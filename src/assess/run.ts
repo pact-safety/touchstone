@@ -27,6 +27,8 @@ export interface TranscriptEntry {
   excerpts: string[];
   response: string | null;
   reasoning?: string;
+  /** Wall-clock time of the model call, in milliseconds. */
+  ms?: number;
   error?: string;
   checks: { item: string; proposed: unknown; final: unknown; quotes_kept: number; quotes_dropped: number; note?: string }[];
 }
@@ -172,7 +174,9 @@ export async function assess(input: RunInput): Promise<{ assessment: Assessment;
     calls++;
     let parsed: { verdicts?: unknown[] } | undefined;
     try {
+      const started = Date.now();
       const res = await chat(llm, [{ role: 'user', content: prompt }], input.fetchImpl);
+      entry.ms = Date.now() - started;
       entry.response = res.content;
       if (res.reasoning) entry.reasoning = res.reasoning;
       parsed = parseJson(res.content) as { verdicts?: unknown[] };

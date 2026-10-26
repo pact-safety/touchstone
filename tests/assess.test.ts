@@ -171,3 +171,24 @@ describe('correction triage', () => {
     expect(r.comment).not.toContain('@someone');
   });
 });
+
+describe('streaming chat client', () => {
+  const sse = (events: object[]) => events.map((e) => `data: ${JSON.stringify(e)}\n\n`).join('') + 'data: [DONE]\n\n';
+  const cfg = { baseUrl: 'http://fake', model: 'm', temperature: 0, seed: 1, maxTokens: 10 };
+  it('assembles content and reasoning from a stream', async () => {
+    const { chat } = await import('../src/assess/llm.ts');
+    const body = sse([{ choices: [{ delta: { reasoning: 'thinking ' } }] }, { choices: [{ delta: { content: '{"verdicts":' } }] }, { choices: [{ delta: { content: '[]}' }, finish_reason: 'stop' }] }]);
+    const r = await chat(cfg, [{ role: 'user', content: 'x' }], async () => new Response(body, { status: 200 }));
+    expect(r.content).toBe('{"verdicts":[]}');
+    expect(r.reasoning).toBe('thinking ');
+  });
+  it('treats a truncated stream as a failure', async () => {
+    const { chat } = await import('../src/assess/llm.ts');
+    const body = sse([{ choices: [{ delta: { content: '{"verdicts": [' }, finish_reason: 'length' }] }]);
+    await expect(chat(cfg, [{ role: 'user', content: 'x' }], async () => new Response(body, { status: 200 }))).rejects.toThrow(/max_tokens/);
+  });
+  it('rejects a non-completion 200 such as a retired endpoint', async () => {
+    const { chat } = await import('../src/assess/llm.ts');
+    await expect(chat(cfg, [{ role: 'user', content: 'x' }], async () => new Response('OK\r\n', { status: 200 }))).rejects.toThrow(/did not return a chat completion/);
+  });
+});

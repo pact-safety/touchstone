@@ -24,9 +24,11 @@ export interface ChatResult {
 export class RateLimited extends Error {}
 
 export async function chat(cfg: LlmConfig, messages: { role: 'system' | 'user'; content: string }[], f: typeof fetch = fetch): Promise<ChatResult> {
+  // Streamed, so response headers arrive at once: a CPU-only model can take longer than fetch's
+  // 300-second header timeout to finish an answer.
   const body: Record<string, unknown> = {
     model: cfg.model, messages, temperature: cfg.temperature, seed: cfg.seed, max_tokens: cfg.maxTokens,
-    response_format: { type: 'json_object' },
+    response_format: { type: 'json_object' }, stream: true,
   };
   if (cfg.reasoningEffort) body.reasoning_effort = cfg.reasoningEffort;
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
@@ -40,14 +42,39 @@ export async function chat(cfg: LlmConfig, messages: { role: 'system' | 'user'; 
   }
   if (res.status === 429) throw new RateLimited(`rate limited by ${cfg.baseUrl}`);
   if (!res.ok) throw new Error(`${cfg.baseUrl} returned ${res.status}: ${(await res.text()).slice(0, 300)}`);
-  // A 200 that isn't a chat completion (e.g. a retired endpoint answering "OK") is a failure, not an empty answer.
   const text = await res.text();
+  if (/^\s*data:/.test(text)) return fromStream(text, cfg.baseUrl);
+  // A 200 that isn't a chat completion (e.g. a retired endpoint answering "OK") is a failure, not an empty answer.
   let parsed: unknown;
   try { parsed = JSON.parse(text); } catch { throw new Error(`${cfg.baseUrl} did not return a chat completion (got ${JSON.stringify(text.slice(0, 60))})`); }
   const d = parsed as { choices?: { message?: { content?: string; reasoning_content?: string; reasoning?: string } }[]; usage?: unknown };
   const m = d.choices?.[0]?.message;
   if (!m?.content) throw new Error(`${cfg.baseUrl} returned no message content`);
   return { content: m.content, reasoning: m.reasoning_content ?? m.reasoning, usage: d.usage };
+}
+
+/** Assemble a server-sent-events chat stream into one result. */
+function fromStream(text: string, baseUrl: string): ChatResult {
+  let content = '';
+  let reasoning = '';
+  let usage: unknown;
+  let finish: string | undefined;
+  for (const line of text.split('\n')) {
+    const m = line.match(/^data:\s*(.*)$/);
+    if (!m || m[1] === '[DONE]') continue;
+    let ev: { choices?: { delta?: { content?: string; reasoning_content?: string; reasoning?: string }; finish_reason?: string | null }[]; usage?: unknown; error?: { message?: string } };
+    try { ev = JSON.parse(m[1]!); } catch { continue; }
+    if (ev.error) throw new Error(`${baseUrl} stream error: ${ev.error.message ?? 'unknown'}`);
+    const ch = ev.choices?.[0];
+    content += ch?.delta?.content ?? '';
+    reasoning += ch?.delta?.reasoning_content ?? ch?.delta?.reasoning ?? '';
+    if (ch?.finish_reason) finish = ch.finish_reason;
+    if (ev.usage) usage = ev.usage;
+  }
+  if (!content) throw new Error(`${baseUrl} streamed no message content${finish ? ` (finish: ${finish})` : ''}`);
+  // An answer cut off at max_tokens is incomplete JSON at best; report it as such rather than half-parsing it.
+  if (finish === 'length') throw new Error(`${baseUrl} hit max_tokens before finishing`);
+  return { content, reasoning: reasoning || undefined, usage };
 }
 
 /** Pull the JSON object out of a reply, tolerating a ```json fence. */
