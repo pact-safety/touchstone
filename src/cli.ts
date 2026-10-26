@@ -59,6 +59,9 @@ function llmConfig(c: ReturnType<typeof load>) {
   const baseUrl = process.env.TOUCHSTONE_LLM_BASE_URL || 'http://localhost:11434/v1';
   const apiKey = process.env.TOUCHSTONE_LLM_API_KEY || undefined;
   const effort = process.env.TOUCHSTONE_REASONING_EFFORT || (model.includes('gpt-oss') ? 'low' : '');
+  // qwen3 on a CPU runner spent its whole budget thinking and never answered; the answer's per-item
+  // rationale is the reasoning we keep. TOUCHSTONE_THINK=on turns thinking back on.
+  const think = process.env.TOUCHSTONE_THINK ? process.env.TOUCHSTONE_THINK === 'on' : model.startsWith('qwen3') ? false : undefined;
   return {
     entry: entry!,
     llm: {
@@ -66,6 +69,7 @@ function llmConfig(c: ReturnType<typeof load>) {
       apiKey,
       model, temperature: 0, seed: 20261026, maxTokens: 6000,
       ...(effort ? { reasoningEffort: effort as 'low' | 'medium' | 'high' } : {}),
+      ...(think !== undefined ? { think } : {}),
     },
   };
 }

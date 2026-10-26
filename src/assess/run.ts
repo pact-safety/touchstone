@@ -22,6 +22,8 @@ export interface TranscriptEntry {
   temperature: number;
   seed: number;
   prompt_version: string;
+  /** false when the model's thinking mode was switched off for this call. */
+  think?: boolean;
   prompt_sha256: string;
   /** Excerpt ids shown to the model; with the pinned sources they reconstruct the prompt exactly. */
   excerpts: string[];
@@ -168,6 +170,7 @@ export async function assess(input: RunInput): Promise<{ assessment: Assessment;
     const prompt = renderPrompt(tpl, b, std, g, excerpts);
     const entry: TranscriptEntry = {
       group: g.id, model: llm.model, temperature: llm.temperature, seed: llm.seed, prompt_version: version,
+      ...(llm.think !== undefined ? { think: llm.think } : {}),
       prompt_sha256: sha256(prompt), excerpts: excerpts.map((c) => c.id), response: null, checks: [],
     };
     transcript.push(entry);

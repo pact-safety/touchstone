@@ -192,3 +192,21 @@ describe('streaming chat client', () => {
     await expect(chat(cfg, [{ role: 'user', content: 'x' }], async () => new Response('OK\r\n', { status: 200 }))).rejects.toThrow(/did not return a chat completion/);
   });
 });
+
+describe('thinking switch', () => {
+  it('sends think:false and /no_think when thinking is off, and nothing extra otherwise', async () => {
+    const { chat } = await import('../src/assess/llm.ts');
+    const seen: Record<string, unknown>[] = [];
+    const f = async (_u: unknown, init?: RequestInit) => {
+      seen.push(JSON.parse(String(init!.body)));
+      return new Response(JSON.stringify({ choices: [{ message: { content: '{}' } }] }), { status: 200 });
+    };
+    const base = { baseUrl: 'http://fake', model: 'qwen3:8b', temperature: 0, seed: 1, maxTokens: 10 };
+    await chat({ ...base, think: false }, [{ role: 'user', content: 'Assess this.' }], f as typeof fetch);
+    await chat(base, [{ role: 'user', content: 'Assess this.' }], f as typeof fetch);
+    expect(seen[0]!.think).toBe(false);
+    expect((seen[0]!.messages as { content: string }[])[0]!.content).toBe('Assess this.\n\n/no_think');
+    expect(seen[1]!.think).toBeUndefined();
+    expect((seen[1]!.messages as { content: string }[])[0]!.content).toBe('Assess this.');
+  });
+});

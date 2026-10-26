@@ -12,6 +12,11 @@ export interface LlmConfig {
   maxTokens: number;
   /** gpt-oss reasoning effort; omitted for models that don't take it. */
   reasoningEffort?: 'low' | 'medium' | 'high';
+  /**
+   * false turns off a hybrid model's thinking mode (qwen3), so its whole token budget goes to the answer.
+   * Sent as Ollama's `think: false` and as Qwen's documented `/no_think` switch at the end of the prompt.
+   */
+  think?: boolean;
 }
 
 export interface ChatResult {
@@ -31,6 +36,11 @@ export async function chat(cfg: LlmConfig, messages: { role: 'system' | 'user'; 
     response_format: { type: 'json_object' }, stream: true,
   };
   if (cfg.reasoningEffort) body.reasoning_effort = cfg.reasoningEffort;
+  if (cfg.think === false) {
+    body.think = false;
+    const last = messages.length - 1;
+    body.messages = messages.map((m, i) => (i === last && m.role === 'user' ? { ...m, content: `${m.content}\n\n/no_think` } : m));
+  }
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   if (cfg.apiKey) headers.Authorization = `Bearer ${cfg.apiKey}`;
   const url = cfg.baseUrl.replace(/\/$/, '') + '/chat/completions';
