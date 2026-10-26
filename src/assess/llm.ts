@@ -28,7 +28,36 @@ export interface ChatResult {
 
 export class RateLimited extends Error {}
 
-export async function chat(cfg: LlmConfig, messages: { role: 'system' | 'user'; content: string }[], f: typeof fetch = fetch): Promise<ChatResult> {
+/** Longest a single model call may take. CPU-only inference can be silent for many minutes before its first token. */
+export const CALL_TIMEOUT_MS = 30 * 60 * 1000;
+
+/**
+ * POST with node:http(s) rather than fetch: fetch drops a connection after 300 s without response headers or
+ * without a new chunk, which a CPU-only model hits while it reads a long prompt. Only the overall cap applies.
+ */
+async function post(url: string, headers: Record<string, string>, body: string): Promise<Response> {
+  const { request } = await import(url.startsWith('https:') ? 'node:https' : 'node:http');
+  return new Promise((resolve, reject) => {
+    const req = request(url, { method: 'POST', headers: { ...headers, 'Content-Length': Buffer.byteLength(body) } }, (res: import('node:http').IncomingMessage) => {
+      const chunks: Buffer[] = [];
+      res.on('data', (c: Buffer) => chunks.push(c));
+      res.on('end', () => resolve(new Response(Buffer.concat(chunks), { status: res.statusCode ?? 0 })));
+      res.on('error', reject);
+    });
+    req.setTimeout(CALL_TIMEOUT_MS, () => req.destroy(new Error(`no complete response within ${CALL_TIMEOUT_MS / 60000} minutes`)));
+    req.on('error', reject);
+    req.end(body);
+  });
+}
+
+/** Name the underlying network error (e.g. ECONNREFUSED) instead of a bare "fetch failed". */
+const describe = (e: unknown) => {
+  const err = e as Error & { cause?: { code?: string; message?: string }; code?: string };
+  const code = err.code ?? err.cause?.code;
+  return `${err.message}${code ? ` (${code})` : ''}${err.cause?.message && err.cause.message !== err.message ? `: ${err.cause.message}` : ''}`;
+};
+
+export async function chat(cfg: LlmConfig, messages: { role: 'system' | 'user'; content: string }[], f?: typeof fetch): Promise<ChatResult> {
   // Streamed, so response headers arrive at once: a CPU-only model can take longer than fetch's
   // 300-second header timeout to finish an answer.
   const body: Record<string, unknown> = {
@@ -44,11 +73,19 @@ export async function chat(cfg: LlmConfig, messages: { role: 'system' | 'user'; 
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   if (cfg.apiKey) headers.Authorization = `Bearer ${cfg.apiKey}`;
   const url = cfg.baseUrl.replace(/\/$/, '') + '/chat/completions';
-  let res = await f(url, { method: 'POST', headers, body: JSON.stringify(body) });
+  // Tests inject a fetch; real calls go through post() so slow local models aren't cut off.
+  const send = async (b: string) => {
+    try {
+      return f ? await f(url, { method: 'POST', headers, body: b }) : await post(url, headers, b);
+    } catch (e) {
+      throw new Error(`${cfg.baseUrl} request failed: ${describe(e)}`);
+    }
+  };
+  let res = await send(JSON.stringify(body));
   if (res.status === 400) {
     // Some servers reject response_format; the prompt already asks for JSON only.
     delete body.response_format;
-    res = await f(url, { method: 'POST', headers, body: JSON.stringify(body) });
+    res = await send(JSON.stringify(body));
   }
   if (res.status === 429) throw new RateLimited(`rate limited by ${cfg.baseUrl}`);
   if (!res.ok) throw new Error(`${cfg.baseUrl} returned ${res.status}: ${(await res.text()).slice(0, 300)}`);
