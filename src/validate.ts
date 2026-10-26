@@ -17,6 +17,17 @@ export function validate(c: Corpus): string[] {
   for (const { path, value } of c.benchmarks)
     if (fileId(path) !== value.id) errors.push(`${path}: file name must be ${value.id}.yaml`);
 
+  for (const { path, value: std } of c.standards) {
+    if (std.scoring?.scheme !== 'aisl-severity') continue;
+    // Categories are ordered best first, so limits may only get looser (never lower) down the list.
+    const cats = std.scoring.categories;
+    for (const g of std.groups)
+      for (let i = 1; i < cats.length; i++)
+        for (let j = 0; j < i; j++)
+          if ((cats[i]!.max[g.id] ?? 0) < (cats[j]!.max[g.id] ?? 0))
+            errors.push(`${path}: category "${cats[i]!.id}" has a lower max for ${g.id} than earlier category "${cats[j]!.id}"; categories must be ordered best first`);
+  }
+
   const allowed = new Set(c.models.map((m) => m.id));
 
   for (const { path, value: a } of c.assessments) {
@@ -40,6 +51,15 @@ export function validate(c: Corpus): string[] {
     if (a.mode === 'imported') {
       const groups = new Set(std.groups.map((g) => g.id));
       for (const k of Object.keys(a.scores ?? {})) if (!groups.has(k)) at(`scores: unknown group "${k}"`);
+      const inRange = (v: unknown): boolean => {
+        if (typeof v !== 'number') return true; // 'invalid' and null are not numbers
+        const sc = std.scoring!;
+        if (sc.scheme === 'aisl-severity') return Number.isInteger(v) && v >= 1 && v <= 4;
+        if (sc.scheme === 'points') return v >= 0 && v <= sc.max;
+        return v >= 0 && v <= 100;
+      };
+      for (const [k, v] of Object.entries(a.scores ?? {})) if (!inRange(v)) at(`scores.${k}: ${v} is out of range for the ${std.scoring!.scheme} scheme`);
+      for (const [k, v] of Object.entries(a.published?.groups ?? {})) if (!inRange(v)) at(`published.groups.${k}: ${v} is out of range for the ${std.scoring!.scheme} scheme`);
       continue;
     }
     checkVerdicts(std, a, at);

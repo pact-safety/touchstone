@@ -30,7 +30,7 @@ jobs:
           NUMBER: ${{ github.event.issue.number }}
           REPO: ${{ github.repository }}
         run: |
-          existing=$(gh api "repos/$REPO/issues/$NUMBER/comments" --jq '[.[] | select(.body | startswith("<!-- touchstone-triage -->"))][0].id // empty')
+          existing=$(gh api "repos/$REPO/issues/$NUMBER/comments" --jq '[.[] | select(.user.login == "github-actions[bot]" and (.body | startswith("<!-- touchstone-triage -->")))][0].id // empty')
           if [ -n "$existing" ]; then
             gh api -X PATCH "repos/$REPO/issues/comments/$existing" -F body=@comment.md > /dev/null
           else

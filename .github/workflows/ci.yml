@@ -20,9 +20,20 @@ jobs:
       - run: npm run typecheck
       - run: npx tsx src/cli.ts validate
       - run: npm test
-      - name: Every verdict change has a revision entry
+      - name: Every verdict change has a revision entry (pull request)
         if: github.event_name == 'pull_request'
-        run: npx tsx src/cli.ts check-revisions --base "origin/${{ github.base_ref }}"
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: npx tsx src/cli.ts check-revisions --base "origin/$BASE_REF"
+      - name: Every verdict change has a revision entry (push to main)
+        if: github.event_name == 'push'
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          if [ -z "${BEFORE//0/}" ]; then
+            echo "New branch; no base to compare against."; exit 0
+          fi
+          npx tsx src/cli.ts check-revisions --base "$BEFORE"
       - name: Site builds, and the data build is reproducible
         run: |
           npm run build

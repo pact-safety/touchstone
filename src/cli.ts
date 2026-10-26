@@ -21,7 +21,7 @@ import { buildSiteData } from './build.ts';
 import { check, queue, inScope, type WatchState } from './watch.ts';
 import { assess, promptTemplate, renderPrompt, selectExcerpts, type TranscriptEntry } from './assess/run.ts';
 import { currentPins, fetchSources, type FetchedSource } from './assess/sources.ts';
-import { sha256 } from './assess/text.ts';
+import { sha256, verifyQuote } from './assess/text.ts';
 import { triage } from './triage.ts';
 import { checkRevisions } from './revisions.ts';
 import type { Assessment } from './schema.ts';
@@ -55,11 +55,16 @@ function llmConfig(c: ReturnType<typeof load>) {
   const model = process.env.TOUCHSTONE_MODEL ?? cfg.default;
   const entry = c.models.find((m) => m.id === model);
   if (!entry) fail(`Model "${model}" is not on the open-weights allowlist in config/models.yaml.`);
+  const baseUrl = process.env.TOUCHSTONE_LLM_BASE_URL ?? 'https://models.github.ai/inference';
+  // The GitHub token is only ever sent to GitHub Models, never to a custom endpoint.
+  let host = '';
+  try { host = new URL(baseUrl).hostname; } catch { /* an invalid URL gets no fallback */ }
+  const apiKey = process.env.TOUCHSTONE_LLM_API_KEY ?? (host === 'models.github.ai' ? process.env.GITHUB_TOKEN : undefined);
   return {
     entry: entry!,
     llm: {
-      baseUrl: process.env.TOUCHSTONE_LLM_BASE_URL ?? 'https://models.github.ai/inference',
-      apiKey: process.env.TOUCHSTONE_LLM_API_KEY ?? process.env.GITHUB_TOKEN,
+      baseUrl,
+      apiKey,
       model, temperature: 0, seed: 20261026, maxTokens: 4000,
     },
   };
@@ -150,6 +155,18 @@ async function main() {
         console.log(`${snap.kind} ${snap.ref}: ${same ? 'matches' : 'DIFFERS from'} the text the model was given`);
       }
       const chunks = sources.flatMap((x) => x.chunks);
+      const chunkText = new Map(chunks.map((x) => [x.locator, x.text]));
+      for (const [id, v] of Object.entries(a!.verdicts ?? {})) {
+        if (v.by !== 'model') continue;
+        for (const e of v.evidence) {
+          if (!e.quote) continue;
+          const text = chunkText.get(e.locator);
+          if (text === undefined || !verifyQuote(e.quote, text)) {
+            ok = false;
+            console.log(`${id}: quote NOT found at ${e.locator}: "${e.quote}"`);
+          }
+        }
+      }
       const tpl = promptTemplate();
       const lines = readFileSync(join(root, a!.model_run!.transcript), 'utf8').trim().split('\n').map((l) => JSON.parse(l) as TranscriptEntry);
       for (const e of lines) {

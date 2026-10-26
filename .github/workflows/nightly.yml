@@ -49,7 +49,7 @@ jobs:
           if [ -z "$(git status --porcelain -- data/assessments data/runs)" ]; then
             echo "No new or changed assessments; nothing to review."; exit 0
           fi
-          branch="nightly/$(date -u +%F)"
+          branch="nightly/$(date -u +%F)-$GITHUB_RUN_ID"
           git config user.name "touchstone-bot"
           git config user.email "touchstone-bot@users.noreply.github.com"
           git switch -c "$branch"
