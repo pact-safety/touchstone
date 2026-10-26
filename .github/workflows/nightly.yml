@@ -5,8 +5,10 @@ name: Nightly re-assessment
 # or key is needed. To use a hosted OpenAI-compatible provider instead, set the repository variable
 # TOUCHSTONE_LLM_BASE_URL, the variable TOUCHSTONE_MODEL, and the secret TOUCHSTONE_LLM_API_KEY.
 on:
-  schedule:
-    - cron: '17 4 * * *'
+  # The schedule is off until the assessor runs on hardware fast enough to finish within the Actions budget:
+  # on the 2-core private-repo runner one model call took about 68 minutes. Re-enable with:
+  # schedule:
+  #   - cron: '17 4 * * *'
   workflow_dispatch:
     inputs:
       max_calls:
