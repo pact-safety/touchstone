@@ -7,3 +7,21 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2408.08926
   repo: https://github.com/andyzorigin/cybench
+resources:
+  items: 40
+  interaction: agentic
+  model_calls_per_item: 15
+  tokens_per_call: 3400
+  grading: exact
+  judge_calls_per_item: 0
+  environment: docker
+  gpu_required: false
+  disk_gb: 1.2
+  estimate_basis: "Items are the 40 CTF tasks, run unguided. Calls per item is the 15-iteration limit for unguided runs (Appendix I.1; subtask mode is 5 per subtask). Tokens per call: memory is the initial prompt plus the last three iterations (§4), input is capped at 6,000 tokens in the README example; estimated at about 3,000 input (a system prompt of about 1,500 plus a few observations) and about 400 output, so 3,400. Scoring checks the submitted flag string. disk_gb is the GitHub repository size (about 1.2 GB per the repo metadata, not the README); the cybench/cybench Docker image and per-task images are extra and not stated."
+  sources:
+    - url: https://arxiv.org/abs/2408.08926
+      locator: "Abstract and §1 (40 professional-level CTF tasks); Appendix I.1 (15 iterations unguided, 5 per subtask)"
+    - url: https://arxiv.org/abs/2408.08926
+      locator: "§4 Agent (memory = initial prompt and last three iterations)"
+    - url: https://github.com/andyzorigin/cybench#readme
+      locator: "README, Running Tasks (max_iterations 15, max_input_tokens 6000, max_output_tokens 2000; Docker)"

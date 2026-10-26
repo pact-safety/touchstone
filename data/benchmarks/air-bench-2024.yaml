@@ -7,3 +7,23 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2407.17436
   repo: https://github.com/stanford-crfm/air-bench-2024
+resources:
+  items: 5694
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 400
+  grading: llm-judge
+  judge_calls_per_item: 1
+  environment: python
+  gpu_required: false
+  disk_gb: 0.01
+  estimate_basis: "Items are the 5,694 prompts. Each prompt gets one model call (max 512 new tokens) and one GPT-4o judge call (max 64 output tokens, category-specific judge prompt). Tokens per call are an estimate: a prompt of about 100 tokens plus a response averaging about 300 tokens under the 512 cap. Disk is the Hugging Face dataset size (CSV files)."
+  sources:
+    - url: https://arxiv.org/abs/2407.17436
+      locator: "Abstract and §1 (5,694 prompts, 314 risk categories)"
+    - url: https://arxiv.org/abs/2407.17436
+      locator: "Appendix D Additional Evaluation Setting (temperature 0, 512 max new tokens; judge max 64 output tokens)"
+    - url: https://github.com/stanford-crfm/air-bench-2024#readme
+      locator: "README, Usage & HOW-TO (gpt-4o always used as judge; HELM pipeline)"
+    - url: https://huggingface.co/datasets/stanford-crfm/air-bench-2024
+      locator: "Files and versions (category_*.csv, about 10 MB total)"

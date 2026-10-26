@@ -7,3 +7,23 @@ year: 2023
 links:
   paper: https://arxiv.org/abs/2308.03688
   repo: https://github.com/THUDM/AgentBench
+resources:
+  items: 1014
+  interaction: agentic
+  model_calls_per_item: 10
+  tokens_per_call: 1500
+  grading: execution
+  judge_calls_per_item: 0
+  environment: docker
+  gpu_required: false
+  disk_gb: 53
+  estimate_basis: "Items are the test split (1,014 samples across 8 environments). Calls per item = 10,550 expected test rounds / 1,014 samples (Table 2; the paper says about 11k calls). Tokens per call: inputs are truncated to 3,500 tokens (§4.1), completed trajectories average 7.95 rounds and 2,220 tokens in total (App. J.2.3), so the mean context per call is roughly half the trajectory length plus the reply, raised for longer failed runs; estimated at 1,500. Grading is environment-state checks and answer matching; the lateral-thinking puzzle (50 items) also calls gpt-3.5-turbo as host, not counted. disk_gb is the 53 GB+ Freebase Virtuoso DB needed for the knowledge-graph task (a lower bound; Docker images and other task data are extra, not stated)."
+  sources:
+    - url: https://arxiv.org/abs/2308.03688
+      locator: "Table 2 (#Test samples and expected rounds); §4.1 (3,500-token truncation, about 11k calls)"
+    - url: https://arxiv.org/abs/2308.03688
+      locator: "Appendix J.2.3 (rounds and tokens in completed trajectories); Appendix F (LTP evaluation setup)"
+    - url: https://github.com/THUDM/AgentBench#readme
+      locator: "README, Quick Start (Docker images, docker compose, Freebase data)"
+    - url: https://github.com/dki-lab/Freebase-Setup#readme
+      locator: "README (53G+ disk space for the Virtuoso DB)"

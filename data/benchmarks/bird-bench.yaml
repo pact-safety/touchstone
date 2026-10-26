@@ -6,3 +6,21 @@ concept: Text-to-SQL
 year: 2023
 links:
   paper: https://arxiv.org/abs/2305.03111
+resources:
+  items: 1534
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 1500
+  grading: execution
+  judge_calls_per_item: 0
+  environment: python
+  gpu_required: false
+  disk_gb: 33.4
+  estimate_basis: "Items are the public development set (1,534); the 1,789-example test set is concealed and scored by submission. Tokens per call are an estimate: the schema of a database averaging 7.3 tables with column descriptions and the external-knowledge evidence, about 1,300 tokens, plus a question and a SQL answer of about 200. Scoring runs the predicted and gold SQL on SQLite and compares results (execution accuracy, VES). disk_gb is the paper's total for all 95 databases (train, dev and test); the dev-only download is smaller but its size is not stated."
+  sources:
+    - url: https://arxiv.org/abs/2305.03111
+      locator: "Appendix A.2 Composition (9,428 train, 1,534 dev, 1,789 concealed test)"
+    - url: https://arxiv.org/abs/2305.03111
+      locator: "Abstract and §1 (12,751 pairs, 95 databases, 33.4 GB); §4 Data Statistics, Table 1 (7.3 tables per database); §5 Evaluation Metrics (EX and VES)"
+    - url: https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106
+      locator: "Dataset card (dev set fields; databases as SQLite files)"

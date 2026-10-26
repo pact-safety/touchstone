@@ -7,3 +7,21 @@ year: 2022
 links:
   paper: https://arxiv.org/abs/2206.04615
   repo: https://github.com/google/BIG-bench
+resources:
+  items: 86827
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 300
+  grading: rule-based
+  judge_calls_per_item: 0
+  environment: python
+  gpu_required: false
+  disk_gb: 1.85
+  estimate_basis: "The paper states 204 tasks but no total item count. Items are taken from the Hugging Face dataset card: 167 JSON-task configs hold 2,631,256 examples in total, and the paper's own protocol evaluates at most 1,000 examples per task (Appendix A), so items = sum of min(examples, 1,000) over the configs = 86,827 (my calculation; programmatic tasks are not in the card; the per-subtask split of the 1,000 cap is ignored). Tokens per call are an estimate: the paper's setup allows 1,024 input and 64 output tokens, and typical zero-shot prompts are short, so about 300. Scoring uses task metrics (exact match, ROUGE, multiple-choice scores). Disk is the card's dataset_size (1.85 GB)."
+  sources:
+    - url: https://arxiv.org/abs/2206.04615
+      locator: "Abstract (204 tasks); Appendix A Model details (evaluation on up to 1,000 examples per task, 1,024 input and 64 output tokens)"
+    - url: https://huggingface.co/datasets/google/bigbench
+      locator: "Dataset card YAML, dataset_info (per-config num_examples for the default split; dataset_size)"
+    - url: https://github.com/google/BIG-bench#readme
+      locator: "README (more than 200 JSON and programmatic tasks; pip install)"
