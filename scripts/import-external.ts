@@ -7,9 +7,9 @@
  *     Scorecard's worked examples (Appendices C and D), transcribed below.
  * Writes standards/betterbench.yaml, data/benchmarks/*.yaml and data/assessments/** (overwrites).
  */
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { stringify } from 'yaml';
+import { parse, stringify } from 'yaml';
 
 const root = new URL('..', import.meta.url).pathname;
 const IMPORTED_ON = '2026-10-26';
@@ -63,7 +63,10 @@ for (const b of benchmarks) {
   if (b.repo) links.repo = `https://github.com/${b.repo}`;
   if (b.website) links.website = b.website;
   const { arxiv, repo, website, ...rest } = b;
-  out(`data/benchmarks/${b.id}.yaml`, { ...rest, links });
+  // Keep hand-curated fields (run-cost `resources`) that this importer doesn't own.
+  const existing = join(root, `data/benchmarks/${b.id}.yaml`);
+  const prev = existsSync(existing) ? (parse(readFileSync(existing, 'utf8')) as Record<string, unknown>) : {};
+  out(`data/benchmarks/${b.id}.yaml`, { ...rest, links, ...(prev.resources ? { resources: prev.resources } : {}) });
 }
 const byName = new Map(benchmarks.map((b) => [b.name, b.id]));
 const bbName: Record<string, string> = { Machiavelli: 'MACHIAVELLI', GSM8k: 'GSM8K', Wordcraft: 'WordCraft', ALE: 'Arcade Learning Environment' };

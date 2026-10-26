@@ -118,6 +118,37 @@ export const Standard = z
   });
 export type Standard = z.infer<typeof Standard>;
 
+const Citation = z.strictObject({ url: z.string().url(), locator: z.string().min(1) });
+
+/**
+ * What a full run of the benchmark costs, for the run-cost half of the Touchstone score.
+ * Counts come from the benchmark's own paper, docs or repo (cited); `tokens_per_call` is an
+ * estimate whose basis must be stated. See docs/touchstone-score.md.
+ */
+export const Resources = z.strictObject({
+  /** Test items in the standard full evaluation (not train/dev splits). */
+  items: z.number().int().positive(),
+  /** single-turn: one prompt, one answer. multi-turn: a scripted conversation. agentic: the model acts in an environment. */
+  interaction: z.enum(['single-turn', 'multi-turn', 'agentic']),
+  /** Mean calls to the model under test per item (1 for single-turn; for agentic, the stated or default step limit). */
+  model_calls_per_item: z.number().positive(),
+  /** Mean input + output tokens per model call. An estimate: say how it was made in `estimate_basis`. */
+  tokens_per_call: z.number().int().positive(),
+  /** How outputs are scored. */
+  grading: z.enum(['exact', 'rule-based', 'execution', 'llm-judge', 'human']),
+  /** Mean grader-model calls per item (0 unless grading is llm-judge). */
+  judge_calls_per_item: z.number().nonnegative(),
+  /** What the harness needs beyond access to the model under test. */
+  environment: z.enum(['none', 'python', 'docker', 'vm', 'simulator', 'live-web']),
+  /** The harness itself needs a GPU (independent of hosting the model under test). */
+  gpu_required: z.boolean(),
+  /** Download size of data, images and environments for a full run, in GB. */
+  disk_gb: z.number().nonnegative(),
+  estimate_basis: z.string().min(1),
+  sources: z.array(Citation).min(1),
+});
+export type Resources = z.infer<typeof Resources>;
+
 export const Benchmark = z.strictObject({
   id: Slug,
   name: z.string(),
@@ -132,6 +163,7 @@ export const Benchmark = z.strictObject({
       website: z.string().url().optional(),
     })
     .default({}),
+  resources: Resources.optional(),
 });
 export type Benchmark = z.infer<typeof Benchmark>;
 
