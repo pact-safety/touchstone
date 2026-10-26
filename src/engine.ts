@@ -282,8 +282,9 @@ export function improvements(standard: Standard, a: Assessment, limit = 5): Impr
       out.push({
         item: item.id, group: g.name, groupFrom: from.display, groupTo: to.display,
         overallFrom: now.overall.label, overallTo: after.overall.label,
+      // A null pct (Invalid, Unclassified, Incomplete) ranks below every scored value, so leaving it is a gain.
         blocking: sc.scheme === 'aisl-severity' && from.state === 'invalid' && from.failed_baseline.includes(item.id),
-        dOverall: (after.overall.pct ?? 0) - (now.overall.pct ?? 0), dGroup: (to.pct ?? 0) - (from.pct ?? 0),
+        dOverall: (after.overall.pct ?? -1) - (now.overall.pct ?? -1), dGroup: (to.pct ?? -1) - (from.pct ?? -1),
       });
     }
   }
