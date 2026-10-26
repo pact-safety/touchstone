@@ -1,14 +1,29 @@
 /**
- * Build the site's data file. Output depends only on the repository contents (no clock), so the
+ * Build the site's data files: a small index plus one file per benchmark and per standard. Output depends only on the repository contents (no clock), so the
  * same commit always produces byte-identical JSON.
  */
-import { existsSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import type { Assessment, Benchmark, Standard } from './schema.ts';
 import type { Corpus } from './load.ts';
 import { score, type Result } from './engine.ts';
 import type { WatchState } from './watch.ts';
 
 export const REPO_URL = 'https://github.com/pact-safety/touchstone';
+
+export interface Summary {
+  benchmark: string;
+  standard: string;
+  file: string;
+  status: Assessment['status'];
+  kind: Assessment['provenance']['kind'];
+  model: string | null;
+  label: string;
+  pct: number | null;
+  discrepancies: number;
+}
+export type IndexStandard = Omit<Standard, 'groups'>;
+export type BenchmarkFile = { id: string; assessments: (Assessment & { file: string })[]; results: (Result & { file: string })[] };
 
 export function buildSiteData(c: Corpus) {
   const standards = new Map(c.standards.map((s) => [s.value.id, s.value]));
@@ -18,18 +33,53 @@ export function buildSiteData(c: Corpus) {
     if (!s || s.status !== 'encoded') continue;
     results.push({ ...score(s, a), file: path });
   }
+  results.sort((a, b) => a.file.localeCompare(b.file));
   const watchPath = join(c.root, 'data/watch/state.json');
   const watch: WatchState | null = existsSync(watchPath) ? JSON.parse(readFileSync(watchPath, 'utf8')) : null;
   const byId = <T extends { id: string }>(xs: T[]) => [...xs].sort((a, b) => a.id.localeCompare(b.id));
+  const assessments = c.assessments
+    .map(({ path, value }) => ({ file: path, ...value }))
+    .sort((a, b) => a.file.localeCompare(b.file));
+  const byFile = new Map(assessments.map((a) => [a.file, a]));
+  const summaries: Summary[] = results.map((r) => {
+    const a = byFile.get(r.file)!;
+    return {
+      benchmark: r.benchmark, standard: r.standard, file: r.file, status: a.status, kind: a.provenance.kind,
+      model: a.model_run?.model ?? null, label: r.overall.label, pct: r.overall.pct, discrepancies: r.discrepancies.length,
+    };
+  });
+  const allStandards = byId(c.standards.map((s) => s.value));
+  const benchmarks = byId(c.benchmarks.map((b) => b.value)) as Benchmark[];
   return {
-    repo: REPO_URL,
-    watch,
-    standards: byId(c.standards.map((s) => s.value)),
-    benchmarks: byId(c.benchmarks.map((b) => b.value)),
-    assessments: c.assessments
-      .map(({ path, value }) => ({ file: path, ...value }))
-      .sort((a, b) => a.file.localeCompare(b.file)),
-    results: results.sort((a, b) => a.file.localeCompare(b.file)),
+    index: {
+      repo: REPO_URL,
+      watch,
+      standards: allStandards.map(({ groups: _groups, ...meta }): IndexStandard => meta),
+      benchmarks,
+      summaries,
+    },
+    benchmarks: benchmarks.map((b): BenchmarkFile => ({
+      id: b.id,
+      assessments: assessments.filter((a) => a.benchmark === b.id),
+      results: results.filter((r) => r.benchmark === b.id),
+    })),
+    standards: allStandards,
   };
 }
-export type SiteData = ReturnType<typeof buildSiteData>;
+export type SiteIndex = ReturnType<typeof buildSiteData>['index'];
+
+/** Write index.json, benchmarks/<id>.json and standards/<id>.json under `out`; stale files are removed first. */
+export function writeSiteData(c: Corpus, out: string): number {
+  const d = buildSiteData(c);
+  for (const p of ['index.json', 'benchmarks', 'standards']) rmSync(join(out, p), { recursive: true, force: true });
+  const files: [string, unknown][] = [
+    ['index.json', d.index],
+    ...d.benchmarks.map((b): [string, unknown] => [`benchmarks/${b.id}.json`, b]),
+    ...d.standards.map((s): [string, unknown] => [`standards/${s.id}.json`, s]),
+  ];
+  for (const [path, value] of files) {
+    mkdirSync(dirname(join(out, path)), { recursive: true });
+    writeFileSync(join(out, path), JSON.stringify(value) + '\n');
+  }
+  return files.length;
+}

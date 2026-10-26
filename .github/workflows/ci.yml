@@ -37,6 +37,6 @@ jobs:
       - name: Site builds, and the data build is reproducible
         run: |
           npm run build
-          cp site/src/generated/ratings.json /tmp/first.json
-          npx tsx src/cli.ts build --out site/src/generated/ratings.json
-          cmp /tmp/first.json site/src/generated/ratings.json
+          cp -r site/public/data /tmp/first-data
+          npx tsx src/cli.ts build --out site/public/data
+          diff -r /tmp/first-data site/public/data

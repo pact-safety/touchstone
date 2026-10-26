@@ -17,7 +17,7 @@ import { parseArgs } from 'node:util';
 import { parse, stringify } from 'yaml';
 import { load } from './load.ts';
 import { validate } from './validate.ts';
-import { buildSiteData } from './build.ts';
+import { writeSiteData } from './build.ts';
 import { check, queue, inScope, type WatchState } from './watch.ts';
 import { assess, promptTemplate, renderPrompt, selectExcerpts, type TranscriptEntry } from './assess/run.ts';
 import { currentPins, fetchSources, type FetchedSource } from './assess/sources.ts';
@@ -79,9 +79,8 @@ async function main() {
     }
     case 'build': {
       const c = loadValid();
-      const out = values.out ?? 'site/src/generated/ratings.json';
-      writeFile(join(root, out), JSON.stringify(buildSiteData(c), null, 1) + '\n');
-      console.log(`wrote ${out}`);
+      const out = values.out ?? 'site/public/data';
+      console.log(`wrote ${writeSiteData(c, join(root, out))} files to ${out}`);
       return;
     }
     case 'watch': {
