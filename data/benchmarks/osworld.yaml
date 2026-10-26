@@ -7,3 +7,24 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2404.07972
   repo: https://github.com/xlang-ai/OSWorld
+resources:
+  items: 369
+  interaction: agentic
+  model_calls_per_item: 15
+  tokens_per_call: 4300
+  grading: execution
+  judge_calls_per_item: 0
+  environment: vm
+  gpu_required: false
+  disk_gb: 12.3
+  estimate_basis: >-
+    Calls per item are the 15-step limit used in the paper and README examples. Tokens are an estimate for the paper's baseline, which keeps the last 3 observations and actions in context: about 800 tokens of system prompt, about 2.8 full-HD screenshots on average at roughly 1,100 tokens each, about 300 tokens of past actions and about 150 of output. Disk is the Ubuntu VM image zip (Ubuntu.qcow2.zip, 12.3 GB on Hugging Face) that the Docker provider downloads; the unzipped image is larger and the paper and README state no size.
+  sources:
+    - url: https://arxiv.org/abs/2404.07972
+      locator: "Table 3 (369 Ubuntu tasks; 43 Windows tasks are supplementary)"
+    - url: https://arxiv.org/abs/2404.07972
+      locator: "§2.1 (max steps, e.g. 15) and §4.1 baseline (most recent 3 observations and actions)"
+    - url: https://github.com/xlang-ai/OSWorld
+      locator: "README, Docker and VMware sections (VM-based environment; --max_steps 15 examples)"
+    - url: https://github.com/xlang-ai/OSWorld/blob/main/desktop_env/providers/docker/manager.py
+      locator: "UBUNTU_X86_URL (huggingface.co/datasets/xlangai/ubuntu_osworld, Ubuntu.qcow2.zip, 12,273,896,463 bytes)"

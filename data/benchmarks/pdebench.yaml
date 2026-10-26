@@ -7,3 +7,22 @@ year: 2022
 links:
   paper: https://arxiv.org/abs/2210.07182
   repo: https://github.com/pdebench/PDEBench
+resources:
+  items: 6410
+  interaction: non-llm
+  model_calls_per_item: 0
+  tokens_per_call: 0
+  grading: rule-based
+  judge_calls_per_item: 0
+  environment: python
+  gpu_required: true
+  disk_gb: 3455
+  estimate_basis: >-
+    The paper fixes no test set, so items are derived: Table 1's per-PDE sample counts sum to 64,100, and the paper's baselines use a 10% test split; this ignores the many parameter variants, so treat it as indicative. Disk is the sum of the dataset sizes in the data_download README table (the incompressible Navier-Stokes set is 2.3 TB of it). GPU is true because the paper's baselines were trained on RTX 2080 and 3090 GPUs, although the README also lists CPU-only PyTorch.
+  sources:
+    - url: https://arxiv.org/abs/2210.07182
+      locator: "Table 1 (samples per PDE) and §4.1 (90% train / 10% test split; GeForce RTX 2080 and 3090 GPUs)"
+    - url: https://github.com/pdebench/PDEBench/blob/main/pdebench/data_download/README.md
+      locator: "Dataset Size column of the download table (47+93+88+4+62+13+551+285+6.2+2300+6.2 GB)"
+    - url: https://github.com/pdebench/PDEBench
+      locator: "README, Installation (GPU support instructions; CPU-only PyTorch option)"

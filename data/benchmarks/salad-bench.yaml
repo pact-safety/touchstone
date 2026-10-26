@@ -7,3 +7,22 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2402.05044
   repo: https://github.com/OpenSafetyLab/SALAD-BENCH
+resources:
+  items: 21318
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 340
+  grading: llm-judge
+  judge_calls_per_item: 1
+  environment: python
+  gpu_required: true
+  disk_gb: 14.5
+  estimate_basis: >-
+    Items are the base set only; the attack-enhanced (5,000), defense-enhanced (200) and multiple-choice subsets are extra. Tokens are an estimate: questions are short (about 40 tokens) and no response length limit is stated, so a mean answer of about 300 tokens is assumed. The MD-Judge evaluator is a 7B model run locally (README uses vllm), hence a GPU; disk is its weights (14.5 GB for MD-Judge-v0.1 on Hugging Face) plus about 30 MB of Salad-Data.
+  sources:
+    - url: https://arxiv.org/abs/2402.05044
+      locator: "Table 9 (base set, 21,318 questions) and §3.1 (5,000 attack-enhanced questions)"
+    - url: https://github.com/OpenSafetyLab/SALAD-BENCH
+      locator: "README, Introduction and Usage (MD-Judge evaluator for QA pairs; optional vllm)"
+    - url: https://huggingface.co/OpenSafetyLab/MD-Judge-v0.1
+      locator: "Files tab (three safetensors shards, 14.5 GB total)"

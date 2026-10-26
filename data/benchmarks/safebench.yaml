@@ -7,3 +7,22 @@ year: 2022
 links:
   paper: https://arxiv.org/abs/2206.09682
   repo: https://github.com/trust-ai/SafeBench
+resources:
+  items: 80
+  interaction: non-llm
+  model_calls_per_item: 0
+  tokens_per_call: 0
+  grading: rule-based
+  judge_calls_per_item: 0
+  environment: simulator
+  gpu_required: true
+  disk_gb: 20
+  estimate_basis: >-
+    Items are 8 safety-critical scenarios x 10 driving routes each, evaluated per scenario-generation algorithm (4 of them, so up to 320 runs per agent). Disk and GPU come from the CARLA 0.9.13 docs (about 20 GB, at least a 6 GB GPU) because the SafeBench README gives no size for its Google Drive CARLA download; its commands launch CARLA with -prefernvidia and the paper trains agents on RTX 3090 GPUs.
+  sources:
+    - url: https://arxiv.org/abs/2206.09682
+      locator: "§1 and §3.2 (8 scenarios, 10 driving routes per scenario, 4 generation algorithms)"
+    - url: https://github.com/trust-ai/SafeBench
+      locator: "README, Installation and Usage (CARLA_0.9.13 download; CarlaUE4.sh -prefernvidia)"
+    - url: https://carla.readthedocs.io/en/0.9.13/start_quickstart/
+      locator: "System requirements (GPU of at least 6 GB; about 20 GB of disk space)"

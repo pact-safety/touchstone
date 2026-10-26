@@ -7,3 +7,22 @@ year: 2025
 links:
   paper: https://arxiv.org/abs/2503.03750
   repo: https://github.com/centerforaisafety/mask
+resources:
+  items: 1000
+  interaction: single-turn
+  model_calls_per_item: 5
+  tokens_per_call: 500
+  grading: llm-judge
+  judge_calls_per_item: 5
+  environment: python
+  gpu_required: false
+  disk_gb: 0.01
+  estimate_basis: >-
+    Items are the 1,000 public examples (the 500-example hold-out is private). Calls per item are 1 pressure prompt plus 3 belief-elicitation prompts plus 2 extra indirect prompts for binary propositions; the binary share is not stated, so 5 is an upper bound, and an LLM judge resolves every response (5 judge calls). Tokens (about 500 per call) are an estimate from a scenario-plus-system-prompt input of a few hundred tokens and a short answer. Disk is an estimate for a CSV dataset (the Hugging Face card is gated).
+  sources:
+    - url: https://arxiv.org/abs/2503.03750
+      locator: "§4.1 Dataset (1,000 public examples; 500 private hold-out)"
+    - url: https://arxiv.org/abs/2503.03750
+      locator: "§4.2 Evaluation Pipeline (lie prompt, three belief prompts, two extra for binary, LLM judge)"
+    - url: https://github.com/centerforaisafety/mask/blob/main/mask/README.md
+      locator: "README, Setup and Usage (OPENAI_API_KEY needed for evaluation; python generate_responses.py, evaluate.py)"

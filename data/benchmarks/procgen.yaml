@@ -7,3 +7,22 @@ year: 2019
 links:
   paper: https://arxiv.org/abs/1912.01588
   repo: https://github.com/openai/procgen
+resources:
+  items: 16
+  interaction: non-llm
+  model_calls_per_item: 0
+  tokens_per_call: 0
+  grading: rule-based
+  judge_calls_per_item: 0
+  environment: simulator
+  gpu_required: true
+  disk_gb: 0.04
+  estimate_basis: >-
+    Items are the 16 environments; each is scored by episodic return on the full level distribution, so there is no fixed episode count. GPU is true because the paper's protocol trains the PPO agent for 200M timesteps, about 24 GPU-hours per environment; the environments themselves run on CPU. Disk is the Linux wheel for pip install procgen (36 MB on PyPI).
+  sources:
+    - url: https://arxiv.org/abs/1912.01588
+      locator: "§2 Procgen Benchmark (16 environments)"
+    - url: https://arxiv.org/abs/1912.01588
+      locator: "§2.2 Experimental Protocols (200M timesteps, about 24 GPU-hrs and 60 CPU-hrs)"
+    - url: https://github.com/openai/procgen
+      locator: "README, Installation (pip install procgen)"

@@ -7,3 +7,24 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2410.07095
   repo: https://github.com/openai/mle-bench
+resources:
+  items: 75
+  interaction: agentic
+  model_calls_per_item: 2000
+  tokens_per_call: 950
+  grading: execution
+  judge_calls_per_item: 0
+  environment: docker
+  gpu_required: true
+  disk_gb: 3300
+  estimate_basis: >-
+    Calls per item use the 2,000-step limit in the paper's AIDE configuration (24-hour limit also applies; OpenHands uses 500). Tokens come from the paper's measured o1-preview AIDE usage of 127.5M input plus 15.0M output tokens per seed of 75 competitions, which is about 1.9M per competition, divided by 2,000 steps; real runs may stop earlier, so per-call tokens are understated and the total is the better figure. Disk is the README's 3.3 TB for the full set (158 GB for the Lite split).
+  sources:
+    - url: https://arxiv.org/abs/2410.07095
+      locator: "§1 contributions (75 offline Kaggle competitions)"
+    - url: https://arxiv.org/abs/2410.07095
+      locator: "Appendix A.6 AIDE config (agent.steps 2000, time_limit 86400) and §6 Accessibility (127.5M input + 15.0M output tokens per seed)"
+    - url: https://arxiv.org/abs/2410.07095
+      locator: "§3 setup (24 hours per competition; 36 vCPUs, 440GB RAM, one A10 GPU)"
+    - url: https://github.com/openai/mle-bench
+      locator: "README, Lite Evaluation (158GB for Low split vs 3.3TB for the full set) and Environment (Docker base image)"
