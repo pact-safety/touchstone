@@ -3,11 +3,16 @@
 # An assessment whose model_run.model is not listed here fails validation.
 # `id` is the name the provider uses; the same weights can appear under several providers.
 allowed:
+  - id: qwen3:8b
+    provider: ollama
+    license: Apache-2.0
+    weights: https://huggingface.co/Qwen/Qwen3-8B
+    note: The nightly default. Fits a standard GitHub Actions runner (16 GB RAM, CPU only), so it needs no account or key.
   - id: gpt-oss:20b
     provider: ollama
     license: Apache-2.0
     weights: https://huggingface.co/openai/gpt-oss-20b
-    note: The nightly default. Runs on the GitHub Actions runner's CPU, so it needs no account or key.
+    note: Stronger, but needs more than a standard runner's 16 GB; use a larger or self-hosted runner.
   - id: gpt-oss:120b
     provider: ollama
     license: Apache-2.0
@@ -24,4 +29,4 @@ allowed:
     weights: https://huggingface.co/Qwen/Qwen2.5-14B-Instruct
 
 # The model the nightly job uses unless TOUCHSTONE_MODEL overrides it.
-default: gpt-oss:20b
+default: qwen3:8b
