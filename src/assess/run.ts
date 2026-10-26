@@ -140,6 +140,7 @@ export interface RunInput {
   llm: LlmConfig;
   provider: string;
   license: string;
+  modelDigest?: string;
   runOn: string;
   transcriptPath: string;
   pins: { paper_version?: string; repo_commit?: string };
@@ -204,7 +205,9 @@ export async function assess(input: RunInput): Promise<{ assessment: Assessment;
     provenance: { kind: 'automated', assessors: [`touchstone-assessor (${llm.model})`], assessed_on: input.runOn },
     benchmark_ref: { ...(input.pins.paper_version ? { paper_version: input.pins.paper_version } : {}), ...(input.pins.repo_commit ? { repo_commit: input.pins.repo_commit } : {}) },
     model_run: {
-      model: llm.model, provider: input.provider, license: input.license, temperature: llm.temperature, seed: llm.seed,
+      model: llm.model, provider: input.provider, license: input.license,
+      ...(input.modelDigest ? { model_digest: input.modelDigest } : {}),
+      temperature: llm.temperature, seed: llm.seed,
       prompt_version: version, run_on: input.runOn, transcript: input.transcriptPath, sources: input.sources.map((s) => s.snapshot),
     },
     verdicts,
