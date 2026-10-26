@@ -4,10 +4,13 @@
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { parse } from 'yaml';
+import { z } from 'zod';
 import type { Assessment, Benchmark, Standard } from './schema.ts';
 import type { Corpus } from './load.ts';
 import { improvements, score, type Improvement, type Result } from './engine.ts';
 import type { WatchState } from './watch.ts';
+import { frontier, rigor, rigorInputs, runProfile, type Pricing, type TouchstoneData } from './touchstone.ts';
 
 export const REPO_URL = 'https://github.com/pact-safety/touchstone';
 
@@ -23,7 +26,8 @@ export interface Summary {
   discrepancies: number;
 }
 export type IndexStandard = Omit<Standard, 'groups'>;
-export type BenchmarkFile = { id: string; assessments: (Assessment & { file: string })[]; results: (Result & { file: string; improvements: Improvement[] })[] };
+const PricingSchema = z.strictObject({ as_of: z.string(), low_usd_per_mtok: z.number().positive(), high_usd_per_mtok: z.number().positive() });
+export type BenchmarkFile = { id: string; touchstone: TouchstoneData; assessments: (Assessment & { file: string })[]; results: (Result & { file: string; improvements: Improvement[] })[] };
 
 export function buildSiteData(c: Corpus) {
   const standards = new Map(c.standards.map((s) => [s.value.id, s.value]));
@@ -49,17 +53,28 @@ export function buildSiteData(c: Corpus) {
     };
   });
   const allStandards = byId(c.standards.map((s) => s.value));
-  const benchmarks = byId(c.benchmarks.map((b) => b.value)) as Benchmark[];
+  const pricing: Pricing = PricingSchema.parse(parse(readFileSync(join(c.root, 'config/pricing.yaml'), 'utf8')));
+  const plain = byId(c.benchmarks.map((b) => b.value)) as Benchmark[];
+  const encodedStds = c.standards.map((s) => s.value).filter((s) => s.status === 'encoded' && s.scoring);
+  const parts = plain.map((b) => {
+    const r = rigor(rigorInputs(encodedStds, assessments.filter((a) => a.benchmark === b.id)));
+    const run = runProfile(b.resources, pricing);
+    return { r, run, tokens: run && b.resources?.interaction !== 'non-llm' ? run.tokens : null };
+  });
+  const onFront = frontier(plain.map((b, i) => ({ id: b.id, score: parts[i]!.r.score, tokens: parts[i]!.tokens })));
+  const benchmarks = plain.map((b, i) => ({ ...b, touchstone: { rigor: parts[i]!.r, run: parts[i]!.run, onFrontier: onFront.has(b.id) } }));
   return {
     index: {
       repo: REPO_URL,
       watch,
+      pricing,
       standards: allStandards.map(({ groups: _groups, ...meta }): IndexStandard => meta),
       benchmarks,
       summaries,
     },
     benchmarks: benchmarks.map((b): BenchmarkFile => ({
       id: b.id,
+      touchstone: b.touchstone,
       assessments: assessments.filter((a) => a.benchmark === b.id),
       results: results.filter((r) => r.benchmark === b.id),
     })),

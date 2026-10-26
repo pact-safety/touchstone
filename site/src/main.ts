@@ -1,7 +1,9 @@
 import './styles.css';
+import './touchstone.css';
 import type { BenchmarkFile, SiteIndex, Summary } from '../../src/build.ts';
 import type { Assessment, Benchmark, Item, Standard, Verdict } from '../../src/schema.ts';
 import type { Improvement, Result } from '../../src/engine.ts';
+import type { Rigor, RunProfile } from '../../src/touchstone.ts';
 
 const main = document.getElementById('main')!;
 const announcer = document.getElementById('announcer')!;
@@ -40,7 +42,8 @@ let data!: SiteIndex;
 type IStd = SiteIndex['standards'][number];
 let standards = new Map<string, IStd>();
 let encoded: IStd[] = [];
-let benchmarks = new Map<string, Benchmark>();
+type B = SiteIndex['benchmarks'][number];
+let benchmarks = new Map<string, B>();
 let byPair = new Map<string, Summary[]>();
 type A = Assessment & { file: string };
 type R = Result & { file: string; improvements: Improvement[] };
@@ -78,21 +81,28 @@ function announce(msg: string) { announcer.textContent = ''; requestAnimationFra
 
 // ---------- Ratings: a table from 640px up, a list of cards below ----------
 const wide = matchMedia('(min-width: 40rem)');
-const state = { q: '', domain: '', modality: '', source: 'all', sort: 'name', dir: 1, focus: { row: 1, col: 0 }, lastBench: '' };
+const state = { q: '', domain: '', modality: '', source: 'all', value: '', sort: 'touchstone', dir: -1, focus: { row: 1, col: 0 }, lastBench: '' };
 let wantSearch = false;
 
-function filteredBenchmarks(): Benchmark[] {
+/** Columns whose first click sorts ascending (A to Z, cheapest first). */
+const ascFirst = (k: string) => k === 'name' || k === 'domain' || k === 'run';
+
+function filteredBenchmarks(): B[] {
   const q = state.q.toLowerCase();
   const rows = [...benchmarks.values()].filter((b) =>
     (!q || b.name.toLowerCase().includes(q) || b.id.includes(q) || b.concept.toLowerCase().includes(q)) &&
-    (!state.domain || b.domain === state.domain) && (!state.modality || b.modality === state.modality));
-  const key = (b: Benchmark): number | string => {
+    (!state.domain || b.domain === state.domain) && (!state.modality || b.modality === state.modality) && (!state.value || b.touchstone.onFrontier));
+  const key = (b: B): number | string | null => {
     if (state.sort === 'name') return b.name.toLowerCase();
     if (state.sort === 'domain') return b.domain;
+    if (state.sort === 'touchstone') return b.touchstone.rigor.score;
+    if (state.sort === 'run') return b.touchstone.run?.tokens ?? null;
     return primary(b.id, state.sort, state.source)?.pct ?? -1;
   };
   return rows.sort((x, y) => {
     const a = key(x), c = key(y);
+    if ((a === null) !== (c === null)) return a === null ? 1 : -1; // no data sorts last in either direction
+    if (a === null || c === null) return x.name.localeCompare(y.name);
     const cmp = typeof a === 'number' && typeof c === 'number' ? a - c : String(a).localeCompare(String(c));
     return cmp * state.dir || x.name.localeCompare(y.name);
   });
@@ -115,21 +125,23 @@ function renderRatings() {
         <select id="modality" class="field"><option value="">All</option>${modalities.map((m) => html`<option value="${m}">${m.replace('-', ' ')}</option>`)}</select></label>
       <label class="grid gap-1 text-sm"><span>Ratings from</span>
         <select id="source" class="field"><option value="all">Best available</option><option value="published">Reviewed only</option><option value="automated">Automated only</option></select></label>
+      <label class="grid gap-1 text-sm"><span>Show</span>
+        <select id="value" class="field"><option value="">All benchmarks</option><option value="best">Best value</option></select></label>
       <label class="grid gap-1 text-sm sm:hidden"><span>Sort by</span>
-        <select id="sort" class="field"><option value="name">Name</option><option value="domain">Domain</option>${encoded.map((s) => html`<option value="${s.id}">${s.short}</option>`)}</select></label>
+        <select id="sort" class="field"><option value="touchstone">Touchstone score</option><option value="run">Run cost</option><option value="name">Name</option><option value="domain">Domain</option>${encoded.map((s) => html`<option value="${s.id}">${s.short}</option>`)}</select></label>
     </div>
     <p id="count" class="t-caption mt-4" aria-live="polite"></p>
     <div id="results" class="mt-2"></div>
     <p id="grid-help" class="t-caption mt-4"></p>
   `.s;
-  for (const id of ['domain', 'modality', 'source', 'sort'] as const) (document.getElementById(id) as HTMLSelectElement).value = state[id];
+  for (const id of ['domain', 'modality', 'source', 'value', 'sort'] as const) (document.getElementById(id) as HTMLSelectElement).value = state[id];
   const on = (id: string, ev: string, fn: (e: Event) => void) => document.getElementById(id)!.addEventListener(ev, fn);
   on('q', 'input', (e) => { state.q = (e.target as HTMLInputElement).value; state.focus = { row: 1, col: 0 }; draw(false); });
-  for (const id of ['domain', 'modality', 'source'] as const)
+  for (const id of ['domain', 'modality', 'source', 'value'] as const)
     on(id, 'change', (e) => { state[id] = (e.target as HTMLSelectElement).value; state.focus = { row: 1, col: 0 }; draw(false); });
   on('sort', 'change', (e) => {
     state.sort = (e.target as HTMLSelectElement).value;
-    state.dir = state.sort === 'name' || state.sort === 'domain' ? 1 : -1;
+    state.dir = ascFirst(state.sort) ? 1 : -1;
     draw(false);
   });
   draw(false);
@@ -138,6 +150,8 @@ wide.addEventListener('change', () => { if (document.getElementById('results')) 
 
 const columns = () => [
   { key: 'name', label: 'Benchmark' },
+  { key: 'touchstone', label: 'Touchstone' },
+  { key: 'run', label: 'Run cost' },
   { key: 'domain', label: 'Domain' },
   ...encoded.map((s) => ({ key: s.id, label: s.short })),
 ];
@@ -165,6 +179,7 @@ function draw(focusCell: boolean) {
     <tr role="row" data-bench="${b.id}" data-prefetch="benchmarks/${b.id}.json">
       <th role="rowheader" scope="row" tabindex="-1" class="font-medium text-heading"><a href="#/benchmark/${b.id}" tabindex="-1" class="hover:text-brand">${b.name}</a>
         <div class="t-caption font-normal">${b.concept}</div></th>
+      ${touchstoneCell(b)}${runCell(b)}
       <td role="gridcell" tabindex="-1"><span class="chip">${b.domain}</span></td>
       ${encoded.map((s) => cell(b, s))}
     </tr>`.s).join('');
@@ -172,7 +187,29 @@ function draw(focusCell: boolean) {
   setRoving(focusCell);
 }
 
-function cell(b: Benchmark, s: IStd): Raw {
+const apiLabel = (r: RunProfile) => (r.apiTier === 'none' ? 'No API cost' : r.apiTier);
+const noData = (text: string) => html`<span class="text-sm text-muted" aria-hidden="true">—</span><span class="sr-only">${text}</span>`;
+/** Grade badge, score and confidence as text: "C 61 · high confidence". */
+function touchstoneView(r: Rigor): Raw {
+  if (r.score === null || !r.grade) return noData('No published ratings yet');
+  return html`<span class="ts-grade ts-grade-${r.grade.toLowerCase()}" title="Touchstone grade ${r.grade}">${r.grade}</span> <span class="tabular-nums">${r.score}</span> <span class="text-muted">· ${r.confidence} confidence</span>`;
+}
+/** API tier and local tier: "$$ · Standard". */
+function runView(b: B): Raw {
+  const r = b.touchstone.run;
+  if (!r) return noData('Run-cost data not yet collected');
+  return html`<span>${apiLabel(r)}</span> <span class="text-muted">· ${r.localTier}</span>${b.touchstone.onFrontier ? html` <span class="pill">best value</span>` : ''}`;
+}
+const touchstoneCell = (b: B) => {
+  const r = b.touchstone.rigor;
+  return html`<td role="gridcell" tabindex="-1" aria-label="Touchstone: ${r.score === null ? 'no published ratings' : `grade ${r.grade}, score ${r.score}, ${r.confidence} confidence`}"><span class="text-sm" aria-hidden="true">${touchstoneView(r)}</span></td>`;
+};
+const runCell = (b: B) => {
+  const r = b.touchstone.run;
+  return html`<td role="gridcell" tabindex="-1" aria-label="Run cost: ${r ? `${r.apiTier === 'none' ? 'no API cost' : `API tier ${r.apiTier.length} of 5`}, local tier ${r.localTier}${b.touchstone.onFrontier ? ', best value' : ''}` : 'not yet collected'}"><span class="text-sm" aria-hidden="true">${runView(b)}</span></td>`;
+};
+
+function cell(b: B, s: IStd): Raw {
   const p = primary(b.id, s.id, state.source);
   if (!p) {
     const why = inScope(s, b) ? 'Not rated yet' : 'Out of scope';
@@ -186,12 +223,14 @@ function cell(b: Benchmark, s: IStd): Raw {
 }
 
 /** Phones: one card per benchmark; only standards with a rating get a line. */
-function cardView(b: Benchmark): Raw {
+function cardView(b: B): Raw {
   const rated = encoded.map((s) => [s, primary(b.id, s.id, state.source)] as const).filter((x): x is [IStd, Summary] => !!x[1]);
   const missing = encoded.length - rated.length;
   return html`<li><a class="bcard" href="#/benchmark/${b.id}" data-bench="${b.id}" data-prefetch="benchmarks/${b.id}.json">
     <div class="flex items-start justify-between gap-3"><span class="t-sub">${b.name}</span><span class="chip">${b.domain}</span></div>
     <div class="t-caption mt-1">${b.concept}</div>
+    <div class="mt-3 grid gap-1 text-sm"><div><span class="text-muted">Touchstone</span> ${touchstoneView(b.touchstone.rigor)}</div>
+      <div><span class="text-muted">Run cost</span> ${runView(b)}</div></div>
     ${rated.length ? html`<div class="mt-4 grid gap-3">${rated.map(([s, p]) => html`<div>
       <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-sm"><span class="text-muted">${s.short}</span>
         <span class="flex flex-wrap items-center gap-1.5">${labelView(p.label)}${chips(p)}</span></div>
@@ -255,7 +294,7 @@ function onCardKey(e: KeyboardEvent) {
   next?.focus();
 }
 function sortBy(key: string) {
-  state.dir = state.sort === key ? -state.dir : key === 'name' || key === 'domain' ? 1 : -1;
+  state.dir = state.sort === key ? -state.dir : ascFirst(key) ? 1 : -1;
   state.sort = key;
   draw(true);
   const col = columns().find((c) => c.key === key)!;
@@ -421,7 +460,68 @@ async function loadBenchmark(b: Benchmark) {
   return { file, std: new Map(full.map((s) => [s.id, s])) };
 }
 
-function renderBenchmark(b: Benchmark, file: BenchmarkFile, full: Map<string, Standard>, focusStd?: string): HTMLElement | null {
+const money = (x: number) => `$${x.toLocaleString('en-US', { maximumSignificantDigits: 2 })}`;
+
+function rigorPanel(b: B): Raw {
+  const r = b.touchstone.rigor;
+  if (r.score === null || !r.grade)
+    return html`<section class="card mt-8" aria-labelledby="ts-rigor"><h2 id="ts-rigor" class="t-section">Touchstone score</h2>
+      <p class="mt-2 text-sm">${r.explanation} Drafts are not counted.</p></section>`;
+  return html`<section class="card mt-8" aria-labelledby="ts-rigor">
+    <h2 id="ts-rigor" class="t-section">Touchstone score</h2>
+    <p class="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1"><span class="ts-grade ts-grade-lg ts-grade-${r.grade.toLowerCase()}">${r.grade}</span>
+      <span class="text-2xl font-semibold tabular-nums">${r.score}</span><span class="text-muted">out of 100 · ${r.confidence} confidence</span></p>
+    <p class="mt-3 text-sm">${r.explanation}</p>
+    <div class="table-wrap mt-4"><table class="w-full text-sm">
+      <caption class="sr-only">Published ratings behind the Touchstone score</caption>
+      <thead><tr class="text-left text-muted"><th scope="col" class="px-3 py-2 font-normal">Standard</th><th scope="col" class="px-3 py-2 font-normal">Verdict</th><th scope="col" class="px-3 py-2 font-normal">Normalized (0–100)</th></tr></thead>
+      <tbody>${r.inputs.map((i) => html`<tr class="border-t border-line">
+        <th scope="row" class="px-3 py-2.5 text-left font-medium"><a class="link" href="#/benchmark/${b.id}/${i.standard}">${i.short}</a></th>
+        <td class="px-3 py-2.5">${i.label}</td>
+        <td class="px-3 py-2.5 tabular-nums">${i.normalized === null ? 'not counted (incomplete)' : i.normalized}</td></tr>`)}</tbody>
+    </table></div>
+    <dl class="mt-4 grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1 text-sm">
+      <dt class="text-muted">Spread</dt><dd>${r.spread} points</dd>
+      <dt class="text-muted">Agreement</dt><dd>${r.agreement}</dd>
+      <dt class="text-muted">Confidence</dt><dd>${r.confidence}</dd>
+    </dl>
+    <p class="mt-3 text-sm">${r.gradeStable ? 'The grade is stable: it does not change if every cutpoint moves 5 points either way.' : 'The grade is near a cutpoint: it would change if every cutpoint moved 5 points.'}</p>
+    <p class="t-caption mt-2">Only published ratings count; drafts are excluded. <a class="link" href="#/method">How the score works</a></p>
+  </section>`;
+}
+
+function runPanel(b: B): Raw {
+  const run = b.touchstone.run, res = b.resources;
+  if (!run || !res)
+    return html`<section class="card mt-5" aria-labelledby="ts-run"><h2 id="ts-run" class="t-section">Run cost</h2><p class="mt-2 text-sm">Run-cost data not yet collected</p></section>`;
+  const [lo, hi] = run.costUsd;
+  return html`<section class="card mt-5" aria-labelledby="ts-run">
+    <h2 id="ts-run" class="t-section">Run cost</h2>
+    <dl class="mt-3 grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1 text-sm">
+      <dt class="text-muted">Tokens per full run</dt><dd class="tabular-nums">${run.tokens.toLocaleString('en-US')}</dd>
+      <dt class="text-muted">API tier</dt><dd>${apiLabel(run)}${run.apiTier === 'none' ? '' : html` · ~${money(lo)}–${money(hi)} at reference prices (as of ${data.pricing.as_of})`}</dd>
+      <dt class="text-muted">Local tier</dt><dd>${run.localTier}</dd>
+    </dl>
+    <p class="mt-3 text-sm">${run.explanation}</p>
+    <h3 class="mt-5 font-medium">Facts behind it</h3>
+    <dl class="mt-2 grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1 text-sm">
+      <dt class="text-muted">Test items</dt><dd class="tabular-nums">${res.items.toLocaleString('en-US')}</dd>
+      <dt class="text-muted">Interaction</dt><dd>${res.interaction}</dd>
+      <dt class="text-muted">Model calls per item</dt><dd class="tabular-nums">${res.model_calls_per_item}</dd>
+      <dt class="text-muted">Tokens per call</dt><dd class="tabular-nums">${res.tokens_per_call.toLocaleString('en-US')}</dd>
+      <dt class="text-muted">Grading</dt><dd>${res.grading}</dd>
+      <dt class="text-muted">Judge calls per item</dt><dd class="tabular-nums">${res.judge_calls_per_item}</dd>
+      <dt class="text-muted">Environment</dt><dd>${res.environment}</dd>
+      <dt class="text-muted">GPU for the harness</dt><dd>${res.gpu_required ? 'yes' : 'no'}</dd>
+      <dt class="text-muted">Download size</dt><dd class="tabular-nums">${res.disk_gb} GB</dd>
+      <dt class="text-muted">How tokens were estimated</dt><dd>${res.estimate_basis}</dd>
+      <dt class="text-muted">Sources</dt><dd><ul role="list">${res.sources.map((x) => html`<li><a class="link" href="${safeUrl(x.url)}">${x.locator}</a></li>`)}</ul></dd>
+    </dl>
+    <p class="t-caption mt-3">Token counts are estimates. The local tier covers the harness only, not hosting the model under test.</p>
+  </section>`;
+}
+
+function renderBenchmark(b: B, file: BenchmarkFile, full: Map<string, Standard>, focusStd?: string): HTMLElement | null {
   const watched = data.watch?.benchmarks[b.id];
   const results = new Map(file.results.map((r) => [r.file, r]));
   const shown = encoded.filter((s) => pairs(b.id, s.id).length || inScope(s, b));
@@ -452,6 +552,7 @@ function renderBenchmark(b: Benchmark, file: BenchmarkFile, full: Map<string, St
       ${b.links.repo ? html`<li><a class="link" href="${safeUrl(b.links.repo)}">Code</a>${watched?.repo_commit ? ` (at ${watched.repo_commit.slice(0, 7)}${watched.archived ? ', archived' : ''})` : ''}</li>` : ''}
       ${b.links.website ? html`<li><a class="link" href="${safeUrl(b.links.website)}">Website</a></li>` : ''}
     </ul>
+    ${rigorPanel(b)}${runPanel(b)}
     <ul class="strip mt-8" role="list" aria-label="Summary by standard">${shown.map(tile)}</ul>
     <nav aria-label="Standards on this page (chips)" class="chip-row mt-8 lg:hidden"><ul class="flex gap-2" role="list">
       ${shown.map((s) => html`<li class="shrink-0"><a class="btn-quiet" href="${link(s)}">${s.short}</a></li>`)}
@@ -525,6 +626,8 @@ function renderMethod() {
     <h1 class="t-page" tabindex="-1">How it works</h1>
     <div class="mt-6 grid max-w-3xl gap-4">
       <p>Touchstone separates judgement from arithmetic. People, or an open-weights model whose work people review, decide one verdict per item of a standard. Everything after that is a published, deterministic calculation: the same verdicts always give the same score, and every score on this site shows the calculation behind it.</p>
+      <h2 class="t-section mt-6">The Touchstone score</h2>
+      <p>Each benchmark gets two separate things, never blended into one number. The <strong>rigor score</strong> is the median of its published ratings, each put on a 0–100 scale, graded A (85 and up) to F, with a note on how closely the standards agree. The <strong>run cost</strong> is an estimate of the tokens, API price band and local setup a full run needs. A cheap benchmark should not look more rigorous, so the two stay apart; the "Best value" filter shows benchmarks no other benchmark beats on both. <a class="link" href="${data.repo}/blob/main/docs/touchstone-score.md">The exact rules, with a worked example and limitations</a>.</p>
       <h2 class="t-section mt-6">Verdicts</h2>
       <p>Each item of each standard is written as a decision rule: what must be true for it to be met, and when it can be not applicable. A positive verdict must cite evidence at a pinned version: an arXiv version or a git commit, with an exact location and a short quote. Missing documentation counts as not met.</p>
       <h2 class="t-section mt-6">Live ratings</h2>

@@ -38,7 +38,7 @@ npx tsx src/cli.ts assess --benchmark truthfulqa --standard aisl-scorecard
 npx tsx src/cli.ts replay --benchmark truthfulqa --standard aisl-scorecard
 ```
 
-See [docs/methodology.md](docs/methodology.md) for the scoring rules, [docs/automation.md](docs/automation.md) for the nightly job and auditing, and [CONTRIBUTING.md](CONTRIBUTING.md) for corrections and new assessments.
+See [docs/methodology.md](docs/methodology.md) for the scoring rules, [docs/touchstone-score.md](docs/touchstone-score.md) for the Touchstone score (rigor consensus and run cost), [docs/automation.md](docs/automation.md) for the nightly job and auditing, and [CONTRIBUTING.md](CONTRIBUTING.md) for corrections and new assessments.
 
 ## Current data
 
