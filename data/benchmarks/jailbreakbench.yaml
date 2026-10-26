@@ -7,3 +7,21 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2404.01318
   repo: https://github.com/JailbreakBench/jailbreakbench
+resources:
+  items: 100
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 400
+  grading: llm-judge
+  judge_calls_per_item: 1
+  environment: python
+  gpu_required: false
+  disk_gb: 0.001
+  estimate_basis: "Items is the 100 harmful behaviors in JBB-Behaviors (a separate 100 benign behaviors are optional). One call scores one jailbreak prompt; generating the jailbreaks is a separate attack cost. Tokens are an estimate: an attack prompt of about 250 tokens plus the default 150-token response. The Llama-3-70B judge is run through the Together API by default, so the harness itself needs no GPU (vLLM is only for running a target model locally). Disk is the Hugging Face dataset repo (about 1 MB)."
+  sources:
+    - url: https://arxiv.org/abs/2404.01318
+      locator: "§3.1 (JBB-Behaviors: 100 behaviors); §3.6 (all models generate 150 tokens per input); §3.5 (Llama-3-70B as jailbreak judge)"
+    - url: https://github.com/JailbreakBench/jailbreakbench
+      locator: README, Accessing the JBB-Behaviors datasets section; Jailbreak and refusal judges section; Loading a local model via vLLM section
+    - url: https://huggingface.co/datasets/JailbreakBench/JBB-Behaviors
+      locator: Files tab (data/harmful-behaviors.csv and related files, about 1 MB)

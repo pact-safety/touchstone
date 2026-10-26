@@ -7,3 +7,21 @@ year: 2025
 links:
   paper: https://arxiv.org/abs/2510.20270
   repo: https://github.com/safety-research/impossiblebench
+resources:
+  items: 452
+  interaction: agentic
+  model_calls_per_item: 44
+  tokens_per_call: 63000
+  grading: execution
+  judge_calls_per_item: 0
+  environment: docker
+  gpu_required: false
+  disk_gb: 120
+  estimate_basis: "Items is 103 Impossible-LiveCodeBench plus 349 Impossible-SWEbench tasks for one version (oneoff or conflicting); running both versions doubles it. Calls per item is the full-scaffold turn limits (25 for LiveCodeBench, 50 for SWE-bench) weighted by item count. Tokens use (system prompt + observation) x turns / 2: about 2,800 x 50 / 2 for SWE-bench and 1,300 x 25 / 2 for LiveCodeBench, weighted by calls, giving about 63,000; agents that stop early cost less. Disk is not stated by ImpossibleBench; it uses the original SWE-bench Docker images, so the 120 GB that SWE-bench recommends is used. The LLM judge in the analysis folder is optional and not counted."
+  sources:
+    - url: https://arxiv.org/abs/2510.20270
+      locator: "Appendix F.1 (103 Impossible-LiveCodeBench and 349 Impossible-SWEbench data points per version); Appendix F.2 (turn limits: minimal 10 / 50, full 25 / 50; original Docker images)"
+    - url: https://github.com/safety-research/impossiblebench
+      locator: README, Installation section (Docker required for SWE-bench) and Agent Scaffolds section
+    - url: https://github.com/SWE-bench/SWE-bench
+      locator: README, evaluation setup note ("at least 120GB of free storage")

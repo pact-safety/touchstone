@@ -7,3 +7,23 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2402.04249
   repo: https://github.com/centerforaisafety/HarmBench
+resources:
+  items: 400
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 450
+  grading: llm-judge
+  judge_calls_per_item: 0.75
+  environment: python
+  gpu_required: true
+  disk_gb: 26
+  estimate_basis: "Items is the 400 text behaviors (200 standard, 100 copyright, 100 contextual); the 110 multimodal behaviors need a vision model and are excluded. Costs assume the direct-request baseline with no attack method; attacks multiply them. Tokens are an estimate: prompts range from about 20 (standard) to several hundred (contextual) tokens, averaging about 100, and completions are capped at 512 tokens, averaging about 350. Judge calls are 0.75 because the 100 copyright behaviors use a hashing classifier, and the other 300 use the Llama 2 13B classifier. Disk is the classifier weights (about 26 GB on Hugging Face), which dominate; the harness needs a GPU to run that 13B classifier."
+  sources:
+    - url: https://arxiv.org/abs/2402.04249
+      locator: "§4.1 (510 behaviors: 400 textual, 110 multimodal; 200 standard / 100 copyright / 100 contextual / 110 multimodal); §3.2 (completions standardized to 512 tokens); §4.3 and Appendix B.5 (Llama 2 13B classifier, hashing for copyright)"
+    - url: https://github.com/centerforaisafety/HarmBench
+      locator: README, Classifiers section (cais/HarmBench-Llama-2-13b-cls)
+    - url: https://github.com/centerforaisafety/HarmBench/blob/main/docs/evaluation_pipeline.md
+      locator: Step 3, Evaluating completions ("enough GPUs for the classifier (Llama 2 13B)")
+    - url: https://huggingface.co/cais/HarmBench-Llama-2-13b-cls
+      locator: Files tab (six safetensors shards, about 26 GB)

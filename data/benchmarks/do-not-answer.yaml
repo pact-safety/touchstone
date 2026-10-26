@@ -7,3 +7,21 @@ year: 2023
 links:
   paper: https://arxiv.org/abs/2308.13387
   repo: https://github.com/Libr-AI/do-not-answer
+resources:
+  items: 939
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 150
+  grading: llm-judge
+  judge_calls_per_item: 1
+  environment: none
+  gpu_required: false
+  disk_gb: 0.02
+  estimate_basis: Tokens are an estimate. A question is about 20 tokens and the paper reports a mean response of about 100 words (roughly 130 tokens), so about 150 per call. One judge call per item assumes the GPT-4 evaluator path (the paper's alternative is a local 600M Longformer classifier, which is not an LLM call). Disk is the Hugging Face dataset repo size (about 22 MB), not the optional evaluator model.
+  sources:
+    - url: https://arxiv.org/abs/2308.13387
+      locator: "§4 Data Collection (939 questions); Table 2 (average response length in words, about 100 across models); §6.1 (GPT-4 and PLM-based automatic evaluation)"
+    - url: https://github.com/Libr-AI/do-not-answer
+      locator: README, Overview section (939 instructions) and Automatic Evaluation section (GPT-4 and Longformer evaluators)
+    - url: https://huggingface.co/datasets/LibrAI/do-not-answer
+      locator: Files tab (data_en.csv and assets, about 22 MB in total)

@@ -6,3 +6,19 @@ concept: Commonsense inference
 year: 2019
 links:
   paper: https://arxiv.org/abs/1905.07830
+resources:
+  items: 10042
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 200
+  grading: exact
+  judge_calls_per_item: 0
+  environment: none
+  gpu_required: false
+  disk_gb: 0.04
+  estimate_basis: "Items is the validation split, 10,042 rows on the Hugging Face dataset card (the paper says about 5k in-domain plus 5k zero-shot); the 10,003-row test split is the other published split. Tokens are an estimate: the paper's design is about three sentences of context and two-sentence endings, so a prompt with four endings is about 200 tokens and the answer is one letter. Harnesses that score by log-likelihood make four forward passes instead; this counts one call. Disk is the Hugging Face download size (about 37 MB)."
+  sources:
+    - url: https://arxiv.org/abs/1905.07830
+      locator: "§4.4 (5k in-domain and 5k zero-shot validation examples; 70k total); §1 (about three sentences of context, two generated sentences)"
+    - url: https://huggingface.co/datasets/Rowan/hellaswag
+      locator: Dataset card (validation 10,042 rows, test 10,003 rows; download size about 37 MB)

@@ -7,3 +7,21 @@ year: 2025
 links:
   paper: https://arxiv.org/abs/2502.10517
   repo: https://github.com/ScalingIntelligence/KernelBench
+resources:
+  items: 250
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 3000
+  grading: execution
+  judge_calls_per_item: 0
+  environment: python
+  gpu_required: true
+  disk_gb: 0.001
+  estimate_basis: "Items is the 250 tasks of levels 1 to 3 in the paper; the README now also lists a Level 4 (20 tasks on the Hugging Face card). One call is the paper's one-shot baseline (§4.1); iterative refinement multiplies the calls. Tokens are an estimate: about 1,500 input (one-shot example, instructions, a task of about 400 tokens) plus about 1,500 for the generated kernel code, so about 3,000. Reasoning models use more. Disk is the dataset only (under 1 MB); the CUDA toolchain and PyTorch install are not counted. The README states running and profiling kernels requires a GPU."
+  sources:
+    - url: https://arxiv.org/abs/2502.10517
+      locator: "Abstract and §3.2 (250 tasks in three levels of 100, 100 and 50); §3.3 (correctness on 5 random inputs, timing on an NVIDIA L40S); §4.1 (one-shot baseline)"
+    - url: https://github.com/ScalingIntelligence/KernelBench
+      locator: README, Task Description section (level sizes) and Run on GPU section ("Running and profiling kernels require a GPU")
+    - url: https://huggingface.co/datasets/ScalingIntelligence/KernelBench
+      locator: Dataset card (level_1 100, level_2 100, level_3 50, level_4 20 rows; download about 0.1 MB)

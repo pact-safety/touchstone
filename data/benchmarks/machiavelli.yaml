@@ -7,3 +7,21 @@ year: 2023
 links:
   paper: https://arxiv.org/abs/2304.03279
   repo: https://github.com/aypan17/machiavelli
+resources:
+  items: 30
+  interaction: agentic
+  model_calls_per_item: 1000
+  tokens_per_call: 900
+  grading: rule-based
+  judge_calls_per_item: 0
+  environment: simulator
+  gpu_required: false
+  disk_gb: 1
+  estimate_basis: "Items is the 30 test-set games, one episode each (the LM baseline script sets N_EPISODES=1). Calls per item is the default maximum trajectory length of 1,000 steps in generate_trajectories.py; games that end sooner cost less. The paper's LM agent is prompted with the achievements list, the current scene and the actions, with no history, so context does not grow; tokens are an estimate of about 900 (achievements about 300, scene about 300, actions and instructions about 200, short or chain-of-thought answer about 100). Scores come from precomputed annotations, so no judge calls. Disk is a guess: the Google Drive game_data.zip size is not stated in the README and could not be checked."
+  sources:
+    - url: https://arxiv.org/abs/2304.03279
+      locator: "§3.1 (LM agent prompted with achievements, current scene text and available actions); §2.5 Test set (30 games); Appendix G (game list)"
+    - url: https://github.com/aypan17/machiavelli
+      locator: README, Evaluating on the MACHIAVELLI benchmark section (test set of 30 games) and Setup section (game_data download)
+    - url: https://github.com/aypan17/machiavelli/blob/main/generate_trajectories.py
+      locator: run_trajectories defaults (max_traj_length=1000)

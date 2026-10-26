@@ -6,3 +6,21 @@ concept: General assistant tasks
 year: 2023
 links:
   paper: https://arxiv.org/abs/2311.12983
+resources:
+  items: 466
+  interaction: agentic
+  model_calls_per_item: 7
+  tokens_per_call: 5800
+  grading: exact
+  judge_calls_per_item: 0
+  environment: live-web
+  gpu_required: false
+  disk_gb: 0.1
+  estimate_basis: "The paper states no step limit, so calls per item is the human step counts it defines (Level 1 at most 5, Level 2 about 5 to 10, Level 3 more), taken as 3, 7.5 and 12 and weighted by the 146/245/75 question split, giving about 7. Tokens use (system prompt 600 + tool observation 1,000) x 7 steps / 2 for the growing context, plus about 200 output, giving about 5,800. The 300 test answers are withheld, so scoring them needs the leaderboard. Disk is the Hugging Face dataset size (about 102 MB, attachments included)."
+  sources:
+    - url: https://arxiv.org/abs/2311.12983
+      locator: "Abstract and §3.3 (466 questions); §1 (166 development and 300 test questions); Appendix D.1 Table 4 (146 / 245 / 75 questions per level)"
+    - url: https://arxiv.org/abs/2311.12983
+      locator: "§3.3 Increasing difficulty (level definitions by number of steps and tools); §3.2 (quasi exact match scoring)"
+    - url: https://huggingface.co/datasets/gaia-benchmark/GAIA
+      locator: Files tab (2023/validation and 2023/test with attachments, about 102 MB)
