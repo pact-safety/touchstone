@@ -128,12 +128,15 @@ const Citation = z.strictObject({ url: z.string().url(), locator: z.string().min
 export const Resources = z.strictObject({
   /** Test items in the standard full evaluation (not train/dev splits). */
   items: z.number().int().positive(),
-  /** single-turn: one prompt, one answer. multi-turn: a scripted conversation. agentic: the model acts in an environment. */
-  interaction: z.enum(['single-turn', 'multi-turn', 'agentic']),
+  /**
+   * single-turn: one prompt, one answer. multi-turn: a scripted conversation. agentic: the model acts in an
+   * environment. non-llm: evaluates a trained policy or classifier, so cost is compute, not tokens.
+   */
+  interaction: z.enum(['single-turn', 'multi-turn', 'agentic', 'non-llm']),
   /** Mean calls to the model under test per item (1 for single-turn; for agentic, the stated or default step limit). */
-  model_calls_per_item: z.number().positive(),
+  model_calls_per_item: z.number().nonnegative(),
   /** Mean input + output tokens per model call. An estimate: say how it was made in `estimate_basis`. */
-  tokens_per_call: z.number().int().positive(),
+  tokens_per_call: z.number().int().nonnegative(),
   /** How outputs are scored. */
   grading: z.enum(['exact', 'rule-based', 'execution', 'llm-judge', 'human']),
   /** Mean grader-model calls per item (0 unless grading is llm-judge). */
@@ -146,6 +149,14 @@ export const Resources = z.strictObject({
   disk_gb: z.number().nonnegative(),
   estimate_basis: z.string().min(1),
   sources: z.array(Citation).min(1),
+}).superRefine((r, ctx) => {
+  const llm = r.interaction !== 'non-llm';
+  if (llm && (r.model_calls_per_item <= 0 || r.tokens_per_call <= 0))
+    ctx.addIssue({ code: 'custom', message: 'language-model benchmarks need model_calls_per_item and tokens_per_call above 0' });
+  if (!llm && (r.model_calls_per_item !== 0 || r.tokens_per_call !== 0 || r.judge_calls_per_item !== 0))
+    ctx.addIssue({ code: 'custom', message: 'non-llm benchmarks have 0 model calls, tokens and judge calls' });
+  if (r.grading !== 'llm-judge' && r.judge_calls_per_item !== 0)
+    ctx.addIssue({ code: 'custom', message: 'judge_calls_per_item must be 0 unless grading is llm-judge' });
 });
 export type Resources = z.infer<typeof Resources>;
 
