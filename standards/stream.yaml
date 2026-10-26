@@ -7,7 +7,7 @@
 id: stream
 name: STREAM reporting standard
 short: STREAM
-version: "1.0"
+version: "1.0.1"
 publisher: McCaslin et al.
 year: 2025
 kind: reporting-standard
@@ -32,8 +32,8 @@ groups:
     name: Threat relevance
     items:
       - { id: s1.i, text: "Does the report describe the capabilities that the evaluation measures, and which threat models they are relevant to?", guidance: { met: "Both the measured capability and the relevant threat model are stated.", evidence: [paper, report] } }
-      - { id: s1.ii, text: "Does the report state what evaluation results would \"rule in\" or \"rule out\" capabilities of concern, if any?", guidance: { met: "Thresholds or results that would rule capabilities in or out are stated.", evidence: [paper, report] } }
-      - { id: s1.iii, text: "Does the report provide an example evaluation item and response?", guidance: { met: "At least one item and a model response are shown (redacted if hazardous).", evidence: [paper, report] } }
+      - { id: s1.ii, text: "Does the report state what evaluation results would \"rule in\" or \"rule out\" capabilities of concern, if any?", guidance: { met: "An explicit threshold or decision rule mapping a score level to a conclusion about a capability of concern is stated, or the report states there is none.", evidence: [paper, report] } }
+      - { id: s1.iii, text: "Does the report provide an example evaluation item and response?", guidance: { met: "The item stem and the structure of the model response are visible; a placeholder-only redaction does not count.", evidence: [paper, report] } }
   - id: test_construction
     name: Test construction, grading and scoring
     items:
@@ -50,8 +50,8 @@ groups:
     name: Model elicitation
     items:
       - { id: s3.i, text: "Does the report specify the exact model version(s) tested?", guidance: { met: "Exact model identifiers or snapshot dates are given.", evidence: [paper, report] } }
-      - { id: s3.ii, text: "Does the report specify the safety mitigations active during testing, and any adaptations to elicitation?", guidance: { met: "Active safeguards and elicitation adaptations are stated.", evidence: [paper, report] } }
-      - { id: s3.iii, text: "Does the report describe the elicitation techniques for the test in sufficient detail?", guidance: { met: "Prompts, scaffolds, sampling settings and attempt counts are described.", evidence: [paper, report] } }
+      - { id: s3.ii, text: "Does the report specify the safety mitigations active during testing, and any adaptations to elicitation?", guidance: { met: "Active safeguards and elicitation adaptations are stated, including an explicit \"none\"; silence is unmet.", evidence: [paper, report] } }
+      - { id: s3.iii, text: "Does the report describe the elicitation techniques for the test in sufficient detail?", guidance: { met: "The full prompt (or a link to it), scaffold name and version, sampling settings and number of attempts are all given.", evidence: [paper, report] } }
   - id: performance
     name: Model performance
     items:
@@ -69,8 +69,8 @@ groups:
   - id: interpretation
     name: Results interpretation
     items:
-      - { id: s6.i, text: "Does the report state overall conclusions about the model's capabilities/risk level, and connect with evaluation evidence?", guidance: { met: "Conclusions are stated and tied to specific results.", evidence: [paper, report] } }
-      - { id: s6.ii, text: "Does the report give 'falsification' conditions for its conclusions, and state whether pre-registered?", guidance: { met: "Falsification conditions and pre-registration status are both stated.", evidence: [paper, report] } }
-      - { id: s6.iii, text: "Does the report include predictions about near-term future performance?", guidance: { met: "A forecast of near-term performance is given.", evidence: [paper, report] } }
+      - { id: s6.i, text: "Does the report state overall conclusions about the model's capabilities/risk level, and connect with evaluation evidence?", guidance: { met: "Each stated conclusion cites a specific table, figure or number.", evidence: [paper, report] } }
+      - { id: s6.ii, text: "Does the report give 'falsification' conditions for its conclusions, and state whether pre-registered?", guidance: { met: "The report states what result would overturn its conclusions and states pre-registration status as yes or no.", evidence: [paper, report] } }
+      - { id: s6.iii, text: "Does the report include predictions about near-term future performance?", guidance: { met: "A forecast of future performance with a stated time horizon is given.", evidence: [paper, report] } }
       - { id: s6.iv, text: "Does the report state the length of time allowed for interpreting results before deployment?", guidance: { met: "The interpretation period before deployment is stated.", not_applicable: "The report is not tied to a model deployment decision (e.g. a benchmark paper).", evidence: [report] } }
       - { id: s6.v, text: "Does the report describe any notable disagreements over results interpretation?", guidance: { met: "Disagreements are described, or the report states there were none.", evidence: [paper, report] } }

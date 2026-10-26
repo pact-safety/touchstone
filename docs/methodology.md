@@ -49,3 +49,7 @@ Where a standard's authors published assessments, they are imported with `proven
 ## Comparing standards
 
 Standards measure different things on different scales. Touchstone never merges them into one number. The site's bars place a score on its own standard's scale (AISL 1→100%, 4→0%; points ÷ 15; checklists as percentages; categories A→100% … E→0%) for visual length only.
+
+## Rule revisions
+
+**2026-10-26.** The `guidance.met` (and, for a few items, `guidance.not_applicable`) decision rules of 81 items were rewritten so that two assessors reach the same verdict: each now names the observable evidence required. Standards changed: `aisl-scorecard` (34 rules, now 2026.07.1), `abc` (25, now 1.0.1), `construct-validity` (15, now 2025.1.1) and `stream` (7, now 1.0.1). Item wording and severities are unchanged.

@@ -160,7 +160,7 @@ const abc: [string, number, number, number, number][] = [
 for (const [id, o, t, r, overall] of abc) {
   const scores = { outcome_validity: o, task_validity: t, benchmark_reporting: r };
   out(`data/assessments/${id}/abc.yaml`, {
-    benchmark: id, standard: 'abc', standard_version: '1.0', status: 'published', mode: 'imported',
+    benchmark: id, standard: 'abc', standard_version: '1.0.1', status: 'published', mode: 'imported',
     provenance: { kind: 'external', assessors: ['Agentic Benchmark Checklist team'], assessed_on: '2025-07-03', source_title: 'ABC results table', source_url: ABC_URL },
     scores,
     published: { groups: scores, overall },
@@ -171,7 +171,7 @@ for (const [id, o, t, r, overall] of abc) {
 // ---------- AISL Scorecard worked examples ----------
 const SC_URL = 'https://aclanthology.org/2026.evaleval-1.25/';
 out('data/assessments/impossiblebench/aisl-scorecard.yaml', {
-  benchmark: 'impossiblebench', standard: 'aisl-scorecard', standard_version: '2026.07', status: 'published', mode: 'imported',
+  benchmark: 'impossiblebench', standard: 'aisl-scorecard', standard_version: '2026.07.1', status: 'published', mode: 'imported',
   provenance: { kind: 'external', assessors: ['AI Standards Lab'], assessed_on: '2026-07-04', source_title: 'Scorecard of AI Benchmark Quality, Appendix C', source_url: SC_URL, standard_version_used: 'penultimate (Appendix B)' },
   scores: { construct_validity: 1, internal_validity: 1, external_validity: 1, reliability: 2, correctness: 1 },
   published: { groups: { construct_validity: 1, internal_validity: 1, external_validity: 1, reliability: 2, correctness: 1 }, label: 'Category B' },
@@ -179,7 +179,7 @@ out('data/assessments/impossiblebench/aisl-scorecard.yaml', {
   revisions: [{ date: IMPORTED_ON, by: 'touchstone-import', summary: 'Dimension scores transcribed from Appendix C.' }],
 });
 out('data/assessments/vending-bench-2/aisl-scorecard.yaml', {
-  benchmark: 'vending-bench-2', standard: 'aisl-scorecard', standard_version: '2026.07', status: 'published', mode: 'imported',
+  benchmark: 'vending-bench-2', standard: 'aisl-scorecard', standard_version: '2026.07.1', status: 'published', mode: 'imported',
   provenance: { kind: 'external', assessors: ['AI Standards Lab'], assessed_on: '2026-07-04', source_title: 'Scorecard of AI Benchmark Quality, Appendix D', source_url: SC_URL, standard_version_used: 'penultimate (Appendix B)' },
   scores: { construct_validity: 'invalid', internal_validity: null, external_validity: null, reliability: null, correctness: null },
   published: { label: 'Not suitable for use' },
