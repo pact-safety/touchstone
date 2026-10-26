@@ -15,6 +15,7 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write
 concurrency:
   group: nightly
   cancel-in-progress: false
@@ -87,7 +88,7 @@ jobs:
           git add data/assessments data/runs data/watch
           git commit -m "Nightly re-assessment $(date -u +%F)"
           git push -u origin "$branch"
-          gh pr create --title "Nightly re-assessment $(date -u +%F)" --label automated-assessment --body-file - <<'BODY'
+          cat > pr-body.md <<'BODY'
           The nightly job found new or changed benchmark sources and proposed verdicts with an open-weights model.
 
           **Before merging**, for each changed `*.auto.yaml`:
@@ -97,3 +98,10 @@ jobs:
 
           Transcripts are in `data/runs/`. Run `npx tsx src/cli.ts replay --benchmark <id> --standard <id>` to check the sources and prompts match the record.
           BODY
+          title="Nightly re-assessment $(date -u +%F)"
+          if gh pr create --title "$title" --label automated-assessment --body-file pr-body.md; then exit 0; fi
+          # If the organization blocks Actions from opening pull requests, hand off through an issue instead:
+          # one click on the compare link opens the same PR from a person's account.
+          compare="https://github.com/$GITHUB_REPOSITORY/compare/main...$branch?expand=1"
+          { echo "**Pull requests from Actions are blocked by organization policy**, so this run is handed off as an issue."; echo; echo "[Open the pull request]($compare) for branch \`$branch\`, then review it as below."; echo; cat pr-body.md; } > issue-body.md
+          gh issue create --title "$title: ready for review" --label automated-assessment --body-file issue-body.md
