@@ -6,7 +6,7 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node
 import { dirname, join } from 'node:path';
 import type { Assessment, Benchmark, Standard } from './schema.ts';
 import type { Corpus } from './load.ts';
-import { score, type Result } from './engine.ts';
+import { improvements, score, type Improvement, type Result } from './engine.ts';
 import type { WatchState } from './watch.ts';
 
 export const REPO_URL = 'https://github.com/pact-safety/touchstone';
@@ -23,15 +23,15 @@ export interface Summary {
   discrepancies: number;
 }
 export type IndexStandard = Omit<Standard, 'groups'>;
-export type BenchmarkFile = { id: string; assessments: (Assessment & { file: string })[]; results: (Result & { file: string })[] };
+export type BenchmarkFile = { id: string; assessments: (Assessment & { file: string })[]; results: (Result & { file: string; improvements: Improvement[] })[] };
 
 export function buildSiteData(c: Corpus) {
   const standards = new Map(c.standards.map((s) => [s.value.id, s.value]));
-  const results: (Result & { file: string })[] = [];
+  const results: (Result & { file: string; improvements: Improvement[] })[] = [];
   for (const { path, value: a } of c.assessments) {
     const s = standards.get(a.standard);
     if (!s || s.status !== 'encoded') continue;
-    results.push({ ...score(s, a), file: path });
+    results.push({ ...score(s, a), improvements: improvements(s, a), file: path });
   }
   results.sort((a, b) => a.file.localeCompare(b.file));
   const watchPath = join(c.root, 'data/watch/state.json');

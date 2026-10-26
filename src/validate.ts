@@ -45,27 +45,38 @@ export function validate(c: Corpus): string[] {
     const dates = a.revisions.map((r) => r.date);
     if (dates.some((d, i) => i > 0 && d < dates[i - 1]!)) at('revisions must be in date order, oldest first');
 
+    const names = a.provenance.assessors.map((n) => n.trim().toLowerCase());
+    if (new Set(names).size !== names.length) at('provenance.assessors must be distinct people (compared case-insensitively)');
+
+    const sc = std.scoring!;
+    const inRange = (v: unknown): boolean => {
+      if (typeof v !== 'number') return true; // 'invalid' and null are not numbers
+      if (sc.scheme === 'aisl-severity') return Number.isInteger(v) && v >= 1 && v <= 4;
+      if (sc.scheme === 'points') return v >= 0 && v <= sc.max;
+      return v >= 0 && v <= 100;
+    };
+    if (!inRange(a.published?.overall)) at(`published.overall: ${a.published!.overall} is out of range for the ${sc.scheme} scheme`);
+    for (const [k, v] of Object.entries(a.published?.groups ?? {})) if (!inRange(v)) at(`published.groups.${k}: ${v} is out of range for the ${sc.scheme} scheme`);
+
     if (a.model_run && !allowed.has(a.model_run.model))
       at(`model "${a.model_run.model}" is not on the open-weights allowlist in config/models.yaml`);
 
     if (a.mode === 'imported') {
       const groups = new Set(std.groups.map((g) => g.id));
       for (const k of Object.keys(a.scores ?? {})) if (!groups.has(k)) at(`scores: unknown group "${k}"`);
-      const inRange = (v: unknown): boolean => {
-        if (typeof v !== 'number') return true; // 'invalid' and null are not numbers
-        const sc = std.scoring!;
-        if (sc.scheme === 'aisl-severity') return Number.isInteger(v) && v >= 1 && v <= 4;
-        if (sc.scheme === 'points') return v >= 0 && v <= sc.max;
-        return v >= 0 && v <= 100;
-      };
       for (const [k, v] of Object.entries(a.scores ?? {})) if (!inRange(v)) at(`scores.${k}: ${v} is out of range for the ${std.scoring!.scheme} scheme`);
-      for (const [k, v] of Object.entries(a.published?.groups ?? {})) if (!inRange(v)) at(`published.groups.${k}: ${v} is out of range for the ${std.scoring!.scheme} scheme`);
       continue;
     }
     checkVerdicts(std, a, at);
   }
   return errors;
 }
+
+const IMMUTABLE = [
+  /arxiv\.org\/(abs|pdf)\/[0-9]{4}\.[0-9]{4,5}v[0-9]+/,
+  /github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[0-9a-f]{40}(?![0-9a-f])/i,
+  /web\.archive\.org\/web\/[0-9]+\//,
+];
 
 function checkVerdicts(std: Standard, a: import('./schema.ts').Assessment, at: (m: string) => void) {
   const items = new Map(std.groups.flatMap((g) => g.items).map((i) => [i.id, i]));
@@ -83,6 +94,9 @@ function checkVerdicts(std: Standard, a: import('./schema.ts').Assessment, at: (
     } else if (typeof v.value === 'number') at(`verdicts.${id}: must be met, unmet or n/a`);
 
     if (!strict) continue;
+    for (const e of v.evidence)
+      if (!IMMUTABLE.some((re) => re.test(e.url)))
+        at(`verdicts.${id}: evidence url ${e.url} is not an immutable reference; use an arXiv version (arxiv.org/abs/NNNN.NNNNNvN), a GitHub URL at a 40-character commit SHA, or a web.archive.org snapshot`);
     if (v.value === 'n/a') {
       if (!item.guidance?.not_applicable) at(`verdicts.${id}: this item has no n/a condition, so it cannot be n/a`);
       if (!v.rationale) at(`verdicts.${id}: n/a needs a rationale naming the n/a condition`);
@@ -93,7 +107,7 @@ function checkVerdicts(std: Standard, a: import('./schema.ts').Assessment, at: (
       if (positive && v.evidence.length === 0) at(`verdicts.${id}: a positive verdict needs at least one evidence entry`);
       if (!positive && v.evidence.length === 0 && !v.rationale) at(`verdicts.${id}: a negative verdict needs evidence or a rationale`);
     }
-    if (a.provenance.kind === 'automated' && v.by === 'model' && v.evidence.some((e) => e.quote) && v.quotes_verified !== true)
+    if (a.provenance.kind === 'automated' && v.evidence.some((e) => e.quote) && v.quotes_verified !== true)
       at(`verdicts.${id}: model verdict quotes were not verified against the source`);
   }
 

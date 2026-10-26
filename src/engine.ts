@@ -98,9 +98,11 @@ function aislGroup(g: Group, a: Assessment, sev: { yellow: number; orange: numbe
     }
   }
   const base = { id: g.id, name: g.name, counts, capped_by, failed_baseline };
+  if (counts.na === g.items.length)
+    return { ...base, state: 'unscored', score: null, display: 'n/a', pct: null, explanation: 'No applicable items.' };
   if (failed_baseline.length)
     return {
-      ...base, state: 'invalid', score: null, display: 'Invalid', pct: 0,
+      ...base, state: 'invalid', score: null, display: 'Invalid', pct: null,
       explanation: `Invalid: baseline ${failed_baseline.length === 1 ? 'requirement' : 'requirements'} ${list(failed_baseline)} ${failed_baseline.length === 1 ? 'is' : 'are'} not met, so this dimension cannot be scored.`,
     };
   const sevOf = (id: string) => g.items.find((i) => i.id === id)!.severity!;
@@ -158,7 +160,7 @@ function checklistGroup(g: Group, a: Assessment): GroupResult {
 
 function importedGroup(standard: Standard, g: Group, v: number | 'invalid' | null | undefined): GroupResult {
   const base = { id: g.id, name: g.name, counts: emptyCounts(), capped_by: [], failed_baseline: [] };
-  if (v === 'invalid') return { ...base, state: 'invalid', score: null, display: 'Invalid', pct: 0, explanation: 'Reported as invalid by the source.' };
+  if (v === 'invalid') return { ...base, state: 'invalid', score: null, display: 'Invalid', pct: null, explanation: 'Reported as invalid by the source.' };
   if (v === null || v === undefined) return { ...base, state: 'unscored', score: null, display: 'Not reported', pct: null, explanation: 'The source did not report this dimension.' };
   const s = standard.scoring!;
   const explanation = 'Score as published by the source; item-level verdicts were not published.';
@@ -177,7 +179,7 @@ function overallOf(standard: Standard, a: Assessment, groups: GroupResult[]): Re
       const why = blocked.length
         ? `${list(blocked.map((g) => g.name))} ${blocked.length === 1 ? 'has' : 'have'} no score, so no category applies.`
         : 'The dimension scores meet no category\'s limits.';
-      return { score: null, display: 'Unclassified', pct: 0, label: 'Unclassified', explanation: why };
+      return { score: null, display: 'Unclassified', pct: null, label: 'Unclassified', explanation: why };
     }
     const c = cats[idx]!;
     const better = cats[idx - 1];
@@ -188,6 +190,14 @@ function overallOf(standard: Standard, a: Assessment, groups: GroupResult[]): Re
       explanation: `Category ${c.id}: the best category whose limits every dimension meets.${better ? ` Category ${better.id} is missed because ${missed.join('; ')}.` : ''} Fit for: ${c.use}`,
     };
   }
+  // Itemized: a group with no applicable items would silently drop out of the mean, so the result is incomplete instead.
+  // Imported results keep the mean of the groups the source reported.
+  const empty = a.mode === 'itemized' ? groups.filter((g) => g.state === 'unscored') : [];
+  if (empty.length)
+    return {
+      score: null, display: 'Incomplete', pct: null, label: 'Incomplete',
+      explanation: `Incomplete: ${list(empty.map((g) => g.name))} ${empty.length === 1 ? 'has' : 'have'} no applicable items, so no overall score is given.`,
+    };
   if (s.scheme === 'points') {
     let m: number | null;
     let how: string;
@@ -237,8 +247,46 @@ function discrepancies(standard: Standard, a: Assessment, groups: GroupResult[],
     if (Math.abs(round1(p.overall) - round1(overall.score)) > TOLERANCE + 1e-9)
       out.push({ field: 'Overall', published: fmt(p.overall), computed: fmt(overall.score) });
   }
-  // Only a published category is comparable; a free-text verdict ("not suitable") is shown, not diffed.
-  if (p.label?.startsWith('Category ') && standard.scoring?.scheme === 'aisl-severity' && p.label !== overall.label)
+  // Only a published category is comparable, and only when every group was scored; a free-text verdict ("not suitable") is shown, not diffed.
+  if (p.label?.startsWith('Category ') && standard.scoring?.scheme === 'aisl-severity' && groups.every((g) => g.state === 'scored') && p.label !== overall.label)
     out.push({ field: 'Category', published: p.label, computed: overall.label });
   return out;
+}
+
+export interface Improvement {
+  item: string;
+  group: string;
+  groupFrom: string;
+  groupTo: string;
+  overallFrom: string;
+  overallTo: string;
+  /** An unmet AISL baseline item in a dimension that is currently invalid. */
+  blocking: boolean;
+}
+
+/** Items whose fix would change a dimension score or the overall result, best first. Itemized assessments only. */
+export function improvements(standard: Standard, a: Assessment, limit = 5): Improvement[] {
+  if (a.mode !== 'itemized' || !standard.scoring) return [];
+  const sc = standard.scoring;
+  const best: number | 'met' = sc.scheme === 'points' ? Math.max(...sc.levels) : 'met';
+  const now = score(standard, a);
+  const out: (Improvement & { dOverall: number; dGroup: number })[] = [];
+  for (const g of standard.groups) {
+    const from = now.groups.find((x) => x.id === g.id)!;
+    for (const item of g.items) {
+      const v = a.verdicts?.[item.id]?.value;
+      if (v === 'n/a' || (typeof best === 'number' ? typeof v === 'number' && v >= best : v === 'met')) continue;
+      const after = score(standard, { ...a, verdicts: { ...a.verdicts, [item.id]: { value: best, evidence: [] } } });
+      const to = after.groups.find((x) => x.id === g.id)!;
+      if (from.display === to.display && now.overall.label === after.overall.label) continue;
+      out.push({
+        item: item.id, group: g.name, groupFrom: from.display, groupTo: to.display,
+        overallFrom: now.overall.label, overallTo: after.overall.label,
+        blocking: sc.scheme === 'aisl-severity' && from.state === 'invalid' && from.failed_baseline.includes(item.id),
+        dOverall: (after.overall.pct ?? 0) - (now.overall.pct ?? 0), dGroup: (to.pct ?? 0) - (from.pct ?? 0),
+      });
+    }
+  }
+  out.sort((x, y) => y.dOverall - x.dOverall || y.dGroup - x.dGroup || (x.item < y.item ? -1 : x.item > y.item ? 1 : 0));
+  return out.slice(0, limit).map(({ dOverall: _o, dGroup: _g, ...rest }) => rest);
 }

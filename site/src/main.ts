@@ -1,7 +1,7 @@
 import './styles.css';
 import type { BenchmarkFile, SiteIndex, Summary } from '../../src/build.ts';
 import type { Assessment, Benchmark, Item, Standard, Verdict } from '../../src/schema.ts';
-import type { Result } from '../../src/engine.ts';
+import type { Improvement, Result } from '../../src/engine.ts';
 
 const main = document.getElementById('main')!;
 const announcer = document.getElementById('announcer')!;
@@ -43,7 +43,7 @@ let encoded: IStd[] = [];
 let benchmarks = new Map<string, Benchmark>();
 let byPair = new Map<string, Summary[]>();
 type A = Assessment & { file: string };
-type R = Result & { file: string };
+type R = Result & { file: string; improvements: Improvement[] };
 const pairs = (b: string, s: string) => byPair.get(`${b}|${s}`) ?? [];
 const inScope = (s: IStd, b: Benchmark) =>
   (!s.scope?.modalities || s.scope.modalities.includes(b.modality)) && (!s.scope?.domains || s.scope.domains.includes(b.domain));
@@ -358,6 +358,17 @@ function setFilter(btn: HTMLButtonElement) {
   announce(`Showing ${shown} item${shown === 1 ? '' : 's'}`);
 }
 
+function improvementsView(s: Standard, r: R) {
+  const text = new Map(s.groups.flatMap((g) => g.items).map((i) => [i.id, i.text]));
+  return html`<section class="mt-6" aria-labelledby="imp-${r.file.replace(/\W/g, '-')}">
+    <h4 id="imp-${r.file.replace(/\W/g, '-')}" class="font-medium">What would most improve this rating</h4>
+    ${r.improvements.length ? html`<ol class="mt-2 grid gap-3 text-sm" role="list">${r.improvements.map((m) => html`<li>
+        <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1"><code>${m.item}</code>${m.blocking ? html`<span class="pill pill-diff">blocking</span>` : ''}
+          <span>${m.group}: ${m.groupFrom} → ${m.groupTo} · Overall: ${m.overallFrom} → ${m.overallTo}</span></div>
+        <p class="mt-1">${text.get(m.item)}</p></li>`)}</ol>` : html`<p class="mt-2 text-sm text-muted">Every applicable item is met</p>`}
+  </section>`;
+}
+
 function assessmentCard(b: Benchmark, s: Standard, a: A, r: R, open: boolean) {
   const fileUrl = `${data.repo}/blob/main/${a.file}`;
   const id = a.file.replace(/\W/g, '-');
@@ -381,7 +392,7 @@ function assessmentCard(b: Benchmark, s: Standard, a: A, r: R, open: boolean) {
         <td class="px-3 py-2.5"><div class="grid gap-1">${g.display}${bar(g.pct)}</div></td>
         <td class="px-3 py-2.5">${g.explanation}</td></tr>`)}</tbody>
     </table></div>
-    ${a.mode === 'itemized' ? html`${filterBar(s, a)}${s.groups.map((g) => html`<details class="items mt-3" ${open ? 'open' : ''}>
+    ${a.mode === 'itemized' ? html`${improvementsView(s, r)}${filterBar(s, a)}${s.groups.map((g) => html`<details class="items mt-3" ${open ? 'open' : ''}>
         <summary class="font-medium">${g.name}: item verdicts (${g.items.length})</summary>
         <ul class="mt-2" role="list">${g.items.map((it) => itemRow(b, s, it, a))}</ul>
       </details>`)}` : html`<p class="mt-5 text-sm text-muted">Item-level verdicts were not published by this source, so only its dimension scores are shown.</p>`}
