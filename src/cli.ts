@@ -52,10 +52,10 @@ const writeFile = (path: string, text: string) => { mkdirSync(dirname(path), { r
 
 function llmConfig(c: ReturnType<typeof load>) {
   const cfg = parse(readFileSync(join(root, 'config/models.yaml'), 'utf8')) as { default: string };
-  const model = process.env.TOUCHSTONE_MODEL ?? cfg.default;
+  const model = process.env.TOUCHSTONE_MODEL || cfg.default;
   const entry = c.models.find((m) => m.id === model);
   if (!entry) fail(`Model "${model}" is not on the open-weights allowlist in config/models.yaml.`);
-  const baseUrl = process.env.TOUCHSTONE_LLM_BASE_URL ?? 'https://models.github.ai/inference';
+  const baseUrl = process.env.TOUCHSTONE_LLM_BASE_URL || 'https://models.github.ai/inference';
   // The GitHub token is only ever sent to GitHub Models, never to a custom endpoint.
   let host = '';
   try { host = new URL(baseUrl).hostname; } catch { /* an invalid URL gets no fallback */ }
