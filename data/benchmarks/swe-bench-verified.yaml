@@ -7,3 +7,28 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2310.06770
   repo: https://github.com/SWE-bench/SWE-bench
+resources:
+  items: 500
+  interaction: agentic
+  model_calls_per_item: 250
+  tokens_per_call: 65000
+  grading: execution
+  judge_calls_per_item: 0
+  environment: docker
+  gpu_required: false
+  disk_gb: 120
+  estimate_basis: >-
+    Step limit is 250, the default in mini-SWE-agent's SWE-bench config, which `swebench infer` uses; the SWE-bench
+    paper itself only evaluates single-shot retrieval. Tokens: history is linear, so mean context = prefix (about
+    2,500 tokens) + about 500 tokens per step x 250 / 2 = 65,000; real runs usually stop earlier, so this is an upper
+    bound. disk_gb is the documented 120 GB of free storage for the Docker images; the docs give no image total for
+    the 500 Verified tasks alone (about 100 GB for environment images, about 2,000 GB if every instance image is kept).
+  sources:
+    - url: https://github.com/SWE-bench/SWE-bench
+      locator: "README, news item of Aug. 13, 2024 (500 problems) and Running evaluation warning (120GB free storage, 16GB RAM, 8 cores)"
+    - url: https://github.com/SWE-bench/SWE-bench/blob/main/docs/guides/docker_setup.md
+      locator: "Cache Level Configuration table (env ~100GB, instance ~2,000GB)"
+    - url: https://github.com/SWE-bench/SWE-bench/blob/main/docs/guides/datasets.md
+      locator: "dataset table (SWE-bench Verified, 500 instances)"
+    - url: https://github.com/SWE-agent/mini-swe-agent/blob/main/src/minisweagent/config/benchmarks/swebench.yaml
+      locator: "agent section, step_limit: 250 (cost_limit: 3.)"

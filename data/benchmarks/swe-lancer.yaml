@@ -7,3 +7,27 @@ year: 2025
 links:
   paper: https://arxiv.org/abs/2502.12115
   repo: https://github.com/openai/SWELancer-Benchmark
+resources:
+  items: 463
+  interaction: agentic
+  model_calls_per_item: 40
+  tokens_per_call: 36000
+  grading: execution
+  judge_calls_per_item: 0
+  environment: docker
+  gpu_required: false
+  disk_gb: 14
+  estimate_basis: >-
+    Items are the public Diamond split in the released repo (198 IC SWE tasks after the 2025/07/17 trim, per the
+    README, plus the paper's 265 SWE Manager tasks, which matches the 463 rows in all_swelancer_tasks.csv); the paper's
+    full set of 1,488 is a private holdout. Calls are the SimpleAgentSolver's max_turns of 40. Tokens: mean context =
+    prefix (about 6,000 for the system prompt and a long issue) + about 1,500 per turn x 40 / 2 = 36,000, below the
+    solver's 110,000-token context limit. disk_gb is the README's per-task image size (about 14 GB); the monolith image
+    size is not stated.
+  sources:
+    - url: https://arxiv.org/abs/2502.12115
+      locator: "§2 and Table 1 (Diamond: 237 IC SWE + 265 SWE Manager; full set 1,488, private holdout); §3.1 (Docker container, Playwright tests)"
+    - url: https://github.com/openai/preparedness/blob/main/project/swelancer/README.md
+      locator: "Note on 198 tasks; Docker Setup section (about 14GB per task image)"
+    - url: https://github.com/openai/preparedness/blob/main/project/swelancer/swelancer/solvers/swelancer_agent/solver.py
+      locator: "max_turns = 40; DEFAULT_CTX_LIMIT = 110000"

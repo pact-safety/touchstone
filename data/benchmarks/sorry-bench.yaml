@@ -7,3 +7,23 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2406.14598
   repo: https://github.com/SORRY-Bench/sorry-bench
+resources:
+  items: 440
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 350
+  grading: llm-judge
+  judge_calls_per_item: 1
+  environment: python
+  gpu_required: true
+  disk_gb: 15
+  estimate_basis: >-
+    Tokens: an unsafe instruction is about 40 tokens and the response is capped at 1024 tokens (refusals are short,
+    compliances long), so I assumed a mean response of about 300 tokens. The judge is the fine-tuned Mistral-7B the
+    README downloads and runs with vLLM (the GPT-4 judge option needs no GPU); disk_gb is that 7B model at 2 bytes per
+    parameter (about 15 GB, not stated in the README) plus a dataset too small to matter.
+  sources:
+    - url: https://arxiv.org/abs/2406.14598
+      locator: "§2.3 (440 unsafe instructions, 44 categories); §4.1 (max tokens 1024); §3.3 (fine-tuned Mistral-7b-instruct-v0.2 judge)"
+    - url: https://github.com/SORRY-Bench/sorry-bench
+      locator: "README, Evaluation / Judge sections (vLLM, fine-tuned Mistral-7b judge; GPT-4 judge needs no GPU)"

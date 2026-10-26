@@ -7,3 +7,23 @@ year: 2020
 links:
   paper: https://arxiv.org/abs/2007.09185
   repo: https://github.com/minqi/wordcraft
+resources:
+  items: 500
+  interaction: non-llm
+  model_calls_per_item: 0
+  tokens_per_call: 0
+  grading: rule-based
+  judge_calls_per_item: 0
+  environment: python
+  gpu_required: false
+  disk_gb: 0.001
+  estimate_basis: >-
+    WordCraft evaluates trained RL agents (an IMPALA self-attention actor-critic) in a Gym environment, not language
+    model calls. The benchmark fixes no test-set size; 500 is the README's example --num_test_episodes. Success is
+    scored by the environment's reward. disk_gb is the 0.4 MB recipe dataset; Python dependencies and the spaCy
+    en_core_web_lg model are not sized in the README, and it does not say a GPU is required.
+  sources:
+    - url: https://arxiv.org/abs/2007.09185
+      locator: "§3 (RL environment based on Little Alchemy 2; 700 items, 3,417 recipes); §5 (agents trained with IMPALA; 80/20 train/test recipe split)"
+    - url: https://github.com/minqi/wordcraft
+      locator: "README, Installation and Usage sections (--num_test_episodes 500; datasets/alchemy2.json)"

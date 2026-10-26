@@ -7,3 +7,24 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2406.12045
   repo: https://github.com/sierra-research/tau-bench
+resources:
+  items: 165
+  interaction: agentic
+  model_calls_per_item: 30
+  tokens_per_call: 8500
+  grading: rule-based
+  judge_calls_per_item: 0
+  environment: python
+  gpu_required: false
+  disk_gb: 0.01
+  estimate_basis: >-
+    Items are 115 retail plus 50 airline tasks. Calls use the paper's cap of 30 agent actions per task. Tokens: mean
+    context = prefix (domain policy plus tool definitions, about 4,000 tokens) + about 300 tokens per step x 30 / 2 =
+    8,500; the paper's $0.38 agent cost per retail task suggests typical episodes end well before 30 steps, so this is
+    an upper bound. Grading compares the final database state with the goal state; the LM user simulator is a second
+    model but is not a judge, and its calls are not counted. disk_gb is the GitHub repository size.
+  sources:
+    - url: https://arxiv.org/abs/2406.12045
+      locator: "Table 1 (115 retail, 50 airline tasks); §5 Experiments (at most 30 agent actions); §5.1 Cost analysis ($0.38 agent cost per retail task)"
+    - url: https://github.com/sierra-research/tau-bench
+      locator: "README, Setup and Run sections (default LLM user simulator; python run.py)"

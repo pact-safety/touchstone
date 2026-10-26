@@ -7,3 +7,25 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2403.03218
   repo: https://github.com/centerforaisafety/wmdp
+resources:
+  items: 3668
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 170
+  grading: exact
+  judge_calls_per_item: 0
+  environment: python
+  gpu_required: false
+  disk_gb: 0.001
+  estimate_basis: >-
+    Tokens: the Hugging Face dataset is 1.1 MB in 3,668 rows (bio 1,273, cyber 1,987, chem 408); at about 4 bytes per
+    token that gives roughly 50, 200 and 60 tokens per question, a weighted mean of about 150, plus about 20 for the
+    lm-evaluation-harness prompt header and a one-token answer. Grading is the top logit among A-D in the paper;
+    through an API a letter answer is graded by exact match.
+  sources:
+    - url: https://github.com/centerforaisafety/wmdp
+      locator: "README, introduction (3,668 multiple-choice questions) and Datasets section"
+    - url: https://arxiv.org/abs/2403.03218
+      locator: "Appendix B.1 (zero-shot lm-evaluation-harness format, top logit among A-D); dataset composition table (1,273 bio, 1,987 cyber)"
+    - url: https://huggingface.co/datasets/cais/wmdp
+      locator: "dataset card (wmdp-bio, wmdp-chem, wmdp-cyber test splits, 1.1 MB)"

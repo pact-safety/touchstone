@@ -7,3 +7,23 @@ year: 2024
 links:
   paper: https://arxiv.org/abs/2402.10260
   repo: https://github.com/alexandrasouly/strongreject
+resources:
+  items: 313
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 380
+  grading: llm-judge
+  judge_calls_per_item: 1
+  environment: python
+  gpu_required: false
+  disk_gb: 0.06
+  estimate_basis: >-
+    Tokens: a forbidden prompt is about 30 tokens and I assumed a mean response of about 350 tokens (many are refused
+    briefly, some comply at length); no response length is stated. Grading is the rubric evaluator with one remote
+    LLM call per response; the fine-tuned Gemma 2B evaluator is optional, so no GPU is required. disk_gb is the
+    GitHub repository size (dataset CSVs plus notebook).
+  sources:
+    - url: https://arxiv.org/abs/2402.10260
+      locator: "§2.1 (313 forbidden prompts); §2.2 (rubric evaluator, remote LLM; optional Gemma 2B evaluator on one GPU)"
+    - url: https://github.com/alexandrasouly/strongreject
+      locator: "README, Dataset section (strongreject_dataset.csv, 313 questions) and Autograder implementation section (GPT-4 Turbo judge)"

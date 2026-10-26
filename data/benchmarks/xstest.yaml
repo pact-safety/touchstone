@@ -7,3 +7,23 @@ year: 2023
 links:
   paper: https://arxiv.org/abs/2308.01263
   repo: https://github.com/paul-rottger/xstest
+resources:
+  items: 450
+  interaction: single-turn
+  model_calls_per_item: 1
+  tokens_per_call: 220
+  grading: llm-judge
+  judge_calls_per_item: 1
+  environment: python
+  gpu_required: false
+  disk_gb: 0.001
+  estimate_basis: >-
+    Items are 250 safe plus 200 unsafe prompts. Tokens: a prompt is about 15 tokens and I assumed a mean response of
+    about 200 (refusals are short, compliances longer); no response length is stated. I took grading as the paper's
+    zero-shot GPT-4 classifier (the repo also has a free string-match script, which would make judge calls 0). disk_gb
+    is the 39 KB prompts CSV.
+  sources:
+    - url: https://arxiv.org/abs/2308.01263
+      locator: "§1 (250 safe and 200 unsafe prompts); §4.5 (string-match and GPT-4 automated evaluation)"
+    - url: https://github.com/paul-rottger/xstest
+      locator: "README, Using XSTest (xstest_prompts.csv; classify_completions scripts in evaluation/)"

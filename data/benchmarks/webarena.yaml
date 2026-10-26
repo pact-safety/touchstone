@@ -7,3 +7,25 @@ year: 2023
 links:
   paper: https://arxiv.org/abs/2307.13854
   repo: https://github.com/web-arena-x/webarena
+resources:
+  items: 812
+  interaction: agentic
+  model_calls_per_item: 30
+  tokens_per_call: 6300
+  grading: rule-based
+  judge_calls_per_item: 0
+  environment: docker
+  gpu_required: false
+  disk_gb: 1000
+  estimate_basis: >-
+    Calls use the paper's maximum of 30 state transitions. Tokens: the paper's agent sees only the current page plus
+    its action history, so mean context = instructions with two examples (about 2,500) + an accessibility-tree
+    observation (about 3,000) + action history (about 50 tokens per step x 30 / 2 = 750) = 6,300; no observation
+    length is stated. Grading is programmatic checks; fuzzy_match calls GPT-4 for 82 of the 812 examples, which I did
+    not count as a judge. disk_gb is the 1000 GB EBS volume the environment README recommends for the pre-installed
+    AMI, not a measured download (the map backend alone is about 180 GB).
+  sources:
+    - url: https://arxiv.org/abs/2307.13854
+      locator: "§3 (812 test examples); §3.2 (fuzzy_match with gpt-4-0613); Appendix A.6 (maximum 30 state transitions); Appendix A.8 (82 examples need GPT-4)"
+    - url: https://github.com/web-arena-x/webarena/blob/main/environment_docker/README.md
+      locator: "Pre-installed Amazon Machine Image section (1000GB EBS root volume); Setting up your own map backend (about 180GB download)"
