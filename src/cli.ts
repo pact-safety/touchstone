@@ -55,19 +55,33 @@ function llmConfig(c: ReturnType<typeof load>) {
   const model = process.env.TOUCHSTONE_MODEL || cfg.default;
   const entry = c.models.find((m) => m.id === model);
   if (!entry) fail(`Model "${model}" is not on the open-weights allowlist in config/models.yaml.`);
-  const baseUrl = process.env.TOUCHSTONE_LLM_BASE_URL || 'https://models.github.ai/inference';
-  // The GitHub token is only ever sent to GitHub Models, never to a custom endpoint.
-  let host = '';
-  try { host = new URL(baseUrl).hostname; } catch { /* an invalid URL gets no fallback */ }
-  const apiKey = process.env.TOUCHSTONE_LLM_API_KEY ?? (host === 'models.github.ai' ? process.env.GITHUB_TOKEN : undefined);
+  // Default: a local Ollama server (the nightly job starts one on the runner). No other token is ever sent.
+  const baseUrl = process.env.TOUCHSTONE_LLM_BASE_URL || 'http://localhost:11434/v1';
+  const apiKey = process.env.TOUCHSTONE_LLM_API_KEY || undefined;
+  const effort = process.env.TOUCHSTONE_REASONING_EFFORT || (model.includes('gpt-oss') ? 'low' : '');
   return {
     entry: entry!,
     llm: {
       baseUrl,
       apiKey,
-      model, temperature: 0, seed: 20261026, maxTokens: 4000,
+      model, temperature: 0, seed: 20261026, maxTokens: 6000,
+      ...(effort ? { reasoningEffort: effort as 'low' | 'medium' | 'high' } : {}),
     },
   };
+}
+
+/** The weights digest an Ollama server reports for a model, so a run records exactly which weights it used. */
+async function ollamaDigest(baseUrl: string, model: string): Promise<string | undefined> {
+  try {
+    const origin = new URL(baseUrl).origin;
+    const res = await fetch(`${origin}/api/tags`);
+    if (!res.ok) return undefined;
+    const d = (await res.json()) as { models?: { name: string; model?: string; digest?: string }[] };
+    const m = d.models?.find((x) => x.name === model || x.model === model);
+    return m?.digest ? `sha256:${m.digest.replace(/^sha256:/, '')}` : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 async function main() {
@@ -107,11 +121,15 @@ async function main() {
       }
       if (!targets.length) { console.log('nothing to assess'); return; }
       let used = 0;
+      let written = 0;
+      let failed = 0;
+      const modelDigest = await ollamaDigest(llm.baseUrl, llm.model);
       const sourceCache = new Map<string, { pins: Awaited<ReturnType<typeof currentPins>>; sources: FetchedSource[] }>();
       for (const t of targets) {
-        if (used >= budget) { console.log(`call budget reached; ${targets.length - targets.indexOf(t)} pair(s) left for the next run`); break; }
         const b = c.benchmarks.find((x) => x.value.id === t.benchmark)!.value;
         const s = c.standards.find((x) => x.value.id === t.standard)!.value;
+        // A pair needs one call per group; never start one the budget can't finish.
+        if (used + s.groups.length > budget) { console.log(`call budget reached; ${targets.length - targets.indexOf(t)} pair(s) left for the next run`); break; }
         if (!sourceCache.has(b.id)) {
           const pins = readWatch()?.benchmarks[b.id] ?? (await currentPins(b, process.env.GITHUB_TOKEN));
           sourceCache.set(b.id, { pins, sources: await fetchSources(b, pins, process.env.GITHUB_TOKEN) });
@@ -121,10 +139,18 @@ async function main() {
         const transcriptPath = `data/runs/${b.id}/${s.id}/${date}.jsonl`;
         const run = await assess({
           benchmark: b, standard: s, sources, llm, provider: entry.provider, license: entry.license, runOn: date,
-          transcriptPath, pins: { paper_version: pins.paper_version, repo_commit: pins.repo_commit },
-          maxCalls: budget === Infinity ? undefined : budget - used,
+          transcriptPath, pins: { paper_version: pins.paper_version, repo_commit: pins.repo_commit }, modelDigest,
         });
         used += run.calls;
+        // An assessment is only recorded when every group got a usable answer. A partial or failed run is
+        // reported and its transcript kept outside the data, so nothing half-assessed is ever scored.
+        if (!run.complete) {
+          failed++;
+          writeFile(join(root, `runs-failed/${b.id}/${s.id}/${date}.jsonl`), run.transcript.map((e) => JSON.stringify(e)).join('\n') + '\n');
+          const errs = [...new Set(run.transcript.map((e) => e.error).filter(Boolean))];
+          console.log(`${b.id} × ${s.id}: NOT RECORDED, run incomplete (${run.calls} call(s))${errs.length ? `: ${errs.join(' | ').slice(0, 300)}` : ''}`);
+          continue;
+        }
         // A person's correction outlives a model re-run; it is kept and flagged for review against the new sources.
         const autoPath = join(root, `data/assessments/${b.id}/${s.id}.auto.yaml`);
         if (existsSync(autoPath)) {
@@ -136,8 +162,12 @@ async function main() {
         }
         writeFile(autoPath, `# Proposed by the automated assessor. Review before publishing: see docs/automation.md.\n` + stringify(run.assessment, { lineWidth: 0 }));
         writeFile(join(root, transcriptPath), run.transcript.map((e) => JSON.stringify(e)).join('\n') + '\n');
-        console.log(`${b.id} × ${s.id}: ${run.complete ? 'complete' : 'partial'} (${run.calls} call(s))`);
+        written++;
+        console.log(`${b.id} × ${s.id}: recorded (${run.calls} call(s))`);
       }
+      console.log(`${written} assessment(s) recorded, ${failed} incomplete, ${used} call(s) used`);
+      // Every attempted pair failing means the model or endpoint is broken: fail the job loudly.
+      if (failed > 0 && written === 0) process.exit(1);
       return;
     }
     case 'replay': {

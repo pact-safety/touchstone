@@ -1,7 +1,9 @@
 name: Nightly re-assessment
 # Checks every benchmark's paper version and repo commit, re-assesses what changed (or was never
 # assessed) with an open-weights model, and opens a pull request. Nothing is published until a
-# person reviews and merges it.
+# person reviews and merges it. By default the model runs on this runner with Ollama, so no account
+# or key is needed. To use a hosted OpenAI-compatible provider instead, set the repository variable
+# TOUCHSTONE_LLM_BASE_URL, the variable TOUCHSTONE_MODEL, and the secret TOUCHSTONE_LLM_API_KEY.
 on:
   schedule:
     - cron: '17 4 * * *'
@@ -9,18 +11,19 @@ on:
     inputs:
       max_calls:
         description: Most model calls this run may make
-        default: '40'
+        default: '12'
 permissions:
   contents: write
   pull-requests: write
-  models: read
 concurrency:
   group: nightly
   cancel-in-progress: false
 jobs:
   reassess:
     runs-on: ubuntu-latest
-    timeout-minutes: 120
+    timeout-minutes: 300
+    env:
+      OLLAMA_VERSION: '0.40.1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -32,13 +35,36 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: npx tsx src/cli.ts watch --write | tee watch.json
+      - name: Free disk space for model weights
+        if: vars.TOUCHSTONE_LLM_BASE_URL == ''
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL && df -h /
+      - name: Start Ollama (pinned) and pull the model
+        if: vars.TOUCHSTONE_LLM_BASE_URL == ''
+        env:
+          MODEL: ${{ vars.TOUCHSTONE_MODEL || 'gpt-oss:20b' }}
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          ollama --version
+          (ollama serve > ollama.log 2>&1 &)
+          for i in $(seq 1 30); do curl -sf http://localhost:11434/api/tags > /dev/null && break; sleep 2; done
+          ollama pull "$MODEL"
+          ollama list
       - name: Assess changed and unassessed pairs
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          TOUCHSTONE_LLM_BASE_URL: ${{ vars.TOUCHSTONE_LLM_BASE_URL || 'https://models.github.ai/inference' }}
+          TOUCHSTONE_LLM_BASE_URL: ${{ vars.TOUCHSTONE_LLM_BASE_URL }}
+          TOUCHSTONE_LLM_API_KEY: ${{ secrets.TOUCHSTONE_LLM_API_KEY }}
           TOUCHSTONE_MODEL: ${{ vars.TOUCHSTONE_MODEL }}
-          MAX_CALLS: ${{ inputs.max_calls || vars.TOUCHSTONE_MAX_CALLS || '40' }}
+          MAX_CALLS: ${{ inputs.max_calls || vars.TOUCHSTONE_MAX_CALLS || '12' }}
         run: npx tsx src/cli.ts assess --queue --max-calls "$MAX_CALLS"
+      - name: Keep transcripts of incomplete runs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: incomplete-runs
+          path: runs-failed/
+          if-no-files-found: ignore
+          retention-days: 30
       - run: npx tsx src/cli.ts validate
       - run: npm test
       - name: Open a pull request for review

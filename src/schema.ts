@@ -186,6 +186,8 @@ export const ModelRun = z.strictObject({
   model: z.string(),
   provider: z.string(),
   license: z.string(),
+  /** Content digest of the exact weights used, where the server reports one (Ollama does). */
+  model_digest: z.string().optional(),
   temperature: z.number(),
   seed: z.number().int(),
   /** Version of prompts/assess-item.md used; bump it whenever the prompt changes. */

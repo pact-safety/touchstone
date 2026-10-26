@@ -3,23 +3,25 @@
 # An assessment whose model_run.model is not listed here fails validation.
 # `id` is the name the provider uses; the same weights can appear under several providers.
 allowed:
-  - id: openai/gpt-oss-120b
-    provider: github-models
-    license: Apache-2.0
-    weights: https://huggingface.co/openai/gpt-oss-120b
-  - id: openai/gpt-oss-20b
-    provider: github-models
-    license: Apache-2.0
-    weights: https://huggingface.co/openai/gpt-oss-20b
   - id: gpt-oss:20b
     provider: ollama
     license: Apache-2.0
     weights: https://huggingface.co/openai/gpt-oss-20b
-    note: Runs locally on a 16 GB GPU or Apple silicon.
+    note: The nightly default. Runs on the GitHub Actions runner's CPU, so it needs no account or key.
+  - id: gpt-oss:120b
+    provider: ollama
+    license: Apache-2.0
+    weights: https://huggingface.co/openai/gpt-oss-120b
+    note: Needs about 65 GB of memory; for a self-hosted runner.
+  - id: openai/gpt-oss-120b
+    provider: openai-compatible (OpenRouter, Groq, Hugging Face)
+    license: Apache-2.0
+    weights: https://huggingface.co/openai/gpt-oss-120b
+    note: Hosted; set TOUCHSTONE_LLM_BASE_URL and the TOUCHSTONE_LLM_API_KEY secret.
   - id: qwen2.5:14b-instruct
     provider: ollama
     license: Apache-2.0
     weights: https://huggingface.co/Qwen/Qwen2.5-14B-Instruct
 
 # The model the nightly job uses unless TOUCHSTONE_MODEL overrides it.
-default: openai/gpt-oss-120b
+default: gpt-oss:20b
