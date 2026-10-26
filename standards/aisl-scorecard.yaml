@@ -1,0 +1,462 @@
+# Scorecard of AI Benchmark Quality (AI Standards Lab), final template in Appendix A.
+# Item wording is the standard's own. `severity` comes from the highlight colour of
+# each item in the published PDF: yellow caps a dimension at 2, orange at 3, red at 4.
+# Unhighlighted items are baseline requirements: if one is unmet the dimension is invalid.
+# Items are the leaves of the template. A principle that has bullets is not scored
+# itself; it is shown to assessors as context through `principle`.
+id: aisl-scorecard
+name: Scorecard of AI Benchmark Quality
+short: AISL Scorecard
+version: "2026.07"
+publisher: AI Standards Lab (San Joaquin, Gipiškis, Chin)
+year: 2026
+kind: rubric
+status: encoded
+url: https://aclanthology.org/2026.evaleval-1.25/
+citation: >-
+  San Joaquin, A., Gipiškis, R., & Chin, Z. S. (2026). Scorecard of AI Benchmark Quality.
+  Proceedings of the Workshop on Evaluating Evaluations (EvalEval), ACL 2026, 128–160.
+description: >-
+  Grades a benchmark on five quality dimensions, each scored 1 (best) to 4, then maps the
+  scores to the most demanding use the benchmark is fit for, from Category A (major policy
+  decisions) to Category E (exploratory research).
+scoring:
+  scheme: aisl-severity
+  severity_scores: { yellow: 2, orange: 3, red: 4 }
+  categories:
+    - id: A
+      use: Ideal for major policy decisions and high-stakes risk assessment.
+      max: { construct_validity: 1, internal_validity: 1, external_validity: 1, reliability: 1, correctness: 1 }
+    - id: B
+      use: Minimum for major policy decisions, alongside other evidence and external validation.
+      max: { construct_validity: 2, internal_validity: 2, external_validity: 1, reliability: 1, correctness: 1 }
+    - id: C
+      use: Final model checkpoint, including flagship results reported at model release.
+      max: { construct_validity: 2, internal_validity: 2, external_validity: 1, reliability: 2, correctness: 2 }
+    - id: D
+      use: During model development and community-driven evaluation; conclusions are provisional.
+      max: { construct_validity: 3, internal_validity: 3, external_validity: 3, reliability: 3, correctness: 3 }
+    - id: E
+      use: Exploratory research only, such as checking a phenomenon is measurable at all.
+      max: { construct_validity: 4, internal_validity: 3, external_validity: 4, reliability: 4, correctness: 4 }
+groups:
+  - id: construct_validity
+    name: Construct validity
+    description: Whether the evaluation captures the intended phenomenon.
+    items:
+      - id: cv.01
+        principle: Define the phenomenon
+        text: Precise and operational definition for the target phenomenon
+        severity: baseline
+        guidance:
+          met: The paper or docs give a definition of the target phenomenon that states which observable outputs or behaviours count as evidence of it.
+          evidence: [paper, docs]
+      - id: cv.02
+        principle: Define the phenomenon
+        text: Specify scope
+        severity: baseline
+        guidance:
+          met: The documentation states what is in scope and names at least one aspect of the phenomenon that is excluded or not covered.
+          evidence: [paper, docs]
+      - id: cv.03
+        principle: Define the phenomenon
+        text: If the target phenomenon has distinct facets (e.g. factual accuracy vs. tone), score each facet independently rather than collapsing them into a single metric
+        severity: yellow
+        guidance:
+          met: Each facet the documentation names is reported as its own score.
+          not_applicable: The documentation defines a single-facet phenomenon and names no sub-components.
+          evidence: [paper, repo]
+      - id: cv.04
+        principle: Build a representative dataset
+        text: Define and document the intended task space, including its full range of difficulty and variation
+        severity: baseline
+        guidance:
+          met: The documentation describes the space of tasks the benchmark is meant to cover, including how difficulty or variation is spread across it.
+          evidence: [paper, docs]
+      - id: cv.05
+        principle: Build a representative dataset
+        text: Verify that sampled items cover the full range of the documented task space
+        severity: baseline
+        guidance:
+          met: The documentation reports a sampling strategy or coverage analysis (counts or distribution of items across the documented task space).
+          evidence: [paper, dataset]
+      - id: cv.06
+        principle: Build a representative dataset
+        text: Especially for automated generations, have a robust algorithm for verifying that each item actually tests the target phenomenon
+        severity: baseline
+        guidance:
+          met: Every item passed a documented verification step (human review, filter, or validator) checking it tests the phenomenon; the step and its pass rate or criteria are described.
+          evidence: [paper, repo]
+      - id: cv.07
+        principle: Build a representative dataset
+        text: Include edge-case inputs that probe boundary conditions and known model sensitivities
+        severity: red
+        guidance:
+          met: The dataset contains an identified subset of edge-case or perturbation items (e.g. reordering, paraphrase, adversarial phrasing), described in the documentation.
+          evidence: [paper, dataset]
+      - id: cv.08
+        principle: If reusing datasets, acknowledge limitations
+        text: Analyze effects of adapting prior work, including comparing new benchmark against original
+        severity: baseline
+        guidance:
+          met: Results on the new benchmark are compared with results on the source dataset, or the effect of the adaptation is otherwise analysed.
+          not_applicable: The benchmark reuses no prior dataset or benchmark.
+          evidence: [paper]
+      - id: cv.09
+        principle: If reusing datasets, acknowledge limitations
+        text: Explain modifications to reused dataset
+        severity: baseline
+        guidance:
+          met: Each modification made to reused data is listed with its reason.
+          not_applicable: The benchmark reuses no prior dataset or benchmark.
+          evidence: [paper, docs]
+      - id: cv.10
+        principle: Use statistical methods to compare models
+        text: Report sample size and justify statistical power
+        severity: baseline
+        guidance:
+          met: The number of items is reported and an argument is given that it suffices to distinguish models at the reported differences (power analysis, or confidence intervals narrower than reported gaps).
+          evidence: [paper]
+      - id: cv.11
+        principle: Use statistical methods to compare models
+        text: Report uncertainty estimates at least for primary scores
+        severity: baseline
+        guidance:
+          met: Primary reported scores carry confidence intervals, standard errors, or spread across runs.
+          evidence: [paper, website]
+      - id: cv.12
+        principle: Use statistical methods to compare models
+        text: If using human raters, document rater instructions and training materials
+        severity: orange
+        guidance:
+          met: Rater instructions or training materials are published or reproduced in the documentation.
+          not_applicable: No human raters label items or judge outputs.
+          evidence: [paper, repo]
+      - id: cv.13
+        principle: Use statistical methods to compare models
+        text: If using human raters, identify and mitigate potential demographic biases among raters (i.e. whether rater demographics skew which outputs are judged as correct)
+        severity: orange
+        guidance:
+          met: Rater demographics are reported and a check or mitigation for demographic skew in judgements is described.
+          not_applicable: No human raters label items or judge outputs.
+          evidence: [paper]
+      - id: cv.14
+        principle: Use statistical methods to compare models
+        text: Use metrics that preserve label variability (e.g. inter-annotator agreement distributions)
+        severity: red
+        guidance:
+          met: Where labels are subjective, reported metrics retain disagreement (distributions or agreement statistics) instead of one consensus label.
+          not_applicable: All labels are objective (deterministic ground truth with a single correct outcome).
+          evidence: [paper]
+      - id: cv.15
+        principle: Use statistical methods to compare models
+        text: Do not reduce subjective labels to single-point aggregates (e.g. simple mean)
+        severity: red
+        guidance:
+          met: Subjective labels are not reported only as a single mean or majority value.
+          not_applicable: All labels are objective (deterministic ground truth with a single correct outcome).
+          evidence: [paper]
+      - id: cv.16
+        principle: Conduct an error analysis
+        text: Analyze whether model failures are caused by confounds (e.g. formatting, language complexity, prompt length) rather than the capability under test
+        severity: red
+        guidance:
+          met: The documentation reports an analysis relating failures to at least one candidate confound.
+          evidence: [paper]
+      - id: cv.17
+        principle: Conduct an error analysis
+        text: Identify and analyze common failure modes of models on the evaluation
+        severity: red
+        guidance:
+          met: The documentation reports categories of model failures with their frequency or examples.
+          evidence: [paper]
+      - id: cv.18
+        principle: Justify construct validity
+        text: Provide rationale for tasks and metrics chosen
+        severity: baseline
+        guidance:
+          met: The documentation explains why the chosen tasks and metric measure the defined phenomenon.
+          evidence: [paper]
+      - id: cv.19
+        principle: Justify construct validity
+        text: Demonstrate how this evaluation differs from or improves upon existing evaluations measuring the same or similar constructs, addressing gaps or limitations in prior work
+        severity: orange
+        guidance:
+          met: Named prior evaluations of the same or similar construct are compared, with the gap this one addresses.
+          evidence: [paper]
+      - id: cv.20
+        principle: Justify construct validity
+        text: Provide a clear rationale for design choices, including their limitations and how strong performance on the evaluation would predict real-world capability
+        severity: red
+        guidance:
+          met: The documentation states limitations of the design and argues how scores relate to real-world capability or harm.
+          evidence: [paper]
+  - id: internal_validity
+    name: Internal validity
+    description: Whether results can be attributed to the model rather than confounds, leakage or chance.
+    items:
+      - id: iv.01
+        principle: Only measure the phenomenon
+        text: Verify that the evaluation design handles unavoidable secondary capabilities needed for the target phenomenon (e.g. reading comprehension in a numeracy test)
+        severity: yellow
+        guidance:
+          met: Secondary capabilities the tasks require are named and controlled for or shown not to drive scores.
+          evidence: [paper]
+      - id: iv.02
+        principle: Only measure the phenomenon
+        text: Identify any construct overlap between the target phenomenon and related phenomena
+        severity: baseline
+        guidance:
+          met: The documentation names related phenomena that could be measured by the same tasks.
+          evidence: [paper]
+      - id: iv.03
+        principle: Only measure the phenomenon
+        text: Quantify the extent of that overlap and describe mitigation steps taken
+        severity: baseline
+        guidance:
+          met: The overlap named under iv.02 is measured (e.g. correlation with a related benchmark) and a mitigation is described.
+          evidence: [paper]
+      - id: iv.04
+        principle: Only measure the phenomenon
+        text: Test whether output format requirements (e.g. response length limits, structured output schemas, JSON formatting) independently affect model scores, and report these effects
+        severity: baseline
+        guidance:
+          met: Results under at least two output-format conditions are reported, or format-failure rates are reported separately from task failures.
+          evidence: [paper, repo]
+      - id: iv.05
+        principle: Only measure the phenomenon
+        text: Test whether small, semantically irrelevant changes to prompt wording (e.g. punctuation, synonym substitution) produce large swings in model scores; report sensitivity as a variance measure
+        severity: baseline
+        guidance:
+          met: A prompt-perturbation experiment is reported with a variance or spread measure.
+          evidence: [paper]
+      - id: iv.06
+        principle: Only measure the phenomenon
+        text: Test for systematic parsing bias across different output types (i.e. whether the parser systematically favours or penalises particular response formats independent of correctness)
+        severity: baseline
+        guidance:
+          met: Parser behaviour is checked across response formats and the result is reported.
+          not_applicable: Scoring involves no parsing of free-form output (e.g. outcomes are read from environment state or exit codes).
+          evidence: [paper, repo]
+      - id: iv.07
+        principle: Describe the mechanisms used to ensure the model cannot access ground truth labels or answer keys during evaluation, and document any residual leakage risk
+        text: Confirm that the model being evaluated and any model used as a rater or judge were not trained on data that overlaps with the evaluation's test set
+        severity: baseline
+        guidance:
+          met: A contamination check or a training-data cutoff argument is reported for evaluated models (and judge models, if any), and the mechanism isolating answers from the model is described.
+          evidence: [paper, repo]
+      - id: iv.08
+        text: If the evaluation environment changes over time (e.g. API versions, live web data), document each change and re-validate affected results, or use a static snapshot
+        severity: baseline
+        guidance:
+          met: The environment is a static snapshot, or a changelog of environment changes with re-validation is published.
+          not_applicable: The evaluation uses no external or mutable environment (fixed inputs, local scoring).
+          evidence: [repo, docs]
+      - id: iv.09
+        text: Residual data / state are cleared between evaluation runs
+        severity: baseline
+        guidance:
+          met: The harness resets state per task (fresh container, process, or conversation), shown in code or docs.
+          not_applicable: Each item is a single stateless model call.
+          evidence: [repo]
+          probe: harness-resets-state
+      - id: iv.10
+        principle: The chance of randomly arriving at the correct answer is minimized
+        text: Avoid MCQs, unless mitigations are in place to reduce gaming through guessing
+        severity: orange
+        guidance:
+          met: The format is not multiple choice, or multiple-choice results are reported against the random baseline with a significance test or a guessing mitigation.
+          evidence: [paper, dataset]
+  - id: external_validity
+    name: External validity
+    description: Whether results hold outside the conditions under which they were collected.
+    items:
+      - id: ev.01
+        text: Involve domain experts / real users in defining evaluation scenarios and acceptance criteria
+        severity: red
+        guidance:
+          met: The documentation names the experts or user groups consulted and what they defined.
+          evidence: [paper]
+      - id: ev.02
+        text: Have domain experts review evaluation content for accuracy and relevance
+        severity: red
+        guidance:
+          met: Item content was reviewed by people with stated domain expertise.
+          evidence: [paper]
+      - id: ev.03
+        text: Takes different prompting/elicitation settings into account
+        severity: baseline
+        guidance:
+          met: Results are reported under more than one prompting or elicitation setting (e.g. zero- vs few-shot, with and without chain of thought, different scaffolds).
+          evidence: [paper]
+      - id: ev.04
+        text: Non-IID testing under a variety of stress conditions and severities
+        severity: red
+        guidance:
+          met: The benchmark includes items deliberately drawn from out-of-distribution, adversarial, or graded-severity conditions, reported as such.
+          evidence: [paper, dataset]
+      - id: ev.05
+        principle: If applicable, models deployed to particular applications should have application-centric evaluations
+        text: Evaluate under the system configuration (model and environment setup) expected in real deployment
+        severity: baseline
+        guidance:
+          met: The evaluation setup matches a named deployment configuration.
+          not_applicable: The benchmark does not claim to evaluate a specific deployed application.
+          evidence: [paper]
+      - id: ev.06
+        principle: If applicable, models deployed to particular applications should have application-centric evaluations
+        text: Test whether the model can be manipulated into passing via adversarial inputs or misuse scenarios
+        severity: baseline
+        guidance:
+          met: Adversarial or misuse configurations of the system under test are included.
+          not_applicable: The benchmark does not claim to evaluate a specific deployed application.
+          evidence: [paper]
+      - id: ev.07
+        principle: If applicable, models deployed to particular applications should have application-centric evaluations
+        text: Document how the test environment differs from real deployment, including missing variability (user diversity, platform differences, adversarial inputs), and interpret results in light of those gaps
+        severity: orange
+        guidance:
+          met: Differences between the test setting and real use are listed and tied to how results should be read.
+          evidence: [paper]
+  - id: reliability
+    name: Reliability
+    description: Whether the evaluation can be re-run to the same result and its flaws are handled.
+    items:
+      - id: rel.01
+        principle: "Replicability: re-run the exact evaluation, get the same result"
+        text: Fully document all environment variables (hyperparameters, software versions, OS, hardware) such that an independent third party can reproduce results on different infrastructure
+        severity: yellow
+        guidance:
+          met: Sampling parameters, software versions (lockfile or pinned requirements), and hardware are documented.
+          evidence: [repo, paper]
+          probe: pinned-dependencies
+      - id: rel.02
+        principle: "Replicability: re-run the exact evaluation, get the same result"
+        text: Have an independent third party reproduce the results on different infrastructure.
+        severity: yellow
+        guidance:
+          met: A reproduction by a party other than the authors is published and cited.
+          evidence: [website, paper]
+      - id: rel.03
+        principle: Flaw mitigation
+        text: Describe steps to prevent, identify, and correct for flaws in evaluation
+        severity: baseline
+        guidance:
+          met: The documentation describes quality-control steps and a way flaws are corrected (e.g. errata, versioned releases, issue tracker triage).
+          evidence: [paper, repo]
+      - id: rel.04
+        principle: Flaw mitigation
+        text: "For each unavoidable flaw: (a) explain qualitatively what it is and which direction it likely biases results, (b) quantify its impact where possible (e.g. ground truth noise), and (c) provide explicit guidance on which conclusions from the evaluation remain valid despite the flaw and which do not"
+        severity: yellow
+        guidance:
+          met: Each known flaw is described with its direction of bias, an estimate of impact where possible, and guidance on valid conclusions.
+          evidence: [paper]
+      - id: rel.05
+        principle: Interpretation of methodology and results
+        text: Report relevant baselines, especially human baselines for human-centric tasks
+        severity: red
+        guidance:
+          met: A human or expert baseline is reported, or the documentation explains why none is relevant and reports another reference point.
+          evidence: [paper]
+      - id: rel.06
+        principle: Interpretation of methodology and results
+        text: Report performance of minimal baselines (e.g. random selection, majority-class prediction, zero-shot naive models) to establish a lower bound and give context for model scores
+        severity: baseline
+        guidance:
+          met: At least one trivial baseline's score is reported.
+          evidence: [paper]
+  - id: correctness
+    name: Correctness
+    description: Whether ground truth and scoring are right and cannot be gamed.
+    items:
+      - id: cor.01
+        principle: Annotated ground truth is verified robustly, whether annotated by humans or AI
+        text: If using model rater(s), document evidence that ratings correlate with human judgments
+        severity: baseline
+        guidance:
+          met: Agreement between the model rater and human judgements is reported.
+          not_applicable: No model is used as a rater or judge.
+          evidence: [paper]
+      - id: cor.02
+        principle: Annotated ground truth is verified robustly, whether annotated by humans or AI
+        text: Design the rater to resist adversarial inputs and reward hacking
+        severity: yellow
+        guidance:
+          met: The model rater was tested against adversarial or reward-hacking outputs, or design defences are described.
+          not_applicable: No model is used as a rater or judge.
+          evidence: [paper, repo]
+      - id: cor.03
+        principle: Annotated ground truth is verified robustly, whether annotated by humans or AI
+        text: Verify consistency of model rater across repeated identical inputs
+        severity: baseline
+        guidance:
+          met: Repeat-rating consistency of the model rater is reported, or the rater is run deterministically and that is documented.
+          not_applicable: No model is used as a rater or judge.
+          evidence: [paper, repo]
+      - id: cor.04
+        principle: Annotated ground truth is verified robustly, whether annotated by humans or AI
+        text: Identify and mitigate systematic biases in the model rater (i.e. whether it systematically over- or under-scores certain output types)
+        severity: baseline
+        guidance:
+          met: Rater bias across output types (e.g. length, style, model family) is measured and addressed.
+          not_applicable: No model is used as a rater or judge.
+          evidence: [paper]
+      - id: cor.05
+        principle: Annotated ground truth is verified robustly, whether annotated by humans or AI
+        text: "Multiple annotators label each item independently, with inter-annotator agreement reported (e.g. Cohen's kappa ≥ 0.7), or a programmatic verification method with documented accuracy is used"
+        severity: red
+        guidance:
+          met: Agreement of independent annotators is reported, or labels are verified programmatically (e.g. executable tests) with the method's accuracy documented.
+          evidence: [paper, repo]
+      - id: cor.06
+        principle: Each task has a verified end state, whether it is solvable or not
+        text: Classify each task as solvable or intentionally unsolvable, and document the expected model behavior for each type
+        severity: baseline
+        guidance:
+          met: Every task is documented as solvable or intentionally unsolvable, with the expected behaviour for unsolvable ones.
+          evidence: [paper, dataset]
+      - id: cor.07
+        principle: Each task has a verified end state, whether it is solvable or not
+        text: For solvable tasks, provide verified ground-truth solutions
+        severity: baseline
+        guidance:
+          met: Reference solutions or answers are provided and were checked (e.g. an oracle solver passes, or reviewed by a second person).
+          evidence: [dataset, repo]
+          probe: oracle-solver-present
+      - id: cor.08
+        principle: Each task has a verified end state, whether it is solvable or not
+        text: Enumerate all valid solution forms, or specify acceptance criteria broad enough to recognize equivalent correct answers
+        severity: orange
+        guidance:
+          met: Scoring accepts equivalent correct answers (normalisation, multiple references, or criteria-based checks), as shown in code or docs.
+          evidence: [repo, paper]
+      - id: cor.09
+        principle: The scoring implementation must not be exploitable through shortcuts such as outputting trigger strings, exploiting parser edge cases, or matching answer patterns without completing the underlying task
+        text: Scoring rules are well-specified and handle edge-case outputs such as partial answers, correct answers in unexpected formats, and refusals
+        severity: red
+        guidance:
+          met: The scoring rules cover partial answers, unexpected formats, refusals, and errors or timeouts.
+          evidence: [repo, paper]
+      - id: cor.10
+        principle: The scoring implementation must not be exploitable through shortcuts such as outputting trigger strings, exploiting parser edge cases, or matching answer patterns without completing the underlying task
+        text: Validate that the automated output parser produces consistent results on identical inputs
+        severity: baseline
+        guidance:
+          met: The parser is deterministic (shown in code) or its consistency is tested.
+          not_applicable: Scoring involves no parsing of free-form output.
+          evidence: [repo]
+      - id: cor.11
+        principle: The scoring implementation must not be exploitable through shortcuts such as outputting trigger strings, exploiting parser edge cases, or matching answer patterns without completing the underlying task
+        text: Measure parser accuracy against a set of manually verified outputs
+        severity: baseline
+        guidance:
+          met: Parser accuracy against hand-checked outputs is reported.
+          not_applicable: Scoring involves no parsing of free-form output.
+          evidence: [paper, repo]
+      - id: cor.12
+        principle: The scoring implementation must not be exploitable through shortcuts such as outputting trigger strings, exploiting parser edge cases, or matching answer patterns without completing the underlying task
+        text: Conduct adversarial testing of the scoring pipeline to verify it cannot be gamed without the model completing the task
+        severity: baseline
+        guidance:
+          met: Attempts to pass without completing tasks (e.g. null agents, trigger strings, test tampering) were made and reported.
+          evidence: [paper, repo]

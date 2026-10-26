@@ -1,0 +1,25 @@
+# Models the automated assessor may use. Only open-weights models under an OSI-approved licence
+# are allowed, so anyone can download the same weights and audit or repeat a run.
+# An assessment whose model_run.model is not listed here fails validation.
+# `id` is the name the provider uses; the same weights can appear under several providers.
+allowed:
+  - id: openai/gpt-oss-120b
+    provider: github-models
+    license: Apache-2.0
+    weights: https://huggingface.co/openai/gpt-oss-120b
+  - id: openai/gpt-oss-20b
+    provider: github-models
+    license: Apache-2.0
+    weights: https://huggingface.co/openai/gpt-oss-20b
+  - id: gpt-oss:20b
+    provider: ollama
+    license: Apache-2.0
+    weights: https://huggingface.co/openai/gpt-oss-20b
+    note: Runs locally on a 16 GB GPU or Apple silicon.
+  - id: qwen2.5:14b-instruct
+    provider: ollama
+    license: Apache-2.0
+    weights: https://huggingface.co/Qwen/Qwen2.5-14B-Instruct
+
+# The model the nightly job uses unless TOUCHSTONE_MODEL overrides it.
+default: openai/gpt-oss-120b

@@ -1,0 +1,31 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npx tsx src/cli.ts validate
+      - run: npm test
+      - name: Every verdict change has a revision entry
+        if: github.event_name == 'pull_request'
+        run: npx tsx src/cli.ts check-revisions --base "origin/${{ github.base_ref }}"
+      - name: Site builds, and the data build is reproducible
+        run: |
+          npm run build
+          cp site/src/generated/ratings.json /tmp/first.json
+          npx tsx src/cli.ts build --out site/src/generated/ratings.json
+          cmp /tmp/first.json site/src/generated/ratings.json

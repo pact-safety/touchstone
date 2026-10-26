@@ -1,0 +1,34 @@
+{
+  "name": "@pact-safety/touchstone",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Rigor ratings for AI benchmarks across published benchmark-quality standards, with deterministic scoring.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "touchstone": "tsx src/cli.ts",
+    "validate": "tsx src/cli.ts validate",
+    "build:data": "tsx src/cli.ts build --out site/src/generated/ratings.json",
+    "dev": "npm run build:data && vite --config site/vite.config.ts",
+    "build": "npm run build:data && vite build --config site/vite.config.ts",
+    "preview": "vite preview --config site/vite.config.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "check": "npm run typecheck && npm run validate && npm test"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^26.6.5",
+    "pdfjs-dist": "5.4.296",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5",
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
+  }
+}

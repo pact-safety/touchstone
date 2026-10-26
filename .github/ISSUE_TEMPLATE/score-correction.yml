@@ -1,0 +1,59 @@
+name: Request a score correction
+description: A verdict or score is wrong or missing information. Tell us which, and show the evidence.
+title: "Correction: "
+labels: [correction]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Each score comes from item verdicts, and each verdict follows a written decision rule. The most useful request names the items, says which way the verdict should change, and links evidence a reviewer can check: a paper section at a specific arXiv version, or a file at a specific commit. A bot will reply with the current verdicts for the items you name.
+  - type: input
+    id: benchmark
+    attributes:
+      label: Benchmark
+      description: The benchmark's id or name, e.g. truthfulqa
+    validations:
+      required: true
+  - type: input
+    id: standard
+    attributes:
+      label: Standard
+      description: The standard's id or short name, e.g. aisl-scorecard or BetterBench
+    validations:
+      required: true
+  - type: input
+    id: items
+    attributes:
+      label: Items
+      description: Item ids, comma separated (e.g. cv.11, iv.07). Shown on each item in the site. Use a dimension id (e.g. reliability) for a whole dimension.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong
+      description: The current verdict, what it should be, and why under the item's decision rule.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Links with exact locations (section, page, or file and lines at a commit), and a short quote.
+    validations:
+      required: true
+  - type: dropdown
+    id: relationship
+    attributes:
+      label: Your relationship to the benchmark
+      options:
+        - I am an author or maintainer
+        - I use it
+        - Neither
+    validations:
+      required: true
+  - type: checkboxes
+    id: understand
+    attributes:
+      label: Process
+      options:
+        - label: I understand a change is made only if the evidence meets the item's decision rule, and that the change and this request are recorded publicly in the assessment's revision log.
+          required: true

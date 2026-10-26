@@ -1,0 +1,76 @@
+# STREAM v1 (Standard for Transparently Reporting Evaluations in AI Model reports).
+# Encoded from the published summary checklist. STREAM judges how evaluation results are
+# reported, so for a benchmark it is applied to the benchmark's own results report.
+# Branch items (human- vs auto-graded, with or without human baseline) are n/a on the branch
+# that does not apply. Scoring is Touchstone's: group = met / (met + unmet) × 100,
+# overall = mean of groups.
+id: stream
+name: STREAM reporting standard
+short: STREAM
+version: "1.0"
+publisher: McCaslin et al.
+year: 2025
+kind: reporting-standard
+status: encoded
+scoring_defined_by: touchstone
+applies_to: Reports of dangerous-capability (version 1 is scoped to chemical and biological) benchmark evaluations.
+scope:
+  domains: [safety]
+url: https://streamevals.com/
+citation: >-
+  McCaslin, T., et al. (2025). STREAM (ChemBio): A Standard for Transparently Reporting
+  Evaluations in AI Model Reports. arXiv:2508.09853.
+description: >-
+  Criteria for what a report must say about a dangerous-capability evaluation so third parties
+  can judge its results: threat relevance, test construction and grading, elicitation, performance,
+  baselines, and interpretation.
+scoring:
+  scheme: checklist
+  overall: mean-of-groups
+groups:
+  - id: threat_relevance
+    name: Threat relevance
+    items:
+      - { id: s1.i, text: "Does the report describe the capabilities that the evaluation measures, and which threat models they are relevant to?", guidance: { met: "Both the measured capability and the relevant threat model are stated.", evidence: [paper, report] } }
+      - { id: s1.ii, text: "Does the report state what evaluation results would \"rule in\" or \"rule out\" capabilities of concern, if any?", guidance: { met: "Thresholds or results that would rule capabilities in or out are stated.", evidence: [paper, report] } }
+      - { id: s1.iii, text: "Does the report provide an example evaluation item and response?", guidance: { met: "At least one item and a model response are shown (redacted if hazardous).", evidence: [paper, report] } }
+  - id: test_construction
+    name: Test construction, grading and scoring
+    items:
+      - { id: s2.i, text: "Does the report state the number of evaluation items?", guidance: { met: "The item count is stated.", evidence: [paper, report] } }
+      - { id: s2.ii, text: "Does the report describe the item type (multiple choice, multiple response, short answer, etc.) and scoring method?", guidance: { met: "Item format and scoring method are both described.", evidence: [paper, report] } }
+      - { id: s2.iii, text: "Does the report describe how the grading criteria were created, and describe quality control measures?", guidance: { met: "Creation of grading criteria and quality control are both described.", evidence: [paper, report] } }
+      - { id: s2.iv-a, principle: "If human or expert graded", text: "Does the report describe the grader sample?", guidance: { met: "Graders' number and expertise are described.", not_applicable: "Grading is automated.", evidence: [paper, report] } }
+      - { id: s2.iv-b, principle: "If human or expert graded", text: "Does the report describe the grading process?", guidance: { met: "The human grading procedure is described.", not_applicable: "Grading is automated.", evidence: [paper, report] } }
+      - { id: s2.iv-c, principle: "If human or expert graded", text: "Does the report state the level of agreement between human graders?", guidance: { met: "An inter-grader agreement figure is reported.", not_applicable: "Grading is automated.", evidence: [paper, report] } }
+      - { id: s2.v-a, principle: "If auto-graded by a model", text: "Does the report describe the base model used for grading, and any modifications made to it?", guidance: { met: "The grader model and its modifications are named.", not_applicable: "No model grader is used.", evidence: [paper, report] } }
+      - { id: s2.v-b, principle: "If auto-graded by a model", text: "Does the report describe the automated grading process?", guidance: { met: "The automated grading procedure is described.", not_applicable: "No model grader is used.", evidence: [paper, report] } }
+      - { id: s2.v-c, principle: "If auto-graded by a model", text: "Does the report state whether the autograder was compared to human graders/other auto-graders?", guidance: { met: "A comparison of the autograder with humans or other graders is reported.", not_applicable: "No model grader is used.", evidence: [paper, report] } }
+  - id: elicitation
+    name: Model elicitation
+    items:
+      - { id: s3.i, text: "Does the report specify the exact model version(s) tested?", guidance: { met: "Exact model identifiers or snapshot dates are given.", evidence: [paper, report] } }
+      - { id: s3.ii, text: "Does the report specify the safety mitigations active during testing, and any adaptations to elicitation?", guidance: { met: "Active safeguards and elicitation adaptations are stated.", evidence: [paper, report] } }
+      - { id: s3.iii, text: "Does the report describe the elicitation techniques for the test in sufficient detail?", guidance: { met: "Prompts, scaffolds, sampling settings and attempt counts are described.", evidence: [paper, report] } }
+  - id: performance
+    name: Model performance
+    items:
+      - { id: s4.i, text: "Does the report give representative performance statistics (e.g. mean, maximum)?", guidance: { met: "Summary statistics of performance are reported.", evidence: [paper, report] } }
+      - { id: s4.ii, text: "Does the report give uncertainty measures, and specify the number of evaluation runs conducted?", guidance: { met: "Uncertainty and number of runs are both reported.", evidence: [paper, report] } }
+      - { id: s4.iii, text: "Does the report provide results from ablations/alternative testing conditions?", guidance: { met: "Results under at least one alternative condition are reported.", evidence: [paper, report] } }
+  - id: baselines
+    name: Baseline performance
+    items:
+      - { id: s5.i-a, principle: "If a human baseline was used", text: "Does the report describe the human baseline sample and recruitment?", guidance: { met: "The baseline participants and their recruitment are described.", not_applicable: "No human baseline was used.", evidence: [paper, report] } }
+      - { id: s5.i-b, principle: "If a human baseline was used", text: "Does the report give human performance statistics, and describe differences with the AI test?", guidance: { met: "Human scores and differences in test conditions are reported.", not_applicable: "No human baseline was used.", evidence: [paper, report] } }
+      - { id: s5.i-c, principle: "If a human baseline was used", text: "Does the report describe how human performance was elicited?", guidance: { met: "Conditions given to human participants are described.", not_applicable: "No human baseline was used.", evidence: [paper, report] } }
+      - { id: s5.ii-a, principle: "If no human baseline was used", text: "Does the report explain why a human baseline would not be appropriate/feasible?", guidance: { met: "A reason for having no human baseline is given.", not_applicable: "A human baseline was used.", evidence: [paper, report] } }
+      - { id: s5.ii-b, principle: "If no human baseline was used", text: "Does the report provide an alternative comparison point, and explain it?", guidance: { met: "Another reference point is reported and explained.", not_applicable: "A human baseline was used.", evidence: [paper, report] } }
+  - id: interpretation
+    name: Results interpretation
+    items:
+      - { id: s6.i, text: "Does the report state overall conclusions about the model's capabilities/risk level, and connect with evaluation evidence?", guidance: { met: "Conclusions are stated and tied to specific results.", evidence: [paper, report] } }
+      - { id: s6.ii, text: "Does the report give 'falsification' conditions for its conclusions, and state whether pre-registered?", guidance: { met: "Falsification conditions and pre-registration status are both stated.", evidence: [paper, report] } }
+      - { id: s6.iii, text: "Does the report include predictions about near-term future performance?", guidance: { met: "A forecast of near-term performance is given.", evidence: [paper, report] } }
+      - { id: s6.iv, text: "Does the report state the length of time allowed for interpreting results before deployment?", guidance: { met: "The interpretation period before deployment is stated.", not_applicable: "The report is not tied to a model deployment decision (e.g. a benchmark paper).", evidence: [report] } }
+      - { id: s6.v, text: "Does the report describe any notable disagreements over results interpretation?", guidance: { met: "Disagreements are described, or the report states there were none.", evidence: [paper, report] } }

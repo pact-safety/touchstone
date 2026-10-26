@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+/* Tokens from PACT's design system (bench/DESIGN_TOKENS.md): brand purple is the only loud colour,
+   cards use a hairline border instead of shadow, Work Sans with system fallbacks. */
+:root {
+  --bg: #ffffff;
+  --surface: #f7f8fc;
+  --fg: #1e2740;
+  --muted: #5d606a;
+  --heading: #1e2740;
+  --line: #e4e6ee;
+  --brand: #533feb;
+  --accent: #00c8ff;
+  --code-bg: #f3f3f3;
+  --ok: #1a7f4b;
+  --warn: #9a5b00;
+  --bad: #b3261e;
+  --sev-yellow: #c9b800;
+  --sev-orange: #e07b00;
+  --sev-red: #d13b3b;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0c101a; --surface: #111520; --fg: #b4b8c4; --muted: #8e919c; --heading: #f0f0f0;
+    --line: #252629; --code-bg: #080b12; --brand: #8b7cff; --ok: #4cc38a; --warn: #f0b04a; --bad: #ff7a70;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0c101a; --surface: #111520; --fg: #b4b8c4; --muted: #8e919c; --heading: #f0f0f0;
+  --line: #252629; --code-bg: #080b12; --brand: #8b7cff; --ok: #4cc38a; --warn: #f0b04a; --bad: #ff7a70;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-heading: var(--heading);
+  --color-line: var(--line);
+  --color-brand: var(--brand);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+  --font-sans: "Work Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-heading: "Work Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+}
+
+@layer base {
+  body { line-height: 1.6; }
+  h1, h2, h3 { line-height: 1.2; text-wrap: balance; color: var(--heading); }
+  :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; border-radius: 4px; }
+  /* Headings and sections take focus programmatically on navigation; they are not controls. */
+  h1[tabindex="-1"]:focus, section[tabindex="-1"]:focus, main:focus { outline: none; }
+  kbd { font-family: var(--font-mono); font-size: 0.8em; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 0.35em; background: var(--surface); }
+  code { font-family: var(--font-mono); font-size: 0.85em; background: var(--code-bg); border-radius: 4px; padding: 0.05em 0.3em; }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+}
+
+@layer components {
+  .skip-link { position: absolute; left: 1rem; top: -3rem; z-index: 50; background: var(--brand); color: var(--bg); padding: 0.5rem 0.9rem; border-radius: 6px; }
+  .skip-link:focus { top: 1rem; }
+  .nav-link { color: var(--fg); text-decoration: none; padding-block: 0.25rem; border-bottom: 2px solid transparent; }
+  .nav-link:hover { color: var(--brand); }
+  .nav-link[aria-current="page"] { color: var(--heading); border-bottom-color: var(--brand); font-weight: 500; }
+  .link { color: var(--brand); text-decoration: underline; text-underline-offset: 2px; }
+  .btn { display: inline-flex; align-items: center; gap: 0.4rem; border-radius: 6px; padding: 0.4rem 0.9rem; background: var(--brand); color: var(--bg); font-weight: 500; font-size: 0.875rem; }
+  .btn-quiet { display: inline-flex; align-items: center; gap: 0.4rem; border-radius: 6px; padding: 0.3rem 0.6rem; border: 1px solid var(--line); font-size: 0.8125rem; color: var(--fg); background: var(--bg); }
+  .btn-quiet:hover { border-color: var(--brand); }
+  .field { border: 1px solid var(--line); border-radius: 6px; padding: 0.4rem 0.6rem; background: var(--bg); color: var(--fg); font-size: 0.9rem; }
+  .card { border: 1px solid var(--line); border-radius: 8px; background: var(--surface); padding: 1.25rem 1.5rem; }
+  .pill { display: inline-flex; align-items: center; border-radius: 999px; padding: 0 0.55rem; font-size: 0.75rem; font-weight: 500; line-height: 1.6rem; border: 1px solid var(--line); white-space: nowrap; }
+  .pill-met { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
+  .pill-unmet { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, transparent); }
+  .pill-na { color: var(--muted); }
+  .pill-draft { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
+  .sev { display: inline-block; width: 0.6rem; height: 0.6rem; border-radius: 2px; margin-right: 0.35rem; vertical-align: middle; border: 1px solid var(--line); }
+  .sev-yellow { background: var(--sev-yellow); } .sev-orange { background: var(--sev-orange); } .sev-red { background: var(--sev-red); } .sev-baseline { background: transparent; border-color: var(--fg); }
+  .bar { height: 5px; border-radius: 3px; background: var(--line); overflow: hidden; min-width: 4rem; }
+  .bar > span { display: block; height: 100%; border-radius: 3px; background: var(--brand); }
+  .dialog { max-width: 32rem; width: calc(100% - 2rem); border: 1px solid var(--line); border-radius: 8px; padding: 1.5rem; background: var(--bg); color: var(--fg); }
+  .dialog::backdrop { background: rgb(0 0 0 / 0.45); }
+  .grid-table { border-collapse: separate; border-spacing: 0; width: 100%; font-variant-numeric: tabular-nums; }
+  .grid-table th, .grid-table td { padding: 0.5rem 0.75rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+  .grid-table thead th { position: sticky; top: 0; background: var(--bg); font-size: 0.8125rem; font-weight: 500; color: var(--muted); z-index: 1; white-space: nowrap; }
+  .grid-table tbody tr { cursor: pointer; }
+  .grid-table tbody tr:hover td, .grid-table tbody tr:hover th { background: var(--surface); }
+  .grid-table [role="gridcell"]:focus-visible, .grid-table [role="rowheader"]:focus-visible, .grid-table [role="columnheader"]:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; background: var(--surface); }
+  .sort-btn { all: unset; cursor: pointer; }
+  details > summary { cursor: pointer; }
+  details > summary::marker { color: var(--muted); }
+  blockquote.quote { border-left: 3px solid var(--line); padding-left: 0.75rem; color: var(--fg); font-style: italic; }
+}

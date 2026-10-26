@@ -1,0 +1,68 @@
+name: Nightly re-assessment
+# Checks every benchmark's paper version and repo commit, re-assesses what changed (or was never
+# assessed) with an open-weights model, and opens a pull request. Nothing is published until a
+# person reviews and merges it.
+on:
+  schedule:
+    - cron: '17 4 * * *'
+  workflow_dispatch:
+    inputs:
+      max_calls:
+        description: Most model calls this run may make
+        default: '40'
+permissions:
+  contents: write
+  pull-requests: write
+  models: read
+concurrency:
+  group: nightly
+  cancel-in-progress: false
+jobs:
+  reassess:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Check sources for changes
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: npx tsx src/cli.ts watch --write | tee watch.json
+      - name: Assess changed and unassessed pairs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          TOUCHSTONE_LLM_BASE_URL: ${{ vars.TOUCHSTONE_LLM_BASE_URL || 'https://models.github.ai/inference' }}
+          TOUCHSTONE_MODEL: ${{ vars.TOUCHSTONE_MODEL }}
+          MAX_CALLS: ${{ inputs.max_calls || vars.TOUCHSTONE_MAX_CALLS || '40' }}
+        run: npx tsx src/cli.ts assess --queue --max-calls "$MAX_CALLS"
+      - run: npx tsx src/cli.ts validate
+      - run: npm test
+      - name: Open a pull request for review
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # git status, not git diff: new assessment files are untracked.
+          if [ -z "$(git status --porcelain -- data/assessments data/runs)" ]; then
+            echo "No new or changed assessments; nothing to review."; exit 0
+          fi
+          branch="nightly/$(date -u +%F)"
+          git config user.name "touchstone-bot"
+          git config user.email "touchstone-bot@users.noreply.github.com"
+          git switch -c "$branch"
+          git add data/assessments data/runs data/watch
+          git commit -m "Nightly re-assessment $(date -u +%F)"
+          git push -u origin "$branch"
+          gh pr create --title "Nightly re-assessment $(date -u +%F)" --label automated-assessment --body-file - <<'BODY'
+          The nightly job found new or changed benchmark sources and proposed verdicts with an open-weights model.
+
+          **Before merging**, for each changed `*.auto.yaml`:
+          - read the rationale and quoted evidence for each verdict (every quote was verified verbatim against the pinned source);
+          - override any verdict you disagree with by setting `by: human` and a rationale;
+          - set `status: published` and add yourself to `provenance.reviewers`, or leave it as a draft.
+
+          Transcripts are in `data/runs/`. Run `npx tsx src/cli.ts replay --benchmark <id> --standard <id>` to check the sources and prompts match the record.
+          BODY

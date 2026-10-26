@@ -1,0 +1,212 @@
+# Agentic Benchmark Checklist (ABC) v1, Zhu et al. 2025.
+# Task-validity (T.*) and reporting (R.*) items follow the paper's numbering. Outcome-validity
+# items are specific to an evaluation method; each is n/a unless the benchmark uses that method.
+# Section score = met / (met + unmet) × 100. Overall = mean of the three section scores, which
+# reproduces the paper's published overall figures.
+id: abc
+name: Agentic Benchmark Checklist
+short: ABC
+version: "1.0"
+publisher: Zhu et al. (UIUC Kang Lab and collaborators)
+year: 2025
+kind: checklist
+status: encoded
+applies_to: Agentic benchmarks, where an AI agent completes tasks with tools or in an environment.
+scope:
+  modalities: [lm-agent]
+url: https://arxiv.org/abs/2507.02825
+citation: >-
+  Zhu, Y., Jin, T., Pruksachatkun, Y., et al. (2025). Establishing Best Practices for Building
+  Rigorous Agentic Benchmarks. arXiv:2507.02825.
+description: >-
+  Checks whether a task is solvable if and only if the agent has the target capability (task
+  validity), whether the evaluation correctly decides if a task was solved (outcome validity),
+  and how transparently limitations are reported.
+scoring:
+  scheme: checklist
+  overall: mean-of-groups
+groups:
+  - id: outcome_validity
+    name: Outcome validity
+    description: The evaluation method correctly indicates whether the task has been solved.
+    items:
+      - id: O.a.1
+        principle: String matching (whole or substring)
+        text: Considers expressions semantically equivalent to ground truth.
+        guidance: { met: "Matching normalises or accepts equivalent expressions of the answer.", not_applicable: "The benchmark does not score by string matching.", evidence: [repo] }
+      - id: O.a.2
+        principle: String matching (whole or substring)
+        text: Handles redundant words used by agents.
+        guidance: { met: "Extra words around a correct answer do not cause a false failure.", not_applicable: "The benchmark does not score by string matching.", evidence: [repo] }
+      - id: O.a.3
+        principle: String matching (substring)
+        text: Handles negation modifiers used by agents.
+        guidance: { met: "An answer that negates the ground truth is not scored correct.", not_applicable: "The benchmark does not score by substring matching.", evidence: [repo] }
+      - id: O.a.4
+        principle: String matching (substring)
+        text: Is robust against systematically listing all possible answers.
+        guidance: { met: "Listing every candidate answer does not score as correct.", not_applicable: "The benchmark does not score by substring matching.", evidence: [repo] }
+      - id: O.a.5
+        principle: String matching (substring)
+        text: Ground truth is sufficiently complex to prevent guessing.
+        guidance: { met: "Answers cannot be hit by guessing short or common strings.", not_applicable: "The benchmark does not score by substring matching.", evidence: [dataset] }
+      - id: O.b.1
+        principle: LLM-as-a-judge
+        text: Demonstrates documented or experimental evidence of the judge's accuracy, self-consistency, and agreement with human.
+        guidance: { met: "Judge accuracy, self-consistency and human agreement are all reported.", not_applicable: "No LLM judge is used.", evidence: [paper] }
+      - id: O.b.2
+        principle: LLM-as-a-judge
+        text: Is designed to resist adversarial inputs and reward hacking.
+        guidance: { met: "The judge was tested or hardened against adversarial outputs.", not_applicable: "No LLM judge is used.", evidence: [paper, repo] }
+      - id: O.c.1
+        principle: Code generation, unit or end-to-end testing
+        text: Verifies test cases for correctness and quality (e.g., by human).
+        guidance: { met: "Test cases were reviewed for correctness.", not_applicable: "Outputs are not scored by test cases.", evidence: [paper] }
+      - id: O.c.2
+        principle: Code generation, unit or end-to-end testing
+        text: Measures quality of test cases using objective metrics (e.g., code coverage, cyclomatic complexity control).
+        guidance: { met: "Test-suite quality is measured with an objective metric such as coverage.", not_applicable: "Outputs are not scored by test cases.", evidence: [paper, repo] }
+      - id: O.d.1
+        principle: Code generation, fuzz testing
+        text: Addresses potential edge cases.
+        guidance: { met: "Fuzzing covers documented edge cases.", not_applicable: "Fuzz testing is not used.", evidence: [repo] }
+      - id: O.d.2
+        principle: Code generation, fuzz testing
+        text: Ensures comprehensive coverage of all relevant input variations (e.g., data types, memory layouts, value ranges).
+        guidance: { met: "Generated inputs span the relevant types and ranges.", not_applicable: "Fuzz testing is not used.", evidence: [repo] }
+      - id: O.d.3
+        principle: Code generation, fuzz testing
+        text: Generates inputs that the code under testing is sensitive to.
+        guidance: { met: "Inputs are chosen to exercise sensitive behaviour.", not_applicable: "Fuzz testing is not used.", evidence: [repo] }
+      - id: O.e.1
+        principle: Code generation, end-to-end testing
+        text: Exercises all relevant parts of the code being tested.
+        guidance: { met: "End-to-end tests reach every relevant component.", not_applicable: "End-to-end testing is not used.", evidence: [repo] }
+      - id: O.e.2
+        principle: Code generation, end-to-end testing
+        text: Prevents non-deterministic ("flaky") test results.
+        guidance: { met: "Tests are shown to give the same result on repeat runs.", not_applicable: "End-to-end testing is not used.", evidence: [repo] }
+      - id: O.f.1
+        principle: State modification, state matching
+        text: Ground truth includes all states achievable after success.
+        guidance: { met: "Every valid end state is accepted.", not_applicable: "Outcomes are not scored by matching environment state.", evidence: [repo] }
+      - id: O.f.2
+        principle: State modification, state matching
+        text: Checks relevant and irrelevant states for the challenge.
+        guidance: { met: "Scoring also checks that unrelated state was not damaged.", not_applicable: "Outcomes are not scored by matching environment state.", evidence: [repo] }
+      - id: O.f.3
+        principle: State modification, state matching
+        text: Ground truth is complex to prevent trivial state modifications.
+        guidance: { met: "A trivial state change cannot satisfy the check.", not_applicable: "Outcomes are not scored by matching environment state.", evidence: [repo] }
+      - id: O.g.1
+        principle: Multistep reasoning, answer matching
+        text: Specifies required answer formats in challenge descriptions.
+        guidance: { met: "Task prompts state the required answer format.", not_applicable: "Answers are not scored by matching a final answer.", evidence: [dataset] }
+      - id: O.g.2
+        principle: Multistep reasoning, answer matching
+        text: Minimizes the possibility of success by random guessing.
+        guidance: { met: "The answer space is large enough that guessing rarely succeeds, or chance is corrected for.", not_applicable: "Answers are not scored by matching a final answer.", evidence: [dataset, paper] }
+      - id: O.h.1
+        principle: Multistep reasoning, quality measure
+        text: Designs quality metrics that prevent exploitation (e.g., achieving high scores by reward hacking).
+        guidance: { met: "The quality metric was checked against exploitation.", not_applicable: "No continuous quality metric is used.", evidence: [paper, repo] }
+  - id: task_validity
+    name: Task validity
+    description: A task is solvable if and only if the agent possesses the target capability.
+    items:
+      - id: T.1
+        principle: Tool
+        text: Versions of all tools (e.g., Python) are clearly specified.
+        guidance: { met: "Tool and package versions are pinned or stated in the task setup.", evidence: [repo], probe: pinned-dependencies }
+      - id: T.2
+        principle: Tool
+        text: Required API tools are consistently accessible during evaluation.
+        guidance: { met: "Availability and rate limits of API tools are managed.", not_applicable: "No external API tools are used.", evidence: [repo, docs] }
+      - id: T.3
+        principle: Tool
+        text: Evaluation process terminates or handles errors appropriately if an API becomes inaccessible.
+        guidance: { met: "API outages are detected and the run stops or the task is excluded, not silently failed.", not_applicable: "No external API tools are used.", evidence: [repo] }
+      - id: T.4
+        principle: Environment
+        text: Residual data or state are fully cleared between runs.
+        guidance: { met: "Each task starts from a fresh environment.", evidence: [repo], probe: harness-resets-state }
+      - id: T.5
+        principle: Environment
+        text: Agent is completely isolated from any ground truth information.
+        guidance: { met: "Answers, tests and solutions are not reachable from the agent's environment.", evidence: [repo] }
+      - id: T.6
+        principle: Environment
+        text: Setup does not change over time (e.g., no live website).
+        guidance: { met: "The environment is frozen at release (containers, snapshots, local copies).", evidence: [repo] }
+      - id: T.7
+        principle: Implementation
+        text: Annotated ground truth is verified for correctness.
+        guidance: { met: "Ground truth was checked by a second person or by execution.", evidence: [paper] }
+      - id: T.8
+        principle: Implementation
+        text: Each task is verified to be solvable.
+        guidance: { met: "Every task was solved by a person or a reference solution.", evidence: [paper, repo] }
+      - id: T.9
+        principle: Implementation
+        text: Benchmark includes an Oracle solver that can automatically solve all challenges.
+        guidance: { met: "An automated reference solver ships with the benchmark and solves all tasks.", evidence: [repo], probe: oracle-solver-present }
+      - id: T.10
+        principle: Implementation
+        text: Implementation is free of vulnerabilities that could be exploited to pass evaluations without completing tasks.
+        guidance: { met: "No known exploit passes tasks without solving them, and the authors report checking for one.", evidence: [paper, repo] }
+  - id: benchmark_reporting
+    name: Benchmark reporting
+    description: Limitations that cannot be avoided are reported transparently.
+    items:
+      - id: R.1
+        principle: Transparency and validity
+        text: Is fully or at least partially open-sourced.
+        guidance: { met: "Tasks or data are publicly available, in full or in part.", evidence: [repo, dataset] }
+      - id: R.2
+        principle: Transparency and validity
+        text: Offers an open-source evaluation harness for users.
+        guidance: { met: "The code that runs and scores the benchmark is public.", evidence: [repo] }
+      - id: R.3
+        principle: Transparency and validity
+        text: Includes measures to prevent data contamination at the time of benchmark release, such as a private, held-out test set.
+        guidance: { met: "A held-out set, canary string or equivalent contamination measure exists.", evidence: [repo, paper], probe: canary-or-heldout }
+      - id: R.4
+        principle: Transparency and validity
+        text: Includes measures or plans to consistently update challenges over time to avoid overfitting.
+        guidance: { met: "An update plan or versioned refresh is documented.", evidence: [docs, paper] }
+      - id: R.5
+        principle: Transparency and validity
+        text: Clearly states the relationship between the agent capabilities it aims to evaluate and the constructs or outcomes it measures.
+        guidance: { met: "The documentation links the measured outcome to the named capability.", evidence: [paper] }
+      - id: R.6
+        principle: Transparency and validity
+        text: Clearly states the evaluation subject of the benchmark (e.g., a model or an agent framework).
+        guidance: { met: "It is stated whether a model, a scaffold, or the pair is being evaluated.", evidence: [paper] }
+      - id: R.7
+        principle: Flaw mitigation
+        text: Describes steps taken to prevent, identify, and correct flaws.
+        guidance: { met: "Quality-control and correction steps are described.", evidence: [paper, repo] }
+      - id: R.8
+        principle: Flaw mitigation
+        text: Includes qualitative discussions of the potential impact of unavoidable flaws.
+        guidance: { met: "Known flaws and their likely effect are discussed.", evidence: [paper] }
+      - id: R.9
+        principle: Flaw mitigation
+        text: Includes quantitative analysis to assess the impact of unavoidable flaws (e.g., noise of ground truth).
+        guidance: { met: "The impact of a known flaw is estimated numerically.", evidence: [paper] }
+      - id: R.10
+        principle: Result interpretation
+        text: Reports metrics about statistical significance, such as confidence intervals.
+        guidance: { met: "Reported results carry confidence intervals or significance tests.", evidence: [paper] }
+      - id: R.11
+        principle: Result interpretation
+        text: Provides guidance on interpreting results with eval flaws.
+        guidance: { met: "Readers are told how flaws should change their reading of scores.", evidence: [paper] }
+      - id: R.12
+        principle: Result interpretation
+        text: Reports results of non-AI baselines (e.g., human experts).
+        guidance: { met: "A human or other non-AI baseline is reported.", evidence: [paper] }
+      - id: R.13
+        principle: Result interpretation
+        text: Reports results of trivial agents (e.g., one that does nothing).
+        guidance: { met: "A do-nothing or trivial agent's score is reported.", evidence: [paper] }

@@ -1,0 +1,131 @@
+# Construct Validity Checklist from "Measuring What Matters" (Bean et al., NeurIPS 2025).
+# The authors publish a checklist but no scoring rule. Touchstone's rule: each
+# recommendation's score = met / (met + unmet) × 100, overall = mean of recommendations.
+id: construct-validity
+name: Measuring What Matters construct validity checklist
+short: Construct validity
+version: "2025.1"
+publisher: Bean et al. (Oxford Reasoning with Machines Lab and collaborators)
+year: 2025
+kind: checklist
+status: encoded
+scoring_defined_by: touchstone
+url: https://oxrml.com/research/measuring-what-matters/checklist/
+citation: >-
+  Bean, A. M., Kearns, R. O., Romanou, A., et al. (2025). Measuring what Matters: Construct
+  Validity in Large Language Model Benchmarks. NeurIPS 2025 Datasets and Benchmarks Track.
+description: >-
+  Eight recommendations, drawn from a review of 445 LLM benchmark papers, for making sure a
+  benchmark measures the phenomenon it claims to.
+scoring:
+  scheme: checklist
+  overall: mean-of-groups
+groups:
+  - id: define
+    name: Define the phenomenon
+    items:
+      - id: def.1
+        text: Provide a precise and operational definition for the phenomenon being measured
+        guidance: { met: "A definition is given that says which observable outputs count as evidence of the phenomenon.", evidence: [paper] }
+      - id: def.2
+        text: Specify the scope of the phenomenon being covered and acknowledge any excluded aspects
+        guidance: { met: "Scope is stated and at least one excluded aspect is named.", evidence: [paper] }
+      - id: def.3
+        text: Identify if the phenomenon has sub-components and ensure they are measured separately
+        guidance: { met: "Sub-components are named and scored separately, or the phenomenon is argued to have none.", evidence: [paper, repo] }
+  - id: measure_only
+    name: Measure only the phenomenon
+    items:
+      - id: mo.1
+        text: Control for unrelated tasks that may affect the results
+        guidance: { met: "Abilities other than the target that tasks require are identified and controlled for.", evidence: [paper] }
+      - id: mo.2
+        text: Assess the impact of format constraints on model performance
+        guidance: { met: "The effect of output-format requirements on scores is measured.", evidence: [paper] }
+      - id: mo.3
+        text: Validate any automated output parsing techniques for accuracy, consistency and bias
+        guidance: { met: "Parser accuracy, consistency and bias are each checked and reported.", not_applicable: "No automated parsing of free-form output is used.", evidence: [paper, repo] }
+  - id: dataset
+    name: Construct a representative dataset for the task
+    items:
+      - id: ds.1
+        text: Employ sampling strategies to ensure task items are representative of the overall task space
+        guidance: { met: "A sampling strategy over a described task space is documented.", evidence: [paper] }
+      - id: ds.2
+        text: Verify the quality and relevance of all task items, especially for large or automatically generated datasets
+        guidance: { met: "Every item passed a documented quality or relevance check.", evidence: [paper] }
+      - id: ds.3
+        text: Include task items that test known LLM sensitivities (e.g. input permutations or variations)
+        guidance: { met: "An identified subset of items varies inputs to test sensitivity.", evidence: [paper, dataset] }
+  - id: reuse
+    name: Acknowledge limitations of reusing datasets
+    items:
+      - id: ru.1
+        text: Document whether the benchmark adapts a previous dataset or benchmark
+        guidance: { met: "The documentation states whether prior datasets are reused. (Met by a clear statement either way.)", evidence: [paper] }
+      - id: ru.2
+        text: If so, analyse and report the relevant strengths and limitations of the adapted prior work
+        guidance: { met: "Strengths and limitations of the reused work are discussed.", not_applicable: "No prior dataset or benchmark is reused.", evidence: [paper] }
+      - id: ru.3
+        text: If so, report and compare performance on the new benchmark against the original
+        guidance: { met: "Results on the new and the original benchmark are compared.", not_applicable: "No prior dataset or benchmark is reused.", evidence: [paper] }
+      - id: ru.4
+        text: Explain modifications to reused datasets and how they improve construct validity
+        guidance: { met: "Each modification is listed with how it improves validity.", not_applicable: "No prior dataset or benchmark is reused.", evidence: [paper] }
+  - id: contamination
+    name: Prepare for contamination
+    items:
+      - id: ct.1
+        text: Implement tests to detect data contamination and apply them to the benchmark
+        guidance: { met: "A contamination test is described and its results reported.", evidence: [paper, repo] }
+      - id: ct.2
+        text: Maintain a held-out set of task items to facilitate ongoing, uncontaminated evaluation
+        guidance: { met: "A private or held-out split exists.", evidence: [paper, repo], probe: canary-or-heldout }
+      - id: ct.3
+        text: Investigate the potential pre-exposure of benchmark source materials or similar data in common LLM training corpora
+        guidance: { met: "The authors check whether source material appears in common training corpora.", evidence: [paper] }
+  - id: statistics
+    name: Use statistical methods to compare models
+    items:
+      - id: st.1
+        text: Report the benchmark's sample size and justify its statistical power
+        guidance: { met: "Item count is reported with a power or precision argument.", evidence: [paper] }
+      - id: st.2
+        text: Report uncertainty estimates for all primary scores to enable robust model comparisons
+        guidance: { met: "Every primary score has an interval or standard error.", evidence: [paper] }
+      - id: st.3
+        text: If using human raters, describe their demographics and mitigate potential demographic biases in rater recruitment and instructions
+        guidance: { met: "Rater demographics are described and a bias mitigation is stated.", not_applicable: "No human raters are used.", evidence: [paper] }
+      - id: st.4
+        text: Use metrics that capture the inherent variability of any subjective labels, without relying on single-point aggregation or exact matching
+        guidance: { met: "Subjective labels are reported with their variability.", not_applicable: "Labels are objective.", evidence: [paper] }
+  - id: error_analysis
+    name: Conduct an error analysis
+    items:
+      - id: ea.1
+        text: Conduct a qualitative and quantitative analysis of common failure modes
+        guidance: { met: "Failure modes are both described and counted.", evidence: [paper] }
+      - id: ea.2
+        text: Investigate whether failure modes correlate with non-targeted phenomena (confounders) rather than the intended construct
+        guidance: { met: "Failures are tested against at least one confounder.", evidence: [paper] }
+      - id: ea.3
+        text: If so, identify and discuss any potential scoring biases revealed in the error analysis
+        guidance: { met: "Scoring biases found in error analysis are discussed.", not_applicable: "The error analysis found no confounder correlation.", evidence: [paper] }
+      - id: ea.4
+        text: Conduct experiments or propose new directions to improve model scores on the benchmark
+        guidance: { met: "Experiments or proposals for improving scores are reported.", evidence: [paper] }
+  - id: justify
+    name: Justify construct validity
+    items:
+      - id: jv.1
+        text: Justify the relevance of the benchmark for the phenomenon with real-world applications
+        guidance: { met: "A real-world application is named and linked to the tasks.", evidence: [paper] }
+      - id: jv.2
+        text: Provide a clear rationale for the choice of tasks and metrics, connected to the operational definition of the phenomenon
+        guidance: { met: "Task and metric choices are tied to the definition in def.1.", evidence: [paper] }
+      - id: jv.3
+        text: Compare similarities and differences between the benchmark and existing evaluations of similar phenomena
+        guidance: { met: "Named existing evaluations are compared.", evidence: [paper] }
+      - id: jv.4
+        text: Discuss the limitations and design trade-offs of the benchmark concerning construct validity
+        guidance: { met: "Limitations specific to construct validity are discussed.", evidence: [paper] }

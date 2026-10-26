@@ -1,0 +1,40 @@
+name: Triage correction requests
+on:
+  issues:
+    types: [opened, edited, labeled]
+permissions:
+  contents: read
+  issues: write
+jobs:
+  triage:
+    if: contains(github.event.issue.labels.*.name, 'correction')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Check the request against the current record
+        env:
+          # The issue body is untrusted: it is only ever written to a file, never interpolated into a command.
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          printf '%s' "$ISSUE_BODY" > body.md
+          npx tsx src/cli.ts triage --body-file body.md > triage.json
+          node -e 'const t=require("./triage.json"); require("fs").writeFileSync("comment.md", "<!-- touchstone-triage -->\n"+t.comment); require("fs").writeFileSync("labels.txt", t.labels.join(","))'
+      - name: Post or update the triage comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          existing=$(gh api "repos/$REPO/issues/$NUMBER/comments" --jq '[.[] | select(.body | startswith("<!-- touchstone-triage -->"))][0].id // empty')
+          if [ -n "$existing" ]; then
+            gh api -X PATCH "repos/$REPO/issues/comments/$existing" -F body=@comment.md > /dev/null
+          else
+            gh issue comment "$NUMBER" --repo "$REPO" --body-file comment.md
+          fi
+          gh issue edit "$NUMBER" --repo "$REPO" --remove-label needs-info,triaged 2>/dev/null || true
+          gh issue edit "$NUMBER" --repo "$REPO" --add-label "$(cat labels.txt)"
