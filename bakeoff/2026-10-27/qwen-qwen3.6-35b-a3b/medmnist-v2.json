@@ -1,0 +1,584 @@
+{
+ "model": "qwen/qwen3.6-35b-a3b",
+ "benchmark": "medmnist-v2",
+ "standard": "betterbench",
+ "date": "2026-10-27",
+ "complete": true,
+ "calls": 4,
+ "verdicts": {
+  "des.01": 0,
+  "des.02": 0,
+  "des.03": 10,
+  "des.04": 10,
+  "des.05": 15,
+  "des.06": 0,
+  "des.07": 15,
+  "des.08": 0,
+  "des.09": 0,
+  "des.10": 0,
+  "des.11": 0,
+  "des.12": 15,
+  "des.13": 15,
+  "des.14": 0,
+  "imp.01": 15,
+  "imp.02": 15,
+  "imp.03": 15,
+  "imp.04": 15,
+  "imp.05": 0,
+  "imp.06": 0,
+  "imp.07": 15,
+  "imp.08": 0,
+  "imp.09": 0,
+  "imp.10": 0,
+  "imp.11": 0,
+  "doc.01": 15,
+  "doc.02": 15,
+  "doc.03": 0,
+  "doc.04": 15,
+  "doc.05": 15,
+  "doc.06": 15,
+  "doc.07": 15,
+  "doc.08": 0,
+  "doc.09": 15,
+  "doc.10": 15,
+  "doc.11": 15,
+  "doc.12": 0,
+  "doc.13": 0,
+  "doc.14": 0,
+  "doc.15": 15,
+  "doc.16": 15,
+  "doc.17": 15,
+  "doc.18": 0,
+  "doc.19": 0,
+  "mai.01": 0,
+  "mai.02": 0,
+  "mai.03": 0
+ },
+ "transcript": [
+  {
+   "group": "design",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "6aef28b4afcd3c9be2d9895af63aaaa791b8a295392382677e6cad2903463f2a",
+   "excerpts": [
+    "repo:README.md#8",
+    "repo:README.md#10",
+    "repo:LICENSE#0",
+    "paper:p3#0",
+    "paper:p5#1",
+    "paper:p6#0",
+    "repo:README.md#7",
+    "paper:p7#2",
+    "paper:p7#3"
+   ],
+   "response": "{\n\"verdicts\": [\n{\n\"item\": \"des.01\",\n\"value\": 15,\n\"rationale\": \"The paper explicitly defines the tested capability as a 'biomedical image classification benchmark' consisting of standardized datasets.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p4#0\",\n\"quote\": \"The diverse dataset design could lead to diverse task difficulty, which is desirable as a biomedical image classification benchmark.\"\n}\n]\n},\n{\n\"item\": \"des.02\",\n\"value\": 15,\n\"rationale\": \"The design translates the concept of medical image classification into a benchmark by standardizing image sizes to 28x28 (2D) and 28x28x28 (3D) and providing standardized evaluation functions.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p4#0\",\n\"quote\": \"The MedMNIST v2 dataset consists of 12 2D and 6 3D standardized datasets... Image Size Fixed (28 2 & 28 3 )\"\n}\n]\n},\n{\n\"item\": \"des.03\",\n\"value\": 10,\n\"rationale\": \"The paper mentions the utility for benchmarking methods but does not explicitly describe the real-world helpfulness of knowing about the capability beyond general medical imaging context.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p7#2\",\n\"quote\": \"Data users are also encouraged to analyze the average performance over the 12 2D datasets and 6 3D datasets to benchmark their methods.\"\n}\n]\n},\n{\n\"item\": \"des.04\",\n\"value\": 10,\n\"rationale\": \"The paper describes how to interpret scores by reporting AUC and ACC and encouraging average performance analysis, but lacks explicit warnings on misinterpretation.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p7#2\",\n\"quote\": \"We report the AUC and ACC for each dataset. Data users are also encouraged to analyze the average performance over the 12 2D datasets and 6 3D datasets to benchmark their methods.\"\n}\n]\n},\n{\n\"item\": \"des.05\",\n\"value\": 15,\n\"rationale\": \"The excerpts explicitly state that data was annotated by an expert endocrinologist, confirming domain expert involvement.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p6#0\",\n\"quote\": \"each 3D shape of adrenal gland is annotated by an expert endocrinologist using abdominal computed tomography (CT)\"\n}\n]\n},\n{\n\"item\": \"des.06\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not describe specific use cases or user personas for the benchmark.\",\n\"evidence\": []\n},\n{\n\"item\": \"des.07\",\n\"value\": 15,\n\"rationale\": \"The paper integrates domain literature by citing specific medical datasets (e.g., RibFrac, BBBC051) and sources (e.g., Zhongshan Hospital) used to construct the benchmark.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p6#0\",\n\"quote\": \"The FractureMNIST3D is based on the RibFrac Dataset 32 , containing around 5 , 000 rib fractures from 660 computed tomography (CT) scans.\"\n}\n]\n},\n{\n\"item\": \"des.08\",\n\"value\": 15,\n\"rationale\": \"The choice of metrics (AUC and ACC) is informed by their properties regarding class imbalance and threshold sensitivity, as explained in the text.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p7#2\",\n\"quote\": \"AUC is a threshold-free metric to evaluate the continuous prediction scores, while ACC evaluates the discrete prediction labels given threshold... AUC is less sensitive to class imbalance than ACC.\"\n}\n]\n},\n{\n\"item\": \"des.09\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not mention metric floors or ceilings.\",\n\"evidence\": []\n},\n{\n\"item\": \"des.10\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not include human performance levels.\",\n\"evidence\": []\n},\n{\n\"item\": \"des.11\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not include random performance levels.\",\n\"evidence\": []\n},\n{\n\"item\": \"des.12\",\n\"value\": 15,\n\"rationale\": \"The benchmark includes validated automatic evaluation via standardized evaluation functions and scripts for training and evaluation.\",\n\"evidence\": [\n{\n\"excerpt\": \"repo:README.md#7\",\n\"quote\": \"[`evaluator.py`](medmnist/evaluator.py): Standardized evaluation functions.\"\n}\n]\n},\n{\n\"item\": \"des.13\",\n\"value\": 15,\n\"rationale\": \"The paper explicitly compares MedMNIST v2 to other decathlon datasets, highlighting differences in domain, task, and image size.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p3#0\",\n\"quote\": \"Table 1. A comparison of MedMNIST v2 and other “decathlon” datasets . Visual Domain Decathlon 4 Medical Segmentation Decathlon 5 MedMNIST v1 9 MedMNIST v2\"\n}\n]\n},\n{\n\"item\": \"des.14\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not address input sensitivity.\",\n\"evidence\": []\n}\n]\n}",
+   "checks": [
+    {
+     "item": "des.01",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "des.02",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "des.03",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.04",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.05",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.08",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "des.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.10",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.11",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.12",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.13",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.14",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 10518,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 3913,
+    "completion_tokens": 1279,
+    "total_tokens": 5192,
+    "cost": 0.00160635,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00160635,
+     "upstream_inference_prompt_cost": 0.0003913,
+     "upstream_inference_completions_cost": 0.00121505
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "implementation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "10f01ef2be85a177743a1200fdf302877fcae13f20159a6906409127fdf236b3",
+   "excerpts": [
+    "paper:p9#2",
+    "repo:README.md#7",
+    "repo:LICENSE#1",
+    "paper:p7#2",
+    "repo:README.md#5",
+    "repo:README.md#15",
+    "paper:p1#2",
+    "paper:p4#1",
+    "paper:p9#1",
+    "repo:setup.py#0"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"imp.01\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts explicitly state that evaluation code is available via a GitHub repository and an evaluation script.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p9#2\",\n        \"quote\": \"The data API and evaluation script in Python is available at   https://github.com/MedMNIST/MedMNIST .\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.02\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts confirm that the dataset is freely available and accessible via an API, satisfying the requirement for accessible evaluation data.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p9#2\",\n        \"quote\": \"The MedMNIST can be freely available at   https://medmnist.com/ .\"\n      },\n      {\n        \"excerpt\": \"repo:README.md#5\",\n        \"quote\": \"All these datasets are accessible via the same API.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.03\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts state that a data API is available, which supports evaluation of models via API.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p9#2\",\n        \"quote\": \"The data API and evaluation script in Python is available at   https://github.com/MedMNIST/MedMNIST .\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.04\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts mention exporting models to TensorFlow Lite for offline inference and provide PyTorch datasets, supporting local model evaluation.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p7#2\",\n        \"quote\": \"We train Edge exportable models of MedMNIST2D on Google AutoML Vision and export trained quantized models into TensorFlow Lite format to do offline inference.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.05\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention the use of globally unique identifiers or encryption of evaluation instances.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.06\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a task to identify if a model is trained on benchmark data.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.07\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts reference external scripts to reproduce experiments and provide an evaluation script, allowing for result replication.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#7\",\n        \"quote\": \"[EXTERNAL] [`MedMNIST/experiments`](https://github.com/MedMNIST/experiments): training and evaluation scripts to reproduce both 2D and 3D experiments in our paper\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.08\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts report AUC and ACC metrics but do not mention statistical significance tests or uncertainty quantification.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.09\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention assessing the need for warnings for sensitive or harmful content.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.10\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention implementing build status or equivalent CI/CD status indicators.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.11\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not specify release requirements.\",\n    \"evidence\": []\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "imp.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.03",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.04",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.05",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.08",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.10",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.11",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 6034,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 3959,
+    "completion_tokens": 953,
+    "total_tokens": 4912,
+    "cost": 0.00130125,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00130125,
+     "upstream_inference_prompt_cost": 0.0003959,
+     "upstream_inference_completions_cost": 0.00090535
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "documentation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "f5a624a2fed457ea39be582df30c91a0e36db2fbb8088b318853ef13b572bcc3",
+   "excerpts": [
+    "repo:FILE LISTING#0",
+    "repo:README.md#12",
+    "repo:LICENSE#6",
+    "paper:p9#3",
+    "repo:README.md#8",
+    "paper:p6#4",
+    "paper:p10#0",
+    "repo:README.md#11",
+    "paper:p1#1",
+    "paper:p9#2",
+    "paper:p8#0",
+    "paper:p11#3"
+   ],
+   "response": "{\n\"verdicts\": [\n{\n\"item\": \"doc.01\",\n\"value\": 15,\n\"rationale\": \"The repository file listing explicitly includes a 'requirements.txt' file, satisfying the requirement for a requirements file.\",\n\"evidence\": [\n{\n\"excerpt\": \"repo:FILE LISTING#0\",\n\"quote\": \"requirements.txt\"\n}\n]\n},\n{\n\"item\": \"doc.02\",\n\"value\": 15,\n\"rationale\": \"The repository contains 'getting_started.ipynb' and 'getting_started_without_PyTorch.ipynb', and the README provides a 'Quick Start' section with code examples.\",\n\"evidence\": [\n{\n\"excerpt\": \"repo:FILE LISTING#0\",\n\"quote\": \"examples/getting_started.ipynb\"\n},\n{\n\"excerpt\": \"repo:README.md#8\",\n\"quote\": \"# Quick Start\"\n}\n]\n},\n{\n\"item\": \"doc.03\",\n\"value\": 0,\n\"rationale\": \"The provided excerpts do not contain any in-line code comments from the source files (e.g., dataset.py, evaluator.py).\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.04\",\n\"value\": 15,\n\"rationale\": \"The repository includes a README.md with installation and usage instructions, and the paper provides a code availability link, constituting code documentation.\",\n\"evidence\": [\n{\n\"excerpt\": \"repo:FILE LISTING#0\",\n\"quote\": \"README.md\"\n},\n{\n\"excerpt\": \"paper:p9#2\",\n\"quote\": \"The data API and evaluation script in Python is available at   https://github.com/MedMNIST/MedMNIST .\"\n}\n]\n},\n{\n\"item\": \"doc.05\",\n\"value\": 15,\n\"rationale\": \"The excerpts contain a paper with references, acknowledgements, and author contributions, indicating it is a peer-reviewed publication (Nature Scientific Data context implied by format and content).\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p10#0\",\n\"quote\": \"Author contributions statement\"\n}\n]\n},\n{\n\"item\": \"doc.06\",\n\"value\": 15,\n\"rationale\": \"The paper describes the benchmark construction, including dataset scales, tasks, and baseline methods, and the README details the dataset structure.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p1#1\",\n\"quote\": \"MedMNIST v2 is designed to perform classification on lightweight 2D and 3D images with various dataset scales\"\n}\n]\n},\n{\n\"item\": \"doc.07\",\n\"value\": 15,\n\"rationale\": \"The paper and README document the test tasks (binary/multi-class, etc.) and the rationale (lightweight benchmark for biomedical images).\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p1#1\",\n\"quote\": \"diverse tasks (binary/multi-class, ordinal regression, and multi-label)\"\n}\n]\n},\n{\n\"item\": \"doc.08\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not explicitly document assumptions of normative properties.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.09\",\n\"value\": 15,\n\"rationale\": \"The paper explicitly states limitations regarding clinical use and resolution reduction.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p9#2\",\n\"quote\": \"Please note that this dataset is NOT intended for clinical use, as substantially reducing the resolution of medical images might result in images that are insufficient to represent and capture different disease pathologies.\"\n}\n]\n},\n{\n\"item\": \"doc.10\",\n\"value\": 15,\n\"rationale\": \"The paper mentions data collection contributions and the README details the data structure and download process.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p10#0\",\n\"quote\": \"JY, RS, DW, ZL, LZ, BK and HP contributed to data collection, cleaning and annotations.\"\n}\n]\n},\n{\n\"item\": \"doc.11\",\n\"value\": 15,\n\"rationale\": \"The paper and README document evaluation metrics such as AUC and ACC, and provide an evaluator script.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p9#2\",\n\"quote\": \"Methods   AUC   ACC\"\n},\n{\n\"excerpt\": \"repo:README.md#12\",\n\"quote\": \"Parse and evaluate a standard result file, refer to [`Evaluator.parse_and_evaluate`](medmnist/evaluator.py) for details.\"\n}\n]\n},\n{\n\"item\": \"doc.12\",\n\"value\": 15,\n\"rationale\": \"The repository file listing includes a LICENSE file, and the content of the license is partially shown.\",\n\"evidence\": [\n{\n\"excerpt\": \"repo:FILE LISTING#0\",\n\"quote\": \"LICENSE\"\n}\n]\n},\n{\n\"item\": \"doc.13\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not mention a globally unique, persistent identifier (like a DOI) for the dataset and metadata.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.14\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not show that standardized metadata (e.g., in a specific schema) is included.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.15\",\n\"value\": 15,\n\"rationale\": \"The paper acknowledges authors of open datasets used and mentions data collection contributions.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p10#0\",\n\"quote\": \"We would like to acknowledge all authors of the open datasets used in this study.\"\n}\n]\n},\n{\n\"item\": \"doc.16\",\n\"value\": 15,\n\"rationale\": \"The paper and README describe preprocessing steps such as resizing to 28 or 224 pixels and splitting into train/val/test.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p6#4\",\n\"quote\": \"the input resolutions are   28   or   224   (resized from   28 )\"\n}\n]\n},\n{\n\"item\": \"doc.17\",\n\"value\": 15,\n\"rationale\": \"The paper states that authors contributed to 'data collection, cleaning and annotations'.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p10#0\",\n\"quote\": \"JY, RS, DW, ZL, LZ, BK and HP contributed to data collection, cleaning and annotations.\"\n}\n]\n},\n{\n\"item\": \"doc.18\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not explicitly explain the representativeness of the data.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.19\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not state that the documentation follows a recognized standard.\",\n\"evidence\": []\n}\n]\n}",
+   "checks": [
+    {
+     "item": "doc.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.04",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "doc.05",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.06",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.08",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.09",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.10",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.11",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.12",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "doc.13",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.14",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.15",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.16",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.17",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.18",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.19",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 10454,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 4420,
+    "completion_tokens": 1647,
+    "total_tokens": 6067,
+    "cost": 0.00200665,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00200665,
+     "upstream_inference_prompt_cost": 0.000442,
+     "upstream_inference_completions_cost": 0.00156465
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "maintenance",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "4615155d46459e81cdc589340e58b99a2952ea33250b34d0b99336fb812af1f9",
+   "excerpts": [
+    "repo:README.md#14",
+    "repo:LICENSE#2",
+    "repo:LICENSE#6",
+    "paper:p9#2",
+    "paper:p9#3",
+    "repo:README.md#12",
+    "paper:p7#0",
+    "repo:README.md#10",
+    "repo:LICENSE#1"
+   ],
+   "response": "{\n\"verdicts\": [\n{\n\"item\": \"mai.01\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not contain any information regarding when the code usability was last checked. There is no evidence of a recent usability check.\",\n\"evidence\": []\n},\n{\n\"item\": \"mai.02\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not mention a maintained feedback channel for users. While the license mentions issue tracking systems in the context of contributions, it does not establish an active, maintained feedback channel for general users.\",\n\"evidence\": []\n},\n{\n\"item\": \"mai.03\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not list a specific contact person. The README provides a project page link and the paper lists authors, but no specific contact person is identified.\",\n\"evidence\": []\n}\n]\n}",
+   "checks": [
+    {
+     "item": "mai.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.02",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 2083,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 3104,
+    "completion_tokens": 205,
+    "total_tokens": 3309,
+    "cost": 0.00050515,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00050515,
+     "upstream_inference_prompt_cost": 0.0003104,
+     "upstream_inference_completions_cost": 0.00019475
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  }
+ ]
+}

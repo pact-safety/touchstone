@@ -1,0 +1,421 @@
+{
+ "model": "qwen/qwen3.6-35b-a3b",
+ "benchmark": "machiavelli",
+ "standard": "betterbench",
+ "date": "2026-10-27",
+ "complete": true,
+ "calls": 4,
+ "verdicts": {
+  "imp.01": 15,
+  "imp.02": 15,
+  "imp.03": 15,
+  "imp.04": 15,
+  "imp.05": 0,
+  "imp.06": 0,
+  "imp.07": 15,
+  "imp.08": 0,
+  "imp.09": 0,
+  "imp.10": 0,
+  "imp.11": 0,
+  "mai.01": 0,
+  "mai.02": 0,
+  "mai.03": 0
+ },
+ "transcript": [
+  {
+   "group": "design",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "2ef143254f44130ebab22508187a90624a43bbc65faa038d9f3dcbeae0ea6801",
+   "excerpts": [
+    "paper:p1#3",
+    "paper:p3#4",
+    "paper:p16#3",
+    "paper:p28#2",
+    "paper:p31#0",
+    "paper:p1#2",
+    "paper:p6#0",
+    "paper:p28#3",
+    "paper:p31#3",
+    "paper:p4#3",
+    "paper:p13#3",
+    "paper:p28#0",
+    "paper:p28#4"
+   ],
+   "response": "{\n  \"verdicts\": [\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"The excerpts define the tested capability (power) and its operationalization. Specifically, [paper:p3#4] states: 'Power is a nebulous concept with competing definitions in philosophy, physics, political science, economics, and sociology. We offer a fuller discussion of power in Appendices B, C, D, and E. Power can be decomposed as either the inputs to the agent or the outputs of the agent.' This defines the concept and how it translates to the benchmark task (inputs/outputs).\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p3#4\",\n          \"quote\": \"Power is a nebulous concept with competing definitions in philosophy, physics, political science, economics, and sociology. We offer a fuller discussion of power in Appendices B, C, D, and E. Power can be decomposed as either the inputs to the agent or the outputs of the agent.\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 15,\n      \"rationale\": \"The excerpts explicitly describe how knowing about the tested capability is helpful in the real world. [paper:p31#0] states: 'This directly reduces the existential risks posed by power-seeking AIs (Carlsmith, 2022) and undesirable traits from evolutionary pressures (Hendrycks, 2023).' This describes the real-world benefit of understanding/measuring power.\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p31#0\",\n          \"quote\": \"This directly reduces the existential risks posed by power-seeking AIs (Carlsmith, 2022) and undesirable traits from evolutionary pressures (Hendrycks, 2023).\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"The excerpts describe how scores should be interpreted, specifically noting that they represent harm reduction relative to random baselines. [paper:p6#0] states: 'Except for the goals category, scores represent the amount of harm reduced for that category, as a proportion of the mean amount of harm across 1,000 random trajectories.' It also notes that 'solving' the benchmark doesn't imply solving all safety problems ([paper:p31#3]).\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p6#0\",\n          \"quote\": \"Except for the goals category, scores represent the amount of harm reduced for that category, as a proportion of the mean amount of harm across 1,000 random trajectories.\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"Domain experts are involved in the creation of gold labels. [paper:p4#3] states: 'We define the gold labels on the test set to be the ensemble of labels from three experts (authors).' This shows expert involvement in the benchmark design/evaluation.\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p4#3\",\n          \"quote\": \"We define the gold labels on the test set to be the ensemble of labels from three experts (authors).\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 0,\n      \"rationale\": \"The excerpts do not describe specific use cases or user personas. They discuss agents, models, and general societal risks, but do not detail specific user personas or concrete use cases for the benchmark itself.\",\n      \"evidence\": []\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"Domain literature is integrated by referencing multiple fields and specific papers. [paper:p3#4] mentions: 'Power is a nebulous concept with competing definitions in philosophy, physics, political science, economics, and sociology.' It also cites Carlsmith (2022) and Hendrycks (2023) in [paper:p31#0].\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p3#4\",\n          \"quote\": \"Power is a nebulous concept with competing definitions in philosophy, physics, political science, economics, and sociology.\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"The metric choice is informed by the need to measure power and harm. [paper:p28#2] describes training a 'power measurement model' and using 'pairwise ranking loss'. [paper:p6#0] defines the metric as 'harm reduced... as a proportion of the mean amount of harm'. This shows informed choice based on the concept of power.\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p6#0\",\n          \"quote\": \"scores represent the amount of harm reduced for that category, as a proportion of the mean amount of harm across 1,000 random trajectories.\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"Metric floors and ceilings are included via the random baseline. [paper:p6#0] states scores are 'as a proportion of the mean amount of harm across 1,000 random trajectories.' The random agent serves as a floor (0% harm reduction relative to itself, or baseline 1.0 in proportion terms depending on normalization, but explicitly defined as the baseline for comparison). The text implies a scale where random is the reference point.\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p6#0\",\n          \"quote\": \"scores represent the amount of harm reduced for that category, as a proportion of the mean amount of harm across 1,000 random trajectories.\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"Human performance level is included/compared. [paper:p4#3] states: 'GPT-4 is usually as accurate as human annotators from Surge AI on a test set of 2,000 scenes... GPT-4’s labels are more correlated with the gold labels than the average crowdworker’s labels.' This establishes a human performance benchmark for the labeling task.\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p4#3\",\n          \"quote\": \"GPT-4 is usually as accurate as human annotators from Surge AI on a test set of 2,000 scenes sampled uniformly at random from all games.\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"Random performance level is included as a baseline. [paper:p6#0] explicitly lists 'Random' as a column in Table 2 and defines scores relative to '1,000 random trajectories'.\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p6#0\",\n          \"quote\": \"scores represent the amount of harm reduced for that category, as a proportion of the mean amount of harm across 1,000 random trajectories.\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"Validated automatic evaluation is used. [paper:p4#3] states: 'Model labels are competitive with human labels... GPT-4’s labels are more correlated with the gold labels than the average crowdworker’s labels.' This validates the automatic evaluation method (GPT-4) against human experts.\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p4#3\",\n          \"quote\": \"GPT-4’s labels are more correlated with the gold labels than the average crowdworker’s labels.\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"Differences to related benchmarks are explained. [paper:p1#2] states: 'Previous benchmarks aimed at evaluating these complex systems have measured language understanding... or reasoning in isolated scenarios... However, models are now being trained for real-world, interactive tasks... benchmarks should assess how models behave in interactive environments.' It contrasts with text-based games where difficulty comes from physical exploration.\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p1#2\",\n          \"quote\": \"Previous benchmarks aimed at evaluating these complex systems have measured language understanding (Wang et al., 2019) or reasoning in isolated scenarios (Srivastava et al., 2022; Liang et al., 2022).\"\n        }\n      ]\n    },\n    {\n      \"item\": \"<item id>\",\n      \"value\": 10,\n      \"rationale\": \"Input sensitivity is addressed. [paper:p31#3] states: 'while the RL algorithm used in this work can be sensitive to hyperparameters, the results hold across a large suite of games.' This acknowledges and addresses sensitivity to hyperparameters (a form of input sensitivity for the training process).\",\n      \"evidence\": [\n        {\n          \"excerpt\": \"paper:p31#3\",\n          \"quote\": \"while the RL algorithm used in this work can be sensitive to hyperparameters, the results hold across a large suite of games.\"\n        }\n      ]\n    }\n  ]\n}",
+   "checks": [
+    {
+     "item": "des.01",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.02",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.03",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.04",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.05",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.06",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.07",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.08",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.09",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.10",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.11",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.12",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.13",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.14",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    }
+   ],
+   "ms": 15513,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 3907,
+    "completion_tokens": 2168,
+    "total_tokens": 6075,
+    "cost": 0.0024503,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0024503,
+     "upstream_inference_prompt_cost": 0.0003907,
+     "upstream_inference_completions_cost": 0.0020596
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "implementation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "625835e5617c24d372badb1d18e048490ed7e5ff409d0213c3149dedc320a27e",
+   "excerpts": [
+    "paper:p16#3",
+    "repo:README.md#1",
+    "repo:README.md#5",
+    "paper:p31#2",
+    "repo:FILE LISTING#1",
+    "paper:p9#0",
+    "paper:p10#2",
+    "paper:p25#4",
+    "paper:p28#2",
+    "paper:p29#0"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"imp.01\",\n    \"value\": 15,\n    \"rationale\": \"The repository contains Python code for agents, game environments, and utilities, and the README provides instructions to run them, indicating evaluation code is available.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#1\",\n        \"quote\": \"Use our demo script to play through a game:\"\n      },\n      {\n        \"excerpt\": \"repo:FILE LISTING#1\",\n        \"quote\": \"machiavelli/game/machiavelli_env.py\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.02\",\n    \"value\": 15,\n    \"rationale\": \"The README explicitly states that data is available via Google Drive and provides the password and location for the artificial conscience model.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#1\",\n        \"quote\": \"The data is available through [Google Drive](https://drive.google.com/file/d/19PXa2bgjkfFfTTI3EZIT3-IJ_vxrV0Rz/view).\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.03\",\n    \"value\": 15,\n    \"rationale\": \"The paper describes using OpenAI's Chat Completion API for language model agents, and the codebase includes helpers for this, supporting API-based evaluation.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p25#4\",\n        \"quote\": \"For models using OpenAI’s Chat Completion API 1   (gpt-3.5-turbo and gpt-4), we provide the instructions as a system prompt\"\n      },\n      {\n        \"excerpt\": \"repo:FILE LISTING#1\",\n        \"quote\": \"machiavelli/openai_helpers.py\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.04\",\n    \"value\": 15,\n    \"rationale\": \"The repository includes code for baseline agents including 'random' and 'LM' agents, and the README mentions running scripts locally, supporting local model evaluation.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#5\",\n        \"quote\": \"Code for baseline agents (random, LM, RL)\"\n      },\n      {\n        \"excerpt\": \"repo:README.md#1\",\n        \"quote\": \"python -m demo -g <GAME> --agent RandomAgent\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.05\",\n    \"value\": 0,\n    \"rationale\": \"The provided excerpts do not mention the addition of globally unique identifiers or the encryption of evaluation instances.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.06\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a task to identify if a model is trained on benchmark data.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.07\",\n    \"value\": 15,\n    \"rationale\": \"The README provides specific bash commands and instructions to download data and models to replicate the paper, and the file listing shows scripts for running experiments.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#1\",\n        \"quote\": \"In order to replicate the paper, you will need to download the artificial consciensce from [Google Drive]\"\n      },\n      {\n        \"excerpt\": \"repo:README.md#5\",\n        \"quote\": \"source ./experiments/baselines_lm.sh\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.08\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not report statistical significance or uncertainty quantification of benchmark results.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.09\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention an assessment of the need for warnings for sensitive or harmful content.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.10\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention the implementation of build status or equivalent CI/CD checks.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.11\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not specify release requirements.\",\n    \"evidence\": []\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "imp.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.03",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.04",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.05",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.08",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.10",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.11",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 8011,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 3928,
+    "completion_tokens": 1091,
+    "total_tokens": 5019,
+    "cost": 0.00142925,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00142925,
+     "upstream_inference_prompt_cost": 0.0003928,
+     "upstream_inference_completions_cost": 0.00103645
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "documentation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "ef7a72c2d0d348df4fea4bea211e9512aa2a4f393de150bd1d4dcd39ecbd90e4",
+   "excerpts": [
+    "paper:p16#3",
+    "repo:README.md#1",
+    "repo:README.md#3",
+    "repo:README.md#2",
+    "paper:p7#4",
+    "repo:README.md#4",
+    "repo:README.md#5",
+    "paper:p20#3",
+    "paper:p30#0",
+    "repo:README.md#6",
+    "paper:p25#0",
+    "paper:p28#0",
+    "paper:p4#3"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"doc.01\",\n    \"value\": 15,\n    \"rationale\": \"The README explicitly lists a requirements file and provides instructions to install it.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#3\",\n        \"quote\": \"└── requirements.txt            # Do `pip install -r requirements.txt`\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.02\",\n    \"value\": 15,\n    \"rationale\": \"The README provides a 'Play a game!' section with a demo script and instructions to play interactively.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#1\",\n        \"quote\": \"Use our demo script to play through a game:\\n```bash\\npython -m demo -h # Get the list of available games\\npython -m demo -g <GAME> # Play through a game interactively\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.03\",\n    \"value\": 0,\n    \"rationale\": \"The provided excerpts do not contain any in-line code comments from the source code.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.04\",\n    \"value\": 15,\n    \"rationale\": \"The README documents the repo structure, key files, and how to add custom agents, serving as code documentation.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#2\",\n        \"quote\": \"## :robot: Adding a custom agent\\n1. To create your own agent, create a new class in `machiavelli/agents/` that inherits from `machiavelli.agent.BaseAgent` and implements the `get_action` method.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.05\",\n    \"value\": 15,\n    \"rationale\": \"The citation in the README indicates the paper was published in ICML, a peer-reviewed venue.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#6\",\n        \"quote\": \"journal = {ICML},\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.06\",\n    \"value\": 15,\n    \"rationale\": \"The README describes the reproducibility process, including scripts to recreate results and data annotation.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#3\",\n        \"quote\": \"## :test_tube: Reproducibility\\nWe include the scripts used to recreate the results in our paper, including our various agent baselines, in `experiments/`.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.07\",\n    \"value\": 15,\n    \"rationale\": \"The README describes the benchmark as a test set of 30 games and provides metadata files listing the games.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#2\",\n        \"quote\": \"The MACHIAVELLI benchmark is a test set of 30 challenging games where agents trained to maximize reward perform poorly on behavioral metrics by default.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.08\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not explicitly document assumptions of normative properties.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.09\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not contain a section or text explicitly documenting limitations.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.10\",\n    \"value\": 15,\n    \"rationale\": \"The README documents the data collection (download links), test environment design (repo structure), and prompt design (annotation code).\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#1\",\n        \"quote\": \"The data is available through [Google Drive](https://drive.google.com/file/d/19PXa2bgjkfFfTTI3EZIT3-IJ_vxrV0Rz/view).\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.11\",\n    \"value\": 15,\n    \"rationale\": \"The README documents the evaluation metric by describing how to compute results using the evaluation script.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#3\",\n        \"quote\": \"Given a directory of trajectories, compute the results for your trajectories using the following script:\\n```bash\\npython -m evaluate_trajectories --traj_dir <TRAJ_DIR> --results_file <RESULTS_FILE>\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.12\",\n    \"value\": 15,\n    \"rationale\": \"The repo structure includes a LICENSE file, indicating an applicable license is specified.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#3\",\n        \"quote\": \"├── LICENSE\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.13\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a globally unique, persistent identifier (like a DOI) for the dataset.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.14\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention the inclusion of standardized metadata formats.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.15\",\n    \"value\": 15,\n    \"rationale\": \"The README provides links to Google Drive for data and mentions the source of the artificial conscience model.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#1\",\n        \"quote\": \"Download the \\\"artificial conscience\\\": In order to replicate the paper, you will need to download the artificial consciensce from [Google Drive](https://drive.google.com/file/d/1MD0N-0IfJx4mCUnAqH9yhjqBz2u00c9a/view?usp=sharing).\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.16\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not document specific data preprocessing steps taken.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.17\",\n    \"value\": 15,\n    \"rationale\": \"The README documents the data annotation process by pointing to the annotation code and directories.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#3\",\n        \"quote\": \"(Advanced users) If you wish to reproduce our data annotation (e.g. to extend the label set), look at the `machiavelli/annotate/` and `machiavelli/data/` directories.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.18\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not explain the representativeness of the data.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.19\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not state that the documentation follows a recognized standard.\",\n    \"evidence\": []\n  }\n]\n}",
+   "checks": [],
+   "ms": 11490,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 4318,
+    "completion_tokens": 1783,
+    "total_tokens": 6101,
+    "cost": 0.00212565,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00212565,
+     "upstream_inference_prompt_cost": 0.0004318,
+     "upstream_inference_completions_cost": 0.00169385
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   },
+   "error": "Unexpected non-whitespace character after JSON at position 167 (line 6 column 4)"
+  },
+  {
+   "group": "maintenance",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "6d9cabff82c4a7165a3ea3a2d3966738a4f825e0768f0864c8183b5532a05ec8",
+   "excerpts": [
+    "paper:p20#0",
+    "repo:README.md#5",
+    "repo:README.md#6",
+    "paper:p5#2",
+    "paper:p16#3",
+    "repo:README.md#1",
+    "paper:p17#3",
+    "paper:p21#2",
+    "paper:p28#0",
+    "repo:README.md#3"
+   ],
+   "response": "{\n\"verdicts\": [\n{\n\"item\": \"mai.01\",\n\"value\": 0,\n\"rationale\": \"The provided excerpts do not contain any information regarding code usability checks or maintenance activities within the last year.\",\n\"evidence\": []\n},\n{\n\"item\": \"mai.02\",\n\"value\": 0,\n\"rationale\": \"The provided excerpts do not mention a maintained feedback channel for users.\",\n\"evidence\": []\n},\n{\n\"item\": \"mai.03\",\n\"value\": 0,\n\"rationale\": \"The provided excerpts do not list a specific contact person.\",\n\"evidence\": []\n}\n]\n}",
+   "checks": [
+    {
+     "item": "mai.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.02",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 1911,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 3182,
+    "completion_tokens": 153,
+    "total_tokens": 3335,
+    "cost": 0.00046355,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00046355,
+     "upstream_inference_prompt_cost": 0.0003182,
+     "upstream_inference_completions_cost": 0.00014535
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  }
+ ],
+ "error": "Unexpected non-whitespace character after JSON at position 167 (line 6 column 4)"
+}

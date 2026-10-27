@@ -1,0 +1,582 @@
+{
+ "model": "qwen/qwen3.6-35b-a3b",
+ "benchmark": "pdebench",
+ "standard": "betterbench",
+ "date": "2026-10-27",
+ "complete": true,
+ "calls": 4,
+ "verdicts": {
+  "des.01": 15,
+  "des.02": 15,
+  "des.03": 15,
+  "des.04": 0,
+  "des.05": 0,
+  "des.06": 0,
+  "des.07": 15,
+  "des.08": 15,
+  "des.09": 0,
+  "des.10": 0,
+  "des.11": 0,
+  "des.12": 0,
+  "des.13": 15,
+  "des.14": 15,
+  "imp.01": 15,
+  "imp.02": 15,
+  "imp.03": 15,
+  "imp.04": 15,
+  "imp.05": 0,
+  "imp.06": 0,
+  "imp.07": 15,
+  "imp.08": 0,
+  "imp.09": 0,
+  "imp.10": 0,
+  "imp.11": 0,
+  "doc.01": 0,
+  "doc.02": 10,
+  "doc.03": 0,
+  "doc.04": 10,
+  "doc.05": 0,
+  "doc.06": 10,
+  "doc.07": 10,
+  "doc.08": 10,
+  "doc.09": 15,
+  "doc.10": 10,
+  "doc.11": 10,
+  "doc.12": 0,
+  "doc.13": 15,
+  "doc.14": 10,
+  "doc.15": 10,
+  "doc.16": 0,
+  "doc.17": 0,
+  "doc.18": 0,
+  "doc.19": 0,
+  "mai.01": 0,
+  "mai.02": 10,
+  "mai.03": 10
+ },
+ "transcript": [
+  {
+   "group": "design",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "246aff79372c653ebf570a7e6447c3fb76492dd0568354991998acefc6359f64",
+   "excerpts": [
+    "paper:p17#2",
+    "paper:p18#0",
+    "paper:p23#2",
+    "paper:p2#4",
+    "paper:p7#2",
+    "paper:p44#0",
+    "paper:p5#1",
+    "paper:p5#2",
+    "paper:p22#3",
+    "paper:p7#0",
+    "paper:p41#1"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"des.01\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark explicitly defines the tested capabilities (PDEs) and concepts (forward/inverse problems) with mathematical formulations.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p5#1\",\n        \"quote\": \"The basic PDEs are stylized, simple models: 1D advection/Burgers/Diffusion-Reaction/Diffusion-Sorption equations, 2D Diffusion-Reaction equation, and 2D DarcyFlow\"\n      },\n      {\n        \"excerpt\": \"paper:p18#0\",\n        \"quote\": \"The metrics that we used for the inverse problem are: 1) MSE 2) the normalized l2 norm (L2), 3) the normalized l3 norm (L3); 4) the FFT MSE\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.02\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts describe how the PDE concepts translate to benchmark tasks via specific metrics like RMSE and MSE for forward and inverse problems.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p17#2\",\n        \"quote\": \"The normalized RMSE is a variant of the RMSE to provide scale-independent information defined as: nRMSE ≡ || u pred − u true || 2 / || u true || 2\"\n      },\n      {\n        \"excerpt\": \"paper:p18#0\",\n        \"quote\": \"In general, we expect a larger error when we measure the error in the estimated quantity w.r.t. the predicted quantity.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.03\",\n    \"value\": 15,\n    \"rationale\": \"The document explains that finding surrogate models for these PDEs is a necessary precondition for real-world application.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p5#1\",\n        \"quote\": \"Finding a surrogate model which can approximate these challenging dynamics with high fidelity we argue is a necessary precondition to applying such models in the real world.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.04\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts define metrics but do not describe how scores should or should not be interpreted or used in a broader context.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.05\",\n    \"value\": 0,\n    \"rationale\": \"There is no mention of domain experts being involved in the design or validation process in the provided excerpts.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.06\",\n    \"value\": 0,\n    \"rationale\": \"While real-world applications are mentioned, specific use cases or user personas are not described.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.07\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark integrates domain literature by citing specific equations (e.g., Fitzhugh-Nagumo) and referencing prior work.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p23#2\",\n        \"quote\": \"The reaction functions for the activator and inhibitor are defined by the Fitzhugh-Nagumo equation [25]\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.08\",\n    \"value\": 15,\n    \"rationale\": \"The choice of metrics is informed by the need to measure specific physical properties like stability, boundary conditions, and frequency ranges.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p17#2\",\n        \"quote\": \"The maximum error measures the model’s worst prediction, which quantifies both local performance and models’ stability of their prediction.\"\n      },\n      {\n        \"excerpt\": \"paper:p18#0\",\n        \"quote\": \"For the frequency metrics we investigated the low frequency... the middle frequency... and high frequency... ranges.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.09\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts define metrics but do not include specific metric floors or ceilings.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.10\",\n    \"value\": 0,\n    \"rationale\": \"Human performance levels are not included in the provided excerpts.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.11\",\n    \"value\": 0,\n    \"rationale\": \"Random performance levels are not included in the provided excerpts.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.12\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark uses validated automatic evaluation metrics such as RMSE, MSE, and FFT-based metrics.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p17#2\",\n        \"quote\": \"The normalized RMSE is a variant of the RMSE to provide scale-independent information defined as: nRMSE ≡ || u pred − u true || 2 / || u true || 2\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.13\",\n    \"value\": 15,\n    \"rationale\": \"The document explains differences by stating that a publicly available benchmark dataset for these specific PDEs was not available prior.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p5#1\",\n        \"quote\": \"While some of these have been used in prior work, a publicly available benchmark dataset is, to the best of our knowledge, not available.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.14\",\n    \"value\": 15,\n    \"rationale\": \"Input sensitivity is addressed by noting the sensitive dependence on initial conditions and evaluating error at specific time steps.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p5#1\",\n        \"quote\": \"The PDEs exhibit a variety of behaviors of real-world significance which are known to challenge emulators, such as... sensitive dependence on initial conditions\"\n      },\n      {\n        \"excerpt\": \"paper:p18#0\",\n        \"quote\": \"We evaluated the error of the prediction at a specific instant in time t = T , that has been selected as T = 15 for all the tested datasets\"\n      }\n    ]\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "des.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "des.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "des.03",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.04",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.05",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.08",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "des.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.10",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.11",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.12",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "des.13",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.14",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    }
+   ],
+   "ms": 18872,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 4240,
+    "completion_tokens": 1554,
+    "total_tokens": 5794,
+    "cost": 0.0019003,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0019003,
+     "upstream_inference_prompt_cost": 0.000424,
+     "upstream_inference_completions_cost": 0.0014763
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "implementation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "d96c4f98a5f2232efb00986bc80ce78dafe35cc4fd2b3af099331290f9bb3b64",
+   "excerpts": [
+    "paper:p1#1",
+    "paper:p2#2",
+    "paper:p45#3",
+    "paper:p11#2",
+    "paper:p47#1",
+    "paper:p48#1",
+    "paper:p49#1",
+    "paper:p4#2",
+    "paper:p2#4"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"imp.01\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts explicitly state that the code is available and provide a GitHub link.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p1#1\",\n        \"quote\": \"The code is available at   https://github.com/pdebench/PDEBench .\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.02\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts confirm that evaluation data is accessible via a repository and generation code is provided.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p48#1\",\n        \"quote\": \"The dataset is free for download either by directly accessing the DaRUS page   https://doi. org/10.18419/darus-2986   or making use of a Python API\"\n      },\n      {\n        \"excerpt\": \"paper:p2#2\",\n        \"quote\": \"Data may be generated by executing code through a common interface, or by downloading high-fidelity datasets of simulations.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.03\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts mention an API for evaluation and a Python API for data access.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#2\",\n        \"quote\": \"We also propose an API to ease the implementation and evaluation of new methods\"\n      },\n      {\n        \"excerpt\": \"paper:p48#1\",\n        \"quote\": \"making use of a Python API, \\\"pyDaRUS\\\", provided by DaRUS.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.04\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts state that source codes are available and users can generate datasets, implying local execution support.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p1#1\",\n        \"quote\": \"more extensible source codes with user-friendly APIs for data generation and baseline results\"\n      },\n      {\n        \"excerpt\": \"paper:p48#1\",\n        \"quote\": \"we provide the data generation source code. This allows future users to increase their dataset size as much as they need.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.05\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention globally unique identifiers for evaluation instances or encryption of instances.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.06\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a task to identify if a model is trained on benchmark data.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.07\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts state that all data generation scripts are included in the code repository.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p11#2\",\n        \"quote\": \"All the data generation scripts are included in the code repository.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.08\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention statistical significance or uncertainty quantification of benchmark results.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.09\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention warnings for sensitive or harmful content.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.10\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention build status or equivalent implementation.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.11\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not specify release requirements.\",\n    \"evidence\": []\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "imp.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.03",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.04",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.05",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.08",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.10",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.11",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 8697,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 3419,
+    "completion_tokens": 990,
+    "total_tokens": 4409,
+    "cost": 0.0012824,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0012824,
+     "upstream_inference_prompt_cost": 0.0003419,
+     "upstream_inference_completions_cost": 0.0009405
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "documentation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "b5a0425a857226d6bb4eab6efa2ab50b9568ef35e885d2e4c608158b3c002e42",
+   "excerpts": [
+    "paper:p3#3",
+    "paper:p45#1",
+    "repo:README.md#14",
+    "paper:p2#3",
+    "paper:p45#3",
+    "repo:README.md#13",
+    "paper:p9#1",
+    "paper:p47#2",
+    "paper:p48#1",
+    "paper:p10#1",
+    "paper:p22#3"
+   ],
+   "response": "{\n\"verdicts\": [\n{\n\"item\": \"doc.01\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not mention a requirements file or equivalent.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.02\",\n\"value\": 10,\n\"rationale\": \"The README provides a directory tour and links to data/models, serving as a quick-start guide, but lacks a step-by-step tutorial.\",\n\"evidence\": [\n{\n\"excerpt\": \"repo:README.md#14\",\n\"quote\": \"Below is an illustration of the directory structure of PDEBench.\"\n}\n]\n},\n{\n\"item\": \"doc.03\",\n\"value\": 0,\n\"rationale\": \"No evidence of in-line code comments is provided in the excerpts.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.04\",\n\"value\": 10,\n\"rationale\": \"Code documentation is partially available via config files and README, but full API docs are not shown.\",\n\"evidence\": [\n{\n\"excerpt\": \"repo:README.md#13\",\n\"quote\": \"- base_path: string, location of the data directory\"\n}\n]\n},\n{\n\"item\": \"doc.05\",\n\"value\": 15,\n\"rationale\": \"The paper is identified by a DOI (2210.07182v7), indicating it is a peer-reviewed publication.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p3#3\",\n\"quote\": \"(2210.07182v7 page 3, chunk 3)\"\n}\n]\n},\n{\n\"item\": \"doc.06\",\n\"value\": 10,\n\"rationale\": \"The construction process is partially documented via the paper and code availability, but details are in appendices.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p48#1\",\n\"quote\": \"we emphasize that we provide the data generation source code.\"\n}\n]\n},\n{\n\"item\": \"doc.07\",\n\"value\": 10,\n\"rationale\": \"Test tasks are described (e.g., regression), but detailed rationale for specific test splits is not fully explicit in excerpts.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p45#1\",\n\"quote\": \"These values are the target for the regression task performed by the baseline models.\"\n}\n]\n},\n{\n\"item\": \"doc.08\",\n\"value\": 10,\n\"rationale\": \"Assumptions are mentioned (e.g., discretization error), but not exhaustively documented for all normative properties.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p45#3\",\n\"quote\": \"The only possible source of error might come from the discretization error\"\n}\n]\n},\n{\n\"item\": \"doc.09\",\n\"value\": 15,\n\"rationale\": \"Limitations are explicitly documented in the paper.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p10#1\",\n\"quote\": \"Limitations While PDEB ENCH provides an easy-to-use, modular and extensible approach\"\n}\n]\n},\n{\n\"item\": \"doc.10\",\n\"value\": 10,\n\"rationale\": \"Data collection is partially documented via source code availability, but the specific design process is not detailed in excerpts.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p48#1\",\n\"quote\": \"we emphasize that we provide the data generation source code.\"\n}\n]\n},\n{\n\"item\": \"doc.11\",\n\"value\": 10,\n\"rationale\": \"Metrics are mentioned as 'better-suited', but specific definitions are not fully detailed in the excerpts.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p2#3\",\n\"quote\": \"with results for popular state-of-the-art ML models (FNO, U-Net, PINN) for (f) a set of metrics that are better-suited for Scientific ML\"\n}\n]\n},\n{\n\"item\": \"doc.12\",\n\"value\": 0,\n\"rationale\": \"No applicable license is specified in the excerpts.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.13\",\n\"value\": 15,\n\"rationale\": \"A persistent DOI is provided for the dataset.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p48#1\",\n\"quote\": \"https://doi. org/10.18419/darus-2986\"\n}\n]\n},\n{\n\"item\": \"doc.14\",\n\"value\": 10,\n\"rationale\": \"Standardized metadata is partially included via the data card questions, but not fully shown.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p45#1\",\n\"quote\": \"4. What data does each instance consist of? (\\\"Raw\\\" data (e.g. unprocessed text or images) or features? In either case, please provide a description.)\"\n}\n]\n},\n{\n\"item\": \"doc.15\",\n\"value\": 10,\n\"rationale\": \"Data sources are mentioned (numerical simulations), but the specific collection process is not fully detailed.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p45#3\",\n\"quote\": \"our dataset was generated with a relatively high resolution.\"\n}\n]\n},\n{\n\"item\": \"doc.16\",\n\"value\": 0,\n\"rationale\": \"Data preprocessing steps are not documented in the excerpts.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.17\",\n\"value\": 0,\n\"rationale\": \"No data annotation process is documented (data is numerical/simulated).\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.18\",\n\"value\": 0,\n\"rationale\": \"Representativeness is not explained in the excerpts.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.19\",\n\"value\": 0,\n\"rationale\": \"No recognized documentation standard is mentioned.\",\n\"evidence\": []\n}\n]\n}",
+   "checks": [
+    {
+     "item": "doc.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.02",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.04",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.05",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "doc.06",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.07",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.08",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.09",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.10",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.11",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.12",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.13",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.14",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.15",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.16",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.17",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.18",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.19",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 12063,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 3919,
+    "completion_tokens": 1445,
+    "total_tokens": 5364,
+    "cost": 0.00176465,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00176465,
+     "upstream_inference_prompt_cost": 0.0003919,
+     "upstream_inference_completions_cost": 0.00137275
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "maintenance",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "69070ad599e679bf18d5e8bdc5b79704b9645ec28c3a45a1f02d95d35b086a07",
+   "excerpts": [
+    "paper:p37#0",
+    "repo:README.md#16",
+    "repo:README.md#19",
+    "paper:p45#3",
+    "paper:p49#0",
+    "paper:p49#1",
+    "paper:p15#2",
+    "paper:p37#2",
+    "repo:LICENSE.txt#0"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"mai.01\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not contain any statement confirming that code usability was checked within the last year. While recent citations are listed, there is no evidence of a usability check.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"mai.02\",\n    \"value\": 10,\n    \"rationale\": \"The excerpts indicate a mechanism for user feedback exists via the GitHub bugtracker, satisfying the availability of a maintained feedback channel.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p49#1\",\n        \"quote\": \"Errors may be submitted via the bugtracker on github.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"mai.03\",\n    \"value\": 10,\n    \"rationale\": \"The excerpts state that contact information is provided in the paper, which satisfies the criterion that a contact person is listed.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p49#0\",\n        \"quote\": \"E-mail addresses are provided in the main-body of the paper.\"\n      }\n    ]\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "mai.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.02",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.03",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 3069,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 3544,
+    "completion_tokens": 292,
+    "total_tokens": 3836,
+    "cost": 0.0006318,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0006318,
+     "upstream_inference_prompt_cost": 0.0003544,
+     "upstream_inference_completions_cost": 0.0002774
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  }
+ ]
+}

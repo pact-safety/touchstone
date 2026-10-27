@@ -1,0 +1,583 @@
+{
+ "model": "qwen/qwen3.6-35b-a3b",
+ "benchmark": "hellaswag",
+ "standard": "betterbench",
+ "date": "2026-10-27",
+ "complete": true,
+ "calls": 4,
+ "verdicts": {
+  "des.01": 15,
+  "des.02": 0,
+  "des.03": 15,
+  "des.04": 15,
+  "des.05": 15,
+  "des.06": 0,
+  "des.07": 0,
+  "des.08": 15,
+  "des.09": 15,
+  "des.10": 15,
+  "des.11": 0,
+  "des.12": 15,
+  "des.13": 0,
+  "des.14": 15,
+  "imp.01": 15,
+  "imp.02": 15,
+  "imp.03": 0,
+  "imp.04": 15,
+  "imp.05": 0,
+  "imp.06": 0,
+  "imp.07": 15,
+  "imp.08": 0,
+  "imp.09": 0,
+  "imp.10": 0,
+  "imp.11": 0,
+  "doc.01": 0,
+  "doc.02": 0,
+  "doc.03": 0,
+  "doc.04": 0,
+  "doc.05": 15,
+  "doc.06": 0,
+  "doc.07": 0,
+  "doc.08": 0,
+  "doc.09": 0,
+  "doc.10": 0,
+  "doc.11": 15,
+  "doc.12": 0,
+  "doc.13": 0,
+  "doc.14": 0,
+  "doc.15": 15,
+  "doc.16": 0,
+  "doc.17": 15,
+  "doc.18": 0,
+  "doc.19": 0,
+  "mai.01": 0,
+  "mai.02": 0,
+  "mai.03": 0
+ },
+ "transcript": [
+  {
+   "group": "design",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "cf81bd185d22d23b07faaa1bdc5f5ebfcaca26fddb4c2f459150557037557584",
+   "excerpts": [
+    "paper:p2#0",
+    "paper:p8#3",
+    "paper:p9#0",
+    "paper:p2#2",
+    "paper:p3#0",
+    "paper:p12#0",
+    "paper:p9#3",
+    "paper:p12#2",
+    "paper:p6#0",
+    "paper:p14#0"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"des.01\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark explicitly defines the tested capability as 'commonsense NLI' and the benchmark itself as 'HellaSwag'.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"a new benchmark for commonsense NLI\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.02\",\n    \"value\": 15,\n    \"rationale\": \"The text describes how the capability (commonsense reasoning) translates to the task via Adversarial Filtering to select challenging wrong answers, requiring models to go beyond surface learning.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"We use Adversarial Filtering (AF), a data-collection paradigm in which a series of discriminators is used to select a challenging set of generated wrong answers.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.03\",\n    \"value\": 15,\n    \"rationale\": \"The text explains that knowing about this capability helps distinguish robust reasoning from spurious pattern matching, which is crucial for real-world reliability.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p9#0\",\n        \"quote\": \"for humans to answer HellaSwag questions requires abstracting away from language and modeling world states instead.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.04\",\n    \"value\": 15,\n    \"rationale\": \"The text explicitly warns against interpreting high scores as robust reasoning if they rely on dataset-specific biases, and suggests scores should be interpreted in the context of evolving benchmarks.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"Their strong performance on SWAG is dependent on the finetuning process, wherein they largely learn to pick up on dataset-specific distributional biases.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.05\",\n    \"value\": 15,\n    \"rationale\": \"The text states that humans validate the data to remove adversarial endings that seem realistic, indicating domain expert (human) involvement in the design.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p3#0\",\n        \"quote\": \"Last, humans validate the data to remove adversarial endings that seem realistic.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.06\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not describe specific use cases or user personas for the benchmark.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.07\",\n    \"value\": 0,\n    \"rationale\": \"While the text mentions prior work (SWAG, BERT), it does not explicitly state that domain literature is integrated into the design process beyond citing previous datasets.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.08\",\n    \"value\": 15,\n    \"rationale\": \"The choice of accuracy as a metric is informed by the need to distinguish between models that learn surface biases versus those that perform robust reasoning, as shown by the drop in performance when distributions shift.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"When the distribution of language shifts slightly, performance drops drastically – even if the domain remains identical.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.09\",\n    \"value\": 15,\n    \"rationale\": \"The text provides the random chance baseline (25%) and the human performance level (95.6%), effectively defining the metric floors and ceilings.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"the resulting dataset of 70k problems is easy for humans (95.6% accuracy), yet challenging for machines ( ă 50% q\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.10\",\n    \"value\": 15,\n    \"rationale\": \"Human performance level is explicitly included in the results table and text.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p6#0\",\n        \"quote\": \"Human 95.7 95.6 95.6 95.6 95.8 95.7 94.0 94.0 96.5 96.5\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.11\",\n    \"value\": 15,\n    \"rationale\": \"Random performance level is explicitly included as the baseline.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p6#0\",\n        \"quote\": \"Chance 25.0\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.12\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark uses automatic evaluation (accuracy) which is validated against human performance and other baselines.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p6#0\",\n        \"quote\": \"Table 1: Performance of models, evaluated with accuracy (%).\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.13\",\n    \"value\": 15,\n    \"rationale\": \"The text explains differences to related benchmarks (SWAG) by highlighting the use of Adversarial Filtering to create harder, more robust examples.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"We study this question by introducing HellaSwag , a new benchmark for commonsense NLI.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.14\",\n    \"value\": 15,\n    \"rationale\": \"The text addresses input sensitivity by showing that performance drops drastically when the distribution of language shifts slightly.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"When the distribution of language shifts slightly, performance drops drastically – even if the domain remains identical.\"\n      }\n    ]\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "des.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.02",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "des.03",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.04",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.05",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.07",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.08",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.09",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.10",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.11",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "des.12",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.13",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "des.14",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 10549,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 4354,
+    "completion_tokens": 1515,
+    "total_tokens": 5869,
+    "cost": 0.00187465,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00187465,
+     "upstream_inference_prompt_cost": 0.0004354,
+     "upstream_inference_completions_cost": 0.00143925
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "implementation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "475de65323364c8bab8f2532596c60cd854614d97f7c65acbcfdd6cf2dbfbb41",
+   "excerpts": [
+    "paper:p9#2",
+    "paper:p12#2",
+    "paper:p14#0",
+    "paper:p2#1",
+    "paper:p9#1",
+    "paper:p4#1",
+    "paper:p6#1",
+    "paper:p2#2",
+    "paper:p2#0",
+    "paper:p3#0"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"imp.01\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts explicitly state that the dataset and code are available via a provided URL.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#2\",\n        \"quote\": \"Dataset and code at https: // rowanzellers.com / hellaswag.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.02\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts confirm that the dataset is accessible via the provided URL, satisfying the requirement for accessible evaluation data.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#2\",\n        \"quote\": \"Dataset and code at https: // rowanzellers.com / hellaswag.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.03\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts describe evaluation via local models and human evaluation but do not mention support for evaluation via API.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.04\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts describe training and evaluating various models (BERT, GPT, etc.) locally using cross-entropy loss, indicating support for local model evaluation.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p6#1\",\n        \"quote\": \"Accordingly, we train our models using a four-way cross-entropy loss, where the objective is to predict the correct ending.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.05\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention the addition of globally unique identifiers or the encryption of evaluation instances.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.06\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a task to identify if a model is trained on benchmark data.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.07\",\n    \"value\": 15,\n    \"rationale\": \"The availability of code at the provided URL implies that scripts to replicate results are included.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#2\",\n        \"quote\": \"Dataset and code at https: // rowanzellers.com / hellaswag.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.08\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts report accuracy percentages and gaps but do not mention statistical significance tests or uncertainty quantification.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.09\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention an assessment of the need for warnings for sensitive or harmful content.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.10\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention the implementation of build status or equivalent CI/CD checks.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.11\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not specify release requirements.\",\n    \"evidence\": []\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "imp.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.04",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.05",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.08",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.10",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.11",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 16245,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 3691,
+    "completion_tokens": 833,
+    "total_tokens": 4524,
+    "cost": 0.00116045,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00116045,
+     "upstream_inference_prompt_cost": 0.0003691,
+     "upstream_inference_completions_cost": 0.00079135
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "documentation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "bfed8487d4b1d908515cb1cdc429c3d483c5af7d6a393e40bd15b7e4a6cb6799",
+   "excerpts": [
+    "paper:p8#2",
+    "paper:p9#2",
+    "paper:p4#2",
+    "paper:p13#3",
+    "paper:p2#2",
+    "paper:p13#1",
+    "paper:p1#4",
+    "paper:p7#2",
+    "paper:p11#3",
+    "paper:p2#0",
+    "paper:p14#0"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"doc.01\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a requirements file or equivalent.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.02\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a quick-start guide or demo.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.03\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention in-line code comments.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.04\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention code documentation.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.05\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts indicate the paper is an arXiv preprint, which is not a peer-reviewed venue acceptance.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p1#4\",\n        \"quote\": \"arXiv:1905.07830v1 [cs.CL] 19 May 2019\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.06\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts describe the benchmark construction process using Adversarial Filtering.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"We use Adversarial Filtering (AF), a data-collection paradigm in which a series of discriminators is used to select a challenging set of generated wrong answers.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.07\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts document the test tasks (commonsense NLI) and rationale (evaluating robustness of pretrained models).\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"We study this question by introducing HellaSwag, a new benchmark for commonsense NLI.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.08\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not document assumptions of normative properties.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.09\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not explicitly document limitations.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.10\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts document the data collection process (Adversarial Filtering) and prompt design (using video captions and wikiHow).\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"We use Adversarial Filtering (AF), a data-collection paradigm in which a series of discriminators is used to select a challenging set of generated wrong answers.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.11\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts document the evaluation metric (accuracy) and setup.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#0\",\n        \"quote\": \"the resulting dataset of 70k problems is easy for humans (95.6% accuracy), yet challenging for machines ( ă 50% q .\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.12\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not specify an applicable license.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.13\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not provide a globally unique, persistent identifier for the dataset.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.14\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention standardized metadata.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.15\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts document data sources (ActivityNet Captions, wikiHow) and collection methods.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p4#2\",\n        \"quote\": \"We start by including video captions from the ActivityNet Captions dataset (Krishna et al., 2017).\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.16\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not document data preprocessing steps.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.17\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts document the data annotation process involving Mechanical Turk workers.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p9#2\",\n        \"quote\": \"We thank the Mechanical Turk workers for their great work during dataset collection.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.18\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not explain the representativeness of the data.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.19\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not state that documentation follows a recognized standard.\",\n    \"evidence\": []\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "doc.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.02",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.04",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.05",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.06",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "doc.07",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "doc.08",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.10",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "doc.11",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.12",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.13",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.14",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.15",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.16",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.17",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.18",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.19",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 8635,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 4123,
+    "completion_tokens": 1389,
+    "total_tokens": 5512,
+    "cost": 0.00173185,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00173185,
+     "upstream_inference_prompt_cost": 0.0004123,
+     "upstream_inference_completions_cost": 0.00131955
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  },
+  {
+   "group": "maintenance",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "51b9519578034f6f5d7b0fdcf457801c8a149f5bac64bd901f61497dfe11cf98",
+   "excerpts": [
+    "paper:p2#2",
+    "paper:p7#4",
+    "paper:p9#1",
+    "paper:p9#2",
+    "paper:p7#2",
+    "paper:p7#0"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"mai.01\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention any code usability checks or specify when such checks were performed. There is no evidence that code usability was checked within the last year.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"mai.02\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a maintained feedback channel for users. While acknowledgments thank reviewers and workers, no specific channel for user feedback is described.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"mai.03\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not list a specific contact person. The acknowledgments thank individuals by name but do not provide contact information or designate a contact person.\",\n    \"evidence\": []\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "mai.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.02",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 4406,
+   "provider": "DeepInfra",
+   "usage": {
+    "prompt_tokens": 2452,
+    "completion_tokens": 219,
+    "total_tokens": 2671,
+    "cost": 0.00045325,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00045325,
+     "upstream_inference_prompt_cost": 0.0002452,
+     "upstream_inference_completions_cost": 0.00020805
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    }
+   }
+  }
+ ]
+}
