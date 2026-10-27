@@ -61,6 +61,11 @@ describe('metrics', () => {
     expect(cost.pairs).toEqual({ complete: 0, incomplete: 1 });
   });
 
+  it('falls back to usage.estimated_cost when cost is absent', () => {
+    const t = { group: 'design', model: 'm', temperature: 0, seed: 1, prompt_version: '1', prompt_sha256: 'x', excerpts: [], response: null, usage: { estimated_cost: 0.125 }, checks: [] };
+    expect(modelMetrics(std, {}, [pair({}, { transcript: [t] })]).cost_usd).toBeCloseTo(0.125, 10);
+  });
+
   it('leaves incomplete pairs out of every agreement metric but keeps them in calls and pair counts', () => {
     const gold = asm('truthfulqa', g);
     const check = { item: 'des.01', proposed: 0, final: 0, quotes_kept: 1, quotes_dropped: 1 };
@@ -140,6 +145,70 @@ describe('bakeoff run', () => {
     });
     const f = JSON.parse(readFileSync(join(out, 'gpt-oss-20b/truthfulqa.json'), 'utf8')) as PairFile;
     expect(f).toMatchObject({ complete: false, calls: 0, error: 'boom' });
+  });
+});
+
+describe('bakeoff completeness and rate limits', () => {
+  const PAPER = 'We define truthfulness as the model avoiding false statements. The benchmark contains 817 questions spanning 38 categories.';
+  const source: FetchedSource = {
+    snapshot: { kind: 'paper', url: 'https://arxiv.org/abs/2109.07958v2', ref: 'v2', sha256: sha256(PAPER), chars: PAPER.length },
+    chunks: chunk('paper:p1', 'p1', PAPER, 200),
+  };
+  const ok = (ids: string[]) => new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify({ verdicts: ids.map((item) => ({ item, value: 0, rationale: 'r', evidence: [] })) }) } }] }), { status: 200 });
+  // `reply(n, ids)` answers the n-th call (0-based); undefined means a normal answer for every id.
+  const run = async (reply: (n: number, ids: string[]) => Response | undefined, extra: { sleep?: (ms: number) => Promise<void>; maxCalls?: number } = {}) => {
+    let n = 0;
+    const fetchImpl: typeof fetch = async (_u, init) => {
+      const prompt = JSON.parse(String(init!.body)).messages[0].content as string;
+      const ids = [...prompt.matchAll(/^- id: (\S+)/gm)].map((x) => x[1]!);
+      return reply(n++, ids) ?? ok(ids);
+    };
+    const out = mkdtempSync(join(tmpdir(), 'bakeoff-'));
+    const r = await runBakeoff({
+      c: corpus, models: [llmConfig(corpus, 'gpt-oss:20b')], out, date: 'd', benchmark: 'truthfulqa', maxCalls: extra.maxCalls ?? Infinity,
+      sourcesFor: async () => ({ pins: {}, sources: [source] }), fetchImpl, sleep: extra.sleep ?? (async () => {}),
+    });
+    return { r, file: JSON.parse(readFileSync(join(out, 'gpt-oss-20b/truthfulqa.json'), 'utf8')) as PairFile, count: () => n };
+  };
+  const missing = (x: Awaited<ReturnType<typeof run>>) => x.r.metrics['gpt-oss:20b']!.items_missing;
+
+  it('counts an omitted item as missing, not as an incomplete pair', async () => {
+    const baseline = await run(() => undefined);
+    const x = await run((n, ids) => (n === 0 ? ok(ids.slice(1)) : undefined));
+    expect(x.file.complete).toBe(true);
+    expect(missing(x)).toBe(missing(baseline) + 1);
+  });
+
+  it('counts a non-JSON reply as the whole group missing, not as an incomplete pair', async () => {
+    let size = 0;
+    const baseline = await run(() => undefined);
+    const x = await run((n, ids) => { if (n !== 0) return undefined; size = ids.length; return new Response(JSON.stringify({ choices: [{ message: { content: 'sorry, no' } }] }), { status: 200 }); });
+    expect(x.file.complete).toBe(true);
+    expect(missing(x)).toBe(missing(baseline) + size);
+  });
+
+  it('keeps a pair incomplete when a call fails at the transport level', async () => {
+    const { file } = await run((n) => (n === 1 ? new Response('boom', { status: 500 }) : undefined));
+    expect(file.complete).toBe(false);
+    expect(file.error).toMatch(/500/);
+  });
+
+  it('waits 30s and retries a rate-limited pair, counting the retry calls', async () => {
+    const sleeps: number[] = [];
+    const { file, count } = await run((n) => (n === 0 ? new Response('', { status: 429 }) : undefined), { sleep: async (ms) => { sleeps.push(ms); } });
+    expect(sleeps).toEqual([30000]);
+    expect(file).toMatchObject({ complete: true, calls: 5 });
+    expect(count()).toBe(5);
+  });
+
+  it('gives up after three retries, and never retries past the call budget', async () => {
+    const sleeps: number[] = [];
+    const always = await run(() => new Response('', { status: 429 }), { sleep: async (ms) => { sleeps.push(ms); } });
+    expect(sleeps).toEqual([30000, 60000, 120000]);
+    expect(always.file.complete).toBe(false);
+    const none: number[] = [];
+    await run(() => new Response('', { status: 429 }), { maxCalls: 4, sleep: async (ms) => { none.push(ms); } });
+    expect(none).toEqual([]);
   });
 });
 

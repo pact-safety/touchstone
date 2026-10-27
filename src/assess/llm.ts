@@ -106,7 +106,7 @@ async function chatOnce(cfg: LlmConfig, messages: Messages, f: typeof fetch | un
   if (res.status === 429) throw new RateLimited(`rate limited by ${cfg.baseUrl}`);
   if (!res.ok) throw new Error(`${cfg.baseUrl} returned ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const text = await res.text();
-  if (/^\s*data:/.test(text)) return fromStream(text, cfg.baseUrl);
+  if (/^\s*data:/m.test(text)) return fromStream(text, cfg.baseUrl);
   // A 200 that isn't a chat completion (e.g. a retired endpoint answering "OK") is a failure, not an empty answer.
   let parsed: unknown;
   try { parsed = JSON.parse(text); } catch { throw new Error(`${cfg.baseUrl} did not return a chat completion (got ${JSON.stringify(text.slice(0, 60))})`); }

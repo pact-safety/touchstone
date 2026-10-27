@@ -114,7 +114,8 @@ export function modelMetrics(std: Standard, gold: Record<string, Assessment>, pa
       const inp = num(u.prompt_tokens) ?? num(u.input_tokens), out = num(u.completion_tokens) ?? num(u.output_tokens);
       if (inp !== undefined) m.input_tokens = (m.input_tokens ?? 0) + inp;
       if (out !== undefined) m.output_tokens = (m.output_tokens ?? 0) + out;
-      if (num(u.cost) !== undefined) cost = (cost ?? 0) + num(u.cost)!;
+      const c = num(u.cost) ?? num(u.estimated_cost); // DeepInfra's direct API reports estimated_cost
+      if (c !== undefined) cost = (cost ?? 0) + c;
       for (const c of p.complete ? t.checks : []) {
         m.quote_checks.failed += c.quotes_dropped;
         m.quote_checks.total += c.quotes_kept + c.quotes_dropped;
@@ -203,6 +204,8 @@ export interface BakeoffOptions {
   sourcesFor: (b: Benchmark) => Promise<{ pins: Pins; sources: FetchedSource[] }>;
   /** Test seam: replaces the network for model calls. */
   fetchImpl?: typeof fetch;
+  /** Test seam: replaces the real wait between rate-limit retries. */
+  sleep?: (ms: number) => Promise<void>;
   log?: (s: string) => void;
 }
 
@@ -229,6 +232,7 @@ export function goldAssessments(c: Corpus, only?: string): Assessment[] {
 
 export async function runBakeoff(o: BakeoffOptions) {
   const log = o.log ?? (() => {});
+  const sleep = o.sleep ?? ((ms: number) => new Promise<void>((r) => setTimeout(r, ms)));
   const std = o.c.standards.find((s) => s.value.id === STANDARD)!.value;
   const golds = goldAssessments(o.c, o.benchmark);
   if (!golds.length) throw new Error(o.benchmark ? `No BetterBench gold assessment for "${o.benchmark}".` : 'No BetterBench gold assessments found.');
@@ -250,20 +254,27 @@ export async function runBakeoff(o: BakeoffOptions) {
       try {
         src ??= await o.sourcesFor(b);
         if (!src.sources.length) throw new Error('no paper or repo to read');
-        const run = await assess({
-          benchmark: b, standard: std, sources: src.sources, llm, provider: entry.provider, license: entry.license, runOn: o.date,
-          transcriptPath: path, pins: { paper_version: src.pins.paper_version, repo_commit: src.pins.repo_commit }, fetchImpl: o.fetchImpl,
-        });
-        file.complete = run.complete;
-        file.calls = run.calls;
-        used += run.calls;
-        file.verdicts = Object.fromEntries(Object.entries(run.assessment.verdicts ?? {}).map(([id, v]) => [id, v.value]));
-        file.transcript = run.transcript;
-        const errs = [...new Set(run.transcript.map((e) => e.error).filter(Boolean))];
-        if (errs.length) file.error = errs.join(' | ').slice(0, 300);
+        // A rate-limited pair waits and retries (30s, 60s, 120s); retries spend budget like any call.
+        for (let retry = 0; ; retry++) {
+          const run = await assess({
+            benchmark: b, standard: std, sources: src.sources, llm, provider: entry.provider, license: entry.license, runOn: o.date,
+            transcriptPath: path, pins: { paper_version: src.pins.paper_version, repo_commit: src.pins.repo_commit }, fetchImpl: o.fetchImpl,
+          });
+          file.calls += run.calls;
+          used += run.calls;
+          file.verdicts = Object.fromEntries(Object.entries(run.assessment.verdicts ?? {}).map(([id, v]) => [id, v.value]));
+          file.transcript = run.transcript;
+          // Omitted items and unparseable replies are model-quality outcomes (counted as missing); only an unanswered call is incomplete.
+          file.complete = std.groups.every((gr) => run.transcript.some((e) => e.group === gr.id && e.response !== null));
+          const errs = [...new Set(run.transcript.map((e) => e.error).filter(Boolean))];
+          file.error = errs.length ? errs.join(' | ').slice(0, 300) : undefined;
+          if (file.complete || retry >= 3 || !errs.some((e) => /rate limited/.test(e!)) || used + std.groups.length > o.maxCalls) break;
+          log(`${llm.model} × ${b.id}: rate limited; retry ${retry + 1} of 3 after ${30 * 2 ** retry}s`);
+          await sleep(30000 * 2 ** retry);
+        }
         // A pinned entry must have been served only by its pinned provider(s); a missing provider field is a mismatch.
         const pins = pinnedProviders(llm.extra);
-        const bad = pins ? [...new Set(run.transcript.filter((e) => e.response !== null).map((e) => e.provider ?? '(none reported)').filter((p) => !pins.includes(p.toLowerCase())))] : [];
+        const bad = pins ? [...new Set(file.transcript.filter((e) => e.response !== null).map((e) => e.provider ?? '(none reported)').filter((p) => !pins.includes(p.toLowerCase())))] : [];
         if (bad.length) { file.complete = false; file.incomplete_reason = `served by unpinned provider(s) ${bad.join(', ')}; pinned to ${pins!.join(', ')}`; }
       } catch (e) {
         file.error = (e as Error).message.slice(0, 300);

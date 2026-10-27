@@ -182,6 +182,12 @@ describe('streaming chat client', () => {
     expect(r.content).toBe('{"verdicts":[]}');
     expect(r.reasoning).toBe('thinking ');
   });
+  it('recognises a stream that opens with SSE comment lines (OpenRouter)', async () => {
+    const { chat } = await import('../src/assess/llm.ts');
+    const body = ': OPENROUTER PROCESSING\n\n' + sse([{ provider: 'DeepInfra', choices: [{ delta: { content: '{"verdicts":[]}' }, finish_reason: 'stop' }] }]);
+    const r = await chat(cfg, [{ role: 'user', content: 'x' }], async () => new Response(body, { status: 200 }));
+    expect(r).toMatchObject({ content: '{"verdicts":[]}', provider: 'DeepInfra' });
+  });
   it('treats a truncated stream as a failure', async () => {
     const { chat } = await import('../src/assess/llm.ts');
     const body = sse([{ choices: [{ delta: { content: '{"verdicts": [' }, finish_reason: 'length' }] }]);

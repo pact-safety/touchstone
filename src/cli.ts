@@ -14,7 +14,7 @@
  *   check-revisions --base <ref>     Fail if changed verdicts lack a revision entry.
  */
 import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { parse, stringify } from 'yaml';
 import { load } from './load.ts';
@@ -97,7 +97,7 @@ async function main() {
     case 'build': {
       const c = loadValid();
       const out = values.out ?? 'site/public/data';
-      console.log(`wrote ${writeSiteData(c, join(root, out))} files to ${out}`);
+      console.log(`wrote ${writeSiteData(c, resolve(root, out))} files to ${out}`);
       return;
     }
     case 'watch': {
@@ -177,7 +177,7 @@ async function main() {
       }
       const date = values.date ?? today();
       await runBakeoff({
-        c, models, date, out: join(root, values.out ?? `bakeoff/${date}`), benchmark: values.benchmark,
+        c, models, date, out: resolve(root, values.out ?? `bakeoff/${date}`), benchmark: values.benchmark,
         maxCalls: maxCalls(values['max-calls']), sourcesFor, log: console.log,
       });
       return;
