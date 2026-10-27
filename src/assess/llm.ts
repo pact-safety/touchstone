@@ -28,6 +28,8 @@ export interface ChatResult {
   usage?: unknown;
   /** The upstream provider that served the call, when the router reports one (OpenRouter does). */
   provider?: string;
+  /** The model the endpoint says it ran (response `model`); can differ from the one requested. */
+  served_model?: string;
   /** Billable requests made: 2 when a 400 forced a retry without response_format. */
   attempts: number;
 }
@@ -110,10 +112,10 @@ async function chatOnce(cfg: LlmConfig, messages: Messages, f: typeof fetch | un
   // A 200 that isn't a chat completion (e.g. a retired endpoint answering "OK") is a failure, not an empty answer.
   let parsed: unknown;
   try { parsed = JSON.parse(text); } catch { throw new Error(`${cfg.baseUrl} did not return a chat completion (got ${JSON.stringify(text.slice(0, 60))})`); }
-  const d = parsed as { choices?: { message?: { content?: string; reasoning_content?: string; reasoning?: string } }[]; usage?: unknown; provider?: string };
+  const d = parsed as { choices?: { message?: { content?: string; reasoning_content?: string; reasoning?: string } }[]; usage?: unknown; provider?: string; model?: string };
   const m = d.choices?.[0]?.message;
   if (!m?.content) throw new Error(`${cfg.baseUrl} returned no message content`);
-  return { content: m.content, reasoning: m.reasoning_content ?? m.reasoning, usage: d.usage, ...(typeof d.provider === 'string' ? { provider: d.provider } : {}) };
+  return { content: m.content, reasoning: m.reasoning_content ?? m.reasoning, usage: d.usage, ...(typeof d.provider === 'string' ? { provider: d.provider } : {}), ...(typeof d.model === 'string' ? { served_model: d.model } : {}) };
 }
 
 /** Assemble a server-sent-events chat stream into one result. */
@@ -123,10 +125,11 @@ function fromStream(text: string, baseUrl: string): Omit<ChatResult, 'attempts'>
   let usage: unknown;
   let finish: string | undefined;
   let provider: string | undefined;
+  let served: string | undefined;
   for (const line of text.split('\n')) {
     const m = line.match(/^data:\s*(.*)$/);
     if (!m || m[1] === '[DONE]') continue;
-    let ev: { choices?: { delta?: { content?: string; reasoning_content?: string; reasoning?: string }; finish_reason?: string | null }[]; usage?: unknown; provider?: string; error?: { message?: string } };
+    let ev: { choices?: { delta?: { content?: string; reasoning_content?: string; reasoning?: string }; finish_reason?: string | null }[]; usage?: unknown; provider?: string; model?: string; error?: { message?: string } };
     try { ev = JSON.parse(m[1]!); } catch { continue; }
     if (ev.error) throw new Error(`${baseUrl} stream error: ${ev.error.message ?? 'unknown'}`);
     const ch = ev.choices?.[0];
@@ -135,11 +138,12 @@ function fromStream(text: string, baseUrl: string): Omit<ChatResult, 'attempts'>
     if (ch?.finish_reason) finish = ch.finish_reason;
     if (ev.usage) usage = ev.usage;
     if (typeof ev.provider === 'string') provider = ev.provider;
+    if (typeof ev.model === 'string') served = ev.model;
   }
   if (!content) throw new Error(`${baseUrl} streamed no message content${finish ? ` (finish: ${finish})` : ''}`);
   // An answer cut off at max_tokens is incomplete JSON at best; report it as such rather than half-parsing it.
   if (finish === 'length') throw new Error(`${baseUrl} hit max_tokens before finishing`);
-  return { content, reasoning: reasoning || undefined, usage, ...(provider ? { provider } : {}) };
+  return { content, reasoning: reasoning || undefined, usage, ...(provider ? { provider } : {}), ...(served ? { served_model: served } : {}) };
 }
 
 /** Pull the JSON object out of a reply, tolerating a ```json fence. */

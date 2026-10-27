@@ -31,6 +31,8 @@ export interface TranscriptEntry {
   reasoning?: string;
   /** Upstream provider that served the call, when the router reports it. */
   provider?: string;
+  /** Model the endpoint reports having served; compared with the requested one by the bake-off. */
+  served_model?: string;
   /** Token counts (and cost, when the router reports it) exactly as the endpoint returned them. */
   usage?: unknown;
   /** Wall-clock time of the model call, in milliseconds. */
@@ -188,6 +190,7 @@ export async function assess(input: RunInput): Promise<{ assessment: Assessment;
       entry.response = res.content;
       if (res.reasoning) entry.reasoning = res.reasoning;
       if (res.provider) entry.provider = res.provider;
+      if (res.served_model) entry.served_model = res.served_model;
       if (res.usage) entry.usage = res.usage;
       parsed = parseJson(res.content) as { verdicts?: unknown[] };
     } catch (e) {

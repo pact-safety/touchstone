@@ -188,6 +188,13 @@ describe('streaming chat client', () => {
     const r = await chat(cfg, [{ role: 'user', content: 'x' }], async () => new Response(body, { status: 200 }));
     expect(r).toMatchObject({ content: '{"verdicts":[]}', provider: 'DeepInfra' });
   });
+  it('captures the served model from a stream chunk and from a plain JSON reply', async () => {
+    const { chat } = await import('../src/assess/llm.ts');
+    const body = sse([{ choices: [{ delta: { content: '{}' } }] }, { model: 'google/gemma-4-31B-it', choices: [{ delta: {}, finish_reason: 'stop' }] }]);
+    expect((await chat(cfg, [{ role: 'user', content: 'x' }], async () => new Response(body, { status: 200 }))).served_model).toBe('google/gemma-4-31B-it');
+    const json = JSON.stringify({ model: 'x/y', choices: [{ message: { content: '{}' } }] });
+    expect((await chat(cfg, [{ role: 'user', content: 'x' }], async () => new Response(json, { status: 200 }))).served_model).toBe('x/y');
+  });
   it('treats a truncated stream as a failure', async () => {
     const { chat } = await import('../src/assess/llm.ts');
     const body = sse([{ choices: [{ delta: { content: '{"verdicts": [' }, finish_reason: 'length' }] }]);

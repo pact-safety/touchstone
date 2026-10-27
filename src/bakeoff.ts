@@ -18,6 +18,7 @@ export const STANDARD = 'betterbench';
 export const LEVELS = [0, 5, 10, 15];
 
 type Value = Verdict['value'];
+type CI = [number, number] | null;
 export interface PairFile {
   model: string;
   benchmark: string;
@@ -43,6 +44,12 @@ export interface ModelMetrics {
   mae: number | null;
   /** Quadratic-weighted Cohen's kappa over 0/5/10/15; null when undefined (no items, or no variation to measure). */
   kappa: number | null;
+  /** Mean (model - gold) in points over the numeric items; negative = the model scores lower than BetterBench. */
+  bias: number | null;
+  /** Benchmark-level cluster bootstrap 95% CIs (resample benchmarks, not items). */
+  ci: { kappa: CI; mae: CI; exact_pct: CI };
+  /** 95% CI of (this kappa - the top model's kappa) on the same resamples; null for the top model. Set by runBakeoff. */
+  kappa_vs_top: CI;
   na: { both: number; gold_only: number; model_only: number };
   /** Mean |engine overall(model) - engine overall(gold)| over complete pairs. */
   overall_mad: number | null;
@@ -76,9 +83,64 @@ export function weightedKappa(pairs: [number, number][], levels = LEVELS): numbe
   return exp === 0 ? null : 1 - obs / exp;
 }
 
+type ByBench = Record<string, [number, number][]>;
+const BOOTSTRAP_REPLICATES = 2000;
+const BOOTSTRAP_SEED = 20261028;
+
+/** Small seeded PRNG so the bootstrap is reproducible. */
+function mulberry32(a: number) {
+  return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+
+/** [gold, model] numeric pairs per benchmark, complete pairs only. */
+function numericByBench(gold: Record<string, Assessment>, pairs: PairFile[]): ByBench {
+  const out: ByBench = {};
+  for (const p of pairs) {
+    if (!p.complete || !gold[p.benchmark]) continue;
+    for (const [id, gv] of Object.entries(gold[p.benchmark]!.verdicts ?? {})) {
+      const mv = p.verdicts[id];
+      if (LEVELS.includes(gv.value as number) && LEVELS.includes(mv as number)) (out[p.benchmark] ??= []).push([gv.value as number, mv as number]);
+    }
+  }
+  return out;
+}
+const pool = (by: ByBench, draw: string[]) => draw.flatMap((b) => by[b] ?? []);
+
+/**
+ * Percentile 95% CI of `stat` over benchmark resamples. The same seed and ids give the same draws for every
+ * caller, so two models' statistics are compared on identical resamples. shortcut: replicates where stat is null are dropped.
+ */
+export function bootstrap(ids: string[], stat: (draw: string[]) => number | null): CI {
+  if (!ids.length) return null;
+  const rnd = mulberry32(BOOTSTRAP_SEED);
+  const vals: number[] = [];
+  for (let r = 0; r < BOOTSTRAP_REPLICATES; r++) {
+    const v = stat(ids.map(() => ids[Math.floor(rnd() * ids.length)]!));
+    if (v !== null) vals.push(v);
+  }
+  if (!vals.length) return null;
+  vals.sort((a, b) => a - b);
+  return [vals[Math.floor(0.025 * vals.length)]!, vals[Math.ceil(0.975 * vals.length) - 1]!];
+}
+
+/** The model with the highest point-estimate kappa (first on ties); undefined when none has one. */
+export const topModel = (metrics: Record<string, ModelMetrics>) =>
+  Object.entries(metrics).filter(([, m]) => m.kappa !== null).sort((a, b) => b[1].kappa! - a[1].kappa!)[0]?.[0];
+
+/** Per model, the CI of (its kappa - the top model's kappa) on shared benchmark resamples; null for the top model. */
+export function kappaVsTop(gold: Record<string, Assessment>, byModel: Record<string, PairFile[]>, metrics: Record<string, ModelMetrics>): Record<string, CI> {
+  const top = topModel(metrics);
+  const by = Object.fromEntries(Object.entries(byModel).map(([id, ps]) => [id, numericByBench(gold, ps)]));
+  return Object.fromEntries(Object.keys(byModel).map((id) => [id, id === top || !top ? null : bootstrap(Object.keys(gold).sort(), (d) => {
+    const a = weightedKappa(pool(by[id]!, d)), b = weightedKappa(pool(by[top]!, d));
+    return a === null || b === null ? null : a - b;
+  })]));
+}
+
 export function modelMetrics(std: Standard, gold: Record<string, Assessment>, pairs: PairFile[]): ModelMetrics {
   const m: ModelMetrics = {
-    items: 0, items_missing: 0, numeric_items: 0, exact_pct: null, within5_pct: null, mae: null, kappa: null,
+    items: 0, items_missing: 0, numeric_items: 0, exact_pct: null, within5_pct: null, mae: null, kappa: null, bias: null,
+    ci: { kappa: null, mae: null, exact_pct: null }, kappa_vs_top: null,
     na: { both: 0, gold_only: 0, model_only: 0 }, overall_mad: null, quote_checks: { failed: 0, total: 0 }, downgraded: 0,
     pairs: { complete: 0, incomplete: 0 }, calls: 0, input_tokens: null, output_tokens: null, cost_usd: 'n/a', providers: [],
   };
@@ -128,6 +190,14 @@ export function modelMetrics(std: Standard, gold: Record<string, Assessment>, pa
   m.within5_pct = pct(numeric.filter(([a, b]) => Math.abs(a - b) <= 5).length, numeric.length);
   m.mae = numeric.length ? numeric.reduce((s, [a, b]) => s + Math.abs(a - b), 0) / numeric.length : null;
   m.kappa = weightedKappa(numeric);
+  m.bias = numeric.length ? numeric.reduce((s, [g, v]) => s + (v - g), 0) / numeric.length : null;
+  const by = numericByBench(gold, pairs);
+  const stats = {
+    kappa: (d: string[]) => weightedKappa(pool(by, d)),
+    mae: (d: string[]) => { const x = pool(by, d); return x.length ? x.reduce((s, [a, b]) => s + Math.abs(a - b), 0) / x.length : null; },
+    exact_pct: (d: string[]) => { const x = pool(by, d); return pct(x.filter(([a, b]) => a === b).length, x.length); },
+  };
+  for (const k of ['kappa', 'mae', 'exact_pct'] as const) m.ci[k] = bootstrap(Object.keys(gold).sort(), stats[k]);
   m.overall_mad = diffs.length ? diffs.reduce((a, b) => a + b, 0) / diffs.length : null;
   m.cost_usd = cost ?? 'n/a';
   m.providers = [...providers].sort();
@@ -156,10 +226,12 @@ export function topDisagreements(gold: Record<string, Assessment>, byModel: Reco
 }
 
 const f = (x: number | null, d = 1) => (x === null ? 'n/a' : x.toFixed(d));
+const ci = (x: CI, d = 1) => (x === null ? 'n/a' : `[${x[0].toFixed(d)}, ${x[1].toFixed(d)}]`);
 
 export function renderReport(date: string, metrics: Record<string, ModelMetrics>, dis: Disagreement[]): string {
   const ids = Object.keys(metrics);
-  const row = (label: string, g: (m: ModelMetrics) => string) => `| ${label} | ${ids.map((i) => g(metrics[i]!)).join(' | ')} |`;
+  const top = topModel(metrics);
+  const row = (label: string, g: (m: ModelMetrics, id: string) => string) => `| ${label} | ${ids.map((i) => g(metrics[i]!, i)).join(' | ')} |`;
   const lines = [
     `# Bake-off against BetterBench, ${date}`,
     '',
@@ -173,6 +245,11 @@ export function renderReport(date: string, metrics: Record<string, ModelMetrics>
     row('within 5 points %', (m) => f(m.within5_pct)),
     row('MAE (points)', (m) => f(m.mae, 2)),
     row('quadratic kappa', (m) => f(m.kappa, 3)),
+    row('kappa 95% CI', (m) => ci(m.ci.kappa, 3)),
+    row('MAE 95% CI', (m) => ci(m.ci.mae, 2)),
+    row('exact % 95% CI', (m) => ci(m.ci.exact_pct)),
+    row('bias (model − gold, points)', (m) => f(m.bias, 2)),
+    row('kappa vs top (95% CI)', (m, i) => (i === top ? '—' : ci(m.kappa_vs_top, 3))),
     row('n/a: both / gold only / model only', (m) => `${m.na.both} / ${m.na.gold_only} / ${m.na.model_only}`),
     row('overall score mean abs diff', (m) => f(m.overall_mad, 2)),
     row('quote checks failed', (m) => `${m.quote_checks.failed} / ${m.quote_checks.total}`),
@@ -183,6 +260,8 @@ export function renderReport(date: string, metrics: Record<string, ModelMetrics>
     row('output tokens', (m) => (m.output_tokens === null ? 'n/a' : `${m.output_tokens}`)),
     row('cost ($)', (m) => (m.cost_usd === 'n/a' ? 'n/a' : m.cost_usd.toFixed(4))),
     row('providers', (m) => m.providers.join(', ') || 'n/a'),
+    '',
+    'The 95% CIs resample benchmarks (2000 draws, fixed seed), not items, because items within a benchmark are not independent; "kappa vs top" is the CI of the difference from the highest-kappa model on the same resamples.',
     '',
     '## Items with the most disagreement',
     '',
@@ -276,6 +355,10 @@ export async function runBakeoff(o: BakeoffOptions) {
         const pins = pinnedProviders(llm.extra);
         const bad = pins ? [...new Set(file.transcript.filter((e) => e.response !== null).map((e) => e.provider ?? '(none reported)').filter((p) => !pins.includes(p.toLowerCase())))] : [];
         if (bad.length) { file.complete = false; file.incomplete_reason = `served by unpinned provider(s) ${bad.join(', ')}; pinned to ${pins!.join(', ')}`; }
+        // OpenRouter-style dated suffixes still match; a missing served_model (older files, some endpoints) is not a mismatch.
+        const want = llm.model.toLowerCase();
+        const wrong = [...new Set(file.transcript.filter((e) => e.response !== null && e.served_model && !e.served_model.toLowerCase().startsWith(want)).map((e) => e.served_model!))];
+        if (wrong.length && file.complete) { file.complete = false; file.incomplete_reason = `served by a different model: ${wrong.join(', ')}; requested ${llm.model}`; }
       } catch (e) {
         file.error = (e as Error).message.slice(0, 300);
       }
@@ -289,6 +372,7 @@ export async function runBakeoff(o: BakeoffOptions) {
     byModel[llm.model] = golds.flatMap((g) => readPair(pairPath(llm.model, g.benchmark)) ?? []);
   }
   const metrics = Object.fromEntries(Object.entries(byModel).map(([id, ps]) => [id, modelMetrics(std, goldBy, ps)]));
+  for (const [id, v] of Object.entries(kappaVsTop(goldBy, byModel, metrics))) metrics[id]!.kappa_vs_top = v;
   const dis = topDisagreements(goldBy, byModel);
   write(join(o.out, 'metrics.json'), JSON.stringify({ date: o.date, standard: STANDARD, benchmarks: golds.map((g) => g.benchmark), models: metrics, top_disagreements: dis }, null, 1) + '\n');
   write(join(o.out, 'report.md'), renderReport(o.date, metrics, dis));

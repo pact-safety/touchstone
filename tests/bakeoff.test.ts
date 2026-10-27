@@ -7,7 +7,7 @@ import { load } from '../src/load.ts';
 import { llmConfig } from '../src/llm-config.ts';
 import { chunk, sha256 } from '../src/assess/text.ts';
 import type { FetchedSource } from '../src/assess/sources.ts';
-import { goldAssessments, modelMetrics, runBakeoff, topDisagreements, weightedKappa, type PairFile } from '../src/bakeoff.ts';
+import { bootstrap, goldAssessments, kappaVsTop, modelMetrics, runBakeoff, renderReport, topDisagreements, weightedKappa, type PairFile } from '../src/bakeoff.ts';
 import type { Assessment, Verdict } from '../src/schema.ts';
 
 const corpus = load(new URL('..', import.meta.url).pathname);
@@ -82,6 +82,54 @@ describe('metrics', () => {
     const gold = asm('truthfulqa', { 'des.01': 0, 'des.02': 15 });
     const top = topDisagreements({ truthfulqa: gold }, { a: [pair({ 'des.01': 0, 'des.02': 0 })], b: [pair({ 'des.01': 5, 'des.02': 'n/a' })] });
     expect(top.map((d) => [d.item, d.total])).toEqual([['des.02', 15], ['des.01', 5]]);
+  });
+});
+
+describe('bias and bootstrap', () => {
+  const g = { 'des.01': 0, 'des.02': 5, 'des.03': 10, 'des.04': 15 } as const;
+  it('bias is mean model − gold: negative when the model scores lower', () => {
+    const gold = asm('truthfulqa', g);
+    // differences: 0, -5, -10, 0 -> mean -3.75
+    expect(modelMetrics(std, { truthfulqa: gold }, [pair({ 'des.01': 0, 'des.02': 0, 'des.03': 0, 'des.04': 15 })]).bias).toBeCloseTo(-3.75, 10);
+    expect(modelMetrics(std, { truthfulqa: gold }, [pair({ 'des.01': 5, 'des.02': 5, 'des.03': 10, 'des.04': 15 })]).bias).toBeCloseTo(1.25, 10);
+  });
+
+  // Five synthetic benchmarks of 4 items each, the model off by one level on one item in two of them.
+  const ids = ['b1', 'b2', 'b3', 'b4', 'b5'];
+  const golds = Object.fromEntries(ids.map((b) => [b, asm(b, g)]));
+  const mk = (off: Record<string, Partial<Record<keyof typeof g, number>>>) =>
+    ids.map((b) => pair({ ...g, ...off[b] } as Record<string, Verdict['value']>, { benchmark: b }));
+  const good = mk({ b2: { 'des.02': 10 }, b4: { 'des.03': 5 } });
+  const worse = mk({ b1: { 'des.01': 10 }, b2: { 'des.02': 10 }, b3: { 'des.04': 5 }, b4: { 'des.03': 5 } });
+
+  it('is deterministic, and its CI contains the point estimate', () => {
+    const a = modelMetrics(std, golds, good), b = modelMetrics(std, golds, good);
+    expect(a.ci).toEqual(b.ci);
+    for (const [k, point] of [['kappa', a.kappa], ['mae', a.mae], ['exact_pct', a.exact_pct]] as const) {
+      const [lo, hi] = a.ci[k]!;
+      expect(lo).toBeLessThanOrEqual(point!);
+      expect(hi).toBeGreaterThanOrEqual(point!);
+    }
+    expect(bootstrap(ids, (d) => d.length)).toEqual([5, 5]);
+  });
+
+  it('compares each model with the top one on shared resamples; the top model has no comparison', () => {
+    const byModel = { good, worse };
+    const metrics = Object.fromEntries(Object.entries(byModel).map(([id, ps]) => [id, modelMetrics(std, golds, ps)]));
+    const vs = kappaVsTop(golds, byModel, metrics);
+    expect(metrics.good!.kappa!).toBeGreaterThan(metrics.worse!.kappa!);
+    expect(vs.good).toBeNull();
+    const [lo, hi] = vs.worse!;
+    expect(lo).toBeLessThanOrEqual(metrics.worse!.kappa! - metrics.good!.kappa!);
+    expect(hi).toBeGreaterThanOrEqual(metrics.worse!.kappa! - metrics.good!.kappa!);
+    expect(kappaVsTop(golds, byModel, metrics)).toEqual(vs);
+  });
+
+  it("renders the 'vs top' cell as — for the top model", () => {
+    const metrics = { good: modelMetrics(std, golds, good), worse: modelMetrics(std, golds, worse) };
+    metrics.worse.kappa_vs_top = [-0.5, -0.1];
+    const line = renderReport('d', metrics, []).split('\n').find((l) => l.startsWith('| kappa vs top'))!;
+    expect(line).toBe('| kappa vs top (95% CI) | — | [-0.500, -0.100] |');
   });
 });
 
@@ -258,16 +306,16 @@ describe('bakeoff pinning and pair files', () => {
     snapshot: { kind: 'paper', url: 'https://arxiv.org/abs/2109.07958v2', ref: 'v2', sha256: sha256(PAPER), chars: PAPER.length },
     chunks: chunk('paper:p1', 'p1', PAPER, 200),
   };
-  const fakeFetch = (provider: string | undefined): typeof fetch => async (_u, init) => {
+  const fakeFetch = (provider: string | undefined, served?: string): typeof fetch => async (_u, init) => {
     const prompt = JSON.parse(String(init!.body)).messages[0].content as string;
     const ids = [...prompt.matchAll(/^- id: (\S+)/gm)].map((x) => x[1]!);
     const verdicts = ids.map((item) => ({ item, value: 0, rationale: 'r', evidence: [] }));
-    return new Response(JSON.stringify({ ...(provider ? { provider } : {}), choices: [{ message: { content: JSON.stringify({ verdicts }) } }] }), { status: 200 });
+    return new Response(JSON.stringify({ ...(provider ? { provider } : {}), ...(served ? { model: served } : {}), choices: [{ message: { content: JSON.stringify({ verdicts }) } }] }), { status: 200 });
   };
-  const run = async (provider: string | undefined, out: string) => {
+  const run = async (provider: string | undefined, out: string, served?: string) => {
     await runBakeoff({
       c: corpus, models: [llmConfig(corpus, 'openai/gpt-oss-120b')], out, date: 'd', benchmark: 'truthfulqa', maxCalls: Infinity,
-      sourcesFor: async () => ({ pins: {}, sources: [source] }), fetchImpl: fakeFetch(provider),
+      sourcesFor: async () => ({ pins: {}, sources: [source] }), fetchImpl: fakeFetch(provider, served),
     });
     return JSON.parse(readFileSync(join(out, 'openai-gpt-oss-120b/truthfulqa.json'), 'utf8')) as PairFile;
   };
@@ -280,6 +328,17 @@ describe('bakeoff pinning and pair files', () => {
     const none = await run(undefined, mkdtempSync(join(tmpdir(), 'bakeoff-')));
     expect(none.complete).toBe(false);
     expect(none.incomplete_reason).toMatch(/none reported/);
+  });
+
+  it('marks a pair incomplete when another model served it; ignores case, dated suffixes and a missing field', async () => {
+    const tmp = () => mkdtempSync(join(tmpdir(), 'bakeoff-'));
+    const bad = await run('DeepInfra', tmp(), 'google/gemma-4-31B-it');
+    expect(bad.complete).toBe(false);
+    expect(bad.incomplete_reason).toBe('served by a different model: google/gemma-4-31B-it; requested openai/gpt-oss-120b');
+    expect(await run('DeepInfra', tmp(), 'OpenAI/GPT-OSS-120B')).toMatchObject({ complete: true });
+    expect(await run('DeepInfra', tmp(), 'openai/gpt-oss-120b-20260401')).toMatchObject({ complete: true });
+    expect((await run('DeepInfra', tmp())).transcript[0]!.served_model).toBeUndefined();
+    expect(await run('DeepInfra', tmp())).toMatchObject({ complete: true });
   });
 
   it('re-runs an unparseable pair file instead of aborting, and leaves no .tmp behind', async () => {
