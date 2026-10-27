@@ -193,6 +193,25 @@ describe('streaming chat client', () => {
   });
 });
 
+describe('per-model request settings', () => {
+  it('merges extra into the body (not model/messages) and returns the streamed provider', async () => {
+    const { chat } = await import('../src/assess/llm.ts');
+    let seen: Record<string, unknown> = {};
+    const f = async (_u: unknown, init?: RequestInit) => {
+      seen = JSON.parse(String(init!.body));
+      const ev = [{ provider: 'DeepInfra', choices: [{ delta: { content: '{}' } }] }, { choices: [{ delta: {}, finish_reason: 'stop' }] }];
+      return new Response(ev.map((e) => `data: ${JSON.stringify(e)}\n\n`).join('') + 'data: [DONE]\n\n', { status: 200 });
+    };
+    const extra = { provider: { only: ['deepinfra'] }, seed: 7, model: 'evil', messages: [] };
+    const r = await chat({ baseUrl: 'http://fake', model: 'm', temperature: 0, seed: 1, maxTokens: 10, extra }, [{ role: 'user', content: 'x' }], f as typeof fetch);
+    expect(seen.provider).toEqual({ only: ['deepinfra'] });
+    expect(seen.seed).toBe(7);
+    expect(seen.model).toBe('m');
+    expect(seen.messages).toHaveLength(1);
+    expect(r.provider).toBe('DeepInfra');
+  });
+});
+
 describe('thinking switch', () => {
   it('sends think:false and /no_think when thinking is off, and nothing extra otherwise', async () => {
     const { chat } = await import('../src/assess/llm.ts');

@@ -29,6 +29,10 @@ export interface TranscriptEntry {
   excerpts: string[];
   response: string | null;
   reasoning?: string;
+  /** Upstream provider that served the call, when the router reports it. */
+  provider?: string;
+  /** Token counts (and cost, when the router reports it) exactly as the endpoint returned them. */
+  usage?: unknown;
   /** Wall-clock time of the model call, in milliseconds. */
   ms?: number;
   error?: string;
@@ -180,10 +184,14 @@ export async function assess(input: RunInput): Promise<{ assessment: Assessment;
       const started = Date.now();
       const res = await chat(llm, [{ role: 'user', content: prompt }], input.fetchImpl);
       entry.ms = Date.now() - started;
+      calls += res.attempts - 1;
       entry.response = res.content;
       if (res.reasoning) entry.reasoning = res.reasoning;
+      if (res.provider) entry.provider = res.provider;
+      if (res.usage) entry.usage = res.usage;
       parsed = parseJson(res.content) as { verdicts?: unknown[] };
     } catch (e) {
+      calls += ((e as { attempts?: number }).attempts ?? 1) - 1;
       entry.error = (e as Error).message;
       complete = false;
       if ((e as Error).name === 'RateLimited' || /rate limited/.test(entry.error)) break;

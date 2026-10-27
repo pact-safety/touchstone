@@ -6,6 +6,8 @@
  *   watch [--write]                  Check sources for changes; print (and with --write, save) the work queue.
  *   assess [--benchmark id] [--standard id] [--queue] [--max-calls n]
  *                                    Run the automated assessor (see docs/automation.md for environment variables).
+ *   bakeoff --models id,id [--benchmark id] [--max-calls n] [--out dir]
+ *                                    Run candidate models on the benchmarks BetterBench assessed by hand and score them against it.
  *   replay --benchmark id --standard id
  *                                    Re-fetch pinned sources and check they and every prompt hash match the run record.
  *   triage --body-file <file>        Print the triage comment for a correction request (JSON: ok, labels, comment).
@@ -24,7 +26,9 @@ import { currentPins, fetchSources, type FetchedSource } from './assess/sources.
 import { sha256, verifyQuote } from './assess/text.ts';
 import { triage } from './triage.ts';
 import { checkRevisions } from './revisions.ts';
-import type { Assessment } from './schema.ts';
+import type { Assessment, Benchmark } from './schema.ts';
+import { llmConfig as llmConfigOf } from './llm-config.ts';
+import { runBakeoff } from './bakeoff.ts';
 
 const root = join(dirname(new URL(import.meta.url).pathname), '..');
 const today = () => new Date().toISOString().slice(0, 10);
@@ -33,7 +37,7 @@ const { positionals, values } = parseArgs({
   options: {
     out: { type: 'string' }, write: { type: 'boolean' }, benchmark: { type: 'string' }, standard: { type: 'string' },
     queue: { type: 'boolean' }, 'max-calls': { type: 'string' }, 'body-file': { type: 'string' }, base: { type: 'string' },
-    date: { type: 'string' },
+    date: { type: 'string' }, models: { type: 'string' },
   },
 });
 const cmd = positionals[0];
@@ -50,28 +54,23 @@ const watchPath = join(root, 'data/watch/state.json');
 const readWatch = (): WatchState | null => (existsSync(watchPath) ? JSON.parse(readFileSync(watchPath, 'utf8')) : null);
 const writeFile = (path: string, text: string) => { mkdirSync(dirname(path), { recursive: true }); writeFileSync(path, text); };
 
-function llmConfig(c: ReturnType<typeof load>) {
-  const cfg = parse(readFileSync(join(root, 'config/models.yaml'), 'utf8')) as { default: string };
-  const model = process.env.TOUCHSTONE_MODEL || cfg.default;
-  const entry = c.models.find((m) => m.id === model);
-  if (!entry) fail(`Model "${model}" is not on the open-weights allowlist in config/models.yaml.`);
-  // Default: a local Ollama server (the nightly job starts one on the runner). No other token is ever sent.
-  const baseUrl = process.env.TOUCHSTONE_LLM_BASE_URL || 'http://localhost:11434/v1';
-  const apiKey = process.env.TOUCHSTONE_LLM_API_KEY || undefined;
-  const effort = process.env.TOUCHSTONE_REASONING_EFFORT || (model.includes('gpt-oss') ? 'low' : '');
-  // qwen3 on a CPU runner spent its whole budget thinking and never answered; the answer's per-item
-  // rationale is the reasoning we keep. TOUCHSTONE_THINK=on turns thinking back on.
-  const think = process.env.TOUCHSTONE_THINK ? process.env.TOUCHSTONE_THINK === 'on' : model.startsWith('qwen3') ? false : undefined;
-  return {
-    entry: entry!,
-    llm: {
-      baseUrl,
-      apiKey,
-      model, temperature: 0, seed: 20261026, maxTokens: 6000,
-      ...(effort ? { reasoningEffort: effort as 'low' | 'medium' | 'high' } : {}),
-      ...(think !== undefined ? { think } : {}),
-    },
-  };
+const maxCalls = (v?: string) => {
+  if (v === undefined) return Infinity;
+  if (!/^[1-9]\d*$/.test(v)) fail(`--max-calls must be a positive integer (got "${v}").`);
+  return Number(v);
+};
+const llmConfig = (c: ReturnType<typeof load>, modelOverride?: string) => {
+  try { return llmConfigOf(c, modelOverride); } catch (e) { return fail((e as Error).message); }
+};
+
+/** Pins and fetched sources for a benchmark, fetched once per process however many pairs use them. */
+const sourceCache = new Map<string, { pins: Awaited<ReturnType<typeof currentPins>>; sources: FetchedSource[] }>();
+async function sourcesFor(b: Benchmark) {
+  if (!sourceCache.has(b.id)) {
+    const pins = readWatch()?.benchmarks[b.id] ?? (await currentPins(b, process.env.GITHUB_TOKEN));
+    sourceCache.set(b.id, { pins, sources: await fetchSources(b, pins, process.env.GITHUB_TOKEN) });
+  }
+  return sourceCache.get(b.id)!;
 }
 
 /** The weights digest an Ollama server reports for a model, so a run records exactly which weights it used. */
@@ -111,7 +110,7 @@ async function main() {
     case 'assess': {
       const c = loadValid();
       const { entry, llm } = llmConfig(c);
-      const budget = values['max-calls'] ? Number(values['max-calls']) : Infinity;
+      const budget = maxCalls(values['max-calls']);
       const date = values.date ?? today();
       let targets: { benchmark: string; standard: string }[];
       if (values.queue) {
@@ -127,17 +126,12 @@ async function main() {
       let written = 0;
       let failed = 0;
       const modelDigest = await ollamaDigest(llm.baseUrl, llm.model);
-      const sourceCache = new Map<string, { pins: Awaited<ReturnType<typeof currentPins>>; sources: FetchedSource[] }>();
       for (const t of targets) {
         const b = c.benchmarks.find((x) => x.value.id === t.benchmark)!.value;
         const s = c.standards.find((x) => x.value.id === t.standard)!.value;
         // A pair needs one call per group; never start one the budget can't finish.
         if (used + s.groups.length > budget) { console.log(`call budget reached; ${targets.length - targets.indexOf(t)} pair(s) left for the next run`); break; }
-        if (!sourceCache.has(b.id)) {
-          const pins = readWatch()?.benchmarks[b.id] ?? (await currentPins(b, process.env.GITHUB_TOKEN));
-          sourceCache.set(b.id, { pins, sources: await fetchSources(b, pins, process.env.GITHUB_TOKEN) });
-        }
-        const { pins, sources } = sourceCache.get(b.id)!;
+        const { pins, sources } = await sourcesFor(b);
         if (!sources.length) { console.log(`${b.id}: no paper or repo to read; skipped`); continue; }
         const transcriptPath = `data/runs/${b.id}/${s.id}/${date}.jsonl`;
         const run = await assess({
@@ -171,6 +165,21 @@ async function main() {
       console.log(`${written} assessment(s) recorded, ${failed} incomplete, ${used} call(s) used`);
       // Every attempted pair failing means the model or endpoint is broken: fail the job loudly.
       if (failed > 0 && written === 0) process.exit(1);
+      return;
+    }
+    case 'bakeoff': {
+      const c = loadValid();
+      const ids = (values.models ?? fail('--models is required (comma-separated ids from config/models.yaml)')).split(',').map((x) => x.trim()).filter(Boolean);
+      const models = ids.map((id) => llmConfig(c, id));
+      // Fail before any spend if a key the model needs is missing (only the variable's name is shown).
+      for (const m of models) {
+        if (m.keyEnv && !m.llm.apiKey) fail(`${m.llm.model}: environment variable ${m.keyEnv} is not set.`);
+      }
+      const date = values.date ?? today();
+      await runBakeoff({
+        c, models, date, out: join(root, values.out ?? `bakeoff/${date}`), benchmark: values.benchmark,
+        maxCalls: maxCalls(values['max-calls']), sourcesFor, log: console.log,
+      });
       return;
     }
     case 'replay': {
@@ -226,7 +235,7 @@ async function main() {
       return;
     }
     default:
-      fail('usage: touchstone <validate|build|watch|assess|replay|triage|check-revisions> (see src/cli.ts)');
+      fail('usage: touchstone <validate|build|watch|assess|bakeoff|replay|triage|check-revisions> (see src/cli.ts)');
   }
 }
 

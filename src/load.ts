@@ -20,6 +20,12 @@ export const OpenModel = z.strictObject({
   license: z.string(),
   weights: z.string().url(),
   note: z.string().optional(),
+  /** Endpoint for this model; TOUCHSTONE_LLM_BASE_URL still overrides it. */
+  base_url: z.string().url().optional(),
+  /** Name (not value) of the env var holding this endpoint's API key. */
+  api_key_env: z.string().regex(/^[A-Z_][A-Z0-9_]*$/).optional(),
+  /** Extra JSON body fields sent with every call, e.g. an OpenRouter provider block. */
+  request: z.record(z.string(), z.unknown()).optional(),
 });
 export type OpenModel = z.infer<typeof OpenModel>;
 

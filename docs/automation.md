@@ -20,8 +20,8 @@ Any OpenAI-compatible endpoint works:
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `TOUCHSTONE_LLM_BASE_URL` | `https://models.github.ai/inference` | Chat-completions endpoint; e.g. `http://localhost:11434/v1` for Ollama |
-| `TOUCHSTONE_LLM_API_KEY` | `GITHUB_TOKEN` | Bearer token, if the endpoint needs one |
+| `TOUCHSTONE_LLM_BASE_URL` | `https://models.github.ai/inference` | Chat-completions endpoint for models without their own `base_url` in `config/models.yaml` (an entry's `base_url` always wins); e.g. `http://localhost:11434/v1` for Ollama |
+| `TOUCHSTONE_LLM_API_KEY` | `GITHUB_TOKEN` | Bearer token, sent only to hosted entries (those with `base_url` or `api_key_env`) or when `TOUCHSTONE_LLM_BASE_URL` is set; never to a local Ollama entry |
 | `TOUCHSTONE_MODEL` | `default` in `config/models.yaml` | Must be on the allowlist |
 
 Run it locally against Ollama:
@@ -42,6 +42,12 @@ TOUCHSTONE_LLM_BASE_URL=http://localhost:11434/v1 TOUCHSTONE_MODEL=gpt-oss:20b \
   - a positive verdict left with no verified quote becomes negative, with the model's proposal kept in the rationale;
   - `n/a` on an item with no n/a condition becomes negative;
   - a reply that is not valid JSON, or a value that is not allowed, leaves the item without a verdict (scored as unmet) and marks the run partial.
+
+## Bake-off against BetterBench
+
+`touchstone bakeoff --models <id,id,...> [--benchmark <id>] [--max-calls N] [--out <dir>]` runs candidate models (any on the allowlist) on the 23 benchmarks BetterBench assessed by hand, using the same pipeline as `assess` for the `betterbench` standard, and scores each model's verdicts against BetterBench's. Output goes to `bakeoff/<date>/`: one `<model>/<benchmark>.json` per pair (verdict values and the transcript as in `data/runs`, with replies and reasoning verbatim; no excerpt text), plus `report.md` and `metrics.json`. A pair whose file has `complete: true` is skipped, so a crashed run resumes without re-spending; incomplete pairs are re-run and overwritten. `--max-calls` caps the whole run and never starts a pair it cannot finish.
+
+Per model it reports: items compared; exact agreement, agreement within 5 points and mean absolute error (numeric pairs only); quadratic-weighted Cohen's kappa over 0/5/10/15; n/a confusion counts (kept out of the others); the mean absolute difference of the engine's overall score against the gold one (complete pairs); quote checks failed and verdicts downgraded for unsupported quotes; complete and incomplete pairs; calls, tokens and cost (`n/a` unless the endpoint reports `usage.cost`); and the providers that served the calls, to confirm pinning held. `report.md` also lists the 10 items with the most disagreement across models.
 
 ## Reviewing a nightly pull request
 

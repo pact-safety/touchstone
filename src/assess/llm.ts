@@ -17,6 +17,8 @@ export interface LlmConfig {
    * Sent as Ollama's `think: false` and as Qwen's documented `/no_think` switch at the end of the prompt.
    */
   think?: boolean;
+  /** Extra JSON body fields from the model's `request` entry (e.g. OpenRouter `provider`); win over defaults except model/messages. */
+  extra?: Record<string, unknown>;
 }
 
 export interface ChatResult {
@@ -24,6 +26,10 @@ export interface ChatResult {
   /** Reasoning text, when the model or provider returns it separately (gpt-oss does). */
   reasoning?: string;
   usage?: unknown;
+  /** The upstream provider that served the call, when the router reports one (OpenRouter does). */
+  provider?: string;
+  /** Billable requests made: 2 when a 400 forced a retry without response_format. */
+  attempts: number;
 }
 
 export class RateLimited extends Error {}
@@ -57,7 +63,15 @@ const describe = (e: unknown) => {
   return `${err.message}${code ? ` (${code})` : ''}${err.cause?.message && err.cause.message !== err.message ? `: ${err.cause.message}` : ''}`;
 };
 
-export async function chat(cfg: LlmConfig, messages: { role: 'system' | 'user'; content: string }[], f?: typeof fetch): Promise<ChatResult> {
+type Messages = { role: 'system' | 'user'; content: string }[];
+
+/** A failed call still reports how many requests it made, on `error.attempts`. */
+export async function chat(cfg: LlmConfig, messages: Messages, f?: typeof fetch): Promise<ChatResult> {
+  const count = { n: 1 };
+  try { return { ...(await chatOnce(cfg, messages, f, count)), attempts: count.n }; } catch (e) { throw Object.assign(e as Error, { attempts: count.n }); }
+}
+
+async function chatOnce(cfg: LlmConfig, messages: Messages, f: typeof fetch | undefined, count: { n: number }): Promise<Omit<ChatResult, 'attempts'>> {
   // Streamed, so response headers arrive at once: a CPU-only model can take longer than fetch's
   // 300-second header timeout to finish an answer.
   const body: Record<string, unknown> = {
@@ -65,6 +79,7 @@ export async function chat(cfg: LlmConfig, messages: { role: 'system' | 'user'; 
     response_format: { type: 'json_object' }, stream: true,
   };
   if (cfg.reasoningEffort) body.reasoning_effort = cfg.reasoningEffort;
+  for (const [k, v] of Object.entries(cfg.extra ?? {})) if (k !== 'model' && k !== 'messages') body[k] = v;
   if (cfg.think === false) {
     body.think = false;
     const last = messages.length - 1;
@@ -85,6 +100,7 @@ export async function chat(cfg: LlmConfig, messages: { role: 'system' | 'user'; 
   if (res.status === 400) {
     // Some servers reject response_format; the prompt already asks for JSON only.
     delete body.response_format;
+    count.n = 2;
     res = await send(JSON.stringify(body));
   }
   if (res.status === 429) throw new RateLimited(`rate limited by ${cfg.baseUrl}`);
@@ -94,22 +110,23 @@ export async function chat(cfg: LlmConfig, messages: { role: 'system' | 'user'; 
   // A 200 that isn't a chat completion (e.g. a retired endpoint answering "OK") is a failure, not an empty answer.
   let parsed: unknown;
   try { parsed = JSON.parse(text); } catch { throw new Error(`${cfg.baseUrl} did not return a chat completion (got ${JSON.stringify(text.slice(0, 60))})`); }
-  const d = parsed as { choices?: { message?: { content?: string; reasoning_content?: string; reasoning?: string } }[]; usage?: unknown };
+  const d = parsed as { choices?: { message?: { content?: string; reasoning_content?: string; reasoning?: string } }[]; usage?: unknown; provider?: string };
   const m = d.choices?.[0]?.message;
   if (!m?.content) throw new Error(`${cfg.baseUrl} returned no message content`);
-  return { content: m.content, reasoning: m.reasoning_content ?? m.reasoning, usage: d.usage };
+  return { content: m.content, reasoning: m.reasoning_content ?? m.reasoning, usage: d.usage, ...(typeof d.provider === 'string' ? { provider: d.provider } : {}) };
 }
 
 /** Assemble a server-sent-events chat stream into one result. */
-function fromStream(text: string, baseUrl: string): ChatResult {
+function fromStream(text: string, baseUrl: string): Omit<ChatResult, 'attempts'> {
   let content = '';
   let reasoning = '';
   let usage: unknown;
   let finish: string | undefined;
+  let provider: string | undefined;
   for (const line of text.split('\n')) {
     const m = line.match(/^data:\s*(.*)$/);
     if (!m || m[1] === '[DONE]') continue;
-    let ev: { choices?: { delta?: { content?: string; reasoning_content?: string; reasoning?: string }; finish_reason?: string | null }[]; usage?: unknown; error?: { message?: string } };
+    let ev: { choices?: { delta?: { content?: string; reasoning_content?: string; reasoning?: string }; finish_reason?: string | null }[]; usage?: unknown; provider?: string; error?: { message?: string } };
     try { ev = JSON.parse(m[1]!); } catch { continue; }
     if (ev.error) throw new Error(`${baseUrl} stream error: ${ev.error.message ?? 'unknown'}`);
     const ch = ev.choices?.[0];
@@ -117,11 +134,12 @@ function fromStream(text: string, baseUrl: string): ChatResult {
     reasoning += ch?.delta?.reasoning_content ?? ch?.delta?.reasoning ?? '';
     if (ch?.finish_reason) finish = ch.finish_reason;
     if (ev.usage) usage = ev.usage;
+    if (typeof ev.provider === 'string') provider = ev.provider;
   }
   if (!content) throw new Error(`${baseUrl} streamed no message content${finish ? ` (finish: ${finish})` : ''}`);
   // An answer cut off at max_tokens is incomplete JSON at best; report it as such rather than half-parsing it.
   if (finish === 'length') throw new Error(`${baseUrl} hit max_tokens before finishing`);
-  return { content, reasoning: reasoning || undefined, usage };
+  return { content, reasoning: reasoning || undefined, usage, ...(provider ? { provider } : {}) };
 }
 
 /** Pull the JSON object out of a reply, tolerating a ```json fence. */

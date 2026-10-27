@@ -1,3 +1,4 @@
+# A `request` block is merged into every call body; `provider` pins one OpenRouter provider and precision so every call hits the same weights, with fallbacks off.
 # Models the automated assessor may use. Only open-weights models under an OSI-approved licence
 # are allowed, so anyone can download the same weights and audit or repeat a run.
 # An assessment whose model_run.model is not listed here fails validation.
@@ -23,10 +24,45 @@ allowed:
     license: Apache-2.0
     weights: https://huggingface.co/openai/gpt-oss-120b
     note: Hosted; set TOUCHSTONE_LLM_BASE_URL and the TOUCHSTONE_LLM_API_KEY secret.
+    base_url: https://openrouter.ai/api/v1
+    request:
+      provider: {only: [deepinfra], quantizations: [bf16], allow_fallbacks: false, require_parameters: true, zdr: true, data_collection: deny}
+      reasoning: {effort: low}
   - id: qwen2.5:14b-instruct
     provider: ollama
     license: Apache-2.0
     weights: https://huggingface.co/Qwen/Qwen2.5-14B-Instruct
+  - id: google/gemma-4-31b-it
+    provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+    license: Apache-2.0
+    weights: https://huggingface.co/google/gemma-4-31B-it
+    base_url: https://openrouter.ai/api/v1
+    request:
+      provider: {only: [deepinfra], quantizations: [fp8], allow_fallbacks: false, require_parameters: true, zdr: true, data_collection: deny}
+      reasoning: {enabled: false}
+  - id: qwen/qwen3.6-35b-a3b
+    provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+    license: Apache-2.0
+    weights: https://huggingface.co/Qwen/Qwen3.6-35B-A3B
+    base_url: https://openrouter.ai/api/v1
+    request:
+      provider: {only: [deepinfra], quantizations: [fp8], allow_fallbacks: false, require_parameters: true, zdr: true, data_collection: deny}
+      reasoning: {enabled: false}
+  - id: deepseek/deepseek-v4.1-flash-1017
+    provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+    license: MIT
+    weights: https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017
+    base_url: https://openrouter.ai/api/v1
+    request:
+      provider: {only: [deepinfra], quantizations: [fp8], allow_fallbacks: false, require_parameters: true, zdr: true, data_collection: deny}
+      reasoning: {enabled: false}
+  - id: allenai/Olmo-3.1-32B-Instruct
+    provider: openai-compatible (DeepInfra)
+    license: Apache-2.0
+    weights: https://huggingface.co/allenai/Olmo-3.1-32B-Instruct
+    note: Not on OpenRouter; set the TOUCHSTONE_DEEPINFRA_API_KEY secret.
+    base_url: https://api.deepinfra.com/v1/openai
+    api_key_env: TOUCHSTONE_DEEPINFRA_API_KEY
 
 # The model the nightly job uses unless TOUCHSTONE_MODEL overrides it.
 default: qwen3:8b
