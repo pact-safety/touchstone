@@ -12,6 +12,28 @@
 
 Pull requests opened with the workflow's own token do not trigger other workflows, which is why the nightly job runs validation and tests itself.
 
+## The candidate watchers
+
+`.github/workflows/watch.yml` runs two watchers that file GitHub issues for things worth adding to the corpus. Nothing is assessed or published automatically; a person reviews each issue.
+
+| Watcher | When (UTC) | Looks at | Window |
+|---|---|---|---|
+| `watch --source arxiv` | daily 02:30 | new cs.CL / cs.LG / cs.AI papers whose title or abstract mentions benchmark, evaluation suite, eval suite or leaderboard | 72 h |
+| `watch --source news` | hourly, :17 | the feeds in [`config/watch.yaml`](../config/watch.yaml) | 48 h |
+
+Both also run on demand (Actions > Watch > Run workflow, with `dry_run` on by default). Locally: `node --env-file=.env --import tsx src/cli.ts watch --source news --dry-run [--max N]`.
+
+1. **Fetch and parse** RSS/Atom (a small built-in reader; feeds that send ETag or Last-Modified are fetched conditionally).
+2. **Filter without tokens:** keep items inside the window, drop ids already in the seen-state, then a keyword prefilter (arXiv: a term in the title or "we introduce ... benchmark" in the abstract; news: the feed's AI-only rule plus benchmark/standard words by the feed's `for` tag).
+3. **Triage** the survivors only, newest first, at most 60 (arXiv) or 20 (news) per run (`--max N` or `max_triage` in the config); the rest wait for the next run. One call per item to `google/gemma-4-31b-it` (DeepInfra via OpenRouter, key `TOUCHSTONE_LLM_API_KEY`) with the title and the first ~2,000 characters in a block the prompt labels untrusted data. The reply must be exactly `{relevant, kind, reason}`; anything else counts as not relevant and is logged.
+4. **File an issue** for each relevant item: label `candidate-benchmark` or `candidate-standard` (created if missing), title `[candidate benchmark] <title>`, body with the link, date, feed, arXiv id and the model's one-sentence reason. Feed and model text is stripped of HTML, length-capped, and has @mentions and `#123` references defused. Before creating, the watcher searches existing issues (open and closed) for the arXiv id or URL, so a lost cache cannot duplicate.
+
+**Seen-state** is `data/watch/seen-<source>.json` (gitignored), kept between runs with `actions/cache` (restore by prefix, new key each run) and pruned after 30 days. Dry runs never save it.
+
+**Cost.** Each run's job summary shows items at every stage, tokens, and cost (`usage.cost`, or `estimated_cost` if that is what the provider reports). The step fails with a clear message if the `TOUCHSTONE_LLM_API_KEY` secret is missing.
+
+**Add a source.** Append an entry to `news.feeds` in `config/watch.yaml` with a `name`, `url` and `for` (`benchmark`, `standard` or `both`); add `ai_only: true` for general news feeds. No code change is needed. Sources without a usable feed (aisi.gov.uk blog, betterbench, iso.org) are listed there as a comment.
+
 ## The model
 
 The model must be on [`config/models.yaml`](../config/models.yaml): open weights under an OSI-approved licence, so anyone can download the same model and repeat a run. The default is `openai/gpt-oss-120b` (Apache-2.0) through GitHub Models, which Actions can call with the workflow's token (`permissions: models: read`) at no cost within the free rate limits.

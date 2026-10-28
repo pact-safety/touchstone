@@ -1,0 +1,31 @@
+# Sources for `touchstone watch --source arxiv|news` (see docs/automation.md#the-candidate-watchers).
+# To add a feed: append an entry under news.feeds. `for` says what it is a source of: benchmark | standard | both.
+arxiv:
+  url: https://export.arxiv.org/api/query
+  categories: [cs.CL, cs.LG, cs.AI]
+  # A paper is fetched when its title or abstract mentions one of these.
+  terms: [benchmark, evaluation suite, eval suite, leaderboard]
+  page_size: 200
+  max_pages: 5          # newest first; stops early once a page reaches past the window
+  window_hours: 72
+  max_triage: 60
+  # Code-only prefilter: the title names one of the terms, or the abstract says the paper introduces one.
+  introduces: '\b(?:we|this (?:paper|work))\s+(?:\w+\s+){0,3}?(?:introduce|present|propose|release|construct|develop|curate|build|create|contribute)\w*\b[^.]{0,100}?\b(?:benchmark|evaluation suite|eval suite|leaderboard)'
+news:
+  window_hours: 48
+  max_triage: 20
+  # Code-only prefilter words (regex fragments, matched case-insensitively at word starts).
+  keywords:
+    ai: ['\bAI\b', artificial intelligence, machine learning, \bLLMs?\b, language model, foundation model, frontier model, generative]
+    benchmark: [benchmark, evaluation, \bevals?\b, leaderboard, test suite, assessment, red.?team]
+    standard: [standard, guideline, framework, specification, protocol, \bcode of practice, requirements, regulation, certification, conformity, \bsafety\b]
+  feeds:
+    - {name: AI Standards Lab, url: 'https://aistandardslab.org/feed/', for: standard}
+    - {name: Epoch AI, url: 'https://epoch.ai/atom.xml', for: benchmark}
+    - {name: MLCommons, url: 'https://mlcommons.org/feed/', for: both}
+    - {name: METR, url: 'https://metr.org/feed.xml', for: both}   # about 4 MB: conditional GET (ETag / Last-Modified) is used
+    - {name: NIST news, url: 'https://www.nist.gov/news-events/news/rss.xml', for: standard, ai_only: true}
+    - {name: EU digital strategy, url: 'https://digital-strategy.ec.europa.eu/rss.xml', for: standard, ai_only: true}
+    - {name: Stanford CRFM, url: 'https://crfm.stanford.edu/feed.xml', for: both}
+    - {name: Inspect Evals releases, url: 'https://github.com/UKGovernmentBEIS/inspect_evals/releases.atom', for: benchmark}
+  # Skipped for now (no feed): aisi.gov.uk blog, betterbench, iso.org.
