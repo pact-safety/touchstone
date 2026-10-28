@@ -4,6 +4,8 @@
  *   validate                         Check every file against the schema and cross-file rules.
  *   build --out <file>               Write the site's data file.
  *   watch [--write]                  Check sources for changes; print (and with --write, save) the work queue.
+ *   watch --source arxiv|news [--dry-run] [--max N]
+ *                                    File candidate-benchmark / candidate-standard issues for new papers and news (see docs/automation.md).
  *   assess [--benchmark id] [--standard id] [--queue] [--max-calls n]
  *                                    Run the automated assessor (see docs/automation.md for environment variables).
  *   bakeoff --models id,id [--benchmark id] [--max-calls n] [--excerpt-chars n] [--replay dir] [--out dir]
@@ -13,7 +15,7 @@
  *   triage --body-file <file>        Print the triage comment for a correction request (JSON: ok, labels, comment).
  *   check-revisions --base <ref>     Fail if changed verdicts lack a revision entry.
  */
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { appendFileSync, mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { parse, stringify } from 'yaml';
@@ -29,6 +31,7 @@ import { checkRevisions } from './revisions.ts';
 import type { Assessment, Benchmark } from './schema.ts';
 import { llmConfig as llmConfigOf } from './llm-config.ts';
 import { runBakeoff } from './bakeoff.ts';
+import { ghCli, loadWatchConfig, readState, run as runCandidates, summary as candidateSummary, writeState } from './candidates.ts';
 
 const root = join(dirname(new URL(import.meta.url).pathname), '..');
 const today = () => new Date().toISOString().slice(0, 10);
@@ -37,7 +40,7 @@ const { positionals, values } = parseArgs({
   options: {
     out: { type: 'string' }, write: { type: 'boolean' }, benchmark: { type: 'string' }, standard: { type: 'string' },
     queue: { type: 'boolean' }, 'max-calls': { type: 'string' }, 'excerpt-chars': { type: 'string' }, replay: { type: 'string' }, 'body-file': { type: 'string' }, base: { type: 'string' },
-    date: { type: 'string' }, models: { type: 'string' },
+    date: { type: 'string' }, models: { type: 'string' }, source: { type: 'string' }, 'dry-run': { type: 'boolean' }, max: { type: 'string' },
   },
 });
 const cmd = positionals[0];
@@ -106,6 +109,24 @@ async function main() {
       return;
     }
     case 'watch': {
+      if (values.source) {
+        if (values.source !== 'arxiv' && values.source !== 'news') fail('--source must be arxiv or news.');
+        const source = values.source as 'arxiv' | 'news';
+        if (values.max !== undefined && !/^[1-9]\d*$/.test(values.max)) fail(`--max must be a positive integer (got "${values.max}").`);
+        const c = load(root);
+        const { llm, keyEnv } = llmConfig(c, 'google/gemma-4-31b-it');
+        if (!llm.apiKey) fail(`${keyEnv ?? 'TOUCHSTONE_LLM_API_KEY'} is not set: the watchers need it for triage. Add it as a repository secret (Settings > Secrets and variables > Actions).`);
+        const statePath = join(root, `data/watch/seen-${source}.json`);
+        const state = readState(statePath);
+        const dryRun = !!values['dry-run'];
+        const r = await runCandidates({ source, cfg: loadWatchConfig(root), llm: { ...llm, maxTokens: 400 }, state, gh: ghCli(), dryRun, max: values.max ? Number(values.max) : undefined });
+        if (!dryRun) writeState(statePath, state);
+        const text = candidateSummary(source, dryRun, r);
+        console.log(text);
+        if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text);
+        if (r.errors.some((e) => /^(triage|issue) /.test(e))) process.exitCode = 1; // a flaky feed alone is only a warning
+        return;
+      }
       const c = loadValid();
       const state = await check(c, values.date ?? today(), process.env.GITHUB_TOKEN);
       if (values.write) writeFile(watchPath, JSON.stringify(state, null, 1) + '\n');

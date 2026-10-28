@@ -1,0 +1,62 @@
+name: Watch for candidate benchmarks and standards
+# Files `candidate-benchmark` / `candidate-standard` issues for new arXiv benchmark papers (daily) and new
+# standards or benchmark news from feeds (hourly). See docs/automation.md#the-candidate-watchers.
+on:
+  schedule:
+    - cron: '30 2 * * *'   # arxiv
+    - cron: '17 * * * *'   # news
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Which watcher to run
+        type: choice
+        options: [arxiv, news]
+        default: news
+      dry_run:
+        description: Triage but do not file issues or save seen-state
+        type: boolean
+        default: true
+permissions:
+  contents: read
+  issues: write
+concurrency:
+  group: watch-${{ github.event.schedule == '30 2 * * *' && 'arxiv' || github.event.schedule == '17 * * * *' && 'news' || inputs.source }}
+  cancel-in-progress: false
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      SOURCE: ${{ github.event.schedule == '30 2 * * *' && 'arxiv' || github.event.schedule == '17 * * * *' && 'news' || inputs.source }}
+      DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Restore seen-state
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/watch/seen-${{ env.SOURCE }}.json
+          key: watch-seen-${{ env.SOURCE }}-${{ github.run_id }}
+          restore-keys: watch-seen-${{ env.SOURCE }}-
+      - name: Watch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TOUCHSTONE_LLM_API_KEY: ${{ secrets.TOUCHSTONE_LLM_API_KEY }}
+        run: |
+          if [ -z "$TOUCHSTONE_LLM_API_KEY" ]; then
+            echo "::error::The TOUCHSTONE_LLM_API_KEY repository secret is not set. The watchers need it for triage (Settings > Secrets and variables > Actions)."
+            exit 1
+          fi
+          flag=""
+          if [ "$DRY_RUN" = "true" ]; then flag="--dry-run"; fi
+          npx tsx src/cli.ts watch --source "$SOURCE" $flag
+      - name: Save seen-state
+        if: ${{ !cancelled() && env.DRY_RUN != 'true' }}
+        uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: data/watch/seen-${{ env.SOURCE }}.json
+          key: watch-seen-${{ env.SOURCE }}-${{ github.run_id }}
