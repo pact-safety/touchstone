@@ -157,6 +157,8 @@ export interface RunInput {
   fetchImpl?: typeof fetch;
   /** Stop before this many model calls (free-tier budgets); remaining groups are left out. */
   maxCalls?: number;
+  /** Per-group excerpt budget in characters; default 10,000. */
+  excerptChars?: number;
 }
 
 export async function assess(input: RunInput): Promise<{ assessment: Assessment; transcript: TranscriptEntry[]; calls: number; complete: boolean }> {
@@ -172,7 +174,7 @@ export async function assess(input: RunInput): Promise<{ assessment: Assessment;
 
   for (const g of std.groups) {
     if (input.maxCalls !== undefined && calls >= input.maxCalls) { complete = false; break; }
-    const excerpts = selectExcerpts(g, chunks);
+    const excerpts = selectExcerpts(g, chunks, input.excerptChars);
     const prompt = renderPrompt(tpl, b, std, g, excerpts);
     const entry: TranscriptEntry = {
       group: g.id, model: llm.model, temperature: llm.temperature, seed: llm.seed, prompt_version: version,

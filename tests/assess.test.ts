@@ -128,6 +128,15 @@ describe('automated assessor', () => {
     expect(selectExcerpts(g, source().chunks).map((c) => c.id)).toEqual(a.transcript[0]!.excerpts);
   });
 
+  it('selects more chunks under a larger excerpt budget', () => {
+    const g = std('abc').groups[0]!;
+    const text = g.items.map((i) => i.text).join(' ');
+    // 3000-char chunks that all match the group, so the 10,000 default keeps 3 and 40,000 keeps more
+    const chunks = Array.from({ length: 8 }, (_, i) => ({ id: `paper:p#${i}`, source: 'paper:p', locator: 'p', text: `${text} ${'x'.repeat(3000 - text.length - 1)}` }));
+    expect(selectExcerpts(g, chunks)).toHaveLength(3);
+    expect(selectExcerpts(g, chunks, 40_000).length).toBeGreaterThan(3);
+  });
+
   it('produces an assessment that validates as a draft and scores', async () => {
     const r = await run('aisl-scorecard', (items) => ({ verdicts: items.map((id) => ({ item: id, value: 'unmet', rationale: 'Not documented.' })) }));
     const path = 'data/assessments/truthfulqa/aisl-scorecard.auto.yaml';

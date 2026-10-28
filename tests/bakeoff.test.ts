@@ -185,6 +185,40 @@ describe('bakeoff run', () => {
     expect(calls).toBe(8);
   });
 
+  it('records excerpt_chars; reruns a complete pair only when the budget differs (missing = 10000)', async () => {
+    let calls = 0;
+    const fetchImpl: typeof fetch = async () => {
+      calls++;
+      return new Response(JSON.stringify({ choices: [{ message: { content: JSON.stringify({ verdicts: [] }) } }] }), { status: 200 });
+    };
+    const out = mkdtempSync(join(tmpdir(), 'bakeoff-'));
+    const opts = {
+      c: corpus, models: [llmConfig(corpus, 'gpt-oss:20b')], out, date: 'd', benchmark: 'truthfulqa', maxCalls: Infinity,
+      sourcesFor: async () => ({ pins: {}, sources: [source] }), fetchImpl,
+    };
+    const p = join(out, 'gpt-oss-20b/truthfulqa.json');
+    const read = () => JSON.parse(readFileSync(p, 'utf8')) as PairFile;
+    await runBakeoff(opts);
+    expect(calls).toBe(4);
+    expect(read()).toMatchObject({ complete: true, excerpt_chars: 10000 });
+    expect(JSON.parse(readFileSync(join(out, 'metrics.json'), 'utf8')).excerpt_chars).toBe(10000);
+    await runBakeoff({ ...opts, excerptChars: 10000 });
+    expect(calls).toBe(4);
+    await runBakeoff({ ...opts, excerptChars: 40000 });
+    expect(calls).toBe(8);
+    expect(read().excerpt_chars).toBe(40000);
+    expect(readFileSync(join(out, 'report.md'), 'utf8')).toContain('Excerpt budget: 40000 characters per group.');
+    await runBakeoff({ ...opts, excerptChars: 40000 });
+    expect(calls).toBe(8);
+    // an older file without the field counts as 10000
+    const { excerpt_chars: _, ...old } = read();
+    writeFileSync(p, JSON.stringify(old));
+    await runBakeoff({ ...opts, excerptChars: 10000 });
+    expect(calls).toBe(8);
+    await runBakeoff({ ...opts, excerptChars: 40000 });
+    expect(calls).toBe(12);
+  });
+
   it('records a failing pair as incomplete instead of throwing', async () => {
     const out = mkdtempSync(join(tmpdir(), 'bakeoff-'));
     await runBakeoff({

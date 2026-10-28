@@ -16,6 +16,7 @@ import type { Pins, FetchedSource } from './assess/sources.ts';
 
 export const STANDARD = 'betterbench';
 export const LEVELS = [0, 5, 10, 15];
+const DEFAULT_EXCERPT_CHARS = 10_000; // matches selectExcerpts' default, so the nightly is unchanged
 
 type Value = Verdict['value'];
 type CI = [number, number] | null;
@@ -26,6 +27,8 @@ export interface PairFile {
   date: string;
   complete: boolean;
   calls: number;
+  /** Excerpt budget (characters per group) this pair ran with; absent in older files means 10,000. */
+  excerpt_chars?: number;
   error?: string;
   /** Why a pair that otherwise finished was marked incomplete (e.g. served by an unpinned provider). */
   incomplete_reason?: string;
@@ -228,7 +231,7 @@ export function topDisagreements(gold: Record<string, Assessment>, byModel: Reco
 const f = (x: number | null, d = 1) => (x === null ? 'n/a' : x.toFixed(d));
 const ci = (x: CI, d = 1) => (x === null ? 'n/a' : `[${x[0].toFixed(d)}, ${x[1].toFixed(d)}]`);
 
-export function renderReport(date: string, metrics: Record<string, ModelMetrics>, dis: Disagreement[]): string {
+export function renderReport(date: string, metrics: Record<string, ModelMetrics>, dis: Disagreement[], excerptChars = DEFAULT_EXCERPT_CHARS): string {
   const ids = Object.keys(metrics);
   const top = topModel(metrics);
   const row = (label: string, g: (m: ModelMetrics, id: string) => string) => `| ${label} | ${ids.map((i) => g(metrics[i]!, i)).join(' | ')} |`;
@@ -236,6 +239,8 @@ export function renderReport(date: string, metrics: Record<string, ModelMetrics>
     `# Bake-off against BetterBench, ${date}`,
     '',
     'Each model assessed the benchmarks BetterBench scored by hand; its verdicts are compared with BetterBench\'s. Agreement, MAE and kappa use only items where both gave a number; n/a is counted separately.',
+    '',
+    `Excerpt budget: ${excerptChars} characters per group.`,
     '',
     `| | ${ids.join(' | ')} |`,
     `|---|${ids.map(() => '---').join('|')}|`,
@@ -280,6 +285,8 @@ export interface BakeoffOptions {
   date: string;
   benchmark?: string;
   maxCalls: number;
+  /** Per-group excerpt budget in characters; default 10,000. */
+  excerptChars?: number;
   sourcesFor: (b: Benchmark) => Promise<{ pins: Pins; sources: FetchedSource[] }>;
   /** Test seam: replaces the network for model calls. */
   fetchImpl?: typeof fetch;
@@ -316,6 +323,7 @@ export async function runBakeoff(o: BakeoffOptions) {
   const golds = goldAssessments(o.c, o.benchmark);
   if (!golds.length) throw new Error(o.benchmark ? `No BetterBench gold assessment for "${o.benchmark}".` : 'No BetterBench gold assessments found.');
   const goldBy = Object.fromEntries(golds.map((g) => [g.benchmark, g]));
+  const excerptChars = o.excerptChars ?? DEFAULT_EXCERPT_CHARS;
   const pairPath = (model: string, bench: string) => join(o.out, slug(model), `${bench}.json`);
   let used = 0;
   let budgetHit = false;
@@ -325,11 +333,12 @@ export async function runBakeoff(o: BakeoffOptions) {
     let src: Awaited<ReturnType<BakeoffOptions['sourcesFor']>> | undefined;
     for (const { entry, llm } of o.models) {
       const path = pairPath(llm.model, b.id);
-      // Only a complete pair is final; an incomplete one is re-run and its file overwritten.
-      if (readPair(path)?.complete) continue;
+      // Only a complete pair at this excerpt budget is final; any other is re-run and its file overwritten.
+      const prev = readPair(path);
+      if (prev?.complete && (prev.excerpt_chars ?? DEFAULT_EXCERPT_CHARS) === excerptChars) continue;
       // A pair needs one call per group; never start one the budget can't finish.
       if (used + std.groups.length > o.maxCalls) { budgetHit = true; log(`call budget reached; rerun the same command to continue`); break; }
-      const file: PairFile = { model: llm.model, benchmark: b.id, standard: STANDARD, date: o.date, complete: false, calls: 0, verdicts: {}, transcript: [] };
+      const file: PairFile = { model: llm.model, benchmark: b.id, standard: STANDARD, date: o.date, complete: false, calls: 0, excerpt_chars: excerptChars, verdicts: {}, transcript: [] };
       try {
         src ??= await o.sourcesFor(b);
         if (!src.sources.length) throw new Error('no paper or repo to read');
@@ -337,7 +346,7 @@ export async function runBakeoff(o: BakeoffOptions) {
         for (let retry = 0; ; retry++) {
           const run = await assess({
             benchmark: b, standard: std, sources: src.sources, llm, provider: entry.provider, license: entry.license, runOn: o.date,
-            transcriptPath: path, pins: { paper_version: src.pins.paper_version, repo_commit: src.pins.repo_commit }, fetchImpl: o.fetchImpl,
+            transcriptPath: path, pins: { paper_version: src.pins.paper_version, repo_commit: src.pins.repo_commit }, fetchImpl: o.fetchImpl, excerptChars,
           });
           file.calls += run.calls;
           used += run.calls;
@@ -374,8 +383,8 @@ export async function runBakeoff(o: BakeoffOptions) {
   const metrics = Object.fromEntries(Object.entries(byModel).map(([id, ps]) => [id, modelMetrics(std, goldBy, ps)]));
   for (const [id, v] of Object.entries(kappaVsTop(goldBy, byModel, metrics))) metrics[id]!.kappa_vs_top = v;
   const dis = topDisagreements(goldBy, byModel);
-  write(join(o.out, 'metrics.json'), JSON.stringify({ date: o.date, standard: STANDARD, benchmarks: golds.map((g) => g.benchmark), models: metrics, top_disagreements: dis }, null, 1) + '\n');
-  write(join(o.out, 'report.md'), renderReport(o.date, metrics, dis));
+  write(join(o.out, 'metrics.json'), JSON.stringify({ date: o.date, standard: STANDARD, excerpt_chars: excerptChars, benchmarks: golds.map((g) => g.benchmark), models: metrics, top_disagreements: dis }, null, 1) + '\n');
+  write(join(o.out, 'report.md'), renderReport(o.date, metrics, dis, excerptChars));
   log(`${used} call(s) used; wrote ${join(o.out, 'report.md')}`);
   return { metrics, dis, used };
 }

@@ -6,7 +6,7 @@
  *   watch [--write]                  Check sources for changes; print (and with --write, save) the work queue.
  *   assess [--benchmark id] [--standard id] [--queue] [--max-calls n]
  *                                    Run the automated assessor (see docs/automation.md for environment variables).
- *   bakeoff --models id,id [--benchmark id] [--max-calls n] [--out dir]
+ *   bakeoff --models id,id [--benchmark id] [--max-calls n] [--excerpt-chars n] [--out dir]
  *                                    Run candidate models on the benchmarks BetterBench assessed by hand and score them against it.
  *   replay --benchmark id --standard id
  *                                    Re-fetch pinned sources and check they and every prompt hash match the run record.
@@ -36,7 +36,7 @@ const { positionals, values } = parseArgs({
   allowPositionals: true,
   options: {
     out: { type: 'string' }, write: { type: 'boolean' }, benchmark: { type: 'string' }, standard: { type: 'string' },
-    queue: { type: 'boolean' }, 'max-calls': { type: 'string' }, 'body-file': { type: 'string' }, base: { type: 'string' },
+    queue: { type: 'boolean' }, 'max-calls': { type: 'string' }, 'excerpt-chars': { type: 'string' }, 'body-file': { type: 'string' }, base: { type: 'string' },
     date: { type: 'string' }, models: { type: 'string' },
   },
 });
@@ -57,6 +57,11 @@ const writeFile = (path: string, text: string) => { mkdirSync(dirname(path), { r
 const maxCalls = (v?: string) => {
   if (v === undefined) return Infinity;
   if (!/^[1-9]\d*$/.test(v)) fail(`--max-calls must be a positive integer (got "${v}").`);
+  return Number(v);
+};
+const excerptChars = (v?: string) => {
+  if (v === undefined) return undefined;
+  if (!/^[1-9]\d*$/.test(v)) fail(`--excerpt-chars must be a positive integer (got "${v}").`);
   return Number(v);
 };
 const llmConfig = (c: ReturnType<typeof load>, modelOverride?: string) => {
@@ -178,7 +183,7 @@ async function main() {
       const date = values.date ?? today();
       await runBakeoff({
         c, models, date, out: resolve(root, values.out ?? `bakeoff/${date}`), benchmark: values.benchmark,
-        maxCalls: maxCalls(values['max-calls']), sourcesFor, log: console.log,
+        maxCalls: maxCalls(values['max-calls']), excerptChars: excerptChars(values['excerpt-chars']), sourcesFor, log: console.log,
       });
       return;
     }
