@@ -11,6 +11,7 @@ import type { Corpus } from './load.ts';
 import type { Assessment, Benchmark, Standard, Verdict } from './schema.ts';
 import { score } from './engine.ts';
 import { assess, type TranscriptEntry } from './assess/run.ts';
+import { sha256 } from './assess/text.ts';
 import type { LlmConfig } from './assess/llm.ts';
 import type { Pins, FetchedSource } from './assess/sources.ts';
 
@@ -29,6 +30,8 @@ export interface PairFile {
   calls: number;
   /** Excerpt budget (characters per group) this pair ran with; absent in older files means 10,000. */
   excerpt_chars?: number;
+  /** Set when verdicts were rescored offline from the stored replies in this directory; no model was called. */
+  replayed_from?: string;
   error?: string;
   /** Why a pair that otherwise finished was marked incomplete (e.g. served by an unpinned provider). */
   incomplete_reason?: string;
@@ -287,6 +290,8 @@ export interface BakeoffOptions {
   maxCalls: number;
   /** Per-group excerpt budget in characters; default 10,000. */
   excerptChars?: number;
+  /** Rescore offline: answer each group from the stored reply in this earlier bake-off directory instead of calling the model. */
+  replay?: string;
   sourcesFor: (b: Benchmark) => Promise<{ pins: Pins; sources: FetchedSource[] }>;
   /** Test seam: replaces the network for model calls. */
   fetchImpl?: typeof fetch;
@@ -303,6 +308,23 @@ const write = (path: string, text: string) => { mkdirSync(dirname(path), { recur
 const readPair = (path: string): PairFile | undefined => {
   if (!existsSync(path)) return undefined;
   try { return JSON.parse(readFileSync(path, 'utf8')) as PairFile; } catch { return undefined; }
+};
+
+/**
+ * A fetch that answers from a stored pair instead of the network. The prompt is looked up by its sha256, so a prompt
+ * that no longer rebuilds identically (sources, template or excerpt selection changed) is refused rather than guessed at.
+ */
+const replayFetch = (stored: PairFile): typeof fetch => async (_url, init) => {
+  const messages = JSON.parse(String(init!.body)).messages as { content: string }[];
+  const sha = sha256(messages[messages.length - 1]!.content.replace(/\n\n\/no_think$/, '')); // chat() appends /no_think when think is off
+  const e = stored.transcript.find((t) => t.prompt_sha256 === sha);
+  if (!e) throw new Error(`prompt sha256 ${sha.slice(0, 12)} matches no stored prompt; refusing to replay`);
+  if (e.response === null) throw new Error(`stored reply for group "${e.group}" is empty`);
+  const { cost: _c, estimated_cost: _e, ...usage } = (e.usage ?? {}) as Record<string, unknown>;
+  return new Response(JSON.stringify({
+    choices: [{ message: { content: e.response, ...(e.reasoning ? { reasoning: e.reasoning } : {}) } }],
+    usage: { ...usage, cost: 0 }, ...(e.provider ? { provider: e.provider } : {}), ...(e.served_model ? { model: e.served_model } : {}),
+  }), { status: 200 });
 };
 
 /** Providers named by `request.provider.only`, lower-cased; undefined when the entry is not pinned. */
@@ -338,18 +360,23 @@ export async function runBakeoff(o: BakeoffOptions) {
       if (prev?.complete && (prev.excerpt_chars ?? DEFAULT_EXCERPT_CHARS) === excerptChars) continue;
       // A pair needs one call per group; never start one the budget can't finish.
       if (used + std.groups.length > o.maxCalls) { budgetHit = true; log(`call budget reached; rerun the same command to continue`); break; }
-      const file: PairFile = { model: llm.model, benchmark: b.id, standard: STANDARD, date: o.date, complete: false, calls: 0, excerpt_chars: excerptChars, verdicts: {}, transcript: [] };
+      const file: PairFile = { model: llm.model, benchmark: b.id, standard: STANDARD, date: o.date, complete: false, calls: 0, excerpt_chars: excerptChars, ...(o.replay ? { replayed_from: o.replay } : {}), verdicts: {}, transcript: [] };
       try {
         src ??= await o.sourcesFor(b);
         if (!src.sources.length) throw new Error('no paper or repo to read');
+        let fetchImpl = o.fetchImpl;
+        if (o.replay) {
+          const stored = readPair(join(o.replay, slug(llm.model), `${b.id}.json`));
+          if (!stored) throw new Error(`no stored pair in ${o.replay}`);
+          fetchImpl = replayFetch(stored);
+        }
         // A rate-limited pair waits and retries (30s, 60s, 120s); retries spend budget like any call.
         for (let retry = 0; ; retry++) {
           const run = await assess({
             benchmark: b, standard: std, sources: src.sources, llm, provider: entry.provider, license: entry.license, runOn: o.date,
-            transcriptPath: path, pins: { paper_version: src.pins.paper_version, repo_commit: src.pins.repo_commit }, fetchImpl: o.fetchImpl, excerptChars,
+            transcriptPath: path, pins: { paper_version: src.pins.paper_version, repo_commit: src.pins.repo_commit }, fetchImpl, excerptChars,
           });
-          file.calls += run.calls;
-          used += run.calls;
+          if (!o.replay) { file.calls += run.calls; used += run.calls; } // a replay makes no model calls
           file.verdicts = Object.fromEntries(Object.entries(run.assessment.verdicts ?? {}).map(([id, v]) => [id, v.value]));
           file.transcript = run.transcript;
           // Omitted items and unparseable replies are model-quality outcomes (counted as missing); only an unanswered call is incomplete.
@@ -383,7 +410,7 @@ export async function runBakeoff(o: BakeoffOptions) {
   const metrics = Object.fromEntries(Object.entries(byModel).map(([id, ps]) => [id, modelMetrics(std, goldBy, ps)]));
   for (const [id, v] of Object.entries(kappaVsTop(goldBy, byModel, metrics))) metrics[id]!.kappa_vs_top = v;
   const dis = topDisagreements(goldBy, byModel);
-  write(join(o.out, 'metrics.json'), JSON.stringify({ date: o.date, standard: STANDARD, excerpt_chars: excerptChars, benchmarks: golds.map((g) => g.benchmark), models: metrics, top_disagreements: dis }, null, 1) + '\n');
+  write(join(o.out, 'metrics.json'), JSON.stringify({ date: o.date, standard: STANDARD, excerpt_chars: excerptChars, ...(o.replay ? { replayed_from: o.replay } : {}), benchmarks: golds.map((g) => g.benchmark), models: metrics, top_disagreements: dis }, null, 1) + '\n');
   write(join(o.out, 'report.md'), renderReport(o.date, metrics, dis, excerptChars));
   log(`${used} call(s) used; wrote ${join(o.out, 'report.md')}`);
   return { metrics, dis, used };

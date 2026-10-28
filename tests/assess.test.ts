@@ -2,8 +2,8 @@ import { describe, expect, it } from 'vitest';
 import { load } from '../src/load.ts';
 import { validate } from '../src/validate.ts';
 import { score } from '../src/engine.ts';
-import { assess, selectExcerpts } from '../src/assess/run.ts';
-import { chunk, normalize, rank, verifyQuote, sha256 } from '../src/assess/text.ts';
+import { assess, finalize, selectExcerpts } from '../src/assess/run.ts';
+import { chunk, normalize, rank, verifyQuote, sha256, type Chunk } from '../src/assess/text.ts';
 import type { FetchedSource } from '../src/assess/sources.ts';
 import { queue } from '../src/watch.ts';
 import { triage, parseIssueForm } from '../src/triage.ts';
@@ -67,6 +67,47 @@ describe('text', () => {
   });
 });
 
+describe('quote check in finalize', () => {
+  const A = 'The benchmark contains 817 questions spanning 38 categories, including health, law and finance. Scores are averaged over five runs.';
+  const B = 'We report 95% confidence intervals for all primary scores using bootstrap resampling.';
+  const C = 'Limitations: the questions are in English only and were written by the authors.';
+  const mk = (id: string, text: string): Chunk => ({ id, source: 'paper:p1', locator: `loc ${id}`, text });
+  const [ca, cb, cc] = [mk('paper:p1#0', A), mk('paper:p1#1', B), mk('paper:p1#2', C)] as [Chunk, Chunk, Chunk];
+  const shown = new Map([ca, cb].map((c) => [c.id, c]));
+  const snaps = new Map([['paper', source().snapshot]]);
+  const item = std('construct-validity').groups[0]!.items[0]!;
+  const check = (excerpt: string, quote: string) => finalize(std('construct-validity'), item, { value: 'met', rationale: 'r', evidence: [{ excerpt, quote }] }, shown, snaps);
+  const kept = (r: ReturnType<typeof check>) => r.check.quotes_kept;
+
+  it('accepts a bracketed excerpt id', () => {
+    expect(kept(check('[paper:p1#0]', '817 questions spanning 38 categories'))).toBe(1);
+    expect(kept(check(' [paper:p1#0] ', '817 questions spanning 38 categories'))).toBe(1);
+  });
+  it('accepts a quote from another chunk shown in the group, and reports that chunk', () => {
+    const r = check('paper:p1#0', 'We report 95% confidence intervals for all primary scores');
+    expect(kept(r)).toBe(1);
+    expect(r.verdict!.evidence[0]!.locator).toBe('loc paper:p1#1');
+  });
+  it('rejects a quote found only in a chunk that was not shown', () => {
+    const r = check('paper:p1#0', 'the questions are in English only');
+    expect(kept(r)).toBe(0);
+    expect(r.verdict!.value).toBe('unmet');
+    expect(cc.text).toContain('English only');
+  });
+  it('accepts ellipsis-joined parts in order within one chunk, with "..." or "…"', () => {
+    expect(kept(check('paper:p1#0', '817 questions spanning 38 categories ... Scores are averaged over five runs'))).toBe(1);
+    expect(kept(check('paper:p1#0', '817 questions spanning 38 categories… Scores are averaged over five runs'))).toBe(1);
+  });
+  it('rejects ellipsis parts out of order, spread over two chunks, or shorter than 12 characters', () => {
+    expect(kept(check('paper:p1#0', 'Scores are averaged over five runs ... 817 questions spanning 38 categories'))).toBe(0);
+    expect(kept(check('paper:p1#0', '817 questions spanning 38 categories ... bootstrap resampling is used'))).toBe(0);
+    expect(kept(check('paper:p1#0', '817 questions spanning 38 categories ... law'))).toBe(0);
+  });
+  it('still rejects a fabricated quote', () => {
+    expect(kept(check('paper:p1#0', 'The benchmark contains 900 questions in total'))).toBe(0);
+  });
+});
+
 describe('automated assessor', () => {
   it('keeps verified quotes and marks verdicts as model-made', async () => {
     const r = await run('construct-validity', (items, ex) => ({
@@ -92,9 +133,9 @@ describe('automated assessor', () => {
     expect(r.transcript[0]!.checks[0]!.note).toBe('downgraded: no quote could be verified');
   });
 
-  it('accepts a quote only from the excerpt it cites', async () => {
+  it('finds a quote in whichever shown excerpt holds it, whichever excerpt is cited', async () => {
     const r = await run('construct-validity', (items, ex) => ({
-      verdicts: items.map((id) => ({ item: id, value: 'met', rationale: 'x', evidence: ex.map((e) => ({ excerpt: e, quote: 'We report 95% confidence intervals for all primary scores' })) })),
+      verdicts: items.map((id) => ({ item: id, value: 'met', rationale: 'x', evidence: [{ excerpt: ex[0], quote: 'We report 95% confidence intervals for all primary scores' }] })),
     }));
     const st2 = r.assessment.verdicts!['st.2']!;
     expect(st2.value).toBe('met');

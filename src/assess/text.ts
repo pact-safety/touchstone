@@ -92,8 +92,22 @@ export function rank(chunks: Chunk[], query: string, k: number): Chunk[] {
     .map((x) => chunks[x.i]!);
 }
 
-/** True when the quote, normalised, appears in the chunk, normalised. Quotes under 12 characters never verify. */
+/**
+ * True when the quote, normalised, appears in the chunk, normalised. Quotes under 12 characters never verify.
+ * A quote joined by "..." or "…" (NFKC turns the latter into the former) also verifies when every part is at
+ * least 12 characters and the parts occur in order within the chunk.
+ */
 export function verifyQuote(quote: string, chunkText: string): boolean {
   const q = normalize(quote);
-  return q.length >= 12 && normalize(chunkText).includes(q);
+  const hay = normalize(chunkText);
+  if (q.length >= 12 && hay.includes(q)) return true;
+  const parts = q.split('...').map((p) => p.trim()).filter(Boolean);
+  if (parts.length < 2 || parts.some((p) => p.length < 12)) return false;
+  let at = 0;
+  for (const p of parts) {
+    const i = hay.indexOf(p, at);
+    if (i < 0) return false;
+    at = i + p.length;
+  }
+  return true;
 }

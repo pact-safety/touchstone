@@ -228,6 +228,36 @@ describe('bakeoff run', () => {
     const f = JSON.parse(readFileSync(join(out, 'gpt-oss-20b/truthfulqa.json'), 'utf8')) as PairFile;
     expect(f).toMatchObject({ complete: false, calls: 0, error: 'boom' });
   });
+
+  it('replays stored replies with no model call, 0 calls and $0, and refuses when a prompt hash differs', async () => {
+    const live: typeof fetch = async (_u, init) => {
+      const prompt = JSON.parse(String(init!.body)).messages[0].content as string;
+      const ids = [...prompt.matchAll(/^- id: (\S+)/gm)].map((x) => x[1]!);
+      const verdicts = ids.map((item) => ({ item, value: 0, rationale: 'r', evidence: [] }));
+      return new Response(JSON.stringify({ provider: 'FakeHost', usage: { prompt_tokens: 100, cost: 0.5 }, choices: [{ message: { content: JSON.stringify({ verdicts }) } }] }), { status: 200 });
+    };
+    const base = { c: corpus, models: [llmConfig(corpus, 'gpt-oss:20b')], date: 'd', benchmark: 'truthfulqa', maxCalls: Infinity, sourcesFor: async () => ({ pins: {}, sources: [source] }) };
+    const from = mkdtempSync(join(tmpdir(), 'bakeoff-'));
+    await runBakeoff({ ...base, out: from, fetchImpl: live });
+    const noNetwork: typeof fetch = async () => { throw new Error('model called during replay'); };
+
+    const out = mkdtempSync(join(tmpdir(), 'bakeoff-'));
+    await runBakeoff({ ...base, out, replay: from, fetchImpl: noNetwork });
+    const f = JSON.parse(readFileSync(join(out, 'gpt-oss-20b/truthfulqa.json'), 'utf8')) as PairFile;
+    expect(f).toMatchObject({ complete: true, calls: 0, replayed_from: from });
+    expect(f.transcript.length).toBe(4);
+    expect(JSON.parse(readFileSync(join(out, 'metrics.json'), 'utf8'))).toMatchObject({ replayed_from: from, models: { 'gpt-oss:20b': { calls: 0, cost_usd: 0 } } });
+
+    // Corrupt one stored hash: that group's rebuilt prompt no longer matches, so the pair is incomplete.
+    const stored = JSON.parse(readFileSync(join(from, 'gpt-oss-20b/truthfulqa.json'), 'utf8')) as PairFile;
+    stored.transcript[0]!.prompt_sha256 = 'f'.repeat(64);
+    writeFileSync(join(from, 'gpt-oss-20b/truthfulqa.json'), JSON.stringify(stored));
+    const out2 = mkdtempSync(join(tmpdir(), 'bakeoff-'));
+    await runBakeoff({ ...base, out: out2, replay: from, fetchImpl: noNetwork });
+    const bad = JSON.parse(readFileSync(join(out2, 'gpt-oss-20b/truthfulqa.json'), 'utf8')) as PairFile;
+    expect(bad.complete).toBe(false);
+    expect(bad.error).toMatch(/matches no stored prompt/);
+  });
 });
 
 describe('bakeoff completeness and rate limits', () => {

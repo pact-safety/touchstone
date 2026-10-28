@@ -95,7 +95,7 @@ export function renderPrompt(tpl: string, b: Benchmark, std: Standard, g: Group,
 
 /**
  * Deterministic post-processing of one proposed verdict:
- *  - quotes are kept only if found verbatim (after normalisation) in the excerpt they cite;
+ *  - quotes are kept only if found verbatim (after normalisation) in the excerpt they cite or another excerpt shown in the group;
  *  - a positive verdict with no verified quote becomes negative;
  *  - n/a on an item with no n/a condition becomes negative;
  *  - anything unparseable is left out, and the engine scores it as unmet.
@@ -117,8 +117,11 @@ export function finalize(std: Standard, item: Item, raw: unknown, shown: Map<str
   let dropped = 0;
   for (const e of Array.isArray(r.evidence) ? r.evidence : []) {
     const { excerpt, quote } = (e ?? {}) as { excerpt?: unknown; quote?: unknown };
-    const c = typeof excerpt === 'string' ? shown.get(excerpt) : undefined;
-    if (!c || typeof quote !== 'string' || quote.split(/\s+/).length > 40 || !verifyQuote(quote, c.text)) { dropped++; continue; }
+    if (typeof quote !== 'string' || quote.split(/\s+/).length > 40) { dropped++; continue; }
+    // The cited chunk first (models copy the prompt's `[id]` header brackets), then any other chunk shown in this group, never beyond.
+    const cited = typeof excerpt === 'string' ? shown.get(excerpt.trim().replace(/^\[(.*)\]$/s, '$1').trim()) : undefined;
+    const c = [cited, ...shown.values()].find((x) => x && verifyQuote(quote, x.text));
+    if (!c) { dropped++; continue; }
     const snap = snapshots.get(c.source.split(':')[0]!)!;
     evidence.push({ source: snap.kind, url: snap.url, locator: c.locator, quote: quote.trim() });
   }

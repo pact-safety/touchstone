@@ -6,7 +6,7 @@
  *   watch [--write]                  Check sources for changes; print (and with --write, save) the work queue.
  *   assess [--benchmark id] [--standard id] [--queue] [--max-calls n]
  *                                    Run the automated assessor (see docs/automation.md for environment variables).
- *   bakeoff --models id,id [--benchmark id] [--max-calls n] [--excerpt-chars n] [--out dir]
+ *   bakeoff --models id,id [--benchmark id] [--max-calls n] [--excerpt-chars n] [--replay dir] [--out dir]
  *                                    Run candidate models on the benchmarks BetterBench assessed by hand and score them against it.
  *   replay --benchmark id --standard id
  *                                    Re-fetch pinned sources and check they and every prompt hash match the run record.
@@ -36,7 +36,7 @@ const { positionals, values } = parseArgs({
   allowPositionals: true,
   options: {
     out: { type: 'string' }, write: { type: 'boolean' }, benchmark: { type: 'string' }, standard: { type: 'string' },
-    queue: { type: 'boolean' }, 'max-calls': { type: 'string' }, 'excerpt-chars': { type: 'string' }, 'body-file': { type: 'string' }, base: { type: 'string' },
+    queue: { type: 'boolean' }, 'max-calls': { type: 'string' }, 'excerpt-chars': { type: 'string' }, replay: { type: 'string' }, 'body-file': { type: 'string' }, base: { type: 'string' },
     date: { type: 'string' }, models: { type: 'string' },
   },
 });
@@ -178,12 +178,12 @@ async function main() {
       const models = ids.map((id) => llmConfig(c, id));
       // Fail before any spend if a key the model needs is missing (only the variable's name is shown).
       for (const m of models) {
-        if (m.keyEnv && !m.llm.apiKey) fail(`${m.llm.model}: environment variable ${m.keyEnv} is not set.`);
+        if (!values.replay && m.keyEnv && !m.llm.apiKey) fail(`${m.llm.model}: environment variable ${m.keyEnv} is not set.`);
       }
       const date = values.date ?? today();
       await runBakeoff({
         c, models, date, out: resolve(root, values.out ?? `bakeoff/${date}`), benchmark: values.benchmark,
-        maxCalls: maxCalls(values['max-calls']), excerptChars: excerptChars(values['excerpt-chars']), sourcesFor, log: console.log,
+        maxCalls: maxCalls(values['max-calls']), excerptChars: excerptChars(values['excerpt-chars']), replay: values.replay && resolve(root, values.replay), sourcesFor, log: console.log,
       });
       return;
     }
