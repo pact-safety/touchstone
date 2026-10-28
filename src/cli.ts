@@ -114,12 +114,13 @@ async function main() {
         const source = values.source as 'arxiv' | 'news';
         if (values.max !== undefined && !/^[1-9]\d*$/.test(values.max)) fail(`--max must be a positive integer (got "${values.max}").`);
         const c = load(root);
-        const { llm, keyEnv } = llmConfig(c, 'google/gemma-4-31b-it');
+        const cfg = loadWatchConfig(root);
+        const { llm, keyEnv } = llmConfig(c, cfg.model);
         if (!llm.apiKey) fail(`${keyEnv ?? 'TOUCHSTONE_LLM_API_KEY'} is not set: the watchers need it for triage. Add it as a repository secret (Settings > Secrets and variables > Actions).`);
         const statePath = join(root, `data/watch/seen-${source}.json`);
         const state = readState(statePath);
         const dryRun = !!values['dry-run'];
-        const r = await runCandidates({ source, cfg: loadWatchConfig(root), llm: { ...llm, maxTokens: 400 }, state, gh: ghCli(), dryRun, max: values.max ? Number(values.max) : undefined });
+        const r = await runCandidates({ source, cfg, llm: { ...llm, maxTokens: 400 }, state, gh: ghCli(), dryRun, max: values.max ? Number(values.max) : undefined });
         if (!dryRun) writeState(statePath, state);
         const text = candidateSummary(source, dryRun, r);
         console.log(text);

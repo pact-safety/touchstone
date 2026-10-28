@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { parseFeed, sanitize } from '../src/feeds.ts';
+import { load } from '../src/load.ts';
 import {
   arxivPrefilter, digestFor, dropSeen, files, inWindow, issueFor, loadWatchConfig, newsPrefilter, prune, run, triageItem, triagePrompt,
   type Gh, type Item, type SeenState, type Usage,
@@ -21,6 +22,10 @@ const ATOM = `<feed xmlns="http://www.w3.org/2005/Atom"><title>Atom</title>
 <link href="http://arxiv.org/abs/2510.12345v2" rel="alternate" type="text/html"/><link title="pdf" href="http://arxiv.org/pdf/2510.12345v2" rel="related"/></entry></feed>`;
 
 const item = (o: Partial<Item> = {}): Item => ({ id: 'i', title: 'T', url: 'https://example.org/t', summary: 'S', published: NOW.toISOString(), source: 'Src', for: 'both', ...o });
+
+it('triage model is on the allowlist', () => {
+  expect(load(root).models.map((m) => m.id)).toContain(cfg.model);
+});
 
 describe('parseFeed', () => {
   it('reads RSS: CDATA, entities, escaped HTML, and drops items without a date', () => {
