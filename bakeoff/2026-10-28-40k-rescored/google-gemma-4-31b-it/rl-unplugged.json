@@ -1,0 +1,617 @@
+{
+ "model": "google/gemma-4-31b-it",
+ "benchmark": "rl-unplugged",
+ "standard": "betterbench",
+ "date": "2026-10-28",
+ "complete": true,
+ "calls": 0,
+ "excerpt_chars": 40000,
+ "replayed_from": "/Users/li/touchstone/bakeoff/2026-10-28-40k",
+ "verdicts": {
+  "des.01": 15,
+  "imp.01": 15,
+  "imp.02": 15,
+  "imp.03": 0,
+  "imp.04": 0,
+  "imp.05": 0,
+  "imp.06": 0,
+  "imp.07": 15,
+  "imp.08": 0,
+  "imp.09": 0,
+  "imp.10": 0,
+  "imp.11": 0,
+  "doc.01": 0,
+  "doc.02": 0,
+  "doc.03": 0,
+  "doc.04": 10,
+  "doc.05": 0,
+  "doc.06": 15,
+  "doc.07": 15,
+  "doc.08": 0,
+  "doc.09": 10,
+  "doc.10": 15,
+  "doc.11": 15,
+  "doc.12": 0,
+  "doc.13": 0,
+  "doc.14": 10,
+  "doc.15": 15,
+  "doc.16": 15,
+  "doc.17": 0,
+  "doc.18": 10,
+  "doc.19": 0,
+  "mai.01": 0,
+  "mai.02": 0,
+  "mai.03": 0
+ },
+ "transcript": [
+  {
+   "group": "design",
+   "model": "google/gemma-4-31b-it",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "b927219ace745f02684ab004af2dc660498ee8134007d4b627be3f8917dd43ea",
+   "excerpts": [
+    "paper:p9#0",
+    "paper:p6#1",
+    "paper:p19#1",
+    "paper:p2#0",
+    "paper:p3#3",
+    "paper:p14#0",
+    "paper:p17#0",
+    "paper:p3#0",
+    "paper:p3#2",
+    "paper:p7#3",
+    "paper:p14#2",
+    "paper:p2#1",
+    "paper:p4#1",
+    "paper:p3#1",
+    "paper:p19#0",
+    "paper:p5#1",
+    "paper:p8#1",
+    "paper:p11#2",
+    "paper:p18#1",
+    "paper:p19#2",
+    "paper:p4#2",
+    "paper:p21#0",
+    "paper:p2#2",
+    "paper:p2#3",
+    "paper:p15#1",
+    "paper:p21#1",
+    "paper:p9#2"
+   ],
+   "response": "{\"verdicts\": [{\"item\": \"des.01\", \"value\": 15, \"rationale\": \"The benchmark defines the tested concept as offline reinforcement learning, which learns policies from logged data without further environment interaction.\", \"evidence\": [{\"excerpt\": \"paper:p2#0\", \"quote\": \"offline methods for reinforcement learning, 1   that can learn\\nnew policies from logged data, without any further interactions with the environment\"}]}], \"des.02\": {\"value\": 15, \"rationale\": \"The benchmark describes how the concept translates to tasks by mapping task domains to axes like action space, observation space, and exploration difficulty.\", \"evidence\": [{\"excerpt\": \"paper:p3#2\", \"quote\": \"We chose the task domains\\nto include tasks that vary along the following axes. In Figure 1, we give an overview of how each\\ntask domain maps to these axes.\"}]},\"des.03\": {\"value\": 15, \"rationale\": \"The text explains that offline RL is useful for real-world impact because real-world systems produce large amounts of data during normal operation.\", \"evidence\": [{\"excerpt\": \"paper:p2#0\", \"quote\": \"most real-world\\nsystems produce large amounts of data as part of their normal operation. There is a resurgence of interest in offline methods for reinforcement learning, 1   that can learn\\nnew policies from logged data, without any further interactions with the environment due to its\\npotential real-world impact.\"}]},\"des.04\": {\"value\": 15, \"rationale\": \"The benchmark describes how online policy selection gives an overly optimistic view and how offline policy selection indicates robustness to imperfect selection.\", \"evidence\": [{\"excerpt\": \"paper:p4#2\", \"quote\": \"it gives an overly optimistic view of how useful offline RL methods are today.\"}]},\"des.05\": {\"value\": 0, \"rationale\": \"There is no mention of domain experts being involved in the design of the benchmark.\"}, \"des.06\": {\"value\": 0, \"rationale\": \"The excerpts do not describe specific use cases or user personas.\"}, \"des.07\": {\"value\": 15, \"rationale\": \"The benchmark integrates domain literature by using established environments and protocols from cited works like Agarwal et al. and Bellemare et al.\", \"evidence\": [{\"excerpt\": \"paper:p6#1\", \"quote\": \"The Arcade Learning environment (ALE) [Bellemare et al., 2013] is a suite consisting of a diverse\\nset of   57   Atari 2600 games (Atari57).\"}]},\"des.08\": {\"value\": 15, \"rationale\": \"The choice of normalized performance metrics is informed by following established protocols from Agarwal et al. [2020].\", \"evidence\": [{\"excerpt\": \"paper:p19#2\", \"quote\": \"Following Agarwal et al. [2020], we report the absolute normalized % performance with respect to\\nnormalized   = 100   ×   score − random_score\\nbest_score − random_score\"}]},\"des.09\": {\"value\": 15, \"rationale\": \"The normalization formula explicitly includes a 'random_score' (floor) and 'best_score' (ceiling).\", \"evidence\": [{\"excerpt\": \"paper:p19#2\", \"quote\": \"normalized   = 100   ×   score − random_score\\nbest_score − random_score\"}]},\"des.10\": {\"value\": 0, \"rationale\": \"While 'best_score' from an online DQN is used, there is no mention of human performance levels.\"}, \"des.11\": {\"value\": 15, \"rationale\": \"The benchmark includes a 'random_score' for the games to normalize performance.\", \"evidence\": [{\"excerpt\": \"paper:p19#2\", \"quote\": \"\\\"random_score\\\" corresponds to the score of an random agent for the\\ngames in a single number.\"}]},\"des.12\": {\"value\": 0, \"rationale\": \"The excerpts do not provide evidence of a validated automatic evaluation system; they focus on manual evaluation protocols.\"}, \"des.13\": {\"value\": 15, \"rationale\": \"The benchmark explains that unlike other benchmarks, it includes tasks that test memory and representation learning rather than just fully observable MDPs.\", \"evidence\": [{\"excerpt\": \"paper:p9#2\", \"quote\": \"Unlike our benchmark which includes tasks that test memory\\nand representation learning, their tasks are all from fully observable MDPs\"}]},\"des.14\": {\"value\": 15, \"rationale\": \"The benchmark addresses input sensitivity through ablation studies on hyperparameters like the number of tau samples and BCQ thresholds.\", \"evidence\": [{\"excerpt\": \"paper:p21#0\", \"quote\": \"In Figure 9, we show the sensitivity of the IQN to the number of   τ   samples with online policy\\nevaluation.\"}]}}",
+   "checks": [
+    {
+     "item": "des.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.02",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.03",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.04",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.05",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.06",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.07",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.08",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.09",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.10",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.11",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.12",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.13",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    },
+    {
+     "item": "des.14",
+     "final": null,
+     "quotes_kept": 0,
+     "quotes_dropped": 0,
+     "note": "value not allowed; left out (scored as unmet)"
+    }
+   ],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "google/gemma-4-31b-it",
+   "usage": {
+    "prompt_tokens": 8676,
+    "completion_tokens": 1096,
+    "total_tokens": 9772,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0021736,
+     "upstream_inference_prompt_cost": 0.0017352,
+     "upstream_inference_completions_cost": 0.0004384
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  },
+  {
+   "group": "implementation",
+   "model": "google/gemma-4-31b-it",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "3ca3e7af3b6cc9b02f9649d1008cabc2bc1ce5c1789b9331934c0929dfd862fe",
+   "excerpts": [
+    "paper:p1#1",
+    "paper:p2#2",
+    "paper:p3#0",
+    "paper:p2#3",
+    "paper:p10#0",
+    "paper:p3#1",
+    "paper:p3#2",
+    "paper:p4#0",
+    "paper:p4#3",
+    "paper:p8#0",
+    "paper:p2#0",
+    "paper:p4#2",
+    "paper:p5#1",
+    "paper:p7#3",
+    "paper:p8#1",
+    "paper:p9#2",
+    "paper:p9#3",
+    "paper:p14#3",
+    "paper:p3#3",
+    "paper:p7#2",
+    "paper:p13#3",
+    "paper:p7#0"
+   ],
+   "response": "{\"verdicts\": [{\"item\": \"imp.01\", \"value\": 15, \"rationale\": \"The authors explicitly state they will open-source the code.\", \"evidence\": [{\"excerpt\": \"paper:p1#1\", \"quote\": \"open-source all algorithms presented in this paper\"}]}, {\"item\": \"imp.02\", \"value\": 15, \"rationale\": \"The authors state they will release data for all tasks and provide a unified API for access.\", \"evidence\": [{\"excerpt\": \"paper:p1#1\", \"quote\": \"We will release data for all our tasks\"}]}, {\"item\": \"imp.03\", \"value\": 0, \"rationale\": \"There is no mention of supporting model evaluation via API.\", \"evidence\": []}, {\"item\": \"imp.04\", \"value\": 0, \"rationale\": \"The excerpts do not explicitly state support for local model evaluation.\", \"evidence\": []}, {\"item\": \"imp.05\", \"value\": 0, \"rationale\": \"There is no mention of globally unique identifiers or encryption for evaluation instances.\", \"evidence\": []}, {\"item\": \"imp.06\", \"value\": 0, \"rationale\": \"The excerpts do not mention a task to identify if the model was trained on benchmark data.\", \"evidence\": []}, {\"item\": \"imp.07\", \"value\": 15, \"rationale\": \"The authors provide detailed evaluation protocols and open-sourced code to ensure reproducibility.\", \"evidence\": [{\"excerpt\": \"paper:p3#0\", \"quote\": \"releasing the datasets with a proper evaluation protocols and open-sourced code will also address the reproducibility issue\"}]}, {\"item\": \"imp.08\", \"value\": 0, \"rationale\": \"The excerpts do not report statistical significance or uncertainty quantification for the results.\", \"evidence\": []}, {\"item\": \"imp.09\", \"value\": 0, \"rationale\": \"There is no assessment of the need for warnings regarding sensitive or harmful content.\", \"evidence\": []}, {\"item\": \"imp.10\", \"value\": 0, \"rationale\": \"There is no mention of a build status or equivalent implementation.\", \"evidence\": []}, {\"item\": \"imp.11\", \"value\": 0, \"rationale\": \"The excerpts do not specify release requirements.\", \"evidence\": []}]}",
+   "checks": [
+    {
+     "item": "imp.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.04",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.05",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.08",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.10",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.11",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "google/gemma-4-31b-it",
+   "usage": {
+    "prompt_tokens": 6685,
+    "completion_tokens": 514,
+    "total_tokens": 7199,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0015426,
+     "upstream_inference_prompt_cost": 0.001337,
+     "upstream_inference_completions_cost": 0.0002056
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  },
+  {
+   "group": "documentation",
+   "model": "google/gemma-4-31b-it",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "4d31e537057d53b92e8d13a480e71bc8c3837362ccf0d0a359ebc54978571179",
+   "excerpts": [
+    "paper:p1#1",
+    "paper:p2#0",
+    "paper:p10#0",
+    "paper:p6#2",
+    "paper:p3#0",
+    "paper:p9#3",
+    "paper:p20#4",
+    "paper:p2#2",
+    "paper:p2#3",
+    "paper:p6#1",
+    "paper:p9#1",
+    "paper:p9#2",
+    "paper:p3#2",
+    "paper:p7#3",
+    "paper:p2#1",
+    "paper:p3#1",
+    "paper:p4#2",
+    "paper:p5#3",
+    "paper:p4#0",
+    "paper:p8#0",
+    "paper:p13#1",
+    "paper:p6#3",
+    "paper:p7#1",
+    "paper:p5#1",
+    "paper:p5#2",
+    "paper:p7#0",
+    "paper:p15#0",
+    "paper:p14#3"
+   ],
+   "response": "{\"verdicts\": [{\"item\": \"doc.01\", \"value\": 0, \"rationale\": \"The excerpts do not mention a requirements file or equivalent.\", \"evidence\": []}, {\"item\": \"doc.02\", \"value\": 0, \"rationale\": \"No quick-start guide or demo is mentioned in the provided text.\", \"evidence\": []}, {\"item\": \"doc.03\", \"value\": 0, \"rationale\": \"The excerpts do not provide code snippets to verify the use of in-line comments.\", \"evidence\": []}, {\"item\": \"doc.04\", \"value\": 10, \"rationale\": \"The authors mention providing open-sourced code and a unified API, though full documentation is not detailed.\", \"evidence\": [{\"excerpt\": \"paper:p3#0\", \"quote\": \"releasing the datasets with a proper evaluation protocols and open-sourced code\"}]}, {\"item\": \"doc.05\", \"value\": 0, \"rationale\": \"While the text is from a paper, there is no evidence in the excerpts that it was accepted at a peer-reviewed venue.\", \"evidence\": []}, {\"item\": \"doc.06\", \"value\": 15, \"rationale\": \"The construction process, including the use of specific agents to generate data and sub-sampling, is documented.\", \"evidence\": [{\"excerpt\": \"paper:p6#2\", \"quote\": \"The dataset is generated by running an online DQN agent and recording transitions from its replay during training\"}]}, {\"item\": \"doc.07\", \"value\": 15, \"rationale\": \"The tasks are described across various domains and the rationale for their selection (e.g., varying axes of difficulty) is provided.\", \"evidence\": [{\"excerpt\": \"paper:p3#2\", \"quote\": \"We chose the task domains to include tasks that vary along the following axes.\"}]}, {\"item\": \"doc.08\", \"value\": 0, \"rationale\": \"The excerpts do not document assumptions of normative properties.\", \"evidence\": []}, {\"item\": \"doc.09\", \"value\": 10, \"rationale\": \"The authors discuss potential drawbacks of offline RL and specific implementation difficulties.\", \"evidence\": [{\"excerpt\": \"paper:p10#0\", \"quote\": \"But offline approaches also have potential drawbacks.\"}]}, {\"item\": \"doc.10\", \"value\": 15, \"rationale\": \"The data collection process (e.g., using DQN agents, recording transitions) and environment design are documented.\", \"evidence\": [{\"excerpt\": \"paper:p6#2\", \"quote\": \"The dataset is generated by running an online DQN agent and recording transitions from its replay during training\"}]}, {\"item\": \"doc.11\", \"value\": 15, \"rationale\": \"The evaluation protocols and the use of arithmetic mean/median scores are documented.\", \"evidence\": [{\"excerpt\": \"paper:p7#3\", \"quote\": \"We use the arithmetic mean with the exception of Atari where we use median\"}]}, {\"item\": \"doc.12\", \"value\": 0, \"rationale\": \"No applicable license is specified in the excerpts.\", \"evidence\": []}, {\"item\": \"doc.13\", \"value\": 0, \"rationale\": \"No globally unique, persistent identifier (like a DOI) is provided in the excerpts.\", \"evidence\": []}, {\"item\": \"doc.14\", \"value\": 10, \"rationale\": \"The authors mention storing metadata such as episodic rewards and episode IDs.\", \"evidence\": [{\"excerpt\": \"paper:p3#2\", \"quote\": \"We additionally store metadata such as episodic rewards and episode id.\"}]}, {\"item\": \"doc.15\", \"value\": 15, \"rationale\": \"Data sources (e.g., DM Control Suite, Atari 2600) and the collection process are documented.\", \"evidence\": [{\"excerpt\": \"paper:p2#3\", \"quote\": \"We include widely-used domains such as the DM Control Suite [Tassa et al., 2018] and Atari 2600 games [Bellemare et al., 2013]\"}]}, {\"item\": \"doc.16\", \"value\": 15, \"rationale\": \"Preprocessing steps, such as sub-sampling and reducing successful episodes, are documented.\", \"evidence\": [{\"excerpt\": \"paper:p6#1\", \"quote\": \"Each dataset is then sub-sampled and the number of its successful episodes reduced by 2 / 3\"}]}, {\"item\": \"doc.17\", \"value\": 0, \"rationale\": \"The data is generated by agents, not annotated by humans; no annotation process is documented.\", \"evidence\": []}, {\"item\": \"doc.18\", \"value\": 10, \"rationale\": \"The authors explain the diversity of the tasks and the selection of games to cover different difficulty levels.\", \"evidence\": [{\"excerpt\": \"paper:p6#2\", \"quote\": \"picked every fifth game as our offline policy section task to cover diverse set of games in terms of difficulty\"}]}, {\"item\": \"doc.19\", \"value\": 0, \"rationale\": \"There is no mention of following a recognized documentation standard.\", \"evidence\": []}]}",
+   "checks": [
+    {
+     "item": "doc.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.02",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.04",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.05",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.06",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.08",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.09",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.10",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.11",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.12",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.13",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.14",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.15",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.16",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.17",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.18",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.19",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "google/gemma-4-31b-it",
+   "usage": {
+    "prompt_tokens": 8867,
+    "completion_tokens": 1144,
+    "total_tokens": 10011,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.002231,
+     "upstream_inference_prompt_cost": 0.0017734,
+     "upstream_inference_completions_cost": 0.0004576
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  },
+  {
+   "group": "maintenance",
+   "model": "google/gemma-4-31b-it",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "00997ee681e793cca5c30e542bb86b0d48bb40f40e571c815bd3b636a769daec",
+   "excerpts": [
+    "paper:p2#2",
+    "paper:p3#0",
+    "paper:p14#2",
+    "paper:p1#1",
+    "paper:p6#2",
+    "paper:p9#3",
+    "paper:p3#2"
+   ],
+   "response": "{\"verdicts\": [{\"item\": \"mai.01\", \"value\": 0, \"rationale\": \"The excerpts do not mention any checks of code usability performed within the last year.\", \"evidence\": []}, {\"item\": \"mai.02\", \"value\": 0, \"rationale\": \"While a project page on GitHub is mentioned, there is no evidence of a maintained feedback channel for users.\", \"evidence\": []}, {\"item\": \"mai.03\", \"value\": 0, \"rationale\": \"No specific contact person is listed in the provided excerpts.\", \"evidence\": []}]}",
+   "checks": [
+    {
+     "item": "mai.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.02",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "google/gemma-4-31b-it",
+   "usage": {
+    "prompt_tokens": 2367,
+    "completion_tokens": 128,
+    "total_tokens": 2495,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0005246,
+     "upstream_inference_prompt_cost": 0.0004734,
+     "upstream_inference_completions_cost": 0.0000512
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  }
+ ]
+}

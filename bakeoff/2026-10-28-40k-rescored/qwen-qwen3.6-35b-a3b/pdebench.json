@@ -1,0 +1,662 @@
+{
+ "model": "qwen/qwen3.6-35b-a3b",
+ "benchmark": "pdebench",
+ "standard": "betterbench",
+ "date": "2026-10-28",
+ "complete": true,
+ "calls": 0,
+ "excerpt_chars": 40000,
+ "replayed_from": "/Users/li/touchstone/bakeoff/2026-10-28-40k",
+ "verdicts": {
+  "des.01": 15,
+  "des.02": 15,
+  "des.03": 15,
+  "des.04": 15,
+  "des.05": 0,
+  "des.06": 10,
+  "des.07": 15,
+  "des.08": 15,
+  "des.09": 0,
+  "des.10": 0,
+  "des.11": 0,
+  "des.12": 15,
+  "des.13": 15,
+  "des.14": 15,
+  "imp.01": 15,
+  "imp.02": 15,
+  "imp.03": 15,
+  "imp.04": 15,
+  "imp.05": 0,
+  "imp.06": 0,
+  "imp.07": 0,
+  "imp.08": 0,
+  "imp.09": 15,
+  "imp.10": 15,
+  "imp.11": 15,
+  "doc.01": 0,
+  "doc.02": 15,
+  "doc.03": 0,
+  "doc.04": 15,
+  "doc.05": 15,
+  "doc.06": 15,
+  "doc.07": 15,
+  "doc.08": 0,
+  "doc.09": 15,
+  "doc.10": 15,
+  "doc.11": 15,
+  "doc.12": 15,
+  "doc.13": 15,
+  "doc.14": 15,
+  "doc.15": 15,
+  "doc.16": 0,
+  "doc.17": 0,
+  "doc.18": 15,
+  "doc.19": 15,
+  "mai.01": 0,
+  "mai.02": 0,
+  "mai.03": 10
+ },
+ "transcript": [
+  {
+   "group": "design",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "807195b6d7be6900a9a3f726bbf6560fc24734bee17a6e226754e93396af7158",
+   "excerpts": [
+    "paper:p17#2",
+    "paper:p18#0",
+    "paper:p23#2",
+    "paper:p2#4",
+    "paper:p7#2",
+    "paper:p44#0",
+    "paper:p5#1",
+    "paper:p5#2",
+    "paper:p22#3",
+    "paper:p7#0",
+    "paper:p22#2",
+    "paper:p46#2",
+    "repo:README.md#13",
+    "paper:p37#2",
+    "paper:p48#0",
+    "paper:p44#1",
+    "paper:p29#0",
+    "paper:p30#0",
+    "paper:p32#0",
+    "paper:p11#2",
+    "paper:p22#0",
+    "paper:p24#0",
+    "paper:p12#0",
+    "repo:pyproject.toml#2",
+    "paper:p21#0",
+    "paper:p44#3",
+    "paper:p45#0",
+    "repo:README.md#11",
+    "paper:p3#0",
+    "paper:p3#1",
+    "paper:p17#0",
+    "paper:p3#3",
+    "paper:p41#1",
+    "repo:README.md#9",
+    "paper:p7#1"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"des.01\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark explicitly defines the tested capabilities as solving Partial Differential Equations (PDEs) and performing inverse problems, providing specific mathematical formulations.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p3#1\",\n        \"quote\": \"We expand the range of benchmarks in this domain by providing a larger, more diverse problem selection and scale than these previous attempts (11 PDEs with different parametrizations leading to 35 datasets). We additionally consider inverse problems for PDEs [ 53 , 56 ], with the goal to identify unobserved latent parameters using ML.\"\n      },\n      {\n        \"excerpt\": \"paper:p3#3\",\n        \"quote\": \"In the following we describe the general learning problem addressed with the benchmark, the currently covered PDEs, existing implemented baselines... and the ways in which the benchmark follows FAIR data principles [63].\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.02\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts describe how the PDEs (capability) translate to benchmark tasks (forward and inverse problems) using specific datasets and metrics like RMSE and nRMSE.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p18#0\",\n        \"quote\": \"The metrics that we used for the inverse problem are: 1) MSE 2) the normalized l2 norm (L2), 3) the normalized l3 norm (L3); 4) the FFT MSE, the FFT L2 and 5) the FFT L3.\"\n      },\n      {\n        \"excerpt\": \"paper:p3#0\",\n        \"quote\": \"To evaluate ML methods for scientific problems, we consider several metrics that go beyond the standard RMSE and include properties of the underlying physics.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.03\",\n    \"value\": 15,\n    \"rationale\": \"The document explains that finding surrogate models for these PDEs is a necessary precondition for applying them in real-world scenarios like aerodynamics and weather forecasting.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p5#1\",\n        \"quote\": \"Finding a surrogate model which can approximate these challenging dynamics with high fidelity we argue is a necessary precondition to applying such models in the real world.\"\n      },\n      {\n        \"excerpt\": \"paper:p5#2\",\n        \"quote\": \"This equation can describe more complex phenomena, such as shock wave formation and propagation. It is applied to many real-world problems, such as the aerodynamics around airplane wings and interstellar gas dynamics.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.04\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark explicitly states that standard RMSE is not a good proxy for evaluation in turbulent regimes and advocates for comprehensive metrics including physics properties.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p3#0\",\n        \"quote\": \"The results show that the standard error measure in ML, the RMSE on test data, is not a good proxy for evaluating ML models, in particular in turbulent and non-smooth regimes where it fails to capture small spatial scale changes.\"\n      },\n      {\n        \"excerpt\": \"paper:p17#2\",\n        \"quote\": \"The normalized RMSE is a variant of the RMSE to provide scale-independent information defined as: nRMSE ≡ || u pred − u true || 2 / || u true || 2\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.05\",\n    \"value\": 15,\n    \"rationale\": \"The dataset creation involved senior researchers, postdoctoral researchers, and PhD students from academic and industry institutions, indicating domain expert involvement.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p44#1\",\n        \"quote\": \"This dataset was created by Makoto Takamoto and Francesco Alesiani (senior researchers at NEC Labs Europe), Dan MacKinlay (postdoctoral researcher at CSIRO’s Data61), Timothy Praditia and Raphael Leiteritz (PhD students at the University of Stuttgart), Dirk Pflüger and Mathias Niepert (professors at the University of Stuttgart).\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.06\",\n    \"value\": 10,\n    \"rationale\": \"The document describes use cases such as 'developing or testing ML models for fitting the out-of-distribution data' and 'benchmarking with new experiments', but does not describe specific user personas.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p48#0\",\n        \"quote\": \"The dataset could possibly be used for developing or testing ML models for fitting the out-of-distribution data, such as unseen physical parameters.\"\n      },\n      {\n        \"excerpt\": \"paper:p7#1\",\n        \"quote\": \"This provides a low barrier of entry for users to try out benchmarking with new experiments or baseline configurations.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.07\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark integrates domain literature by citing specific PDEs (Navier-Stokes, Fitzhugh-Nagumo) and referencing prior work in scientific machine learning and PDEs.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p23#2\",\n        \"quote\": \"The reaction functions for the activator and inhibitor are defined by the Fitzhugh-Nagumo equation [25], written as: R u ( u, v ) = u − u 3 − k − v\"\n      },\n      {\n        \"excerpt\": \"paper:p3#1\",\n        \"quote\": \"Recent works in PDEs have attempted to produce standardised datasets covering well-known challenges [ 44 , 19 , 51 ].\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.08\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark justifies its metric choice by explaining that standard RMSE fails in turbulent regimes and introduces physics-informed metrics like nRMSE, cRMSE, and fRMSE.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p3#0\",\n        \"quote\": \"The results show that the standard error measure in ML, the RMSE on test data, is not a good proxy for evaluating ML models, in particular in turbulent and non-smooth regimes where it fails to capture small spatial scale changes.\"\n      },\n      {\n        \"excerpt\": \"paper:p17#2\",\n        \"quote\": \"cRMSE is defined as nRMSE ≡ || P u pred − P u true || 2 /N , which measure the deviation of the prediction from some physically conserved value.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.09\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts provide definitions for metrics and show performance tables, but do not explicitly state or define theoretical metric floors (e.g., 0 error) or ceilings (e.g., random baseline error values) in the text.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.10\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts discuss human experts creating the data and using ML models, but do not provide a human performance level or baseline for comparison against the ML models.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.11\",\n    \"value\": 0,\n    \"rationale\": \"While random initial conditions are mentioned, the excerpts do not define or report a 'random performance level' baseline for the benchmark tasks.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"des.12\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark includes validated automatic evaluation scripts (`metrics.py`) and provides extensive tables of results for baseline models using these metrics.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#9\",\n        \"quote\": \"`metrics.py` is the script to evaluate the trained models based on various evaluation metrics described in our paper. Additionally, it also plots the prediction and target data.\"\n      },\n      {\n        \"excerpt\": \"paper:p29#0\",\n        \"quote\": \"Table 6: Summary of the baseline models’ performance for different evaluation metrics: RMSE, normalised RMSE (nRMSE), RMSE from conserved value (cRMSE)...\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.13\",\n    \"value\": 15,\n    \"rationale\": \"The document explicitly compares PDEBench to prior works (like [44], [19], [51]) and classic benchmarks (ImageNet, MNIST), highlighting differences in scale, diversity, and task type.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p3#1\",\n        \"quote\": \"Of these, the excellent work of [ 44 ] is most closely related, but with only four physical systems, it still lacks sufficient scale and diversity of data to challenge emerging ML algorithms. We expand the range of benchmarks in this domain by providing a larger, more diverse problem selection and scale than these previous attempts\"\n      },\n      {\n        \"excerpt\": \"paper:p17#0\",\n        \"quote\": \"Easily accessible and widely used image classification benchmarks such as MNIST and ImageNet are widely credited with accelerating progress in machine learning.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"des.14\",\n    \"value\": 15,\n    \"rationale\": \"The benchmark addresses input sensitivity by varying parameters (e.g., diffusion coefficients, Mach numbers) and initial conditions, and analyzing resolution sensitivity.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p21#0\",\n        \"quote\": \"where N d is the number of spatial dimensions, M = | v | /c s is the Mach number... 1D random field periodic (10 − 8 , 10 − 8 , − ) ... 1D shock-tube out-going (10 − 8 , 10 − 8 , − )\"\n      },\n      {\n        \"excerpt\": \"paper:p37#2\",\n        \"quote\": \"Figure 13 plots the resolution dependence of the inference time of classical simulation and ML methods for 2D/3D compressible Navier-Stokes equations cases.\"\n      }\n    ]\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "des.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "des.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "des.03",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.04",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "des.05",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "des.06",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.08",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.10",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.11",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.12",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "des.13",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "des.14",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    }
+   ],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "qwen/qwen3.6-35b-a3b",
+   "usage": {
+    "prompt_tokens": 13413,
+    "completion_tokens": 2482,
+    "total_tokens": 15895,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0036992,
+     "upstream_inference_prompt_cost": 0.0013413,
+     "upstream_inference_completions_cost": 0.0023579
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  },
+  {
+   "group": "implementation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "768d7f8bd059f7843d704023bed6c245ef7237e852425092ad2d6a1cfdfdb690",
+   "excerpts": [
+    "paper:p1#1",
+    "paper:p2#2",
+    "paper:p45#3",
+    "paper:p11#2",
+    "paper:p47#1",
+    "paper:p48#1",
+    "paper:p49#1",
+    "paper:p4#2",
+    "repo:README.md#19",
+    "paper:p19#1",
+    "paper:p45#0",
+    "paper:p2#4",
+    "paper:p3#1",
+    "paper:p9#1",
+    "paper:p7#1",
+    "repo:README.md#9",
+    "paper:p5#1",
+    "paper:p11#1",
+    "paper:p13#0",
+    "paper:p12#0",
+    "paper:p46#0",
+    "repo:pyproject.toml#5",
+    "paper:p22#1",
+    "repo:pyproject.toml#0",
+    "repo:pyproject.toml#2",
+    "paper:p3#3",
+    "paper:p6#2",
+    "paper:p2#3"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"imp.01\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts explicitly state that the code is available and provide a URL to the repository.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p1#1\",\n        \"quote\": \"The code is available at   https://github.com/pdebench/PDEBench .\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.02\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts confirm that evaluation data is accessible via a repository and generation code is provided.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#2\",\n        \"quote\": \"Data may be generated by executing code through a common interface, or by downloading high-fidelity datasets of simulations.\"\n      },\n      {\n        \"excerpt\": \"paper:p48#1\",\n        \"quote\": \"Yes, the dataset is freely and publicly available and accessible.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.03\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts mention an API for data access and evaluation, specifically citing pyDaRUS and a standardized API.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p1#1\",\n        \"quote\": \"PDEB ENCH   allows researchers to extend the benchmark freely for their own pur- poses using a standardized API\"\n      },\n      {\n        \"excerpt\": \"paper:p48#1\",\n        \"quote\": \"The dataset is free for download either by directly accessing the DaRUS page   https://doi. org/10.18419/darus-2986   or making use of a Python API, \\\"pyDaRUS\\\", provided by DaRUS.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.04\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts indicate that code is available to generate data and run simulations locally, supporting local model evaluation.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p2#2\",\n        \"quote\": \"Data may be generated by executing code through a common interface\"\n      },\n      {\n        \"excerpt\": \"paper:p45#3\",\n        \"quote\": \"users can also generate their own dataset with the provided source code with even higher resolution.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.05\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention the use of globally unique identifiers for evaluation instances or encryption of instances.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.06\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a task to identify if a model is trained on benchmark data.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.07\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts state that code, data, and instructions are included to reproduce results.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p11#1\",\n        \"quote\": \"Did you include the code, data, and instructions needed to reproduce the main experi- mental results (either in the supplemental material or as a URL)? [Yes] We include the parameters used to reproduce the datasets in Appendix D and instructions to run the code in the README file in our code repository.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.08\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts report mean and standard deviation values for errors, which constitutes uncertainty quantification.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p11#1\",\n        \"quote\": \"Did you report error bars (e.g., with respect to the random seed after running experi- ments multiple times)? [Yes] We ran several experiments using different parameters. The mean and standard deviation values for the errors are reported in the Figure 2.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.09\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts explicitly assess the need for warnings by stating the data contains no offensive or sensitive content.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p11#1\",\n        \"quote\": \"[Yes] We do not include any confidential or private data, only numerical values related to general physical systems with no potential ethical issues or severe environmental damage.\"\n      },\n      {\n        \"excerpt\": \"paper:p12#0\",\n        \"quote\": \"(e)   Did you discuss whether the data you are using/curating contains personally identifiable information or offensive content? [N/A] We do not include any personal information or offensive content in our datasets.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.10\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts show that build status is implemented via pytest configurations and CI scripts in the repository metadata.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:pyproject.toml#2\",\n        \"quote\": \"[tool.pytest.ini_options] minversion = \\\"6.0\\\" addopts = [\\\"-ra\\\", \\\"--showlocals\\\", \\\"--strict-markers\\\", \\\"--strict-config\\\"]\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.11\",\n    \"value\": 15,\n    \"rationale\": \"The excerpts specify the license of the assets and the repository.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p11#2\",\n        \"quote\": \"(b)   Did you mention the license of the assets? [Yes] Appropriate license notices are included in the affected source code files, and license of new assets is included in the supplementary materials.\"\n      },\n      {\n        \"excerpt\": \"repo:pyproject.toml#0\",\n        \"quote\": \"license = {file = \\\"LICENSE.txt\\\"}\"\n      }\n    ]\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "imp.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.03",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "imp.04",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.05",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.07",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "imp.08",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "imp.09",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.10",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.11",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "qwen/qwen3.6-35b-a3b",
+   "usage": {
+    "prompt_tokens": 9606,
+    "completion_tokens": 1459,
+    "total_tokens": 11065,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00234665,
+     "upstream_inference_prompt_cost": 0.0009606,
+     "upstream_inference_completions_cost": 0.00138605
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  },
+  {
+   "group": "documentation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "611d874648e0c27f94029843d014dfbb54fb6aff27d6b58e5213ef3af60ca849",
+   "excerpts": [
+    "paper:p3#3",
+    "paper:p45#1",
+    "repo:README.md#14",
+    "paper:p2#3",
+    "paper:p45#3",
+    "repo:README.md#13",
+    "paper:p9#1",
+    "paper:p47#2",
+    "paper:p48#1",
+    "paper:p2#2",
+    "paper:p3#2",
+    "repo:README.md#0",
+    "paper:p7#2",
+    "paper:p13#1",
+    "paper:p22#2",
+    "paper:p45#2",
+    "paper:p5#3",
+    "paper:p50#0",
+    "paper:p10#1",
+    "paper:p46#1",
+    "paper:p46#2",
+    "paper:p6#0",
+    "paper:p29#0",
+    "paper:p32#0",
+    "paper:p22#3",
+    "paper:p48#2",
+    "repo:README.md#21",
+    "paper:p7#0",
+    "paper:p44#0",
+    "paper:p7#1",
+    "paper:p11#2",
+    "paper:p47#0",
+    "paper:p47#1",
+    "paper:p45#0",
+    "paper:p3#0",
+    "paper:p6#3",
+    "paper:p1#1"
+   ],
+   "response": "{\n\"verdicts\": [\n{\n\"item\": \"doc.01\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not mention a requirements file or equivalent for installation.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.02\",\n\"value\": 15,\n\"rationale\": \"The README provides a quick-start guide with code snippets for including and using the benchmark.\",\n\"evidence\": [\n{\n\"excerpt\": \"repo:README.md#0\",\n\"quote\": \"This repository consists of the code used to generate the datasets, to upload and download the datasets from the data repository, as well as to train and evaluate different machine learning models as baselines.\"\n},\n{\n\"excerpt\": \"paper:p6#0\",\n\"quote\": \"Listing 1: Including a benchmark dataset. physical quantities must therefore be evaluated with appropriate metrics.\"\n}\n]\n},\n{\n\"item\": \"doc.03\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not provide evidence of in-line code comments being used in the source code.\",\n\"evidence\": []\n},\n{\n\"item\": \"doc.04\",\n\"value\": 15,\n\"rationale\": \"The code is described as 'well documented' and the repository includes a README and API documentation.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p7#2\",\n\"quote\": \"Training code and configurations are open and well documented, allowing researchers to easily reproduce or extend these methods.\"\n},\n{\n\"excerpt\": \"repo:README.md#0\",\n\"quote\": \"PDEBench provides a diverse and comprehensive set of benchmarks for scientific machine learning... This repository consists of the code used to generate the datasets...\"\n}\n]\n},\n{\n\"item\": \"doc.05\",\n\"value\": 15,\n\"rationale\": \"The paper is identified as a NeurIPS 2022 paper, which is a peer-reviewed venue.\",\n\"evidence\": [\n{\n\"excerpt\": \"repo:README.md#0\",\n\"quote\": \"The code repository for the NeurIPS 2022 paper [PDEBench: An Extensive Benchmark for Scientific Machine Learning](https://arxiv.org/abs/2210.07182)\"\n}\n]\n},\n{\n\"item\": \"doc.06\",\n\"value\": 15,\n\"rationale\": \"The benchmark construction process is documented via the Data Sheet and descriptions of simulation methods.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p46#1\",\n\"quote\": \"All the dataset were obtained by performing computationally expensive numerical simulations for each PDEs.\"\n},\n{\n\"excerpt\": \"paper:p44#0\",\n\"quote\": \"In this section, we provide more detailed information about the DaRUS Dataverse which PDEB ENCH uses to store its datasets.\"\n}\n]\n},\n{\n\"item\": \"doc.07\",\n\"value\": 15,\n\"rationale\": \"Test tasks and rationale are documented in the paper, including the definition of forward and inverse problems.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p2#3\",\n\"quote\": \"covering both “classical” forward learning problems and inverse settings\"\n},\n{\n\"excerpt\": \"paper:p44#0\",\n\"quote\": \"PDEB ENCH ’s datasets were created to provide a more challenging and representative benchmark for scientific ML approaches\"\n}\n]\n},\n{\n\"item\": \"doc.08\",\n\"value\": 15,\n\"rationale\": \"Assumptions of normative properties (physics conservation) are documented as part of the metric design.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p5#3\",\n\"quote\": \"Physics-informed learning that aims to conserve physical quantities must therefore be evaluated with appropriate metrics.\"\n}\n]\n},\n{\n\"item\": \"doc.09\",\n\"value\": 15,\n\"rationale\": \"Limitations are explicitly documented in Section 4.4 of the paper.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p10#1\",\n\"quote\": \"Limitations While PDEB ENCH provides an easy-to-use, modular and extensible approach... the scope of our benchmark is naturally limited.\"\n}\n]\n},\n{\n\"item\": \"doc.10\",\n\"value\": 15,\n\"rationale\": \"The data collection process (numerical simulation) and test environment (hardware) are documented.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p46#1\",\n\"quote\": \"All the dataset were obtained by performing computationally expensive numerical simulations for each PDEs.\"\n},\n{\n\"excerpt\": \"paper:p7#2\",\n\"quote\": \"The training was performed on GeForce RTX 2080 GPUs for 1D/2D cases, and GeForce GTX 3090 for 3D cases.\"\n}\n]\n},\n{\n\"item\": \"doc.11\",\n\"value\": 15,\n\"rationale\": \"Evaluation metrics are documented, including RMSE, nRMSE, cRMSE, and physics-informed metrics.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p5#3\",\n\"quote\": \"The following table summarizes the metrics used; further details can be found in the Appendix B.\"\n},\n{\n\"excerpt\": \"paper:p29#0\",\n\"quote\": \"Table 6: Summary of the baseline models’ performance for different evaluation metrics: RMSE, normalised RMSE (nRMSE), RMSE from conserved value (cRMSE)...\"\n}\n]\n},\n{\n\"item\": \"doc.12\",\n\"value\": 15,\n\"rationale\": \"The license is specified as MIT for code and CC BY for data.\",\n\"evidence\": [\n{\n\"excerpt\": \"repo:README.md#21\",\n\"quote\": \"MIT licensed, except where otherwise stated. See `LICENSE.txt` file.\"\n},\n{\n\"excerpt\": \"paper:p48#2\",\n\"quote\": \"The dataset is licensed under CC BY license.\"\n}\n]\n},\n{\n\"item\": \"doc.13\",\n\"value\": 15,\n\"rationale\": \"A persistent DOI is provided for the dataset.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p44#0\",\n\"quote\": \"PDEB ENCH obtained a permanent DOI (doi:10.18419/darus-2986) [55] through DaRUS.\"\n}\n]\n},\n{\n\"item\": \"doc.14\",\n\"value\": 15,\n\"rationale\": \"Standardized metadata is included via the DaRUS/Dataverse platform.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p44#0\",\n\"quote\": \"All data uploaded to DaRUS gets a DOI as a persistent identifier, a license, and can be described with an extensive set of metadata, organized in metadata blocks.\"\n}\n]\n},\n{\n\"item\": \"doc.15\",\n\"value\": 15,\n\"rationale\": \"Data sources (numerical simulations) and collection methods are documented.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p46#1\",\n\"quote\": \"All the dataset were obtained by performing computationally expensive numerical simulations for each PDEs.\"\n}\n]\n},\n{\n\"item\": \"doc.16\",\n\"value\": 0,\n\"rationale\": \"The excerpts state that preprocessing/cleaning was not done or is N/A, so no steps are documented.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p47#1\",\n\"quote\": \"1. Was any preprocessing/cleaning/labeling of the data done...? N/A.\"\n}\n]\n},\n{\n\"item\": \"doc.17\",\n\"value\": 0,\n\"rationale\": \"Data annotation is not applicable as the data is generated via simulation, not human annotation.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p47#1\",\n\"quote\": \"1. Was any preprocessing/cleaning/labeling of the data done...? N/A.\"\n}\n]\n},\n{\n\"item\": \"doc.18\",\n\"value\": 15,\n\"rationale\": \"Representativeness is explained, noting the datasets are intended to be representative of challenging physical systems.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p45#0\",\n\"quote\": \"The datasets that we provide are intended to be representative of challenging physical systems.\"\n}\n]\n},\n{\n\"item\": \"doc.19\",\n\"value\": 15,\n\"rationale\": \"Documentation follows the FAIR data principles and includes a Data Sheet.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p3#2\",\n\"quote\": \"the ways in which the benchmark follows FAIR data principles [63].\"\n},\n{\n\"excerpt\": \"paper:p44#0\",\n\"quote\": \"K PDEB ENCH ’s Data Sheet In this section, we provide more detailed information about the DaRUS Dataverse...\"\n}\n]\n}\n]\n}",
+   "checks": [
+    {
+     "item": "doc.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.04",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.05",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.06",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.08",
+     "proposed": 15,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1,
+     "note": "downgraded: no quote could be verified"
+    },
+    {
+     "item": "doc.09",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.10",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.11",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "doc.12",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.13",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.14",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.15",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.16",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "doc.17",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 1
+    },
+    {
+     "item": "doc.18",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "doc.19",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 1,
+     "quotes_dropped": 1
+    }
+   ],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "qwen/qwen3.6-35b-a3b",
+   "usage": {
+    "prompt_tokens": 12297,
+    "completion_tokens": 2111,
+    "total_tokens": 14408,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00323515,
+     "upstream_inference_prompt_cost": 0.0012297,
+     "upstream_inference_completions_cost": 0.00200545
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  },
+  {
+   "group": "maintenance",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "1eef8e936a85d78d0667864dce2f2f4edb5863a12f325316f1e37c685cb8ac5d",
+   "excerpts": [
+    "paper:p37#0",
+    "repo:README.md#16",
+    "repo:README.md#19",
+    "paper:p45#3",
+    "paper:p49#0",
+    "paper:p49#1",
+    "paper:p15#2",
+    "paper:p37#2",
+    "repo:LICENSE.txt#0",
+    "paper:p11#0",
+    "paper:p48#1",
+    "repo:README.md#17"
+   ],
+   "response": "{\n\"verdicts\": [\n{\n\"item\": \"mai.01\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not contain any information or quotes indicating that code usability was checked within the last year.\",\n\"evidence\": []\n},\n{\n\"item\": \"mai.02\",\n\"value\": 0,\n\"rationale\": \"While errors can be submitted via a bugtracker, the excerpts do not explicitly state that a 'maintained feedback channel for users' is available as a general feature, nor do they quote such a statement. The bugtracker is mentioned in the context of extending/augmenting the dataset, not as a general user feedback channel.\",\n\"evidence\": []\n},\n{\n\"item\": \"mai.03\",\n\"value\": 10,\n\"rationale\": \"The excerpts state that contact information is available, specifically that 'E-mail addresses are provided in the main-body of the paper', which satisfies the criterion of listing a contact person/method.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p49#0\",\n\"quote\": \"E-mail addresses are provided in the main-body of the paper.\"\n}\n]\n}\n]\n}",
+   "checks": [
+    {
+     "item": "mai.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.02",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.03",
+     "proposed": 10,
+     "final": 10,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "qwen/qwen3.6-35b-a3b",
+   "usage": {
+    "prompt_tokens": 4612,
+    "completion_tokens": 268,
+    "total_tokens": 4880,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0007158,
+     "upstream_inference_prompt_cost": 0.0004612,
+     "upstream_inference_completions_cost": 0.0002546
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  }
+ ]
+}

@@ -1,0 +1,471 @@
+{
+ "model": "qwen/qwen3.6-35b-a3b",
+ "benchmark": "gsm8k",
+ "standard": "betterbench",
+ "date": "2026-10-28",
+ "complete": true,
+ "calls": 0,
+ "excerpt_chars": 40000,
+ "replayed_from": "/Users/li/touchstone/bakeoff/2026-10-28-40k",
+ "verdicts": {
+  "des.01": 15,
+  "des.02": 15,
+  "des.03": 5,
+  "des.04": 0,
+  "des.05": 15,
+  "des.06": 0,
+  "des.07": 15,
+  "des.08": 15,
+  "des.09": 0,
+  "des.10": 0,
+  "des.11": 0,
+  "des.12": 15,
+  "des.13": 15,
+  "des.14": 15,
+  "imp.01": 15,
+  "imp.02": 15,
+  "imp.03": 0,
+  "imp.04": 15,
+  "imp.05": 0,
+  "imp.06": 0,
+  "imp.07": 15,
+  "imp.08": 0,
+  "imp.09": 0,
+  "imp.10": 0,
+  "imp.11": 0,
+  "mai.01": 0,
+  "mai.02": 0,
+  "mai.03": 0
+ },
+ "transcript": [
+  {
+   "group": "design",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "2ab0f85a5708a08766b678c521b9460fbfd06fe4b59fad25bbb6da7cbfdd55a7",
+   "excerpts": [
+    "paper:p2#0",
+    "paper:p9#1",
+    "paper:p14#1",
+    "paper:p17#1",
+    "paper:p22#0",
+    "paper:p15#1",
+    "paper:p16#1",
+    "paper:p8#0",
+    "paper:p6#0",
+    "paper:p8#1",
+    "paper:p3#0",
+    "paper:p5#1",
+    "paper:p10#1",
+    "repo:LICENSE#0",
+    "paper:p9#0",
+    "paper:p11#0",
+    "paper:p11#1",
+    "paper:p4#2",
+    "paper:p13#0",
+    "paper:p21#1",
+    "paper:p3#2",
+    "paper:p4#1",
+    "paper:p5#0",
+    "paper:p1#1",
+    "paper:p13#1"
+   ],
+   "response": "{\n\"verdicts\": [\n{\n\"item\": \"des.01\",\n\"value\": 15,\n\"rationale\": \"The benchmark explicitly defines the tested capability as 'grade school math level' problems involving 'elementary calculations' and 'multi-step mathematical reasoning'.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p2#0\",\n\"quote\": \"a dataset of 8.5K high quality problems at the grade school math level.\"\n},\n{\n\"excerpt\": \"paper:p3#0\",\n\"quote\": \"solutions primarily involve performing a sequence of elementary calculations using basic arithmetic operations\"\n}\n]\n},\n{\n\"item\": \"des.02\",\n\"value\": 15,\n\"rationale\": \"The document describes how the capability (math reasoning) translates to the task via 'high linguistic diversity' and 'multi-step' problem solving, distinguishing it from simple pattern matching.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p3#0\",\n\"quote\": \"We designed this dataset to have high linguistic diversity while relying on relatively simple grade school math concepts.\"\n},\n{\n\"excerpt\": \"paper:p1#1\",\n\"quote\": \"Mathematical reasoning thus reveals a critical weakness in modern language models.\"\n}\n]\n},\n{\n\"item\": \"des.03\",\n\"value\": 5,\n\"rationale\": \"The document mentions that models 'falter when required to perform multi-step mathematical reasoning', implying real-world relevance, but does not explicitly describe how knowing this is helpful in the real world.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p1#1\",\n\"quote\": \"However, even the largest models falter when required to perform multi-step mathematical reasoning\"\n}\n]\n},\n{\n\"item\": \"des.04\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not contain instructions on how benchmark scores should or should not be interpreted or used.\",\n\"evidence\": []\n},\n{\n\"item\": \"des.05\",\n\"value\": 15,\n\"rationale\": \"The document explicitly states that the problems were 'created by human problem writers' and involved 'human workers' for quality control.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p3#0\",\n\"quote\": \"GSM8K consists of 8.5K high quality grade school math problems created by human problem writers.\"\n},\n{\n\"excerpt\": \"paper:p3#0\",\n\"quote\": \"We avoid error-prone scraping procedures and instead rely on human workers to create problems.\"\n}\n]\n},\n{\n\"item\": \"des.06\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not describe specific use cases or user personas for the benchmark.\",\n\"evidence\": []\n},\n{\n\"item\": \"des.07\",\n\"value\": 15,\n\"rationale\": \"The document integrates domain literature by citing previous math word problem datasets and methods, and comparing GSM8K to them.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p3#2\",\n\"quote\": \"Early math word problem datasets (Kushman et al., 2014; Roy and Roth, 2015) are relatively small\"\n},\n{\n\"excerpt\": \"paper:p4#1\",\n\"quote\": \"The MATH dataset (Hendrycks et al., 2021) is larger and significantly more complex than GSM8K\"\n}\n]\n},\n{\n\"item\": \"des.08\",\n\"value\": 15,\n\"rationale\": \"The document explains the choice of 'Test Solve Rate' as the metric, justified by the need to measure performance on diverse, multi-step problems where simple generation fails.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p3#0\",\n\"quote\": \"By creating each individual problem to be relatively unique, held-out test performance becomes a far more relevant metric.\"\n},\n{\n\"excerpt\": \"paper:p5#0\",\n\"quote\": \"At test time, we judge performance by autoregressively sampling a single low temperature solution and checking whether the final answer is correct.\"\n}\n]\n},\n{\n\"item\": \"des.09\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not mention metric floors or ceilings.\",\n\"evidence\": []\n},\n{\n\"item\": \"des.10\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not include a human performance level for the benchmark.\",\n\"evidence\": []\n},\n{\n\"item\": \"des.11\",\n\"value\": 0,\n\"rationale\": \"The excerpts do not include a random performance level for the benchmark.\",\n\"evidence\": []\n},\n{\n\"item\": \"des.12\",\n\"value\": 15,\n\"rationale\": \"The document describes a 'verifier' trained to judge correctness, which serves as an automatic evaluation method, and discusses its validation through ablations and error analysis.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p5#0\",\n\"quote\": \"Verifiers are trained to judge the correctness of solutions, with the training signal determined solely by whether or not the solution reached the correct final answer.\"\n},\n{\n\"excerpt\": \"paper:p22#0\",\n\"quote\": \"Any disagreement between the second and third columns indicates that the verifier made an error.\"\n}\n]\n},\n{\n\"item\": \"des.13\",\n\"value\": 15,\n\"rationale\": \"The document explicitly explains differences to related benchmarks like MATH, LogiQA, and CommonsenseQA in terms of complexity, format, and reasoning requirements.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p4#1\",\n\"quote\": \"The MATH dataset (Hendrycks et al., 2021) is larger and significantly more complex than GSM8K\"\n},\n{\n\"excerpt\": \"paper:p4#1\",\n\"quote\": \"Similar to CommonsenseQA, GSM8K includes questions that require basic background knowledge\"\n}\n]\n},\n{\n\"item\": \"des.14\",\n\"value\": 15,\n\"rationale\": \"The document addresses input sensitivity by noting that 'solutions that veer off-course quickly become unrecoverable' due to 'high sensitivity to individual mistakes'.\",\n\"evidence\": [\n{\n\"excerpt\": \"paper:p1#1\",\n\"quote\": \"One significant challenge in mathematical reasoning is the high sensitivity to individual mistakes\"\n},\n{\n\"excerpt\": \"paper:p1#1\",\n\"quote\": \"Solutions that veer off-course quickly become unrecoverable.\"\n}\n]\n}\n]\n}",
+   "checks": [
+    {
+     "item": "des.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.03",
+     "proposed": 5,
+     "final": 5,
+     "quotes_kept": 1,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.04",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.05",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.08",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.10",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.11",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.12",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.13",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "des.14",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "qwen/qwen3.6-35b-a3b",
+   "usage": {
+    "prompt_tokens": 8602,
+    "completion_tokens": 1523,
+    "total_tokens": 10125,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00230705,
+     "upstream_inference_prompt_cost": 0.0008602,
+     "upstream_inference_completions_cost": 0.00144685
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  },
+  {
+   "group": "implementation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "6dae73c8da02cb819bd5420fe088d3bba037c8bca8ed1d888c5c4cef50f648e5",
+   "excerpts": [
+    "paper:p13#0",
+    "repo:README.md#3",
+    "repo:README.md#6",
+    "paper:p1#1",
+    "repo:FILE LISTING#0",
+    "paper:p6#0",
+    "repo:README.md#2",
+    "paper:p3#0",
+    "paper:p14#0",
+    "paper:p14#1",
+    "repo:README.md#5",
+    "paper:p2#1",
+    "paper:p17#0",
+    "repo:LICENSE#0",
+    "paper:p17#1",
+    "paper:p12#0",
+    "repo:README.md#0",
+    "paper:p8#1",
+    "paper:p2#0"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"imp.01\",\n    \"value\": 15,\n    \"rationale\": \"The repository file listing and README confirm that evaluation code (e.g., dataset.py, calculator.py) is available.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:FILE LISTING#0\",\n        \"quote\": \"grade_school_math/dataset.py\"\n      },\n      {\n        \"excerpt\": \"repo:README.md#2\",\n        \"quote\": \"Some example python code to do so is shown in `dataset.py:is_correct`.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.02\",\n    \"value\": 15,\n    \"rationale\": \"The dataset files (test.jsonl, train.jsonl) are listed in the repository, making evaluation data accessible.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:FILE LISTING#0\",\n        \"quote\": \"grade_school_math/data/test.jsonl\"\n      },\n      {\n        \"excerpt\": \"repo:FILE LISTING#0\",\n        \"quote\": \"grade_school_math/data/train.jsonl\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.03\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts describe local evaluation using Python scripts and a calculator module, with no mention of API-based evaluation support.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.04\",\n    \"value\": 15,\n    \"rationale\": \"The repository provides local scripts (train.py, sample.py) and code for local model evaluation and calculator usage.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#6\",\n        \"quote\": \"python train.py\"\n      },\n      {\n        \"excerpt\": \"repo:README.md#6\",\n        \"quote\": \"python sample.py\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.05\",\n    \"value\": 0,\n    \"rationale\": \"There is no evidence in the excerpts that globally unique identifiers are added or evaluation instances are encrypted.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.06\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a task to identify if a model is trained on benchmark data.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.07\",\n    \"value\": 15,\n    \"rationale\": \"The repository includes scripts (train.py, sample.py) and code for data processing, allowing for result replication.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:FILE LISTING#0\",\n        \"quote\": \"grade_school_math/train.py\"\n      },\n      {\n        \"excerpt\": \"repo:FILE LISTING#0\",\n        \"quote\": \"grade_school_math/sample.py\"\n      }\n    ]\n  },\n  {\n    \"item\": \"imp.08\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts report solve rates and performance boosts but do not mention statistical significance tests or uncertainty quantification.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.09\",\n    \"value\": 0,\n    \"rationale\": \"There is no mention of assessing the need for warnings for sensitive or harmful content.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.10\",\n    \"value\": 0,\n    \"rationale\": \"The README states the status is 'Archive' and 'no updates expected', but does not describe an implemented build status system.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"imp.11\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not specify release requirements.\",\n    \"evidence\": []\n  }\n]\n}",
+   "checks": [
+    {
+     "item": "imp.01",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.02",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.04",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.05",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.06",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.07",
+     "proposed": 15,
+     "final": 15,
+     "quotes_kept": 2,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.08",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.09",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.10",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "imp.11",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "qwen/qwen3.6-35b-a3b",
+   "usage": {
+    "prompt_tokens": 6209,
+    "completion_tokens": 942,
+    "total_tokens": 7151,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.0015158,
+     "upstream_inference_prompt_cost": 0.0006209,
+     "upstream_inference_completions_cost": 0.0008949
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  },
+  {
+   "group": "documentation",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "e4f93e7095647e2c877e70fe32cd09a3eed43b1048eff221782b4bd865f4acb9",
+   "excerpts": [
+    "paper:p4#0",
+    "paper:p12#0",
+    "repo:README.md#3",
+    "paper:p10#1",
+    "repo:README.md#1",
+    "repo:README.md#2",
+    "repo:README.md#6",
+    "repo:LICENSE#0",
+    "paper:p17#0",
+    "repo:README.md#0",
+    "paper:p13#0",
+    "paper:p14#1",
+    "paper:p1#0",
+    "paper:p13#1",
+    "paper:p3#1",
+    "paper:p8#1",
+    "paper:p11#0",
+    "paper:p15#0",
+    "paper:p3#0",
+    "repo:FILE LISTING#0",
+    "paper:p20#1",
+    "paper:p4#1",
+    "repo:README.md#5",
+    "paper:p2#1",
+    "paper:p8#0"
+   ],
+   "response": "{\n\"verdicts\": [\n  {\n    \"item\": \"doc.01\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not mention a requirements file (e.g., requirements.txt) or equivalent dependency specification.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.02\",\n    \"value\": 15,\n    \"rationale\": \"The README provides a quick-start guide with specific commands for training and sampling, and links to a blog post and paper.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#6\",\n        \"quote\": \"We present a basic example of training a GPT2 sized model and using the calculator in the sampling process.\"\n      },\n      {\n        \"excerpt\": \"repo:README.md#6\",\n        \"quote\": \"**Training a Model**\\n\\n```bash\\npython train.py\\n```\\n\\n**Sampling from the Model**\\n\\n```bash\\npython sample.py\\n```\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.03\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not provide evidence of in-line code comments within the source code files.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.04\",\n    \"value\": 15,\n    \"rationale\": \"Comprehensive documentation is available in the README.md file, detailing dataset structure, usage, and components.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#0\",\n        \"quote\": \"State-of-the-art language models can match human performance on many tasks, but they still struggle to robustly perform multi-step mathematical reasoning. To diagnose the failures of current models and support research, we're releasing GSM8K, a dataset of 8.5K high quality linguistically diverse grade school math word problems.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.05\",\n    \"value\": 0,\n    \"rationale\": \"The provided citation in the README points to an arXiv preprint, not a peer-reviewed venue. The excerpts do not show acceptance at a peer-reviewed venue.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#6\",\n        \"quote\": \"journal={arXiv preprint arXiv:2110.14168},\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.06\",\n    \"value\": 15,\n    \"rationale\": \"The paper's Appendix A details the benchmark construction process, including hiring contractors, quality control, and error checking.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p15#0\",\n        \"quote\": \"We initially collected a starting set of a thousand problems and natural language solutions by hiring freelance contractors on Upwork... We then worked with Surge AI... to scale up our data collection.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.07\",\n    \"value\": 15,\n    \"rationale\": \"The paper documents the test tasks (grade school math word problems) and rationale (diagnosing failures of current models).\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p1#0\",\n        \"quote\": \"To diagnose the failures of current models and support research, we introduce GSM8K, a dataset of 8.5K high quality linguistically diverse grade school math word problems.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.08\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not document assumptions of normative properties.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.09\",\n    \"value\": 15,\n    \"rationale\": \"The paper explicitly documents limitations, such as the calculator implementation bugs and potential subtle errors in problems.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p17#0\",\n        \"quote\": \"We note that the original version of our calculator, used for all results in this paper, had some minor implementation bugs.\"\n      },\n      {\n        \"excerpt\": \"paper:p15#0\",\n        \"quote\": \"It is possible that a larger percentage of problems contain subtle errors.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.10\",\n    \"value\": 15,\n    \"rationale\": \"The paper details the data collection process (Upwork/Surge AI), test environment (calculator override), and prompt design (seed questions from GPT-3).\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p15#0\",\n        \"quote\": \"To assist contractors with writing questions, we provided seed questions automatically generated from a few-shot prompted 175B GPT-3 model.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.11\",\n    \"value\": 15,\n    \"rationale\": \"The evaluation metric is documented as 'Test Solve Rate' and the method for extracting the final answer using the `####` token.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:README.md#1\",\n        \"quote\": \"To extract the final numeric solution for a particular question, simply parse the completion to extract the numeric value immediately following the `####` token.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.12\",\n    \"value\": 15,\n    \"rationale\": \"The LICENSE file explicitly specifies the MIT License.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"repo:LICENSE#0\",\n        \"quote\": \"MIT License\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.13\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not provide a globally unique, persistent identifier (like a DOI) for the dataset and metadata.\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.14\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not show the inclusion of standardized metadata (e.g., Datasheets for Datasets).\",\n    \"evidence\": []\n  },\n  {\n    \"item\": \"doc.15\",\n    \"value\": 15,\n    \"rationale\": \"The paper documents data sources (Upwork, Surge AI) and how data was collected (human writers, re-solving for verification).\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p15#0\",\n        \"quote\": \"We initially collected a starting set of a thousand problems and natural language solutions by hiring freelance contractors on Upwork... We then worked with Surge AI... to scale up our data collection.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.16\",\n    \"value\": 15,\n    \"rationale\": \"The paper documents preprocessing steps, such as generating calculator annotations and filtering problems based on agreement checks.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p15#0\",\n        \"quote\": \"We checked whether their final answers agreed with the original solutions, and any problems that produced disagreements were either repaired or discarded.\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.17\",\n    \"value\": 15,\n    \"rationale\": \"The paper documents the data annotation process, including hiring contractors and using a finetuned model for Socratic subquestions.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p15#0\",\n        \"quote\": \"We initially collected a starting set of a thousand problems and natural language solutions by hiring freelance contractors on Upwork\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.18\",\n    \"value\": 15,\n    \"rationale\": \"The paper explains representativeness by stating the dataset consists of 'high quality linguistically diverse grade school math word problems' and avoids template repetition.\",\n    \"evidence\": [\n      {\n        \"excerpt\": \"paper:p3#0\",\n        \"quote\": \"High Diversity We strive for high diversity among problems. We actively avoid designing problems that are drawn from the same linguistic template or differ only in superficial details\"\n      }\n    ]\n  },\n  {\n    \"item\": \"doc.19\",\n    \"value\": 0,\n    \"rationale\": \"The excerpts do not state that the documentation follows a recognized standard (e.g., Datasheets for Datasets).\",\n    \"evidence\": []\n  }\n]\n}",
+   "checks": [],
+   "ms": 0,
+   "provider": "DeepInfra",
+   "served_model": "qwen/qwen3.6-35b-a3b",
+   "usage": {
+    "prompt_tokens": 8383,
+    "completion_tokens": 2027,
+    "total_tokens": 10410,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00276395,
+     "upstream_inference_prompt_cost": 0.0008383,
+     "upstream_inference_completions_cost": 0.00192565
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   },
+   "error": "no JSON object in reply"
+  },
+  {
+   "group": "maintenance",
+   "model": "qwen/qwen3.6-35b-a3b",
+   "temperature": 0,
+   "seed": 20261026,
+   "prompt_version": "1",
+   "prompt_sha256": "dc8df29963b18496be4593fa38a462014de35c72dc7049217bac487a4f2948a2",
+   "excerpts": [
+    "paper:p15#0",
+    "paper:p17#0",
+    "repo:README.md#6",
+    "paper:p4#0",
+    "paper:p15#1",
+    "repo:README.md#3",
+    "repo:LICENSE#0"
+   ],
+   "response": "{\n\"verdicts\": [\n{\n\"item\": \"mai.01\",\n\"value\": 0,\n\"rationale\": \"The excerpts describe data collection and quality checks performed during the initial creation of the dataset (2021), but do not mention any code usability checks performed within the last year.\",\n\"evidence\": []\n},\n{\n\"item\": \"mai.02\",\n\"value\": 0,\n\"rationale\": \"The excerpts provide no evidence of a maintained feedback channel for users; the README only provides usage instructions and citation information.\",\n\"evidence\": []\n},\n{\n\"item\": \"mai.03\",\n\"value\": 0,\n\"rationale\": \"The excerpts list authors in the BibTeX entry but do not list a specific contact person for the project or dataset.\",\n\"evidence\": []\n}\n]\n}",
+   "checks": [
+    {
+     "item": "mai.01",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.02",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    },
+    {
+     "item": "mai.03",
+     "proposed": 0,
+     "final": 0,
+     "quotes_kept": 0,
+     "quotes_dropped": 0
+    }
+   ],
+   "ms": 1,
+   "provider": "DeepInfra",
+   "served_model": "qwen/qwen3.6-35b-a3b",
+   "usage": {
+    "prompt_tokens": 2136,
+    "completion_tokens": 191,
+    "total_tokens": 2327,
+    "is_byok": false,
+    "prompt_tokens_details": {
+     "cached_tokens": 0,
+     "cache_write_tokens": 0,
+     "audio_tokens": 0,
+     "video_tokens": 0
+    },
+    "cost_details": {
+     "upstream_inference_cost": 0.00039505,
+     "upstream_inference_prompt_cost": 0.0002136,
+     "upstream_inference_completions_cost": 0.00018145
+    },
+    "completion_tokens_details": {
+     "reasoning_tokens": 0,
+     "image_tokens": 0,
+     "audio_tokens": 0
+    },
+    "cost": 0
+   }
+  }
+ ],
+ "error": "no JSON object in reply"
+}
