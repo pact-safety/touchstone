@@ -1,5 +1,7 @@
 import './styles.css';
 import './touchstone.css';
+import './ratings.css';
+import { ascFirst, decodeView, DEFAULT_VIEW, encodeView, MAX_COMPARE } from './hashstate.ts';
 import type { BenchmarkFile, SiteIndex, Summary } from '../../src/build.ts';
 import type { Assessment, Benchmark, Item, Standard, Verdict } from '../../src/schema.ts';
 import type { Improvement, Result } from '../../src/engine.ts';
@@ -79,13 +81,18 @@ const skeleton = () => html`<div class="skel-page" role="status"><span class="sr
 
 function announce(msg: string) { announcer.textContent = ''; requestAnimationFrame(() => (announcer.textContent = msg)); }
 
-// ---------- Ratings: a table from 640px up, a list of cards below ----------
-const wide = matchMedia('(min-width: 40rem)');
-const state = { q: '', domain: '', modality: '', source: 'all', value: '', sort: 'touchstone', dir: -1, focus: { row: 1, col: 0 }, lastBench: '' };
+// ---------- Ratings: a plain table from 52rem up, a list of cards below ----------
+const wide = matchMedia('(min-width: 52rem)');
+const state = { ...DEFAULT_VIEW, lastBench: '' };
 let wantSearch = false;
 
-/** Columns whose first click sorts ascending (A to Z, cheapest first). */
-const ascFirst = (k: string) => k === 'name' || k === 'domain' || k === 'run';
+const MODALITY: Record<string, string> = { 'lm-agent': 'Language-model agent', 'language-model': 'Language model', 'rl-agent': 'Reinforcement-learning agent', classifier: 'Classifier', 'scientific-ml': 'Scientific ML' };
+const modalityName = (m: string) => MODALITY[m] ?? m.replace(/-/g, ' ');
+/** Only standards with at least one rating get a column, so the table has no empty ones. */
+const ratedStds = () => encoded.filter((s) => data.summaries.some((a) => a.standard === s.id));
+const unitOf = (s: IStd) => s.scoring?.scheme === 'aisl-severity' ? 'Category A (best) to E' : s.scoring?.scheme === 'points' ? `points out of ${s.scoring.max}` : 'share of applicable items met';
+const stdTip = (s: IStd) => `${s.name}. ${s.description.split(/(?<=\.)\s/)[0]} Scored as: ${unitOf(s)}.`;
+const BEST_VALUE = 'Best value: no other benchmark is both cheaper to run and rated more rigorous.';
 
 function filteredBenchmarks(): B[] {
   const q = state.q.toLowerCase();
@@ -108,208 +115,227 @@ function filteredBenchmarks(): B[] {
   });
 }
 
+const columns = () => [
+  { key: 'name', label: 'Benchmark', tip: '' },
+  { key: 'touchstone', label: 'Touchstone grade', tip: 'Median of the published ratings, A (best) to F. “n of m standards” is how many of the encoded standards it rests on.' },
+  { key: 'run', label: 'Run cost', tip: 'Estimated cost of a full run as a $ band (tokens), plus the local setup needed. Cheapest first.' },
+  ...ratedStds().map((s) => ({ key: s.id, label: s.short, tip: stdTip(s) })),
+];
+const defaultView = () => ({ q: '', domain: '', modality: '', source: 'all', value: '' });
+const activeCount = () => Object.entries(defaultView()).filter(([k, d]) => state[k as keyof ReturnType<typeof defaultView>] !== d).length + (state.sort !== DEFAULT_VIEW.sort || state.dir !== DEFAULT_VIEW.dir ? 1 : 0);
+
+/** Category A-E share the A-F grade ramp (.ts-grade-*); other standards print their own figure. */
+function ratingLabel(label: string) {
+  const m = /^Category ([A-E])$/.exec(label);
+  if (m) return html`<span class="ts-grade ts-grade-${m[1]!.toLowerCase()}">${label}</span>`;
+  if (label === 'Unclassified') return html`<span class="chip">${label}</span>`;
+  return html`<span class="font-semibold text-heading">${label}</span>`;
+}
+
 function renderRatings() {
   const watch = data.watch;
   const rated = new Set(data.summaries.map((a) => a.benchmark)).size;
   const modalities = [...new Set([...benchmarks.values()].map((b) => b.modality))].sort();
+  const stds = ratedStds();
   main.innerHTML = html`
     <h1 class="t-page" tabindex="-1">Benchmark rigor ratings</h1>
-    <p class="mt-4 max-w-3xl text-lg text-muted">How rigorous are the benchmarks AI developers and policymakers rely on? Each standard is scored in its own units, so compare down one standard, not across.</p>
+    <p class="mt-4 max-w-3xl text-base text-muted sm:text-lg">How rigorous are the benchmarks AI developers and policymakers rely on? Each standard is scored in its own units, so compare down one standard, not across.</p>
     <p class="t-caption mt-3">${rated} of ${benchmarks.size} benchmarks rated under ${encoded.length} encoded standards.
       ${watch ? `Sources are checked nightly; last checked ${watch.checked_on}.` : 'Nightly source checks have not run yet.'}</p>
-    <div class="mt-8 flex flex-wrap items-end gap-3" role="search">
-      <label class="grid w-full gap-1 text-sm sm:w-auto"><span>Search</span><input id="q" type="search" class="field sm:w-56" placeholder="Name or concept" value="${state.q}" autocomplete="off"></label>
+    <div class="rt-legend legend mt-4">
+      <p>Grade A to F is the median of a benchmark's published ratings (A 85+, B 70+, C 55+, D 40+, E 25+, F below). “1 of ${encoded.length} standards” is how many it rests on: one standard means low confidence, and more standards that agree mean more. <a class="link" href="#/method">How it works</a></p>
+      <details class="mt-2"><summary>Full key</summary>
+        <dl class="rt-key">
+          ${stds.map((s) => html`<dt>${s.short}</dt><dd>${stdTip(s)}</dd>`)}
+          <dt>Run cost</dt><dd>$ to $$$$$ is the API cost band for a full run: $ under 1M tokens, $$ under 10M, $$$ under 100M, $$$$ under 1B, $$$$$ 1B or more. The local setup (Lite, Standard, Heavy, Extreme) is the hardware the test harness needs, not hosting the model.</dd>
+          <dt>Best value</dt><dd>${BEST_VALUE}</dd>
+          <dt><span aria-hidden="true">≠</span><span class="sr-only">differs</span></dt><dd>The source's published figure differs from Touchstone's recomputation from the same verdicts.</dd>
+          <dt>draft</dt><dd>An automated assessment not yet reviewed by a person.</dd>
+          <dt>Empty cell</dt><dd>A dash means not rated yet; a shaded blank cell means the standard does not apply to this type of benchmark.</dd>
+        </dl></details>
+    </div>
+    <button type="button" id="rf-toggle" class="rt-toggle btn-quiet mt-4" aria-expanded="false" aria-controls="rf-panel"></button>
+    <div id="rf-panel" class="rt-panel mt-4" role="search">
+      <label class="grid gap-1 text-sm"><span>Search</span><input id="q" type="search" class="field" placeholder="Name or concept" value="${state.q}" autocomplete="off"></label>
       <label class="grid gap-1 text-sm"><span>Domain</span>
         <select id="domain" class="field"><option value="">All</option><option value="safety">Safety</option><option value="capability">Capability</option></select></label>
       <label class="grid gap-1 text-sm"><span>Type</span>
-        <select id="modality" class="field"><option value="">All</option>${modalities.map((m) => html`<option value="${m}">${m.replace('-', ' ')}</option>`)}</select></label>
+        <select id="modality" class="field"><option value="">All</option>${modalities.map((m) => html`<option value="${m}">${modalityName(m)}</option>`)}</select></label>
       <label class="grid gap-1 text-sm"><span>Ratings from</span>
         <select id="source" class="field"><option value="all">Best available</option><option value="published">Reviewed only</option><option value="automated">Automated only</option></select></label>
       <label class="grid gap-1 text-sm"><span>Show</span>
-        <select id="value" class="field"><option value="">All benchmarks</option><option value="best">Best value</option></select></label>
-      <label class="grid gap-1 text-sm sm:hidden"><span>Sort by</span>
-        <select id="sort" class="field"><option value="touchstone">Touchstone score</option><option value="run">Run cost</option><option value="name">Name</option><option value="domain">Domain</option>${encoded.map((s) => html`<option value="${s.id}">${s.short}</option>`)}</select></label>
+        <select id="value" class="field"><option value="">All benchmarks</option><option value="best">Best value only</option></select></label>
+      <label class="rt-sortsel grid gap-1 text-sm"><span>Sort by</span>
+        <select id="sort" class="field">${columns().map((c) => html`<option value="${c.key}">${c.label}</option>`)}<option value="domain">Domain</option></select></label>
     </div>
     <p id="count" class="t-caption mt-4" aria-live="polite"></p>
     <div id="results" class="mt-2"></div>
-    <p id="grid-help" class="t-caption mt-4"></p>
+    <div id="tray" class="rt-tray" role="region" aria-label="Compare benchmarks" hidden></div>
   `.s;
-  for (const id of ['domain', 'modality', 'source', 'value', 'sort'] as const) (document.getElementById(id) as HTMLSelectElement).value = state[id];
+  syncControls();
   const on = (id: string, ev: string, fn: (e: Event) => void) => document.getElementById(id)!.addEventListener(ev, fn);
-  on('q', 'input', (e) => { state.q = (e.target as HTMLInputElement).value; state.focus = { row: 1, col: 0 }; draw(false); });
+  on('q', 'input', (e) => { state.q = (e.target as HTMLInputElement).value; draw(); });
   for (const id of ['domain', 'modality', 'source', 'value'] as const)
-    on(id, 'change', (e) => { state[id] = (e.target as HTMLSelectElement).value; state.focus = { row: 1, col: 0 }; draw(false); });
+    on(id, 'change', (e) => { state[id] = (e.target as HTMLSelectElement).value; draw(); });
   on('sort', 'change', (e) => {
     state.sort = (e.target as HTMLSelectElement).value;
     state.dir = ascFirst(state.sort) ? 1 : -1;
-    draw(false);
+    draw();
   });
-  draw(false);
+  on('rf-toggle', 'click', () => {
+    const open = document.getElementById('rf-panel')!.classList.toggle('is-open');
+    document.getElementById('rf-toggle')!.setAttribute('aria-expanded', String(open));
+  });
+  draw();
 }
-wide.addEventListener('change', () => { if (document.getElementById('results')) draw(false); });
+wide.addEventListener('change', () => { if (document.getElementById('results')) draw(); });
 
-const columns = () => [
-  { key: 'name', label: 'Benchmark' },
-  { key: 'touchstone', label: 'Touchstone' },
-  { key: 'run', label: 'Run cost' },
-  { key: 'domain', label: 'Domain' },
-  ...encoded.map((s) => ({ key: s.id, label: s.short })),
-];
+function syncControls() {
+  for (const id of ['domain', 'modality', 'source', 'value', 'sort'] as const) (document.getElementById(id) as HTMLSelectElement).value = state[id];
+  (document.getElementById('q') as HTMLInputElement).value = state.q;
+}
 
-function draw(focusCell: boolean) {
+function draw() {
   const rows = filteredBenchmarks();
-  document.getElementById('count')!.textContent = `${rows.length} benchmark${rows.length === 1 ? '' : 's'} shown`;
-  const box = document.getElementById('results')!;
-  const help = document.getElementById('grid-help')!;
-  const legend = `<span aria-hidden="true">≠</span> marks a published figure that differs from Touchstone's recomputation from the same verdicts. “draft” is an automated assessment not yet reviewed.`;
-  if (!wide.matches) {
-    box.innerHTML = html`<ul class="cards" role="list">${rows.map(cardView)}</ul>`.s;
-    help.innerHTML = `Use the up and down arrow keys to move between benchmarks and Enter to open one. ${legend}`;
-    return;
-  }
-  help.innerHTML = `Use the arrow keys to move through the table and Enter to open a benchmark. ${legend}`;
-  if (!box.querySelector('table'))
-    box.innerHTML = `<div class="table-wrap"><table class="grid-table" role="grid" aria-labelledby="ratings-caption" aria-describedby="grid-help"><caption id="ratings-caption" class="sr-only">Benchmarks by standard</caption><thead></thead><tbody></tbody></table></div>`;
-  const table = box.querySelector('table')!;
-  const cols = columns();
-  table.querySelector('thead')!.innerHTML = html`<tr role="row">${cols.map((c, i) => html`
-    <th role="columnheader" scope="col" data-col="${i}" tabindex="-1" aria-sort="${state.sort === c.key ? (state.dir > 0 ? 'ascending' : 'descending') : 'none'}">
-      <button type="button" class="sort-btn" tabindex="-1" data-sort="${c.key}">${c.label}</button></th>`)}</tr>`.s;
-  table.querySelector('tbody')!.innerHTML = rows.map((b) => html`
-    <tr role="row" data-bench="${b.id}" data-prefetch="benchmarks/${b.id}.json">
-      <th role="rowheader" scope="row" tabindex="-1" class="font-medium text-heading"><a href="#/benchmark/${b.id}" tabindex="-1" class="hover:text-brand">${b.name}</a>
-        <div class="t-caption font-normal">${b.concept}</div></th>
-      ${touchstoneCell(b)}${runCell(b)}
-      <td role="gridcell" tabindex="-1"><span class="chip">${b.domain}</span></td>
-      ${encoded.map((s) => cell(b, s))}
-    </tr>`.s).join('');
-  state.focus.row = Math.min(state.focus.row, rows.length);
-  setRoving(focusCell);
+  document.getElementById('count')!.textContent = `${rows.length} of ${benchmarks.size} benchmarks shown`;
+  document.getElementById('results')!.innerHTML = (!rows.length ? emptyView() : wide.matches ? tableView(rows) : html`<ul class="cards" role="list">${rows.map(cardView)}</ul>`).s;
+  syncUi();
 }
+
+/** Everything that mirrors state outside the results: filter count, compare boxes and tray, and the URL. */
+function syncUi() {
+  const n = activeCount();
+  document.getElementById('rf-toggle')!.textContent = `Filter and sort${n ? ` (${n} active)` : ''}`;
+  main.querySelectorAll<HTMLInputElement>('input[data-cmp]').forEach((i) => {
+    i.checked = state.compare.includes(i.dataset.cmp!);
+    i.disabled = !i.checked && state.compare.length >= MAX_COMPARE;
+  });
+  const tray = document.getElementById('tray')!;
+  const c = state.compare.length;
+  tray.hidden = !c;
+  tray.innerHTML = c ? html`<span><strong>${c}</strong> selected <span class="t-caption">(2 to ${MAX_COMPARE})</span></span>
+    ${c >= 2 ? html`<a class="btn btn-primary" href="#/compare/${state.compare.join(',')}">Compare ${c}</a>` : html`<span class="t-caption">Select one more to compare</span>`}
+    <button type="button" class="btn-quiet" data-clear-compare>Clear</button>`.s : '';
+  const h = encodeView(state);
+  if (location.hash !== h) history.replaceState(null, '', h); // filters live in the URL without adding history entries
+}
+
+function emptyView(): Raw {
+  const names: Record<string, string> = { safety: 'Safety', capability: 'Capability', published: 'Reviewed only', automated: 'Automated only' };
+  const active = [state.q && `Search “${state.q}”`, state.domain && `Domain: ${names[state.domain]}`, state.modality && `Type: ${modalityName(state.modality)}`,
+    state.source !== 'all' && `Ratings from: ${names[state.source]}`, state.value && 'Best value only'].filter(Boolean);
+  return html`<div class="rt-empty" role="status"><p class="t-sub">No benchmarks match.</p>
+    <ul class="mt-2 text-sm" role="list">${active.map((a) => html`<li>${a}</li>`)}</ul>
+    <p class="mt-4"><button type="button" class="btn btn-primary" data-clear-filters>Clear filters</button></p></div>`;
+}
+
+function tableView(rows: B[]): Raw {
+  const cols = columns();
+  const stds = ratedStds();
+  const label = cols.find((c) => c.key === state.sort)?.label ?? state.sort;
+  return html`<table class="rt"><caption class="sr-only">Benchmarks, sorted by ${label}. Tick two to ${MAX_COMPARE} to compare them.</caption>
+    <thead><tr><th scope="col" class="rt-sel"><span class="sr-only">Compare</span></th>${cols.map((c) => html`
+      <th scope="col" aria-sort="${state.sort === c.key ? (state.dir > 0 ? 'ascending' : 'descending') : 'none'}">
+        <button type="button" class="sort-btn" data-sort="${c.key}" title="${c.tip}">${c.label}<span class="sort-arrow" aria-hidden="true"></span></button></th>`)}</tr></thead>
+    <tbody>${rows.map((b) => html`<tr data-bench="${b.id}" data-prefetch="benchmarks/${b.id}.json">
+      <td class="rt-sel">${cmpBox(b)}</td>
+      <th scope="row" class="rt-name"><a class="rt-link" href="#/benchmark/${b.id}">${b.name}</a>
+        <div class="rt-sub"><span class="chip">${b.domain}</span><span class="rt-concept" title="${b.concept}">${modalityName(b.modality)} · ${b.concept}</span></div></th>
+      <td class="rt-grade">${touchstoneView(b.touchstone.rigor)}</td><td class="rt-run">${runView(b)}</td>
+      ${stds.map((s) => cell(b, s))}</tr>`)}</tbody></table>`;
+}
+
+const cmpBox = (b: B) => html`<label class="rt-cmp"><input type="checkbox" data-cmp="${b.id}"><span class="sr-only">Compare ${b.name}</span></label>`;
 
 const apiLabel = (r: RunProfile) => (r.apiTier === 'none' ? 'No API cost' : r.apiTier);
 const noData = (text: string) => html`<span class="text-sm text-muted" aria-hidden="true">—</span><span class="sr-only">${text}</span>`;
-/** Grade badge, score and confidence as text: "C 61 · high confidence". */
+/** Grade, score and how many standards it rests on. Confidence is explained once in the legend, not per row. */
 function touchstoneView(r: Rigor): Raw {
   if (r.score === null || !r.grade) return noData('No published ratings yet');
-  return html`<span class="ts-grade ts-grade-${r.grade.toLowerCase()}" title="Touchstone grade ${r.grade}">${r.grade}</span> <span class="tabular-nums">${r.score}</span> <span class="text-muted">· ${r.confidence} confidence</span>`;
+  return html`<span class="rt-nowrap"><span class="ts-grade ts-grade-${r.grade.toLowerCase()}" title="Touchstone grade ${r.grade}">${r.grade}</span> <span class="tabular-nums">${r.score}</span></span><span class="rt-count">${r.n} of ${encoded.length} standards</span>`;
 }
-/** API tier and local tier: "$$ · Standard". */
+/** API band and local setup: "$$ / Standard setup". */
 function runView(b: B): Raw {
   const r = b.touchstone.run;
   if (!r) return noData('Run-cost data not yet collected');
-  return html`<span>${apiLabel(r)}</span> <span class="text-muted">· ${r.localTier}</span>${b.touchstone.onFrontier ? html` <span class="pill">best value</span>` : ''}`;
+  return html`<span class="rt-nowrap" title="${r.tokens.toLocaleString('en-US')} tokens per full run"><span aria-hidden="true">${apiLabel(r)}</span><span class="sr-only">${r.apiTier === 'none' ? 'No API cost' : `API cost band ${r.apiTier.length} of 5`}</span></span>${b.touchstone.onFrontier ? html` <span class="pill rt-best" title="${BEST_VALUE}">best value</span>` : ''}
+    <span class="rt-count">${r.localTier} setup</span>`;
 }
-const touchstoneCell = (b: B) => {
-  const r = b.touchstone.rigor;
-  return html`<td role="gridcell" tabindex="-1" aria-label="Touchstone: ${r.score === null ? 'no published ratings' : `grade ${r.grade}, score ${r.score}, ${r.confidence} confidence`}"><span class="text-sm" aria-hidden="true">${touchstoneView(r)}</span></td>`;
-};
-const runCell = (b: B) => {
-  const r = b.touchstone.run;
-  return html`<td role="gridcell" tabindex="-1" aria-label="Run cost: ${r ? `${r.apiTier === 'none' ? 'no API cost' : `API tier ${r.apiTier.length} of 5`}, local tier ${r.localTier}${b.touchstone.onFrontier ? ', best value' : ''}` : 'not yet collected'}"><span class="text-sm" aria-hidden="true">${runView(b)}</span></td>`;
-};
 
 function cell(b: B, s: IStd): Raw {
   const p = primary(b.id, s.id, state.source);
-  if (!p) {
-    const why = inScope(s, b) ? 'Not rated yet' : 'Out of scope';
-    return html`<td role="gridcell" tabindex="-1" data-std="${s.id}"><span class="text-sm text-muted">—</span><span class="sr-only">${why}</span></td>`;
-  }
-  return html`<td role="gridcell" tabindex="-1" data-std="${s.id}" aria-label="${s.short}: ${p.label}${p.status === 'draft' ? ', automated draft' : ''}${p.discrepancies ? ', published figure differs' : ''}">
-    <div class="grid gap-1.5" aria-hidden="true">
-      <span class="flex flex-wrap items-center gap-1.5 text-sm">${labelView(p.label)}${chips(p)}</span>
-      ${bar(p.pct)}
-    </div></td>`;
+  if (p) return html`<td data-std="${s.id}"><span class="flex flex-wrap items-center gap-1.5 text-sm">${ratingLabel(p.label)}${chips(p)}</span>${bar(p.pct)}</td>`;
+  return inScope(s, b)
+    ? html`<td data-std="${s.id}"><span class="text-sm text-muted" aria-hidden="true">—</span><span class="sr-only">Not rated yet</span></td>`
+    : html`<td data-std="${s.id}" class="rt-na"><span class="sr-only">Does not apply to this type of benchmark</span></td>`;
 }
 
-/** Phones: one card per benchmark; only standards with a rating get a line. */
+/** Narrow screens: one card per benchmark; only standards with a rating get a line. */
 function cardView(b: B): Raw {
-  const rated = encoded.map((s) => [s, primary(b.id, s.id, state.source)] as const).filter((x): x is [IStd, Summary] => !!x[1]);
-  const missing = encoded.length - rated.length;
-  return html`<li><a class="bcard" href="#/benchmark/${b.id}" data-bench="${b.id}" data-prefetch="benchmarks/${b.id}.json">
-    <div class="flex items-start justify-between gap-3"><span class="t-sub">${b.name}</span><span class="chip">${b.domain}</span></div>
-    <div class="t-caption mt-1">${b.concept}</div>
-    <div class="mt-3 grid gap-1 text-sm"><div><span class="text-muted">Touchstone</span> ${touchstoneView(b.touchstone.rigor)}</div>
+  const rated = ratedStds().map((s) => [s, primary(b.id, s.id, state.source)] as const).filter((x): x is [IStd, Summary] => !!x[1]);
+  const missing = ratedStds().length - rated.length;
+  return html`<li class="bcard" data-bench="${b.id}" data-prefetch="benchmarks/${b.id}.json">
+    <div class="flex items-start justify-between gap-3"><a class="t-sub rt-link" href="#/benchmark/${b.id}">${b.name}</a><span class="chip">${b.domain}</span></div>
+    <div class="t-caption mt-1">${modalityName(b.modality)} · ${b.concept}</div>
+    <div class="mt-3 grid gap-1 text-sm"><div><span class="text-muted">Touchstone grade</span> ${touchstoneView(b.touchstone.rigor)}</div>
       <div><span class="text-muted">Run cost</span> ${runView(b)}</div></div>
     ${rated.length ? html`<div class="mt-4 grid gap-3">${rated.map(([s, p]) => html`<div>
       <div class="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-sm"><span class="text-muted">${s.short}</span>
-        <span class="flex flex-wrap items-center gap-1.5">${labelView(p.label)}${chips(p)}</span></div>
+        <span class="flex flex-wrap items-center gap-1.5">${ratingLabel(p.label)}${chips(p)}</span></div>
       <div class="mt-1.5">${bar(p.pct)}</div></div>`)}</div>` : ''}
     ${missing ? html`<div class="t-caption mt-3">+${missing} not rated</div>` : ''}
-  </a></li>`;
+    <label class="rt-cmp rt-cmp-card mt-3"><input type="checkbox" data-cmp="${b.id}"> Compare</label>
+  </li>`;
 }
 
-/** Roving tabindex: exactly one cell in the grid is tabbable; arrow keys move it. */
-function gridCells(): HTMLElement[][] {
-  const table = main.querySelector('table');
-  if (!table) return [];
-  return [...table.querySelectorAll('tr')].map((tr) => [...tr.querySelectorAll<HTMLElement>('th, td')]);
-}
-function setRoving(focus: boolean) {
-  const cells = gridCells();
-  cells.flat().forEach((c) => (c.tabIndex = -1));
-  if (!cells.length) return;
-  const row = Math.max(0, Math.min(state.focus.row, cells.length - 1));
-  const col = Math.max(0, Math.min(state.focus.col, cells[row]!.length - 1));
-  state.focus = { row, col };
-  const target = cells[row]![col]!;
-  target.tabIndex = 0;
-  if (focus) target.focus();
-}
-function onGridKey(e: KeyboardEvent) {
-  const cell = (e.target as HTMLElement).closest('th, td') as HTMLElement | null;
-  if (!cell || !main.querySelector('table')?.contains(cell)) return;
-  const cells = gridCells();
-  const rows = cells.length;
-  let { row, col } = state.focus;
-  const last = (r: number) => cells[r]!.length - 1;
-  switch (e.key) {
-    case 'ArrowRight': col = Math.min(col + 1, last(row)); break;
-    case 'ArrowLeft': col = Math.max(col - 1, 0); break;
-    case 'ArrowDown': row = Math.min(row + 1, rows - 1); break;
-    case 'ArrowUp': row = Math.max(row - 1, 0); break;
-    case 'PageDown': row = Math.min(row + 10, rows - 1); break;
-    case 'PageUp': row = Math.max(row - 10, 0); break;
-    case 'Home': col = 0; if (e.ctrlKey) row = 0; break;
-    case 'End': col = last(row); if (e.ctrlKey) row = rows - 1; break;
-    case 'Enter':
-    case ' ': {
-      e.preventDefault();
-      if (row === 0) return sortBy(cell.querySelector<HTMLElement>('[data-sort]')!.dataset.sort!);
-      return openFromRow(cell);
-    }
-    default: return;
-  }
-  e.preventDefault();
-  state.focus = { row, col };
-  setRoving(true);
-}
-/** Card list: a list of links. Up/Down move between cards; Enter is the link's own. */
-function onCardKey(e: KeyboardEvent) {
-  const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('.bcard');
-  if (!a || (e.key !== 'ArrowDown' && e.key !== 'ArrowUp')) return;
-  const all = [...main.querySelectorAll<HTMLAnchorElement>('.bcard')];
-  const next = all[all.indexOf(a) + (e.key === 'ArrowDown' ? 1 : -1)];
-  e.preventDefault();
-  next?.focus();
-}
 function sortBy(key: string) {
   state.dir = state.sort === key ? -state.dir : ascFirst(key) ? 1 : -1;
   state.sort = key;
-  draw(true);
-  const col = columns().find((c) => c.key === key)!;
-  announce(`Sorted by ${col.label}, ${state.dir > 0 ? 'ascending' : 'descending'}`);
+  syncControls();
+  draw();
+  document.querySelector<HTMLElement>(`[data-sort="${CSS.escape(key)}"]`)?.focus();
+  announce(`Sorted by ${columns().find((c) => c.key === key)?.label ?? key}, ${state.dir > 0 ? 'ascending' : 'descending'}`);
 }
-function openFromRow(cell: HTMLElement) {
-  const tr = cell.closest('tr[data-bench]') as HTMLElement | null;
-  if (!tr) return;
-  state.lastBench = tr.dataset.bench!;
-  const std = cell.dataset.std;
-  location.hash = `#/benchmark/${tr.dataset.bench}${std ? `/${std}` : ''}`;
+
+// ---------- Compare: #/compare/a,b[,c,d] ----------
+const usd = (x: number) => `$${x.toLocaleString('en-US', { maximumSignificantDigits: 2 })}`;
+function renderCompare(ids: string[]) {
+  state.compare = [...new Set(ids)].filter((id) => benchmarks.has(id)).slice(0, MAX_COMPARE);
+  const back = encodeView(state);
+  if (state.compare.length < 2) {
+    main.innerHTML = html`<h1 class="t-page" tabindex="-1">Compare benchmarks</h1>
+      <p class="mt-4">Pick at least two benchmarks to compare.</p><p class="mt-4"><a class="btn btn-primary" href="${back}">Choose benchmarks</a></p>`.s;
+    return;
+  }
+  const bs = state.compare.map((id) => benchmarks.get(id)!);
+  const stds = encoded.filter((s) => bs.some((b) => primary(b.id, s.id, 'all')));
+  const row = (head: Raw | string, f: (b: B) => Raw | string) => html`<tr><th scope="row">${head}</th>${bs.map((b) => html`<td>${f(b)}</td>`)}</tr>`;
+  main.innerHTML = html`
+    <p class="text-sm"><a class="link" href="${back}">Ratings</a> <span aria-hidden="true">/</span> <span class="sr-only">current page:</span> Compare</p>
+    <h1 class="t-page mt-3" tabindex="-1">Compare benchmarks</h1>
+    <p class="t-caption mt-3">Each standard is scored in its own units, so read down a row, not across.</p>
+    <div class="rt-scroll mt-6"><table class="rt rt-compare"><caption class="sr-only">Side-by-side comparison of ${bs.map((b) => b.name).join(', ')}</caption>
+      <thead><tr><th scope="col"><span class="sr-only">Measure</span></th>${bs.map((b) => html`<th scope="col"><a class="rt-link" href="#/benchmark/${b.id}">${b.name}</a>
+        <div class="mt-1"><a class="link text-sm" href="#/compare/${state.compare.filter((x) => x !== b.id).join(',')}">Remove<span class="sr-only"> ${b.name}</span></a></div></th>`)}</tr></thead>
+      <tbody>
+        ${row('Touchstone grade', (b) => touchstoneView(b.touchstone.rigor))}
+        ${row('Score (0 to 100)', (b) => String(b.touchstone.rigor.score ?? '—'))}
+        ${row('Run cost', (b) => { const r = b.touchstone.run; return r ? html`${apiLabel(r)}<span class="rt-count">${r.tokens.toLocaleString('en-US')} tokens${r.apiTier === 'none' ? '' : `, about ${usd(r.costUsd[0])} to ${usd(r.costUsd[1])}`}</span><span class="rt-count">${r.localTier} local setup</span>${b.touchstone.onFrontier ? html`<span class="pill rt-best" title="${BEST_VALUE}">best value</span>` : ''}` : 'Not yet collected'; })}
+        ${row('Type', (b) => html`<span class="chip">${b.domain}</span> ${modalityName(b.modality)}`)}
+        ${stds.map((s) => row(html`<span title="${stdTip(s)}">${s.short}</span>`, (b) => {
+          const p = primary(b.id, s.id, 'all');
+          return p ? html`<span class="flex flex-wrap items-center gap-1.5">${ratingLabel(p.label)}${chips(p)}</span>${bar(p.pct)}` : inScope(s, b) ? 'Not rated yet' : html`<span class="text-muted">Does not apply</span>`;
+        }))}
+      </tbody></table></div>`.s;
 }
-main.addEventListener('keydown', (e) => {
-  if (main.querySelector('table[role="grid"]')) onGridKey(e);
-  else if (main.querySelector('.cards')) onCardKey(e);
+
+main.addEventListener('change', (e) => {
+  const t = e.target as HTMLInputElement;
+  if (!t.matches('input[data-cmp]')) return;
+  const id = t.dataset.cmp!;
+  state.compare = t.checked ? [...state.compare.filter((x) => x !== id), id].slice(0, MAX_COMPARE) : state.compare.filter((x) => x !== id);
+  syncUi();
+  announce(`${state.compare.length} selected for comparison`);
 });
 main.addEventListener('click', (e) => {
   const t = e.target as HTMLElement;
@@ -317,16 +343,11 @@ main.addEventListener('click', (e) => {
   const f = t.closest<HTMLButtonElement>('[data-f]');
   if (f) return setFilter(f);
   const sortBtn = t.closest<HTMLElement>('[data-sort]');
-  if (sortBtn) { const cells = gridCells(); state.focus = { row: 0, col: cells[0]!.findIndex((c) => c.contains(sortBtn)) }; return sortBy(sortBtn.dataset.sort!); }
-  const card = t.closest<HTMLElement>('.bcard');
-  if (card) { state.lastBench = card.dataset.bench!; return; }
-  const cell = t.closest<HTMLElement>('tbody th, tbody td');
-  if (cell && main.querySelector('table[role="grid"]')?.contains(cell)) {
-    const cells = gridCells();
-    const row = cells.findIndex((r) => r.includes(cell));
-    state.focus = { row, col: cells[row]!.indexOf(cell) };
-    if (!t.closest('a')) { e.preventDefault(); openFromRow(cell); } else state.lastBench = (cell.closest('tr') as HTMLElement).dataset.bench!;
-  }
+  if (sortBtn) return sortBy(sortBtn.dataset.sort!);
+  if (t.closest('[data-clear-filters]')) { Object.assign(state, defaultView()); syncControls(); draw(); document.getElementById('q')!.focus(); return; }
+  if (t.closest('[data-clear-compare]')) { state.compare = []; syncUi(); announce('Comparison selection cleared'); return; }
+  const link = t.closest<HTMLElement>('[data-bench] a[href^="#/benchmark/"]');
+  if (link) state.lastBench = link.closest<HTMLElement>('[data-bench]')!.dataset.bench!;
 });
 // A benchmark's JSON starts loading as soon as its row or card is hovered or focused.
 const warm = (e: Event) => { const el = (e.target as HTMLElement).closest<HTMLElement>('[data-prefetch]'); if (el) prefetch(el.dataset.prefetch!); };
@@ -652,8 +673,8 @@ let seq = 0;
 let shown = ''; // what the page currently shows, so a link to a section of the same benchmark just scrolls
 async function route() {
   const my = ++seq;
-  const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
-  const [view, id, sub] = parts;
+  const [path = '', qs = ''] = location.hash.replace(/^#\/?/, '').split(/\?(.*)/s);
+  const [view, id, sub] = path.split('/').filter(Boolean);
   let target: HTMLElement | null = null;
   let nav = 'ratings';
   if (view === 'benchmark' && id && shown === `benchmark/${id}`) {
@@ -665,7 +686,12 @@ async function route() {
   const dataView = (view === 'benchmark' && id && benchmarks.has(id)) || (view === 'standard' && id && standards.has(id));
   if (dataView) { main.setAttribute('aria-busy', 'true'); main.innerHTML = skeleton(); }
   try {
-    if (!view || view === 'ratings') { renderRatings(); shown = 'ratings'; }
+    if (!view || view === 'ratings') {
+      // A hash with a query is the whole state (shared link or back button); a bare #/ keeps what the reader had set.
+      if (qs) Object.assign(state, decodeView(qs, { sorts: [...columns().map((c) => c.key), 'domain'], modalities: [...new Set([...benchmarks.values()].map((b) => b.modality))], benchmarks: new Set(benchmarks.keys()) }));
+      renderRatings(); shown = 'ratings';
+    }
+    else if (view === 'compare') { renderCompare((id ?? '').split(',')); shown = 'compare'; }
     else if (view === 'benchmark' && id) {
       const b = benchmarks.get(id);
       if (!b) { renderNotFound(); shown = ''; }
@@ -702,14 +728,8 @@ async function route() {
     if (wantSearch) { wantSearch = false; document.getElementById('q')!.focus(); return; }
     // Returning to the list puts focus back on the row or card the reader left from.
     if (state.lastBench) {
-      const name = benchmarks.get(state.lastBench)?.name;
-      if (wide.matches) {
-        const row = gridCells().findIndex((r) => (r[0]?.closest('tr') as HTMLElement | null)?.dataset.bench === state.lastBench);
-        if (row > 0) { state.focus = { row, col: 0 }; setRoving(true); announce(`Ratings, at ${name}`); return; }
-      } else {
-        const card = main.querySelector<HTMLElement>(`.bcard[data-bench="${CSS.escape(state.lastBench)}"]`);
-        if (card) { card.focus(); announce(`Ratings, at ${name}`); return; }
-      }
+      const link = main.querySelector<HTMLElement>(`[data-bench="${CSS.escape(state.lastBench)}"] a[href^="#/benchmark/"]`);
+      if (link) { link.focus(); announce(`Ratings, at ${benchmarks.get(state.lastBench)?.name}`); return; }
     }
   }
   (target ?? h1).focus();
@@ -726,7 +746,7 @@ document.addEventListener('keydown', (e) => {
   const t = e.target as HTMLElement;
   const typing = t.closest('input, select, textarea, [contenteditable]');
   if (e.metaKey || e.altKey || (e.ctrlKey && !['Home', 'End'].includes(e.key))) return;
-  if (e.key === 'Escape' && !dialog.open && location.hash.startsWith('#/benchmark/')) { e.preventDefault(); location.hash = '#/'; return; }
+  if (e.key === 'Escape' && !dialog.open && /^#\/(benchmark|compare)\//.test(location.hash)) { e.preventDefault(); location.hash = '#/'; return; }
   if (typing || dialog.open) return;
   if (e.key === '/') { e.preventDefault(); const q = document.getElementById('q'); if (q) q.focus(); else if (data) { wantSearch = true; if (location.hash === '#/' || location.hash === '') route(); else location.hash = '#/'; } return; }
   if (e.key === '?') { e.preventDefault(); dialog.showModal(); return; }
@@ -740,11 +760,11 @@ document.addEventListener('keydown', (e) => {
 
 // ---------- Theme ----------
 const themeBtn = document.getElementById('theme-toggle')!;
-const currentTheme = () => document.documentElement.dataset.theme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-const labelTheme = () => { const t = currentTheme(); themeBtn.textContent = t === 'dark' ? 'Light theme' : 'Dark theme'; };
+const currentTheme = () => document.documentElement.dataset.pactTheme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+const labelTheme = () => { const t = currentTheme(); themeBtn.removeAttribute('aria-label'); /* visible text is the accessible name */ themeBtn.textContent = t === 'dark' ? 'Light theme' : 'Dark theme'; };
 themeBtn.addEventListener('click', () => {
   const next = currentTheme() === 'dark' ? 'light' : 'dark';
-  document.documentElement.dataset.theme = next;
+  document.documentElement.dataset.pactTheme = next;
   try { localStorage.setItem('theme', next); } catch {}
   labelTheme();
 });

@@ -1,0 +1,59 @@
+/* Ratings table, cards, filters and compare view. Consumes the shared tokens; defines only rt-* classes. */
+.rt-legend { max-width: 52rem; font-size: 0.875rem; color: var(--muted); }
+.rt-legend summary { cursor: pointer; min-height: 1.5rem; }
+.rt-key { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1rem; margin-top: 0.5rem; }
+.rt-key dt { font-weight: 600; color: var(--heading, var(--text)); }
+
+/* Filters: always visible from 52rem; behind a toggle below it. Controls are at least 44px tall. */
+.rt-toggle { min-height: 44px; padding-inline: 1rem; }
+.rt-panel { display: none; gap: 0.75rem; }
+.rt-panel.is-open { display: grid; }
+.rt-panel .field, .rt-cmp, .sort-btn { min-height: 44px; }
+.rt-panel .field { width: 100%; border-color: var(--control-line, var(--line)); }
+@media (min-width: 52rem) {
+  .rt-toggle, .rt-sortsel { display: none; }
+  .rt-panel { display: flex; flex-wrap: wrap; align-items: end; }
+  .rt-panel .field { width: auto; min-height: 40px; }
+  #q { width: 14rem; }
+}
+
+/* Plain table: header sticks to the viewport top (no scroll wrapper, so sticky works). */
+.rt { width: 100%; border-collapse: separate; border-spacing: 0; font-variant-numeric: tabular-nums; }
+.rt th, .rt td { padding: 0.55rem 0.8rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+.rt thead th { position: sticky; top: 0; z-index: 2; background: var(--bg); border-bottom: 2px solid var(--control-line, var(--line));
+  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.rt tbody tr:hover > * { background: var(--hover); }
+.rt tbody th { font-weight: 400; }
+.rt .rt-sel { width: 3rem; padding-inline: 0.25rem; text-align: center; }
+.rt-name { width: 34%; max-width: 22rem; }
+.rt-link { font-weight: 600; color: var(--heading, var(--text)); text-decoration: none; }
+.rt-link:hover { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
+.rt-sub { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.2rem; min-width: 0; }
+.rt-concept { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.8125rem; color: var(--muted); }
+.rt-grade, .rt-run { white-space: nowrap; }
+.rt-nowrap { white-space: nowrap; }
+.rt-count { display: block; font-size: 0.8125rem; color: var(--muted); }
+.rt-best { line-height: 1.3rem; margin-left: 0.25rem; }
+.rt-grade .ts-grade { font-size: 1.125rem; }
+.rt-na { background: repeating-linear-gradient(135deg, transparent 0 6px, color-mix(in srgb, var(--line) 55%, transparent) 6px 7px); }
+
+/* Sort controls: a real button in each header, with a visible arrow driven by aria-sort. */
+.sort-btn { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.sort-btn:hover { color: var(--brand); }
+.sort-arrow::after { content: "↕"; color: var(--faint, var(--muted)); }
+th[aria-sort="ascending"] .sort-arrow::after { content: "▲"; color: var(--brand); }
+th[aria-sort="descending"] .sort-arrow::after { content: "▼"; color: var(--brand); }
+th[aria-sort="ascending"], th[aria-sort="descending"] { color: var(--heading, var(--text)); }
+
+/* Compare: a checkbox per row or card, a sticky tray, and a side-by-side view. */
+.rt-cmp { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; gap: 0.5rem; cursor: pointer; }
+.rt-cmp input { width: 1.25rem; height: 1.25rem; accent-color: var(--brand); }
+.rt-cmp-card { justify-content: flex-start; font-size: 0.875rem; }
+.rt-tray { position: sticky; bottom: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 1rem; padding: 0.75rem 1rem;
+  background: var(--surface); border: 1px solid var(--control-line, var(--line)); }
+.rt-tray[hidden] { display: none; }
+.rt-scroll { overflow-x: auto; }
+.rt-compare { min-width: 36rem; }
+.rt-compare th[scope="row"] { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--muted); white-space: nowrap; width: 11rem; }
+.rt-compare td { vertical-align: top; }
+.rt-empty { border: 1px dashed var(--control-line, var(--line)); padding: 2rem 1.5rem; }
