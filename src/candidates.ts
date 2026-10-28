@@ -74,10 +74,10 @@ export type Verdict = z.infer<typeof Verdict>;
 /** An item is filed only when the model says it is relevant, that this is the item's main contribution, and is not unsure. */
 export const files = (v: Verdict | null): v is Verdict & { kind: Kind } => !!v && v.relevant && v.primary_contribution && v.confidence !== 'low' && v.kind !== 'other';
 /**
- * What Touchstone would rate: a standard, or a benchmark of general-purpose LLMs/agents whose abstract says artifacts are released.
+ * What Touchstone would rate: a standard, or a benchmark of general-purpose LLMs/agents. Code/data release is only a tag (abstracts often omit it).
  * `in_scope` is already forced false by triageItem when the evidence quote is not in the abstract.
  */
-export const inScope = (v: Verdict) => v.kind === 'standard' || (v.in_scope && v.releases_artifacts);
+export const inScope = (v: Verdict) => v.kind === 'standard' || v.in_scope;
 
 const OPEN = '<<<UNTRUSTED_DATA';
 const CLOSE = 'UNTRUSTED_DATA>>>';
@@ -166,7 +166,7 @@ export const issueFor = (i: Item, v: Verdict & { kind: Kind }) => ({
 
 const DIGEST_PREFIX = (date: string) => `[arXiv digest] ${date}:`;
 
-export interface DigestEntry { item: Item; kind: Kind; reason: string; confidence: string; inScope: boolean; evidence: string }
+export interface DigestEntry { item: Item; kind: Kind; reason: string; confidence: string; inScope: boolean; artifacts: boolean; evidence: string }
 
 /** One issue for a day's arXiv candidates: "In scope" (standards first, with evidence quotes), then the other benchmarks collapsed. */
 export function digestFor(date: string, cs: DigestEntry[]) {
@@ -174,14 +174,14 @@ export function digestFor(date: string, cs: DigestEntry[]) {
   const inS = [...cs.filter((c) => c.inScope && c.kind === 'standard'), ...cs.filter((c) => c.inScope && c.kind === 'benchmark')];
   const other = cs.filter((c) => !c.inScope);
   const full = (c: DigestEntry) => [
-    `- ${link(c)} | arXiv ${sanitize(c.item.arxivId ?? '', 40)} | ${c.kind} | ${c.confidence} | ${sanitize(c.reason, 300)}`,
+    `- ${link(c)} | arXiv ${sanitize(c.item.arxivId ?? '', 40)} | ${c.kind} | ${c.confidence}${c.kind === 'benchmark' ? ` | ${c.artifacts ? 'code/data: stated' : 'code/data: not stated in abstract'}` : ''} | ${sanitize(c.reason, 300)}`,
     ...(c.evidence ? [`  > ${sanitize(c.evidence, 300)}`] : []),
   ];
   return {
     title: `${DIGEST_PREFIX(date)} ${inS.length} in scope (+${other.length} other)`,
     label: LABELS.benchmark.name,
     body: [
-      'Papers submitted to arXiv in the last 72 hours that the triage model flagged. "In scope" = a standard, or a benchmark of general-purpose LLMs or agents that releases code, data or a leaderboard, with a quote from the abstract. Line format: title | arXiv id | kind | confidence | reason.',
+      'Papers submitted to arXiv in the last 72 hours that the triage model flagged. "In scope" = a standard, or a benchmark of general-purpose LLMs or agents, with a quote from the abstract; benchmarks are tagged "code/data: stated" or "not stated in abstract". Line format: title | arXiv id | kind | confidence | code/data tag | reason.',
       '', '### In scope', '', ...(inS.length ? inS.flatMap(full) : ['None today.']), '',
       ...(other.length ? [`<details><summary>Other new benchmarks (${other.length})</summary>`, '', ...other.map((c) => `- ${link(c)}: ${sanitize(c.reason, 200)}`), '', '</details>', ''] : []),
       'Filed automatically by the Touchstone watchers. Review before adding anything to the corpus.',
@@ -239,7 +239,7 @@ export interface RunOptions {
   fetchImpl?: typeof fetch;
   llmFetch?: typeof fetch;
 }
-export interface Candidate { item: Item; kind: Kind; reason: string; confidence: string; inScope: boolean; evidence: string; issue?: 'created' | 'duplicate' | 'dry-run' | 'digest' }
+export interface Candidate { item: Item; kind: Kind; reason: string; confidence: string; inScope: boolean; artifacts: boolean; evidence: string; issue?: 'created' | 'duplicate' | 'dry-run' | 'digest' }
 export interface Decision { item: Item; verdict: Verdict | null; filed: boolean }
 export interface RunResult { fetched: number; inWindow: number; unseen: number; prefiltered: number; triaged: number; invalid: number; relevant: number; modelRelevant: number; deferred: number; errors: string[]; usage: Usage; candidates: Candidate[]; decisions: Decision[]; digest?: { title: string; body: string; result: 'created' | 'duplicate' | 'dry-run' } }
 
@@ -278,7 +278,7 @@ export async function run(o: RunOptions): Promise<RunResult> {
     if (v?.relevant) modelRelevant++;
     decisions.push({ item, verdict: v, filed: files(v) });
     if (files(v)) {
-      const c: Candidate = { item, kind: v.kind, reason: v.reason, confidence: v.confidence, inScope: inScope(v), evidence: v.evidence };
+      const c: Candidate = { item, kind: v.kind, reason: v.reason, confidence: v.confidence, inScope: inScope(v), artifacts: v.releases_artifacts, evidence: v.evidence };
       if (o.source === 'news') {
         if (o.dryRun) c.issue = 'dry-run';
         else {

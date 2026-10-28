@@ -145,14 +145,16 @@ describe('sanitize and issues', () => {
     expect(s.length).toBeLessThanOrEqual(100);
   });
   it('builds a digest: in scope first (standards, evidence quotes), others collapsed', () => {
-    const mk = (title: string, id: string, kind: 'benchmark' | 'standard', inScope: boolean, evidence = '') =>
-      ({ item: item({ title, arxivId: id, url: `https://arxiv.org/abs/${id}` }), kind, reason: `r-${id}`, confidence: 'high', inScope, evidence });
-    const d = digestFor('2026-10-28', [mk('B [x] @bob', '2510.1', 'benchmark', true, 'We release it. @eve'), mk('S', '2510.2', 'standard', true), mk('Narrow', '2510.3', 'benchmark', false), mk('Narrow2', '2510.4', 'benchmark', false)]);
+    const mk = (title: string, id: string, kind: 'benchmark' | 'standard', inScope: boolean, evidence = '', artifacts = false) =>
+      ({ item: item({ title, arxivId: id, url: `https://arxiv.org/abs/${id}` }), kind, reason: `r-${id}`, confidence: 'high', inScope, artifacts, evidence });
+    const d = digestFor('2026-10-28', [mk('B [x] @bob', '2510.1', 'benchmark', true, 'We release it. @eve', true), mk('S', '2510.2', 'standard', true), mk('Narrow', '2510.3', 'benchmark', false), mk('Narrow2', '2510.4', 'benchmark', false)]);
     expect(d.title).toBe('[arXiv digest] 2026-10-28: 2 in scope (+2 other)');
     expect(d.label).toBe('candidate-benchmark');
     const [inS, rest] = d.body.split('<details>');
     expect(inS!.indexOf('[S](')).toBeLessThan(inS!.indexOf('[B |x| @'));
     expect(inS).toContain('[S](https://arxiv.org/abs/2510.2) | arXiv 2510.2 | standard | high | r-2510.2');
+    expect(inS).toMatch(/\| benchmark \| high \| code\/data: stated \| r-2510.1/);
+    expect(digestFor('2026-10-28', [mk('N', '9', 'benchmark', true)]).body).toContain('| high | code/data: not stated in abstract | r-9');
     expect(inS).toContain('  > We release it.');
     expect(inS).not.toMatch(/Narrow/);
     expect(rest).toContain('<summary>Other new benchmarks (2)</summary>');
@@ -221,14 +223,17 @@ describe('run', () => {
       expect(r.candidates.every((c) => c.issue === 'digest')).toBe(true);
       expect(Object.keys(o.state.seen)).toHaveLength(3);
     });
-    it('puts benchmarks without artifacts or verified evidence under "other"', async () => {
+    it('puts benchmarks without verified evidence or scope under "other"; missing artifacts only changes the tag', async () => {
       const { g, created } = gh();
       const r = await run(arx({ gh: g, llmFetch: reply(V({ evidence: 'a sentence that is not in the abstract' })) }) as never);
       expect(created).toEqual(['[arXiv digest] 2026-10-28: 0 in scope (+3 other)']);
       expect(r.candidates.every((c) => !c.inScope)).toBe(true);
       const g2 = gh();
       await run(arx({ gh: g2.g, llmFetch: reply(V({ releases_artifacts: false })) }) as never);
-      expect(g2.created).toEqual(['[arXiv digest] 2026-10-28: 0 in scope (+3 other)']);
+      expect(g2.created).toEqual(['[arXiv digest] 2026-10-28: 3 in scope (+0 other)']);
+      const g3 = gh();
+      await run(arx({ gh: g3.g, llmFetch: reply(V({ in_scope: false })) }) as never);
+      expect(g3.created).toEqual(['[arXiv digest] 2026-10-28: 0 in scope (+3 other)']);
     });
     it('files nothing when no paper passes the gate', async () => {
       const { g, created } = gh();
