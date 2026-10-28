@@ -3,6 +3,7 @@ import { load } from '../src/load.ts';
 import { validate } from '../src/validate.ts';
 import { score } from '../src/engine.ts';
 import { assess, finalize, selectExcerpts } from '../src/assess/run.ts';
+import { parseJson } from '../src/assess/llm.ts';
 import { chunk, normalize, rank, verifyQuote, sha256, type Chunk } from '../src/assess/text.ts';
 import type { FetchedSource } from '../src/assess/sources.ts';
 import { queue } from '../src/watch.ts';
@@ -290,5 +291,22 @@ describe('thinking switch', () => {
     expect((seen[0]!.messages as { content: string }[])[0]!.content).toBe('Assess this.\n\n/no_think');
     expect(seen[1]!.think).toBeUndefined();
     expect((seen[1]!.messages as { content: string }[])[0]!.content).toBe('Assess this.');
+  });
+});
+
+describe('parseJson', () => {
+  const obj = { verdicts: [{ item: 'a', rationale: 'see\n```py\nx = 1\n```\nok' }] };
+  it('parses valid JSON whose string contains a code fence', () => {
+    expect(parseJson(JSON.stringify(obj))).toEqual(obj);
+  });
+  it('parses a reply wrapped in a json fence', () => {
+    expect(parseJson('```json\n{"a": 1}\n```')).toEqual({ a: 1 });
+  });
+  it('parses prose followed by fenced JSON', () => {
+    expect(parseJson('Here you go:\n```json\n{"a": {"b": 2}}\n```\nDone {not json}')).toEqual({ a: { b: 2 } });
+  });
+  it('throws on garbage', () => {
+    expect(() => parseJson('no json here')).toThrow('no JSON object in reply');
+    expect(() => parseJson('{broken')).toThrow();
   });
 });

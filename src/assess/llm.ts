@@ -148,10 +148,14 @@ function fromStream(text: string, baseUrl: string): Omit<ChatResult, 'attempts'>
 
 /** Pull the JSON object out of a reply, tolerating a ```json fence. */
 export function parseJson(text: string): unknown {
+  const slice = (s: string) => {
+    const start = s.indexOf('{');
+    const end = s.lastIndexOf('}');
+    if (start === -1 || end <= start) throw new Error('no JSON object in reply');
+    return JSON.parse(s.slice(start, end + 1));
+  };
+  // The whole reply first: a valid reply can hold a ``` fence inside a string (a rationale quoting code).
+  try { return slice(text.trim()); } catch { /* fall back to the fenced block */ }
   const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/);
-  const s = (fenced ? fenced[1]! : text).trim();
-  const start = s.indexOf('{');
-  const end = s.lastIndexOf('}');
-  if (start === -1 || end <= start) throw new Error('no JSON object in reply');
-  return JSON.parse(s.slice(start, end + 1));
+  return slice((fenced ? fenced[1]! : text).trim());
 }
