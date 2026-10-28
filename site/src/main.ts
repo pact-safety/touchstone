@@ -2,6 +2,7 @@ import './styles.css';
 import './touchstone.css';
 import './ratings.css';
 import { ascFirst, decodeView, DEFAULT_VIEW, encodeView, MAX_COMPARE } from './hashstate.ts';
+import './detail.css';
 import type { BenchmarkFile, SiteIndex, Summary } from '../../src/build.ts';
 import type { Assessment, Benchmark, Item, Standard, Verdict } from '../../src/schema.ts';
 import type { Improvement, Result } from '../../src/engine.ts';
@@ -356,23 +357,32 @@ main.addEventListener('focusin', warm);
 
 // ---------- Benchmark page ----------
 const maxOf = (s: Standard) => (s.scoring?.scheme === 'points' ? s.scoring.max : 15);
-type VClass = 'met' | 'unmet' | 'na';
-/** Missing verdicts count as not met (undocumented means unsatisfied); for points, anything below the maximum is not met. */
+type VClass = 'met' | 'partly' | 'unmet' | 'na';
+/** Missing verdicts count as not met (undocumented means unsatisfied); for points, 0 is not met, the maximum is met, anything between is partly met. */
 function vclass(v: Verdict | undefined, s: Standard): VClass {
   if (!v) return 'unmet';
   if (v.value === 'n/a') return 'na';
-  if (typeof v.value === 'number') return v.value >= maxOf(s) ? 'met' : 'unmet';
+  if (typeof v.value === 'number') return v.value >= maxOf(s) ? 'met' : v.value > 0 ? 'partly' : 'unmet';
   return v.value === 'met' ? 'met' : 'unmet';
 }
 function verdictPill(v: Verdict | undefined, s: Standard) {
   if (!v) return html`<span class="pill pill-unmet"><span aria-hidden="true">✕</span> no verdict</span>`;
   if (v.value === 'n/a') return html`<span class="pill pill-na"><span aria-hidden="true">–</span> n/a</span>`;
+  const c = vclass(v, s);
   if (typeof v.value === 'number') {
-    const c = vclass(v, s);
-    return html`<span class="pill ${c === 'met' ? 'pill-met' : v.value === 0 ? 'pill-unmet' : ''}"><span aria-hidden="true">${c === 'met' ? '✓' : v.value === 0 ? '✕' : '◐'}</span> ${v.value} / ${maxOf(s)}</span>`;
+    const sym = c === 'met' ? '✓' : c === 'partly' ? '◐' : '✕';
+    return html`<span class="pill ${c === 'met' ? 'pill-met' : c === 'partly' ? 'pill-partly' : 'pill-unmet'}"><span aria-hidden="true">${sym}</span> ${c === 'met' ? 'met' : c === 'partly' ? 'partly met' : 'not met'} · ${v.value} / ${maxOf(s)}</span>`;
   }
   return v.value === 'met' ? html`<span class="pill pill-met"><span aria-hidden="true">✓</span> met</span>` : html`<span class="pill pill-unmet"><span aria-hidden="true">✕</span> not met</span>`;
 }
+/** Grades and AISL categories share the .ts-grade-* ramp; the letter is always in the text. */
+function detailLabel(label: string, big = false) {
+  const m = /^Category ([A-E])$/.exec(label);
+  if (m) return html`<span class="ts-grade ts-grade-${m[1]!.toLowerCase()}${big ? ' ts-grade-lg' : ''}">${label}</span>`;
+  return html`<span class="font-semibold text-heading${big ? ' text-2xl' : ''}">${label}</span>`;
+}
+const plainName = (t: string) => (t.length > 90 ? `${t.slice(0, 87).trimEnd()}…` : t);
+const assessmentId = (a: { file: string }) => a.file.replace(/\W/g, '-');
 
 const correctionUrl = (b: Benchmark, s: IStd, item?: string) => {
   const p = new URLSearchParams({ template: 'score-correction.yml', title: `Correction: ${b.name} / ${s.short}${item ? ` ${item}` : ''}`, benchmark: b.id, standard: s.id });
@@ -382,32 +392,34 @@ const correctionUrl = (b: Benchmark, s: IStd, item?: string) => {
 
 function itemRow(b: Benchmark, s: Standard, it: Item, a: A) {
   const v = a.verdicts?.[it.id];
-  return html`<li class="border-t border-line py-4" data-v="${vclass(v, s)}">
+  const by = v?.by === 'model' ? `model${a.model_run ? ` (${a.model_run.model})` : ''}` : a.provenance.assessors.join(', ');
+  const from = a.provenance.assessors.join(', ');
+  return html`<li id="it-${assessmentId(a)}-${it.id}" tabindex="-1" class="border-t border-line py-4" data-v="${vclass(v, s)}">
     <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
       <code>${it.id}</code>
       ${verdictPill(v, s)}
       ${it.severity ? html`<span class="t-caption"><span class="sev sev-${it.severity}" aria-hidden="true"></span>${it.severity === 'baseline' ? 'baseline requirement' : `${it.severity}: caps at ${severityCap(s, it.severity)}`}</span>` : ''}
-      ${v?.by ? html`<span class="t-caption">decided by ${v.by === 'model' ? 'model' : 'a person'}</span>` : ''}
+      ${v?.by ? html`<span class="t-caption">verdict by ${by}</span>` : ''}
     </div>
     <p class="mt-1.5">${it.text}</p>
     ${v?.rationale ? html`<p class="mt-1.5 text-sm"><span class="text-muted">Reasoning:</span> ${v.rationale}</p>` : ''}
-    ${v?.evidence.length ? html`<ul class="mt-2 grid gap-2 text-sm" role="list">${v.evidence.map((e) => html`<li>
-        ${e.quote ? html`<blockquote class="quote">“${e.quote}”</blockquote>` : ''}
-        <a class="link" href="${safeUrl(e.url)}">${e.locator}</a>${e.note ? html` <span class="text-muted">${e.note}</span>` : ''}
-      </li>`)}</ul>` : ''}
+    ${v?.evidence.length ? html`<ul class="mt-2 grid gap-2 text-sm" role="list">${v.evidence.map((e) => html`<li class="evidence">
+        <p><span class="text-muted">Source:</span> <a class="link" href="${safeUrl(e.url)}">${e.locator}</a>${e.note ? html` <span class="text-muted">${e.note}</span>` : ''}</p>
+        ${e.quote ? html`<blockquote class="quote">“${e.quote}”</blockquote>` : html`<p class="t-caption">${a.provenance.kind === 'external' ? `No quote: verdict taken from ${from}'s published score.` : 'No quote recorded.'}</p>`}
+      </li>`)}</ul>` : v ? html`<p class="t-caption mt-2">No evidence recorded for this verdict.</p>` : ''}
     ${it.guidance ? html`<p class="t-caption mt-2">Met when: ${it.guidance.met}${it.guidance.not_applicable ? ` · n/a when: ${it.guidance.not_applicable}` : ''}</p>` : ''}
-    <p class="t-caption mt-1"><a class="link" href="${correctionUrl(b, s, it.id)}">Request a correction to ${it.id}</a></p>
+    <details class="report t-caption mt-1"><summary>Report</summary><a class="link" href="${correctionUrl(b, s, it.id)}">Request a correction to ${it.id}</a></details>
   </li>`;
 }
 const severityCap = (s: Standard, sev: string) => (s.scoring?.scheme === 'aisl-severity' ? (s.scoring.severity_scores as Record<string, number>)[sev] : '');
 
-/** All / Not met / Met / N/A, each with its count. The list itself is filtered by CSS on the card's data-filter. */
+/** All / Not met / Partly met / Met / N/A, each with its count. The list itself is filtered by CSS on the card's data-filter. */
 function filterBar(s: Standard, a: A) {
-  const n = { all: 0, unmet: 0, met: 0, na: 0 };
+  const n = { all: 0, unmet: 0, partly: 0, met: 0, na: 0 };
   for (const it of s.groups.flatMap((g) => g.items)) { n.all++; n[vclass(a.verdicts?.[it.id], s)]++; }
   const btn = (k: keyof typeof n, label: string) => html`<button type="button" class="filter-btn" data-f="${k}" aria-pressed="${k === 'all'}">${label} <span class="tabular-nums">(${n[k]})</span></button>`;
   return html`<div role="group" aria-label="Filter items" class="mt-6 flex flex-wrap items-center gap-2"><span class="t-caption mr-1">Show items</span>
-    ${btn('all', 'All')}${btn('unmet', 'Not met')}${btn('met', 'Met')}${btn('na', 'N/A')}</div>`;
+    ${btn('all', 'All')}${btn('unmet', 'Not met')}${n.partly ? btn('partly', 'Partly met') : ''}${btn('met', 'Met')}${btn('na', 'N/A')}</div>`;
 }
 function setFilter(btn: HTMLButtonElement) {
   const card = btn.closest<HTMLElement>('article')!;
@@ -418,41 +430,77 @@ function setFilter(btn: HTMLButtonElement) {
   announce(`Showing ${shown} item${shown === 1 ? '' : 's'}`);
 }
 
-function improvementsView(s: Standard, r: R) {
+/** Brief highlight for the section or item a link just took the reader to. */
+function flash(el: HTMLElement | null) {
+  if (!el) return;
+  el.classList.remove('flash');
+  void el.offsetWidth;
+  el.classList.add('flash');
+  setTimeout(() => el.classList.remove('flash'), 2000);
+}
+// Links to an item (data-item) open its list and jump to it; links to a section of the page already shown get the highlight.
+main.addEventListener('click', (e) => {
+  const a = (e.target as HTMLElement).closest<HTMLElement>('[data-item]');
+  if (!a) return;
+  const li = document.getElementById(a.dataset.item!);
+  if (!li) return;
+  e.preventDefault();
+  const card = li.closest<HTMLElement>('article')!;
+  if (card.dataset.filter !== 'all') card.querySelector<HTMLButtonElement>('[data-f="all"]')?.click();
+  li.closest('details')!.open = true;
+  li.scrollIntoView({ block: 'center' });
+  li.focus({ preventScroll: true });
+  flash(li);
+});
+window.addEventListener('hashchange', () => {
+  const std = /^#\/benchmark\/[^/]+\/([^/]+)/.exec(location.hash)?.[1];
+  if (std) flash(document.getElementById(`std-${std}`));
+});
+
+/** "Biggest levers": the already-computed improvements as a short table with plain item names. */
+function improvementsView(b: Benchmark, s: Standard, r: R, aid: string) {
   const text = new Map(s.groups.flatMap((g) => g.items).map((i) => [i.id, i.text]));
-  return html`<section class="mt-6" aria-labelledby="imp-${r.file.replace(/\W/g, '-')}">
-    <h4 id="imp-${r.file.replace(/\W/g, '-')}" class="font-medium">What would most improve this rating</h4>
-    ${r.improvements.length ? html`<ol class="mt-2 grid gap-3 text-sm" role="list">${r.improvements.map((m) => html`<li>
-        <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1"><code>${m.item}</code>${m.blocking ? html`<span class="pill pill-diff">blocking</span>` : ''}
-          <span>${m.group}: ${m.groupFrom} → ${m.groupTo} · Overall: ${m.overallFrom} → ${m.overallTo}</span></div>
-        <p class="mt-1">${text.get(m.item)}</p></li>`)}</ol>` : html`<p class="mt-2 text-sm text-muted">Every applicable item is met</p>`}
+  return html`<section class="mt-6" aria-labelledby="imp-${aid}">
+    <h4 id="imp-${aid}" class="font-medium">Biggest levers</h4>
+    ${r.improvements.length ? html`<div class="table-wrap mt-2"><table class="stack-table w-full text-sm">
+      <caption class="sr-only">Items whose fix would most improve this rating</caption>
+      <thead><tr class="text-left text-muted"><th scope="col" class="px-3 py-2 font-normal">Item</th><th scope="col" class="px-3 py-2 font-normal">Dimension</th><th scope="col" class="px-3 py-2 font-normal">Overall if fixed</th></tr></thead>
+      <tbody>${r.improvements.map((m) => html`<tr class="border-t border-line align-top">
+        <th scope="row" class="px-3 py-2.5 text-left font-normal"><a class="link" href="#/benchmark/${b.id}/${s.id}" data-item="it-${aid}-${m.item}" title="${m.item}">${plainName(text.get(m.item) ?? m.item)}</a>${m.blocking ? html` <span class="pill pill-diff">blocking</span>` : ''}</th>
+        <td class="px-3 py-2.5 tabular-nums" data-label="Dimension">${m.group}: ${m.groupFrom} → ${m.groupTo}</td>
+        <td class="px-3 py-2.5 tabular-nums" data-label="Overall if fixed">${m.overallFrom} → ${m.overallTo}</td></tr>`)}</tbody>
+    </table></div>` : html`<p class="mt-2 text-sm text-muted">Every applicable item is met</p>`}
   </section>`;
 }
 
 function assessmentCard(b: Benchmark, s: Standard, a: A, r: R, open: boolean) {
   const fileUrl = `${data.repo}/blob/main/${a.file}`;
-  const id = a.file.replace(/\W/g, '-');
+  const id = assessmentId(a);
+  const verdicts = Object.values(a.verdicts ?? {});
+  const quoted = verdicts.filter((v) => v.evidence.some((e) => e.quote)).length;
   return html`<article class="card mt-5" aria-labelledby="h-${id}" data-filter="all">
     <div class="flex flex-wrap items-baseline justify-between gap-2">
       <h3 id="h-${id}" class="t-sub">${provenanceLabel(a)}</h3>
       <span class="text-sm">${a.status === 'draft' ? html`<span class="pill pill-draft">draft, not yet reviewed</span>` : html`<span class="pill">published</span>`}</span>
     </div>
-    <p class="mt-4">${labelView(r.overall.label, true)}</p>
+    <p class="mt-4">${detailLabel(r.overall.label, true)}</p>
     <p class="mt-2 text-sm">${r.overall.explanation}</p>
     ${r.discrepancies.length ? html`<div class="mt-4 rounded-md border border-line p-3 text-sm" role="note">
         <p class="font-medium text-warn"><span aria-hidden="true">≠</span> The source's published figures differ from a recomputation from its own verdicts</p>
         <ul class="mt-1 list-disc pl-5">${r.discrepancies.map((d) => html`<li>${d.field}: published ${d.published}, recomputed ${d.computed}</li>`)}</ul>
         ${a.notes ? html`<p class="mt-1 text-muted">${a.notes}</p>` : ''}
       </div>` : a.notes ? html`<p class="mt-2 text-sm text-muted">${a.notes}</p>` : ''}
-    <div class="table-wrap mt-5"><table class="w-full text-sm">
+    <div class="table-wrap mt-5"><table class="stack-table w-full text-sm">
       <caption class="sr-only">Scores by ${s.short} dimension</caption>
       <thead><tr class="text-left text-muted"><th scope="col" class="px-3 py-2 font-normal">Dimension</th><th scope="col" class="px-3 py-2 font-normal">Score</th><th scope="col" class="px-3 py-2 font-normal">How it was calculated</th></tr></thead>
       <tbody>${r.groups.map((g) => html`<tr class="border-t border-line align-top">
         <th scope="row" class="px-3 py-2.5 text-left font-medium">${g.name}</th>
-        <td class="px-3 py-2.5"><div class="grid gap-1">${g.display}${bar(g.pct)}</div></td>
-        <td class="px-3 py-2.5">${g.explanation}</td></tr>`)}</tbody>
+        <td class="px-3 py-2.5" data-label="Score"><div class="grid gap-1">${g.display}${bar(g.pct)}</div></td>
+        <td class="px-3 py-2.5" data-label="How it was calculated">${g.explanation}</td></tr>`)}</tbody>
     </table></div>
-    ${a.mode === 'itemized' ? html`${improvementsView(s, r)}${filterBar(s, a)}${s.groups.map((g) => html`<details class="items mt-3" ${open ? 'open' : ''}>
+    ${a.mode === 'itemized' ? html`${improvementsView(b, s, r, id)}${filterBar(s, a)}
+      <p class="t-caption mt-3">${quoted} of ${verdicts.length} verdicts have quotes.</p>
+      ${s.groups.map((g) => html`<details class="items mt-3" ${open ? 'open' : ''}>
         <summary class="font-medium">${g.name}: item verdicts (${g.items.length})</summary>
         <ul class="mt-2" role="list">${g.items.map((it) => itemRow(b, s, it, a))}</ul>
       </details>`)}` : html`<p class="mt-5 text-sm text-muted">Item-level verdicts were not published by this source, so only its dimension scores are shown.</p>`}
@@ -482,8 +530,14 @@ async function loadBenchmark(b: Benchmark) {
 }
 
 const money = (x: number) => `$${x.toLocaleString('en-US', { maximumSignificantDigits: 2 })}`;
+const detailModality = (m: string) => ({ 'language-model': 'Language model', 'lm-agent': 'Language-model agent', 'rl-agent': 'Reinforcement-learning agent', classifier: 'Classifier', 'scientific-ml': 'Scientific ML model' } as Record<string, string>)[m] ?? m.replace(/-/g, ' ');
+const humanTokens = (n: number) => (n >= 1e9 ? `${+(n / 1e9).toPrecision(2)} billion` : n >= 1e6 ? `${+(n / 1e6).toPrecision(2)} million` : `${Math.round(n / 1e3).toLocaleString('en-US')} thousand`);
+const humanLocal = (t: RunProfile['localTier']) => ({ Lite: 'a laptop is enough', Standard: 'needs a Docker or simulator setup', Heavy: 'needs a GPU or virtual machines', Extreme: 'needs a large server or hundreds of GB of disk' })[t];
 
-function rigorPanel(b: B): Raw {
+/** Weakest points are linked from the summary to their item below. */
+type Weak = { s: IStd; aid: string; m: Improvement; text: string };
+
+function rigorPanel(b: B, nStd: number, weak: Weak[]): Raw {
   const r = b.touchstone.rigor;
   if (r.score === null || !r.grade)
     return html`<section class="card mt-8" aria-labelledby="ts-rigor"><h2 id="ts-rigor" class="t-section">Touchstone score</h2>
@@ -491,101 +545,115 @@ function rigorPanel(b: B): Raw {
   return html`<section class="card mt-8" aria-labelledby="ts-rigor">
     <h2 id="ts-rigor" class="t-section">Touchstone score</h2>
     <p class="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1"><span class="ts-grade ts-grade-lg ts-grade-${r.grade.toLowerCase()}">${r.grade}</span>
-      <span class="text-2xl font-semibold tabular-nums">${r.score}</span><span class="text-muted">out of 100 · ${r.confidence} confidence</span></p>
+      <span class="text-2xl font-semibold tabular-nums">${r.score}</span><span class="text-muted">out of 100 · ${r.n} of ${Math.max(nStd, r.n)} standards · ${r.confidence} confidence</span></p>
     <p class="mt-3 text-sm">${r.explanation}</p>
-    <div class="table-wrap mt-4"><table class="w-full text-sm">
-      <caption class="sr-only">Published ratings behind the Touchstone score</caption>
-      <thead><tr class="text-left text-muted"><th scope="col" class="px-3 py-2 font-normal">Standard</th><th scope="col" class="px-3 py-2 font-normal">Verdict</th><th scope="col" class="px-3 py-2 font-normal">Normalized (0–100)</th></tr></thead>
-      <tbody>${r.inputs.map((i) => html`<tr class="border-t border-line">
-        <th scope="row" class="px-3 py-2.5 text-left font-medium"><a class="link" href="#/benchmark/${b.id}/${i.standard}">${i.short}</a></th>
-        <td class="px-3 py-2.5">${i.label}</td>
-        <td class="px-3 py-2.5 tabular-nums">${i.normalized === null ? 'not counted (incomplete)' : i.normalized}</td></tr>`)}</tbody>
-    </table></div>
-    <dl class="mt-4 grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1 text-sm">
-      <dt class="text-muted">Spread</dt><dd>${r.spread} points</dd>
-      <dt class="text-muted">Agreement</dt><dd>${r.agreement}</dd>
-      <dt class="text-muted">Confidence</dt><dd>${r.confidence}</dd>
-    </dl>
-    <p class="mt-3 text-sm">${r.gradeStable ? 'The grade is stable: it does not change if every cutpoint moves 5 points either way.' : 'The grade is near a cutpoint: it would change if every cutpoint moved 5 points.'}</p>
-    <p class="t-caption mt-2">Only published ratings count; drafts are excluded. <a class="link" href="#/method">How the score works</a></p>
+    ${weak.length ? html`<h3 class="mt-5 font-medium">Weakest points</h3>
+      <ol class="mt-2 grid gap-2 text-sm" role="list">${weak.map((w) => html`<li><a class="link" href="#/benchmark/${b.id}/${w.s.id}" data-item="it-${w.aid}-${w.m.item}">${plainName(w.text)}</a>
+        <span class="t-caption">${w.s.short} · ${w.m.group} ${w.m.groupFrom} → ${w.m.groupTo}</span></li>`)}</ol>` : ''}
+    <details class="mt-5 text-sm">
+      <summary>How this score was calculated</summary>
+      <div class="table-wrap mt-3"><table class="stack-table w-full text-sm">
+        <caption class="sr-only">Published ratings behind the Touchstone score</caption>
+        <thead><tr class="text-left text-muted"><th scope="col" class="px-3 py-2 font-normal">Standard</th><th scope="col" class="px-3 py-2 font-normal">Verdict</th><th scope="col" class="px-3 py-2 font-normal">Normalized (0–100)</th></tr></thead>
+        <tbody>${r.inputs.map((i) => html`<tr class="border-t border-line">
+          <th scope="row" class="px-3 py-2.5 text-left font-medium"><a class="link" href="#/benchmark/${b.id}/${i.standard}">${i.short}</a></th>
+          <td class="px-3 py-2.5" data-label="Verdict">${i.label}</td>
+          <td class="px-3 py-2.5 tabular-nums" data-label="Normalized (0–100)">${i.normalized === null ? 'not counted (incomplete)' : i.normalized}</td></tr>`)}</tbody>
+      </table></div>
+      <dl class="mt-4 grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1">
+        <dt class="text-muted">Spread</dt><dd>${r.spread} points</dd>
+        <dt class="text-muted">Agreement</dt><dd>${r.agreement}</dd>
+        <dt class="text-muted">Confidence</dt><dd>${r.confidence}</dd>
+      </dl>
+      <p class="mt-3">${r.gradeStable ? 'The grade is stable: it does not change if every cutpoint moves 5 points either way.' : 'The grade is near a cutpoint: it would change if every cutpoint moved 5 points.'}</p>
+      <p class="t-caption mt-2">Only published ratings count; drafts are excluded. <a class="link" href="#/method">How the score works</a></p>
+    </details>
   </section>`;
 }
 
 function runPanel(b: B): Raw {
   const run = b.touchstone.run, res = b.resources;
   if (!run || !res)
-    return html`<section class="card mt-5" aria-labelledby="ts-run"><h2 id="ts-run" class="t-section">Run cost</h2><p class="mt-2 text-sm">Run-cost data not yet collected</p></section>`;
+    return html`<section class="card mt-12" aria-labelledby="ts-run"><h2 id="ts-run" class="t-section">Run cost</h2><p class="mt-2 text-sm">Run-cost data not yet collected</p></section>`;
   const [lo, hi] = run.costUsd;
-  return html`<section class="card mt-5" aria-labelledby="ts-run">
+  return html`<section class="card mt-12" aria-labelledby="ts-run">
     <h2 id="ts-run" class="t-section">Run cost</h2>
-    <dl class="mt-3 grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1 text-sm">
-      <dt class="text-muted">Tokens per full run</dt><dd class="tabular-nums">${run.tokens.toLocaleString('en-US')}</dd>
-      <dt class="text-muted">API tier</dt><dd>${apiLabel(run)}${run.apiTier === 'none' ? '' : html` · ~${money(lo)}–${money(hi)} at reference prices (as of ${data.pricing.as_of})`}</dd>
-      <dt class="text-muted">Local tier</dt><dd>${run.localTier}</dd>
-    </dl>
-    <p class="mt-3 text-sm">${run.explanation}</p>
-    <h3 class="mt-5 font-medium">Facts behind it</h3>
-    <dl class="mt-2 grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1 text-sm">
-      <dt class="text-muted">Test items</dt><dd class="tabular-nums">${res.items.toLocaleString('en-US')}</dd>
-      <dt class="text-muted">Interaction</dt><dd>${res.interaction}</dd>
-      <dt class="text-muted">Model calls per item</dt><dd class="tabular-nums">${res.model_calls_per_item}</dd>
-      <dt class="text-muted">Tokens per call</dt><dd class="tabular-nums">${res.tokens_per_call.toLocaleString('en-US')}</dd>
-      <dt class="text-muted">Grading</dt><dd>${res.grading}</dd>
-      <dt class="text-muted">Judge calls per item</dt><dd class="tabular-nums">${res.judge_calls_per_item}</dd>
-      <dt class="text-muted">Environment</dt><dd>${res.environment}</dd>
-      <dt class="text-muted">GPU for the harness</dt><dd>${res.gpu_required ? 'yes' : 'no'}</dd>
-      <dt class="text-muted">Download size</dt><dd class="tabular-nums">${res.disk_gb} GB</dd>
-      <dt class="text-muted">How tokens were estimated</dt><dd>${res.estimate_basis}</dd>
-      <dt class="text-muted">Sources</dt><dd><ul role="list">${res.sources.map((x) => html`<li><a class="link" href="${safeUrl(x.url)}">${x.locator}</a></li>`)}</ul></dd>
-    </dl>
-    <p class="t-caption mt-3">Token counts are estimates. The local tier covers the harness only, not hosting the model under test.</p>
+    <p class="mt-3">About ${humanTokens(run.tokens)} tokens per full run. ${run.apiTier === 'none' ? 'No API cost.' : html`<span title="API tier ${apiLabel(run)}">${money(lo)}–${money(hi)} through an API</span> at reference prices.`}
+      Running the harness: <span title="Local tier: ${run.localTier}">${humanLocal(run.localTier)}</span>.</p>
+    <details class="mt-3 text-sm">
+      <summary>How we estimated this</summary>
+      <p class="mt-3">${run.explanation}</p>
+      <dl class="mt-3 grid grid-cols-[max-content_1fr] gap-x-4 gap-y-1">
+        <dt class="text-muted">Tokens per full run</dt><dd class="tabular-nums">${run.tokens.toLocaleString('en-US')}</dd>
+        <dt class="text-muted">API tier</dt><dd>${apiLabel(run)}${run.apiTier === 'none' ? '' : html` · ~${money(lo)}–${money(hi)} at reference prices (as of ${data.pricing.as_of})`}</dd>
+        <dt class="text-muted">Local tier</dt><dd>${run.localTier}</dd>
+        <dt class="text-muted">Test items</dt><dd class="tabular-nums">${res.items.toLocaleString('en-US')}</dd>
+        <dt class="text-muted">Interaction</dt><dd>${res.interaction}</dd>
+        <dt class="text-muted">Model calls per item</dt><dd class="tabular-nums">${res.model_calls_per_item}</dd>
+        <dt class="text-muted">Tokens per call</dt><dd class="tabular-nums">${res.tokens_per_call.toLocaleString('en-US')}</dd>
+        <dt class="text-muted">Grading</dt><dd>${res.grading}</dd>
+        <dt class="text-muted">Judge calls per item</dt><dd class="tabular-nums">${res.judge_calls_per_item}</dd>
+        <dt class="text-muted">Environment</dt><dd>${res.environment}</dd>
+        <dt class="text-muted">GPU for the harness</dt><dd>${res.gpu_required ? 'yes' : 'no'}</dd>
+        <dt class="text-muted">Download size</dt><dd class="tabular-nums">${res.disk_gb} GB</dd>
+        <dt class="text-muted">How tokens were estimated</dt><dd>${res.estimate_basis}</dd>
+        <dt class="text-muted">Sources</dt><dd><ul role="list">${res.sources.map((x) => html`<li><a class="link" href="${safeUrl(x.url)}">${x.locator}</a></li>`)}</ul></dd>
+      </dl>
+      <p class="t-caption mt-3">Token counts are estimates. The local tier covers the harness only, not hosting the model under test.</p>
+    </details>
   </section>`;
 }
+
+/** Ranked order of the ratings page's default sort: Touchstone score, best first; unscored last. */
+const rankedIds = () => [...benchmarks.values()].sort((x, y) => (y.touchstone.rigor.score ?? -1) - (x.touchstone.rigor.score ?? -1) || x.name.localeCompare(y.name)).map((x) => x.id);
 
 function renderBenchmark(b: B, file: BenchmarkFile, full: Map<string, Standard>, focusStd?: string): HTMLElement | null {
   const watched = data.watch?.benchmarks[b.id];
   const results = new Map(file.results.map((r) => [r.file, r]));
-  const shown = encoded.filter((s) => pairs(b.id, s.id).length || inScope(s, b));
+  const parts = encoded.filter((s) => pairs(b.id, s.id).length || inScope(s, b)).map((s) => ({
+    s, fs: full.get(s.id),
+    list: file.assessments.filter((a) => a.standard === s.id).sort((x, y) => rank({ status: x.status, kind: x.provenance.kind } as Summary) - rank({ status: y.status, kind: y.provenance.kind } as Summary)),
+  }));
+  const assessed = parts.filter((p) => p.list.length && p.fs);
+  const pending = parts.filter((p) => !(p.list.length && p.fs));
   const link = (s: IStd) => `#/benchmark/${b.id}/${s.id}`;
-  const sections = shown.map((s) => {
-    const list = file.assessments.filter((a) => a.standard === s.id).sort((x, y) => rank({ status: x.status, kind: x.provenance.kind } as Summary) - rank({ status: y.status, kind: y.provenance.kind } as Summary));
-    const fs = full.get(s.id);
-    return html`<section id="std-${s.id}" class="mt-12 first:mt-0" aria-labelledby="sec-${s.id}" tabindex="-1">
+  const sections = assessed.map(({ s, fs, list }) => html`<section id="std-${s.id}" class="mt-12 first:mt-0" aria-labelledby="sec-${s.id}" tabindex="-1">
       <h2 id="sec-${s.id}" class="t-section">${s.name}</h2>
       <p class="mt-2 text-sm text-muted">${s.description} <a class="link" href="#/standard/${s.id}">How ${s.short} is scored</a></p>
-      ${list.length && fs ? list.map((a) => assessmentCard(b, fs, a, results.get(a.file)!, focusStd === s.id && list.length === 1)) : html`<p class="mt-4 text-sm">Not assessed yet. The nightly job will propose an automated assessment.</p>`}
-    </section>`.s;
-  }).join('');
-  const tile = (s: IStd) => {
-    const p = primary(b.id, s.id, 'all');
-    return html`<li><a class="tile" href="${link(s)}">
-      <span class="t-caption">${s.short}</span>
-      <span class="mt-1 flex flex-wrap items-center gap-1.5">${p ? labelView(p.label) : html`<span class="text-sm text-muted">Not rated yet</span>`}${p ? chips(p) : ''}</span>
-      ${p ? html`<span class="mt-2 block">${bar(p.pct)}</span>` : ''}</a></li>`;
-  };
+      ${list.map((a) => assessmentCard(b, fs!, a, results.get(a.file)!, focusStd === s.id && list.length === 1))}
+    </section>`.s).join('');
+  // The three weakest points: best improvement first, taken in turn from each published standard's primary assessment.
+  const queues = assessed.filter((p) => p.list[0]!.status === 'published').map((p) => ({ s: p.s, text: new Map(p.fs!.groups.flatMap((g) => g.items).map((i) => [i.id, i.text])), aid: assessmentId(p.list[0]!), imps: results.get(p.list[0]!.file)?.improvements ?? [] }));
+  const weak: Weak[] = [];
+  for (let i = 0; weak.length < 3 && queues.some((q) => i < q.imps.length); i++)
+    for (const q of queues) if (i < q.imps.length && weak.length < 3) weak.push({ s: q.s, aid: q.aid, m: q.imps[i]!, text: q.text.get(q.imps[i]!.item) ?? q.imps[i]!.item });
+  const order = rankedIds(), at = order.indexOf(b.id);
+  const near = (id: string | undefined, dir: 'prev' | 'next') => (id ? html`<a class="link" rel="${dir}" href="#/benchmark/${id}">${dir === 'prev' ? '← Previous: ' : 'Next: '}${benchmarks.get(id)!.name}${dir === 'next' ? ' →' : ''}</a>` : '');
   main.innerHTML = html`
     <p class="text-sm"><a class="link" href="#/">Ratings</a> <span aria-hidden="true">/</span> <span class="sr-only">current page:</span> ${b.name}</p>
+    <nav aria-label="Neighbouring benchmarks" class="pager mt-2 text-sm"><span>${near(order[at - 1], 'prev')}</span><span class="t-caption">${at + 1} of ${order.length} by Touchstone score</span><span>${near(order[at + 1], 'next')}</span></nav>
     <h1 class="t-page mt-3" tabindex="-1">${b.name}</h1>
     <p class="mt-3 text-lg text-muted">${b.concept}</p>
-    <p class="t-caption mt-2"><span class="capitalize">${b.domain}</span> · ${b.modality.replace('-', ' ')}${b.year ? ` · ${b.year}` : ''}</p>
+    <p class="t-caption mt-2"><span class="capitalize">${b.domain}</span> · ${detailModality(b.modality)}${b.year ? ` · ${b.year}` : ''}</p>
     <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm" role="list">
       ${b.links.paper ? html`<li><a class="link" href="${safeUrl(b.links.paper)}">Paper</a>${watched?.paper_version ? ` (latest ${watched.paper_version})` : ''}</li>` : ''}
       ${b.links.repo ? html`<li><a class="link" href="${safeUrl(b.links.repo)}">Code</a>${watched?.repo_commit ? ` (at ${watched.repo_commit.slice(0, 7)}${watched.archived ? ', archived' : ''})` : ''}</li>` : ''}
       ${b.links.website ? html`<li><a class="link" href="${safeUrl(b.links.website)}">Website</a></li>` : ''}
     </ul>
-    ${rigorPanel(b)}${runPanel(b)}
-    <ul class="strip mt-8" role="list" aria-label="Summary by standard">${shown.map(tile)}</ul>
-    <nav aria-label="Standards on this page (chips)" class="chip-row mt-8 lg:hidden"><ul class="flex gap-2" role="list">
-      ${shown.map((s) => html`<li class="shrink-0"><a class="btn-quiet" href="${link(s)}">${s.short}</a></li>`)}
-    </ul></nav>
-    <div class="mt-10 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-10">
-      <nav aria-label="Standards on this page" class="rail hidden lg:block"><ul role="list">
-        ${shown.map((s) => html`<li><a href="${link(s)}">${s.short}</a></li>`)}
-      </ul></nav>
-      <div class="min-w-0">${raw_(sections)}</div>
+    ${rigorPanel(b, parts.length, weak)}
+    <div class="std-layout mt-10">
+      ${assessed.length > 1 ? html`<nav aria-label="Standards on this page" class="std-nav"><ul role="list">
+        ${assessed.map(({ s }) => html`<li><a href="${link(s)}">${s.short}</a></li>`)}
+      </ul></nav>` : ''}
+      <div class="min-w-0">${raw_(sections)}
+        ${pending.length ? html`<p class="${assessed.length ? 'mt-12 ' : ''}text-sm">Not yet assessed: ${pending.map((p, i) => html`${i ? ', ' : ''}<a class="link" href="#/standard/${p.s.id}">${p.s.short}</a>`)}. The nightly job will propose automated assessments.</p>` : ''}
+      </div>
     </div>
+    ${runPanel(b)}
   `.s;
-  return focusStd ? document.getElementById(`std-${focusStd}`) : null;
+  const target = focusStd ? document.getElementById(`std-${focusStd}`) : null;
+  flash(target);
+  return target;
 }
 
 // ---------- Standards ----------
@@ -614,7 +682,7 @@ function scoringText(s: Standard): Raw {
       <span class="sev sev-red" aria-hidden="true"></span>red at ${sc.severity_scores.red}; the worst cap applies. An unmet
       <span class="sev sev-baseline" aria-hidden="true"></span>baseline requirement makes the dimension invalid. The benchmark then gets the best category whose limits every dimension meets:</p>
       <div class="table-wrap mt-4"><table class="w-full text-sm"><thead><tr><th scope="col" class="px-3 py-2 text-left">Category</th>${s.groups.map((g) => html`<th scope="col" class="px-3 py-2 text-left">${g.name}</th>`)}<th scope="col" class="px-3 py-2 text-left">Fit for</th></tr></thead>
-      <tbody>${sc.categories.map((c) => html`<tr class="border-t border-line"><th scope="row" class="px-3 py-2 text-left">${labelView(`Category ${c.id}`)}</th>${s.groups.map((g) => html`<td class="px-3 py-2">≤ ${c.max[g.id]}</td>`)}<td class="px-3 py-2">${c.use}</td></tr>`)}</tbody></table></div>`;
+      <tbody>${sc.categories.map((c) => html`<tr class="border-t border-line"><th scope="row" class="px-3 py-2 text-left">${detailLabel(`Category ${c.id}`)}</th>${s.groups.map((g) => html`<td class="px-3 py-2">≤ ${c.max[g.id]}</td>`)}<td class="px-3 py-2">${c.use}</td></tr>`)}</tbody></table></div>`;
   if (sc.scheme === 'points')
     return html`<p>Each criterion scores ${sc.levels.join(', ')}. ${Object.entries(sc.level_meanings ?? {}).sort((a, b) => Number(b[0]) - Number(a[0])).map(([k, v]) => `${k}: ${v} `).join('')}A stage's score is the mean of its applicable criteria; the overall score is the mean of all applicable criteria.</p>`;
   return html`<p>Each group's score is the share of applicable items met. The overall score is the mean of the group scores.${s.scoring_defined_by === 'touchstone' ? ' This standard publishes no scoring rule, so this one is Touchstone\'s.' : ''}</p>`;
@@ -656,7 +724,7 @@ function renderMethod() {
       <h2 class="t-section mt-6">Auditing a rating</h2>
       <p>Each automated assessment records the model, licence, settings, prompt version, and hashes of the exact text it read. Its transcript holds every response, including the model's reasoning when the model provides it. Running <code>touchstone replay</code> re-fetches the pinned sources and confirms they and every prompt match the record.</p>
       <h2 class="t-section mt-6">Corrections</h2>
-      <p>If a verdict is wrong or missing information, use the "Request a correction" link beside it. A bot replies with the current record. Accepted changes land as pull requests, and every change is logged in the assessment's revision history with a link to the request.</p>
+      <p>If a verdict is wrong or missing information, use the "Request a correction" link on the assessment, or "Report" on a single item. A bot replies with the current record. Accepted changes land as pull requests, and every change is logged in the assessment's revision history with a link to the request.</p>
       <p><a class="link" href="${data.repo}/blob/main/docs/methodology.md">Full methodology</a> · <a class="link" href="${data.repo}/blob/main/docs/automation.md">Automation and auditing</a> · <a class="link" href="${data.repo}/blob/main/CONTRIBUTING.md">Contributing</a></p>
     </div>`.s;
 }
