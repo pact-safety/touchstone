@@ -1,40 +1,55 @@
 @import "tailwindcss";
 
-/* Tokens match pact-safety.org: paper/sheet/ink, hairline rules, one accent, no shadows or gradients.
-   Fonts load from Google Fonts in index.html; system fallbacks are listed in @theme below. */
+/* Tokens match pact-safety.org (touchstone product accent). OS colour scheme by default;
+   <html data-pact-theme="light|dark"> overrides it. Square corners, hairline rules, no shadows. */
 :root {
   --bg: #eef0ec;
   --surface: #f8f9f6;
-  --fg: #3b423e;
-  --muted: #4e5551;
-  --heading: #111312;
+  --hover: #e4e8e2;
   --line: #c9cec9;
-  --hover: #f1f3ef;
-  --brand: #2443c4;
-  --accent: #2443c4;
-  --code-bg: #e4e7e2;
-  --on-brand: #f8f9f6;
-  --live: #1e6b45;
-  --ok: var(--live);
-  --warn: #8a4b00;
+  --faint: #a3aaa5;
+  --control-line: #80877f; /* input/select borders: >=3:1 vs --bg and --surface */
+  --text: #111312;
+  --ink-2: #3b423e;
+  --muted: #4e5551;
+  --brand: #a8401f;
+  --on-brand: var(--bg);
+  --code-bg: var(--hover);
+  --ok: #1e6b45;
+  --warn: #8a5a00;
   --bad: #b3261e;
+  /* Grade ramp A-F: PACT ink laid over the page at falling strength, so it is the same weight in both themes and
+     survives colour blindness (it is luminance only; the letter is always printed). Text >= 4.5:1 on every step. */
+  --grade-a: color-mix(in srgb, var(--text) 84%, var(--bg)); --grade-a-fg: var(--bg);
+  --grade-b: color-mix(in srgb, var(--text) 66%, var(--bg)); --grade-b-fg: var(--bg);
+  --grade-c: color-mix(in srgb, var(--text) 51%, var(--bg)); --grade-c-fg: var(--text);
+  --grade-d: color-mix(in srgb, var(--text) 30%, var(--bg)); --grade-d-fg: var(--text);
+  --grade-e: color-mix(in srgb, var(--text) 16%, var(--bg)); --grade-e-fg: var(--text);
+  --grade-f: color-mix(in srgb, var(--text) 6%, var(--bg)); --grade-f-fg: var(--text);
+  /* Aliases kept for existing selectors and Tailwind colour names. */
+  --fg: var(--text);
+  --heading: var(--text);
+  --accent: var(--brand);
+  --live: var(--ok);
   --sev-yellow: #c9b800;
   --sev-orange: #e07b00;
   --sev-red: #d13b3b;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #0f1110; --surface: #161917; --fg: #b9c0ba; --muted: #9aa29c; --heading: #e4e7e3;
-    --line: #2a2f2c; --hover: #1a1e1c; --code-bg: #1a1e1c; --brand: #9db0ff; --accent: #9db0ff; --on-brand: #0f1110;
-    --live: #5cc98e; --warn: #f0b04a; --bad: #ff7a70;
+  :root:not([data-pact-theme="light"]) {
+    --bg: #0f1110; --surface: #161917; --hover: #1c201e; --line: #2a2f2c; --faint: #5a615d; --control-line: #6b736d;
+    --text: #e4e7e3; --ink-2: #b9c0ba; --muted: #9aa29c; --brand: #f08a6e;
+    --ok: #5cc98e; --warn: #f5b042; --bad: #f2867e;
+    --grade-c-fg: var(--bg);
     color-scheme: dark;
   }
 }
-:root[data-theme="dark"] {
-  --bg: #0f1110; --surface: #161917; --fg: #b9c0ba; --muted: #9aa29c; --heading: #e4e7e3;
-  --line: #2a2f2c; --hover: #1a1e1c; --code-bg: #1a1e1c; --brand: #9db0ff; --accent: #9db0ff; --on-brand: #0f1110;
-  --live: #5cc98e; --warn: #f0b04a; --bad: #ff7a70;
+:root[data-pact-theme="dark"] {
+  --bg: #0f1110; --surface: #161917; --hover: #1c201e; --line: #2a2f2c; --faint: #5a615d; --control-line: #6b736d;
+  --text: #e4e7e3; --ink-2: #b9c0ba; --muted: #9aa29c; --brand: #f08a6e;
+  --ok: #5cc98e; --warn: #f5b042; --bad: #f2867e;
+  --grade-c-fg: var(--bg);
   color-scheme: dark;
 }
 
@@ -49,67 +64,74 @@
   --color-ok: var(--ok);
   --color-warn: var(--warn);
   --color-bad: var(--bad);
-  --font-sans: "IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  --font-heading: "Martian Mono", "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
-  --font-mono: "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+  --font-sans: "IBM Plex Sans", system-ui, -apple-system, sans-serif;
+  --font-heading: "Martian Mono", ui-monospace, Menlo, monospace;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 }
 
 @layer base {
   body { font-size: 16px; line-height: 1.5; }
+  button, select, input { font: inherit; }
   h1, h2, h3 { line-height: 1.2; text-wrap: balance; color: var(--heading); }
   h1 { font-weight: 600; letter-spacing: -0.025em; }
   h2 { font-family: var(--font-heading); font-weight: 700; }
   :focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
-  /* Headings and sections take focus programmatically on navigation; they are not controls. */
-  h1[tabindex="-1"]:focus, section[tabindex="-1"]:focus, main:focus { outline: none; }
-  kbd { font-family: var(--font-mono); font-size: 0.8em; border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 2px; padding: 0 0.35em; background: var(--surface); }
-  code { font-family: var(--font-mono); font-size: 0.85em; background: var(--code-bg); border-radius: 2px; padding: 0.05em 0.3em; }
+  /* main takes focus for the skip link; sections keep their ring. */
+  main:focus, h1:focus { outline: none; }
+  kbd { font-family: var(--font-mono); font-size: 0.8em; border: 1px solid var(--line); border-bottom-width: 2px; padding: 0 0.35em; background: var(--surface); }
+  code { font-family: var(--font-mono); font-size: 0.85em; background: var(--code-bg); padding: 0.05em 0.3em; }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
 }
 
 @layer components {
-  .skip-link { position: absolute; left: 1rem; top: -3rem; z-index: 50; background: var(--brand); color: var(--on-brand); padding: 0.5rem 0.9rem; border-radius: 0; }
-  .skip-link:focus { top: 1rem; }
-  .wordmark { font-family: var(--font-heading); font-weight: 800; font-size: 1.125rem; color: var(--heading); }
-  .wordmark a { color: inherit; text-decoration: none; }
-  .wordmark a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .wrap { width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: 1rem; }
+  @media (min-width: 40rem) { .wrap { padding-inline: 1.5rem; } }
+  @media (min-width: 64rem) { .wrap { padding-inline: 2rem; } }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  .skip-link { position: absolute; left: 1rem; top: -4rem; z-index: 50; background: var(--surface); color: var(--text); border: 1px solid var(--text); padding: 0.75rem 1rem; }
+  .skip-link:focus { top: 0.5rem; }
+  .wordmark { font-family: var(--font-heading); font-weight: 800; font-size: 22px; letter-spacing: -0.05em; line-height: 1; color: var(--text); text-decoration: none; padding-block: 0.875rem; white-space: nowrap; }
   .wordmark .slash { color: var(--accent); }
-  .nav-link { font-family: var(--font-mono); font-size: 0.9375rem; text-transform: lowercase; color: var(--fg); text-decoration: none; padding-block: 0.25rem; border-bottom: 2px solid transparent; }
+  .nav-list { scrollbar-width: none; }
+  .nav-link { position: relative; display: block; font-family: var(--font-mono); font-size: 0.9375rem; color: var(--ink-2); text-decoration: none; padding: 0.75rem 0.625rem; white-space: nowrap; }
+  .nav-link::after { content: ""; position: absolute; left: 0.625rem; right: 0.625rem; bottom: 0.4rem; height: 2px; background: var(--brand); transform: scaleX(0); transform-origin: left; transition: transform 0.2s; }
   .nav-link:hover { color: var(--brand); }
-  .nav-link[aria-current="page"] { color: var(--heading); border-bottom-color: var(--brand); font-weight: 600; }
-  .link { color: var(--brand); text-decoration: underline; text-underline-offset: 2px; }
-  .btn { display: inline-flex; align-items: center; gap: 0.4rem; border-radius: 0; padding: 0.4rem 0.9rem; background: var(--heading); color: var(--bg); font-weight: 600; font-size: 0.875rem; }
-  .btn-quiet { display: inline-flex; align-items: center; gap: 0.4rem; border-radius: 0; font-family: var(--font-mono); padding: 0.3rem 0.6rem; border: 1px solid var(--line); font-size: 0.8125rem; color: var(--fg); background: var(--bg); }
-  .btn-quiet:hover { border-color: var(--brand); background: var(--hover); }
-  .field { border: 1px solid var(--line); border-radius: 0; padding: 0.4rem 0.6rem; background: var(--bg); color: var(--fg); font-size: 0.9rem; }
-  .card { border: 1px solid var(--line); border-radius: 2px; background: var(--surface); padding: 1.5rem; }
-  .pill { display: inline-flex; align-items: center; font-family: var(--font-mono); border-radius: 2px; padding: 0 0.55rem; font-size: 0.75rem; font-weight: 500; line-height: 1.6rem; border: 1px solid var(--line); white-space: nowrap; }
-  .pill-met { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, transparent); }
-  .pill-unmet { color: var(--bad); border-color: color-mix(in srgb, var(--bad) 40%, transparent); }
+  .nav-link:hover::after, .nav-link[aria-current="page"]::after { transform: scaleX(1); }
+  .nav-link[aria-current="page"] { color: var(--text); font-weight: 600; }
+  .link { text-decoration: underline; text-decoration-thickness: 1px; text-decoration-color: var(--faint); text-underline-offset: 0.25em; }
+  .link:hover { color: var(--brand); text-decoration-color: var(--brand); }
+  /* Primary button: ink fill, paper text. .btn is the same, for existing markup. */
+  .btn, .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; min-height: 48px; padding-inline: 1.25rem; background: var(--text); color: var(--bg); font-weight: 600; font-size: 1rem; border: 0; cursor: pointer; }
+  .btn:hover, .btn-primary:hover { opacity: 0.9; }
+  .btn-quiet { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; min-height: 44px; padding-inline: 0.75rem; font-family: var(--font-mono); font-size: 0.8125rem; color: var(--text); background: transparent; border: 1.5px solid var(--text); cursor: pointer; }
+  .nav-btn { font-family: var(--font-mono); font-size: 0.9375rem; color: var(--ink-2); background: none; border: 0; padding: 0.75rem 0.625rem; cursor: pointer; white-space: nowrap; }
+  .nav-btn:hover { color: var(--brand); }
+  .nav-btn kbd { border: 0; background: none; padding: 0; color: var(--muted); font-size: 0.8125rem; }
+  .btn-quiet:hover { background: var(--hover); color: var(--brand); }
+  .field { min-height: 44px; border: 1px solid var(--control-line); padding: 0.4rem 0.6rem; background: var(--bg); color: var(--text); font-size: 1rem; }
+  .card { border: 1px solid var(--line); background: var(--surface); padding: clamp(1.25rem, 3vw, 2rem); }
+  .legend { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 1rem; padding-block: 0.75rem; border-block: 1px solid var(--line); font-size: 0.875rem; line-height: 1.5; color: var(--ink-2); }
+  .pill { display: inline-flex; align-items: center; gap: 0.3rem; font-family: var(--font-mono); padding: 0 0.55rem; font-size: 0.8125rem; font-weight: 500; line-height: 1.6rem; border: 1px solid var(--line); background: var(--surface); white-space: nowrap; }
+  .pill-met { color: var(--ok); }
+  .pill-unmet { color: var(--bad); }
   .pill-na { color: var(--muted); }
-  .pill-draft, .pill-diff { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
-  .pill { gap: 0.3rem; }
-  .chip { display: inline-block; font-family: var(--font-mono); border: 1px solid var(--line); border-radius: 2px; padding: 0 0.6rem; font-size: 0.75rem; line-height: 1.4rem; color: var(--muted); text-transform: capitalize; white-space: nowrap; }
-  /* Category A-E: sequential tint of the brand colour, A strongest. The letter is always in the text. */
-  .badge { display: inline-block; font-family: var(--font-mono); border-radius: 2px; padding: 0 0.5rem; font-size: 0.8125rem; font-weight: 600; line-height: 1.5rem; color: var(--heading); border: 1px solid color-mix(in srgb, var(--brand) 55%, transparent); white-space: nowrap; }
-  .badge-lg { font-size: 1.25rem; line-height: 2.25rem; padding: 0 0.85rem; border-radius: 2px; }
-  .badge-a { background: var(--brand); color: var(--on-brand); border-color: var(--brand); }
-  .badge-b { background: color-mix(in srgb, var(--brand) 45%, var(--bg)); }
-  .badge-c { background: color-mix(in srgb, var(--brand) 32%, var(--bg)); }
-  .badge-d { background: color-mix(in srgb, var(--brand) 20%, var(--bg)); }
-  .badge-e { background: color-mix(in srgb, var(--brand) 10%, var(--bg)); }
+  .pill-draft, .pill-diff { color: var(--warn); }
+  .chip { display: inline-block; font-family: var(--font-mono); border: 1px solid var(--line); background: var(--surface); padding: 0 0.6rem; font-size: 0.8125rem; line-height: 1.5rem; color: var(--ink-2); text-transform: capitalize; white-space: nowrap; }
+  /* Category A-E badges share the A-F grade ramp (see touchstone.css). */
+  .badge { display: inline-block; font-family: var(--font-mono); padding: 0 0.5rem; font-size: 0.8125rem; font-weight: 600; line-height: 1.5rem; border: 1px solid transparent; white-space: nowrap; }
+  .badge-lg { font-size: 1.25rem; line-height: 2.25rem; padding: 0 0.85rem; }
   .badge-none { background: transparent; color: var(--muted); border-color: var(--muted); }
   .t-page { font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem); font-weight: 600; line-height: 1.12; letter-spacing: -0.025em; }
   .t-section { font-family: var(--font-heading); font-size: 1.125rem; font-weight: 700; line-height: 1.25; }
   .t-sub { font-size: 1.0625rem; font-weight: 600; line-height: 1.3; color: var(--heading); }
-  .t-caption { font-size: 0.8125rem; line-height: 1.5; color: var(--muted); }
-  .skel { border-radius: 0; background: var(--line); animation: skel 1.4s ease-in-out infinite alternate; }
+  .t-caption { font-size: 0.875rem; line-height: 1.5; color: var(--muted); }
+  .skel { background: var(--line); animation: skel 1.4s ease-in-out infinite alternate; }
   @keyframes skel { from { opacity: 0.45; } to { opacity: 1; } }
   .cards { display: grid; gap: 1rem; }
-  .bcard { display: block; border: 1px solid var(--line); border-radius: 2px; background: var(--surface); padding: 1.1rem 1.1rem 1rem; color: var(--fg); text-decoration: none; }
+  .bcard { display: block; border: 1px solid var(--line); background: var(--surface); padding: 1.1rem 1.1rem 1rem; color: var(--fg); text-decoration: none; }
   .bcard:hover { border-color: var(--brand); }
   .strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.75rem; }
-  .tile { display: block; height: 100%; border: 1px solid var(--line); border-radius: 2px; background: var(--surface); padding: 0.85rem 1rem; color: var(--fg); text-decoration: none; }
+  .tile { display: block; height: 100%; border: 1px solid var(--line); background: var(--surface); padding: 0.85rem 1rem; color: var(--fg); text-decoration: none; }
   .tile:hover { border-color: var(--brand); }
   .chip-row { overflow-x: auto; padding-bottom: 0.5rem; }
   .chip-row ul { width: max-content; }
@@ -117,18 +139,18 @@
   .rail ul { display: grid; gap: 0.1rem; }
   .rail a { display: block; padding: 0.35rem 0.8rem; border-left: 2px solid var(--line); color: var(--fg); text-decoration: none; }
   .rail a:hover { border-left-color: var(--brand); color: var(--brand); }
-  .filter-btn { font-family: var(--font-mono); border: 1px solid var(--line); border-radius: 0; background: var(--bg); color: var(--fg); padding: 0.2rem 0.75rem; font-size: 0.8125rem; }
-  .filter-btn:hover { border-color: var(--brand); }
-  .filter-btn[aria-pressed="true"] { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+  .filter-btn { font-family: var(--font-mono); min-height: 44px; border: 1.5px solid var(--text); background: var(--bg); color: var(--text); padding: 0.2rem 0.75rem; font-size: 0.8125rem; }
+  .filter-btn:hover { background: var(--hover); }
+  .filter-btn[aria-pressed="true"] { background: var(--text); color: var(--bg); }
   article[data-filter="met"] li[data-v]:not([data-v="met"]),
   article[data-filter="unmet"] li[data-v]:not([data-v="unmet"]),
   article[data-filter="na"] li[data-v]:not([data-v="na"]) { display: none; }
-  .table-wrap { position: relative; overflow-x: auto; max-width: 100%; border: 1px solid var(--line); border-radius: 2px; scroll-padding-left: 11rem; }
-  .sev { display: inline-block; width: 0.6rem; height: 0.6rem; border-radius: 2px; margin-right: 0.35rem; vertical-align: middle; border: 1px solid var(--line); }
+  .table-wrap { position: relative; overflow-x: auto; max-width: 100%; border: 1px solid var(--line); scroll-padding-left: 11rem; }
+  .sev { display: inline-block; width: 0.6rem; height: 0.6rem; margin-right: 0.35rem; vertical-align: middle; border: 1px solid var(--line); }
   .sev-yellow { background: var(--sev-yellow); } .sev-orange { background: var(--sev-orange); } .sev-red { background: var(--sev-red); } .sev-baseline { background: transparent; border-color: var(--fg); }
-  .bar { height: 5px; border-radius: 0; background: var(--line); overflow: hidden; min-width: 4rem; }
-  .bar > span { display: block; height: 100%; border-radius: 0; background: var(--brand); }
-  .dialog { max-width: 32rem; width: calc(100% - 2rem); border: 1px solid var(--line); border-radius: 2px; padding: 1.5rem; background: var(--surface); color: var(--fg); }
+  .bar { height: 3px; background: var(--line); overflow: hidden; min-width: 4rem; }
+  .bar > span { display: block; height: 100%; background: var(--muted); }
+  .dialog { margin: auto; max-width: 32rem; width: calc(100% - 2rem); border: 1px solid var(--line); padding: 1.5rem; background: var(--surface); color: var(--fg); }
   .dialog::backdrop { background: rgb(0 0 0 / 0.45); }
   .grid-table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 46rem; font-variant-numeric: tabular-nums; }
   .grid-table th, .grid-table td { padding: 0.75rem 0.9rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
@@ -141,6 +163,7 @@
   .grid-table tbody tr:hover td, .grid-table tbody tr:hover th { background: var(--hover); }
   .grid-table [role="gridcell"]:focus-visible, .grid-table [role="rowheader"]:focus-visible, .grid-table [role="columnheader"]:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; background: var(--surface); }
   .sort-btn { all: unset; cursor: pointer; }
+  .sort-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
   details > summary { cursor: pointer; }
   details > summary::marker { color: var(--muted); }
   blockquote.quote { border-left: 3px solid var(--line); padding-left: 0.75rem; color: var(--fg); font-style: italic; }

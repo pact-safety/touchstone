@@ -1,40 +1,51 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-pact-product="touchstone">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Touchstone</title>
+    <title>Touchstone: rigor ratings for AI benchmarks</title>
     <meta name="description" content="Rigor ratings for AI benchmarks across published benchmark-quality standards.">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="pact/touchstone">
+    <meta property="og:title" content="Touchstone: rigor ratings for AI benchmarks">
+    <meta property="og:description" content="Rigor ratings for AI benchmarks across published benchmark-quality standards.">
+    <meta property="og:image" content="https://pact-safety.org/brand/pact-avatar-dark.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Touchstone: rigor ratings for AI benchmarks">
+    <meta name="twitter:description" content="Rigor ratings for AI benchmarks across published benchmark-quality standards.">
+    <meta name="twitter:image" content="https://pact-safety.org/brand/pact-avatar-dark.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@700;800&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;600&display=swap">
     <script>
-      try { const t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch {}
+      try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.pactTheme = t; } catch {}
     </script>
   </head>
   <body class="bg-bg text-fg font-sans antialiased">
     <a href="#main" class="skip-link">Skip to content</a>
     <header class="border-b border-line">
-      <nav aria-label="Primary" class="mx-auto flex max-w-[1120px] flex-wrap items-center gap-x-6 gap-y-2 px-5 py-4">
-        <span class="wordmark"><a href="https://pact-safety.org">pact<span class="slash">/</span></a><a href="#/">touchstone</a></span>
-        <ul class="flex flex-wrap gap-x-5 gap-y-1 text-sm" role="list">
+      <nav aria-label="Primary" class="wrap flex flex-wrap items-center gap-x-4 sm:gap-x-6">
+        <a class="wordmark" href="#/">pact<span class="slash">/</span>touchstone</a>
+        <div class="ml-auto flex items-center sm:order-last">
+          <button type="button" id="shortcuts-open" class="nav-btn hidden lg:inline-flex" aria-haspopup="dialog"><span class="sr-only xl:not-sr-only">Keyboard&nbsp;</span>shortcuts <kbd>?</kbd></button>
+          <button type="button" id="theme-toggle" class="nav-btn">Theme</button>
+        </div>
+        <ul class="nav-list flex w-full flex-wrap gap-x-2 sm:w-auto" role="list">
           <li><a href="#/" data-nav="ratings" class="nav-link">Ratings</a></li>
           <li><a href="#/standards" data-nav="standards" class="nav-link">Standards</a></li>
           <li><a href="#/method" data-nav="method" class="nav-link">How it works</a></li>
           <li><a id="repo-link" class="nav-link" href="https://github.com/pact-safety/touchstone">GitHub</a></li>
         </ul>
-        <div class="ml-auto flex items-center gap-2">
-          <button type="button" id="shortcuts-open" class="btn-quiet" aria-haspopup="dialog">Keyboard shortcuts <kbd>?</kbd></button>
-          <button type="button" id="theme-toggle" class="btn-quiet" aria-label="Switch colour theme">Theme</button>
-        </div>
       </nav>
     </header>
-    <main id="main" tabindex="-1" aria-busy="true" class="mx-auto min-w-0 max-w-[1120px] px-5 py-10 focus:outline-none">
+    <main id="main" tabindex="-1" aria-busy="true" class="wrap min-w-0 py-10 focus:outline-none">
+      <noscript><style>.skel-page{display:none}</style><p class="t-sub">Touchstone needs JavaScript to show the ratings.</p><p class="mt-2">The data and scoring rules are open: see the <a class="link" href="https://github.com/pact-safety/touchstone">repository</a>.</p></noscript>
       <div class="skel-page" role="status"><span class="sr-only">Loading</span>
         <div class="skel" style="height:2.25rem;width:55%"></div><div class="skel mt-4" style="height:1rem;width:80%"></div>
         <div class="skel mt-8" style="height:7rem"></div><div class="skel mt-4" style="height:7rem"></div><div class="skel mt-4" style="height:7rem"></div></div>
     </main>
-    <footer class="mx-auto max-w-[1120px] px-5 pb-12 pt-6 text-sm text-muted">
+    <footer class="wrap mt-10 border-t border-line py-6 text-sm text-muted">
       A <a class="link" href="https://github.com/pact-safety">PACT</a> project. Ratings are computed from item verdicts by a published, deterministic engine; every verdict cites its evidence.
     </footer>
     <div id="announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
@@ -45,14 +56,10 @@
         <dt><kbd>g</kbd> then <kbd>r</kbd></dt><dd>Go to ratings</dd>
         <dt><kbd>g</kbd> then <kbd>s</kbd></dt><dd>Go to standards</dd>
         <dt><kbd>g</kbd> then <kbd>m</kbd></dt><dd>Go to how it works</dd>
-        <dt>Arrow keys</dt><dd>Move between cells in the ratings table</dd>
-        <dt><kbd>Home</kbd> / <kbd>End</kbd></dt><dd>First or last cell in a row (with <kbd>Ctrl</kbd>: in the table)</dd>
-        <dt><kbd>Page Up</kbd> / <kbd>Page Down</kbd></dt><dd>Move ten rows</dd>
-        <dt><kbd>Enter</kbd></dt><dd>Open the benchmark (or sort, on a column heading)</dd>
-        <dt><kbd>Esc</kbd></dt><dd>Back to the ratings table, at the row you left</dd>
+        <dt><kbd>Esc</kbd></dt><dd>Back to the ratings from a benchmark or comparison</dd>
         <dt><kbd>?</kbd></dt><dd>Show this list</dd>
       </dl>
-      <form method="dialog" class="mt-6"><button class="btn">Close</button></form>
+      <form method="dialog" class="mt-6"><button class="btn btn-primary">Close</button></form>
     </dialog>
     <script type="module" src="./src/main.ts"></script>
   </body>

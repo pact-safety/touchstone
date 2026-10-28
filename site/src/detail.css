@@ -1,0 +1,51 @@
+/* Benchmark detail, standards and method views. Consumes the shared tokens; defines nothing shared. */
+.pill-partly { color: var(--warn); border-color: color-mix(in srgb, var(--warn) 45%, transparent); }
+article[data-filter="partly"] li[data-v]:not([data-v="partly"]) { display: none; }
+
+/* One standards nav: a scrolling chip row on small screens, a sticky rail from 64rem. */
+.std-nav ul { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.5rem; }
+.std-nav a { display: block; white-space: nowrap; padding: 0.4rem 0.8rem; border: 1px solid var(--line); color: var(--text, var(--fg)); text-decoration: none; font-size: 0.875rem; }
+.std-nav a:hover { border-color: var(--brand); color: var(--brand); }
+.std-layout > * + * { margin-top: 1.5rem; }
+@media (min-width: 64rem) {
+  .std-layout { display: grid; grid-template-columns: 12rem minmax(0, 1fr); gap: 2.5rem; }
+  .std-layout > * + * { margin-top: 0; }
+  .std-layout > :only-child { grid-column: 1 / -1; }
+  .std-nav { position: sticky; top: 1.5rem; align-self: start; }
+  .std-nav ul { display: grid; gap: 0.1rem; overflow: visible; padding: 0; }
+  .std-nav a { border: 0; border-left: 2px solid var(--line); padding: 0.35rem 0.8rem; }
+  .std-nav a:hover { border-left-color: var(--brand); }
+}
+
+.pager { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; }
+
+.report > summary { color: var(--muted); width: max-content; }
+.evidence + .evidence { margin-top: 0.25rem; }
+
+/* Brief highlight on the section or item a link just took the reader to. */
+@keyframes ts-flash { from { background: color-mix(in srgb, var(--brand) 22%, transparent); } to { background: transparent; } }
+.flash { animation: ts-flash 1.8s ease-out; }
+
+/* Tables of key/value rows stack below 40rem so no column is squeezed to a word per line. */
+@media (max-width: 39.999rem) {
+  .stack-table, .stack-table tbody, .stack-table tr, .stack-table th, .stack-table td { display: block; width: 100%; }
+  .stack-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .stack-table tbody tr { padding: 0.5rem 0; }
+  .stack-table th[scope="row"] { padding-bottom: 0.1rem; }
+  .stack-table td { padding-top: 0.1rem; padding-bottom: 0.1rem; }
+  .stack-table td[data-label]::before { content: attr(data-label) ": "; display: block; font-size: 0.8125rem; color: var(--muted); }
+}
+
+/* Key/value lists (provenance, score calculation, run cost): long paths and URLs wrap instead of widening the page. */
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); }
+.kv dd { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 39.999rem) {
+  .kv { grid-template-columns: minmax(0, 1fr); }
+  .kv dd { margin-bottom: 0.6rem; }
+}
+
+/* Touch screens: action links and disclosure summaries get a 44px hit area; links inside running prose are left alone. */
+@media (max-width: 57.999rem) {
+  .tap, .kv dd a { display: inline-flex; align-items: center; min-height: 44px; }
+  details > summary { min-height: 44px; padding-block: 0.6rem; }
+}

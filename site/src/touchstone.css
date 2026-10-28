@@ -1,16 +1,27 @@
-/* Grade badges for the Touchstone score. The letter is always in the text; colour only reinforces it. */
-.ts-grade {
+/* Square corners everywhere (unlayered, so it also beats Tailwind's rounded-* utilities). */
+*, ::before, ::after { border-radius: 0; }
+
+/* One grade ramp for Touchstone grades A-F and AISL categories A-E. The letter is always in the text;
+   colour only reinforces it. Fill/text pairs are tokens in styles.css, checked >= 4.5:1 in both themes. */
+.ts-grade, .ts-grade-a, .ts-grade-b, .ts-grade-c, .ts-grade-d, .ts-grade-e, .ts-grade-f {
   display: inline-block;
-  min-width: 1.6em;
-  padding: 0 0.4em;
-  border: 1px solid var(--line);
-  border-radius: 0.375rem;
-  color: var(--fg);
+  min-width: 1.8em;
+  padding: 0 0.45em;
+  border: 1px solid transparent;
+  font-family: var(--font-mono);
   font-weight: 600;
+  line-height: 1.6;
   text-align: center;
+  white-space: nowrap;
+  color: var(--text);
   background: var(--surface);
 }
 .ts-grade-lg { font-size: 1.5rem; padding: 0.1em 0.5em; }
-.ts-grade-a, .ts-grade-b { background: color-mix(in srgb, var(--ok) 22%, var(--surface)); }
-.ts-grade-c, .ts-grade-d { background: color-mix(in srgb, var(--warn) 22%, var(--surface)); }
-.ts-grade-e, .ts-grade-f { background: color-mix(in srgb, var(--bad) 22%, var(--surface)); }
+.ts-grade-a, .badge-a { background: var(--grade-a); color: var(--grade-a-fg); }
+.ts-grade-b, .badge-b { background: var(--grade-b); color: var(--grade-b-fg); }
+.ts-grade-c, .badge-c { background: var(--grade-c); color: var(--grade-c-fg); }
+.ts-grade-d, .badge-d { background: var(--grade-d); color: var(--grade-d-fg); }
+.ts-grade-e, .badge-e { background: var(--grade-e); color: var(--grade-e-fg); }
+.ts-grade-f { background: var(--grade-f); color: var(--grade-f-fg); }
+/* Pale steps need an edge to read as a pill against the page. */
+.ts-grade-e, .ts-grade-f, .badge-e { border-color: var(--faint); }
