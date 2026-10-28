@@ -841,13 +841,16 @@ document.addEventListener('keydown', (e) => {
 // ---------- Theme ----------
 const themeBtn = document.getElementById('theme-toggle')!;
 const currentTheme = () => document.documentElement.dataset.pactTheme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-const labelTheme = () => { const t = currentTheme(); themeBtn.removeAttribute('aria-label'); /* visible text is the accessible name */ themeBtn.textContent = t === 'dark' ? 'Light theme' : 'Dark theme'; };
+// The button names the theme a click switches to; the sr-only prefix and title say so.
+const labelTheme = () => { const to = currentTheme() === 'dark' ? 'light' : 'dark'; themeBtn.innerHTML = `<span class="sr-only">Switch to </span>${to === 'dark' ? 'Dark' : 'Light'} theme`; themeBtn.title = `Switch to ${to} theme`; };
 themeBtn.addEventListener('click', () => {
   const next = currentTheme() === 'dark' ? 'light' : 'dark';
   document.documentElement.dataset.pactTheme = next;
   try { localStorage.setItem('theme', next); } catch {}
   labelTheme();
 });
+// With no saved choice the page follows the OS, so the label must follow it too.
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', labelTheme);
 labelTheme();
 
 async function init() {
