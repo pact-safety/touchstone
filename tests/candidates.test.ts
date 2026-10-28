@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { parseFeed, sanitize } from '../src/feeds.ts';
 import {
-  arxivPrefilter, dropSeen, inWindow, issueFor, loadWatchConfig, newsPrefilter, prune, run, triageItem, triagePrompt,
+  arxivPrefilter, digestFor, dropSeen, files, inWindow, issueFor, loadWatchConfig, newsPrefilter, prune, run, triageItem, triagePrompt,
   type Gh, type Item, type SeenState, type Usage,
 } from '../src/candidates.ts';
 
@@ -73,28 +73,32 @@ describe('prefilter', () => {
 
 const reply = (content: string, usage: unknown = { prompt_tokens: 10, completion_tokens: 5, cost: 0.001 }) => async () =>
   new Response(JSON.stringify({ choices: [{ message: { content } }], usage }), { status: 200 });
+/** A valid triage reply as JSON text, with overrides (undefined removes a key). */
+const V = (o: Record<string, unknown> = {}) => JSON.stringify({ relevant: true, kind: 'benchmark', primary_contribution: true, confidence: 'high', reason: 'ok', ...o });
 const llm = { baseUrl: 'http://fake', model: 'm', temperature: 0, seed: 1, maxTokens: 100 };
 const fresh = (): Usage => ({ calls: 0, prompt_tokens: 0, completion_tokens: 0, cost: 0, cost_reported: false });
 
 describe('triage', () => {
   it('accepts a valid verdict (also in a code fence) and records usage', async () => {
     const u = fresh();
-    const v = await triageItem(llm, item(), u, reply('```json\n{"relevant":true,"kind":"benchmark","reason":"new suite"}\n```'));
-    expect(v).toEqual({ relevant: true, kind: 'benchmark', reason: 'new suite' });
+    const v = await triageItem(llm, item(), u, reply('```json\n{"relevant":true,"kind":"benchmark","primary_contribution":true,"confidence":"high","reason":"new suite"}\n```'));
+    expect(v).toEqual({ relevant: true, kind: 'benchmark', primary_contribution: true, confidence: 'high', reason: 'new suite' });
     expect(u).toMatchObject({ calls: 1, prompt_tokens: 10, completion_tokens: 5, cost: 0.001, cost_reported: true });
   });
   it('reads estimated_cost when cost is absent', async () => {
     const u = fresh();
-    await triageItem(llm, item(), u, reply('{"relevant":false,"kind":"other","reason":"x"}', { prompt_tokens: 1, completion_tokens: 1, estimated_cost: 0.5 }));
+    await triageItem(llm, item(), u, reply(V({ relevant: false, kind: 'other' }), { prompt_tokens: 1, completion_tokens: 1, estimated_cost: 0.5 }));
     expect(u.cost).toBe(0.5);
   });
   it.each([
     ['not json', 'I think this is relevant'],
-    ['bad kind', '{"relevant":true,"kind":"paper","reason":"x"}'],
-    ['relevant string', '{"relevant":"yes","kind":"benchmark","reason":"x"}'],
-    ['missing reason', '{"relevant":true,"kind":"benchmark"}'],
-    ['extra key', '{"relevant":true,"kind":"benchmark","reason":"x","issue":"create"}'],
-    ['relevant but other', '{"relevant":true,"kind":"other","reason":"x"}'],
+    ['bad kind', V({ kind: 'paper' })],
+    ['relevant string', V({ relevant: 'yes' })],
+    ['missing reason', V({ reason: undefined })],
+    ['missing primary_contribution', V({ primary_contribution: undefined })],
+    ['bad confidence', V({ confidence: 'certain' })],
+    ['extra key', V({ issue: 'create' })],
+    ['relevant but other', V({ kind: 'other' })],
   ])('treats %s as not relevant', async (_n, content) => {
     expect(await triageItem(llm, item(), fresh(), reply(content))).toBeNull();
   });
@@ -109,6 +113,18 @@ describe('triage', () => {
   });
 });
 
+describe('files', () => {
+  const v = (o = {}) => JSON.parse(V(o));
+  it('needs relevant, primary contribution and confidence above low', () => {
+    expect(files(v())).toBe(true);
+    expect(files(v({ confidence: 'medium' }))).toBe(true);
+    expect(files(v({ confidence: 'low' }))).toBe(false);
+    expect(files(v({ primary_contribution: false }))).toBe(false);
+    expect(files(v({ relevant: false, kind: 'other' }))).toBe(false);
+    expect(files(null)).toBe(false);
+  });
+});
+
 describe('sanitize and issues', () => {
   it('defuses @mentions, #refs, HTML and backticks and caps length', () => {
     const s = sanitize('<script>alert(1)</script><b>Hi</b> @octocat see org/repo#12 `x` ' + 'y'.repeat(500), 100);
@@ -118,8 +134,19 @@ describe('sanitize and issues', () => {
     expect(s).not.toMatch(/[<>`]|alert/);
     expect(s.length).toBeLessThanOrEqual(100);
   });
+  it('builds a digest with standards first and defused text', () => {
+    const d = digestFor('2026-10-28', [
+      { item: item({ title: 'B [x] @bob', arxivId: '2510.1', url: 'https://arxiv.org/abs/2510.1' }), kind: 'benchmark', reason: 'r1', confidence: 'high' },
+      { item: item({ title: 'S', arxivId: '2510.2', url: 'https://arxiv.org/abs/2510.2' }), kind: 'standard', reason: 'r2', confidence: 'medium' },
+    ]);
+    expect(d.title).toBe('[arXiv digest] 2026-10-28: 2 candidate benchmarks/standards');
+    expect(d.label).toBe('candidate-benchmark');
+    expect(d.body.indexOf('### Standards')).toBeLessThan(d.body.indexOf('### Benchmarks'));
+    expect(d.body).toContain('[S](https://arxiv.org/abs/2510.2) | arXiv 2510.2 | standard | medium | r2');
+    expect(d.body).not.toMatch(/@bob/);
+  });
   it('builds the issue title and body', () => {
-    const i = issueFor(item({ title: '@team <i>FooBench</i>', arxivId: '2510.1', url: 'https://arxiv.org/abs/2510.1' }), { relevant: true, kind: 'benchmark', reason: 'cc @maintainers' });
+    const i = issueFor(item({ title: '@team <i>FooBench</i>', arxivId: '2510.1', url: 'https://arxiv.org/abs/2510.1' }), { relevant: true, kind: 'benchmark', primary_contribution: true, confidence: 'high', reason: 'cc @maintainers' });
     expect(i.title).toBe('[candidate benchmark] @​team FooBench');
     expect(i.label).toBe('candidate-benchmark');
     expect(i.body).toContain('arXiv: 2510.1');
@@ -133,10 +160,10 @@ describe('run', () => {
   const oneFeed = { ...cfg, news: { ...cfg.news, feeds: [cfg.news.feeds[1]!] } };
   const gh = (existing: string[] = []) => {
     const created: string[] = [];
-    const g: Gh = { exists: async (n) => existing.some((e) => e.includes(n)), ensureLabels: async () => {}, create: async (t) => { created.push(t); } };
+    const g: Gh = { exists: async (n) => existing.some((e) => e.includes(n)), titleExists: async (p) => existing.some((e) => e.startsWith(p)), ensureLabels: async () => {}, create: async (t) => { created.push(t); } };
     return { g, created };
   };
-  const base = (extra: object) => ({ source: 'news' as const, cfg: oneFeed, llm, state: { seen: {}, http: {} } as SeenState, dryRun: false, now: NOW, fetchImpl: (async () => new Response(feedXml(3), { status: 200, headers: { etag: '"e1"' } })) as typeof fetch, llmFetch: reply('{"relevant":true,"kind":"benchmark","reason":"ok"}'), ...extra });
+  const base = (extra: object) => ({ source: 'news' as const, cfg: oneFeed, llm, state: { seen: {}, http: {} } as SeenState, dryRun: false, now: NOW, fetchImpl: (async () => new Response(feedXml(3), { status: 200, headers: { etag: '"e1"' } })) as typeof fetch, llmFetch: reply(V()), searchPause: 0, ...extra });
 
   it('files issues, marks seen, stores the ETag, and dedupes against existing issues', async () => {
     const { g, created } = gh(['Source: https://example.org/1']);
@@ -165,5 +192,40 @@ describe('run', () => {
     const r = await run(o as never);
     expect(r).toMatchObject({ triaged: 3, invalid: 3, relevant: 0 });
     expect(created).toHaveLength(0);
+  });
+
+  describe('arXiv digest', () => {
+    const atom = (n: number) => `<feed>${Array.from({ length: n }, (_, k) => `<entry><id>http://arxiv.org/abs/2610.${100 + k}v1</id><published>${new Date(NOW.getTime() - (k + 1) * 36e5).toISOString()}</published><title>FooBench ${k}: a benchmark</title><summary>We introduce FooBench.</summary><link href="http://arxiv.org/abs/2610.${100 + k}v1" rel="alternate"/></entry>`).join('')}</feed>`;
+    const arx = (extra: object) => ({ ...base({}), source: 'arxiv' as const, cfg, fetchImpl: (async () => new Response(atom(3), { status: 200 })) as typeof fetch, ...extra });
+
+    it('files one digest, not one issue per paper, and marks papers seen', async () => {
+      const { g, created } = gh();
+      const o = arx({ gh: g });
+      const r = await run(o as never);
+      expect(created).toEqual(['[arXiv digest] 2026-10-28: 3 candidate benchmarks/standards']);
+      expect(r.candidates.every((c) => c.issue === 'digest')).toBe(true);
+      expect(Object.keys(o.state.seen)).toHaveLength(3);
+    });
+    it('files nothing when no paper passes the gate', async () => {
+      const { g, created } = gh();
+      const r = await run(arx({ gh: g, llmFetch: reply(V({ confidence: 'low' })) }) as never);
+      expect(created).toHaveLength(0);
+      expect(r).toMatchObject({ triaged: 3, modelRelevant: 3, relevant: 0 });
+      expect(r.digest).toBeUndefined();
+    });
+    it('does not repeat a digest for the same date and leaves its papers unseen', async () => {
+      const { g, created } = gh(['[arXiv digest] 2026-10-28: 1 candidate benchmarks/standards']);
+      const o = arx({ gh: g });
+      const r = await run(o as never);
+      expect(created).toHaveLength(0);
+      expect(r.digest?.result).toBe('duplicate');
+      expect(o.state.seen).toEqual({});
+    });
+    it('drops papers already listed in an earlier digest', async () => {
+      const { g, created } = gh(['- [FooBench 0](http://arxiv.org/abs/2610.100v1) | arXiv 2610.100']);
+      const r = await run(arx({ gh: g }) as never);
+      expect(r.candidates.filter((c) => c.issue === 'duplicate')).toHaveLength(1);
+      expect(created).toEqual(['[arXiv digest] 2026-10-28: 2 candidate benchmarks/standards']);
+    });
   });
 });
