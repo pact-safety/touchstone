@@ -84,10 +84,13 @@
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 }
 
+/* Paint here, not via html/body attributes: claude.ai replaces our <html>/<body> and drops them.
+   Unlayered so a host page's own unlayered body styles can't win over it. */
+html, body { background: var(--bg); color: var(--text); }
+body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
 @layer base {
-  /* Paint here, not via html/body attributes: claude.ai replaces our <html>/<body> and drops them. */
-  html, body { background: var(--bg); color: var(--text); }
-  body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-size: 16px; line-height: 1.5; }
+  body { font-size: 16px; line-height: 1.5; }
   button, select, input { font: inherit; }
   h1, h2, h3 { line-height: 1.2; text-wrap: balance; color: var(--heading); }
   h1 { font-weight: 600; letter-spacing: -0.025em; }
