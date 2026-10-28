@@ -1,36 +1,37 @@
 /* Ratings table, cards, filters and compare view. Consumes the shared tokens; defines only rt-* classes. */
 .rt-legend { max-width: 52rem; font-size: 0.875rem; color: var(--muted); }
-.rt-legend summary { cursor: pointer; min-height: 1.5rem; }
+.rt-legend summary { cursor: pointer; }
 .rt-key { display: grid; grid-template-columns: max-content 1fr; gap: 0.35rem 1rem; margin-top: 0.5rem; }
 .rt-key dt { font-weight: 600; color: var(--heading, var(--text)); }
 
-/* Filters: always visible from 52rem; behind a toggle below it. Controls are at least 44px tall. */
+/* Filters: always visible from 58rem; behind a toggle below it. Controls are at least 44px tall. */
 .rt-toggle { min-height: 44px; padding-inline: 1rem; }
 .rt-panel { display: none; gap: 0.75rem; }
 .rt-panel.is-open { display: grid; }
 .rt-panel .field, .rt-cmp, .sort-btn { min-height: 44px; }
 .rt-panel .field { width: 100%; border-color: var(--control-line, var(--line)); }
-@media (min-width: 52rem) {
+@media (min-width: 58rem) {
   .rt-toggle, .rt-sortsel { display: none; }
   .rt-panel { display: flex; flex-wrap: wrap; align-items: end; }
   .rt-panel .field { width: auto; min-height: 40px; }
   #q { width: 14rem; }
 }
 
-/* Plain table: header sticks to the viewport top (no scroll wrapper, so sticky works). */
+/* Plain table: header sticks to the viewport top (no scroll wrapper, so sticky works). It has no fixed width:
+   the name column and headers wrap, and it fits from 58rem up (about 840px minimum); below that the cards take over. */
 .rt { width: 100%; border-collapse: separate; border-spacing: 0; font-variant-numeric: tabular-nums; }
-.rt th, .rt td { padding: 0.55rem 0.8rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+.rt th, .rt td { padding: 0.55rem 0.6rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
 .rt thead th { position: sticky; top: 0; z-index: 2; background: var(--bg); border-bottom: 2px solid var(--control-line, var(--line));
-  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+  font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 600; color: var(--muted); }
 .rt tbody tr:hover > * { background: var(--hover); }
 .rt tbody th { font-weight: 400; }
 .rt .rt-sel { width: 3rem; padding-inline: 0.25rem; text-align: center; }
-.rt-name { width: 34%; max-width: 22rem; }
+.rt-name { min-width: 11rem; }
 .rt-link { font-weight: 600; color: var(--heading, var(--text)); text-decoration: none; }
 .rt-link:hover { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
-.rt-sub { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.2rem; min-width: 0; }
-.rt-concept { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 0.8125rem; color: var(--muted); }
-.rt-grade, .rt-run { white-space: nowrap; }
+.rt-sub { display: flex; align-items: flex-start; gap: 0.5rem; margin-top: 0.2rem; min-width: 0; }
+.rt-concept { min-width: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 0.8125rem; color: var(--muted); }
+.rt-grade { white-space: nowrap; }
 .rt-nowrap { white-space: nowrap; }
 .rt-count { display: block; font-size: 0.8125rem; color: var(--muted); }
 .rt-best { line-height: 1.3rem; margin-left: 0.25rem; }
@@ -52,8 +53,9 @@ th[aria-sort="ascending"], th[aria-sort="descending"] { color: var(--heading, va
 .rt-tray { position: sticky; bottom: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 1rem; padding: 0.75rem 1rem;
   background: var(--surface); border: 1px solid var(--control-line, var(--line)); }
 .rt-tray[hidden] { display: none; }
-.rt-scroll { overflow-x: auto; }
+.rt-scroll { position: relative; overflow-x: auto; } /* relative: contains the .sr-only spans, which are absolutely positioned */
 .rt-compare { min-width: 36rem; }
 .rt-compare th[scope="row"] { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--muted); white-space: nowrap; width: 11rem; }
 .rt-compare td { vertical-align: top; }
 .rt-empty { border: 1px dashed var(--control-line, var(--line)); padding: 2rem 1.5rem; }
+@media (max-width: 57.999rem) { .bcard .rt-link { display: inline-flex; align-items: center; min-height: 44px; } }

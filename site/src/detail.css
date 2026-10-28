@@ -35,3 +35,17 @@ article[data-filter="partly"] li[data-v]:not([data-v="partly"]) { display: none;
   .stack-table td { padding-top: 0.1rem; padding-bottom: 0.1rem; }
   .stack-table td[data-label]::before { content: attr(data-label) ": "; display: block; font-size: 0.8125rem; color: var(--muted); }
 }
+
+/* Key/value lists (provenance, score calculation, run cost): long paths and URLs wrap instead of widening the page. */
+.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); }
+.kv dd { min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 39.999rem) {
+  .kv { grid-template-columns: minmax(0, 1fr); }
+  .kv dd { margin-bottom: 0.6rem; }
+}
+
+/* Touch screens: action links and disclosure summaries get a 44px hit area; links inside running prose are left alone. */
+@media (max-width: 57.999rem) {
+  .tap, .kv dd a { display: inline-flex; align-items: center; min-height: 44px; }
+  details > summary { min-height: 44px; padding-block: 0.6rem; }
+}
