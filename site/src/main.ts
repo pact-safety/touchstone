@@ -840,7 +840,9 @@ document.addEventListener('keydown', (e) => {
 
 // ---------- Theme ----------
 const themeBtn = document.getElementById('theme-toggle')!;
-const currentTheme = () => document.documentElement.dataset.pactTheme ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+// data-theme is honoured because the claude.ai preview host sets it on <html> to match its own theme.
+const hostTheme = () => { const t = document.documentElement.dataset.theme; return t === 'light' || t === 'dark' ? t : undefined; };
+const currentTheme = () => document.documentElement.dataset.pactTheme ?? hostTheme() ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 // The button names the theme a click switches to; the sr-only prefix and title say so.
 const labelTheme = () => { const to = currentTheme() === 'dark' ? 'light' : 'dark'; themeBtn.innerHTML = `<span class="sr-only">Switch to </span>${to === 'dark' ? 'Dark' : 'Light'} theme`; themeBtn.title = `Switch to ${to} theme`; };
 themeBtn.addEventListener('click', () => {
@@ -851,6 +853,7 @@ themeBtn.addEventListener('click', () => {
 });
 // With no saved choice the page follows the OS, so the label must follow it too.
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', labelTheme);
+new MutationObserver(labelTheme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 labelTheme();
 
 async function init() {

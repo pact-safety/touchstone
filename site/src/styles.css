@@ -37,8 +37,9 @@
   --sev-red: #d13b3b;
   color-scheme: light;
 }
+/* Priority: our toggle (data-pact-theme) > host page theme (data-theme, set by claude.ai) > OS. */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-pact-theme="light"]) {
+  :root:not([data-pact-theme="light"]):not([data-theme="light"]) {
     --bg: #0f1110; --surface: #161917; --hover: #1c201e; --line: #2a2f2c; --faint: #5a615d; --control-line: #6b736d;
     --text: #e4e7e3; --ink-2: #b9c0ba; --muted: #9aa29c; --brand: #f08a6e;
     --ok: #5cc98e; --warn: #f5b042; --bad: #f2867e;
@@ -47,7 +48,8 @@
     color-scheme: dark;
   }
 }
-:root[data-pact-theme="dark"] {
+:root[data-pact-theme="dark"],
+:root[data-theme="dark"]:not([data-pact-theme="light"]) {
   --bg: #0f1110; --surface: #161917; --hover: #1c201e; --line: #2a2f2c; --faint: #5a615d; --control-line: #6b736d;
   --text: #e4e7e3; --ink-2: #b9c0ba; --muted: #9aa29c; --brand: #f08a6e;
   --ok: #5cc98e; --warn: #f5b042; --bad: #f2867e;
