@@ -18,14 +18,14 @@
   --ok: #1e6b45;
   --warn: #8a5a00;
   --bad: #b3261e;
-  /* Grade ramp A-F: PACT ink laid over the page at falling strength, so it is the same weight in both themes and
-     survives colour blindness (it is luminance only; the letter is always printed). Text >= 4.5:1 on every step. */
-  --grade-a: color-mix(in srgb, var(--text) 84%, var(--bg)); --grade-a-fg: var(--bg);
-  --grade-b: color-mix(in srgb, var(--text) 66%, var(--bg)); --grade-b-fg: var(--bg);
-  --grade-c: color-mix(in srgb, var(--text) 51%, var(--bg)); --grade-c-fg: var(--text);
-  --grade-d: color-mix(in srgb, var(--text) 30%, var(--bg)); --grade-d-fg: var(--text);
-  --grade-e: color-mix(in srgb, var(--text) 16%, var(--bg)); --grade-e-fg: var(--text);
-  --grade-f: color-mix(in srgb, var(--text) 6%, var(--bg)); --grade-f-fg: var(--text);
+  /* Grade ramp A-F: semantic, from the status hues. A solid ok, B ok tint, C warn tint, D solid warn, E err tint,
+     F solid err. The letter is always printed; text >= 4.5:1 on every fill; tints carry a 1px edge (touchstone.css). */
+  --grade-a: #1e6b45; --grade-a-fg: #ffffff;
+  --grade-b: #bfe3cd; --grade-b-fg: #111312;
+  --grade-c: #efc880; --grade-c-fg: #111312;
+  --grade-d: #8a5a00; --grade-d-fg: #ffffff;
+  --grade-e: #f0bdb8; --grade-e-fg: #111312;
+  --grade-f: #b3261e; --grade-f-fg: #ffffff;
   /* Aliases kept for existing selectors and Tailwind colour names. */
   --fg: var(--text);
   --heading: var(--text);
@@ -44,7 +44,12 @@
     --text: #e4e7e3; --ink-2: #b9c0ba; --muted: #9aa29c; --brand: #f08a6e;
     --ok: #5cc98e; --warn: #f5b042; --bad: #f2867e;
     --sev-yellow: #c9b800; --sev-orange: #e07b00;
-    --grade-c-fg: var(--bg);
+    --grade-a: #5cc98e; --grade-a-fg: #0f1110;
+    --grade-b: #1b4d36; --grade-b-fg: #e4e7e3;
+    --grade-c: #56400f; --grade-c-fg: #e4e7e3;
+    --grade-d: #f5b042; --grade-d-fg: #0f1110;
+    --grade-e: #4d2724; --grade-e-fg: #e4e7e3;
+    --grade-f: #f2867e; --grade-f-fg: #0f1110;
     color-scheme: dark;
   }
 }
@@ -54,7 +59,12 @@
   --text: #e4e7e3; --ink-2: #b9c0ba; --muted: #9aa29c; --brand: #f08a6e;
   --ok: #5cc98e; --warn: #f5b042; --bad: #f2867e;
   --sev-yellow: #c9b800; --sev-orange: #e07b00;
-  --grade-c-fg: var(--bg);
+  --grade-a: #5cc98e; --grade-a-fg: #0f1110;
+  --grade-b: #1b4d36; --grade-b-fg: #e4e7e3;
+  --grade-c: #56400f; --grade-c-fg: #e4e7e3;
+  --grade-d: #f5b042; --grade-d-fg: #0f1110;
+  --grade-e: #4d2724; --grade-e-fg: #e4e7e3;
+  --grade-f: #f2867e; --grade-f-fg: #0f1110;
   color-scheme: dark;
 }
 
@@ -75,7 +85,9 @@
 }
 
 @layer base {
-  body { font-size: 16px; line-height: 1.5; }
+  /* Paint here, not via html/body attributes: claude.ai replaces our <html>/<body> and drops them. */
+  html, body { background: var(--bg); color: var(--text); }
+  body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-size: 16px; line-height: 1.5; }
   button, select, input { font: inherit; }
   h1, h2, h3 { line-height: 1.2; text-wrap: balance; color: var(--heading); }
   h1 { font-weight: 600; letter-spacing: -0.025em; }
