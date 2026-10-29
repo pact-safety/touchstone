@@ -130,7 +130,8 @@ export function finalize(std: Standard, item: Item, raw: unknown, shown: Map<str
   let dropped = 0;
   for (const e of Array.isArray(r.evidence) ? r.evidence : []) {
     const { excerpt, quote } = (e ?? {}) as { excerpt?: unknown; quote?: unknown };
-    if (typeof quote !== 'string' || quote.split(/\s+/).length > 40) { dropped++; continue; }
+    // 40 words can still exceed the schema's 400-character quote limit (long tokens), which would make the file invalid.
+    if (typeof quote !== 'string' || quote.split(/\s+/).length > 40 || quote.trim().length > 400) { dropped++; continue; }
     // The cited chunk first (models copy the prompt's `[id]` header brackets), then any other chunk shown in this group, never beyond.
     const cited = typeof excerpt === 'string' ? shown.get(excerpt.trim().replace(/^\[(.*)\]$/s, '$1').trim()) : undefined;
     const c = [cited, ...shown.values()].find((x) => x && verifyQuote(quote, x.text));
