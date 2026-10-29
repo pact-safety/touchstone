@@ -6,8 +6,9 @@
  *   watch [--write]                  Check sources for changes; print (and with --write, save) the work queue.
  *   watch --source arxiv|news [--dry-run] [--max N]
  *                                    File candidate-benchmark / candidate-standard issues for new papers and news (see docs/automation.md).
- *   assess [--benchmark id] [--standard id] [--queue] [--max-calls n] [--excerpt-chars n]
+ *   assess [--benchmark id] [--standard id] [--queue] [--max-calls n] [--excerpt-chars n] [--date d]
  *                                    Run the automated assessor (see docs/automation.md for environment variables).
+ *                                    Retries rate-limited pairs; re-running with the same --date skips pairs already recorded that day.
  *   bakeoff --models id,id [--benchmark id] [--max-calls n] [--excerpt-chars n] [--replay dir] [--out dir]
  *                                    Run candidate models on the benchmarks BetterBench assessed by hand and score them against it.
  *   replay --benchmark id --standard id
@@ -23,6 +24,7 @@ import { load } from './load.ts';
 import { validate } from './validate.ts';
 import { writeSiteData } from './build.ts';
 import { check, queue, inScope, type WatchState } from './watch.ts';
+import { recordedOn } from './assess/resume.ts';
 import { assess, promptTemplate, renderPrompt, selectExcerpts, type TranscriptEntry } from './assess/run.ts';
 import { currentPins, fetchSources, type FetchedSource } from './assess/sources.ts';
 import { sha256, verifyQuote } from './assess/text.ts';
@@ -157,16 +159,25 @@ async function main() {
         const b = c.benchmarks.find((x) => x.value.id === t.benchmark)!.value;
         const s = c.standards.find((x) => x.value.id === t.standard)!.value;
         // A pair needs one call per group; never start one the budget can't finish.
+        if (recordedOn(join(root, `data/assessments/${b.id}/${s.id}.auto.yaml`), date)) { console.log(`${b.id} × ${s.id}: already recorded on ${date}; skipped`); continue; }
         if (used + s.groups.length > budget) { console.log(`call budget reached; ${targets.length - targets.indexOf(t)} pair(s) left for the next run`); break; }
         const { pins, sources } = await sourcesFor(b);
         if (!sources.length) { console.log(`${b.id}: no paper or repo to read; skipped`); continue; }
         const transcriptPath = `data/runs/${b.id}/${s.id}/${date}.jsonl`;
-        const run = await assess({
-          benchmark: b, standard: s, sources, llm, provider: entry.provider, license: entry.license, runOn: date,
-          transcriptPath, pins: { paper_version: pins.paper_version, repo_commit: pins.repo_commit }, modelDigest,
-          excerptChars: excerptChars(values['excerpt-chars']),
-        });
-        used += run.calls;
+        // A rate-limited pair waits and retries (30s, 60s, 120s), as in the bakeoff; retries spend budget like any call.
+        let run;
+        for (let retry = 0; ; retry++) {
+          run = await assess({
+            benchmark: b, standard: s, sources, llm, provider: entry.provider, license: entry.license, runOn: date,
+            transcriptPath, pins: { paper_version: pins.paper_version, repo_commit: pins.repo_commit }, modelDigest,
+            excerptChars: excerptChars(values['excerpt-chars']),
+          });
+          used += run.calls;
+          const limited = run.transcript.some((e) => e.error && /rate limited/.test(e.error));
+          if (run.complete || retry >= 3 || !limited || used + s.groups.length > budget) break;
+          console.log(`${b.id} × ${s.id}: rate limited; retry ${retry + 1} of 3 after ${30 * 2 ** retry}s`);
+          await new Promise((r) => setTimeout(r, 30000 * 2 ** retry));
+        }
         // An assessment is only recorded when every group got a usable answer. A partial or failed run is
         // reported and its transcript kept outside the data, so nothing half-assessed is ever scored.
         if (!run.complete) {

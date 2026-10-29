@@ -1,4 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import { mkdtempSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { recordedOn } from '../src/assess/resume.ts';
 import { load } from '../src/load.ts';
 import { validate } from '../src/validate.ts';
 import { score } from '../src/engine.ts';
@@ -309,5 +313,16 @@ describe('parseJson', () => {
   it('throws on garbage', () => {
     expect(() => parseJson('no json here')).toThrow('no JSON object in reply');
     expect(() => parseJson('{broken')).toThrow();
+  });
+});
+
+describe('recordedOn (assess resume)', () => {
+  it('skips only a file assessed on the run date', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'ts-'));
+    const f = join(dir, 'x.auto.yaml');
+    writeFileSync(f, '# note\nprovenance:\n  assessed_on: 2026-10-29\n');
+    expect(recordedOn(f, '2026-10-29')).toBe(true);
+    expect(recordedOn(f, '2026-10-30')).toBe(false);
+    expect(recordedOn(join(dir, 'missing.yaml'), '2026-10-29')).toBe(false);
   });
 });
