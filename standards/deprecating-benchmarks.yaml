@@ -1,3 +1,19 @@
+# Deprecating Benchmarks: Criteria and Framework (San Joaquin et al., arXiv:2507.06434v1).
+# Encoded from Section 3 (the seven deprecation criteria, in the paper's two broad categories:
+# quantitative signals, then qualitative issues) and Section 6 recommendations 1-3 (the ones
+# addressed to benchmark developers: version control, deprecation plan, point of contact).
+# Sections 4 and 5 (assessment/reporting/notification by governance actors) and recommendations
+# 4-8 (about deprecation lists) are processes for third parties, not properties of a benchmark.
+#
+# POLARITY: the paper's criteria are deprecation TRIGGERS. Each item is phrased so that met =
+# the benchmark is healthy on that criterion (the trigger is absent, or the paper's mitigation
+# is in place); unmet = the trigger applies. Higher score = better, as in every other standard.
+# The paper gives no thresholds ("determining concrete thresholds for these criteria is beyond
+# the scope of this paper") and calls the list non-exhaustive, so each met rule below is
+# Touchstone's operationalisation and asks for cited evidence either way.
+# The paper names criteria as terms with a description, not as questions; item text is therefore
+# a question built from the paper's own definition wording, negated to match the polarity above.
+# Scoring is Touchstone's: group = met / (met + unmet) x 100, overall = mean of groups.
 id: deprecating-benchmarks
 name: "Deprecating Benchmarks: Criteria and Framework"
 short: Deprecation criteria
@@ -5,8 +21,39 @@ version: "2025.1"
 publisher: San Joaquin, Gipiškis, Staufer, Gil (AI Standards Lab)
 year: 2025
 kind: lifecycle-criteria
-status: catalogued
+status: encoded
+scoring_defined_by: touchstone
+applies_to: Any AI benchmark, assessed for whether it should still be trusted for evaluating current and future models.
 url: https://arxiv.org/abs/2507.06434
-description: Criteria for when a benchmark should be fully or partially deprecated, and a framework for doing so.
-notes: Not yet encoded.
-groups: []
+citation: >-
+  San Joaquin, A., Gipiškis, R., Staufer, L., & Gil, A. (2025). Deprecating Benchmarks:
+  Criteria and Framework. Workshop on Technical AI Governance (TAIG) at ICML 2025.
+  arXiv:2507.06434.
+description: >-
+  Criteria for when a benchmark should be fully or partially deprecated (saturation, contamination,
+  statistical bias, high annotation error rate, task obsolescence, invalidated assumptions, semantic
+  drift), plus the developer-side practices that make deprecation possible (version control, a
+  deprecation plan, a point of contact).
+scoring:
+  scheme: checklist
+  overall: mean-of-groups
+groups:
+  - id: quantitative_signals
+    name: Quantitative signals of diminishing utility
+    items:
+      - { id: c1, text: "Is the benchmark free of saturation, i.e. it has not reached or approached its evaluation ceiling such that further improvements provide limited information about a model's true capabilities?", guidance: { met: "Current best reported scores on the benchmark's standard evaluation leave clear headroom: the top score is not at or near the maximum achievable (including any human-level or label-noise ceiling), and score differences between top models still separate them beyond reported uncertainty. A cited source (paper, leaderboard, documented saturation analysis) is required; a top score at or near the ceiling, or a source calling the benchmark saturated, is unmet.", evidence: [paper, docs, website] } }
+      - { id: c2, text: "Is the benchmark free of contamination, i.e. models memorizing benchmark data due to leakage means performance no longer reflects true generalization with respect to the measured capabilities?", guidance: { met: "The benchmark documents a contamination defence (private held-out test set, post-cutoff or regularly refreshed items, or a contamination analysis showing no material leakage) and no cited source reports material leakage or memorization of its test items. Unmet if test items and answers are public with no such defence, or if leakage is reported and not remedied. The paper is neutral on fully public benchmarks; judge on the evidence of leakage or defence, not on public availability alone.", evidence: [paper, repo, docs] } }
+      - { id: c3, text: "Is the benchmark free of statistical bias, i.e. its class or label distributions are balanced enough that models cannot do well by exploiting dataset imbalances rather than demonstrating the intended capabilities?", guidance: { met: "The label or answer distribution is reported and is balanced, or a majority-class or trivial baseline is reported and scores well below what the benchmark treats as capable performance. Unmet if the distribution is skewed such that an imbalance-exploiting answer (e.g. always the majority class) scores highly, or if neither distribution nor trivial baseline can be found. A benchmark with no classes or labels that could be skewed is met.", evidence: [paper, repo, dataset] } }
+  - id: qualitative_issues
+    name: Qualitative issues from design flaws or shifts in context of use
+    items:
+      - { id: c4, text: "Is the benchmark free of a high annotation error rate, i.e. errors introduced by benchmark creators or labelers/annotators, whether human or automated, that compromise the quality of benchmark data?", guidance: { met: "A cited audit, validation pass or error analysis of the benchmark data reports a low error rate and no cited source reports substantial annotation errors that remain uncorrected (the paper's example: 6.49% of all MMLU questions, 57% of its Virology subset). Unmet if a cited audit finds substantial errors left in the released data, or if the benchmark has no quality review of its labels and no audit exists.", evidence: [paper, repo, docs, dataset] } }
+      - { id: c5, text: "Is the benchmark free of task obsolescence, i.e. the underlying task is still considered relevant and has not effectively been solved?", guidance: { met: "The benchmark states the capability or decision its task serves and that purpose remains current for the models it is used on (no cited source argues the task is irrelevant or solved). Unmet if the task is no longer relevant to current model development or evaluation (the paper's example: word unscrambling for reasoning evaluation) or is effectively solved. This is about the task itself, not score ceilings, which c1 covers.", evidence: [paper, docs, website] } }
+      - { id: c6, text: "Is the benchmark free of invalidated assumptions, i.e. the simplifying assumptions it relies on still hold, so that it reflects real-world complexity and task diversity?", guidance: { met: "The benchmark states its simplifying assumptions, and none is contradicted by a cited source or by the current context of use (the paper's example: single-fact needle-in-a-haystack retrieval standing in for multi-fact RAG). Unmet if a stated or evident assumption is shown no longer to hold for how the benchmark is now used.", evidence: [paper, docs, website] } }
+      - { id: c7, text: "Is the benchmark free of semantic drift, i.e. the meaning or interpretation of its task or labels has not changed over time such that it has become outdated or unrepresentative?", guidance: { met: "The benchmark's content (language, context, social conventions, label meanings) is dated or maintained, and no cited source shows its labels or task wording now mean something different from when it was created. Unmet if the benchmark is frozen since creation and a cited source or clear evidence shows its meaning has shifted, or its content has become unrepresentative.", evidence: [paper, docs, website, dataset] } }
+  - id: deprecation_readiness
+    name: Developer practices that enable deprecation
+    items:
+      - { id: r1, text: "Does the benchmark have version control, with the version immediately visible alongside the benchmark name and pointing towards the updated version?", guidance: { met: "The benchmark carries an explicit version identifier (e.g. a release tag, dataset revision or DOI) shown with its name in its main references, and changes are recorded per version. Unversioned or silently edited releases are unmet.", evidence: [paper, repo, docs, dataset] } }
+      - { id: r2, text: "Is there a deprecation plan, including at a minimum a plan for archiving benchmark-related artifacts (e.g. data and code to generate the dataset)?", guidance: { met: "The benchmark states what happens to its artifacts at end of life (archive location or policy for the data and the code that generates it, e.g. a DOI-backed archive), or the data and generating code are already in a persistent archive. No stated plan and no persistent archive is unmet.", evidence: [paper, repo, docs] } }
+      - { id: r3, text: "Is there a point of contact to handle queries related to the deprecated benchmark, including access to it for authorized use?", guidance: { met: "A named maintainer, contact address or issue tracker is published for the benchmark and the project is maintained (it has had a response, commit or release in the last 12 months). No contact, or an abandoned project, is unmet.", evidence: [paper, repo, docs, website] } }

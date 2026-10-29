@@ -120,6 +120,7 @@ describe('automated assessor', () => {
     const st2 = r.assessment.verdicts!['st.2']!;
     expect(st2.by).toBe('model');
     expect(r.assessment.model_run!.prompt_version).toBe('1');
+    expect(r.assessment.model_run!.excerpt_chars).toBe(10_000);
     expect(r.transcript.length).toBe(std('construct-validity').groups.length);
     expect(['met', 'unmet']).toContain(st2.value);
   });
@@ -191,7 +192,7 @@ describe('automated assessor', () => {
 describe('watch queue', () => {
   it('queues every in-scope pair for a benchmark with sources and orders it deterministically', () => {
     const q = queue(corpus, { checked_on: '2026-10-26', benchmarks: { truthfulqa: { paper_version: 'v2', repo_commit: 'abc' }, cybench: { paper_version: 'v4' } } });
-    expect(q.filter((x) => x.benchmark === 'truthfulqa').map((x) => x.standard)).toEqual(['aisl-scorecard', 'betterbench', 'construct-validity', 'stream']);
+    expect(q.filter((x) => x.benchmark === 'truthfulqa').map((x) => x.standard)).toEqual(['aisl-scorecard', 'betterbench', 'construct-validity', 'deprecating-benchmarks', 'eu-gpai-code-of-practice', 'nist-ai-800-2', 'stream', 'yu-safety-benchmarks']);
     expect(q.filter((x) => x.benchmark === 'cybench').map((x) => x.standard)).toContain('abc');
     expect(q.some((x) => x.benchmark === 'truthfulqa' && x.standard === 'abc')).toBe(false);
   });

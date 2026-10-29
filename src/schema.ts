@@ -239,6 +239,8 @@ export const ModelRun = z.strictObject({
   /** Repo path of the JSONL transcript: every prompt and raw response, in order. */
   transcript: z.string(),
   sources: z.array(SourceSnapshot).min(1),
+  /** Per-group excerpt budget in characters the run was given; absent on runs before it was recorded (then 10,000). */
+  excerpt_chars: z.number().int().positive().optional(),
 });
 export type ModelRun = z.infer<typeof ModelRun>;
 

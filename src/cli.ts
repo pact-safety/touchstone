@@ -6,7 +6,7 @@
  *   watch [--write]                  Check sources for changes; print (and with --write, save) the work queue.
  *   watch --source arxiv|news [--dry-run] [--max N]
  *                                    File candidate-benchmark / candidate-standard issues for new papers and news (see docs/automation.md).
- *   assess [--benchmark id] [--standard id] [--queue] [--max-calls n]
+ *   assess [--benchmark id] [--standard id] [--queue] [--max-calls n] [--excerpt-chars n]
  *                                    Run the automated assessor (see docs/automation.md for environment variables).
  *   bakeoff --models id,id [--benchmark id] [--max-calls n] [--excerpt-chars n] [--replay dir] [--out dir]
  *                                    Run candidate models on the benchmarks BetterBench assessed by hand and score them against it.
@@ -164,6 +164,7 @@ async function main() {
         const run = await assess({
           benchmark: b, standard: s, sources, llm, provider: entry.provider, license: entry.license, runOn: date,
           transcriptPath, pins: { paper_version: pins.paper_version, repo_commit: pins.repo_commit }, modelDigest,
+          excerptChars: excerptChars(values['excerpt-chars']),
         });
         used += run.calls;
         // An assessment is only recorded when every group got a usable answer. A partial or failed run is

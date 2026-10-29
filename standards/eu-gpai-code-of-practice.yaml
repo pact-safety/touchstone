@@ -1,3 +1,17 @@
+# EU General-Purpose AI Code of Practice, Safety and Security chapter (July 2025).
+# Encoded from the chapter's definition of 'high scientific and technical rigour' and its three
+# aspects ('internal validity', 'external validity', 'reproducibility'), required of model
+# evaluations by Appendix 3.1 (1)-(3) under Measure 3.2. The chapter has no numbered sub-clauses
+# for these aspects, so item ids number the "may be shown by, e.g." entries of each definition
+# in the order printed (iv.NN, ev.NN, rp.NN); `text` is each entry verbatim.
+# Selection rule: the Code is addressed to Signatories evaluating their own models. Touchstone
+# rates benchmarks, so only the rigour evidence a benchmark itself can show or lack is encoded.
+# Left out as provider-process obligations: Appendix 3.2 (model elicitation by the Signatory),
+# 3.3 (mitigation effectiveness), 3.4 (qualified teams, resources) and 3.5 (independent external
+# evaluators), and the clause about releasing materials "to the AI Office", which is read here as
+# "released to the benchmark's users" (public or access-controlled). The "e.g." lists are
+# non-exhaustive in the Code; each is encoded as a checklist of the examples it names.
+# Scoring is Touchstone's: group = met / (met + unmet) × 100, overall = mean of groups.
 id: eu-gpai-code-of-practice
 name: EU General-Purpose AI Code of Practice, Safety and Security chapter
 short: EU GPAI Code
@@ -5,8 +19,52 @@ version: "2025-07"
 publisher: European Commission AI Office
 year: 2025
 kind: regulatory-code
-status: catalogued
-url: https://digital-strategy.ec.europa.eu/en/policies/contents-code-gpai
-description: Requires model evaluations of systemic-risk models to meet high scientific and technical rigour, including internal validity, external validity and reproducibility.
-notes: Not yet encoded.
-groups: []
+status: encoded
+scoring_defined_by: touchstone
+applies_to: Safety benchmarks that could serve as model evaluations of systemic risk. Only the rigour evidence a benchmark itself can show is encoded; obligations that fall on the model provider running an evaluation (elicitation, mitigation testing, evaluator qualification and independence) are left out.
+scope:
+  domains: [safety]
+url: https://ec.europa.eu/newsroom/dae/redirection/document/118119
+citation: >-
+  European Commission AI Office (2025). Code of Practice for General-Purpose AI Models: Safety
+  and Security Chapter. Definitions of 'high scientific and technical rigour', 'internal
+  validity', 'external validity' and 'reproducibility'; Appendix 3.1 (July 2025).
+description: Requires model evaluations of systemic-risk models to meet high scientific and technical rigour, including internal validity, external validity and reproducibility. Encoded as the evidence of each aspect that a benchmark can show.
+groups:
+  - id: internal_validity
+    name: Internal validity
+    description: "Definition: ensures model evaluation results are as accurate as scientifically possible in the evaluation setting and are free from methodological shortcomings that could undermine the results."
+    items:
+      - { id: iv.01, principle: "Internal validity may be shown by, e.g.:", text: "large enough sample sizes", guidance: { met: "The number of test items is stated and the paper or docs justify it as sufficient for the comparisons the benchmark supports (a power calculation, or confidence intervals narrow enough to separate the scores it reports). A bare count with no justification is unmet.", evidence: [paper, docs] } }
+      - { id: iv.02, principle: "Internal validity may be shown by, e.g.:", text: "measuring statistical significance and statistical power", guidance: { met: "The benchmark reports both a significance test or confidence interval for score differences and a statistical power figure or minimum detectable difference. Only one of the two is unmet.", evidence: [paper, docs] } }
+      - { id: iv.03, principle: "Internal validity may be shown by, e.g.:", text: "disclosure of environmental parameters used", guidance: { met: "The full prompt template (or a link to it), sampling settings (temperature, max tokens), the harness or scaffold version, and any tool or sandbox configuration are all given.", evidence: [paper, repo, docs] } }
+      - { id: iv.04, principle: "Internal validity may be shown by, e.g.:", text: "controlling for confounding variables and mitigating spurious correlation", guidance: { met: "At least one named control against a confound or shortcut is described together with its result (for example answer-position balancing, a blind or question-only baseline, length or format controls, or prompt-format perturbation).", evidence: [paper, docs] } }
+      - { id: iv.05, principle: "Internal validity may be shown by, e.g.:", text: "preventing use of test data in training (e.g. using train-test splits and respecting canary strings)", guidance: { met: "At least one contamination safeguard is in place and documented: a canary string in the released data files, a held-out or private test split, or a contamination analysis. Silence about contamination is unmet.", evidence: [paper, dataset, repo, docs] } }
+      - { id: iv.06, principle: "Internal validity may be shown by, e.g.:", text: "re-running model evaluations multiple times under different conditions and in different environments, including varying individual parts of model evaluations (e.g. the strength of prompts and safety and security mitigations)", guidance: { met: "Results are reported from repeated runs (different seeds or sessions) and from at least one varied condition (for example a prompt variant, with and without a mitigation, or another harness).", evidence: [paper, docs] } }
+      - { id: iv.07, principle: "Internal validity may be shown by, e.g.:", text: "detailed inspection of trajectories and other outputs", guidance: { met: "The paper or docs report a manual inspection of model outputs or trajectories, stating the sample inspected and what was found (error analysis, grader failures or label errors).", evidence: [paper, docs] } }
+      - { id: iv.08, principle: "Internal validity may be shown by, e.g.:", text: "avoiding potential labelling bias in model evaluations, particularly model evaluations involving human annotators (e.g. through blinding or reporting inter-annotator agreement)", guidance: { met: "How labels or grades were produced is described, with a bias control: blinding or an inter-annotator agreement figure for human labels, or a validation of the label source against human judgement for model-graded or programmatic labels.", evidence: [paper, docs] } }
+      - { id: iv.09, principle: "Internal validity may be shown by, e.g.:", text: "using transparency-increasing techniques (e.g. reasoning traces in evaluations that are representative of the model’s “inner workings” and legible by evaluators)", guidance: { met: "The harness stores, or the benchmark releases, the full model outputs per item, including reasoning traces where the model exposes them, so evaluators can read them.", evidence: [paper, repo, docs] } }
+      - { id: iv.10, principle: "Internal validity may be shown by, e.g.:", text: "using techniques to measure and/or reduce the model’s capability to evade oversight", guidance: { met: "The benchmark includes or documents a check for evaluation awareness, sandbagging or under-elicitation (for example a comparison of results with and without an evaluation cue, or an elicitation-strength sweep).", evidence: [paper, docs] } }
+      - { id: iv.11, principle: "Internal validity may be shown by, e.g.:", text: "disclosing the methods for creating and managing new model evaluations to ensure their integrity", guidance: { met: "The paper or docs describe how items were created and reviewed and how the benchmark is versioned and maintained (changes, fixes, retirement of items).", evidence: [paper, repo, docs] } }
+  - id: external_validity
+    name: External validity
+    description: "Definition: ensures model evaluations are suitably calibrated for results to be used as a proxy for model behaviour outside the evaluation environment."
+    items:
+      - { id: ev.01, principle: "External validity may be shown by, e.g.:", text: "documenting the model evaluation environment", guidance: { met: "The setting the model is tested in is described: input and output format, tools or sandbox available, interaction length, and what the model can and cannot access.", evidence: [paper, docs] } }
+      - { id: ev.02, principle: "External validity may be shown by, e.g.:", text: "the ways in which it diverges from the real-world context", guidance: { met: "The paper or docs state at least one concrete way the evaluation setting differs from real use (a limitations or threats-to-validity discussion naming specifics). A generic disclaimer is unmet.", evidence: [paper, docs] } }
+      - { id: ev.03, principle: "External validity may be shown by, e.g.:", text: "the diversity of the model evaluation environment", guidance: { met: "The spread of the evaluation is described along at least one stated axis (scenario types, domains, languages, task formats or environments) with counts or proportions.", evidence: [paper, dataset, docs] } }
+  - id: reproducibility
+    name: Reproducibility
+    description: "Definition: refers to the ability to obtain consistent model evaluation results using the same input data, computational techniques, code, and model evaluation conditions, allowing for other researchers and engineers to validate, reproduce, or improve on model evaluation results."
+    items:
+      - { id: rp.01, principle: "Reproducibility is defined as:", text: "the ability to obtain consistent model evaluation results using the same input data, computational techniques, code, and model evaluation conditions", guidance: { met: "Run-to-run variation under fixed conditions is reported, or the authors state that they reproduced their own headline numbers from the released code and data. Released code alone is unmet.", evidence: [paper, repo, docs] } }
+      - { id: rp.02, principle: "Reproducibility may be shown by, e.g.:", text: "successful peer reviews and/or reproductions by independent third parties", guidance: { met: "The benchmark paper appeared in a peer-reviewed venue, or an independent reproduction of its results by a third party is cited. A preprint alone is unmet.", evidence: [paper, website] } }
+      - { id: rp.03, principle: "Reproducibility may be shown by releasing adequate amounts of:", text: "model evaluation data", guidance: { met: "The test items are obtainable by outside researchers (public download, or documented access-controlled request). Release of examples only is unmet.", evidence: [dataset, repo, website] } }
+      - { id: rp.04, principle: "Reproducibility may be shown by releasing adequate amounts of:", text: "model evaluation code", guidance: { met: "The harness, scoring code and any grader prompts are released in a repository, runnable against a new model without the authors' help.", evidence: [repo] } }
+      - { id: rp.05, principle: "Reproducibility may be shown by releasing adequate amounts of:", text: "documentation of model evaluation methodology and methods", guidance: { met: "A document (paper, README or docs) covers how items are constructed, how the model is queried and how outputs are scored, in enough detail to implement the evaluation independently.", evidence: [paper, repo, docs] } }
+      - { id: rp.06, principle: "Reproducibility may be shown by releasing adequate amounts of:", text: "model evaluation environment and computational environment", guidance: { met: "The software environment is pinned (a lockfile, container image or version list) and the compute needed for a full run is stated.", evidence: [repo, docs] } }
+      - { id: rp.07, principle: "Reproducibility may be shown by releasing adequate amounts of:", text: "model elicitation techniques", guidance: { met: "The prompts, scaffolding and any few-shot examples or tool setup used to query models are released, not merely described.", evidence: [paper, repo, docs] } }
+      - { id: rp.08, principle: "Reproducibility may be shown by, e.g.:", text: "use of publicly available APIs, technical model evaluation standards, and tools", guidance: { met: "The harness runs models through public APIs or open weights, or is built on or exported to a named public evaluation framework or standard format.", evidence: [repo, docs] } }
+scoring:
+  scheme: checklist
+  overall: mean-of-groups

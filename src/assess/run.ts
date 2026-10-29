@@ -41,8 +41,10 @@ export interface TranscriptEntry {
   checks: { item: string; proposed: unknown; final: unknown; quotes_kept: number; quotes_dropped: number; note?: string }[];
 }
 
+const DEFAULT_EXCERPT_CHARS = 10_000;
+
 /** Excerpts for a group: each item's top 3 chunks, merged in item order, then the group's own top chunks, within a size budget. */
-export function selectExcerpts(group: Group, chunks: Chunk[], budget = 10_000): Chunk[] {
+export function selectExcerpts(group: Group, chunks: Chunk[], budget = DEFAULT_EXCERPT_CHARS): Chunk[] {
   const picked: Chunk[] = [];
   const seen = new Set<string>();
   const add = (c: Chunk) => { if (!seen.has(c.id)) { seen.add(c.id); picked.push(c); } };
@@ -232,6 +234,7 @@ export async function assess(input: RunInput): Promise<{ assessment: Assessment;
       ...(input.modelDigest ? { model_digest: input.modelDigest } : {}),
       temperature: llm.temperature, seed: llm.seed,
       prompt_version: version, run_on: input.runOn, transcript: input.transcriptPath, sources: input.sources.map((s) => s.snapshot),
+      excerpt_chars: input.excerptChars ?? DEFAULT_EXCERPT_CHARS,
     },
     verdicts,
     revisions: [{ date: input.runOn, by: 'touchstone-assessor', summary: complete ? `Automated assessment with ${llm.model}.` : `Partial automated assessment with ${llm.model}; some groups or items were not completed.` }],

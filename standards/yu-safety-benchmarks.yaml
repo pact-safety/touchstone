@@ -1,3 +1,16 @@
+# Yu et al. (2026), "How Should AI Safety Benchmarks Benchmark Safety?" Encoded from the design
+# checklist in Appendix D.1 (Table 5): 37 items, wording copied verbatim from the table. The three
+# groups are the checklist's own modules (Construct Coverage R1-R3, Risk Quantification R4-R6,
+# Measurement Validity R7-R10); item ids are the recommendation number and item letter (r1.a).
+# The ten prose recommendations (R1-R10) are the checklist's rows; they are not encoded separately.
+# Unlike STREAM, the items are imperatives, not questions ("State which ...", "Report ..."); the
+# wording is kept as published, and each met rule reads as "the benchmark does this".
+# The paper's low/medium/high effort markers are not scored. The paper gives no scoring rule (its
+# worked AIR 2024 example counts addressed / partial / not addressed); Touchstone scores met /
+# (met + unmet) per group, overall = mean of groups, so "partial" is unmet here.
+# not_applicable is used only where the checklist wording is itself conditional: R2.d (emergent
+# risks through interaction), R5.c (where applicable), R6.b (human or LLM-as-judge evaluation),
+# R9.c (risks that emerge over extended interaction), R9.d (when collection is constrained).
 id: yu-safety-benchmarks
 name: How Should AI Safety Benchmarks Benchmark Safety?
 short: Safety benchmark design
@@ -5,10 +18,65 @@ version: "2026.1"
 publisher: Yu, Engelmann, Cao, Ali, Papakyriakopoulos
 year: 2026
 kind: checklist
-status: catalogued
+status: encoded
+scoring_defined_by: touchstone
+applies_to: AI safety benchmarks; judged on the benchmark's paper, repository and documentation.
+scope:
+  domains: [safety]
 url: https://arxiv.org/abs/2601.23112
+citation: >-
+  Yu, H., Engelmann, S., Cao, Z., Ali, M., Papakyriakopoulos, O. (2026). How Should AI Safety
+  Benchmarks Benchmark Safety? arXiv:2601.23112.
 description: >-
   Review of 210 AI safety benchmarks with ten recommendations and a design checklist grounded in
   risk management and measurement theory, including probabilistic rather than pass/fail metrics.
-notes: Not yet encoded.
-groups: []
+scoring:
+  scheme: checklist
+  overall: mean-of-groups
+groups:
+  - id: construct_coverage
+    name: Construct Coverage
+    items:
+      - { id: r1.a, principle: "R1. Documenting Known Blind Spots", text: "State which risk types are evaluated (e.g., toxicity, bias, jailbreaks, misinformation) and how each is measured.", guidance: { met: "Each risk type the benchmark evaluates is named and the metric or method that measures it is stated.", evidence: [paper, docs] } }
+      - { id: r1.b, principle: "R1. Documenting Known Blind Spots", text: "Document excluded risks and deployment assumptions (e.g., single-turn only, English text only, no tool-use or multi-agent scenarios).", guidance: { met: "The benchmark states at least one risk it does not cover and at least one deployment assumption (language, turns, tool use, agents).", evidence: [paper, docs] } }
+      - { id: r1.c, principle: "R1. Documenting Known Blind Spots", text: "Acknowledge that passing the benchmark does not guarantee safety against untested or emergent risks.", guidance: { met: "A sentence states that a good score does not establish safety against risks the benchmark did not test.", evidence: [paper, docs] } }
+      - { id: r1.d, principle: "R1. Documenting Known Blind Spots", text: "Compare coverage against prior benchmarks and document differences in risk categories or evaluation methods.", guidance: { met: "At least one named prior benchmark is compared and a difference in risk categories or evaluation method is stated.", evidence: [paper, docs] } }
+      - { id: r2.a, principle: "R2. Expanding Known Boundaries", text: "Describe mechanisms for discovering novel risks (e.g., fuzzing, red-teaming, LM-generated evaluation).", guidance: { met: "A concrete mechanism for finding risks outside the existing categories is described, such as fuzzing, red-teaming or LM-generated evaluation items.", evidence: [paper, docs] } }
+      - { id: r2.b, principle: "R2. Expanding Known Boundaries", text: "Include infrastructure for community contribution (e.g., submission portals with versioned integration and contributor credit).", guidance: { met: "A working route for outside contributions exists (submission portal, documented pull-request process or similar) that says how contributions are integrated and credited.", evidence: [repo, docs, website] } }
+      - { id: r2.c, principle: "R2. Expanding Known Boundaries", text: "Describe update mechanisms: how and when new risks will be incorporated (e.g., annual taxonomy review, continuous calibration).", guidance: { met: "The benchmark states how and when new risks are added (a process and a cadence or trigger).", evidence: [paper, docs, website] } }
+      - { id: r2.d, principle: "R2. Expanding Known Boundaries", text: "Incorporate multi-agent or interactive evaluation where emergent risks may arise through interaction.", guidance: { met: "The benchmark includes multi-agent or interactive evaluation settings.", not_applicable: "The benchmark states no risk it targets can arise through interaction between agents or with users.", evidence: [paper, repo, docs] } }
+      - { id: r3.a, principle: "R3. Incorporating ML Failure Modes with Safety Implications into Analysis", text: "Address distribution shift as a safety-critical issue, not merely a performance limitation.", guidance: { met: "The benchmark discusses or tests distribution shift and frames it as a safety concern, not only an accuracy drop.", evidence: [paper, docs] } }
+      - { id: r3.b, principle: "R3. Incorporating ML Failure Modes with Safety Implications into Analysis", text: "Document potential annotation bias (annotator selection, disagreement patterns, demographic skew).", guidance: { met: "The benchmark documents at least two of: how annotators were selected, where annotators disagreed, annotator demographics or their skew.", evidence: [paper, docs, dataset] } }
+      - { id: r3.c, principle: "R3. Incorporating ML Failure Modes with Safety Implications into Analysis", text: "Implement contamination detection and track temporal validity of evaluation sets.", guidance: { met: "The benchmark runs a contamination check or holds items private, and states how long the evaluation set stays valid (date, refresh or retirement).", evidence: [paper, repo, docs] } }
+  - id: risk_quantification
+    name: Risk Quantification
+    items:
+      - { id: r4.a, principle: "R4. Calibrating Benchmark Frequencies to Exposure Estimates", text: "Report results as “observed rate” or “failure frequency”; reserve “probability” for calibrated estimates.", guidance: { met: "Results are labelled as rates, frequencies or proportions. If \"probability\" or \"risk\" is used, the benchmark shows the estimate is calibrated; otherwise it is unmet.", evidence: [paper, docs] } }
+      - { id: r4.b, principle: "R4. Calibrating Benchmark Frequencies to Exposure Estimates", text: "Calibrate benchmark rates against in-the-wild prevalence to support risk-relevant interpretation.", guidance: { met: "Benchmark rates are compared with, or adjusted by, an estimate of how often the behaviour occurs in real use, with the source of that estimate given.", evidence: [paper, docs] } }
+      - { id: r4.c, principle: "R4. Calibrating Benchmark Frequencies to Exposure Estimates", text: "Specify factors limiting generalization (e.g., limited prompt diversity, synthetic scenarios, missing user context).", guidance: { met: "At least one specific factor limiting how far the results generalize is named (prompt diversity, synthetic scenarios, missing user context or similar).", evidence: [paper, docs] } }
+      - { id: r5.a, principle: "R5. Grounding Severity in Principled Frameworks", text: "Justify severity scales by citing sources (e.g., prior research, regulatory standards, domain-specific frameworks).", guidance: { met: "The severity scale or harm weighting cites a source for its levels.", evidence: [paper, docs] } }
+      - { id: r5.b, principle: "R5. Grounding Severity in Principled Frameworks", text: "Clarify scale semantics: equal intervals, power-law relationships, or catastrophic thresholds.", guidance: { met: "The benchmark states whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.", evidence: [paper, docs] } }
+      - { id: r5.c, principle: "R5. Grounding Severity in Principled Frameworks", text: "Reference established practices where applicable.", guidance: { met: "The benchmark names an established risk-management or safety-engineering practice it follows.", not_applicable: "The benchmark states that no established practice exists for its risks.", evidence: [paper, docs] } }
+      - { id: r6.a, principle: "R6. Accounting for Uncertainty Quantification", text: "Report confidence intervals, standard errors, or worst-case bounds for main metrics.", guidance: { met: "Confidence intervals, standard errors or worst-case bounds are reported for the main metrics.", evidence: [paper, repo, docs] } }
+      - { id: r6.b, principle: "R6. Accounting for Uncertainty Quantification", text: "Report inter-rater reliability (e.g., Cohen’s κ) for human or LLM-as-judge evaluation.", guidance: { met: "An inter-rater agreement statistic (e.g. Cohen’s κ) is reported for the human or LLM judges.", not_applicable: "Scoring uses neither human raters nor an LLM judge (e.g. programmatic checks only).", evidence: [paper, docs] } }
+      - { id: r6.c, principle: "R6. Accounting for Uncertainty Quantification", text: "Test robustness: report score variance across random seeds, prompt rephrasings, and evaluator versions.", guidance: { met: "Score variance is reported across all three: random seeds, prompt rephrasings, and evaluator versions. Fewer than three is unmet.", evidence: [paper, docs] } }
+      - { id: r6.d, principle: "R6. Accounting for Uncertainty Quantification", text: "Apply explicit safety margins when extrapolating to deployment risk; note that real-world risk depends on user behavior, system safeguards, and context.", guidance: { met: "The benchmark applies an explicit margin when extrapolating to deployment risk and says real-world risk depends on user behaviour, system safeguards and context.", evidence: [paper, docs] } }
+  - id: measurement_validity
+    name: Measurement Validity
+    items:
+      - { id: r7.a, principle: "R7. Standardizing Safety Constructs with Transparency", text: "Specify harm constructs targeted (e.g., toxicity, bias, manipulation) and provide operational definitions for each.", guidance: { met: "Every harm construct targeted has an operational definition (what counts as an instance).", evidence: [paper, docs] } }
+      - { id: r7.b, principle: "R7. Standardizing Safety Constructs with Transparency", text: "State whose values inform judgments of harm (expert assessments, policy frameworks, affected communities).", guidance: { met: "The benchmark names whose judgments define harm (experts, a policy framework, affected communities or similar).", evidence: [paper, docs] } }
+      - { id: r7.c, principle: "R7. Standardizing Safety Constructs with Transparency", text: "Acknowledge contested normative choices in construct definitions.", guidance: { met: "At least one contested value choice in the harm definitions is named as contested.", evidence: [paper, docs] } }
+      - { id: r7.d, principle: "R7. Standardizing Safety Constructs with Transparency", text: "Articulate the relationship between measured proxies and real-world safety concerns.", guidance: { met: "The benchmark states what its measured quantity (the proxy) stands in for and how it relates to the real-world safety concern.", evidence: [paper, docs] } }
+      - { id: r8.a, principle: "R8. Locking and Versioning for Reproducibility", text: "Record model access details: interface (API or UI), access date, inference parameters (temperature, top-p), system prompt.", guidance: { met: "Interface, access date, inference parameters and system prompt are all recorded for the reported runs.", evidence: [paper, repo, docs] } }
+      - { id: r8.b, principle: "R8. Locking and Versioning for Reproducibility", text: "Fix and report random seeds for data sampling, model inference, and evaluation.", guidance: { met: "Seeds are fixed and reported for data sampling, model inference and evaluation. Greedy decoding with no sampling counts for inference only.", evidence: [paper, repo, docs] } }
+      - { id: r8.c, principle: "R8. Locking and Versioning for Reproducibility", text: "Version all evaluation components: LLM judge model, scoring rubric, annotation guidelines.", guidance: { met: "The judge model, scoring rubric and annotation guidelines each carry a version, date or commit hash. A benchmark with none of these components is unmet only for those it has.", evidence: [paper, repo, docs] } }
+      - { id: r8.d, principle: "R8. Locking and Versioning for Reproducibility", text: "Provide documentation (e.g., code repository, README) to enable independent replication.", guidance: { met: "A public code repository or documentation exists with enough instructions to rerun the evaluation.", evidence: [repo, docs] } }
+      - { id: r9.a, principle: "R9. Anchoring Proxies in Deployment Contexts", text: "State prompt sources: real user logs, researcher-designed, LLM-generated, or crowdsourced. Report validation if synthetic.", guidance: { met: "The source of the prompts is stated, and if they are synthetic (LLM-generated or researcher-designed) a validation of them is reported.", evidence: [paper, docs, dataset] } }
+      - { id: r9.b, principle: "R9. Anchoring Proxies in Deployment Contexts", text: "Justify why test scenarios represent real-world use; if abstract or synthetic, state limitations.", guidance: { met: "The benchmark argues why its scenarios resemble real use, or, if they are abstract or synthetic, states the limitations that follow.", evidence: [paper, docs] } }
+      - { id: r9.c, principle: "R9. Anchoring Proxies in Deployment Contexts", text: "Include multi-turn evaluation if risks emerge over extended interaction (e.g., manipulation, trust exploitation).", guidance: { met: "The benchmark includes multi-turn evaluation.", not_applicable: "No risk the benchmark targets emerges over extended interaction.", evidence: [paper, repo, docs] } }
+      - { id: r9.d, principle: "R9. Anchoring Proxies in Deployment Contexts", text: "Document trade-offs when in-the-wild collection is constrained by privacy or curation opacity.", guidance: { met: "The benchmark states what was given up where real-world data collection was limited by privacy or opaque curation.", not_applicable: "Data collection was not constrained by privacy or curation opacity (e.g. no in-the-wild data is used).", evidence: [paper, docs] } }
+      - { id: r10.a, principle: "R10. Iterative Refinement via Community Input", text: "Treat benchmarks as evolving instruments with risk-sensitive update cycles.", guidance: { met: "The benchmark has versions or a stated update cycle and ties updates to changes in risk.", evidence: [paper, repo, docs, website] } }
+      - { id: r10.b, principle: "R10. Iterative Refinement via Community Input", text: "Involve affected communities to assess whether scenarios reflect harms they experience.", guidance: { met: "Members of the communities affected by the harms were consulted on whether the scenarios reflect their experience, and how is described.", evidence: [paper, docs] } }
+      - { id: r10.c, principle: "R10. Iterative Refinement via Community Input", text: "State whether the benchmark evaluates the model alone or within system context (user interaction, interface, safeguards).", guidance: { met: "The benchmark says whether it tests the bare model or the model within a system (user interaction, interface, safeguards).", evidence: [paper, docs] } }
+      - { id: r10.d, principle: "R10. Iterative Refinement via Community Input", text: "Acknowledge model-level scores ≠ system-level safety; identify additional evaluation needed for deployment (e.g., user studies, sandbox simulations, post-deployment monitoring).", guidance: { met: "The benchmark says model-level scores are not system-level safety and names at least one further evaluation needed for deployment.", evidence: [paper, docs] } }
