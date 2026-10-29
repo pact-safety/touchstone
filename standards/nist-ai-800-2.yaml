@@ -5,8 +5,11 @@
 # whether the BENCHMARK supports an evaluator following that practice: documents what it measures, ships what is
 # needed to run it reproducibly, and reports what is needed to analyse results. A practice or sub-practice that is
 # purely evaluator-side (a benchmark can neither support nor block it) is left out and listed below.
-# Left out as evaluator-side: Practice 1.1 (define evaluation objectives, both questions); 1.2.5b (results reported
-# by others); 2.1.2 safeguards/filters and model provider settings; 2.2 on its own, "choose an evaluation
+# Left out as evaluator-side: Practice 1.1 (define evaluation objectives, both questions); 1.2.2.a.ii (test item format
+# should reflect intended use: fit to the evaluator's use case is the evaluator's judgement; the benchmark-side part, stating
+# the format, is 1.2.1c); 1.2.2.b.ii (subject matter expertise: the evaluator integrates expert analysis; the benchmark-side
+# evidence is 1.2.2b); 1.2.5b (results reported by others); 2.1.1 principle 2 (external validity: designing the protocol to mirror an external context is the evaluator's choice;
+# the benchmark-side settings are 2.1.2a and 2.1.2c); 2.1.2 safeguards/filters and model provider settings; 2.2 on its own, "choose an evaluation
 # framework" (folded into 2.2.1 as shipped code); 2.3.4 and 2.3.5 (tag and group evaluation logs); 2.4.1.1 degraded
 # serving, 2.4.1.2 tool calling errors, 2.4.1.6 evaluation awareness; 2.4.2A and 2.4.2B manual/automated transcript
 # review; 3.1.1 modelling assumptions, 3.1.4 unquantified variation, 3.1.5 statistical tests for comparisons
@@ -14,6 +17,8 @@
 # version is 2.2.1); 3.3.1 distinguish claim types, 3.3.2b predicting future measurements, 3.3.4 evaluation-awareness
 # reporting, 3.3.6 agreement with other evidence.
 # Folded: the "cost control" design principle (2.1.1) is covered by the agent budget item (2.1.2e) and cost reporting (3.2.3).
+# `principle` is the practice text condensed (lead-ins and cross-references dropped, table labels joined), not a verbatim quote.
+# Item ids loosely follow the draft numbering (e.g. 1.2.2a = 1.2.2.a.i); the 2.1.2a-j ids are Touchstone's own.
 # Emerging practices are encoded like the rest; the draft labels them and the item text says so.
 # Scoring is Touchstone's, the draft publishes none: group = met / (met + unmet) × 100, overall = mean of groups.
 id: nist-ai-800-2
@@ -49,7 +54,7 @@ groups:
     description: Practice 1.2 only; Practice 1.1 (define evaluation objectives) is evaluator-side.
     items:
       - { id: 1.2.1, principle: "Document, in detail, precisely what each candidate benchmark measures.", text: "Does the benchmark state precisely what it measures?", guidance: { met: "The documentation names the construct (the capability or behaviour) and the task through which it is measured, specifically enough that a reader could say what falls outside it.", evidence: [paper, docs, repo] } }
-      - { id: 1.2.1a, principle: "Subject matter. What topics does the benchmark cover?", text: "Does the benchmark state the topics or subject areas its items cover?", guidance: { met: "The subject areas or task categories are listed.", evidence: [paper, docs, dataset] } }
+      - { id: 1.2.1a, principle: "Subject matter. What topics does the benchmark cover?", text: "Does the benchmark state the topics or subject areas its items cover?", guidance: { met: "The paper or repo lists the specific subject areas or task categories the items cover (a named taxonomy, domain list or per-category breakdown, ideally with item counts), rather than only a general description such as 'broad knowledge'.", evidence: [paper, docs, dataset] } }
       - { id: 1.2.1b, principle: "Difficulty. What is the intended difficulty of the benchmark?", text: "Does the benchmark state the intended difficulty of its items?", guidance: { met: "The intended difficulty or target population is stated (for example, expert level, undergraduate level, tasks taking a human a stated time).", evidence: [paper, docs] } }
       - { id: 1.2.1c, principle: "Test item format. How are the benchmark items formatted?", text: "Does the benchmark state the format of its items?", guidance: { met: "The item format is stated (multiple choice, free response, code task, interactive environment, and so on), with at least one example item shown.", evidence: [paper, docs, dataset] } }
       - { id: 1.2.1d, principle: "Grading. How are responses graded or assessed?", text: "Does the benchmark state how responses are graded?", guidance: { met: "The grading method is stated (exact match, rule-based, execution, LLM judge, human) with enough detail to say what counts as correct.", evidence: [paper, docs, repo] } }
