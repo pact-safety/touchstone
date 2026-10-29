@@ -75,17 +75,9 @@ function vocabulary(std: Standard) {
 export function verdictsSchema(std: Standard, g: Group) {
   const str = { type: 'string' };
   const obj = (properties: Record<string, unknown>) => ({ type: 'object', properties, required: Object.keys(properties), additionalProperties: false });
-  return obj({
-    verdicts: {
-      type: 'array',
-      items: obj({
-        item: { enum: g.items.map((i) => i.id) },
-        value: { enum: vocabulary(std).values },
-        rationale: str,
-        evidence: { type: 'array', items: obj({ excerpt: str, quote: str }) },
-      }),
-    },
-  });
+  // An object keyed by item id (all required), not an array: an array schema lets the model stop after a few items.
+  const verdict = obj({ value: { enum: vocabulary(std).values }, rationale: str, evidence: { type: 'array', items: obj({ excerpt: str, quote: str }) } });
+  return obj({ verdicts: obj(Object.fromEntries(g.items.map((i) => [i.id, verdict]))) });
 }
 
 export function renderPrompt(tpl: string, b: Benchmark, std: Standard, g: Group, excerpts: Chunk[]): string {
@@ -223,8 +215,11 @@ export async function assess(input: RunInput): Promise<{ assessment: Assessment;
         if (res.provider) entry.provider = res.provider;
         if (res.served_model) entry.served_model = res.served_model;
         if (res.usage) entry.usage = res.usage;
-        const parsed = parseJson(res.content) as { verdicts?: unknown[] };
-        for (const v of Array.isArray(parsed?.verdicts) ? parsed!.verdicts : []) {
+        const parsed = parseJson(res.content) as { verdicts?: unknown };
+        let list: unknown = parsed?.verdicts;
+        // The constrained reply is keyed by item id; turn it into the array form the checks below expect.
+        if (schema && list && typeof list === 'object' && !Array.isArray(list)) list = Object.entries(list).map(([item, v]) => ({ ...(v as object), item }));
+        for (const v of Array.isArray(list) ? list : []) {
           const id = (v as { item?: unknown })?.item;
           if (typeof id === 'string' && !byItem.has(id)) byItem.set(id, v);
         }

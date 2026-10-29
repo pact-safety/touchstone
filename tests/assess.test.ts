@@ -162,6 +162,7 @@ describe('automated assessor', () => {
 
   describe('schema-constrained retry', () => {
     const reply = (content: string) => new Response(JSON.stringify({ choices: [{ message: { content } }] }), { status: 200 });
+    const goodObj = (items: string[]) => JSON.stringify({ verdicts: Object.fromEntries(items.map((id) => [id, { value: 'unmet', rationale: 'x', evidence: [] }])) });
     const good = (items: string[]) => JSON.stringify({ verdicts: items.map((id) => ({ item: id, value: 'unmet', rationale: 'x', evidence: [] })) });
     /** Runs the first group of construct-validity only. */
     const go = (handler: (body: any, n: number) => Response, constrainedRetry?: boolean) => {
@@ -179,20 +180,30 @@ describe('automated assessor', () => {
     it('retries a malformed reply once with json_schema and uses the better reply', async () => {
       const r = await go((b, n) => reply(n === 1
         ? JSON.stringify({ verdicts: [{ item: ids(b)[0], value: 'unmet', rationale: 'x', evidence: [] }], [ids(b)[1]!]: { value: 'unmet' } })
-        : good(ids(b))));
+        : goodObj(ids(b))));
       expect(r.ids.length).toBeGreaterThan(1);
       expect(r.bodies).toHaveLength(2);
       expect(r.bodies[0].response_format.type).toBe('json_object');
       const rf = r.bodies[1].response_format;
       expect(rf.type).toBe('json_schema');
       expect(rf.json_schema.strict).toBe(true);
-      expect(rf.json_schema.schema.properties.verdicts.items.properties.item.enum).toEqual(r.ids);
+      const vs = rf.json_schema.schema.properties.verdicts;
+      expect(vs.required).toEqual(r.ids);
+      expect(Object.keys(vs.properties)).toEqual(r.ids);
+      expect(vs.additionalProperties).toBe(false);
+      expect(vs.properties[r.ids[0]!].required).toEqual(['value', 'rationale', 'evidence']);
       expect(r.bodies[1].messages).toEqual(r.bodies[0].messages);
       expect(r.calls).toBe(2);
       expect(r.complete).toBe(true);
       expect(r.transcript.map((t) => t.constrained)).toEqual([undefined, 'json_schema']);
       expect(r.transcript.map((t) => t.checks.length)).toEqual([0, r.ids.length]);
       expect(Object.keys(r.assessment.verdicts!).sort()).toEqual([...r.ids].sort());
+    });
+    it('converts an object-form constrained reply and completes the group', async () => {
+      const r = await go((b, n) => reply(n === 1 ? '{"verdicts": []}' : goodObj(ids(b))));
+      expect(r.complete).toBe(true);
+      expect(Object.keys(r.assessment.verdicts!).sort()).toEqual([...r.ids].sort());
+      expect(r.transcript[1]!.checks).toHaveLength(r.ids.length);
     });
     it('records a 400 on the schema request as an error, without an unconstrained third request', async () => {
       const r = await go((_b, n) => n === 1 ? reply('not json at all') : new Response('bad schema', { status: 400 }));
