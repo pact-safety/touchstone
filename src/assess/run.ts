@@ -233,8 +233,8 @@ export async function assess(input: RunInput): Promise<{ assessment: Assessment;
     let used = await attempt();
     const stopOn = (e: TranscriptEntry) => /rate limited/.test(e.error ?? '');
     // A reply that parsed badly or left items out gets one retry under schema-constrained decoding (a plain retry
-    // returns the identical reply at temperature 0). Network/HTTP failures (response null) are not retried.
-    if (input.constrainedRetry !== false && used.got < g.items.length && used.entry.response !== null && !stopOn(used.entry) && (input.maxCalls === undefined || calls < input.maxCalls)) {
+    // returns the identical reply at temperature 0). max_tokens cutoffs are retried too; other network/HTTP failures (response null) are not.
+    if (input.constrainedRetry !== false && used.got < g.items.length && (used.entry.response !== null || /hit max_tokens/.test(used.entry.error ?? '')) && !stopOn(used.entry) && (input.maxCalls === undefined || calls < input.maxCalls)) {
       const retry = await attempt(verdictsSchema(std, g));
       if (stopOn(retry.entry)) { complete = false; break; }
       if (retry.got > used.got) used = retry;

@@ -212,6 +212,15 @@ describe('automated assessor', () => {
       expect(r.complete).toBe(false);
       expect(r.calls).toBe(2);
     });
+    it('retries a max_tokens cutoff with json_schema', async () => {
+      const cut = `data: ${JSON.stringify({ choices: [{ delta: { content: '{"verdicts": [' }, finish_reason: 'length' }] })}\n\ndata: [DONE]\n\n`;
+      const r = await go((b, n) => n === 1 ? new Response(cut, { status: 200 }) : reply(goodObj(ids(b))));
+      expect(r.bodies).toHaveLength(2);
+      expect(r.complete).toBe(true);
+      expect(r.transcript[0]!.error).toMatch(/hit max_tokens/);
+      expect(r.transcript.some((t) => t.constrained === 'json_schema')).toBe(true);
+      expect(Object.keys(r.assessment.verdicts!).sort()).toEqual([...r.ids].sort());
+    });
     it('makes no schema retry when constrainedRetry is false', async () => {
       const r = await go(() => reply('not json at all'), false);
       expect(r.bodies).toHaveLength(1);
