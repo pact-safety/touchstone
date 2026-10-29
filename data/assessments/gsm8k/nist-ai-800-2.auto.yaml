@@ -1,0 +1,504 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gsm8k
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 3101c7d5072418e28b9008a6636bde82a006892c
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gsm8k/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.14168v2
+      ref: v2
+      sha256: d5f50406113e835544f59130d94bbea960dc894a4c89b2cd554a04f0a100c1bd
+      chars: 46512
+    - kind: repo
+      url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+      ref: 3101c7d5072418e28b9008a6636bde82a006892c
+      sha256: 20bd770b749ea24df5479cc6e9770f6581e3679d195ba77037c2c1effa4f61e2
+      chars: 7821
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark specifies it measures multi-step mathematical reasoning through grade school math word problems.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 1, chunk 0
+        quote: they still struggle to robustly perform multi-step mathematical reasoning. To diagnose the failures of current models and support research, we introduce GSM8K, a dataset of 8.5K high quality linguistically diverse grade school math word problems.
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark explicitly states it covers grade school math word problems using basic arithmetic operations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: solutions primarily involve performing a sequence of elementary calculations using basic arithmetic operations (+ − ×÷ ) to reach the final answer.
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The benchmark states the intended difficulty relative to a human population (middle school students).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: A bright middle school student should be able to solve every problem.
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The format is described as a json dictionary with question and answer keys, and example items are provided in Figure 1.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 1
+        quote: saved as a json dictionary (with a "question" key and an "answer" key).
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: "The grading method is based on checking if the final numeric answer extracted after the #### token is correct."
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 2
+        quote: To extract the final numeric solution for a particular question, simply parse the completion to extract the numeric value immediately following the `####` token.
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: unmet
+    rationale: The documentation does not explicitly name areas the construct implies but the items do not cover, nor does it state coverage is complete.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: unmet
+    rationale: The documentation does not name a specific intended use case or threat model, nor does it discuss direct vs proxy measurement.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict any downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for models of different capabilities (6B and 175B) are reported, allowing for an assessment of headroom.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 9, chunk 0
+        quote: |-
+          6B Gen, 6B Verifier
+          6B Gen, 175B Verifier
+          175B Gen, 6B Verifier
+          175B Gen, 175B Verifier
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: A human baseline is provided by stating that a bright middle school student should be able to solve every problem.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: A bright middle school student should be able to solve every problem.
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The items were created by human problem writers, and the documentation describes efforts to avoid templates and duplicates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers.
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The total item count and the split between training and test sets are clearly stated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: We segmented these into 7.5K training problems and 1K test problems.
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark uses a held-out test split to reduce contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: We segmented these into 7.5K training problems and 1K test problems.
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: There is no mention of a canary string in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: The documentation does not state the resources (time, compute, tokens) needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a standard reference protocol for comparison or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: met
+    rationale: The benchmark provides a training set of 7.5K problems separate from the 1K test problems.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: We segmented these into 7.5K training problems and 1K test problems.
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The paper specifies sampling temperatures (T=0 for finetuning, T=0.7 for verification) used for reported results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 6, chunk 1
+        quote: Test performance is determined by a single low temperature ( T   = 0) sample
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 7, chunk 0
+        quote: we use a higher temperature ( T   = 0 . 7) to generate test@100 samples
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: unmet
+    rationale: The excerpts do not provide the exact prompt text or instruction templates used to present items to the model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: met
+    rationale: The benchmark describes the use of a calculator as a tool to override sampling.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 17, chunk 0
+        quote: To simulate the calculator, we simply use the python   eval   function to evaluate the tokens in the expression
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: met
+    rationale: The execution environment for the calculator tool is specified as the python eval function.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 17, chunk 0
+        quote: To simulate the calculator, we simply use the python   eval   function to evaluate the tokens in the expression
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: met
+    rationale: The benchmark specifies a maximum sample length of 400 tokens.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 16, chunk 0
+        quote: Max Sample Length   400 tokens
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: The benchmark uses a single submission (or a set of independent samples) with no retry loop or feedback provided to the model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 5, chunk 1
+        quote: we judge performance by autoregressively sampling a single low temperature solution
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark specifies both single samples (test@1) and multiple samples (test@100) and how they are used (highest ranked or at least once).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 7, chunk 0
+        quote: We use test@N to denote the percentage of problems solved correctly at least once when allowing the model to make N separate guesses
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: n/a
+    rationale: The benchmark uses exact match of the final numeric answer, not an LLM judge, to score responses.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: n/a
+    rationale: No LLM judge is used to score responses.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The paper reports results under varied protocol settings, such as varying the number of completions per problem.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 10, chunk 0
+        quote: 6B   verification   test   performance when given varying numbers of completions per problem to rank.
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a repository with runnable code for training and sampling.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 6
+        quote: python train.py
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 6
+        quote: python sample.py
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the #### token for the answer format and provides logic in dataset.py:is_correct to extract it."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: While a version number (0.0.1) is in setup.py, there is no record of changes or changelog provided.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:setup.py, chunk 0
+        quote: version='0.0.1',
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: unmet
+    rationale: The benchmark uses the python eval function for the calculator, but there is no mention of a sandbox (container or VM).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 17, chunk 0
+        quote: To simulate the calculator, we simply use the python   eval   function to evaluate the tokens in the expression
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: The provided code is for a GPT2 sized model and does not show support for multiple providers or an open interface.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 6
+        quote: We present a basic example of training a GPT2 sized model
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: The excerpts do not show that the harness saves full per-item logs of responses and scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the logs record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The benchmark describes quality control based on worker agreement to ensure problems are solvable.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: After performing extensive quality control based on workers’ answer agreement, we estimate that less than 2 percent of problems contain breaking errors.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The items are grade school math word problems, which do not contain content likely to trigger safety safeguards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 1, chunk 0
+        quote: GSM8K, a dataset of 8.5K high quality linguistically diverse grade school math word problems.
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response (or independent samples) without an interactive environment, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 5, chunk 1
+        quote: we judge performance by autoregressively sampling a single low temperature solution
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: The documentation does not state that task instructions were reviewed for ambiguity by more than one person or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The paper publishes solve rates for various GPT-3 model sizes (3B, 6B, 12B, 175B) and the protocol used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 5, chunk 0
+        quote: 3B model 6B model 12B model 175B model
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 6, chunk 1
+        quote: Test performance is determined by a single low temperature ( T   = 0) sample for each test problem.
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: n/a
+    rationale: The benchmark has one item format (math word problems) and one subject area (grade school math) and claims a single construct (mathematical reasoning).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 1, chunk 0
+        quote: GSM8K, a dataset of 8.5K high quality linguistically diverse grade school math word problems.
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline metric as the 'Test Solve Rate (%)' and specifies that for finetuning, performance is determined by a single sample.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 6, chunk 1
+        quote: Test performance is determined by a single low temperature ( T = 0) sample for each test problem.
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: met
+    rationale: The benchmark reports mean and standard deviation across 3 runs for its results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 5, chunk 0
+        quote: Mean and standard deviation is shown across 3 runs.
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: The excerpts do not provide a structured report template, schema, or a list of required reporting details for evaluators.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: met
+    rationale: The benchmark provides a downloadable file containing model solutions for each test question.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 5
+        quote: |-
+          For each test question, we provide solutions generated from 6B finetuning, 6B verification, 175B finetuning and 175B verification. This data can be found in:
+
+          - `grade_school_math/data/example_model_solutions.jsonl`
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: There is no mention of the cost (money, tokens, or time) associated with the reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: met
+    rationale: The benchmark provides a downloadable file with model-generated solutions for the test questions.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 5
+        quote: |-
+          For each test question, we provide solutions generated from 6B finetuning, 6B verification, 175B finetuning and 175B verification. This data can be found in:
+
+          - `grade_school_math/data/example_model_solutions.jsonl`
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument that the problems are conceptually simple and solvable by a bright middle school student.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: A bright middle school student should be able to solve every problem.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: n/a
+    rationale: The benchmark does not claim to represent real-world tasks; it focuses on grade school math problems.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes the finetuning baseline as using the same language modeling objective as GPT-3.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 5, chunk 1
+        quote: Finetuning, our baseline method, uses the same language modeling objective as the generative pretraining in GPT-3 (Brown et al., 2020).
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: unmet
+    rationale: The documentation does not explicitly state conclusions that the scores should not be taken to show.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents a limitation regarding the models' tendency to make arithmetic mistakes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 6, chunk 0
+        quote: Our models frequently fail to accurately perform calculations.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

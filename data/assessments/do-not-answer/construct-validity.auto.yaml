@@ -1,0 +1,264 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: do-not-answer
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 460703484df354958a5e1cd7378a38fcb94a2f3e
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/do-not-answer/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.13387v2
+      ref: v2
+      sha256: da590ed3a2ff235d293e79d8140123d5bbb46a04421f9f7e7b245a8610aa258d
+      chars: 72696
+    - kind: repo
+      url: https://github.com/Libr-AI/do-not-answer/tree/460703484df354958a5e1cd7378a38fcb94a2f3e
+      ref: 460703484df354958a5e1cd7378a38fcb94a2f3e
+      sha256: f80987b66960beae4489b7e7514e2965ed7bfebe5baaa15cbaf5d146171b4814
+      chars: 25595
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The text provides an operational definition of harmful responses based on whether the model follows the instruction and directly responds to risky questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 6, chunk 3
+        quote: If the model follows the instruction and directly responds, the responses are generally considered to be harmful.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the text mentions a risk taxonomy, it does not explicitly state the scope of the phenomenon nor name any excluded aspects.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is broken down into a hierarchical risk taxonomy and action categories, which are measured and distributed separately in the results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 1, chunk 2
+        quote: We introduce a three-level hierarchical risk taxonomy, covering both mild and extreme risks.
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts mention ablation studies regarding input types (instructions vs responses) and context length, but they do not identify secondary abilities required by the tasks and provide corresponding control conditions for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the paper mentions forcing a specific output format for extraction, it does not measure the effect of these format requirements on the resulting scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses model-based evaluators (GPT-4 and Longformer) to classify responses into indices, rather than using automated parsing of free-form output to extract answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 9, chunk 4
+        quote: "we force the model to return the corresponding class index in the following format: <answer>index</answer>"
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors describe a task space consisting of a risk taxonomy and a sampling strategy of collecting prompts for each fine-grained risk category."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The authors documented a quality check where they excluded or rephrased borderline cases that were not inherently risky to ensure consistency.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 6, chunk 1
+        quote: To ensure the consistency of our data, we address these borderline cases by either incorporating a specific risky scenario, or excluding them if straightforward rephrasing is not feasible.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: The provided excerpts do not mention a subset of permuted or perturbed items or separate results for such items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation describes the collection of a new dataset using GPT-4, indicating it is not adapting a previous dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 5, chunk 2
+        quote: we use   GPT-4   to generate 10–20 questions or question templates for each harm type
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark uses a newly generated dataset rather than adapting a prior one.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 5, chunk 2
+        quote: we use   GPT-4   to generate 10–20 questions or question templates for each harm type
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark uses a newly generated dataset rather than adapting a prior one.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 5, chunk 2
+        quote: we use   GPT-4   to generate 10–20 questions or question templates for each harm type
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark uses a newly generated dataset rather than adapting a prior one.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 5, chunk 2
+        quote: we use   GPT-4   to generate 10–20 questions or question templates for each harm type
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any tests implemented to detect data contamination or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: While the text mentions a 'held-out set of 317 harmful prompts' used by commercial LLM creators, it does not state that the Do-Not-Answer benchmark itself maintains a private or held-out split for ongoing evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The excerpts do not state the total item count of the benchmark, nor do they provide a power calculation or confidence-interval width relative to a claimed gap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: While some 'Overall' scores in Table 5 and Table 10 include uncertainty estimates (e.g., ± 1.4), the individual model scores in the main results tables (like Table 5 and Table 6) do not have confidence intervals or standard errors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The paper mentions that three annotators were used, but it does not describe their demographics or state how demographic biases were mitigated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 7, chunk 3
+        quote: three annotators evaluated the harmfulness of the six models
+    by: model
+    quotes_verified: true
+  st.4:
+    value: met
+    rationale: The ground truth is based on human annotations and model ratings (subjective), and the paper reports that annotators discussed disagreements to reach consensus.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 7, chunk 3
+        quote: They discussed instances of disagreement, and mutually agreed on the final label through consensus.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts describe categories of responses (safe vs harmful) and action categories, but they do not provide a quantitative count of specific failure modes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure provided in the excerpts that breaks down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors conduct an ablation study to verify if including instructions as input improves the performance of the classifier.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 11, chunk 2
+        quote: we verify this hypothesis by only using responses as the inputs to the classifier. Table 10 shows the performance improvement of Longformer given both instruction and response as input
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to the real-world application of preventing misuse by bad actors for cyber attacks, manipulation, or terrorism.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 1, chunk 1
+        quote: modern systems are exhibiting emergent capabilities with ever greater risk of misuse by bad actors, such as to conduct offensive cyber attacks, manipulate people, or provide actionable instructions on how to conduct acts of terrorism
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to existing evaluations like RealToxicityPrompts, noting that prior work focused on specific risk areas like toxicity, whereas this benchmark uses a broader risk taxonomy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 2, chunk 1
+        quote: Most prior work has primarily focused on specific risk areas, such as bias and discrimination (Dhamala et al., 2021; Han et al., 2022, 2023b), language toxicity (Hartvigsen et al., 2022; Roller et al., 2021), and misinformation (Van Der Linden, 2022).
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The authors state a design trade-off where collecting a dataset of only non-followable instructions facilitates high-quality evaluation but may result in a biased distribution of risky questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 5, chunk 2
+        quote: Collecting this dataset facilitates accurate and high-quality response evaluation, at the cost of potentially biased risky question distribution.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

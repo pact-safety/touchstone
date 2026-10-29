@@ -1,0 +1,442 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: swe-bench-verified
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/swe-bench-verified/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2310.06770v3
+      ref: v3
+      sha256: bb04e03876fea31f46a22061ba431ccce08c460a411530b20d66ac670aa8d807
+      chars: 162878
+    - kind: repo
+      url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+      ref: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+      sha256: 13c9768a7e92d37b0405c4bf5faab5c6168e1c40446f565bb6e1f80d693847b4
+      chars: 120623
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested capability as evaluating LLMs on resolving real-world software issues from GitHub.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/index.md, chunk 0
+        quote: SWE-bench is a benchmark for evaluating large language models on real world software issues collected from GitHub.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: "The translation to a task is described: given a codebase and an issue, the model must generate a patch to resolve the problem."
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/index.md, chunk 0
+        quote: Given a *codebase* and an *issue*, a language model is tasked with generating a *patch* that resolves the described problem.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 10
+    rationale: The text mentions that the skill is foundational for machine-automated software engineering and raises AI safety questions, though it doesn't explicitly detail 'how knowing' it is helpful in a practical real-world application sense.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 32, chunk 0
+        quote: a potential future of machine-automated software engineering raises many important questions and has important potential ramifications with regards to AI Safety
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The 'Verified' version of the benchmark specifically uses problems verified by software engineers."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature on software engineering metrics, specifically citing McCabe (1976) and Halstead (1977).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 29, chunk 2
+        quote: Cyclomatic complexity quantifies the control flow of a function, counting the number of independent execution paths through the source code (McCabe, 1976).
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of metric (percentage of resolved instances) is informed by the requirement that a patch must apply and pass all tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 3, chunk 1
+        quote: If the patch applies successfully and all of these tests pass we consider the proposed solution to have successfully resolved the issue. The metric for our benchmark is the percentage of task instances that are resolved.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: No metric floors or ceilings are mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: No human performance level is provided for comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: No random performance level is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses a robust framework for execution-based evaluation using fail-to-pass and pass-to-pass tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 2, chunk 1
+        quote: a robust framework for execution-based evaluation
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 10
+    rationale: The text explains how SWE-bench differs from traditional NLP benchmarks (which use short sequences and contrived problems).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 3, chunk 1
+        quote: Traditional benchmarks in NLP typically involve only short input and output sequences and consider somewhat “contrived” problems created specifically for the benchmark. In contrast, SWE-bench’s realistic construction setting imbues the dataset with unique properties
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 10
+    rationale: The benchmark addresses sensitivity to context distribution shifts, specifically regarding the retrieval method (Oracle vs BM25).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 7, chunk 1
+        quote: Finetuned models are sensitive to context distribution shifts.
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The documentation explicitly mentions a script used to run the evaluation of a prediction file.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/reference/harness.md, chunk 0
+        quote: "`swebench.harness.run_evaluation`: This script is used to run the evaluation of a prediction file"
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The datasets are explicitly stated to be available on Hugging Face.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/guides/datasets.md, chunk 0
+        quote: All datasets are available on Hugging Face
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The inference module provides a script specifically for generating completions using API-based models.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/reference/inference.md, chunk 0
+        quote: "`run_api.py`: Generates completions using API models (OpenAI, Anthropic) for a given dataset"
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The inference module provides a script for running inference using local Llama models.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/reference/inference.md, chunk 0
+        quote: "`run_llama.py`: Runs inference using Llama models (e.g., SWE-Llama)"
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 15
+    rationale: The benchmark uses a unique identifier created from the repository and pull number for each instance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 17, chunk 4
+        quote: instance id   (str) A unique identifier created from   repo   and   pull number
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 15
+    rationale: The paper describes a procedure to ensure the training data repositories are disjoint from the evaluation benchmark to eliminate contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 4, chunk 2
+        quote: To eliminate the risk of data contamination, the set of repositories in the training data is disjoint from those included in the evaluation benchmark.
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: No specific script for replicating the final reported results is mentioned; only general evaluation scripts are provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not mention statistical significance or uncertainty quantification for the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no mention of assessing the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent CI/CD implementation is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: The quickstart guide provides a command to install the package and its dependencies using pip.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/guides/quickstart.md, chunk 0
+        quote: pip install -e .
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): A dedicated Quick Start Guide is available and listed in the documentation index."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 15
+    rationale: "The provided code excerpts from the paper show the use of in-line comments (e.g., # symbols)."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 50, chunk 1
+        quote: "#   insert   prolog   (after   docinfo   if   exists)"
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The repository contains a comprehensive documentation directory with guides and API references.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/README.md, chunk 0
+        quote: This directory contains comprehensive documentation for SWE-bench.
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The benchmark was accepted as an oral presentation at ICLR 2024.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:README.md, chunk 3
+        quote: SWE-bench has been accepted to ICLR 2024 as an oral presentation!
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes a 3-stage pipeline for benchmark construction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 2, chunk 2
+        quote: To find high-quality task instances at scale, we use a   3 -stage pipeline as follows.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper explains that tasks are constructed from merged PRs that resolve issues and contribute tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 16, chunk 1
+        quote: We construct candidate task instances from PRs that satisfy three conditions.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper includes a section specifically discussing limitations and future directions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 10, chunk 0
+        quote: Limitations and future directions.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the data collection process, including PR scraping and filtering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 16, chunk 0
+        quote: In the appendix, we provide more thorough details regarding the dataset construction process
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric is explicitly defined as the percentage of task instances resolved.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 3, chunk 1
+        quote: The metric for our benchmark is the percentage of task instances that are resolved.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The README specifies that the benchmark is under the MIT license.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:README.md, chunk 11
+        quote: MIT license. Check `LICENSE.md`.
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: The excerpts do not show the use of a standardized metadata schema.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents sourcing problems from the top 100 most downloaded PyPI libraries.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 16, chunk 0
+        quote: From a list of the top   5 , 000   most downloaded PyPI libraries during August 2023, we select the top   100   packages
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper describes preprocessing steps such as removing Markdown-style comments and filtering PRs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 18, chunk 0
+        quote: we first remove any Markdown-style comments
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The 'Verified' variant is described as consisting of expert-verified solvable problems."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The paper explains the choice of popular repositories to ensure better maintenance and test coverage.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 2, chunk 3
+        quote: We focus on popular repositories as they tend be better maintained
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of following a specific recognized documentation standard (e.g., Sphinx, Google style).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 10
+    rationale: The text describes a process to verify the usability of task instances via execution, though it does not explicitly date this check within the last year.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 16, chunk 2
+        quote: We verify the usability of a task instance via execution.
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 15
+    rationale: The repository README explicitly welcomes contributions, pull requests, and issues as a way to hear from the community.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:README.md, chunk 11
+        quote: we welcome any contributions, pull requests, or issues!
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: The README lists specific contact persons along with their website and email addresses.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:README.md, chunk 11
+        quote: "Contact person: [Carlos E. Jimenez](http://www.carlosejimenez.com/) and [John Yang](https://john-b-yang.github.io/)"
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

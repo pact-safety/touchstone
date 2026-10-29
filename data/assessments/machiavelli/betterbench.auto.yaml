@@ -1,0 +1,430 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: machiavelli
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/machiavelli/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2304.03279v4
+      ref: v4
+      sha256: ab66d6699e0d0d721e857435d45c43f70115174d074217eb0ec94da8d6963a4a
+      chars: 120586
+    - kind: repo
+      url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+      ref: ebb44e197f663603427882c609dbc9d5fb883d63
+      sha256: 5cbc5f072d51ba92f2bad196db5ae1a6d9579a02ad133424471c9fd7810d3def
+      chars: 10786
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the concept of power and the goal of measuring competence and harmfulness in social environments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 3, chunk 4
+        quote: Power is a nebulous concept with competing definitions in philosophy, physics, political science, economics, and sociology.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark translates the concept of social interaction and power into a task using text-based Choose-Your-Own-Adventure games.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 2, chunk 1
+        quote: Our environment, detailed in Table 1, is based on human-written, text-based Choose-Your-Own-Adventure games from choiceofgames.com .
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text describes how this research helps prevent existential risks posed by power-seeking AIs in the real world.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 31, chunk 0
+        quote: This directly reduces the existential risks posed by power-seeking AIs (Carlsmith, 2022)
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The text mentions that 'solving' the benchmark does not necessarily solve all classic safety problems, providing a limit on interpretation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 31, chunk 3
+        quote: Consequently, “solving” this benchmark would not necessarily imply a solution to many classic safety problems.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: The authors act as experts to define gold labels for the test set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: We define the gold labels on the test set to be the ensemble of labels from three experts (authors).
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates literature from philosophy, political science, and economics (e.g., Piketty, Baldwin).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 16, chunk 1
+        quote: Both capital and economic power share the property that they tend to compound over time (Piketty, 2014).
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The metric is an informed choice based on the proportion of harms relative to a random baseline to measure ethical behavior."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 10
+    rationale: The text mentions a best possible score of 0%, but does not explicitly define a ceiling for all metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 5, chunk 1
+        quote: Following this setup, the best possible score for all behavioral metrics is 0%
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: The benchmark compares model labels against human labels and expert labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: Model labels are competitive with human labels.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: A random agent baseline is used to calculate behavioral scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 0
+        quote: scores represent the amount of harm reduced for that category, as a proportion of the mean amount of harm across 1,000 random trajectories.
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses GPT-4 to provide labels and validates them against expert gold labels using Spearman rank correlation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: Table 8 shows the agreement (Spearman rank correlation) of gold labels against the model labels and crowdworker labels.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains how it differs from previous benchmarks that focused on isolated scenarios or physical exploration.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 1, chunk 2
+        quote: Previous benchmarks aimed at evaluating these complex systems have measured language understanding (Wang et al., 2019) or reasoning in isolated scenarios
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 10
+    rationale: The text mentions that the RL algorithm can be sensitive to hyperparameters, though it doesn't explicitly discuss input sensitivity (prompting).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 31, chunk 3
+        quote: Regarding Q5, while the RL algorithm used in this work can be sensitive to hyperparameters, the results hold across a large suite of games.
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository provides a script to evaluate trajectories.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 3
+        quote: python -m evaluate_trajectories --traj_dir <TRAJ_DIR> --results_file <RESULTS_FILE>
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The evaluation data is explicitly provided via a Google Drive link.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 1
+        quote: The data is available through [Google Drive](https://drive.google.com/file/d/19PXa2bgjkfFfTTI3EZIT3-IJ_vxrV0Rz/view).
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark supports models using OpenAI's Chat Completion API."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The repo includes code for baseline agents (RL, LM) and a local environment, implying local model support, though not explicitly stated as a general feature."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The repository includes specific scripts to recreate the results presented in the paper.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 3
+        quote: We include the scripts used to recreate the results in our paper, including our various agent baselines, in `experiments/`.
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not show reporting of statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no mention of assessing the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent implementation is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: No specific release requirements are specified in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A requirements.txt file is explicitly listed in the repository structure.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 3
+        quote: "requirements.txt            # Do `pip install -r requirements.txt`"
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a demo script and instructions on how to use it to play a game.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 1
+        quote: "Use our demo script to play through a game:"
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain code snippets showing in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 10
+    rationale: The repository contains a 'docs/' folder for a website and a README explaining the repo structure, though comprehensive API documentation is not shown.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 3
+        quote: "docs/                       # Code for website"
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The paper is cited as being published in ICML 2023, which is a peer-reviewed venue.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 6
+        quote: |-
+          journal = {ICML},
+              year = {2023},
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the benchmark structure, including the use of Choose-Your-Own-Adventure games.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 3, chunk 0
+        quote: |-
+          we detail the structure of the Choose-Your-Own-Adventure games in M ACHI - 
+          AVELLI
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (30 challenging games) and the rationale (measuring trade-offs between rewards and ethical behavior).
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 2
+        quote: The MACHIAVELLI benchmark is a test set of 30 challenging games
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper mathematically formulates and operationalizes the normative properties being studied, such as ethical violations and power-seeking."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper documents limitations regarding the context window length of the prompting scheme.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 25, chunk 4
+        quote: Due to limitations on context window length, our current prompting scheme only shows the LM the current scene text
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the prompt design process for the harmfulness model training.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 28, chunk 0
+        quote: "We construct a conditional power measurement dataset... by using the prompt:"
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper documents the use of behavioral metrics and reward maximization as evaluation criteria.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: Using our labels, we can report a rich set of behavioral metrics.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes a LICENSE file specifying the MIT License."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI or Zenodo link) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: There is no evidence of standardized metadata (e.g., Schema.org or DataCite) being used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper and README document that data is collected from Choose-Your-Own-Adventure games and available via Google Drive.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 1
+        quote: The data is available through [Google Drive]
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not document specific data preprocessing steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper documents the annotation process involving experts, crowdworkers from Surge AI, and model labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: GPT-4 is usually as accurate as human annotators from Surge AI on a test set of 2,000 scenes
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Datasheets for Datasets).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: While authors are listed in the citation, no specific contact person (e.g., email or contact details) is listed for the benchmark maintenance.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,494 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: webarena
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dce04686a56253aefba7b18a4fa0937cf1dc987b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/webarena/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2307.13854v4
+      ref: v4
+      sha256: 6bfafefb66f717293e727f9604f112ebfa3489ab976fa28bcd8be90af3a55973
+      chars: 80125
+    - kind: repo
+      url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+      ref: dce04686a56253aefba7b18a4fa0937cf1dc987b
+      sha256: dc81380d8c504549f05bbf8023a510ce4bd463bf2004e4e6748d368274aaff44
+      chars: 24189
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark specifies it measures the functional correctness of task completions through long-horizon web-based tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 1
+        quote: release a set of benchmark tasks focusing on evaluating the functional correctness of task completions
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: ready-to-use benchmark with 812 long-horizon web-based tasks
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: "The benchmark lists specific task categories: information-seeking, site navigation, and content and configuration operation."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 6, chunk 0
+        quote: (1) Information-seeking tasks expect a textual response. ... (2) Site navigation ... (3) Content and configuration operation
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The benchmark describes the tasks as 'long-horizon' and 'complex', designed to emulate tasks humans routinely perform on the internet.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 1
+        quote: tasks in our benchmark are diverse, long-horizon, and designed to emulate tasks that humans routinely perform on the internet
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark uses an interactive environment with natural language intents, and provides example intents in Figure 1 (referenced in text) and Table 1.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: Each task is described as a high-level natural language intent, emulating the abstract language usage patterns typically employed by humans
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 0
+        quote: Tell me the name of the customer who has the most cancellations in the history
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: "The benchmark details multiple grading methods: exact_match, must_include, fuzzy_match (using GPT-4), and programmatic checks (r_prog)."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 6, chunk 1
+        quote: we define exact_match where only ˆ a that is identical with a ∗ receives a score of one.
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 6, chunk 2
+        quote: we introduce fuzzy_match where we utilize a language model to assess whether ˆ a is semantically equivalent to a ∗
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: unmet
+    rationale: The documentation does not explicitly name areas or task types that the construct implies but are not covered.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: unmet
+    rationale: The documentation does not state a specific threat model or whether it measures the construct via a proxy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark makes no claim that its scores predict any downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for GPT-3.5 and GPT-4 (models of different capabilities) are reported, allowing for a judgment of headroom.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 8, chunk 2
+        quote: overall task success rate of GPT-4 to 14.41%. ... On the other hand, GPT-3.5 rarely exhibits this level of reasoning.
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: A human baseline is reported, and the participants are identified as five computer science graduate students.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 2
+        quote: ask five computer science graduate students to perform these tasks. ... human annotators complete 78.24% of the tasks
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation states that intents were contributed by the authors following specific guidelines.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 1
+        quote: The intents were contributed by the authors following the annotation guideline in §3.1.
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The total item count is stated as 812.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: we release a ready-to-use benchmark with 812 long-horizon web-based tasks
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private split, contamination analysis, or specific date-based creation to reduce training data contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: No canary strings are mentioned in the provided documentation or data excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation mentions the use of Docker containers for hosting and the need to setup standalone environments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: We deliver the hosting services using Docker containers with gym -APIs
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 6
+        quote: Setup the standalone environment. Please check out [this page](environment_docker/README.md) for details.
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol with specific settings that may or may not vary to maintain comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: The excerpts mention 812 test examples but do not describe a separate development, validation, or training split.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark reports results for GPT-3.5-TURBO-16K-0613 using a specific temperature setting.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 17, chunk 1
+        quote: we provide the results of GPT-3.5- TURBO -16 K -0613 with temperature 0.0
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The paper states that full prompts are available in the appendix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 8, chunk 0
+        quote: The full prompts can be found in Appendix A.9.
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: met
+    rationale: The benchmark specifies the action space (tools) and the agent loop (reasoning before acting).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 4, chunk 3
+        quote: we design a compound action space that emulates the keyboard and mouse operations
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: met
+    rationale: The environment is provided as Docker containers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: We deliver the hosting services using Docker containers
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: met
+    rationale: The benchmark mentions a maximum step limit for agent runs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 22, chunk 1
+        quote: continuously issues the command type [2430] [DMV area] until it reaches the maximum step limit.
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: unmet
+    rationale: The documentation does not specify the number of allowed submission attempts or the feedback given for incorrect attempts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The documentation does not specify the number of trials per item or the aggregation method used across trials.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark uses GPT-4 as a judge for fuzzy matching and provides the prompt in the appendix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 6, chunk 2
+        quote: we use gpt-4-0613 to perform this evaluation. The corresponding prompt details are provided in Appendix A.7.
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports the agreement between the LLM judge and human judgment as a number.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 17, chunk 1
+        quote: we manually checked 40 examples and found that 39 of them are identical to our human judgment.
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The benchmark reports results under varied protocol settings, specifically removing a sentence in ablation studies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 18, chunk 2
+        quote: We remove this sentence in our ablation studies.
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a runnable script (run.py) and instructions for end-to-end evaluation."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies required formats (e.g., 'In summary...') and provides extraction logic in the prompt constructor."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: met
+    rationale: The benchmark uses version tags (e.g., v0.2.0) and notes that annotation bugs were fixed.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 3
+        quote: The current version ([v0.2.0](https://github.com/web-arena-x/webarena/releases/tag/v0.2.0)) is relatively stable
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: met
+    rationale: The benchmark runs the environment in Docker containers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: We deliver the hosting services using Docker containers
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: met
+    rationale: The harness supports different models (e.g., gpt-3.5-turbo) via a configuration setting in the run script.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 7
+        quote: --model gpt-3.5-turbo
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness saves trajectories as HTML files for each example."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the output logs include the model identifier and benchmark version/commit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The authors describe a validation process where they executed tasks and used multiple annotators to ensure correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 2
+        quote: To ensure consistency and accuracy, each question was annotated twice. If the two annotators disagreed, a third annotator finalized the annotation.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: met
+    rationale: The benchmark explicitly handles unachievable tasks by expecting an 'N/A' response.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 1
+        quote: We label such instances as "N/A" and expect an agent to produce an equivalent response.
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: met
+    rationale: The benchmark uses a self-hosted Docker environment to control the state and prevent external contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: We deliver the hosting services using Docker containers
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: met
+    rationale: The benchmark documents that human testers (graduate students) attempted the tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 2
+        quote: We sample one task from each of the 170 templates and ask five computer science graduate students to perform these tasks.
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes success rates for GPT-4 and GPT-3.5 with specific prompting strategies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 8, chunk 0
+        quote: "Table 2: The end-to-end task success rate (SR %) on WebArena with different prompting strategies."
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports success rates broken down by task type (info vs others)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline metric as the end-to-end task success rate and specifies scoring functions (exact_match, must_include) for item-level aggregation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 3
+        quote: an end-to-end task success rate of only 14.41%
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 6, chunk 1
+        quote: we define exact_match where only ˆ a that is identical with a ∗ receives a score of one
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty methods for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: met
+    rationale: The benchmark provides a structured way to record and run the protocol using config files and a run script.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 5
+        quote: prepare the environment for a configuration defined in a json file
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: While the benchmark mentions providing results in a table, there is no evidence of a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The excerpts do not report the cost (tokens, money, or time) associated with the reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: met
+    rationale: The benchmark states that execution trajectories (transcripts) are provided in the code repository.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 17, chunk 1
+        quote: the execution trajectories in our code repository
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The documentation provides a validity argument by explaining that the environment uses real-world counterparts to achieve realism.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 3, chunk 0
+        quote: We achieve realism by using open-source libraries that underlie many in-use sites from several popular categories and importing data to our environment from their real-world counterparts.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims realism and states that the environment reset method (restarting Docker containers) may impact evaluation time compared to real deployment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 16, chunk 0
+        quote: this environment reset method, through restarting Docker containers from the original images, will have a non-negligible but small impact on evaluation time
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark reports human performance as a baseline and describes the subjects (five computer science graduate students).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 2
+        quote: We sample one task from each of the 170 templates and ask five computer science graduate students to perform these tasks.
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: unmet
+    rationale: The documentation does not explicitly name conclusions that the scores should not be taken to show.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: unmet
+    rationale: There is no dedicated limitations section or list of known issues stating specific benchmark limitations like prompt sensitivity.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

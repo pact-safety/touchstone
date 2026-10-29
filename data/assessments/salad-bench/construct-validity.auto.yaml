@@ -1,0 +1,256 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: salad-bench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/salad-bench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.05044v4
+      ref: v4
+      sha256: 24765d9ad04f6822f7c85de8cdd8775f5dab28fafdcabbb7fa19943d4cc24385
+      chars: 136348
+    - kind: repo
+      url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      ref: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      sha256: 9b9ea84b2f0c812864d0268c8f92b6afb75ac1f820b08573ae31c0094a4a451d
+      chars: 19448
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark provides an operational definition of attack success based on whether a prompt triggers a harmful response.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 8, chunk 4
+        quote: we count an attack success if at least one prompt triggers harmful response
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the benchmark mentions a structured hierarchy of domains and tasks, it does not name any specific excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is broken down into a hierarchy of domains, tasks, and categories to ensure specific safety dimensions are evaluated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 2, chunk 2
+        quote: SALAD-Bench introduces a structured hierarchy with three levels, comprising 6 domains, 16 tasks, and 66 categories, respectively.
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The paper identifies 'instruction following ability' as a secondary ability that restricts accuracy, but it does not report a control condition or ablation result for this ability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: met
+    rationale: The paper explicitly discusses how models that fail to generate the accurate response format result in failures to be detected by the evaluator, impacting scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 24, chunk 0
+        quote: Some LLMs could make the right choices but fail to generate an accurate response format, such that the responses fail to be detected by the MCQ-Judge evaluator.
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: unmet
+    rationale: While the paper mentions regex parsing and some accuracy checks, it does not report repeat-run consistency or a comparison across two output formats to validate the parser for bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts describe the sources of the data (self-instructed and open-sourced) but do not document a sampling strategy over a described task space to ensure representativeness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: While human verification was performed on a sampled subset of 458 questions, the decision rule requires that every item passed a documented quality or relevance check.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 0
+        quote: we sample a subset of our dataset and asks 4 annotators to verify the dataset
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: The excerpts mention using attack methods like GCG and perturbation-based defense methods, but they do not show a counted subset of permuted/perturbed items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: unmet
+    rationale: The excerpts discuss other safety datasets and their shortcomings, but they do not state whether SALAD-Bench adapts or reuses any of these previous datasets for its own construction.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The provided excerpts do not show that any prior dataset or benchmark was reused to create SALAD-Bench.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The provided excerpts do not show that any prior dataset or benchmark was reused to create SALAD-Bench.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The provided excerpts do not show that any prior dataset or benchmark was reused to create SALAD-Bench.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any tests implemented to detect data contamination or report results of such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The paper mentions the use of a proprietary test set for evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 7, chunk 2
+        quote: our proprietary test set
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the item count is stated, there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 3
+        quote: SALAD-Bench contains 21k harmful base questions
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results tables (e.g., Table 10) report point estimates (accuracy, precision, recall, F1) without confidence intervals or standard errors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 19, chunk 0
+        quote: "The values reported in the table, listed from left to right, are as follows: accuracy, precision, recall, and F1 score."
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: Human raters are used for verification, but their demographics are not described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 0
+        quote: we sample a subset of our dataset and asks 4 annotators to verify the dataset.
+    by: model
+    quotes_verified: true
+  st.4:
+    value: met
+    rationale: The benchmark uses human ratings for verification and reports a consistency rate (inter-annotator agreement statistic).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 1
+        quote: The annotation results indicate that our data taxonomy labels match human taxonomy labels with a consistency rate of   94.3% .
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While the paper describes failure modes (e.g., 'weak instruction following ability' or 'too strict safety strategies'), it does not provide counts of these specific failure modes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not show failures or scores broken down by a named confounder in a table or figure showing counts or rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet according to the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors propose a specific direction to explore safety alignment algorithms that reduce negative effects on helpfulness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 23, chunk 1
+        quote: These results encourage us to explore more effective safety alignment algorithms with fewer negative effects
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: unmet
+    rationale: The excerpts mention safety evaluation and 'jailbreaking', but they do not name a specific real-world application and link it to the tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no statement linking the choice of tasks and metrics to a specific operational definition provided in a 'def.1' section.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to existing benchmarks (e.g., Wang et al., 2023b), noting that they are limited in scope to either safety evaluation or attack/defense, whereas SALAD-Bench covers both.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 2, chunk 2
+        quote: these benchmarks tend to be limited in scope, being tailored either exclusively for safety evaluation (Wang et al., 2023b; Shen et al., 2023) or for testing attack and defense mechanisms (Zou et al., 2023), restricting their broader application.
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses a design trade-off regarding the safety taxonomy to balance classification accuracy against the context length of LLMs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 17, chunk 6
+        quote: to make a trade-off between classification accuracy and context length of LLMs, we list the general activities of domain-level or task-level safety taxonomies.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,448 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: humaneval
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: b9453e8f1865df0a0057a1383767caa400acfbcf
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/humaneval/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2107.03374v2
+      ref: v2
+      sha256: 3cf5545b26f5b1321a7c7fd42dedd1be64ad3cda5c6891b80d412c0edbc5a290
+      chars: 162609
+    - kind: repo
+      url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+      ref: b9453e8f1865df0a0057a1383767caa400acfbcf
+      sha256: 63d3dc590c8b85889d95120d1576b847c6cbe8efa1ed35bb2fd287fce209927f
+      chars: 7039
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark is defined as a set of problems with docstrings, reference solutions, and tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 28, chunk 1
+        quote: "the HumanEval dataset described earlier in the paper: 158 problems with a docstring describing the task, reference solution, and tests."
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark translates the capability of producing functionally correct code into a task of generating code bodies from natural language docstrings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 14, chunk 4
+        quote: investigated whether it was possible to train large language models to produce functionally correct code bodies from natural language docstrings.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 10
+    rationale: The text describes how such models could act as coding assistants and impact real-world job performance and labor costs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 28, chunk 1
+        quote: This would be a significantly more helpful coding assistant.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how the benchmark scores specifically should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 10
+    rationale: The text mentions consensus among cryptography experts regarding specific configurations used in related tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 32, chunk 4
+        quote: there is consensus among cryptography experts that these configurations generally should not be used
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 10
+    rationale: The text mentions the model being used as an autocomplete tool for a user.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 5, chunk 1
+        quote: when the model is used as an autocomplete tool where a user provides a prompt
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark design integrates literature from the synthesis and automatic programming communities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 25, chunk 0
+        quote: has been explored in both the ML (Xu et al., 2021) and synthesis (Helmuth & Spector, 2015; Pantridge et al., 2017) communities.
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of functional correctness over BLEU score is justified by the fact that BLEU does not indicate functional correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 6, chunk 0
+        quote: we conclude that improvements in BLEU score may not indicate improved rates of functional correctness in practice.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: No mention of metric floors or ceilings is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 10
+    rationale: The text compares model performance to that of a student who completes an introductory computer science course.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 10, chunk 1
+        quote: a strong student who completes an introductory computer science course is expected to be able to solve a larger fraction of problems than Codex-12B.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 10
+    rationale: The text mentions that certain heuristics outperform evaluating a random sample.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 5, chunk 1
+        quote: choosing the sample with the highest mean token log probability outperforms evaluating a random sample
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses unit tests to automatically evaluate functional correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 4
+        quote: evaluate functional correctness using the pass@ k metric, where k code samples are generated per problem, a problem is considered solved if any sample
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains differences between their approach and other benchmarks like APPS, specifically regarding the metrics used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 6, chunk 3
+        quote: We avoid this metric and only focus on “strict accuracy”
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 10
+    rationale: The text addresses how biased or buggy prompts can result in biased or buggy code.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 30, chunk 1
+        quote: just as buggy prompts result in buggy code, it’s likely that biased prompts or prompts for harmful behavior result in harmful code.
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository contains multiple Python files for evaluation, and the README provides a specific command to run the evaluation script.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:FILE LISTING, chunk 0
+        quote: human_eval/evaluate_functional_correctness.py
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The evaluation dataset is provided as a .jsonl.gz file in the repository.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:FILE LISTING, chunk 0
+        quote: data/HumanEval.jsonl.gz
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: The excerpts do not mention support for evaluating models via API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The README describes an evaluation harness that runs on the user's local machine using python 3.7 or later.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:README.md, chunk 0
+        quote: This is an evaluation harness for the HumanEval problem solving dataset
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The README provides a specific command and example output to replicate the evaluation results.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:README.md, chunk 2
+        quote: |-
+          To evaluate the samples, run
+          ```
+          $ evaluate_functional_correctness samples.jsonl
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 15
+    rationale: The paper describes the use of an unbiased estimator to calculate pass@k to handle variance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 3, chunk 0
+        quote: calculate the unbiased estimator
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The paper discusses the need for content controls and filtering to reduce harms associated with offensive content, but does not explicitly assess a 'need for warnings'."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no evidence of a build status or equivalent implementation for the benchmark itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A requirements.txt file is listed in the repository file listing and referenced in setup.py.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:FILE LISTING, chunk 0
+        quote: requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 10
+    rationale: The README provides installation and usage instructions, which serves as a quick-start guide.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:README.md, chunk 0
+        quote: |-
+          ## Installation
+
+          Make sure to use python 3.7 or later
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code with in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The README describes the repository as an evaluation harness for the dataset described in the accompanying paper.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:README.md, chunk 0
+        quote: This is an evaluation harness for the HumanEval problem solving dataset
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The excerpts are from a paper titled 'Evaluating Large Language Models Trained on Code' which is cited as the source of the benchmark.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:README.md, chunk 0
+        quote: described in the paper "[Evaluating Large Language Models Trained on Code](https://arxiv.org/abs/2107.03374)"
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper documents that the HumanEval problems were hand-written.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 3, chunk 0
+        quote: all problems were hand-written and not programmatically copied from existing sources
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper explains that the tasks are designed to benchmark models on functional correctness using hand-written problems.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 2
+        quote: describe the dataset of hand-written problems, called “HumanEval,” which we created in order to benchmark our models
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: No documentation of assumptions regarding normative properties is found in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper contains a dedicated 'Limitations' section discussing the benchmark and model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 10, chunk 0
+        quote: |-
+          6. Limitations
+          While Codex is able to sample correct solutions for the
+          majority of HumanEval problems, we find that it has a
+          number of limitations.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the data collection process for the training set and the creation of the HumanEval set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 4, chunk 2
+        quote: Our training dataset was collected in May 2020 from 54 million public software repositories hosted on GitHub
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric pass@k is explicitly defined and documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 3, chunk 0
+        quote: to evaluate pass@ k , we generate n ≥ k samples per task
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The repository includes a LICENSE file specifying the MIT License.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:LICENSE, chunk 0
+        quote: The MIT License
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: No standardized metadata (e.g., Schema.org or DataCite) is shown in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents that the HumanEval problems were hand-written.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 3, chunk 0
+        quote: all problems were hand-written and not programmatically copied from existing sources
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper documents the filtering steps used for the training data collection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 4, chunk 2
+        quote: We filtered out files which were likely auto-generated, had average line length greater than 100
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The excerpts do not describe a data annotation process for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the HumanEval data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not mention any code usability checks performed within the last year; in fact, the repository is explicitly stated to be unmaintained.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: No maintained feedback channel for users is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

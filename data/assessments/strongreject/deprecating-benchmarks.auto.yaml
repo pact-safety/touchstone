@@ -1,0 +1,116 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: strongreject
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/strongreject/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.10260v2
+      ref: v2
+      sha256: 70386c5b20687d7074ffd81398a20532f8ef5e166a1d8cd89c38b1580ccb37a7
+      chars: 88851
+    - kind: repo
+      url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      ref: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      sha256: 8a181dda99fd360577e5dd1bf3c8c175dabaca13aa484afd9a04c180553f534e
+      chars: 7554
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The text indicates that while a 'Best' jailbreak could nearly achieve a perfect score, most tested jailbreaks resulted in scores substantially lower, showing headroom for typical model performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 8, chunk 1
+        quote: most jailbreaks we tested did not result in high-quality responses to forbidden prompts
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The excerpts do not document a contamination defense such as a private held-out set or regular refreshing; the dataset is released publicly.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark is described as consisting of forbidden prompts with factually verifiable answers where a full score requires specific information, meaning it does not rely on class labels that could be skewed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: a full score requires victim models to provide specific information that fully answers the forbidden prompt
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: While the paper compares the automated evaluator to human labels, there is no cited audit or error analysis reporting a low error rate for the benchmark data labels themselves.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark serves the purpose of evaluating jailbreak effectiveness, which remains current for the models used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 14, chunk 0
+        quote: a new dataset of forbidden prompts to use in jailbreak evaluation
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not state the simplifying assumptions the benchmark relies on.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: The excerpts do not provide evidence that the benchmark's content is maintained or that no semantic drift has occurred; the README even notes the repository is deprecated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: While a version number is found in the pyproject.toml file, it is not visible alongside the benchmark name in main references, nor is there evidence that changes are recorded per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: The excerpts do not mention a deprecation plan or a policy for archiving artifacts at end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides a list of authors in the pyproject.toml and a repository that is actively pointing users to a newer version, indicating maintenance and a point of contact.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:pyproject.toml, chunk 0
+        quote: authors = ["Alexandra Souly", "Qingyuan Lu", "Dillon Bowen", "Tu Trinh", "Elvis Hsieh", "Sana Pandey", "Pieter Abbeel", "Justin Svegliato", "Scott Emmons", "Olivia Watkins", "Sam Toyer"]
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

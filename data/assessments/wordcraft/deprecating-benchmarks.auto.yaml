@@ -1,0 +1,104 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: wordcraft
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/wordcraft/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2007.09185v1
+      ref: v1
+      sha256: 8943b572fdc0c456f331a8efbdbb5f7bb72e2274a4bade8b39a329387321b366
+      chars: 40918
+    - kind: repo
+      url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+      ref: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+      sha256: 4d7c293845d32a9040fe6d16609e5881ac95625c16af72d3edc825198453cdcc
+      chars: 4593
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain a cited source or analysis demonstrating that current top scores leave clear headroom below the maximum achievable ceiling.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: There is no documentation of a contamination defense such as a private held-out set or contamination analysis; the excerpts only mention a train/test split.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: The excerpts do not report the label/answer distribution or a trivial baseline score to demonstrate the benchmark is free of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts contain no mention of a quality review, audit, or error analysis regarding the annotation error rate of the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to benchmark the ability of RL agents to use commonsense knowledge, a capability that remains current for the models described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 2
+        quote: In order to benchmark the ability of RL agents to make use of commonsense knowledge, we present WordCraft
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The excerpts do not explicitly state the simplifying assumptions the benchmark relies on, which is required to determine if they are invalidated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: There is no evidence of a maintenance process or a cited source confirming that the labels and task meanings have not shifted over time.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not show a version identifier associated with the benchmark name or a record of changes per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a persistent archive for the benchmark's data and code.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: No named maintainer, contact address, or issue tracker is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

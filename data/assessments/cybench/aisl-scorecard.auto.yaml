@@ -1,0 +1,478 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: cybench
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/cybench/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2408.08926v4
+      ref: v4
+      sha256: e8378cc6db7ae7329d5d55b94fc7c3231f5107e86b06fafdb3ec71c3185321e2
+      chars: 426534
+    - kind: repo
+      url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+      ref: ca483c6443f17a20ba7d6bac3d274859a1721e51
+      sha256: c025fa51c98af6abac4210a27a2cf46d943d7bb969f4cf3bca9086b8e87d452e
+      chars: 52134
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines CTF challenges as tasks where the objective is to identify vulnerabilities and execute exploits to retrieve a secret string (the flag).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 3
+        quote: CTF challenges are a broad class of cybersecurity tasks where the objective is to identify one or more vulnerabilities and execute one or more exploits to retrieve a secret string known as a flag
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation defines what is in scope (professional CTF tasks across 6 categories), it does not explicitly name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: met
+    rationale: The benchmark defines three distinct performance metrics (unguided, subtask-guided, and subtask performance) and reports them independently in tables.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 5, chunk 0
+        quote: 1. Unguided performance is the performance on a task without subtask guidance, and outputs a binary score (i.e., 0 or 1 ). 2. Subtask-guided performance is the performance on the final subtask only, and outputs a binary score
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The docs define the task space via 6 categories and report difficulty variation using First Solve Time (FST).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 6, chunk 2
+        quote: "we targeted tasks across 6 categories commonly found in CTF competitions: Crypto (cryptography), Web (web security), Rev (reverse engineering), Forensics, Misc (miscellaneous), and Pwn (exploitation)"
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The documentation reports per-category item counts for the task space.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 0
+        quote: "Forensics; 4 tasks : Analyze and extract hidden or deleted information from data files, memory dumps, or network traffic to uncover secrets or reconstruct events."
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: Every task is verified for solvability through a solution script and continuous integration.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 1
+        quote: To ensure solvability, we introduce and add a solution script to each task to ensure it is buildable and solvable, which is then verified through continuous integration.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: The excerpts do not mention a specific named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark curates tasks from CTF competitions rather than reusing a prior AI benchmark dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 3
+        quote: In these competitions, teams compete to solve CTF challenges
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark curates tasks from CTF competitions rather than reusing a prior AI benchmark dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 3
+        quote: In these competitions, teams compete to solve CTF challenges
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While the item count is stated, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The results tables provided in the excerpts do not show confidence intervals or standard errors for the scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 31, chunk 1
+        quote: Claude 3.5 Sonnet Structured bash 69.01% 73.73% 50.88%
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The benchmark uses objective flags and automated scripts for evaluation; no human raters are used to judge outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 1
+        quote: this script reproduces the automatable steps to solve the task and outputs the retrieved flag as its final line, which is then compared to a reference flag in continuous integration.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: No human raters are used to judge outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 1
+        quote: this script reproduces the automatable steps to solve the task and outputs the retrieved flag as its final line, which is then compared to a reference flag in continuous integration.
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: Every label comes from a deterministic key (the flag).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 1
+        quote: outputs the retrieved flag as its final line, which is then compared to a reference flag in continuous integration.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Every label comes from a deterministic key (the flag).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 1
+        quote: outputs the retrieved flag as its final line, which is then compared to a reference flag in continuous integration.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: There is no table or figure breaking down failures by a named confound like format or length.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The documentation discusses general struggles (e.g., 'insights'), but does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking the specific tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares Cybench to InterCode-CTF and the NYU CTF Dataset, noting that Cybench uses professional-level tasks whereas the others use high school/university levels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 9, chunk 2
+        quote: Whereas Cybench includes professional-level CTF tasks, Intercode-CTF and NYU CTF Dataset include high school and university-level CTF tasks respectively.
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The documentation does not provide a limitations statement specific to the design nor a supported claim linking scores to a real-world capability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify specific secondary capabilities nor provide control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap measurement or mitigation is described as no related phenomena were identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reported results comparing different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The benchmark uses a bash agent where outcomes are based on retrieving a flag from the environment, not parsing free-form output for correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 5, chunk 2
+        quote: the objective is to identify a vulnerability and execute the exploit in order to retrieve a secret string known as a flag
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The paper provides the knowledge cutoff dates for the evaluated models and the release dates of the competitions used for the tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 34, chunk 1
+        quote: We map the date that the competitions released the challenges on Github and the knowledge cutoff dates
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs and local scoring via Docker containers, not a mutable external environment.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:docs/add_model.md, chunk 1
+        quote: Run `docker build -t cybench/cybench:latest . --load`
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: met
+    rationale: The documentation states that the Docker cache is cleared upon task instantiation to reset state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 2
+        quote: We mitigated this issue by clearing the Docker cache upon task instantiation.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The tasks are not multiple choice; they require executing exploits to retrieve a flag.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 5, chunk 2
+        quote: the objective is to identify a vulnerability and execute the exploit in order to retrieve a secret string known as a flag
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios and acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While the paper mentions authors contributing to tasks, it does not name external reviewers' credentials or state the sample size of items reviewed for accuracy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for both unguided and subtask-guided prompting/elicitation settings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 42, chunk 3
+        quote: both unguided performance (Table 10) and subtask-guided performance (Table 11)
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not report results as a separate slice for a named stress condition or shift differing from the train/dev split.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general cybersecurity capabilities via CTF tasks rather than a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 10, chunk 3
+        quote: We have presented Cybench, a new benchmark for evaluating agents on cybersecurity tasks.
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general cybersecurity capabilities via CTF tasks rather than a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 10, chunk 3
+        quote: We have presented Cybench, a new benchmark for evaluating agents on cybersecurity tasks.
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general cybersecurity capabilities via CTF tasks rather than a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 10, chunk 3
+        quote: We have presented Cybench, a new benchmark for evaluating agents on cybersecurity tasks.
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation mentions Python versions and a requirements file, but fails to list hardware models, OS, or specific sampling parameters.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no evidence of a published reproduction by an independent third party on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: met
+    rationale: The paper describes quality-control steps (isolating servers, clearing Docker cache) and a validation process using CI to ensure tasks are solvable.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 2
+        quote: We mitigated this issue by clearing the Docker cache upon task instantiation.
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: While the paper mentions mitigating vulnerabilities, it does not name specific unavoidable flaws with their bias direction and impact estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark reports First Solve Time (FST) as a human baseline for the tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 1, chunk 1
+        quote: successfully solved complete tasks that took human teams up to 11 minutes to solve.
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: The excerpts do not report the score of any trivial or minimal baseline (e.g., random or zero-shot naive).
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The excerpts describe an evaluator that checks for a correct answer or a unique flag string, but do not mention using a model as a rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The excerpts describe an evaluator that checks for a correct answer or a unique flag string, but do not mention using a model as a rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The excerpts describe an evaluator that checks for a correct answer or a unique flag string, but do not mention using a model as a rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The excerpts describe an evaluator that checks for a correct answer or a unique flag string, but do not mention using a model as a rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: unmet
+    rationale: There is no report of multiple independent annotators labeling items or a programmatic checker's accuracy on a labeled sample.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: While the docs mention verifying tasks are solvable, they do not classify every task as solvable or intentionally unsolvable with expected behavior for the latter.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The benchmark uses solution scripts to verify solvability, and these are checked against a reference flag in continuous integration.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 1
+        quote: we introduce and add a solution script to each task to ensure it is buildable and solvable, which is then verified through continuous integration
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The excerpts do not list accepted equivalences or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The scoring involves checking for a unique flag string or a correct answer, which does not involve parsing free-form output in the sense of extracting structured data from natural language.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: we parse observations only for flags, and not for subtask answers
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The scoring involves checking for a unique flag string or a correct answer, which does not involve parsing free-form output in the sense of extracting structured data from natural language.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: we parse observations only for flags, and not for subtask answers
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

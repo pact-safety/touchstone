@@ -1,0 +1,218 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: safebench
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/safebench/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2206.09682v4
+      ref: v4
+      sha256: 0f1ee84ff0998412400a2386114317e04c56257dd55b94c35c1dc453071e1916
+      chars: 89356
+    - kind: repo
+      url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      ref: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      sha256: 02e5136e8abf04e38804e42a946027be2a6e7b35dc16ed7a2a5b7e9b88ea4564
+      chars: 65011
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: The number of test items is stated, but there is no justification (power calculation or confidence intervals) for why this number is sufficient.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 2, chunk 2
+        quote: we systematically evaluate the AD algorithms on 2 , 352 generated safety-critical testing scenarios
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The benchmark does not report significance tests, confidence intervals, or statistical power figures for score differences.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: The documentation does not provide the full prompt templates, sampling settings, or a complete sandbox configuration as required.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: The benchmark uses benign scenarios as a control to compare against safety-critical scenarios to identify performance drops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 10, chunk 3
+        quote: AD algorithms tested on SafeBench have a large performance drop compared to evaluations on benign scenarios
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no mention of contamination safeguards such as canary strings, private splits, or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: While different algorithms and scenarios are used, there is no report of repeated runs with different seeds/sessions for the same evaluation to show stability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The excerpts do not describe a manual inspection of model outputs or trajectories for error analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: unmet
+    rationale: The labels are programmatic (e.g., collision rate), but there is no validation of these labels against human judgement.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: There is no evidence that the benchmark releases full model outputs or reasoning traces for evaluators to read.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: The benchmark does not document checks for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: unmet
+    rationale: While it describes how items were created, it does not describe how the benchmark is versioned, maintained, or how items are retired.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 1, chunk 1
+        quote: we consider 8 safety-critical testing scenarios following National Highway Traffic Safety Administration (NHTSA) and develop 4 scenario generation algorithms
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The excerpts mention the use of the Carla simulator and AWS EKS for infrastructure, but they do not provide a complete description of the input/output formats, interaction length, or specific access restrictions for the model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The documentation explicitly states that the simulation used in SafeBench cannot exactly reflect real-world conditions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 10, chunk 3
+        quote: the simulation in SafeBench cannot exactly reflect real-world conditions
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The spread of the evaluation is described by the number of safety-critical scenarios and the number of variations for each.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 1, chunk 1
+        quote: we consider 8 safety-critical testing scenarios following National Highway Traffic Safety Administration (NHTSA) and develop 4 scenario generation algorithms considering 10 variations for each scenario
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation under fixed conditions, nor do the authors explicitly state they reproduced their headline numbers from the released code.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: unmet
+    rationale: The provided excerpts refer to the paper as a preprint (arXiv 2206.09682) and do not mention a peer-reviewed venue or independent third-party reproductions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The authors state that the code and data needed to reproduce results are available on their website.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 16, chunk 0
+        quote: "Did you include the code, data, and instructions needed to reproduce the main experimental results (either in the supplemental material or as a URL)? [Yes] See on the website:   https://safebench . github . io ."
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: met
+    rationale: The repository contains a harness (carla_runner.py), scoring/evaluation logic, and is released in a public repository.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/main_files.md, chunk 0
+        quote: |-
+          Carla Runner (safebench/carla_runner.py)
+
+          This is the entry point that manages all modules by hosting a loop to run all scenarios.
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: met
+    rationale: The paper and documentation describe how scenarios are constructed, how models are queried, and how outputs are scored via metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 17, chunk 2
+        quote: We follow the equations introduced in Section 3.4 to calculate evaluation metrics.
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: While a Docker image is mentioned, there is no lockfile or version list pinning the software environment, nor is the compute needed for a full run stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: met
+    rationale: The repository includes configuration files for various agents and model checkpoints, providing the setup used to query models.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:FILE LISTING, chunk 0
+        quote: |-
+          safebench/agent/config/sac.yaml
+          safebench/agent/config/td3.yaml
+          safebench/agent/config/yolo.yaml
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The benchmark is built upon the Carla simulator, which is a public tool/simulator.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 4, chunk 0
+        quote: This platform runs in the Docker [ 54   ] container and is built upon the Carla simulator [ 28   ].
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

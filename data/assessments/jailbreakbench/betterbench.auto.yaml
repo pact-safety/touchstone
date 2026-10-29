@@ -1,0 +1,459 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: jailbreakbench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 23dbdf6b19650521604456229bc1d9c4156c85c1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/jailbreakbench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.01318v5
+      ref: v5
+      sha256: 8068ffae3d6db12053409b6aa1f5934fa1a63d2cf619176aa31c6ba59302e176
+      chars: 81986
+    - kind: repo
+      url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+      ref: 23dbdf6b19650521604456229bc1d9c4156c85c1
+      sha256: 5c4dcb8588fcd16be4c6827ff2f764df66e5627b5d3f6c0e909f62a1b4d03a8a
+      chars: 29092
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the goal of a jailbreaking algorithm as designing prompts to elicit harmful, toxic, or objectionable content.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 3, chunk 0
+        quote: the goal of a jailbreaking algorithm is to design input prompts that cause an LLM to generate text that is harmful, toxic, or objectionable.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark formalizes the jailbreaking task as finding a prompt P such that a judge function determines the response matches a harmful goal G."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that benchmarking is important because LLMs are deployed in safety-critical domains.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 1, chunk 2
+        quote: as LLMs are deployed in safety-critical domains, it is of pronounced importance to effectively benchmark the progress of jailbreaking attacks and defenses
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The text provides usage guidelines for assessing robustness and effectiveness, though it doesn't detail a full interpretation framework for scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 24, chunk 1
+        quote: The benchmark can be used to assess the robustness of models and defenses, as well as the effectiveness of attacks.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: The benchmark used three experts to label prompt-response pairs to create ground truth labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 1
+        quote: Three experts labeled each prompt-response pair, and the agreement between them was approximately 95%.
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark integrates literature by sourcing behaviors from prior work and using classifiers from existing jailbreaking literature."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of Llama-3-70B as the metric judge is informed by a comparison of agreement, FPR, and FNR against expert labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 2
+        quote: we choose Llama-3-70B as the classifier in our benchmark as it is an open-weight model and comparable to GPT-4 as a judge.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: While expert labels are used for validation, a general human performance level for the benchmark task is not provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: The excerpts do not provide a random performance level.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The automatic evaluation (Llama-3-70B) was validated by comparing its agreement, FPR, and FNR against expert labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 1
+        quote: We compare the agreement, false positive rate (FPR), and false negative rate (FNR) of the candidate judges to these ground truth labels.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 10
+    rationale: The text mentions other benchmarks like RobustBench and HarmBench, but focuses more on the challenges of LLM benchmarks than a detailed point-by-point difference.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 3, chunk 3
+        quote: In the field of image classification, benchmarks such as RobustBench (Croce et al., 2021) provide a unified platform... However, designing a similar platform to track the adversarial vulnerabilities of LLMs presents new challenges
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 10
+    rationale: The benchmark addresses sensitivity by testing judges with benign examples that share similarities to harmful ones.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 1
+        quote: we add 100 benign examples from XS-Test (R ¨ ottger et al., 2023) to test how sensitive the judges are to benign prompts and responses
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The benchmark provides a standardized evaluation framework and code in a GitHub repository.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 1, chunk 1
+        quote: a standardized evaluation framework at   https://github.com/JailbreakBench/jailbreakbench
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): Evaluation data (JBB-Behaviors) and jailbreak artifacts are provided via a repository and HuggingFace."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The framework explicitly supports cloud-based querying and provides a wrapper for API calls to Together AI and OpenAI."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The framework supports local querying and specifically uses vLLM to load and run models locally.
+    evidence:
+      - source: repo
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 9
+        quote: We use [vLLM](http://vllm.ai) to load and run models locally.
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of adding globally unique identifiers to evaluation instances or encrypting them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The benchmark provides a standardized evaluation framework to benchmark and report performance, and discusses maximizing reproducibility.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 3
+        quote: We also provide a standardized evaluation framework that—besides providing access to jailbreak artifacts—allows the users to benchmark and report the performance of their methods.
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The authors explicitly state they did not report error bars.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 20, chunk 1
+        quote: Did you report error bars (e.g., with respect to the random seed after running experiments multiple times)? [No]
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 15
+    rationale: The authors assess the need for warnings by adding a disclaimer in the dataset README file due to sensitive content.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 22, chunk 1
+        quote: "Security handling: We add a disclaimer in the dataset README file."
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No mention of a build status or equivalent CI/CD implementation is found in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: While a maintenance plan is mentioned, specific release requirements for the benchmark itself are not specified.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A pyproject.toml file is provided, which serves as a requirements equivalent for Python projects.
+    evidence:
+      - source: repo
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:pyproject.toml, chunk 0
+        quote: |-
+          [project]
+          name = "jailbreakbench"
+          version = "1.0.0"
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a quick-start code example for loading the dataset.
+    evidence:
+      - source: repo
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 5
+        quote: |-
+          To load the JBB-Behaviors harmful behaviors dataset, one can run the following:
+
+          ```python
+          import jailbreakbench as jbb
+
+          dataset = jbb.read_dataset()
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 15
+    rationale: The provided code snippet in the README contains in-line docstrings/comments explaining the class and methods.
+    evidence:
+      - source: repo
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 15
+        quote: '"""Query the defense with the supplied input prompt; return response.'
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 10
+    rationale: The README provides some code-level guidance and a contributing guide, though comprehensive API documentation is not explicitly shown.
+    evidence:
+      - source: repo
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 22
+        quote: Please see the [contributing guide](CONTRIBUTING.md) for more information.
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The excerpts are from a paper (2404.01318v5) which is presented as a formal research work with a detailed structure including an appendix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 14, chunk 0
+        quote: |-
+          Structure of the appendix 
+          • Appendix A: we detail the maintenance plan of the benchmark.
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the construction of the benchmark, including the pipeline for red-teaming.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 5, chunk 1
+        quote: we streamline the process of generating jailbreaks by introducing a standardized red-teaming pipeline.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (behaviors) and the rationale for their selection (diversity and balance).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 14, chunk 2
+        quote: JBB-Behaviors was curated to cover a diverse and balanced span of categories
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper explicitly includes a section on limitations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 9, chunk 2
+        quote: Limitations. While we tried to make our benchmark as comprehensive as possible, we had to restrict the scope of what is allowed for attackers.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The prompt design process for the judges is documented, including specific prompts used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 19, chunk 0
+        quote: "Table 10: Prompt for Llama-3-70B as a jailbreak judge"
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metrics (Agreement, FPR, FNR, and Attack Success Rate) are documented in tables.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 0
+        quote: We compute the agreement, false positive rate (FPR), and false negative rate (FNR) for six classifiers.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The MIT license is specified in the paper, the README, and a dedicated LICENSE file.
+    evidence:
+      - source: repo
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 22
+        quote: This codebase is released under [MIT License](https://github.com/JailbreakBench/jailbreakbench/blob/main/LICENSE).
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 15
+    rationale: A persistent identifier (HuggingFace dataset URL) is provided for the dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 22, chunk 2
+        quote: |-
+          Demo   Link:   https://huggingface.co/datasets/JailbreakBench/
+          JBB-Behaviors/viewer/behaviors/harmful
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 15
+    rationale: The benchmark provides Croissant metadata, which is a standardized metadata format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 21, chunk 0
+        quote: The Croissant (Akhtar et al., 2024) metadata for the dataset can be found at the following url
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The data sources (AdvBench, TDC/HarmBench, and original) and the collection process are documented."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper documents that behaviors were curated to be unique and uniformly distributed."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The use of expert annotators for ground truth labels is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 0
+        quote: We use the majority vote of three expert annotators as the ground truth label.
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The representativeness is explained by the balance across misuse categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 14, chunk 2
+        quote: Notably, JBB-Behaviors was curated to cover a diverse and balanced span of categories
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 15
+    rationale: The data card follows the recognized guidelines of Pushkarna et al. (2022).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 21, chunk 0
+        quote: We report information about the dataset following the guidelines of Pushkarna et al. (2022).
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts mention the dataset was last updated in 06/2024, but there is no evidence that code usability specifically was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 15
+    rationale: The benchmark provides a feedback channel via the repository's issue system for submitting artifacts and requesting new models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 1
+        quote: To submit artifacts, users can submit an issue within the   JailbreakBench   repository
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: A specific contact person and their email address are listed in the authorship section.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 21, chunk 1
+        quote: "Contact:   edoardo.debenedetti@inf.ethz.ch"
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

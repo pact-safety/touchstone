@@ -1,0 +1,451 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: cybench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/cybench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2408.08926v4
+      ref: v4
+      sha256: e8378cc6db7ae7329d5d55b94fc7c3231f5107e86b06fafdb3ec71c3185321e2
+      chars: 426534
+    - kind: repo
+      url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+      ref: ca483c6443f17a20ba7d6bac3d274859a1721e51
+      sha256: c025fa51c98af6abac4210a27a2cf46d943d7bb969f4cf3bca9086b8e87d452e
+      chars: 52134
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested capability as cybersecurity skills, specifically identifying and exploiting vulnerabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 0
+        quote: We focus on tasks that serve as effective proxies for real-world cybersecurity skills, including those that involve identifying and exploiting actual common vulnerabilities and exposures (CVEs).
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark describes how these skills translate to tasks using Capture the Flag (CTF) challenges where the goal is to retrieve a flag.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 5, chunk 2
+        quote: Capture the Flag challenges (CTFs) are a broad class of cybersecurity tasks where the objective is to identify a vulnerability and execute the exploit in order to retrieve a secret string known as a flag.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that the tasks mimic real-world scenarios, such as finding accidentally committed API keys.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 40, chunk 0
+        quote: Back To The Past involves finding a secret in an orphaned Git commit which mimics a real-world scenario, e.g. an attacker finds an API key that someone committed on accident
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: The benchmark uses professional-level CTF tasks and references human experts' solve times.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 39, chunk 2
+        quote: there are limits to model capabilities that prevent agents from solving the more challenging tasks that take human experts multiple hours to solve
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature and references existing work on LM agents and CTF datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 0
+        quote: we develop a cybersecurity agent inspired by existing work on LM agents (Huang et al., 2024; Shinn et al., 2024; Yao et al., 2022b; Park et al., 2023).
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of First Solve Time (FST) is used as an objective metric to ground task difficulty.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 0
+        quote: We leverage first solve time (FST), the time it takes the first human team to solve a given challenge in a competition, to provide real-world grounding to the difficulty rating.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: Human performance is included via the First Solve Time (FST) of human teams.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 1
+        quote: Without subtask guidance, agents leveraging Claude 3.5 Sonnet, GPT-4o, OpenAI o1-preview, and Claude 3 Opus successfully solve complete tasks that took human teams up to 11 minutes to solve.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: No random performance level is mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses a solution script verified through continuous integration to ensure tasks are solvable.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 1
+        quote: To ensure solvability, we introduce and add a solution script to each task to ensure it is buildable and solvable, which is then verified through continuous integration.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explains differences from InterCode-CTF and NYU CTF Dataset, noting it focuses on professional-level tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 9, chunk 2
+        quote: Whereas Cybench includes professional-level CTF tasks, Intercode-CTF and NYU CTF Dataset include high school and university-level CTF tasks respectively.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: Input sensitivity (e.g., prompt variations) is not explicitly addressed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository contains scripts for running and grading the benchmark.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 7
+        quote: To grade the benchmark, you can use the `grade_benchmark.py` script.
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The paper and repository state that all code and data are publicly available.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 1, chunk 2
+        quote: All code and data are publicly available at   https://cybench.github.io .
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The benchmark supports various models via API keys and the HELM API.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 0
+        quote: First you need to add a HELM or model-specific API key so that the agent can call an underlying model.
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 10
+    rationale: The documentation describes how to add a new model and rebuild the docker image locally, implying local model support, though not explicitly stating it as a feature.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:docs/add_model.md, chunk 1
+        quote: "Here are the steps for a local rebuild: 1. Run `docker build -t cybench/cybench:latest . --load` from the repo root"
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The repository provides scripts to run the benchmark and grade the results.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 5
+        quote: To run the entire benchmark (which includes all tasks), you can use the `run_benchmark.py` script.
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not mention statistical significance or uncertainty quantification of results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no mention of assessing the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 15
+    rationale: The paper explicitly mentions that buildability is verified through continuous integration.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 6, chunk 3
+        quote: we introduce and add a solution script to each task to ensure it is buildable and solvable, which is then verified through continuous integration.
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: The Dockerfile shows the presence of a requirements.txt file used for pip installation.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:Dockerfile, chunk 1
+        quote: COPY benchmark/requirements.txt /benchmark/requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides both a 'Quick Start' section and a link to a video demo.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 0
+        quote: "[Video demo](https://drive.google.com/file/d/1pFOqSRLxhOxE0srICyT27ZRqTLKFR4NB/view?usp=sharing)"
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The excerpts do not provide source code files containing in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 10
+    rationale: The repository includes a 'docs' directory with guides on task structure and contribution, though comprehensive API/code documentation is not shown.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:docs/add_task.md, chunk 0
+        quote: |-
+          ## Task Structure
+
+          All tasks are located in the [`benchmark`](https://github.com/andyzorigin/cybench/tree/main/benchmark) directory.
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The paper is explicitly stated to be published as a conference paper at ICLR 2025.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 11, chunk 0
+        quote: Published as a conference paper at ICLR 2025
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the task selection process, focusing on professional-level CTF tasks from 2022-2024.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 6, chunk 1
+        quote: we focus on competitions with professional-level tasks that were released recently (2022-2024)
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper provides specific task objectives and concepts (e.g., for Robust CBC).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 108, chunk 1
+        quote: This task involves the manipulation of a CBC-MAC implementation
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper contains a dedicated 'LIMITATIONS' section outlining agent scaffolding and data source issues.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 39, chunk 0
+        quote: |-
+          I   L IMITATIONS 
+          Here we outline several limitations with our work
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper describes the prompt design (e.g., Figure 4 Action-only prompt) and the environment design (Kali Linux Docker container).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: interact with a Kali Linux Docker container through bash commands
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper documents the evaluation metric, where an agent receives a score of 1 for submitting the correct answer or flag.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: An agent receives a score of 1 if it successfully submits the correct answer
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The LICENSE file specifies the Apache License, Version 2.0.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:LICENSE, chunk 11
+        quote: Licensed under the Apache License, Version 2.0 (the "License")
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 15
+    rationale: The benchmark uses a structured metadata.json file containing categories, difficulty, and subtasks.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:docs/add_task.md, chunk 4
+        quote: |-
+          "categories": ["web"],
+            "difficulty": "2"
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents that data is collected from professional CTF competitions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 6, chunk 1
+        quote: we focus on competitions with professional-level tasks
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not document specific data preprocessing steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper mentions that tasks are 'carefully annotated' with metadata and subtasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 6, chunk 1
+        quote: comprising carefully annotated tasks with meaningful metadata and subtasks
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The paper explains the representativeness of the data by discussing how CTF tasks mimic real-world skills and CVEs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 40, chunk 0
+        quote: CTF tasks can draw from and mimic real-world tasks
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Datasheets for Datasets).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: The paper lists several individuals who contributed to the project, including those who led and managed it.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 13, chunk 0
+        quote: |-
+          Percy Liang : Led initial discussions for project formation and ideation. Led and managed the
+          overall project.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

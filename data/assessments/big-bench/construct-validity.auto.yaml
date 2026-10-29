@@ -1,0 +1,242 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: big-bench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 092b196c1f8f14a54bbc62f24759d43bde46dd3b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/big-bench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2206.04615v3
+      ref: v3
+      sha256: b2076d6c32a9c1fe4c2bb403242df1414e3f431dab4a99a2159b8899522cb330
+      chars: 407367
+    - kind: repo
+      url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+      ref: 092b196c1f8f14a54bbc62f24759d43bde46dd3b
+      sha256: 1860567c11288cd61b63234b36bd16a473f3da95617c1c4676646004684d71d5
+      chars: 116073
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: unmet
+    rationale: The excerpts describe the goal of the benchmark and provide examples of specific tasks (like social bias), but they do not provide a single, precise operational definition of the overall phenomenon being measured by BIG-bench.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the text states that tasks measuring 'almost any aspect of large language model capabilities' are in-scope, it does not name any specific excluded aspects.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:docs/doc.md, chunk 2
+        quote: Tasks which measure almost any aspect of large language model capabilities are in-scope for this benchmark
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The benchmark identifies sub-components of social bias (racial, gender, religious, political) and the provided excerpts show that these are categorized as sub-types.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:keywords.md, chunk 6
+        quote: "`racial bias` | sub-type of social bias, exploring the impact of race"
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not name specific secondary abilities required by the tasks nor report control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: met
+    rationale: The paper reports that including multiple-choice options in the query actually hurts performance, measuring the effect of this format constraint.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 16, chunk 1
+        quote: we find that including the choices hurts performance, even in a few-shot context.
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The provided documentation describes tasks as either text-to-text (comparing against a target string) or multiple-choice (comparing predicted probabilities), neither of which involves automated parsing of free-form output.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:docs/doc.md, chunk 12
+        quote: |-
+          Text-to-text, where the model's generated output is compared against a target output string.
+          - Multiple-choice, where the model is used to score several possible outputs.
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The provided excerpts do not document a sampling strategy used to ensure task items are representative of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: While the excerpts mention that tasks must pass unit tests, there is no documentation stating that every item passed a quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: The text mentions that models are sensitive to phrasing and 'brittle', but it does not provide a counted subset of permuted items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: unmet
+    rationale: The provided excerpts do not contain a statement documenting whether the benchmark as a whole adapts a previous dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The excerpts do not show that any prior dataset or benchmark was reused for the construction of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The excerpts do not show that any prior dataset or benchmark was reused for the construction of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The excerpts do not show that any prior dataset or benchmark was reused for the construction of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: While a 'training_on_test_set' task is mentioned for diagnosis, there is no description of a specific contamination test being applied to the benchmark with reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: The excerpts mention an 'all_examples' split, but there is no mention of a private or held-out split for ongoing evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper mentions that models can probe for leakage and describes the training data of BIG-G models, but it does not report a search or overlap check of the benchmark's source material against a corpus.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The excerpts do not state the total item count for the benchmark, nor do they provide power calculations or confidence-interval widths relative to claimed gaps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not show a main results table where every score is accompanied by a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: While the text mentions that rater demographics are not representative, it does not describe the demographics themselves nor state a specific bias mitigation strategy for recruitment or instructions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 10, chunk 3
+        quote: The demographics and backgrounds of the expert raters are not necessarily representative of the population in general
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The metrics described (exact string match, multiple choice grade, and expected calibration error) rely on deterministic keys or probability distributions rather than subjective labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 8, chunk 1
+        quote: "exact_string_match: Accuracy on exact. •   multiple_choice_grade: A weighted multiple choice accuracy between 0-100"
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts do not provide a qualitative and quantitative analysis where failure modes are both described and counted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure showing failures or scores broken down by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors report an experiment on whether including multiple-choice options in the query improves performance, finding that it actually hurts performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 16, chunk 1
+        quote: we find that including the choices hurts performance, even in a few-shot context.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: unmet
+    rationale: The excerpts mention the motivation to predict 'dangerous or undesirable outcomes', but they do not name a specific real-world application and link it to the tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: While tasks and metrics are described, there is no statement linking them to a specific operational definition provided in a 'def.1' section.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: The text mentions 'limitations of current benchmarks' generally, but does not name a specific existing benchmark and state a difference compared to it.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses a limitation regarding how smooth proxy metrics may not accurately reflect performance on the true task.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 15, chunk 1
+        quote: it is not always clear what these smooth proxies teach us about performance on the true task
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

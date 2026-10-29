@@ -1,0 +1,238 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentharm
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentharm/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.09024v3
+      ref: v3
+      sha256: 069d9f1f129c89ecea4342857223e99992754add9a15fc5aabdf03388d011adc
+      chars: 104704
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: The number of test items is stated, but there is no power calculation or confidence interval analysis to justify the sample size as sufficient.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 3
+        quote: Total number of behaviors   440
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: While some standard deviations are mentioned, the benchmark does not report both a significance test/confidence interval and a statistical power figure/minimum detectable difference.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 8, chunk 2
+        quote: with a standard deviation of ±8.5%
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: met
+    rationale: The prompt template is referenced, sampling settings (temperature 0, max tokens 4096) are provided, and the harness is described as a simple while loop.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: we use temperature 0 with up to 4096 generated output tokens
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: The benchmark uses a chat-only version of the dataset as a control to compare refusal rates against the agentic setting.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 17, chunk 0
+        quote: We observe that the refusal rates systematically increase for chat-only tasks compared to agent tasks.
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: met
+    rationale: The benchmark implements both a canary string and a private test set to prevent contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: we introduce a canary string in our repository that helps to filter them out from training sets
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: Results are reported for repeated runs (best-of-5 sampling) and varied conditions (different prompting techniques like CoT and ReAct).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 8, chunk 2
+        quote: "We explore the effect of different prompting techniques: chain-of-thought, ReAct, and a refusal-inducing prompt."
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The authors report manual inspection of execution logs to perform error analysis on model performance gaps.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 0
+        quote: We identify several examples through a manual inspection of the execution logs.
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark describes a human review process where every question is reviewed by a separate human reviewer who did not write it.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: we write all questions by hand and review every question with a separate human reviewer who did not write the question
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: There is no evidence that the benchmark releases the full model outputs or reasoning traces for all items for external evaluators.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: The excerpts do not document checks for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: met
+    rationale: The paper describes that items were written by hand and reviewed by separate human reviewers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: we write all questions by hand and review every question with a separate human reviewer
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: met
+    rationale: The documentation describes the agentic setting (while loop), the input/output format (function call tags), the interaction length (token limit), and the tool access.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: direct prompting with a simple while loop where the result of tool executions is fed into the models context
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 16, chunk 1
+        quote: "< function=example function name > { ”example name”: ”example value” } < /function >"
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: we use temperature 0 with up to 4096 generated output tokens
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The authors explicitly state that they used a predefined tool set instead of real world interactions to limit optimization potential.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: opting to use a predefined tool set and not include real world interactions
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: While the paper mentions evaluating a range of models, it does not provide counts or proportions for the spread of scenario types, domains, or task formats.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: met
+    rationale: The authors report the standard deviation (run-to-run variation) for the Mistral model's harm score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 8, chunk 2
+        quote: Mistral demonstrates notably higher variability in its responses, with a standard deviation of ±8.5%
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: met
+    rationale: The benchmark paper is explicitly stated to be published as a conference paper at ICLR 2025.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 0
+        quote: Published as a conference paper at ICLR 2025
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The authors state they release the benchmark publicly and specify a public test set (60%) for evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 2
+        quote: We release   AgentHarm   publicly to enable simple and reliable evaluation
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is integrated into the Inspect framework, which is a popular evaluation framework, and the paper provides tool implementation code."
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper describes how items are constructed (synthetic tools), how models are queried (system prompts), and how they are scored (human-written rubrics)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: While the compute cost (tokens/dollars) is mentioned, there is no pinned software environment (lockfile or container image) provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: met
+    rationale: The authors release the specific jailbreak template and system prompts used to query the models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 7, chunk 1
+        quote: We use the rule-based jailbreak template from Andriushchenko et al. (2025), with minor modification to adapt it to the agentic setting
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The harness runs models through public APIs (OpenAI, Anthropic, Google) and is built on the Inspect framework.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 7, chunk 1
+        quote: "We evaluate a range of leading LLMs. See Appendix B for more details. •   OpenAI : GPT-3.5-Turbo, GPT-4o mini, and GPT-4o."
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

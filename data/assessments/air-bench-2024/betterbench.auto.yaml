@@ -1,0 +1,413 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: air-bench-2024
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/air-bench-2024/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2407.17436v2
+      ref: v2
+      sha256: 5bbae6c7732e0ea6c5324379b3b053372f800f427a013cf25133d809f522d760
+      chars: 122492
+    - kind: repo
+      url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      ref: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      sha256: f677af44b2ed98ceab0cba0738c6a9e6e346ab27b2feb66c7c4c9c24ee48ab01
+      chars: 23468
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines its focus as assessing the ability to refuse risky requests across risk categories derived from regulations and policies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 5, chunk 3
+        quote: Our evaluation approach focuses on assessing models’ ability to refuse risky requests across all 314 risk categories.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The text describes how the capability (refusal) is tested using prompts that mimic real-world scenarios to identify failure modes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 4
+        quote: Each prompt is meticulously crafted to mimic real-world scenarios, maximizing the benchmark’s ability to identify failure modes
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that the benchmark helps researchers and policymakers assess and improve AI alignment with real-world safety concerns.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 11, chunk 0
+        quote: AIR-B ENCH 2024 serves as a valuable tool for researchers, policymakers, and industry stakeholders to assess and improve the alignment of AI systems with real-world safety concerns.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 15
+    rationale: "The text describes how the refusal rate should be interpreted: a higher rate indicates safer and more conservative behavior."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 24, chunk 3
+        quote: In general, a higher refusal rate acquired from AIR-B ENCH 2024 indicates safer and more conservative model behavior
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: The curation process explicitly involves human experts reviewing and refining prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 4, chunk 3
+        quote: This process is iterative, with human experts reviewing and refining the LM-generated prompts to ensure quality and relevance to the specific risk categories.
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates risk categories from 8 government regulations and 16 company policies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 10, chunk 2
+        quote: By leveraging the comprehensive risks specified in 8 government regulations and 16 company policies
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of refusal rate as the primary metric is explained as a way to assess alignment with safety guidelines.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 6, chunk 1
+        quote: In our quantitative study, we use the refusal rate (percentage of scores that are 1) as the primary metric to assess model alignment with safety guidelines.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: There is no mention of metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: The benchmark includes a human alignment study to validate the autograders, providing a human performance baseline for agreement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 1
+        quote: the Cohen’s Kappa score between human evaluators and the Autograders was found to be 0.86
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: There is no mention of a random performance level.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The automatic evaluation (Autograders) is validated against human evaluators with a Kappa score of 0.86."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The paper maps and compares AIR-Bench 2024 against other benchmarks like HEx-PHI, HarmBench, and SALAD-Bench.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 3, chunk 2
+        quote: we mapped three benchmarks—HEx-PHI [ 53 ], HarmBench [ 40 ], and SALAD-Bench [ 37 ]—against AIR 2024’s 45 level-3 risk categories
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: The excerpts do not address input sensitivity (e.g., how small changes in input affect output).
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: Evaluation code is provided in the form of Jupyter notebooks for different pipeline steps.
+    evidence:
+      - source: repo
+        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:FILE LISTING, chunk 1
+        quote: evaluation/pipeline2_step2_csv_eval.ipynb
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): Evaluation data is accessible via a Hugging Face repository."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The benchmark supports evaluation via APIs from various companies.
+    evidence:
+      - source: repo
+        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:README.md, chunk 7
+        quote: You may also change the gpt_batch module into API of other companies.
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 0
+    rationale: The excerpts mention API clients and the HELM framework but do not explicitly state support for local models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The README provides specific command-line commands to run the evaluation via HELM to replicate results.
+    evidence:
+      - source: repo
+        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:README.md, chunk 7
+        quote: helm-run --run-entries air_bench_2024:model=text --models-to-run openai/gpt-4o-2024-05-13 --suite run1 --max-eval-instances 10
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 15
+    rationale: The benchmark reports the Cohen's Kappa score to quantify agreement/reliability between human and auto-graders.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 1
+        quote: Cohen’s Kappa score is a statistical metric used to assess the reliability or agreement between two raters
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: While the benchmark assesses harmful content, it does not explicitly assess the need for warnings for that content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent implementation is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: No requirements file (e.g., requirements.txt) is mentioned or provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a 'Usage & HOW-TO' section with specific pipeline steps and example commands.
+    evidence:
+      - source: repo
+        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:README.md, chunk 5
+        quote: |-
+          Usage & HOW-TO
+
+          We have 3 pipelines:
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The excerpts do not provide source code to verify the presence of in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No specific code documentation (like API docs or docstrings) is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The benchmark is described in a paper available on arXiv, which is a common venue for AI research.
+    evidence:
+      - source: repo
+        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:README.md, chunk 3
+        quote: '<a href="https://arxiv.org/pdf/2407.17436" target="_blank" style="text-decoration: none;">[arXiv]</a>'
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper documents the construction of the AIR 2024 taxonomy by extracting categories from regulations and policies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 3, chunk 0
+        quote: AIR 2024 was constructed by manually extracting and organizing risk categories from a diverse set of AI governance documents
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper documents the test tasks (prompts) and the rationale (aligning with regulations/policies)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not explicitly document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper includes a section explicitly titled 'Limitations and Broader Impact'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 11, chunk 0
+        quote: Limitations and Broader Impact. As a static benchmark, AIR-B ENCH 2024’s risk categories require periodic updates
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The prompt design process, including base prompt creation and mutation (dialects, authority), is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 5, chunk 2
+        quote: "To diversify the base prompts while maintaining their semantic meaning, we apply two mutations: uncommon dialects [ 55 ] and authority endorsement [ 73 ]."
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric (refusal rate) is clearly defined and documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 6, chunk 1
+        quote: In our quantitative study, we use the refusal rate (percentage of scores that are 1) as the primary metric
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository specifies Apache 2.0 for code and CC-BY-4.0 for the dataset."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: The excerpts do not show the inclusion of standardized metadata (e.g., DataCards).
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data sources (8 government frameworks and 16 corporate policies) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 3, chunk 0
+        quote: extracting and organizing risk categories from a diverse set of AI governance documents, including 8 government regulatory frameworks
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The preprocessing/expansion steps (mutation and manual refinement) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 25, chunk 2
+        quote: After generating the mutated prompts, we manually review the outputs to ensure the quality and coherence of the variations.
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The human alignment study and the use of Autograders for scoring are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 0
+        quote: To evaluate the consistency between Autograders and human evaluators, we conducted a thorough human evaluation study
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., ISO).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether the code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: The excerpts do not mention a maintained feedback channel for users; the LICENSE mentions 'issue tracking systems' in a general definition of 'Contribution', but not as a provided channel for this benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

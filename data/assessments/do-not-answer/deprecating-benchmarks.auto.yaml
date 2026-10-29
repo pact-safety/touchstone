@@ -1,0 +1,104 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: do-not-answer
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 460703484df354958a5e1cd7378a38fcb94a2f3e
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/do-not-answer/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.13387v2
+      ref: v2
+      sha256: da590ed3a2ff235d293e79d8140123d5bbb46a04421f9f7e7b245a8610aa258d
+      chars: 72696
+    - kind: repo
+      url: https://github.com/Libr-AI/do-not-answer/tree/460703484df354958a5e1cd7378a38fcb94a2f3e
+      ref: 460703484df354958a5e1cd7378a38fcb94a2f3e
+      sha256: f80987b66960beae4489b7e7514e2965ed7bfebe5baaa15cbaf5d146171b4814
+      chars: 25595
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain any reported scores, leaderboards, or saturation analysis to determine if there is headroom for improvement.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The excerpts state the dataset is released as an open-source resource but do not document a contamination defence such as a private held-out set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: There is no report of the label or answer distribution, nor is there a reported trivial baseline to check for statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The excerpts mention that responses were manually labeled and that automatic evaluators were tested, but there is no cited audit, validation pass, or error analysis reporting a specific low error rate for the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark states its purpose is to enable a comprehensive evaluation of LLM safety capabilities, a task that remains current for the models it is used on."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The benchmark does not explicitly state its simplifying assumptions, which is a requirement for a 'met' verdict.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark's content is based on a risk taxonomy and guidelines for safety, and there is no cited source indicating that the meaning of these labels or tasks has shifted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 6, chunk 3
+        quote: We assess six model responses across two levels. First, we consider whether a response is harmful based on binary annotation (safe or harmful).
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not mention a version identifier (like a release tag or DOI) associated with the benchmark name, nor do they describe how changes are recorded per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving the benchmark's data and code at the end of its life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: The excerpts do not provide a named maintainer, contact address, or issue tracker for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

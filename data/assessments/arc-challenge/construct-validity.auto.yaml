@@ -1,0 +1,241 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: arc-challenge
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/arc-challenge/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1803.05457v1
+      ref: v1
+      sha256: 5dba73681ca9c0a256829d09cdb30b59a9016f557407c34613de58f4662b6fdf
+      chars: 45437
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The paper provides an operational definition of a Challenge question based on the observable output of two baseline solvers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 3, chunk 1
+        quote: Operationally, we define a Challenge question as one that is answered incorrectly by both of two baseline solvers
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the text describes the nature of the challenge, it does not explicitly state the scope of the phenomenon nor name any excluded aspects of that phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The provided excerpts do not identify sub-components of the phenomenon nor state that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks nor provide control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no mention of measuring how output-format requirements affect the model scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses multiple-choice questions with specific answer options (A, B, C, D), and the excerpts describe solvers that output a choice or score rather than parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 3, chunk 3
+        quote: |-
+          Which property of air does a barometer measure? (A)
+          speed (B) pressure   [ correct] (C) humidity (D) tempera-
+          ture
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts describe the creation of the ARC Corpus using templates, but they do not document a sampling strategy over a described task space for the ARC-Challenge question set itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: There is no documentation stating that every item in the dataset passed a quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: The excerpts do not mention a subset of permuted or perturbed items, nor any separate reporting of results for such items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that the benchmark differs from the 2016 Allen AI Science Challenge, indicating a relationship/adaptation of a previous challenge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 0
+        quote: This challenge differs from the Kaggle-hosted 2016 Allen AI Science Challenge (Schoenick et al., 2017) in three important ways
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The text identifies limitations of previous datasets (small size and ease of solution by simple AI) and implies the strength of the new approach by contrasting it with these limitations."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: The excerpts do not provide a performance comparison between the new ARC benchmark and the original 2016 Allen AI Science Challenge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: met
+    rationale: The text explains that the creation of a Challenge partition is a modification intended to prevent scores from being dominated by simple algorithms.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 0
+        quote: First, the creation of a Challenge partition is to avoid scores being dominated by the performance of simple algorithms
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts describe baseline solvers used to define 'Challenge' questions, but they do not describe a test specifically designed to detect data contamination in the benchmark nor report such results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The text mentions the existence of test partitions for the Challenge and Easy sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 1
+        quote: Table 6 summarizes the scores obtained by various baseline algorithms on the test partitions of the Challenge and Easy sets.
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model to investigate pre-exposure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The excerpts do not state the total item count for the Challenge set, nor do they provide a power calculation or confidence-interval width compared against a claimed gap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results table (Test Scores in p7#2) provides point estimates for solvers but does not include confidence intervals or standard errors for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark uses existing standardized tests and automated solvers; no human raters are used for scoring the models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are deterministic, based on a scoring rubric where a system receives a point if it 'chooses the correct answer'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: a system receives 1 point if it chooses the correct answer
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts describe the types of knowledge and reasoning in the dataset, but they do not provide a quantitative count of specific failure modes for the models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors identify a specific need for a more advanced retrieval strategy to handle questions requiring the combination of multiple facts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 3
+        quote: This suggests the need for a more advanced retrieval strategy for questions that require combining multiple facts
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: unmet
+    rationale: The excerpts describe the benchmark as a challenge for the AI community to improve reasoning and text comprehension, but they do not name a specific real-world application linked to the tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: While the text provides an operational definition of a 'Challenge question', it does not provide a quotable statement linking the choice of tasks and each metric to that definition.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to the bAbI dataset, noting that bAbI's use of synthetic text and a synthetic world limits its realism and difficulty.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 2
+        quote: However, its use of synthetic text and a synthetic world limits the realism and difficulty of the task
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses how using datasets designed for people can lead to scores being dominated by simple algorithms, which biases research away from larger AI challenges.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 4
+        quote: The result of this is that scores become dominated by the performance of simple algorithms
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

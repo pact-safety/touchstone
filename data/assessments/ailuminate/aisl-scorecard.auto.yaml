@@ -1,0 +1,438 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: ailuminate
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/ailuminate/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.05731v2
+      ref: v2
+      sha256: 193b98f48e60a55f41c06180ed202982fab6fdd44c546d07a92eeb6357da1433
+      chars: 129165
+    - kind: repo
+      url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      ref: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      sha256: 92e9e4155001884b8cbaa3eb316cf30de8124aacacc96e638d4250619a3fd7d6
+      chars: 23836
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines the target phenomenon as the reinforcement of binary-gender stereotypes and specifies that evidence is the difference between sentiment-analysis scores for model responses to stereotype vs anti-stereotype prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 25, chunk 0
+        quote: "the focus of this work is on social-bias harms in generative AI systems: specifically, the reinforcement of binary-gender stereotypes in the outputs of text-to-text language models."
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation states the scope is limited to hazards and personas in the assessment standard and explicitly excludes 'untestable' hazards like environmental impact.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 21, chunk 1
+        quote: It only tests the hazards and personas in the assessment standard. It ignores “untestable” hazards such as environmental impact
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: While the benchmark mentions hazard categories, there are no tables or figures provided in the excerpts showing independent scores for each facet.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: unmet
+    rationale: The documentation does not report item counts along a stated difficulty or variation dimension.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation does not report per-category item counts or a stratified sampling plan over the task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The documentation describes a verification step where volunteers performed realism spot checks on prompts, and states that suppliers generally satisfied these checks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 15, chunk 1
+        quote: Fifteen volunteers each performed realism spot checks on 30–50 prompts covering the four languages. All suppliers generally satisfied these quality checks.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: No named subset of boundary or adversarial items with a stated size and membership criterion is documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The excerpts do not indicate that the benchmark reuses a prior dataset; it describes producing new prompts and using a custom fine-tuning dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The excerpts do not indicate that the benchmark reuses a prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While it mentions calibrating prompt count to statistical analysis, it does not report a power calculation or confidence-interval half-width compared to model gaps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results table is not provided, and there is no evidence that every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: met
+    rationale: The documentation provides response-evaluation guidance and principles for annotators to maintain consistency.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 13, chunk 0
+        quote: The following principles offer guidelines for both annotators and red teamers on how to assess responses and resolve edge cases.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a described mitigation for demographic skew in judgements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: unmet
+    rationale: The benchmark uses a simple majority vote for final labels, and no per-item disagreement distribution or inter-annotator agreement statistic is reported beside aggregate scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 18, chunk 1
+        quote: A simple majority vote determined the final result.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: unmet
+    rationale: The benchmark reduces subjective labels (violating/nonviolating) to a single-point aggregate (percentage of violating responses).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 0
+        quote: Score S Percentage of violating responses
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confound like length or language.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The documentation lists potential failure modes in a questionnaire, but does not report actual failure categories with counts or shares from model evaluations.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The documentation does not contain a statement naming the tasks, metrics, and the construct from cv.01 they measure with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: unmet
+    rationale: The documentation mentions other studies and benchmarks (like BET), but does not provide a concrete comparison of a named prior benchmark to state a specific gap addressed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The documentation provides a limitations statement regarding scope and links the benchmark's purpose to guiding AI-safety measures.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 21, chunk 1
+        quote: AIL UMINATE is a useful safety indicator, but it has substantial limitations. 1. The benchmark has a limited scope
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The excerpts do not mention any secondary capabilities or corresponding control conditions/ablation results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap measurement or mitigation is described as no overlap was identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reported results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: While prompt perturbation is mentioned as a failure mode, no experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: The excerpts do not provide a comparison of parser output with reference labels across two response formats with accuracy figures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap checks or training-data cutoffs for every evaluated model in the main results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: unmet
+    rationale: The excerpts do not state that the environment is a static snapshot or provide a changelog with re-validation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: There is no evidence in the code or docs that the harness resets state per task.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: The excerpts do not specify the format of the tasks, nor do they report random-guess baselines or guessing mitigations for MCQs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: While the docs mention domain experts were involved, they do not name the specific experts or user groups, nor what they specifically defined.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: The documentation states domain experts were involved in production, but does not name their credentials or specify the sample size/coverage of the review.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The provided excerpts do not report results under more than one prompting or elicitation setting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There are no results reported as a separate slice for a named stress condition or shift with an item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is described as a general safety-evaluation framework for general purpose chat systems, not a specific deployed application.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 0
+        quote: provides safety testing for general purpose chat systems
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is described as a general safety-evaluation framework for general purpose chat systems, not a specific deployed application.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 0
+        quote: provides safety testing for general purpose chat systems
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is described as a general safety-evaluation framework for general purpose chat systems, not a specific deployed application.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 0
+        quote: provides safety testing for general purpose chat systems
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation does not list specific library versions, hardware models, or OS/container images required for reproduction.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of a published reproduction by an independent third party on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: met
+    rationale: The docs describe quality-control steps (e.g., human validation) and a correction channel via versioned releases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 45, chunk 0
+        quote: create a new versioned release of the benchmark
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: met
+    rationale: The docs identify evaluator error as a flaw, state it biases results toward predicting more unsafe responses, and explain that using a reference system with the same bias mitigates the impact on grades.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 21, chunk 0
+        quote: The evaluator, therefore, likely predicts more unsafe responses compared with the ground truth.
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark uses a named reference system (Ref) as the reference point for scoring comparison.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 0
+        quote: Reference Ref AI system for scoring comparison
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: No scores for trivial baselines (like random selection or zero-shot naive models) are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: unmet
+    rationale: While the benchmark uses human ratings to verify the ensemble's accuracy, it does not report a specific correlation or agreement metric between the model rater and human judgments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 8, chunk 0
+        quote: backed by human ratings of a small percentage of responses to verify the ensemble’s accuracy
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: unmet
+    rationale: The documentation does not report adversarial/reward-hacking tests for the model rater, nor does it describe a named defense like a fixed rubric or injection filter.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: unmet
+    rationale: There is no report of agreement across repeated rating runs on the same inputs for the model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: No specific rater bias (e.g., length or position) is measured with a number and paired with a mitigation/caveat.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The fine-tuning dataset used three raters per prompt-response pair, and a majority vote was used to determine the result.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 18, chunk 1
+        quote: Each sampled prompt-response pair received either a nonviolating or violating label from each of three raters. A simple majority vote determined the final result.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The excerpts do not document every task as solvable or intentionally unsolvable, nor the expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: unmet
+    rationale: The benchmark uses an LLM ensemble for evaluation rather than providing verified ground-truth reference solutions for every task.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences for the scorer, nor does it show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, refusals, and errors/timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The evaluator uses an ensemble of LLMs to classify responses as violating or nonviolating, which does not involve parsing free-form output into a structured format via a parser.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 8, chunk 0
+        quote: The AIL UMINATE evaluator employs an ensemble of specialized LLM models fine-tuned to automate evaluation
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The evaluator uses an LLM ensemble for classification, not a free-form output parser.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 8, chunk 0
+        quote: The AIL UMINATE evaluator employs an ensemble of specialized LLM models fine-tuned to automate evaluation
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null/trivial-agent runs or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

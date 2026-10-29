@@ -1,0 +1,124 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: procgen
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/procgen/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1912.01588v2
+      ref: v2
+      sha256: 723d1ff3392b3bda3a5f5d8d2399ebf50163d81bc5a2da26168f61046f6b56f7
+      chars: 57097
+    - kind: repo
+      url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+      ref: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
+      sha256: c05caebb45027315d9f15fbaf1c83eac4407526940d4444c6ba9a07f0ffdd9a7
+      chars: 52460
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The authors explicitly state that they expect significant improvement in test performance, indicating the benchmark has not reached its ceiling.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 5, chunk 1
+        quote: we expect to see significant improvement on test performance as we develop agents more capable of generalization.
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark uses a defense consisting of training on a specific set of levels and testing on held-out levels to measure zero-shot performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 5, chunk 0
+        quote: we recommend training on 500 levels from each environment and testing on held out levels
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark consists of procedurally generated environments with no fixed classes or labels that could be skewed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 1, chunk 3
+        quote: algorithmic creation of a near-infinite supply of highly randomized content
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts contain no mention of a quality audit, validation pass, or error analysis regarding the annotation or label error rate.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark explicitly states its purpose is to measure sample efficiency and generalization in RL, which remains a current challenge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 1, chunk 3
+        quote: Procgen Benchmark consists of 16 unique environments designed to measure both sample efficiency and generalization in reinforcement learning.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: While the benchmark mentions design criteria (e.g., deterministic state transitions), it does not explicitly state its simplifying assumptions in a way that allows for verification against current use.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: There is no evidence of a maintenance process for the content to prevent semantic drift, and the excerpts do not provide a cited source confirming the labels/tasks remain representative.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: While the benchmark uses versioning in its setup script and mentions a changelog, there is no explicit version identifier shown alongside the benchmark name in its main references.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: The provided excerpts do not mention a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides an issue tracker for reporting bugs and a contact email for the corresponding author.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:CONTRIBUTING.md, chunk 0
+        quote: Please report reproducible bugs through the issue tracker
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 1, chunk 1
+        quote: "Correspondence to: Karl Cobbe   < karl@openai.com >"
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

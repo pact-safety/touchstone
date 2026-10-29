@@ -1,0 +1,108 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: winogrande
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 727e837f77521ef38bcc56df3b275c8da43f45af
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/winogrande/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1907.10641v2
+      ref: v2
+      sha256: 6abd24d9da10e037a32f047f141ea18ba72e4b2ad8215e6e210adba40790b2a7
+      chars: 48588
+    - kind: repo
+      url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+      ref: 727e837f77521ef38bcc56df3b275c8da43f45af
+      sha256: cb990e1d3811069511826e4a1c64562d45015a6fbd5cd6d387dd09f66d65c369
+      chars: 17441
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports that top state-of-the-art scores (59.4-79.1%) are significantly below the human performance ceiling of 94.0%."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document a contamination defense such as a private held-out set or a contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark employs a systematic bias reduction algorithm (AFLITE) to remove spurious correlations and dataset-specific biases, ensuring models cannot rely on simple statistical patterns."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark employs a rigorous validation process where three crowd workers must agree on the correct answer and the lack of ambiguity for a question to be deemed valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: We validate each collected question through a distinct set of three crowd workers.
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark serves as a tool for evaluating commonsense reasoning via pronoun resolution, a purpose that remains current as it is used to test if models rely on statistical patterns or true reasoning.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 1, chunk 2
+        quote: has been used as a benchmark for evaluating commonsense reasoning.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on, which is required for a 'met' verdict.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark's content is maintained as a fixed dataset (Version 1.1), and there is no evidence in the excerpts that the meaning of its labels or tasks has shifted."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not show an explicit version identifier (like a release tag or DOI) visible alongside the benchmark name in its main references, nor is there evidence of recorded changes per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving the data and generating code in a persistent archive.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: While the README has a 'Questions?' section, it is empty, and no named maintainer, contact address, or active issue tracker is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

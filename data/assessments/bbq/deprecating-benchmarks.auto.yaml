@@ -1,0 +1,124 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bbq
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bbq/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.08193v2
+      ref: v2
+      sha256: d156a5efdfc189703ff001f36a71d6d7381866276d31713fe272d86f3e1d8b8d
+      chars: 87185
+    - kind: repo
+      url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+      ref: bea11bd97d79217245b5871acd247b9d6eb24598
+      sha256: 9cf0dc0c368f8b490f93531c0e267be45fea328c489ad58b8395b03a4b8dcfb0
+      chars: 31146
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark reports that models achieve low accuracy (no more than 67.5%) in ambiguous contexts, indicating significant headroom below the maximum achievable score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: Models achieve low accuracy in these ambiguous contexts (no more than 67.5%)
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The excerpts indicate that the test examples are provided in the repository for users to test, but there is no mention of a contamination defense such as a private held-out set or regular refreshing.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 1
+        quote: This folder contains each set of generated examples for BBQ. This is the folder you would use to test BBQ.
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark uses a balanced design where each example is paired with two questions: one targeting a harmful stereotype and one targeting a non-targeted entity."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark describes a human validation process where templates failing a 4/5 agreement threshold were edited until they passed, and annotators achieved over 85% accuracy on filler items.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 1
+        quote: all annotators achieved above 85% accuracy on these items
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to measure social biases in QA models, a capability that remains current for the models it is used on.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: This benchmark is a tool for researchers to measure social biases in QA models
+    by: model
+    quotes_verified: true
+  c6:
+    value: met
+    rationale: The benchmark explicitly states its simplifying assumption that the categories are limited to a current US English-speaking cultural context.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: These categories are limited to a current US English-speaking cultural context
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark's content is designed for a specific cultural context and there is no evidence provided that the labels or task meanings have shifted since creation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: These categories are limited to a current US English-speaking cultural context
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not show an explicit version identifier (like a release tag or DOI) displayed alongside the benchmark name in its main references.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no stated deprecation plan or policy regarding the archiving of artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a GitHub repository which serves as an issue tracker and point of contact, and the repository contains a commit hash indicating it is a versioned project."
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

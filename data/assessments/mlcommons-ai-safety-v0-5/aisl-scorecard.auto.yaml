@@ -1,0 +1,466 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mlcommons-ai-safety-v0-5
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 79accfe1424a7994399154ae34fd960fe93a4259
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mlcommons-ai-safety-v0-5/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.12241v2
+      ref: v2
+      sha256: 948815b355a66f0403dbc0bdba07c085f1ab11bab2bc65a658b165a3add1ddcb
+      chars: 185943
+    - kind: repo
+      url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+      ref: 79accfe1424a7994399154ae34fd960fe93a4259
+      sha256: 784dbe1c8138124c20130b3f9e07d42713cf17bf95330a1ddb43f5db95eca9ed
+      chars: 56881
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines an unsafe response as one that creates or increases the risk of harm, which serves as the observable evidence for the target phenomenon.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 56, chunk 0
+        quote: An unsafe response is one that creates or increases the risk of harm, or increases the severity of harm that is inflicted.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation specifies that the scope is chat-tuned LMs and explicitly excludes the Graphical User Interface.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 8, chunk 3
+        quote: We also do not test the Graphical User Interface or any other user-facing aspects
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: met
+    rationale: The benchmark identifies seven hazard categories and reports that grades are calculated for each model on each test.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 24, chunk 0
+        quote: Grades are calculated for each model on each test.
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: unmet
+    rationale: While the docs name categories and interaction types, they do not report item counts along a difficulty or variation dimension.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The docs mention stratified sampling for the human eval set, but not for the overall dataset construction across the task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: There is no documentation of a verification step and pass rate for every item in the benchmark to ensure it tests the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: The excerpts do not mention a named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The documentation states that many modalities and categories are not covered in existing datasets, and it uses v0.5 to stress-test its own prompt creation process, implying it is not reusing a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 1
+        quote: many of the modalities, languages and hazard categories (and subcategories) that we want to test for are not covered in any of the existing datasets
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 1
+        quote: many of the modalities, languages and hazard categories (and subcategories) that we want to test for are not covered in any of the existing datasets
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: The item count is stated, but no power calculation or confidence-interval half-width is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results (grades) do not have confidence intervals or standard errors reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: While human labeling is mentioned, the actual rater instructions or training materials are not reproduced in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics and mitigation for demographic skew are not reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: met
+    rationale: The benchmark reports inter-annotator agreement using Cohen's Kappa for the human eval set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 23, chunk 0
+        quote: Inter-annotator agreement, as measured by the average Cohen’s Kappa score, is 0.79
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: met
+    rationale: The headline metric for SUTs is the 'lowest grade' among seven tests, not a simple mean of subjective labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 24, chunk 2
+        quote: We take the lowest grade to minimize the risk that we overstate the safety of SUTs.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: There is no table or figure breaking down failures by a named confound like length or complexity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The docs do not report named failure categories with counts or shares; they only provide examples of unsafe responses.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking specific tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark compares its taxonomy against seventeen other safety taxonomies and notes that broad categories in others make results difficult to interpret.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 45, chunk 0
+        quote: We have compared the AI Safety Taxonomy against seventeen widely-used safety taxonomies
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The docs provide a limitation regarding the 'lack of safety' vs 'safety' and link the benchmark to the real-world capability of identifying safety weaknesses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 26, chunk 1
+        quote: if an SUT performs well on the benchmark it does not mean that it is safe, only that we have not identified safety weaknesses
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The provided excerpts do not mention any secondary capabilities or control conditions/ablations for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation identifies that safety evaluation work often overlaps with evaluations of highly advanced AI capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 27, chunk 2
+        quote: This work often overlaps with evaluations of highly advanced AI capabilities
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: While overlap was mentioned in iv.02, there is no evidence that this overlap was quantified or that mitigation steps were described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reported results comparing different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: The excerpts mention that the test specification was motivated by sensitivity to prompt formulation, but no actual prompt-perturbation experiment with variance measures is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark uses LlamaGuard for automated evaluation and reports its accuracy (agreement with human labels) for both unsafe and not unsafe categories."
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper mentions a requirement that publishers do not train on the benchmark, but it does not report overlap check results or training cutoffs for the specific models evaluated in the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed prompts and local/API scoring without a mutable external environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The pipeline processes each prompt as an individual 'Item' sent to the SUT, indicating stateless model calls.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 0
+        quote: It is mainly focused on the individual Item, which is one Prompt from one Test run against one SUT.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark does not use multiple-choice questions; it uses prompts and assesses the safety of the generated responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 0
+        quote: each test contains test items (prompts)
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: met
+    rationale: The documentation mentions that interviews with experts were used to make assumptions about the behavior of the three personas defined for the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 9, chunk 3
+        quote: Based on prior research, our collective expertise, and interviews with experts, we are making limited assumptions about the likely behavior of these three personas.
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While the docs mention a team of AI safety experts designed the items, they do not state whether all items or a specific sample size were reviewed for accuracy and relevance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The documentation states that SUTs were evaluated at low temperature and that testing at different temperatures is a goal for the future, but does not report results under multiple settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There is no evidence of results reported as a separate slice for a named stress condition or shift with an associated item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general-purpose AI chat systems rather than a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 8, chunk 2
+        quote: The systems under test (SUTs) are general-purpose AI chat systems
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general-purpose AI chat systems rather than a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 8, chunk 2
+        quote: The systems under test (SUTs) are general-purpose AI chat systems
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general-purpose AI chat systems rather than a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 8, chunk 2
+        quote: The systems under test (SUTs) are general-purpose AI chat systems
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While sampling parameters are provided, there is no mention of library versions, hardware models, or OS/container images.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 0
+        quote: We collected responses from all models with a temperature of 0.01 and set the maximum number of tokens to be generated to 500.
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The docs mention correcting the public record, but do not describe a specific correction channel (like a changelog) that records at least one actual fix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 8, chunk 1
+        quote: publishing public statements correcting the public record
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs mention that the benchmark has 'numerous limitations', but they do not name specific flaws with their direction of bias, impact estimates, and valid conclusions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 0
+        quote: the v0.5 benchmark has numerous limitations
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark uses a reference model as a baseline for scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 24, chunk 0
+        quote: This involves recording the percentage of unsafe responses for a reference model as a baseline
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: No scores for trivial baselines (e.g., random or zero-shot naive models) are reported in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: met
+    rationale: The benchmark uses LlamaGuard as a model rater and reports its accuracy (70.4%) against a human-verified gold standard label set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 23, chunk 1
+        quote: Overall, the accuracy of LlamaGuard is 70.4% on the human eval set.
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: unmet
+    rationale: The documentation does not report adversarial tests of the model rater or describe specific defenses against reward hacking.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: unmet
+    rationale: There is no report of agreement across repeated rating runs for the model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: No specific rater biases are measured with numbers and mitigated in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: Three trained annotators independently labeled the human eval set, and a Cohen's Kappa score of 0.79 is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 23, chunk 0
+        quote: Inter-annotator agreement, as measured by the average Cohen’s Kappa score, is 0.79
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The excerpts do not document every task as solvable or intentionally unsolvable, nor the expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: unmet
+    rationale: The benchmark focuses on safety (unsafe vs not unsafe) and does not provide verified ground-truth solutions for solvable tasks in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, refusals, and errors/timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The scoring is performed by a model (LlamaGuard) assessing if a response is unsafe, which does not involve parsing free-form output into a structured answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 21, chunk 2
+        quote: Our grading system involves scoring whether each test item is unsafe or not with an automated evaluator model (LlamaGuard [   59 ])
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The scoring is performed by a model (LlamaGuard) assessing if a response is unsafe, which does not involve parsing free-form output into a structured answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 21, chunk 2
+        quote: Our grading system involves scoring whether each test item is unsafe or not with an automated evaluator model (LlamaGuard [   59 ])
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null-agent runs or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

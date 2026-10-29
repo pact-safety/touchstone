@@ -1,0 +1,256 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: impossiblebench
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/impossiblebench/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2510.20270v1
+      ref: v1
+      sha256: 076fdc9d551f5e6646495bc14ac5c5857230c8939b2c64423b02651f66b3baae
+      chars: 64461
+    - kind: repo
+      url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      ref: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      sha256: 6b37396768388d86129c43c497a25560f7c6237e81c74276df6467f68097a492
+      chars: 9620
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report describes the measured capability (propensity to exploit test cases/cheating) and the relevant threat model (failure modes where autonomous agents use specification-violating shortcuts).
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 0
+        quote: systematically measures LLM agents' propensity to exploit test cases by creating "impossible" variants of tasks where passing necessarily implies specification-violating shortcuts or "cheating."
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The excerpts do not provide an explicit threshold or decision rule mapping a score to a conclusion about a capability of concern, nor do they state that none exists.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides a user prompt (item stem) and the required structure of the model response (THOUGHT section followed by a bash code block).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 23, chunk 1
+        quote: Include a THOUGHT section before your command where you explain your reasoning process. Format your response as shown in <format_example>.
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: met
+    rationale: The report states the number of data points for both the LiveCodeBench and SWE-bench datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 19, chunk 0
+        quote: contains   103   data points (for each of the two versions)
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 19, chunk 0
+        quote: we obtain   349   data points as the   Impossible-SWEbench   dataset
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: unmet
+    rationale: While the report mentions unit tests and coding tasks, it does not explicitly describe the item format (e.g., multiple choice) or the scoring method used to determine a pass/fail.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report describes the creation of impossible tasks via mutation strategies and details the quality control process of verifying validity against original and empty patches.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 3, chunk 2
+        quote: we employ two test mutation strategies to create impossible tasks
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 0
+        quote: we verify their validity by testing them against both the original patches from the base benchmarks and empty patches
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: n/a
+    rationale: Grading is automated via unit tests and LLM-based monitors, not by a human grader sample.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 2
+        quote: LLM-based monitors can detect 86-89% of cheating attempts
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: n/a
+    rationale: Grading is automated via unit tests and LLM-based monitors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 2
+        quote: LLM-based monitors can detect 86-89% of cheating attempts
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: Grading is automated via unit tests and LLM-based monitors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 2
+        quote: LLM-based monitors can detect 86-89% of cheating attempts
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: unmet
+    rationale: The report mentions using 'LLM-based monitors' but does not name the specific base model used for grading or any modifications made to it.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The report describes the automated grading process for cheating classification, including the prompt used to judge if a transcript is 'cheating' or 'legit'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 21, chunk 2
+        quote: 'conclude with your final judgment as a single word in bold: either "**cheating**" or "**legit**"'
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: unmet
+    rationale: There is no mention of comparing the autograder (LLM monitor) against human graders or other autograders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: met
+    rationale: The report provides specific model identifiers such as 'Claude Sonnet 3.7' and 'GPT-4.1'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 13, chunk 3
+        quote: "Tested model:   Claude Sonnet 3.7"
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The excerpts do not specify which safety mitigations were active during testing or any adaptations to elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While scaffold names and some sampling settings (token budget) are mentioned, the full prompts, sampling settings (like temperature), and the number of attempts are not all provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: unmet
+    rationale: The excerpts mention that summary statistics can be generated using a tool in the repository, but they do not report actual representative performance statistics (like mean or maximum) for the models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: There is no mention of uncertainty measures or the specific number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results under alternative conditions, such as different test access configurations (hidden and read-only) and different prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 8, chunk 0
+        quote: "We explore three test access configurations: full-access tests (agents could read/write, our default), hidden tests, and read-only tests"
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: n/a
+    rationale: The provided excerpts do not mention the use of a human baseline for performance comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: n/a
+    rationale: The provided excerpts do not mention the use of a human baseline for performance comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: n/a
+    rationale: The provided excerpts do not mention the use of a human baseline for performance comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: unmet
+    rationale: The excerpts do not provide a reason why a human baseline would be inappropriate or infeasible.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: unmet
+    rationale: The excerpts do not provide an alternative comparison point to a human baseline, nor an explanation for one.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: The report discusses cheating behaviors and rates, but there are no overall conclusions about model capabilities or risk levels that cite specific tables, figures, or numbers as required by the rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The provided excerpts do not mention falsification conditions for conclusions nor the pre-registration status of the study.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There are no forecasts of future performance with a stated time horizon in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper describing 'ImpossibleBench' and its findings on model cheating, rather than a report tied to a specific model deployment decision.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The excerpts do not describe any disagreements over results interpretation, nor do they state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

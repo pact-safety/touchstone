@@ -1,0 +1,455 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: strongreject
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/strongreject/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.10260v2
+      ref: v2
+      sha256: 70386c5b20687d7074ffd81398a20532f8ef5e166a1d8cd89c38b1580ccb37a7
+      chars: 88851
+    - kind: repo
+      url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      ref: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      sha256: 8a181dda99fd360577e5dd1bf3c8c175dabaca13aa484afd9a04c180553f534e
+      chars: 7554
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested concept as measuring both the willingness and capabilities of a model to provide useful information related to forbidden prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: "the StrongREJECT evaluator measures both of these dimensions: willingness and capabilities."
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: "The text describes how the concept translates to a task: scoring responses based on the extent to which they provide useful information related to a forbidden prompt."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: The StrongREJECT automated evaluator scores responses based on the extent to which they provide useful information related to the forbidden prompt.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that reliable evaluations are needed for safety researchers to identify which jailbreaks increase model misuse potential.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 2, chunk 2
+        quote: In general, safety researchers need more reliable evaluations to identify which jailbreaks increase model misuse potential.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The text describes what a score of 0 and 1 represent, though it doesn't provide comprehensive guidelines on interpretation or usage.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 3
+        quote: The StrongREJECT autograder scores jailbreak responses between 0 and 1, where 1 is a successful jailbreak with harmful information the model shouldn't disclose.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 15
+    rationale: "The benchmark describes a user persona for the human evaluators: a malicious actor trying to accomplish an objective."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 25, chunk 0
+        quote: When grading, pretend you are a malicious actor trying to accomplish the objective described in the question
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature by cross-referencing prohibited use cases from major model providers' usage policies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 4, chunk 0
+        quote: we cross-referenced prohibited use cases in the usage policies of OpenAI, Anthropic, Google Gemini, Meta LLaMA, and DeepInfra
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of metric is informed by the need to avoid the 'upward bias' of binary non-refusal indicators used in prior work.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 1
+        quote: Existing automated evaluation methods usually fail to measure how much a victim model’s response assists the attacker.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 15
+    rationale: The metric is explicitly defined with a floor of 0 and a ceiling of 1.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 3
+        quote: The StrongREJECT autograder scores jailbreak responses between 0 and 1
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: The benchmark includes human labelers as a performance baseline to validate the automated evaluator.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 3
+        quote: we compare the StrongREJECT evaluator to human labelers.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: There is no mention of a random performance level baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The automated evaluator is validated by comparing its agreement with human judges.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 3
+        quote: the StrongREJECT evaluator has state-of-the-art agreement with human judges compared to several other automated evaluation methods.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains that StrongREJECT differs from previous benchmarks by measuring both willingness and capability rather than just non-refusal.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 10, chunk 3
+        quote: underscore the need for jailbreak researchers to use evaluators that, like StrongREJECT, consider both a model’s willingness to respond to forbidden prompts as well as its capability of doing so.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: The excerpts do not address input sensitivity (e.g., how small changes in input affect the score).
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository provides an implementation of the autograder and a notebook for running evaluations.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 1
+        quote: "an implementation of the StrongREJECT autograder: `strongreject_evaluator.py`"
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The dataset of forbidden prompts is provided in CSV files within the repository.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 1
+        quote: |-
+          The `strongreject_dataset` folder contains:
+          - `strongreject_dataset.csv`: the full dataset of 313 questions
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 10
+    rationale: The repository includes a notebook that uses a GPT version of the autograder, implying API usage, and the dependencies include the openai library.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 1
+        quote: "scoring the responses using a GPT version of our autograder: `run_strongreject.ipynb`"
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 10
+    rationale: The paper mentions fine-tuning a Gemma 2B model to serve as an evaluator that can run on a single GPU, implying local model support.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 21, chunk 0
+        quote: we chose to use the Gemma 2B model released by Google [ 12 ], which is small enough to run on a single GPU
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: A notebook is provided to demonstrate jailbreaking and scoring on the dataset, which serves as a replication script.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 1
+        quote: "a simple notebook showing a jailbreak on the StrongREJECT dataset and scoring the responses using a GPT version of our autograder: `run_strongreject.ipynb`"
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not report statistical significance or uncertainty quantification for the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: The excerpts do not show an assessment of the need for warnings for sensitive/harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A pyproject.toml file is provided which lists dependencies.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:pyproject.toml, chunk 0
+        quote: |-
+          [tool.poetry.dependencies]
+          python = "^3.11"
+          tqdm = "^4.66.1"
+          openai = "^1.6.1"
+          pandas = "^2.1.4"
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a link to a Colab notebook demo and a notebook example.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 0
+        quote: See a demo of how to run StrongREJECT for free in a Colab notebook.
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code files to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 10
+    rationale: The README describes the main functions of the evaluator code.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 4
+        quote: |-
+          The main functions in the file are as follows:  
+          - `autograde_response`: takes a question and a response string, and returns  the autograder score.
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The repository links to an arXiv paper, and the text refers to it as a 'paper'.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 0
+        quote: Repository for "StrongREJECT for Empty Jailbreaks" paper.
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the pipeline used to curate the forbidden prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 18, chunk 1
+        quote: |-
+          To address the issues with previous forbidden prompt databases, we created a robust pipeline to curate
+          a high-quality set of forbidden prompts.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper explains that prompts are designed to be factually verifiable to enable objective evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: |-
+          Our forbidden prompts pose detailed questions with factually verifiable answers
+          to enable objective evaluation.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: No documentation of normative property assumptions was found in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper explicitly lists three limitations of the current work.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 10, chunk 1
+        quote: Limitations. We note three limitations with our current work.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the prompt design process for identifying non-refusals.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 19, chunk 0
+        quote: "Below we show the prompt used for identifying non-refusals:"
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The README explains how the autograder scores responses and normalizes them.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 3
+        quote: The specificity and convincingness scores are then averaged and normalised to be in [0,1].
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The README and LICENSE file specify the MIT license.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 1
+        quote: We release our code and custom generated data under the MIT license.
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: No evidence of standardized metadata (e.g., DataCards) is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper and README list the sources of the forbidden prompts.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 2
+        quote: Source indicates which dataset a given prompt originates from
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper documents the filtering pipeline, including category selection and deduplication.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 18, chunk 1
+        quote: |-
+          We began with a superset of all forbidden prompts in the
+          databases listed in Table 4, then filtered them as follows.
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper describes the fine-tuning of the evaluator using a dataset of responses with labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 5, chunk 1
+        quote: |-
+          We fine-tuned it for 1 epoch (6 hours) on a NVIDIA RTX A6000 GPU using the AdamW
+          optimizer with a learning rate of 2e-4 to provide 5-point Likert scale scores
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of following a recognized documentation standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not provide evidence that code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: No maintained feedback channel for users is mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: While authors are listed in the bibtex, no specific contact person (e.g., email or contact details) is listed for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

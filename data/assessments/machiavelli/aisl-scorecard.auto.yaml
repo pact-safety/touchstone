@@ -1,0 +1,458 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: machiavelli
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/machiavelli/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2304.03279v4
+      ref: v4
+      sha256: ab66d6699e0d0d721e857435d45c43f70115174d074217eb0ec94da8d6963a4a
+      chars: 120586
+    - kind: repo
+      url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+      ref: ebb44e197f663603427882c609dbc9d5fb883d63
+      sha256: 5cbc5f072d51ba92f2bad196db5ae1a6d9579a02ad133424471c9fd7810d3def
+      chars: 10786
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The benchmark defines power through observable outputs (exercised power) and inputs (resource power), specifying units like watts and money.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 13, chunk 2
+        quote: We measure power in terms of watts, money, wellbeing, and social influence.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: The documentation does not explicitly name an aspect of the phenomenon that is excluded from the scope.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: met
+    rationale: The benchmark decomposes power into different units/facets, and Table 2 reports scores for different categories (e.g., Goals, Killing).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 0
+        quote: Table 2. Mean scores across the 30 test set games for several agents.
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: unmet
+    rationale: While the task space is described as text-based adventure games, there is no report of item counts along a difficulty or variation dimension.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation mentions sampling 2,000 scenes uniformly at random, but does not report per-category item counts over the task space.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: on a test set of 2,000 scenes sampled uniformly at random from all games.
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The benchmark uses GPT-4 to label scenes, and the quality is verified by comparing model labels against an ensemble of expert authors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: We define the gold labels on the test set to be the ensemble of labels from three experts (authors).
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark is based on human-written games, but does not reuse a prior benchmark dataset for evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: The item count for the test set is stated, but no power calculation or confidence-interval half-width is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: on a test set of 2,000 scenes sampled uniformly at random from all games.
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The results table (Table 2) provides mean scores but does not include confidence intervals or standard errors for each score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 0
+        quote: Table 2. Mean scores across the 30 test set games for several agents.
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: met
+    rationale: The documentation provides the specific prompts used for the model-based raters (GPT-4) in the appendices.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 17, chunk 0
+        quote: we use GPT-4 (OpenAI, 2023) to label all our scenes using the following prompts.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: The benchmark uses GPT-4 and a small number of expert authors for labeling, not a demographic group of human raters requiring bias mitigation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 17, chunk 0
+        quote: we use GPT-4 (OpenAI, 2023) to label all our scenes
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: unmet
+    rationale: The labels (morality, power) are subjective, but no per-item disagreement distribution or inter-annotator agreement statistic is reported beside the aggregate scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: met
+    rationale: The headline metrics in Table 2 are reported as a proportion of the mean harm across 1,000 random trajectories, not a simple mean of subjective labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 0
+        quote: scores represent the amount of harm reduced for that category, as a proportion of the mean amount of harm across 1,000 random trajectories.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: There is no table or figure breaking down model failures by a named confound like prompt length or language complexity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The documentation does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking specific tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark compares itself to the field of machine ethics and states it improves upon it by offering concrete steps for safer adaptive agents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 8, chunk 3
+        quote: M ACHIAVELLI improves upon machine ethics, offering concrete steps towards building safer adaptive agents.
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The docs provide a limitation regarding the context window and link the benchmark to the real-world capability of reducing risks from power-seeking behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 30, chunk 2
+        quote: This work directly reduces risks from power-seeking behavior, deception, and selfish tendencies
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap measurement or mitigation is described as no overlap was identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: While JSON formatting is required, there are no results reported under different format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: The benchmark uses a parser for JSON, but it does not compare parser output with reference labels across two formats with accuracy figures per format.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or training cutoffs for all evaluated models (e.g., LLaMA, GPT-3.5, GPT-4).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The evaluation uses a static set of game data and scenarios."
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: met
+    rationale: The benchmark consists of stateless model calls for labeling or independent trajectories for agents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: We apply each prompt to every scene in the M ACHIAVELLI benchmark separately
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The evaluation does not use multiple-choice questions; it uses behavioral metrics and JSON-formatted labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: designed to induce the return of a JSON-formatted string
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios and acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The documentation identifies the reviewers as 'authors' (experts) and states that they provided gold labels for a test set of 2,000 scenes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: We define the gold labels on the test set to be the ensemble of labels from three experts (authors). Shown in Table 8, GPT-4’s labels are more correlated with the gold labels than the average crowdworker’s labels.
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports results using both direct prompting and chain-of-thought (CoT) prompting."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There is no report of results as a separate slice for a named stress condition or shift that differs from the train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general agent capabilities in text-based games and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
+        quote: MACHIAVELLI is an RL-style gym environment for text agents.
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general agent capabilities in text-based games and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
+        quote: MACHIAVELLI is an RL-style gym environment for text agents.
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general agent capabilities in text-based games and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
+        quote: MACHIAVELLI is an RL-style gym environment for text agents.
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation provides some hyperparameters and a requirements file, but lacks the hardware model, OS, or container image required by the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: There is no description of quality-control steps combined with a correction channel (like a changelog or errata) that records at least one fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The documentation does not name any unavoidable flaws, and the decision rule states that naming no flaws is unmet.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: No human or expert baseline is reported for the tasks, nor is there a statement explaining why none is relevant.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports a random baseline agent used to establish a baseline for harmful behavior."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: met
+    rationale: The benchmark uses GPT-4 as a rater and reports that its labels correlate with gold labels (expert ensembles).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: Table 8 shows the agreement (Spearman rank correlation) of gold labels against the model labels and crowdworker labels.
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: met
+    rationale: The model rater is designed to return JSON-formatted strings to facilitate parsing, which serves as a specified format/rubric for the output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: designed to induce the return of a JSON-formatted string, allowing us to easily parse and extract label values.
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: unmet
+    rationale: While the authors mention collecting additional rounds of labels for a subset, they do not report the agreement/consistency across these repeated runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: The documentation does not report a measurement of a specific rater bias (e.g., length or position) with a number and a corresponding mitigation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: Gold labels were created using an ensemble of three experts, and agreement between model labels and these gold labels was reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: We define the gold labels on the test set to be the ensemble of labels from three experts (authors).
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The excerpts do not document every task as solvable or intentionally unsolvable, nor the expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: unmet
+    rationale: There is no evidence that reference solutions for solvable tasks were provided and verified by an oracle or second person.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences for the scorer or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, refusals, and errors/timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The scoring of agent performance is based on achievements (points) and behavioral labels, not on parsing free-form output from the agent to determine correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 5, chunk 0
+        quote: We define reward as the sum of the points agent’s achievements.
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The scoring of agent performance is based on achievements (points) and behavioral labels, not on parsing free-form output from the agent to determine correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 5, chunk 0
+        quote: We define reward as the sum of the points agent’s achievements.
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts against the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

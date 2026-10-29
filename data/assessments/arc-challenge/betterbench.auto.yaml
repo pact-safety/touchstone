@@ -1,0 +1,390 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: arc-challenge
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/arc-challenge/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1803.05457v1
+      ref: v1
+      sha256: 5dba73681ca9c0a256829d09cdb30b59a9016f557407c34613de58f4662b6fdf
+      chars: 45437
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested capability as advanced question answering requiring reasoning and commonsense knowledge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 1, chunk 1
+        quote: questions requiring reasoning, use of commonsense knowledge, or other advanced methods for deeper text comprehension
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The capability translates to a task of answering multiple-choice natural science questions from standardized tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 1, chunk 0
+        quote: The dataset contains only natural, grade-school science questions (authored for human tests)
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 0
+    rationale: The excerpts do not describe how knowing about the tested capability is helpful in the real world.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 10
+    rationale: The benchmark integrates literature by citing previous work on standardized tests and QA datasets, though it doesn't explicitly integrate 'domain literature' in a scientific sense.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 1, chunk 2
+        quote: Standardized tests have previously been proposed as a Grand Challenge for AI (Brachman, 2005; Clark and Etzioni, 2016)
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The scoring rubric is clearly defined based on correct answers and ties, and the use of a random baseline is justified to reflect task difficulty."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 10
+    rationale: The text mentions that some systems can match human performance on other datasets, but does not provide a specific human performance level for ARC itself.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 2
+        quote: even matching human performance (Simonite, 2018)
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: A random baseline is explicitly included and described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: Guess-all (“random”). A na¨ ıve baseline that selects all answer options as equally valid
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses an automatic scoring rubric based on correct answer selection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: "We scored systems using the following scoring rubric: For each question, a system receives 1 point if it chooses the correct answer"
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explains differences from SQuAD, SNLI, and the 2016 Allen AI Science Challenge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 0
+        quote: This challenge differs from the Kaggle-hosted 2016 Allen AI Science Challenge (Schoenick et al., 2017) in three important ways
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: Input sensitivity is not addressed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The paper explicitly provides a link to the code for the baseline solvers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 3
+        quote: Code available at https://github.com/allenai/arc-solvers
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The dataset and leaderboard are accessible via a provided URL.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 1
+        quote: The ARC Dataset, Corpus, Models, and Leaderboard can be accessed at http://data.allenai.org/arc.
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: There is no mention of supporting model evaluation via API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 0
+    rationale: The excerpts do not explicitly state that evaluation of local models is supported, only that code is available.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: While code is provided, there is no specific mention of a script to replicate the reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The paper reports percentages but does not mention statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no assessment of the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent implementation is mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: No specific release requirements are specified in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: No requirements file or equivalent is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 10
+    rationale: The paper provides a website for access and mentions releasing baseline implementations, which serves as a starting point.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 4
+        quote: To access ARC, view the leaderboard, and submit new entries, visit the ARC Website at http://data.allenai.org/arc.
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The excerpts do not provide the source code to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: While code is available, there is no mention of separate code documentation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The excerpts are from a paper (1803.05457v1) and the references list several peer-reviewed venues like AAAI and EMNLP, implying the work is part of a peer-reviewed academic process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 8, chunk 2
+        quote: In AAAI , 2018.
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper explicitly states it will describe how the dataset was collected and partitioned.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 0
+        quote: describe how the ARC dataset was collected and partitioned.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper provides examples of knowledge types (Definition, Basic Facts, etc.) and the rationale for the Challenge set (hard for retrieval/co-occurrence).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 4, chunk 0
+        quote: |-
+          Knowledge Type   Example 
+          Definition   What is a worldwide increase in temperature called?
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: No documentation of assumptions regarding normative properties is found.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 0
+    rationale: The paper discusses limitations of other datasets (WikiHop, bAbI) but does not explicitly document the limitations of ARC itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The data collection process is documented, including the use of standardized tests and the search process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 1, chunk 2
+        quote: For ARC we have addressed this through several months of extensive search and investigation.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 10
+    rationale: The paper mentions reporting scores as percentages on test sets, though a formal metric definition is brief.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 3
+        quote: Scores are reported as percentages on the test sets.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: No specific license is mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 10
+    rationale: A URL is provided for the dataset, though it is not explicitly labeled as a persistent identifier like a DOI.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 1
+        quote: The ARC Dataset, Corpus, Models, and Leaderboard can be accessed at http://data.allenai.org/arc.
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: No standardized metadata (e.g., Schema.org, Dublin Core) is mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper lists the specific sources of the questions in Table 7 and describes the collection process."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 10
+    rationale: The paper mentions filtering long sentences and noisy sentences for the corpus, which is a preprocessing step.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 9, chunk 3
+        quote: We filter long sentences ( >   300   characters), sentences with negation and noisy sentences
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The data comes from existing standardized tests; no new annotation process for the ARC dataset itself is documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 10
+    rationale: The paper provides a grade-level distribution of the questions, which explains the representativeness of the student population.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 3, chunk 0
+        quote: "Table 2: Grade-level distribution of ARC questions"
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of following a recognized documentation standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not mention any checks of code usability within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: No maintained feedback channel for users is mentioned in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

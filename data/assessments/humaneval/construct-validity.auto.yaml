@@ -1,0 +1,264 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: humaneval
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: b9453e8f1865df0a0057a1383767caa400acfbcf
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/humaneval/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2107.03374v2
+      ref: v2
+      sha256: 3cf5545b26f5b1321a7c7fd42dedd1be64ad3cda5c6891b80d412c0edbc5a290
+      chars: 162609
+    - kind: repo
+      url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+      ref: b9453e8f1865df0a0057a1383767caa400acfbcf
+      sha256: 63d3dc590c8b85889d95120d1576b847c6cbe8efa1ed35bb2fd287fce209927f
+      chars: 7039
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The paper provides an operational definition of intent misalignment based on observable outputs (outputting B when A is preferred) and specific capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 27, chunk 1
+        quote: We say a model is intent misaligned if it outputs B, in some case where the user would prefer it outputs A
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the paper discusses various aspects of the phenomenon, it does not explicitly state the scope and name a specific excluded aspect of the phenomenon being measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The paper does not name sub-components of the phenomenon that are scored separately, nor does it explicitly state that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify any secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no evidence in the provided text that the effect of output-format requirements on model scores was measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses unit tests to evaluate functional correctness rather than automated parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 6, chunk 3
+        quote: the percentage of problems where the model finds a correct solution (called the “strict accuracy”)
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts mention the creation of a dataset of 164 original problems, but they do not document a sampling strategy used to ensure these are representative of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: While the paper mentions creating original problems with unit tests, there is no documentation stating that every item passed a specific quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: The excerpts describe a subset of problems with 'subtle bugs' for alignment evaluation, but they do not report results for these permuted/perturbed items separately from the main score in a way that satisfies the rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that the HumanEval dataset was created by the authors rather than adapted from a previous one.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 2
+        quote: Next, we describe the dataset of hand-written problems, called “HumanEval,” which we created in order to benchmark our models.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark was created from scratch and did not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 2
+        quote: Next, we describe the dataset of hand-written problems, called “HumanEval,” which we created in order to benchmark our models.
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark was created from scratch and did not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 2
+        quote: Next, we describe the dataset of hand-written problems, called “HumanEval,” which we created in order to benchmark our models.
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark was created from scratch and did not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 2
+        quote: Next, we describe the dataset of hand-written problems, called “HumanEval,” which we created in order to benchmark our models.
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any tests specifically designed to detect data contamination or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: While a 'held-out validation set' is mentioned, it refers to the 'Python GitHub code corpus' used for training/scaling, not a private or held-out split of the HumanEval benchmark items.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 4, chunk 4
+        quote: In Figure 4, we plot test loss on a held-out validation set
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check between the HumanEval source material and any named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is stated, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 0
+        quote: we create a dataset of 164 original programming problems
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not show a main results table where every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark evaluates correctness automatically through unit tests and does not use human raters for the primary scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 0
+        quote: evaluate the correctness of code samples automatically through unit tests
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: Every label comes from a deterministic key (unit tests), which is explicitly listed as a non-subjective condition.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 0
+        quote: evaluate the correctness of code samples automatically through unit tests
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While common failure modes are described, they are not counted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 9, chunk 2
+        quote: The most common failure modes we observe are when the docstring model leaves out an important detail
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not provide a table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The paper proposes specific directions to improve alignment and performance, such as curating the pre-training dataset to remove buggy code.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 27, chunk 3
+        quote: One starting point is to more carefully curate the pre-training dataset to remove buggy or insecure code.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark tasks are linked to real-world software interview questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 1
+        quote: some comparable to simple software interview questions
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts to link tasks and metrics to.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to the APPS benchmark, noting that HumanEval avoids a specific metric used by APPS.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 6, chunk 3
+        quote: In the paper that introduces APPS, the authors benchmark a few language models and report two metrics... We avoid this metric
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: The excerpts discuss limitations of the models (e.g., bias, alignment) but not design trade-offs of the benchmark concerning what the scores measure.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

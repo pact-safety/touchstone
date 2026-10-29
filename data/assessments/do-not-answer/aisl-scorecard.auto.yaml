@@ -1,0 +1,438 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: do-not-answer
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 460703484df354958a5e1cd7378a38fcb94a2f3e
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/do-not-answer/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.13387v2
+      ref: v2
+      sha256: da590ed3a2ff235d293e79d8140123d5bbb46a04421f9f7e7b245a8610aa258d
+      chars: 72696
+    - kind: repo
+      url: https://github.com/Libr-AI/do-not-answer/tree/460703484df354958a5e1cd7378a38fcb94a2f3e
+      ref: 460703484df354958a5e1cd7378a38fcb94a2f3e
+      sha256: f80987b66960beae4489b7e7514e2965ed7bfebe5baaa15cbaf5d146171b4814
+      chars: 25595
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines the target phenomenon as the safety capabilities of LLMs and specifies that evidence is based on whether models provide answers to prompts they are expected not to answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 1, chunk 2
+        quote: consist only of prompts to which we expect responsible language models to not provide answers
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation specifies the scope (English, single-turn, zero-shot) and explicitly excludes the sixth risk area from the taxonomy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 3, chunk 3
+        quote: we keep the first five risk areas while excluding the sixth risk area from our taxonomy
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: While the paper mentions a three-level taxonomy and risk areas, there is no evidence that every sub-component has its own reported score in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by a three-level risk taxonomy, and the paper reports the total item count (939 questions).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 12, chunk 0
+        quote: we assembled a dataset consisting of 939 questions
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation does not report per-category item counts or a stratified sampling plan; it only mentions generating 10-20 questions per harm type.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: While the dataset is 'curated and filtered', there is no description of a verification step's pass rate or specific criteria for each item.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: The documentation mentions 'boundary-case questions' in the analysis, but does not define a named subset with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark creates its own dataset via GPT-4 generation and does not reuse a prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark creates its own dataset via GPT-4 generation and does not reuse a prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: The item count is stated, but there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The results mentioned (e.g., in Table 4 or 5) do not show confidence intervals or standard errors for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: met
+    rationale: The paper states that GPT-4 uses the same guidelines as human annotation and refers to Table 3 for these guidelines.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 9, chunk 3
+        quote: use the same guidelines as for human annotation (Table 3)
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: There is no report of rater demographics or mitigation of demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: unmet
+    rationale: The labels (harmful/harmless or action categories) are subjective, but no per-item disagreement distribution or inter-annotator agreement statistic is reported beside the aggregate score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: unmet
+    rationale: The headline metrics (precision, recall, F1) are based on aggregate labels, and there is no evidence that they avoid single-point aggregates for subjective labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The paper analyzes response length, but does not break down failures by a named confound in a table or figure showing counts or rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper provides examples of mismatched cases and boundary cases, but does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The documentation does not provide a single statement linking the tasks, metrics, and the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares its approach to prior work (e.g., Ganguli et al., Ji et al.) and states it addresses the gap of lacking comprehensive datasets for evaluating safety capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 3, chunk 0
+        quote: Nonetheless, there is still a lack of comprehensive datasets for evaluating the safety capabilities of LLMs
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The paper provides a limitations statement regarding the exclusion of non-risky instructions and links the evaluation to the real-world capability of identifying dangerous capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 12, chunk 0
+        quote: Excluding non-risky instructions limits the identification of over-sensitive LLMs
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities nor provide control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap measurement or mitigation steps are described as no related phenomena were identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: While a specific output format is mentioned for GPT-4, there are no results comparing different formats or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no report of a prompt-perturbation experiment with a variance or spread measure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The evaluation uses a model-based classifier or GPT-4 to categorize responses into indices, which is a form of scoring that does not rely on a systematic parser of free-form output against reference labels in the way described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or provide training cutoffs and release dates for all evaluated models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (a curated dataset of prompts) and local/API scoring without a mutable external environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of stateless model calls to generate responses to a set of prompts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The evaluation does not use multiple-choice questions; it uses open-ended prompts and categorizes the generated responses."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name specific domain experts or user groups consulted to define the evaluation scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: There is no mention of domain experts reviewing the content for accuracy, nor is there a stated sample size for such a review.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The documentation explicitly states that the evaluation focused on a single setting (zero-shot) and left other settings for future work.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not report results as a separate slice for a named stress condition or shift with an item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is presented as a general resource for the research community to evaluate LLMs, not for a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 1, chunk 2
+        quote: This dataset is a vital resource for the research community, contributing towards the safe development and deployment of LLMs.
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is presented as a general resource for the research community to evaluate LLMs, not for a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 1, chunk 2
+        quote: This dataset is a vital resource for the research community, contributing towards the safe development and deployment of LLMs.
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is presented as a general resource for the research community to evaluate LLMs, not for a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 1, chunk 2
+        quote: This dataset is a vital resource for the research community, contributing towards the safe development and deployment of LLMs.
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The provided excerpts do not list sampling parameters, library versions, hardware models, or OS/container images.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of a published reproduction by an independent third party on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: While the docs mention human annotators agreeing on labels, they do not describe a correction channel like a changelog or errata recording at least one fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs mention a 'potentially biased risky question distribution' but do not state the direction of bias, an impact estimate, or which conclusions remain valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 5, chunk 2
+        quote: Collecting this dataset facilitates accurate and high-quality response evaluation, at the cost of potentially biased risky question distribution.
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark reports human evaluation results as a baseline for comparing automatic evaluation methods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 7, chunk 3
+        quote: three annotators evaluated the harmfulness of the six models
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: The excerpts do not report the score of any trivial or minimal baseline (e.g., random selection).
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: met
+    rationale: The documentation reports that GPT-4 exhibits a moderate correlation with human annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 9, chunk 3
+        quote: It exhibits a moderate correlation with human annotators in diverse settings.
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: met
+    rationale: The model rater (GPT-4) is provided with a fixed rubric and specific guidelines for evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 9, chunk 3
+        quote: use the same guidelines as for human annotation (Table 3)
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: unmet
+    rationale: There is no report of agreement across repeated rating runs on the same inputs for the model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: While the docs mention that GPT-4 has limitations in identifying harmful responses, no specific rater bias is measured with a number and mitigated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: Three annotators labeled the harmfulness and action categories independently, and they reached a final label through consensus.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 7, chunk 3
+        quote: three annotators evaluated the harmfulness of the six models and identified refined action categories independently.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: met
+    rationale: The dataset consists of prompts to which the authors expect responsible models to not provide answers (intentionally unsolvable/risky).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 1, chunk 2
+        quote: consist only of prompts to which we expect responsible language models to not provide answers.
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The authors manually labeled all collected responses to define safe and responsible answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 12, chunk 0
+        quote: We define the criteria of what is a safe and responsible answer to a risky question, and manually labeled all collected responses accordingly.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences for the scorer or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify the scoring outcome for partial answers, off-format answers, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: met
+    rationale: The model rater is forced to return the class index in a specific format, which is a deterministic parsing method.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 9, chunk 4
+        quote: "we force the model to return the corresponding class index in the following format:   <answer>index</answer>"
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: unmet
+    rationale: There is no report of parser accuracy against a set of manually verified outputs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: No results are reported for null-agent runs or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

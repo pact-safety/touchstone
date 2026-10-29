@@ -1,0 +1,132 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: ailuminate
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/ailuminate/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.05731v2
+      ref: v2
+      sha256: 193b98f48e60a55f41c06180ed202982fab6fdd44c546d07a92eeb6357da1433
+      chars: 129165
+    - kind: repo
+      url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      ref: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      sha256: 92e9e4155001884b8cbaa3eb316cf30de8124aacacc96e638d4250619a3fd7d6
+      chars: 23836
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain reported scores, a leaderboard, or a saturation analysis to demonstrate headroom from the evaluation ceiling.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark employs a private held-out test set to resist overfitting and contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 14, chunk 1
+        quote: it remains confidential to prevent or at least resist overfitting
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 1
+        quote: 12,000 Private Prompts for benchmarking
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark reports a balanced distribution of prompts across its hazard categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 14, chunk 1
+        quote: Both contain 1,000 prompts per hazard category.
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The benchmark documentation identifies several quality issues, such as 'Low interrater reliability of ground truth data' and 'evaluator uncertainty' that produces a 'wider-than-expected error band', and does not provide a report of a low error rate.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 37, chunk 0
+        quote: Low interrater reliability of ground truth data used to tune the evaluator model
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark defines its purpose as evaluating general-purpose chatbots to ensure they provide helpful responses while maintaining boundaries around hazardous topics, a current and relevant capability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 7, chunk 1
+        quote: The evaluation framework addresses AI systems designed to provide helpful responses while maintaining boundaries around hazardous topics.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The benchmark does not explicitly state its simplifying assumptions, and the provided excerpts do not contain a list of such assumptions to be validated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is a new release (v1.0) and there is no evidence or cited source indicating that its labels or task meanings have shifted or become unrepresentative since creation.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:AILuminate Naming and Versioning.md, chunk 4
+        quote: Version 1.0.0 defines the public release.
+    by: model
+    quotes_verified: true
+  r1:
+    value: met
+    rationale: The benchmark uses an explicit version identifier 'v1.0' in its name and has a detailed versioning policy for recording changes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 16, chunk 1
+        quote: AIL UMINATE   v1.0 uses an automatic evaluation mechanism
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no stated plan for archiving artifacts at end of life, nor evidence that they are already in a persistent archive.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides a contact form for access and is actively maintained, as evidenced by the 2025 date in the naming documentation.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 4
+        quote: please complete this form](https://mlcommons.org/ailuminate/submit-a-sut/
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

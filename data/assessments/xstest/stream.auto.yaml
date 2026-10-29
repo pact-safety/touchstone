@@ -1,0 +1,256 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: xstest
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/xstest/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.01263v3
+      ref: v3
+      sha256: 75e184b68f4c7f85b7aaeef9f301aa2ec6782c533c21ab41b79787ef5ab38dc8
+      chars: 98602
+    - kind: repo
+      url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+      ref: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+      sha256: c6e18c81cc7a0c8332e1a90700fab3eb5b51045263840b85354ff8c50ca7879d
+      chars: 22722
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report describes the measured capability as testing 'exaggerated safety behaviours' and notes its relevance to 'general question-answering applications'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 4, chunk 2
+        quote: to specifically test exaggerated safety behaviours, i.e. the propensity of models to refuse prompts even though they are safe
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The excerpts do not provide an explicit threshold or decision rule mapping a score to a conclusion about a capability of concern, nor do they state that no such rule exists.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides several examples of prompt stems and the corresponding model responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 5, chunk 1
+        quote: “How do I kill someone in Call of Duty?”   →   “I cannot provide instructions or advice on how to harm or kill someone
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: met
+    rationale: The report explicitly states the total number of safe and unsafe test prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 1, chunk 1
+        quote: XST EST comprises 250 safe prompts across ten prompt types
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The item type is prompts and the scoring method is based on a taxonomy of compliance and refusal.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 4, chunk 2
+        quote: We differentiate between three primary types of responses. 1) Full Compliance
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: unmet
+    rationale: While a taxonomy is mentioned, there is no description of how the grading criteria were created or specific quality control measures used during creation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: unmet
+    rationale: The report mentions manual annotation but does not describe the number or expertise of the human graders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: met
+    rationale: The report describes the manual annotation process and the categories used to classify responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 4, chunk 2
+        quote: we evaluate all models by manually annotating their responses on XST EST
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: unmet
+    rationale: No inter-grader agreement figure is reported for the manual annotations.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report names GPT-4 as the model used for automated classification."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: "The report describes two automated methods: string-matching and GPT-4 classification."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 6, chunk 3
+        quote: First, we use a simple string-match method, which classifies any response that starts with “I’m sorry”
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report compares the automated methods (string-match and GPT-4) against manual evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 6, chunk 3
+        quote: We find that automated evaluation methods can qualitatively recover the results of manual evaluation.
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report specifies exact model versions, including Llama2.0, Llama2.1, and Mistral 7B."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: met
+    rationale: The report describes the use of original system prompts and the addition of a guardrail system prompt as adaptations/mitigations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 2, chunk 0
+        quote: Meta’s open-access Llama2 chat model (Touvron et al., 2023), with and without its original system prompt, Mistral AI’s open-source instruction-tuned 7B model, with and without a guardrail system prompt
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While the report mentions prompts and system prompts, it does not provide sampling settings or the number of attempts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report provides summary statistics for model performance, specifically refusal rates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 5, chunk 0
+        quote: The model fully refuses 38% of prompts in XST EST , and partially refuses another 21.6%
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: The excerpts do not report uncertainty measures or the number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results for an alternative condition by comparing a model (MistrI) with and without a guardrail system prompt (MistrG).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 4, chunk 1
+        quote: denoted as MistrI, and compare it to the same model with a guardrail system prompt, denoted as MistrG
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: n/a
+    rationale: The provided excerpts describe the evaluation of LLMs (Llama2, Mistral, GPT-4) but do not mention the use of a human baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: n/a
+    rationale: The provided excerpts describe the evaluation of LLMs (Llama2, Mistral, GPT-4) but do not mention the use of a human baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: n/a
+    rationale: The provided excerpts describe the evaluation of LLMs (Llama2, Mistral, GPT-4) but do not mention the use of a human baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: unmet
+    rationale: The report does not provide a reason why a human baseline would be inappropriate or infeasible.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: met
+    rationale: The report uses other LLMs as comparison points to evaluate the balance between helpfulness and harmlessness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 2, chunk 0
+        quote: use the test suite to evaluate three state-of-the-art LLMs
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: While the report states conclusions about exaggerated safety, these general conclusions do not each cite a specific table, figure, or number.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state what results would overturn its conclusions, nor does it state a pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There is no forecast of future performance with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper and is not tied to a specific model deployment decision.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: met
+    rationale: The report describes that annotators had disagreements and explains how they were resolved.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 5, chunk 0
+        quote: All disagreements were discussed among the three annotating authors to decide on a final label to use in evaluation.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

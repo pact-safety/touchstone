@@ -1,0 +1,458 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: strongreject
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/strongreject/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.10260v2
+      ref: v2
+      sha256: 70386c5b20687d7074ffd81398a20532f8ef5e166a1d8cd89c38b1580ccb37a7
+      chars: 88851
+    - kind: repo
+      url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      ref: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      sha256: 8a181dda99fd360577e5dd1bf3c8c175dabaca13aa484afd9a04c180553f534e
+      chars: 7554
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines the target phenomenon as the extent to which responses provide useful information related to a forbidden prompt, specifying that a full score requires specific information that fully answers the prompt.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: The StrongREJECT automated evaluator scores responses based on the extent to which they provide useful information related to the forbidden prompt.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The scope is limited to LLMs, and the documentation explicitly states that multimodal models are excluded/unclear.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 10, chunk 1
+        quote: First, we limit our scope to LLMs, so it is unclear whether StrongREJECT would be an appropriate benchmark for multimodal models.
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper mentions dimensions of 'willingness and capabilities', but does not provide independent reported scores for these facets in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by six categories of harmful behavior, and the total item count (313) is reported.
+    evidence:
+      - source: repo
+        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 1
+        quote: the full dataset of 313 questions
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: While categories are listed, the documentation does not report the specific item counts per category.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The authors describe a quality filtering pipeline for existing datasets that includes category selection, deduplication, and non-refusal checks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 18, chunk 1
+        quote: To address the issues with previous forbidden prompt databases, we created a robust pipeline to curate a high-quality set of forbidden prompts.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: unmet
+    rationale: The paper does not provide a table or figure comparing the same model on the original datasets versus the adapted StrongREJECT benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: met
+    rationale: The authors list modifications to reused data, such as removing specific categories (unlawful practice, government, etc.) because they were almost always answered by models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 18, chunk 1
+        quote: We first removed forbidden prompts categorized by the database’s authors as unlawful practice, government or politics, and lobbying.
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: met
+    rationale: The item count is stated as 313, and a confidence interval calculation is provided to justify the sample size.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 10, chunk 1
+        quote: the size of our dataset (313 forbidden prompts) balances cost and runtime against comprehensiveness
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results (e.g., Table 1) are not provided in the excerpts, and there is no evidence that every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: met
+    rationale: The documentation provides the guidelines and instructions given to the human evaluators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 24, chunk 0
+        quote: We provide below the guidelines given to the human evaluators.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: There is no report of rater demographics or mitigation of demographic bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: unmet
+    rationale: The ground truth is based on a 1-5 Likert scale (subjective), but no per-item disagreement distribution or inter-annotator agreement statistic is reported beside the aggregate score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: met
+    rationale: The headline metric for human ground truth is the median label across five labelers, not a simple mean.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 6, chunk 0
+        quote: we took the median label across the five human labelers for each forbidden prompt-response pair as the ground truth.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The documentation does not break down failures or scores by a named confound in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The documentation does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement naming the tasks, each metric, and the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to several prior automated evaluators (e.g., HarmBench, PICT), and it is stated that existing methods significantly overstate jailbreak effectiveness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 3
+        quote: Notably, we find that existing automated evaluation methods significantly overstate jailbreak effectiveness compared to human judgments and the StrongREJECT evaluator.
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The authors provide a limitations statement (scope to LLMs, dataset size) and link the scores to the real-world capability of an attacker to gain harmful information.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 10, chunk 1
+        quote: Limitations. We note three limitations with our current work. First, we limit our scope to LLMs
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablations for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation identifies 'willingness' and 'capabilities' as dimensions that could be measured by the same tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: "the StrongREJECT evaluator measures both of these dimensions: willingness and capabilities."
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: While the overlap between willingness and capabilities is discussed, there is no quantification of the overlap (e.g., correlation) or described mitigation steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reported results comparing different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The evaluator uses a rubric-based or fine-tuned model to score responses on a scale, rather than parsing free-form output for specific formats.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 21, chunk 1
+        quote: Labels were generated for each response using the StrongREJECT rubric-based evaluator based on GPT-4 Turbo (adjusted and rounded to provide a 5-point Likert scale scores from [1-5]).
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or training cutoffs for the evaluated models (GPT-4o, GPT-3.5 Turbo, Llama-3.1 70B Instruct).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (forbidden prompts) and local/API scoring without a mutable external environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: StrongREJECT consists of a dataset of forbidden prompts and an automated evaluation method.
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of stateless model calls to the victim models and the evaluator.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 9, chunk 3
+        quote: The y-axis represents GPT-4o’s zero-shot score on a randomly-selected 171-question subset of MMLU tasks.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark uses open-ended responses scored by an evaluator, not multiple-choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: The StrongREJECT automated evaluator scores responses based on the extent to which they provide useful information related to the forbidden prompt.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: There is no mention of domain experts reviewing the content for accuracy, nor is there a stated sample size for such a review.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: While the paper mentions exploring few-shot prompting for the evaluator, it does not report results under more than one prompting setting for the benchmarked models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not show results reported as a separate slice for a named stress condition or shift with an associated item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general jailbreak robustness of LLMs rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general jailbreak robustness of LLMs rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general jailbreak robustness of LLMs rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The provided excerpts do not list sampling parameters, library versions, hardware models, or OS/container images.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The documentation does not describe a correction channel (errata, changelog, or versioned release) that records at least one fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: While the authors mention risks and potential biases of other evaluators, they do not name specific unavoidable flaws in StrongREJECT and provide the required bias direction, impact estimate, and validity guidance for each.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark reports a high correlation between its scores and human labels, serving as the human baseline for the task.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 7, chunk 2
+        quote: Column 4 of Table 1 shows a high Spearman correlation between jailbreak rankings according to human labels and StrongREJECT evaluator scores
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: The benchmark reports the performance of a trivial baseline, specifically 'string matching for non-refusal'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 6, chunk 0
+        quote: String matching for non-refusal. A simple search for matching strings indicating the model refused to respond to the forbidden prompt
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: met
+    rationale: The documentation reports a high Spearman correlation between the StrongREJECT evaluators and human judgments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 7, chunk 2
+        quote: Column 4 of Table 1 shows a high Spearman correlation between jailbreak rankings according to human labels and StrongREJECT evaluator scores
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: met
+    rationale: The benchmark uses a rubric-based evaluator, which is a named defense against reward hacking/adversarial inputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 4, chunk 3
+        quote: a rubric-based evaluator that scores victim model responses according to a rubric
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: unmet
+    rationale: There is no report of agreement across repeated rating runs on the same inputs for the model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: While the paper mentions the evaluator is 'less biased' than others, it does not measure a specific named rater bias with a number and provide a mitigation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The benchmark used five human labelers and took the median label as ground truth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 6, chunk 0
+        quote: we took the median label across the five human labelers for each forbidden prompt-response pair as the ground truth
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The documentation does not explicitly classify every task as solvable or intentionally unsolvable with expected behaviors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The prompts are described as having factually verifiable answers that can be checked via the internet.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 4, chunk 1
+        quote: the prompts we selected had factually verifiable answers with easily accessible information
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list the scorer's accepted equivalences or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: met
+    rationale: The human evaluation guidelines (used to train/verify the rater) explicitly define scoring outcomes for refusals and partial answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 25, chunk 0
+        quote: 1 represents an answer that either refuses or fails to assist in the query
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The scoring is performed by an LLM evaluator (rubric-based or fine-tuned) producing scores, not by a parser of free-form output into a structured solution.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The scoring is performed by an LLM evaluator, not a parser of free-form output.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,322 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: strongreject
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/strongreject/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.10260v2
+      ref: v2
+      sha256: 70386c5b20687d7074ffd81398a20532f8ef5e166a1d8cd89c38b1580ccb37a7
+      chars: 88851
+    - kind: repo
+      url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      ref: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      sha256: 8a181dda99fd360577e5dd1bf3c8c175dabaca13aa484afd9a04c180553f534e
+      chars: 7554
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark names six risk categories and states that the evaluator measures the extent to which responses provide useful information.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: The StrongREJECT automated evaluator scores responses based on the extent to which they provide useful information related to the forbidden prompt.
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark documents excluded risks (child abuse, etc.) and a deployment assumption (limited to LLMs).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 17, chunk 2
+        quote: We have, therefore, avoided questions that include details of child abuse, sexual abuse, animal abuse, torture, and murder.
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 10, chunk 1
+        quote: First, we limit our scope to LLMs, so it is unclear whether StrongREJECT would be an appropriate benchmark for multimodal models.
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: unmet
+    rationale: The excerpts do not contain a statement that a good score does not guarantee safety against untested or emergent risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark compares its evaluator to other automated evaluation methods and states that existing methods overstate jailbreak effectiveness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 3
+        quote: Notably, we find that existing automated evaluation methods significantly overstate jailbreak effectiveness compared to human judgments and the StrongREJECT evaluator.
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: met
+    rationale: The benchmark describes using LLM-generated prompts to create its dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 4, chunk 0
+        quote: Our dataset of forbidden prompts consists of prompts we wrote manually, LLM-generated prompts using GPT-4 and pplx-70b-online
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: While a website is mentioned, there is no documented process for how outside contributions are integrated and credited.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The excerpts do not describe a process or cadence for how and when new risks are incorporated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The excerpts do not mention multi-agent or interactive evaluation settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: The benchmark does not discuss or test distribution shift as a safety concern.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: The benchmark does not document annotator selection, disagreement patterns, or demographics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: There is no mention of contamination detection or the temporal validity/retirement date of the evaluation set.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results using 'non-refusal rates'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 9, chunk 3
+        quote: The x-axis represents non-refusal rates
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark identifies the size of the dataset as a factor that balances cost/runtime against comprehensiveness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 10, chunk 1
+        quote: the size of our dataset (313 forbidden prompts) balances cost and runtime against comprehensiveness
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: The severity scale or harm weighting does not cite a source for its levels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not state if severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: met
+    rationale: The benchmark reports 95% confidence intervals for its agreement measures.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 6, chunk 3
+        quote: Error bars show 95% confidence intervals
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: unmet
+    rationale: While the benchmark compares automated evaluators to human judges, it does not report a specific inter-rater reliability statistic like Cohen's kappa.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: "The benchmark does not report score variance across all three required dimensions: random seeds, prompt rephrasings, and evaluator versions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin when extrapolating to deployment risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: met
+    rationale: The benchmark specifies several harm categories (e.g., Illegal goods and services, Violence) and provides operational definitions for what each category entails.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 18, chunk 0
+        quote: "Illegal goods and services : Illegal drug use and manufacture, weapon use and manufacture, counterfeiting, and underage substance abuse."
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark states that the categories of harmful behavior are based on the usage policies of major model providers."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The provided excerpts do not name any specific value choices in the harm definitions as being contested.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark explains that its proxy (the evaluator score) measures the extent to which a response provides useful information to forbidden prompts, relating this to the real-world concern of misuse potential.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 1, chunk 1
+        quote: its automated evaluator measures the extent to which a response gives useful information to forbidden prompts
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: The excerpts do not record the interface, access date, inference parameters, and system prompt for all reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing and reporting random seeds for data sampling, model inference, and evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: While a rubric and judge model are mentioned, they do not carry specific versions, dates, or commit hashes in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: The benchmark provides a public code repository and documentation for replication.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 1, chunk 1
+        quote: We release the StrongREJECT code and data at https://strong-reject.readthedocs.io/
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The benchmark states prompts are from the authors, existing benchmarks, and OpenAI's system card, and it reports validation by verifying they are distinct and refused by latest models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 4, chunk 1
+        quote: We verified that all of the forbidden prompts we selected for our dataset were distinct, refused by the latest models from the major providers above
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark argues that the prompts reflect harmful material a lay person could find on the web and states the limitation that the dataset size is not a stand-alone definitive measure.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 10, chunk 2
+        quote: StrongREJECT’s 313-prompt dataset is not large enough to be a stand-alone, definitive measure of model robustness
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: n/a
+    rationale: The benchmark focuses on single-turn jailbreak effectiveness (forbidden prompts), and the excerpts do not indicate that the targeted risks emerge only over extended interaction.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark uses publicly available datasets and author-generated prompts, not in-the-wild data constrained by privacy or curation opacity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 14, chunk 2
+        quote: We sourced questions from publicly available datasets and refer users to the original datasets’ licenses in our codebase.
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: The excerpts do not describe a stated update cycle tied to changes in risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that members of affected communities were consulted on the scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark specifies it evaluates the 'victim model' responses to prompts, effectively testing the model's safety fine-tuning.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 1, chunk 1
+        quote: jailbreaks bypassing a victim model’s safety fine-tuning tend to reduce its capabilities
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

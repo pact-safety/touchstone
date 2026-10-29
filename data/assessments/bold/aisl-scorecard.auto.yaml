@@ -1,0 +1,446 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bold
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bold/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2101.11718v1
+      ref: v1
+      sha256: be88679e16de72d41bbb3a6018df6edfd9ac84074663d8ecee3beca27cfc4487
+      chars: 90339
+    - kind: repo
+      url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      ref: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      sha256: 2678000f25d85f0362a62c15f354ad6954f52f71c22f55f80999b5ce8f3c9a28
+      chars: 24778
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The paper provides a precise definition of a biased language generation model based on the observable output of generating negative, unfair, prejudiced, or stereotypical text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 1, chunk 3
+        quote: Broadly, one can say a language generation model is biased if it disproportionately generates text that is often perceived as being negative, unfair, prejudiced, or stereotypical against an idea or a group of people with common attributes.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation defines the scope of demographic domains and explicitly names aspects (other groups, languages, cultural contexts) that are beyond the scope.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: There are various other groups, languages, types of social biases and cultural contexts that are beyond the scope of BOLD
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: While the paper names multiple facets (sentiment, toxicity, gender polarity), it does not provide a table or figure where every single sub-component has its own reported score for the models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: unmet
+    rationale: The docs name the categories (domains), but they do not report item counts along a difficulty or variation dimension.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation does not report per-category item counts or a stratified sampling plan over the task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: There is no documented verification step (with pass rates or criteria) that every item passed to ensure it tests the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: The excerpts do not mention a named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark uses prompts extracted from Wikipedia, but does not reuse a prior dataset or benchmark for evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are mentioned in the README, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The results described do not show confidence intervals or standard errors for every score in a main results table.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: The paper mentions using crowd workers and majority agreement, but does not publish or reproduce the actual rater instructions or training materials.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a described mitigation for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: met
+    rationale: The paper reports a Spearman's correlation coefficient and classification metrics (accuracy, precision, recall, f1) to compare automatic metrics against human labels, which are subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 4
+        quote: "To compare automatic and human annotated metrics, we compute the following between labels computed with automatic metrics and labels from human annotations: (1) Spearman’s ρ correlation coefficient, and (2) accuracy, precision, recall and f1-score"
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: met
+    rationale: The headline metrics for validation are not simple means; they include f1-scores and correlation coefficients based on per-class analysis.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 4
+        quote: we compute the second set of metrics on a per-class basis and use the average of per-class scores weighted by the number of samples in each class.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The paper does not provide a table or figure breaking down failures by a named confound like prompt length or language complexity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper provides examples of failures in Table 7, but does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement that names the tasks, each metric, and the construct from cv.01 they measure with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares BOLD to StereoSet and states that BOLD's metrics directly measure social biases in generated texts rather than the probability of choosing a stereotypical text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 4
+        quote: Instead of measuring the probability that an LM chooses a stereotypical text over an unbiased text, our metrics directly measure social biases in the generated texts.
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The paper provides a limitations statement regarding demographic domains and claims that BOLD provides an indication of bias in specific categories, though not a complete indication of fairness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: benchmarking on BOLD provides an indication of whether a model is biased in the categories considered in BOLD, however, it is not an indication that a model is completely fair.
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or report control conditions/ablations for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The paper names related phenomena and datasets that measure similar biases, such as the Wino-gender schema and StereoSet.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 3
+        quote: Concurrent with our work, Nadeem et al . [25] presented a dataset, StereoSet, with 17,000 sentences that measure an LM’s preference for texts expressing stereotypes.
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: There is no quantification of the overlap with the related phenomena mentioned in iv.02, nor are mitigation steps described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The documentation does not report results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The evaluation uses automated metrics (like VADER and a BERT-based classifier) to score generated text, but the scoring is based on the content of the generated text rather than parsing a specific free-form response format into a label.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not provide a contamination check or the training-data cutoff for all evaluated models (BERT, GPT-2, CTRL).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (prompts extracted from Wikipedia) and local scoring metrics, involving no external or mutable environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The benchmark consists of independent text generation calls based on prompts, which are stateless model calls.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The evaluation uses open-ended language generation rather than multiple-choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: We presented a novel dataset BOLD and a set of metrics to evaluate fairness in open-ended language generation.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While crowd workers were used for validation, the docs do not name reviewers with specific domain credentials nor state that all items or a specific sample size of the content was reviewed for accuracy and relevance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for the CTRL model using three different control codes (WIKI, THT, OPN), which represent different elicitation settings based on training data subsets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 2
+        quote: |-
+          In this study, we use CTRL LM with three different control codes:
+          (1)   CTRL-WIKI   uses the Wikipedia control code
+          (2)   CTRL-THT   uses the Thought control code
+          (3)   CTRL-OPN   uses the Opinion control code
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not report results as a separate slice for a named stress condition or shift with an associated item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general bias in open-ended language generation rather than claiming to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 0
+        quote: we propose to examine bias in open-ended language generation by triggering or prompting language models (LMs) with seed words matching the distribution of human-written text.
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general bias in open-ended language generation rather than claiming to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 0
+        quote: we propose to examine bias in open-ended language generation by triggering or prompting language models (LMs) with seed words matching the distribution of human-written text.
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general bias in open-ended language generation rather than claiming to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 0
+        quote: we propose to examine bias in open-ended language generation by triggering or prompting language models (LMs) with seed words matching the distribution of human-written text.
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While sampling hyperparameters are provided, there is no mention of library versions (lockfile/pinned requirements), hardware model, or OS/container image.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 12, chunk 2
+        quote: set max sentence length to   15 , temperature to   0 . 7 , burn-in to   200   iterations, and max iteration to   500
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The documentation mentions a GitHub issue tracker for bug reports, but the decision rule explicitly states an issue tracker alone does not count, and no versioned release or changelog recording a fix is provided.
+    evidence:
+      - source: repo
+        url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+        locator: amazon-science/bold@3ad652c773f5:CONTRIBUTING.md, chunk 0
+        quote: We welcome you to use the GitHub issue tracker to report bugs or suggest features.
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs identify flaws (e.g., automatic metrics missing toxic text or annotator bias), but they do not provide a specific direction of bias for every flaw, an impact estimate, and guidance on which conclusions remain valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 6
+        quote: there is a higher chance that the automatic metric will miss labeling toxic text as toxic
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark reports a human baseline by gathering crowd-worker ratings to validate automatic metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 1
+        quote: These metrics are validated to agree with humans by gathering crowd-worker ratings along each bias metric using the Amazon Mechanical Turk (AMT) platform.
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: No scores for trivial baselines (like random selection or zero-shot naive models) are reported in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: met
+    rationale: The documentation reports that automatic metrics for sentiment, toxicity, and gender polarity positively correlate with human annotated labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 1
+        quote: we find that all automatic metrics positively correlate with human annotated labels
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark uses a fixed rubric/list of tokens for the unigram matching gender polarity metric."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The metrics described (VADER, BERT-based toxicity, unigram matching) are used as raters, but there is no report of repeated runs on identical inputs to verify consistency.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: While the paper mentions that unigram matching is reliant on a manually chosen list, it does not measure a specific rater bias with a number and provide a mitigation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: Each text in the AMT experiments was shown to at least three crowd workers, and labels were accepted only if there was a majority agreement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 3
+        quote: Each text in our AMT experiments is shown to at least three crowd workers and only those labels are accepted that have a majority agreement on the chosen label.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The benchmark evaluates open-ended generation for bias rather than specific solvable/unsolvable tasks with defined expected behaviors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: unmet
+    rationale: The benchmark uses automated metrics and human labels to measure bias in open-ended text, not verified ground-truth solutions for solvable tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: There is no enumeration of valid solution forms or acceptance criteria for equivalent correct answers, as the task is open-ended generation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, refusals, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The scoring involves automated metrics (VADER, BERT, token counting) rather than parsing free-form output for a specific answer string.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The scoring involves automated metrics rather than parsing free-form output for a specific answer string.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null-agent runs or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,484 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentharm
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentharm/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.09024v3
+      ref: v3
+      sha256: 069d9f1f129c89ecea4342857223e99992754add9a15fc5aabdf03388d011adc
+      chars: 104704
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark measures the robustness of LLM agents against misuse by testing their ability to pursue malicious tasks through multi-turn tool calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 3
+        quote: our benchmark measures basic agentic capabilities and not advanced autonomous capabilities
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists the number of harm categories and provides examples of malicious behaviors like drug trafficking.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 3
+        quote: Number of harm categories   11
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The benchmark explicitly states that the tasks are relatively easy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 1
+        quote: Tasks are relatively easy and do not themselves constitute end-to-end capabilities of concern.
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark uses an interactive environment with tool calls and provides execution logs as examples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 34, chunk 2
+        quote: "Figure 22: Execution logs of Claude Sonnet 3.5 behavior for the “Paid Fake Prescription” task."
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: Grading is based on manually written rubrics and narrow LLM judges to check specific parts of the response.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 2
+        quote: the harm score is computed according to a grading rubric that consists of multiple manually written conditions
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The benchmark states it does not cover multi-turn attacks where the user provides follow-up queries.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 3
+        quote: "We do not consider multi-turn attacks: the user sends only the first (potentially, adversarially chosen) prompt"
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark is meant to inform the misuse potential of LLM agents and measures the robustness of refusal behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 1
+        quote: our dataset is not designed to in any way comment on what tasks should and should not be refused, but instead to test robustness of intended refusal behavior.
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict specific downstream outcomes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for three models of different capabilities (GPT-4o, Claude 3.5 Sonnet, and Mistral Large 2) are reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 9, chunk 3
+        quote: GPT-4o   Template   72.7% ... Claude 3.5 Sonnet   Template   68.7% ... Mistral Large 2   Template   80.5%
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: A benign variant of the dataset is used as a baseline for model capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: We also include a benign variant of the dataset as a baseline for model capabilities.
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation states that all questions were written by hand and reviewed by humans.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: Instead, we write all questions by hand and review every question with a separate human reviewer
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The item count is provided for the full set and the public/private subsets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 3
+        quote: Total number of behaviors   440 ... Size of the public test set   264 ... Size of the private test set   132
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark uses a private test set that has never been exposed to public LLM APIs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: AgentHarm is not contaminated , with 30% of the tasks withheld and never exposed to public LLM APIs.
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: met
+    rationale: The benchmark explicitly mentions the introduction of a canary string in the repository.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: Nonetheless, we introduce a canary string in our repository that helps to filter them out from training sets.
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation states the token cost, monetary cost, time to run, and the supported framework (Inspect).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 3
+        quote: A single run of an LLM agent on our public test set typically requires around 0.5-1.5M tokens
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation describes default settings but does not define a reference protocol for comparison or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: met
+    rationale: The benchmark provides a validation set separate from the public and private test sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 0
+        quote: "We split all behaviors on three categories: validation behaviors (10%), public test behaviors (60%), and private test behaviors (30%)"
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies temperature 0 and a token limit for its main evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: Unless otherwise specified, we use temperature 0 with up to 4096 generated output tokens.
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The paper provides verbatim prompt templates and examples of agent prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 36, chunk 2
+        quote: '"agent_prompt" : "Identify an unsecured database containing sensitive user information on a public website.'
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: met
+    rationale: The benchmark specifies a basic agentic setting using a simple while loop and custom tools.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: we consider a basic agentic setting, i.e., direct prompting with a simple while loop where the result of tool executions is fed into the models context.
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: unmet
+    rationale: The benchmark mentions using synthetic tools and a framework, but does not provide a container image, VM, or full OS/package specification for the environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: unmet
+    rationale: While it mentions a token limit for output, it does not define a stopping condition (like max steps) for the agentic loop itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: unmet
+    rationale: The benchmark mentions single attempts and best-of-n sampling, but does not specify the feedback given to the agent after an incorrect submission.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark specifies the use of a single attempt for main results and describes a best-of-n aggregation for other experiments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 7, chunk 1
+        quote: our main results consider the average success rate of that template given a single attempt.
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark provides the prompt for the semantic refusal judge and describes the rubric-based approach for harm scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 16, chunk 0
+        quote: "Table 5: The prompt for the semantic refusal judge."
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: unmet
+    rationale: The benchmark mentions manual verification of the judge, but does not report a numerical agreement score between the judge and humans.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The benchmark reports results under varied protocol settings, such as different sampling temperatures and prompting techniques (CoT, ReAct).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 8, chunk 2
+        quote: "We explore the effect of different prompting techniques: chain-of-thought, ReAct, and a refusal-inducing prompt."
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark is implemented in the Inspect framework.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 3
+        quote: thanks to the parallelized implementation of the Inspect framework.
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark uses a rubric of manually written conditions and provides an example of a grading function that extracts text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 29, chunk 1
+        quote: answer_text = extract_last_text_message(messages)
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There is no mention of version identifiers or a changelog for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: unmet
+    rationale: The benchmark uses synthetic tools, but there is no evidence that it runs model-generated code in a sandbox container or VM.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: The documentation does not show that the harness supports multiple providers via a configuration setting or open interface.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: met
+    rationale: The benchmark provides execution logs showing the full transcript and the resulting score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 9, chunk 3
+        quote: "Figure 4: Execution logs of Claude 3.5 Sonnet for the “Fake Documents” task."
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The provided excerpts do not show that the logs record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The benchmark states that all tasks were manually written and reviewed by separate human reviewers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: All tasks are manually written and reviewed by separate human reviewers.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: met
+    rationale: The benchmark explicitly tracks and reports refusal rates as a separate metric from the harm score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 19, chunk 0
+        quote: "Refusals : average refusals according to a semantic judge."
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: met
+    rationale: The benchmark uses a private test set to prevent contamination and a canary string to filter the dataset from training sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: we introduce a canary string in our repository that helps to filter them out from training sets.
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: met
+    rationale: The documentation states that every question was reviewed by a separate human reviewer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: we write all questions by hand and review every question with a separate human reviewer
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark publishes scores for multiple models (GPT-4o, Claude 3.5 Sonnet, etc.) and the protocol used."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports results broken down by harm category."
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: unmet
+    rationale: The excerpts mention 'Average Score' and 'Best-of-5 Score' in tables, but they do not precisely define the headline metric or the specific aggregation functions used across items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: met
+    rationale: The benchmark reports average scores with standard deviations (e.g., ± 0.7%) for several models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 9, chunk 3
+        quote: 70.7% ± 0.7%
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: There is no mention of a config file, schema, or report template for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: While the paper mentions a distribution of scores, it does not provide a downloadable file containing per-item scores for a reference run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: met
+    rationale: The benchmark reports the token count and monetary cost per run for GPT-4o and GPT-4o-mini.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 3
+        quote: costs around   $1 - $4   for GPT-4o and   $0 . 08 - $0 . 25   for GPT-4o-mini
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: met
+    rationale: The documentation states that Appendix D contains execution logs of agents, which serve as transcripts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 2
+        quote: Appendix D shows many examples of harmful and benign tasks, detailed and open-ended tasks, grading functions, tool implementations, and execution logs
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument by stating that tasks are designed based on the terms of use of major LLM providers to represent misuse potential.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: We have designed our tasks following the terms of use of major LLM providers, such as OpenAI and Anthropic.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims to provide a signal of real misuse potential but states it uses a predefined tool set and avoids real world interactions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: opting to use a predefined tool set and not include real world interactions
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark includes a benign variant of the dataset as a baseline for model capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: We also include a benign variant of the dataset as a baseline for model capabilities.
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The benchmark explicitly states that it measures basic agentic capabilities and not advanced autonomous capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 3
+        quote: our benchmark measures   basic   agentic capabilities and not advanced autonomous capabilities
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark includes a limitations section that notes the prompts are only in English.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 2
+        quote: "Limitations. We note several limitations of our work: • The prompts are only in English"
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

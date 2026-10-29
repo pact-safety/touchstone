@@ -1,0 +1,216 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: strongreject
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/strongreject/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.10260v2
+      ref: v2
+      sha256: 70386c5b20687d7074ffd81398a20532f8ef5e166a1d8cd89c38b1580ccb37a7
+      chars: 88851
+    - kind: repo
+      url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      ref: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      sha256: 8a181dda99fd360577e5dd1bf3c8c175dabaca13aa484afd9a04c180553f534e
+      chars: 7554
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: The number of test items (313) is stated, but the authors explicitly admit it is 'not large enough to be a stand-alone, definitive measure', failing to justify it as sufficient.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 10, chunk 2
+        quote: StrongREJECT’s 313-prompt dataset is not large enough to be a stand-alone, definitive measure of model robustness.
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: While confidence intervals are reported for correlation, there is no report of a statistical power figure or minimum detectable difference.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 6, chunk 3
+        quote: Error bars show 95% confidence intervals calculated using scipy.stats.bootstrap
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: The excerpts do not provide the full prompt template, sampling settings (temperature, max tokens), or harness version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: The authors describe a control experiment using an unaligned model (Dolphin) to isolate the effect of jailbreaks on capabilities versus willingness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 9, chunk 1
+        quote: To isolate the effect of jailbreaks on capabilities, we must either feed jailbroken forbidden prompts to an unaligned model
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no mention of canary strings, private test splits, or a contamination analysis to prevent test data from being in the training set.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: The authors report results from repeated runs (three sampled outputs) and varied conditions (different temperatures/models).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 15, chunk 3
+        quote: The model is still non-deterministic at τ = 0 , so we supply three sampled outputs.
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The authors report a manual inspection of full model responses, finding they were often vacuous or incoherent.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 2, chunk 1
+        quote: when we look at the full model responses from GPT-4, they do not contain any actionable information on explosives.
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The authors describe using human labelers from LabelBox and validate the automated evaluator's labels against these human judgments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 5, chunk 3
+        quote: We recruited five labelers from LabelBox to label responses from our four victim models
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: The excerpts do not show that the benchmark releases full model outputs per item for evaluators to read.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: There is no documented check for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: unmet
+    rationale: While the paper describes the dataset, it does not describe the review process for item creation or the versioning/maintenance plan.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The excerpts do not describe the model evaluation environment's input/output formats, tools, sandbox, or access restrictions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The authors state that the attacks used in the evaluation are not necessarily useful for other real-world tasks like indirect prompt injection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 14, chunk 0
+        quote: the attacks that we use are not necessarily useful for other tasks like indirect prompt injection of LLM-based applications
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: While the paper mentions a dataset of forbidden prompts, it does not describe the spread of the evaluation along a specific axis with counts or proportions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation under fixed conditions, nor do the authors explicitly state they reproduced their own headline numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: unmet
+    rationale: The provided excerpts do not indicate that the paper was published in a peer-reviewed venue; the citations refer to arXiv preprints.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The authors state that they release the StrongREJECT data at a specific URL.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 1, chunk 1
+        quote: We release the StrongREJECT code and data at https://strong-reject.readthedocs.io/
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: met
+    rationale: The authors release the code at a public URL and provide a Colab notebook for running the evaluator.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 1, chunk 1
+        quote: We release the StrongREJECT code and data at https://strong-reject.readthedocs.io/
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: met
+    rationale: The paper describes how the dataset is sourced, how the model is queried (e.g., via prompts), and how outputs are scored using a rubric or fine-tuned model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 1, chunk 1
+        quote: StrongREJECT’s dataset contains prompts that victim models must answer with specific, harmful information, while its automated evaluator measures the extent to which a response gives useful information to forbidden prompts.
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: While some hardware is mentioned (A6000 GPU), there is no pinned software environment (lockfile or container image) provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper provides the exact prompt used for identifying non-refusals."
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The benchmark uses public APIs (GPT-4o-mini) and open weights (Gemma 2B).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 5, chunk 1
+        quote: we can run and evaluate a dozen jailbreaks on our entire dataset in about 15 minutes from our local machine at a cost of less than $1 using GPT-4o-mini.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

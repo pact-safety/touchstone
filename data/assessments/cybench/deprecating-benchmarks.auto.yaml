@@ -1,0 +1,128 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: cybench
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/cybench/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2408.08926v4
+      ref: v4
+      sha256: e8378cc6db7ae7329d5d55b94fc7c3231f5107e86b06fafdb3ec71c3185321e2
+      chars: 426534
+    - kind: repo
+      url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+      ref: ca483c6443f17a20ba7d6bac3d274859a1721e51
+      sha256: c025fa51c98af6abac4210a27a2cf46d943d7bb969f4cf3bca9086b8e87d452e
+      chars: 52134
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark has a high difficulty ceiling, and current top models cannot solve the most challenging tasks that take human experts multiple hours.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 39, chunk 2
+        quote: there are limits to model capabilities that prevent agents from solving the more challenging tasks that take human experts multiple hours to solve
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark documents a contamination defense by using tasks released after model knowledge cutoff dates and newly written subtasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 9, chunk 0
+        quote: Nearly all successful runs were on tasks that were released after the knowledge cutoff date.
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark consists of CTF tasks where the goal is to find a flag; it does not use class-based labels that could be skewed for trivial exploitation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 2
+        quote: An open-source benchmark with 40 recent professional-level CTF tasks.
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The excerpts mention verifying that tasks are buildable and solvable via solution scripts and CI, but there is no cited audit or error analysis reporting a low annotation error rate for the labels/data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to evaluate cybersecurity capabilities and risks using tasks that serve as proxies for real-world skills, and no source argues this is irrelevant.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 0
+        quote: which serves to evaluate agent capabilities and risks on cybersecurity tasks.
+    by: model
+    quotes_verified: true
+  c6:
+    value: met
+    rationale: The benchmark explicitly states its simplifying assumptions (short time span, small codebases, not real-world) and notes that these are limitations of the CTF data source.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 39, chunk 2
+        quote: the tasks are intended to be solved in a short time span, involve small codebases, and are not real-world
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark uses recent competition data (2022-2024) and there is no evidence that the meaning of the tasks or labels has shifted since creation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 34, chunk 1
+        quote: are recent (all hosted and released publicly between 2022 and 2024)
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not show an explicit version identifier (like a DOI or release tag) displayed alongside the benchmark name in its main references.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving artifacts at the end of the benchmark's life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides a GitHub issue tracker for assistance and questions, and the project is active as evidenced by the ICLR 2025 publication date.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:docs/add_task.md, chunk 5
+        quote: If you need assistance or have questions, please open an issue on the GitHub repository.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

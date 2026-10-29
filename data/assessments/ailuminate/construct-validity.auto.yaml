@@ -1,0 +1,258 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: ailuminate
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/ailuminate/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.05731v2
+      ref: v2
+      sha256: 193b98f48e60a55f41c06180ed202982fab6fdd44c546d07a92eeb6357da1433
+      chars: 129165
+    - kind: repo
+      url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      ref: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      sha256: 92e9e4155001884b8cbaa3eb316cf30de8124aacacc96e638d4250619a3fd7d6
+      chars: 23836
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark defines the phenomenon as whether the model response violates policy, and operationalizes the score as the percentage of violating responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 13, chunk 1
+        quote: what   is   being   evaluation   is   whether   the   model   response   violates   policy
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 0
+        quote: Score   S   Percentage of violating responses
+    by: model
+    quotes_verified: true
+  def.2:
+    value: met
+    rationale: The scope is limited to hazards and personas in the assessment standard, and it explicitly excludes 'untestable' hazards like environmental impact.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 21, chunk 1
+        quote: It only tests the hazards and personas in the assessment standard. It ignores “untestable” hazards such as environmental impact
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The benchmark identifies hazard-specific grades, indicating that the phenomenon is broken down into sub-components (hazards) and measured separately.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 19, chunk 1
+        quote: Provide   hazard-specific grades   to enable reasoning about a SUT’s strengths and weaknesses.
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts mention using OLMo v1.0 as a control to demonstrate difficulty, but they do not identify secondary abilities required by the tasks or report control conditions/ablations for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no evidence that the effect of output-format requirements on model performance scores was measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark does not use automated parsing of free-form output; it explicitly states that requirements for SUTs to produce outputs in a specific expected format are not used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 38, chunk 0
+        quote: |-
+          97: SUT is required to produce outputs conforming to the evaluator's expected format (e.g., true/false, multiple choice selection, etc.)
+          N
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: While the text mentions that 'data sampling strategies' contributed to a configurable threshold for evaluators, it does not document a sampling strategy used to ensure task items are representative of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: The excerpts do not provide evidence that every item in the dataset passed a documented quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that prompts for the T2I pilot dataset were sourced from the Adversarial Nibbler dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 25, chunk 2
+        quote: sourced from the publicly available Adversarial Nibbler dataset [Quaye et al., 2024]
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: While the documentation mentions reusing the Adversarial Nibbler dataset, it does not report specific strengths and limitations of that prior work.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: There is no comparison of performance between the new benchmark and the original Adversarial Nibbler dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The documentation mentions that the reused dataset was 'manually filtered', but it does not explain how this modification improves construct validity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 25, chunk 2
+        quote: sourced from the publicly available Adversarial Nibbler dataset [Quaye et al., 2024], manually filtered for fit to the selected taxonomy.
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts do not describe a contamination test or report its results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The benchmark implements a policy of not providing the evaluation set to prevent contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 43, chunk 1
+        quote: Do not provide the evaluation set
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of source materials against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the text mentions calibrating prompt count to statistical analysis, it does not state the actual item count or provide a power calculation/confidence-interval width.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The excerpts mention displaying uncertainty estimates in the results, but no main results table is provided to verify that every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The benchmark uses human evaluators (as seen in the mitigation tables), but their demographics are not described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.4:
+    value: met
+    rationale: The benchmark uses a safety-model jury to generate labels (subjective) and reports measuring interrater reliability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 37, chunk 0
+        quote: Measure and iterate on methods until high interrater reliability is achieved
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While the benchmark mentions failure modes in a questionnaire, it does not provide a qualitative and quantitative analysis where failure modes are both described and counted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not contain a table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The benchmark reports an experiment with Brainstorm to improve evaluation quality in the suicide & self-harm category using expert psychiatric knowledge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 23, chunk 0
+        quote: The project employed expert psychiatric knowledge to annotate unacceptable SUT responses that the average human annotator may miss.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: unmet
+    rationale: The excerpts mention 'real-world' contexts and 'user information foraging tasks', but they do not name a specific real-world application and link it to the benchmark tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no statement linking the choice of tasks and metrics to a specific operational definition provided in a 'def.1' section.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark compares its prompt-length-density distributions with open datasets from ChatBotArena and WildGuardMix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 15, chunk 1
+        quote: "Figure 1 shows the prompt-length-density distributions compared with two open datasets: one from real users of ChatBotArena and another from WildGuardMix"
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The documentation identifies a failure mode where the benchmark does not measure a property of the SUT linked to the user task.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 43, chunk 1
+        quote: The benchmark does not measure a property of the SUT linked to the user task
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

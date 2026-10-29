@@ -1,0 +1,476 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: osworld
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 044bc33901cb893808e3f91ebc9a17ed8e54b44c
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/osworld/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.07972v2
+      ref: v2
+      sha256: e101f46bd83ffcc2c8a40ddbf41b5d1f8e42c5de594ddb7eb9dbc17eb190d291
+      chars: 161795
+    - kind: repo
+      url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+      ref: 044bc33901cb893808e3f91ebc9a17ed8e54b44c
+      sha256: 71716cfce837c2e4a71032f904cde16d088c61e547f2901257d1e086bce68109
+      chars: 74717
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The paper defines the target phenomenon (autonomous digital agent task) as a POMDP and specifies the observable components (state, observation, action, transition, and reward).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 3, chunk 1
+        quote: An autonomous digital agent task can be formalized as a partially observable Markov decision process (POMDP)
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation describes what is included (Ubuntu and Windows tasks), it does not explicitly name an aspect of the phenomenon that is excluded or not covered.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper mentions different task types (e.g., Multi-App Workflow, Single-App) and software categories, but does not provide independent scores for these as distinct facets of the phenomenon in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The docs define the task space using categories (Multi-App Workflow, Single-App, etc.) and report item counts for these dimensions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 8, chunk 0
+        quote: |-
+          Total tasks (Ubuntu)   369 (100%)
+          - Multi-App Workflow   101 (27.4%)
+          - Single-App   268 (72.6%)
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The documentation reports per-category item counts over the documented task space.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 8, chunk 0
+        quote: |-
+          Total tasks (Ubuntu)   369 (100%)
+          - Multi-App Workflow   101 (27.4%)
+          - Single-App   268 (72.6%)
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The authors describe a verification process involving 9 experts and four rounds of checks to reduce false positives and negatives.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 8, chunk 0
+        quote: we further fixed examples found to have issues, dedicating over 400 man-hours for four rounds of checks
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: met
+    rationale: The paper describes a subset of 28 tasks used to test window perturbations (position, size, clutter), stating the size and the criterion (perturbation).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 14, chunk 0
+        quote: sample a subset of 28 tasks that agents relatively well perform (with a success rate of 50.79%) in OSW ORLD
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark creates its own environment and tasks; there is no evidence of reusing a prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark reuses no prior dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are stated, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results mentioned (e.g., Table 5, Table 7) do not show confidence intervals or standard errors for every score in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: The paper mentions that 9 authors annotated examples, but does not publish or reproduce the rater instructions or training materials.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a check for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: The benchmark uses execution-based evaluation scripts (deterministic state checks) to verify task completion.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 3
+        quote: a custom execution-based evaluation script to verify task completion
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: The benchmark uses deterministic execution-based scripts rather than subjective labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 3
+        quote: a custom execution-based evaluation script to verify task completion
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: met
+    rationale: The paper breaks down performance by task type (CLI vs GUI) and workflow type (single vs multiple software) in a way that analyzes failure/success rates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 11, chunk 2
+        quote: performance tends to be better in tasks oriented towards CLI interfaces (such as OS-type tasks) compared to those based on GUI
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: met
+    rationale: The paper reports named failure categories such as 'misinterpretation of instructions' and 'visual oversight'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 15, chunk 3
+        quote: Failures also arise from   misinterpretation of instructions   and   visual oversight
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking specific tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: "The paper compares OSWorld to prior work (e.g., MiniWoB++, WebArena) and states a concrete difference: the number of unique evaluation functions is orders of magnitude larger."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 3
+        quote: Our benchmark has a total of 134 unique evaluation functions, which are orders of magnitude larger than prior work
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The paper mentions future work and some limitations (e.g., SoM quality), but does not provide a specific design limitations statement linked to a real-world capability or harm claim as required.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities nor provide control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap with related phenomena is measured or mitigated as no overlap was identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reported results comparing different output formats or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: Scoring is based on environment state (files, config) or internal signals rather than parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 29, chunk 2
+        quote: we evaluate these tasks mainly by checking the final result file
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report contamination checks or training cutoffs for the evaluated models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The environment uses virtual machine snapshots to ensure a consistent state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 4, chunk 2
+        quote: The configuration file specifies the snapshot of the virtual machine to be used
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: met
+    rationale: The system uses VM snapshots that can be restored to a specific state at any time, ensuring state is reset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 4, chunk 2
+        quote: stores the complete state of a computer at a certain moment and can be restored to this state at any time
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark uses open-ended interaction and functional correctness scripts rather than multiple-choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 5, chunk 0
+        quote: executing functions to assess functional correctness and obtain results
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation mentions tasks are based on real-world use cases and brainstorming by authors, but does not name specific domain experts or user groups consulted to define scenarios and criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While authors cross-checked examples, there is no mention of reviewers' professional credentials or a statement that a specific sample size of all items was reviewed by experts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper reports results under different prompting settings, specifically comparing few-shot prompting with a chat-mode approach using recent observations and actions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The documentation does not report results as a separate slice for a named stress condition or shift (e.g., adversarial or time) with an associated item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark provides a general environment for open-ended computer tasks rather than claiming to evaluate a specific deployed product or application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 2
+        quote: OSW ORLD enables evaluation of open-ended computer tasks that involve arbitrary applications
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark provides a general environment for open-ended computer tasks rather than claiming to evaluate a specific deployed product or application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 2
+        quote: OSW ORLD enables evaluation of open-ended computer tasks that involve arbitrary applications
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark provides a general environment for open-ended computer tasks rather than claiming to evaluate a specific deployed product or application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 2
+        quote: OSW ORLD enables evaluation of open-ended computer tasks that involve arbitrary applications
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While some library versions are listed in setup.py and sampling parameters are mentioned in the paper, the documentation does not list the hardware model or a specific container image/OS version for reproduction.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The docs describe quality-control steps (cross-checking and human attempts), but there is no mention of a correction channel like a changelog or errata that records at least one fix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 7, chunk 4
+        quote: Quality control   Once annotation is finished, each example is attempted by two authors who did not participate in annotating that specific example
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs name flaws (e.g., latent side effects, a11y tree quality), but they do not provide the required direction of bias, impact estimates, and guidance on which conclusions remain valid for every flaw.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 18, chunk 2
+        quote: we didn’t work out an efficient way to detect the latent side effects of the agent
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: A human baseline is reported for the tasks, noting a success rate of approximately 72.36%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 9, chunk 2
+        quote: the human performance on our tasks was approximately 72.36%
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: The excerpts report performance for state-of-the-art models, but no trivial/minimal baseline (like random selection) is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The excerpts describe the use of executable evaluation scripts and programmatic checks, not a model acting as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The excerpts describe the use of executable evaluation scripts and programmatic checks, not a model acting as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The excerpts describe the use of executable evaluation scripts and programmatic checks, not a model acting as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The excerpts describe the use of executable evaluation scripts and programmatic checks, not a model acting as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The documentation states that each example is cross-checked by two other authors for feasibility and alignment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 7, chunk 1
+        quote: each example will be cross-checked by the other two authors on the feasibility, ambiguity, and alignment with the source
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: met
+    rationale: The benchmark includes both solvable tasks and a specific set of 30 infeasible examples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 7, chunk 1
+        quote: We not only collect tasks that can be finished, but also collect the infeasible ones
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The benchmark uses executable evaluation scripts and reference golden files to verify correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 30, chunk 2
+        quote: the resulting files are compared and analyzed with the expected reference golden files
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: While the benchmark claims to avoid penalizing alternative solutions, it does not list the specific accepted equivalences or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: met
+    rationale: The documentation specifies scoring outcomes for missing submissions, exceptions, and timeouts.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:docs/python-test-evaluation.md, chunk 1
+        quote: Missing submissions, test exceptions and test timeouts score zero.
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: Scoring is based on executable scripts and state verification (e.g., checking files or cookies), not on parsing free-form model output.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: Scoring is based on executable scripts and state verification, not on parsing free-form model output.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: met
+    rationale: The documentation reports results for adversarial grading tests, including infinite-loop timeouts and import failures.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:docs/python-test-evaluation.md, chunk 3
+        quote: import failure, infinite-loop timeout, guest-only marker and cleanup all passed
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,482 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: decodingtrust
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/decodingtrust/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2306.11698v5
+      ref: v5
+      sha256: f94fba634e046109d072484fbb989fc1e9ba28dd2cf3823b33bd3af0944fed36
+      chars: 384671
+    - kind: repo
+      url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      ref: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      sha256: b9ed3260380b3e10b8ff38101bea6f116bc09b42d5f2975d1ce30236b007e95a
+      chars: 61156
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines the construct (robustness to textual adversarial attacks) and the task (evaluation on AdvGLUE) used to measure it.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 6, chunk 2
+        quote: "To evaluate the robustness of GPT-3.5 and GPT-4 on textual adversarial attacks, we construct three evaluation   scenarios : 1) evaluation on the standard benchmark AdvGLUE"
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists various subject areas including toxicity, stereotype bias, and privacy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 19, chunk 0
+        quote: These themes cover topics such as Sexually Transmitted Diseases (STDs), jobs, intelligence, leadership, etc.
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: The provided excerpts do not state the intended difficulty level or target population for the items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark describes formats such as prompt completion and provides examples in tables.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 57, chunk 3
+        quote: The authors perform tasks such as prompt completion, analogical reasoning, and story generation
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark specifies grading methods such as accuracy and a custom 'bias score'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 85, chunk 2
+        quote: the BBNLI benchmark utilizes a metric called the   bias score
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: unmet
+    rationale: The documentation does not explicitly name areas the construct implies but the items do not cover.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark states its objective is to inform efforts to enhance security and reliability of LLMs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 12, chunk 0
+        quote: Our objective is to elucidate potential limitations, thereby informing efforts to enhance the security and reliability of existing LLMs.
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark makes no claim that its scores predict a specific downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): Scores for GPT-3.5 and GPT-4 (models of different capabilities) are reported, allowing for headroom/saturation analysis."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: A random baseline is reported for the machine ethics evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 94, chunk 0
+        quote: Random Baseline   6.3   6.3   8.2   50.0   50.0
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The benchmark describes sourcing items from the Enron dataset and using templates for stereotypes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 40, chunk 2
+        quote: we present a proof-of-concept evaluation of the training data leakage of GPT models, using the Enron Email dataset
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: Item counts are provided for various scenarios in the dataset statistics tables.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 97, chunk 2
+        quote: Standard Benchmark   GPT-3.5   4,800
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark uses datasets obtained after the data collection date of the models to reduce contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 58, chunk 2
+        quote: Wang et al. [   181   ] proposes to leverage datasets that are obtained after the data collection date of GPT models for testing
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: While 'canary number' is mentioned for privacy sensitivity, there is no statement that a canary string is used to detect training data contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The benchmark provides detailed tables on the cost (money) and token usage for running the evaluations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 97, chunk 2
+        quote: "4) Cost of a single run: the cost of answering the above prompts, 5) #/ Repetitions: the number of repetitive runs, 6) Total cost: the cost of all runs."
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a single reference protocol for comparison nor specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: There is no mention of a separate development, validation, or training split used for optimization distinct from the test items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies temperature and top-p values for text generation tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 11, chunk 2
+        quote: we generate up to 150 tokens, set the temperature parameter to 1, and use a top- p   value of 1 in nucleus sampling
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The repository contains files for system and user prompts, and the paper provides specific prompt examples."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark consists of single-response queries to LLMs without tools or agentic loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 11, chunk 2
+        quote: we establish the role of the LLM assistant through the system prompt, “You are a helpful assistant.”
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are answered via API or model inference and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 10, chunk 3
+        quote: Through API requests, we can set specific parameters
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The benchmark is not agentic; it uses single-turn or fixed-turn prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 11, chunk 2
+        quote: we generate up to 150 tokens
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item is a single submission without a retry mechanism or feedback loop.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 11, chunk 2
+        quote: we generate up to 150 tokens
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark specifies the number of repetitions (trials) for different scenarios in its statistics tables.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 97, chunk 2
+        quote: "5) #/ Repetitions: the number of repetitive runs"
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark uses the Perspective API as a judge for toxicity, and the scoring logic is provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 100, chunk 0
+        quote: We leverage Perspective API to evaluate the toxicity of the model completion
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: unmet
+    rationale: There is no reported numerical agreement between the LLM judge (Perspective API) and human graders or other judges.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The benchmark reports results under different decoding strategies (Greedy vs Top-p) and different prompt templates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 77, chunk 0
+        quote: To understand how different decoding strategies can impact generation toxicity, we conduct the experiments below
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a runnable toolkit with a Docker image and a command-line tool `dt-run`.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:README.md, chunk 11
+        quote: To use DecodingTrust with docker, simply pull the following docker image.
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark specifies output formats and provides logic to record parsed results.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:Tutorial.md, chunk 3
+        quote: to record the raw model queries, raw responses, parsed results, labels, and scores for each task
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: While a Docker tag v1.0 is mentioned, there is no changelog or record of changes between versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models do not execute code or tool calls in this benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 11, chunk 2
+        quote: we generate up to 150 tokens
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness supports OpenAI, Huggingface Hub, and local models via configuration."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: met
+    rationale: The harness saves raw queries, responses, and scores for each task in JSON files.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:Tutorial.md, chunk 3
+        quote: to record the raw model queries, raw responses, parsed results, labels, and scores for each task
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: met
+    rationale: The output logs include the model name in the file path and the model identifier in the JSON record.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:Tutorial.md, chunk 3
+        quote: '"model": "gpt-3.5-turbo-0301"'
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: unmet
+    rationale: The documentation does not describe a validation step to ensure items were checked for solvability and correctly keyed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: met
+    rationale: The benchmark explicitly defines and reports the Refusal Rate (RR).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 11, chunk 2
+        quote: we further quantify and report the Non-existence Rate (NE) and Refusal Rate (RR)
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 11, chunk 2
+        quote: we generate up to 150 tokens
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: There is no documentation stating that task instructions were reviewed for clarity by multiple people or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes results for GPT-3.5 and GPT-4 with specific versions (e.g., gpt-4-0314).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 10, chunk 3
+        quote: we utilized the March 14th version of GPT-4 ( gpt-4-0314 ), and the March 1st version of GPT-3.5 ( gpt-3.5-turbo-0301 )
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: Scores are reported separately for different subsets, such as different stereotype domains (race, religion, gender).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 85, chunk 2
+        quote: We report the average bias score for all three stereotype domains as well as the overall average bias score
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines headline metrics and precise aggregation formulas for multiple perspectives, including Toxicity, Stereotype Bias, and Adversarial Robustness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 100, chunk 1
+        quote: We compute the Toxicity score in the DecodingTrust benchmark by 1 minus the averaged expected maximum toxicity across different datasets and system prompts
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty estimation methods for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: met
+    rationale: The benchmark provides a structured config file (config.yaml) to capture protocol settings and a unified JSON output format for results.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:Tutorial.md, chunk 1
+        quote: the top-level main configuration file (`./configs/config.yaml`) contains basic information required by all perspectives
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:Tutorial.md, chunk 3
+        quote: We provide a unified output format for different trustworthiness perspectives.
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: While the documentation describes the output format for item-level results, there is no evidence that these results for reference runs are published in a downloadable file.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: met
+    rationale: The benchmark reports the cost of runs (single run cost and total cost) and token counts for reference results across various perspectives.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 97, chunk 2
+        quote: "Cost of a single run: the cost of answering the above prompts, 5) #/ Repetitions: the number of repetitive runs, 6) Total cost: the cost of all runs."
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: The excerpts do not show that full or representative transcripts of reference runs are available for download.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument for its items, such as using the Perspective API for toxicity and specific datasets for bias and robustness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 12, chunk 2
+        quote: We use Perspective API, an online automated model for toxic language and hate speech detection.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims real-world relevance (e.g., for machine ethics) and notes that existing benchmarks lack the complex social interactions crucial in the real world.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 60, chunk 0
+        quote: while lacking complex social interactions, which are crucial in studying agent behaviors in the real world.
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: n/a
+    rationale: The provided excerpts do not report a baseline for comparison against the model runs; they primarily compare different models (GPT-3.5 vs GPT-4).
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: unmet
+    rationale: The documentation does not explicitly name a conclusion that the scores do not support or provide a disclaimer against over-generalization.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark includes a limitations section that discusses how results might not capture the dynamic nature of model updates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 108, chunk 1
+        quote: our results might not fully capture the dynamic nature of the trustworthiness of these models.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

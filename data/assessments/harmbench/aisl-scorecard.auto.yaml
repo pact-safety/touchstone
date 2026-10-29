@@ -1,0 +1,430 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: harmbench
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/harmbench/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.04249v2
+      ref: v2
+      sha256: 580c29edfdd4e7940ed6c0ccdc4c23b74768be3e812d857f28a97a70592eec05
+      chars: 175045
+    - kind: repo
+      url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      ref: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      sha256: b5be49ee33386aad4099cc19a25d96e7938ea0928a746c13cf196d5583b43430
+      chars: 68399
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The paper defines the red teaming task and specifies that success is measured by the attack success rate (ASR), which is the percentage of test cases that elicit the behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 3, chunk 3
+        quote: The primary measure of a red teaming method’s success is its attack success rate (ASR) on a given target model, which is the percentage of test cases that elicit the behavior from the target model.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation specifies that the benchmark is designed for instruction-tuned LLMs and explicitly excludes models that cannot follow individual instructions or non-LLM ML models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 19, chunk 3
+        quote: We design HarmBench primarily to evaluate instruction-tuned LLMs. In particular, we do not support LLMs that cannot follow individual instructions or ML models that are not LLMs.
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper identifies functional categories (standard, copyright, contextual, multimodal), but the provided excerpts do not show a table or figure where each of these sub-components has its own reported score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The docs define functional categories and report the item counts for each.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 2
+        quote: "HarmBench contains the following 4 functional categories of behavior: standard behaviors, copyright behaviors, contextual behaviors, and multimodal behaviors. These categories contain 200 , 100 , 100 , and 110 behaviors, respectively."
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The paper states that the validation and test sets were selected using stratified sampling based on the intersections of functional behaviors and semantic categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 18, chunk 3
+        quote: These were selected with stratified sampling using the intersections between all functional behaviors and semantic categories
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: While the paper mentions a validation/test split and classifiers, it does not describe a verification step where every item was checked against the phenomenon with a reported pass rate.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: The excerpts do not mention a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark creates its own set of behaviors (though some are modeled after others), and the excerpts do not show the reuse of a prior dataset for evaluation that requires a comparison table of the same model on original vs adapted data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset in a way that requires listing modifications; it designs its own behaviors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: The item count is mentioned, but there is no power calculation or confidence-interval half-width reported to justify statistical power.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results mentioned (e.g., in Appendix C.3) are not provided in the excerpts, and no confidence intervals or standard errors are shown for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: The paper mentions that annotation instructions were given to humans, but the instructions themselves are not reproduced in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: There is no report of rater demographics or mitigation of demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: unmet
+    rationale: The labels are subjective (model ratings/human labels), but no per-item disagreement distribution or inter-annotator agreement statistic is reported beside the aggregate scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: unmet
+    rationale: The primary metric is ASR (Attack Success Rate), which is a single-point aggregate (percentage) of successful elicitations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 3, chunk 3
+        quote: The primary measure of a red teaming method’s success is its attack success rate (ASR) on a given target model, which is the percentage of test cases that elicit the behavior from the target model.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The excerpts do not show a breakdown of failures or scores by a named confound in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement that names the tasks, each metric, and the construct from cv.01 they measure with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares HarmBench to prior evaluations, stating it improves them by increasing the breadth of behaviors and the robustness of the pipeline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 1
+        quote: We improve over existing evaluations by greatly increasing the breadth of behaviors and the comparability and robustness of the evaluation pipeline.
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: While the paper discusses design choices, it does not provide a specific limitations statement for the design linked to a real-world capability or harm claim with support/caveat.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify specific secondary capabilities or provide control conditions/ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap measurement or mitigation is described as no overlap was identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reported results comparing different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: The documentation does not compare parser output with reference labels across at least two response formats with accuracy figures per format.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or provide training-data cutoffs for all evaluated models (e.g., Llama 2, Mistral, etc.).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs and local scoring (classifiers), involving no external or mutable environment.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:docs/codebase_structure.md, chunk 0
+        quote: "The evaluation pipeline consists of four scripts: `generate_test_cases.py`, `merge_test_cases.py`, `generate_completions.py`, `evaluate_completions.py`."
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of single stateless model calls to generate completions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 7, chunk 2
+        quote: Test cases are passed into the target LLM f , which generates T tokens with greedy decoding to produce output strings
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The evaluation does not use multiple choice questions; it uses open-ended completions evaluated by a classifier."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While human labeling is mentioned for a validation set, the docs do not name the reviewers' credentials or state that all items or a specific sample size were reviewed for accuracy and relevance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for multiple elicitation settings, including Zero-Shot and Stochastic Few-Shot.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 22, chunk 1
+        quote: "Zero-Shot (Perez et al., 2022): Zero-shot generation of test cases"
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 22, chunk 1
+        quote: "Stochastic Few-Shot (Perez et al., 2022): Few-shot sampling of test cases"
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not report results as a separate slice for a named stress condition or shift with an associated item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is a general framework for automated red teaming and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is a general framework for automated red teaming and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is a general framework for automated red teaming and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation mentions hyperparameters in config files, but does not list specific library versions, hardware models, or the OS/container image.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no evidence of a published reproduction by an independent third party on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The excerpts do not describe quality-control steps or a correction channel (errata/changelog) that records at least one fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The documentation does not name specific unavoidable flaws with their bias direction and impact estimates; it only mentions a 'caveat' regarding copyright behaviors without the required detailed analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark includes a human-designed jailbreaks baseline for red teaming tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 8, chunk 4
+        quote: These include automated white-box, black-box, and transfer attacks as well as a human-designed jailbreaks baseline.
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports a 'Direct Request' baseline, which serves as a trivial/naive baseline for red teaming."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: met
+    rationale: The documentation reports agreement rates between the HarmBench classifier and human judgments on a validation set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 18, chunk 0
+        quote: Agreement rates between previous metrics and classifiers compared to human judgments on our manually labeled validation set.
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: met
+    rationale: The benchmark describes a fixed rubric (criteria) used in classifier prompts to ensure consistent and robust rating.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 18, chunk 2
+        quote: we include them in our classifier prompts to improve agreement with human labels.
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: unmet
+    rationale: There is no report of agreement across repeated rating runs on the same inputs for the model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: The excerpts do not mention measuring specific rater biases (like length or position) with numbers or stating mitigations for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: unmet
+    rationale: While a human-labeled validation set is mentioned, there is no report of inter-annotator agreement (e.g., Cohen's kappa) between multiple independent annotators.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The documentation does not classify every task as solvable or intentionally unsolvable, nor does it document expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: unmet
+    rationale: The benchmark focuses on whether a model exhibits a harmful behavior; it does not provide verified ground-truth solutions for the tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify the scoring outcome for partial answers, off-format answers, and timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The scoring is performed by a classifier model (Llama 2 or GPT-4) based on a prompt, not by a parser of free-form output into a structured format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 7, chunk 3
+        quote: we fine-tune Llama 2 13B chat to serve as our classifier for whether a test case was successful.
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The scoring is performed by a classifier model, not a parser of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 7, chunk 3
+        quote: we fine-tune Llama 2 13B chat to serve as our classifier for whether a test case was successful.
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: While the paper mentions a 'prequalification test' for robustness, it does not report results for a null/trivial-agent run or a targeted exploit attempt on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

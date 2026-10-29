@@ -1,0 +1,440 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: arc-challenge
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/arc-challenge/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1803.05457v1
+      ref: v1
+      sha256: 5dba73681ca9c0a256829d09cdb30b59a9016f557407c34613de58f4662b6fdf
+      chars: 45437
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark specifies it measures science questions through a multiple-choice task, distinguishing between 'Easy' and 'Challenge' sets based on whether simple retrieval/co-occurrence methods can solve them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 5
+        quote: The ARC dataset consists of 7787 science questions, all non-diagram, multiple choice (typically 4-way multiple choice).
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark explicitly states it covers science topics from US elementary and middle schools.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 4, chunk 2
+        quote: 80 science topics covered by US elementary and middle schools, the subject areas of ARC.
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The benchmark states the target population is students from 3rd to 9th grade (ages 8 through 13).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 5
+        quote: ranging from 3rd grade to 9th, i.e., students typically of age 8 through 13 years.
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The format is stated as multiple choice, and several example items are provided in the text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 5
+        quote: multiple choice (typically 4-way multiple choice).
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The scoring rubric is detailed, including full points for correct answers and partial credit for ties.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: a system receives 1 point if it chooses the correct answer and 1 /k if it reports a k -way tie
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: unmet
+    rationale: The documentation does not name specific areas or task types that the construct implies but are not covered.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: unmet
+    rationale: The documentation does not name a specific intended use case or threat model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark makes no claim that its scores predict any downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for multiple models of varying capabilities (IR, PMI, Neural models, Random) are reported, showing the gap between Easy and Challenge sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 1
+        quote: Table 6 summarizes the scores obtained by various baseline algorithms on the test partitions of the Challenge and Easy sets.
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: A random baseline ('Guess-all') is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: 3. Guess-all (“random”). A na¨ ıve baseline that selects all answer options as equally valid
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark lists the specific sources (educational programs/departments) from which the questions were drawn."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The total item count and the counts for the Challenge and Easy subsets are provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 2, chunk 5
+        quote: The ARC dataset consists of 7787 science questions... sorted into a Challenge Set of 2590 “hard” questions... and an Easy Set of 5197 questions.
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private test split, contamination analysis, or specific date-based creation to reduce training-data contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: No canary strings are mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: The documentation does not state the computational resources (time, compute, tokens) needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: The excerpts mention 'Challenge' and 'Easy' sets, but do not describe a separate development, validation, or training split that does not overlap the test items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: unmet
+    rationale: The documentation does not state the sampling settings (temperature, top_p) or reasoning budget used for the reported results, nor does it state that these are left to the evaluator.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: unmet
+    rationale: The exact prompt text or templates given to the model for each item are not provided verbatim in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark consists of multiple-choice questions answered in a single response without tools or agent loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: For each question, a system receives 1 point if it chooses the correct answer
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are multiple-choice questions and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: For each question, a system receives 1 point if it chooses the correct answer
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-response multiple-choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: For each question, a system receives 1 point if it chooses the correct answer
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission with no retry or feedback mechanism described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: For each question, a system receives 1 point if it chooses the correct answer
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The benchmark does not specify the number of trials per item or how they are aggregated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: n/a
+    rationale: No LLM judge is used; scoring is based on whether the system chooses the correct answer choice.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: a system receives 1 point if it chooses the correct answer
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: n/a
+    rationale: No LLM judge is used to score responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: a system receives 1 point if it chooses the correct answer
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: The documentation does not report how results change under variations of the protocol (e.g., prompt wording or sampling).
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a link to public code that implements the baseline solvers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 3
+        quote: Code available at https://github.com/allenai/arc-solvers
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: unmet
+    rationale: While the scoring rubric is provided, the documentation does not provide the logic/code that extracts answers from model responses.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There are no version identifiers or changelogs provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models in this benchmark do not execute code or tool calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: For each question, a system receives 1 point if it chooses the correct answer
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: The excerpts do not show that the harness supports multiple providers via configuration or an open interface.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: There is no mention of the harness saving full per-item logs containing responses and scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the logs record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: unmet
+    rationale: The documentation does not describe a validation step to ensure items were checked for solvability and correctly keyed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The items are science exam questions and contain no content likely to trigger model safeguards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 5, chunk 0
+        quote: Which item below is not made from a material grown in nature?
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: For each question, a system receives 1 point if it chooses the correct answer
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: The documentation does not state that task instructions were reviewed for ambiguity by multiple people or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes scores for several baseline models on the test sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 1
+        quote: Table 6 summarizes the scores obtained by various baseline algorithms on the test partitions
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports scores separately for the 'Challenge' and 'Easy' subsets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 2
+        quote: Solver Challenge Easy Set Set
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the scoring rubric for individual items and the aggregation method (mean) for the overall score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 6, chunk 3
+        quote: For each question, a system receives 1 point if it chooses the correct answer and 1 /k if it reports a k -way tie
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: met
+    rationale: The benchmark reports a 95% confidence interval for the random baseline on the Challenge set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 2
+        quote: none of the algorithms score significantly higher than the random baseline on the Challenge set, where the 95% confidence interval is ± 2 . 5%
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: The excerpts do not mention a config file, schema, or report template for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: While reference scores are provided in a table, there is no mention of a downloadable file containing per-item scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The excerpts do not report tokens, money, or time per run for the reference results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: The excerpts do not provide or mention downloadable transcripts of the reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument by analyzing the types of reasoning required by the questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 5, chunk 1
+        quote: "Table 5: Types of reasoning suggested by ARC Challenge Set questions"
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: n/a
+    rationale: The benchmark does not claim to represent real-world tasks; it is based on standardized science exam questions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes the specific algorithms and data used for the baselines, such as the IR solver's use of the Waterloo corpus.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 3, chunk 1
+        quote: The IR solver uses the Waterloo corpus from (Clark et al., 2016), a Web-based corpus of 5 × 10 10 tokens (280GB).
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: unmet
+    rationale: The documentation does not explicitly name a conclusion that the scores do not support.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark identifies a limitation regarding the retrieval bias of underlying IR methods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: 1803.05457v1 page 7, chunk 3
+        quote: the retrieval bias of the underlying IR methods is towards sentences that are all very similar to the question
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

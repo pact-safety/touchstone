@@ -1,0 +1,122 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: tau-bench
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 59a200c6d575d595120f1cb70fea53cef0632f6b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/tau-bench/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2406.12045v1
+      ref: v1
+      sha256: ed8409419c3062d4589b374d7841181206794ee748084f58cce10af34523b3e2
+      chars: 132419
+    - kind: repo
+      url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+      ref: 59a200c6d575d595120f1cb70fea53cef0632f6b
+      sha256: e17ddb00606e0458f03bb7af5d8ef22e5e1fb71411e776c7dbc04058a8a705c8
+      chars: 14519
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark shows significant headroom, with the best-performing agent achieving only >60% success and large gaps remaining from perfect resolution.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 7, chunk 1
+        quote: large remaining gaps from perfect resolution makes τ -bench ideal for benchmarking
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document a contamination defence such as a private held-out set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark is described as having a well-balanced spectrum of task difficulties, and it does not use classes or labels that could be exploited by a majority-class baseline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 13, chunk 0
+        quote: τ -bench tasks have a well-balanced and diverse spectrum of difficulties
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: While the authors describe a validation process using gpt-4-turbo trials to polish instructions, there is no cited audit or error analysis reporting a specific low error rate for the final benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark serves to evaluate agents' ability to handle real-world digital tasks involving human interaction, a purpose that remains current as evidenced by the reported gaps in model performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 2, chunk 3
+        quote: We hope that   τ   -bench enables the evaluation and development of more consistent and capable agents for real-world digital tasks involving human interaction.
+    by: model
+    quotes_verified: true
+  c6:
+    value: met
+    rationale: The benchmark explicitly states that its schemas and APIs are simplified compared to real-world domains to ensure logical consistency.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: |-
+          Each   τ   -bench domain’s data schemas, APIs, and rules are simplified
+          compared to real-world domains
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: The repository explicitly warns that the tasks are outdated and that a newer version (tau3-bench) contains fixes for the airline and retail domain tasks, indicating the original content has become unrepresentative or flawed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The excerpts do not show an explicit version identifier (like a DOI or release tag) displayed alongside the benchmark name in main references, nor a record of changes per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no stated plan for archiving artifacts at end of life, nor evidence that the data and generating code are in a persistent archive like a DOI-backed one.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides an issue tracker for queries and the project is active, as evidenced by a recent rewrite and the existence of a newer version (tau3-bench).
+    evidence:
+      - source: repo
+        url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+        locator: sierra-research/tau-bench@59a200c6d575:README.md, chunk 6
+        quote: Please submit issues or pull requests if you find problems with the benchmark.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

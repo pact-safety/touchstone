@@ -1,0 +1,248 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: ale
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 816fd1591f1b73133c269fe753f10a0490ab4a63
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/ale/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1207.4708v2
+      ref: v2
+      sha256: 48f889aff01198b693ba4d7880eb3337bbe755f9b4b3d264b445f4301dd3b422
+      chars: 71511
+    - kind: repo
+      url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+      ref: 816fd1591f1b73133c269fe753f10a0490ab4a63
+      sha256: 58d5c9da63534780222d29d92323766055ca3c10e0153a4a166f703b5fc1212c
+      chars: 120585
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The phenomenon (performance) is operationally defined as the average score achieved during evaluation episodes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 6, chunk 0
+        quote: measured as the average score achieved during the evaluation episodes.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the paper mentions the scope of human benchmarks is limited, it does not provide a general scope for the phenomenon being measured nor name specific excluded aspects of that phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The provided text does not identify sub-components of the phenomenon nor state that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the documentation mentions that certain parameters like action repeat probability can impact performance, there is no report measuring the effect of output-format requirements on scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses emulator states and scores rather than free-form output that requires automated parsing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 3, chunk 1
+        quote: The reward at each time-step is defined on a game by game basis, typically by taking the difference in score or points between frames.
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The provided excerpts do not document a sampling strategy used to ensure task items are representative of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: There is no documentation stating that every task item passed a quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While a 'Perturb agent' is mentioned, there is no evidence of a counted subset of permuted or perturbed task items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: unmet
+    rationale: The provided excerpts do not contain a statement documenting whether the benchmark adapts a previous dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts do not describe any tests specifically designed to detect data contamination or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The authors describe the use of a disjoint test set of games for final evaluation to avoid over-estimating performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 2, chunk 1
+        quote: The typical practice is instead to train on a   training set   then evaluate on a disjoint   test set .
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no mention of searching for benchmark source materials within LLM training corpora or other named training models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the number of trials (30) and evaluation episodes (500) are stated, there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 23, chunk 1
+        quote: Number of trials per result   30
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results table (Table 1) provides average scores but does not include confidence intervals or standard errors for each score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 6, chunk 0
+        quote: "Table 1: Reinforcement Learning results for selected games."
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark uses a human player for comparison, but the human is not acting as a rater for the models' performance; the scores are derived from the game emulator.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 6, chunk 1
+        quote: we provide human player results that report the five-episode average score obtained by a beginner
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels (scores) are derived from a deterministic game emulator, not from subjective human or model ratings.
+    evidence:
+      - source: repo
+        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:docs/environments.md, chunk 5
+        quote: As the Atari games are entirely deterministic
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The provided excerpts do not contain any qualitative or quantitative analysis of common failure modes, nor do they describe or count them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no evidence of failures or scores being broken down by named confounders in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet according to the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors report running experiments with five different sets of features to address the design issue of linear function approximation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 4, chunk 1
+        quote: We ran experiments using five different sets of features
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The text states that the Atari 2600 platform provides challenges typically associated with real-world applications."
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition (def.1) to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to RL competitions, noting that the latter use high-level state variables while ALE uses raw game screens.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 14, chunk 1
+        quote: These competitions also focus their research effort on domains that provide high-level state variables... By contrast, the Arcade Learning Environment and the domain-independent setting force us to consider the question of perceptual grounding
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses a limitation where inter-algorithm scores may not reflect performance relative to humans.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 10, chunk 2
+        quote: the inter-algorithm score of 1.0 achieved by BASS does not reflect the fact that none of our agents achieved a score remotely comparable to a human’s performance.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

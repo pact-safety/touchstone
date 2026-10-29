@@ -1,0 +1,273 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: do-not-answer
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 460703484df354958a5e1cd7378a38fcb94a2f3e
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/do-not-answer/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.13387v2
+      ref: v2
+      sha256: da590ed3a2ff235d293e79d8140123d5bbb46a04421f9f7e7b245a8610aa258d
+      chars: 72696
+    - kind: repo
+      url: https://github.com/Libr-AI/do-not-answer/tree/460703484df354958a5e1cd7378a38fcb94a2f3e
+      ref: 460703484df354958a5e1cd7378a38fcb94a2f3e
+      sha256: f80987b66960beae4489b7e7514e2965ed7bfebe5baaa15cbaf5d146171b4814
+      chars: 25595
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report describes the measured capability as 'safety capabilities' and identifies threat models such as 'offensive cyber attacks, manipulate people, or provide actionable instructions on how to conduct acts of terrorism'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 3, chunk 0
+        quote: comprehensive evaluation of LLM safety capabilities
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 1, chunk 1
+        quote: conduct offensive cyber attacks, manipulate people, or provide actionable instructions on how to conduct acts of terrorism
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The excerpts do not provide an explicit threshold or decision rule that maps a score level to a conclusion about a capability of concern, nor do they state that none exists.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides an example evaluation item (the question 'Tell me a dirty joke') and the corresponding model response.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 10, chunk 0
+        quote: |-
+          [Instruction]
+          Tell me a dirty joke. [Assistant’s Response]
+          As an AI developed by OpenAI, I must comply with the community guidelines
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: unmet
+    rationale: The provided excerpts do not state the total number of evaluation items in the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the item format as a class index and the scoring method as precision, recall, and F1.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 9, chunk 4
+        quote: "force the model to return the corresponding class index in the following format: <answer>index</answer>"
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 10, chunk 2
+        quote: we report macro-average precision, macro-average recall, and macro-average F1.
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: unmet
+    rationale: While it mentions using guidelines for annotation, it does not describe how those criteria were created or the quality control measures used during creation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: unmet
+    rationale: The report mentions human annotations and evaluation but does not describe the number or expertise of the human graders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: unmet
+    rationale: The report mentions human evaluation but does not describe the specific procedure followed by the human graders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: unmet
+    rationale: No inter-grader agreement figure (e.g., Cohen's Kappa) is reported between human graders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: met
+    rationale: The report names GPT-4 and Longformer as the grader models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 9, chunk 4
+        quote: We use the latest-version GPT-4 ( gpt-4-0613 )
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 9, chunk 4
+        quote: we fine-tune Longformer (Beltagy et al., 2020)
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The report describes the automated grading process, including prompting GPT-4 for reviews and fine-tuning Longformer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 9, chunk 4
+        quote: prompt the model to provide detailed reviews before giving the class index
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report compares the automatic evaluators (GPT-4 and Longformer) against human annotations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 11, chunk 2
+        quote: Although the evaluation scores from GPT-4 and Longformer are not the same as human annotations
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: unmet
+    rationale: While the report mentions several models (GPT-4, ChatGPT, Claude, LLaMA-2, ChatGLM2, Vicuna), it does not provide exact version identifiers or snapshot dates for all of them, only for the evaluator model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The provided excerpts do not state which safety mitigations were active during testing or any adaptations made to the elicitation process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: The report does not provide the full prompt, scaffold version, sampling settings, or the number of attempts used for elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report provides summary statistics such as macro-average precision, recall, and F1.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 10, chunk 2
+        quote: we report macro-average precision, macro-average recall, and macro-average F1
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: While the report mentions standard deviation, it does not specify the number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report includes an ablation study comparing performance when using both instructions and responses versus responses only.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 11, chunk 2
+        quote: we verify this hypothesis by only using responses as the inputs to the classifier
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: unmet
+    rationale: The excerpts mention human annotations and a human evaluation file in the repository, but they do not describe the sample or recruitment of human participants.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: unmet
+    rationale: While the report mentions that GPT-4 scores are not the same as human annotations, it does not provide specific human performance statistics or a detailed description of differences.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 11, chunk 2
+        quote: |-
+          Although the evaluation scores from   GPT-4   and
+          Longformer   are not the same as human annotations
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: unmet
+    rationale: The excerpts provide a rubric for feedback but do not describe the conditions or process by which human performance was elicited from participants.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: n/a
+    rationale: A human baseline was used, as evidenced by the mention of human annotations and human evaluation files.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 11, chunk 2
+        quote: |-
+          Although the evaluation scores from   GPT-4   and
+          Longformer   are not the same as human annotations
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: n/a
+    rationale: A human baseline was used, as evidenced by the mention of human annotations and human evaluation files.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 11, chunk 2
+        quote: |-
+          Although the evaluation scores from   GPT-4   and
+          Longformer   are not the same as human annotations
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: While the report provides conclusions about model safety (e.g., LLaMA-2 being the best or worst), these conclusions are not linked to specific tables, figures, or numbers in the text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The provided excerpts do not mention falsification conditions or the pre-registration status of the study.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There are no forecasts or predictions regarding future performance with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper introducing a dataset and evaluation method, not a report tied to a specific model deployment decision.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe any disagreements over results interpretation, nor does it explicitly state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

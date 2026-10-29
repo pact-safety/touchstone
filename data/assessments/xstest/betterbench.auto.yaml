@@ -1,0 +1,414 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: xstest
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/xstest/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.01263v3
+      ref: v3
+      sha256: 75e184b68f4c7f85b7aaeef9f301aa2ec6782c533c21ab41b79787ef5ab38dc8
+      chars: 98602
+    - kind: repo
+      url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+      ref: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+      sha256: c6e18c81cc7a0c8332e1a90700fab3eb5b51045263840b85354ff8c50ca7879d
+      chars: 22722
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark is defined as a diagnostic test suite for exaggerated safety.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 2, chunk 1
+        quote: |-
+          we design XST EST   as a small and hand-crafted
+          diagnostic test suite for exaggerated safety
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark translates the concept of exaggerated safety into sets of targeted safe and unsafe test prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 2, chunk 1
+        quote: |-
+          we design XST EST   as a small and hand-crafted
+          diagnostic test suite for exaggerated safety, which is
+          split into sets of targeted test prompts.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 10
+    rationale: The text describes how refusing safe prompts limits helpfulness in general applications, though it doesn't explicitly frame this as the 'real world' utility of the benchmark itself.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 8, chunk 2
+        quote: |-
+          If models like Llama2.0, and to a lesser extent
+          Llama2.1, consistently refuse such prompts, this
+          directly limits their helpfulness in general question-
+          answering applications.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 15
+    rationale: The text describes how to interpret scores for safe prompts (fewer refusals are better) versus unsafe prompts (more refusals are better).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 4, chunk 1
+        quote: Here, all prompts are safe, so fewer refusals are better.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 10
+    rationale: The benchmark integrates prior work on functional testing for NLP and safety risks in LLMs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 2, chunk 1
+        quote: |-
+          The structure of XST EST   is
+          motivated by prior work on functional testing for
+          NLP.
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 0
+    rationale: The text mentions using refusal rates, but does not provide a rationale for why this specific metric was chosen over others.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: No metric floors or ceilings are mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: Human performance levels are not provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: Random performance levels are not provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The authors validated automated evaluation methods (string-match and GPT-4) against manual evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 6, chunk 3
+        quote: |-
+          We find that automated evaluation methods can
+          qualitatively recover the results of manual evalu-
+          ation.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 10
+    rationale: The benchmark is compared to prior functional testing frameworks and safety risk tests, though specific differences are implied rather than detailed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 2, chunk 1
+        quote: |-
+          Analogously, we
+          design XST EST   as a small and hand-crafted
+          diagnostic test suite for exaggerated safety
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: Input sensitivity (e.g., prompt perturbations) is not addressed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository contains automated evaluation scripts for classifying completions.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 1
+        quote: use our automated evaluation scripts (`classify_completions.py`) in the `evaluation` folder
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The test prompts are provided as a CSV file in the repository.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 0
+        quote: "`xstest_prompts.csv` contains all test prompts."
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 10
+    rationale: The paper mentions accessing GPT-4 via an API for testing, but the provided code/readme does not explicitly provide a general API support implementation for any model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 9, chunk 1
+        quote: GPT-4, which we access through an API
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 0
+    rationale: The excerpts do not explicitly state that the implementation supports local models, only that certain models (like Llama) were tested.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The repository provides a notebook specifically to replicate the analyses from the paper.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 1
+        quote: You can use the `analysis.ipynb` notebook to replicate the analyses from our paper.
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The results are reported as percentages, but there is no mention of statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: The excerpts do not mention assessing the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no evidence of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: No requirements file (e.g., requirements.txt) is mentioned or listed in the file listing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a step-by-step guide on how to use the benchmark.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 1
+        quote: |-
+          1. Download `xstest_prompts.csv` from this repository.
+          2. Using the language model you want to test, collect responses on the test prompts listed in the "prompt" column of the csv.
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not include the source code content to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No specific code documentation (like API docs or docstrings) is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The README explicitly links to a paper accepted at NAACL 2024.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 0
+        quote: 'This repo contains data and code for our NAACL 2024 paper "[XSTest: A Test Suite for Identifying Exaggerated Safety Behaviours in Large Language Models](https://aclanthology.org/2024.naacl-long.301/)".'
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper describes the process of hand-crafting prompts and creating contrast sets."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper documents the prompt types (e.g., Privacy, Figurative Language) and the rationale for using contrast sets."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper documents the normative property that well-calibrated models should not refuse safe prompts."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 0
+    rationale: The excerpts do not explicitly list a 'Limitations' section or document the benchmark's limitations.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The prompt design process (hand-crafting and contrast creation) is documented."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric (refusal rate) and the classification methods are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 7, chunk 0
+        quote: "Table 2: Refusal rates (%) on safe prompts (top) and unsafe prompts (bottom)"
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The repository includes a Creative Commons Attribution 4.0 International Public License.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:LICENSE, chunk 2
+        quote: Creative Commons Attribution 4.0 International Public License
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No DOI or other globally unique persistent identifier for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: There is no evidence of standardized metadata (e.g., DataCards) being included.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents that prompts were hand-crafted and aided by online dictionaries and GPT-4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 3, chunk 2
+        quote: To aid our work, we used online dictionaries as well as GPT-4
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: No data preprocessing steps are documented as the data consists of hand-crafted prompts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper documents the manual annotation process performed by the authors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 9, chunk 2
+        quote: three authors annotated model responses on XST EST as part of the manual model evaluation
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data relative to a broader population of prompts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., ISO).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: The repository readme lists the individuals responsible for the joint work, effectively listing the contact persons.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 0
+        quote: XSTest is joint work between Paul Röttger, Hannah Rose Kirk, Bertie Vidgen, Giuseppe Attanasio, Federico Bianchi, and Dirk Hovy.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,466 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mle-bench
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v6
+  repo_commit: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mle-bench/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.07095v6
+      ref: v6
+      sha256: ecfad6248e2fdcf4920059d7ecb57b46a01959f57302ab2545e80858c09dfa68
+      chars: 93091
+    - kind: repo
+      url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+      ref: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+      sha256: 81a90b069db3f5b38a52517d5d7f0cae4e4db8270c1a45e6053f924d45b56823
+      chars: 43791
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The benchmark defines the target phenomenon as ML engineering and specifies that evidence is the ability to produce a submission file by training a model and running it on a test set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 17, chunk 0
+        quote: You must solve the task by training a model and running the model on the test set to produce a submission file.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation defines the scope as Kaggle competitions that provide clear problem statements and clean datasets, while explicitly excluding real-world AI R&D where problem statements and metrics are not clear.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 10, chunk 1
+        quote: MLE-bench selects for Kaggle competitions that provide clear problem statements, datasets that are clean and well-documented, and have clear metrics for optimization. On the other hand, real-world AI R&D often may not even have a clear problem statement
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper identifies facets such as complexity levels and task categories, but it does not report a separate score for every single sub-component/category in a table; it reports aggregate percentages.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by categories and complexity levels, and item counts are reported for the complexity dimension (29% low, 51% medium, 20% high).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 14, chunk 0
+        quote: There are 29% low, 51% medium and 20% high-complexity competitions.
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: While the total distribution of complexity is given, the docs do not report per-category item counts or a stratified sampling plan over the 15 categories.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: Every competition was screened by at least two ML engineers to ensure it meets the benchmark's requirements.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 13, chunk 3
+        quote: Each competition in our final set was screened by at least two ML engineers working at leading AI companies.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a specific named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark uses Kaggle competitions as tasks but creates its own new test splits and grading logic; it does not reuse a prior benchmark dataset for evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 10, chunk 2
+        quote: MLE-bench uses different train-test splits to the original competitions on Kaggle and re-implements their grading code.
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark reuses no prior benchmark dataset, instead adapting raw Kaggle competition data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 10, chunk 2
+        quote: MLE-bench uses different train-test splits to the original competitions on Kaggle
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While the item count (75) is stated, there is no power calculation or confidence-interval half-width reported to justify statistical power.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 2
+        quote: The resulting benchmark consists of 75 diverse Kaggle competitions
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: met
+    rationale: The main results tables (Table 9 and 10) report scores as mean ± standard error, and the number of seeds/runs is stated in the text and table captions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 6, chunk 0
+        quote: Scores represent the mean ± one standard error of the mean.
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The benchmark uses deterministic grading based on competition metrics and automated plagiarism/log tools; no human raters label the outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 4, chunk 0
+        quote: we implement the grading logic for each competition based on the described evaluation metric in the competition’s description, so that submissions can be graded locally.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: No human raters are used to judge outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 4, chunk 0
+        quote: we implement the grading logic for each competition based on the described evaluation metric in the competition’s description
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: Every label comes from a deterministic key (the competition's evaluation metric/leaderboard logic).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 4, chunk 0
+        quote: we implement the grading logic for each competition based on the described evaluation metric in the competition’s description
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Every label comes from a deterministic key (the competition's evaluation metric/leaderboard logic).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 4, chunk 0
+        quote: we implement the grading logic for each competition based on the described evaluation metric in the competition’s description
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The docs do not provide a table or figure breaking down failures by a named confound like format or length.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The docs describe failure modes in text (e.g., overloading RAM), but they do not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement that names the tasks, each metric, and the construct from cv.01 they measure with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to MLAgentBench and ML-Bench, noting that MLE-bench provides more tasks with more complexity and requires starting from scratch.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 9, chunk 2
+        quote: In contrast, MLE-bench provides significantly more tasks with more complexity, and requires agents to attempt the task from scratch.
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The docs provide a limitations statement regarding the scope of AI R&D and link the benchmark to the real-world capability of accelerating scientific progress.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 10, chunk 1
+        quote: the tasks included in MLE-bench don’t cover the full spectrum of capabilities required for AI R&D.
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities nor provide control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation names related phenomena/benchmarks that measure similar capabilities, such as software engineering and data science tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 9, chunk 3
+        quote: DSBench (Jing et al., 2024) also introduces a benchmark of Kaggle competitions, but much like Weco AI’s dataset, DSBench focuses on data science tasks.
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: While overlap with DSBench is mentioned, it is not quantified (e.g., via correlation) and no mitigation steps are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: The benchmark reports format-failure rates separately from task failures by flagging solutions that fail to produce the required submission file.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 18, chunk 0
+        quote: Actively track whether a solution generates a   submission.csv   file; flag solutions that fail to produce this file as buggy.
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: Scoring is based on reading the environment state (the submission.csv file) rather than parsing free-form model output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 17, chunk 1
+        quote: We will only evaluate submissions found at this path;   failure to submit a ‘submission. csv‘ at this path will result in a failed attempt.
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report a contamination check result or training cutoff for every evaluated model; it only mentions a general investigation for GPT-4o.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark is described as an offline environment, implying a static snapshot of the competitions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 1
+        quote: We introduce MLE-bench, an offline Kaggle competition environment
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: met
+    rationale: The harness uses Python virtual environments for agent execution, which ensures state isolation per run.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 16, chunk 1
+        quote: Each agent is executed using a Python virtual environment containing packages necessary and useful for the agents.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark does not use multiple-choice questions; it requires training a model and producing a CSV submission file.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 17, chunk 0
+        quote: You must solve the task by training a model and running the model on the test set to produce a submission file.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation mentions manual screening and annotation by 'our team', but does not name specific domain experts or user groups consulted to define scenarios and criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While the team manually screened competitions, the docs do not specify the reviewers' credentials or state that a specific sample size of items was reviewed for accuracy and relevance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The excerpts describe different agent scaffolds (AIDE, OpenHands, MLAB), but they do not report results under more than one prompting or elicitation setting (e.g., zero- vs few-shot).
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The documentation does not report results as a separate slice for a named stress condition or shift that differs from the train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general ML engineering capabilities via Kaggle competitions rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general ML engineering capabilities via Kaggle competitions rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general ML engineering capabilities via Kaggle competitions rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While the docs mention hardware and some hyperparameters, they do not provide a lockfile or pinned requirements for library versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no evidence of a published reproduction by an independent third party on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The docs mention limitations and a leaderboard update, but they do not describe a correction channel (like a changelog or versioned release) that records at least one fix; the provided list of issues in the README is an issue tracker.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs name flaws such as contamination and data leakage, but they do not provide a direction of bias, impact estimate, and guidance on valid conclusions for every named flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The authors explicitly state that they established human baselines using Kaggle's leaderboards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 0
+        quote: We establish human baselines for each competition using Kaggle’s publicly available leaderboards.
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: The excerpts do not report the score of a trivial baseline such as random selection or a zero-shot naive model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The benchmark uses programmatic grading based on competition metrics (e.g., MAE) rather than a model rater for the primary scoring.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The benchmark uses programmatic grading based on competition metrics (e.g., MAE) rather than a model rater for the primary scoring.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The benchmark uses programmatic grading based on competition metrics (e.g., MAE) rather than a model rater for the primary scoring.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The benchmark uses programmatic grading based on competition metrics (e.g., MAE) rather than a model rater for the primary scoring.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The dataset was screened by at least two ML engineers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 13, chunk 3
+        quote: Each competition in our final set was screened by at least two ML engineers working at leading AI companies.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: There is no documentation classifying every task as solvable or intentionally unsolvable, nor expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The benchmark uses gold submissions and confirms they lead to results consistent with the human leaderboard.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 10, chunk 2
+        quote: confirm that sample and gold submissions lead to results consistent with the human leaderboard.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The docs do not list accepted equivalences or show a non-identical correct answer passing; they only specify the required CSV format.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, refusals, and errors/timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: met
+    rationale: The documentation explicitly states that the grading process is deterministic.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 7
+        quote: The evaluation (task and grading) itself is deterministic
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: unmet
+    rationale: There is no report of parser accuracy against hand-checked outputs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: The documentation does not report results for a null/trivial-agent run or targeted exploit attempts on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

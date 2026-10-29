@@ -1,0 +1,434 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mle-bench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v6
+  repo_commit: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mle-bench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.07095v6
+      ref: v6
+      sha256: ecfad6248e2fdcf4920059d7ecb57b46a01959f57302ab2545e80858c09dfa68
+      chars: 93091
+    - kind: repo
+      url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+      ref: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+      sha256: 81a90b069db3f5b38a52517d5d7f0cae4e4db8270c1a45e6053f924d45b56823
+      chars: 43791
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark is defined as an environment for assessing AI agents' ability to perform difficult machine learning engineering (MLE) tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 1
+        quote: We introduce MLE-bench, an offline Kaggle competition environment for assessing how well AI agents can perform difficult machine learning engineering (MLE) tasks.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark translates the capability into tasks by using offline Kaggle competitions where agents must train a model and produce a submission file.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 17, chunk 0
+        quote: You will be given a machine learning task. You must solve the task by training a model and running the model on the test set to produce a submission file.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text describes how these capabilities could accelerate scientific progress in healthcare and climate science.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 11, chunk 0
+        quote: If AI agents become capable of autonomously performing ML research, they could have numerous positive impacts, such as accelerating scientific progress in healthcare, climate science, and other domains
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: The benchmark was handcrafted by a team of ML engineers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 2, chunk 2
+        quote: MLE-bench – a benchmark of 75 offline Kaggle competitions for evaluating ML engineering capabilities of AI agents, carefully handcrafted by a team of ML engineers.
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: The excerpts do not show the integration of domain literature.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The benchmark uses pre-defined metrics from Kaggle competitions and implements grading logic based on those described evaluation metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 4, chunk 0
+        quote: we implement the grading logic for each competition based on the described evaluation metric in the competition’s description
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 10
+    rationale: A metric floor is mentioned for a specific competition (champs-scalar-coupling), but not as a general benchmark design feature for all tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 25, chunk 3
+        quote: For this metric, the MAE for any group has a floor of ‘1e-9‘
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: The benchmark uses Kaggle leaderboards to compare agent performance against human scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 2, chunk 1
+        quote: Submissions are graded locally and compared against real-world human attempts via the competition’s leaderboard.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: No random performance level is mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses grading code to evaluate submissions locally, and the authors confirm that gold submissions lead to results consistent with human leaderboards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 10, chunk 2
+        quote: confirm that sample and gold submissions lead to results consistent with the human leaderboard.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains differences between MLE-bench and other benchmarks like DSBench and Weco AI.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 9, chunk 3
+        quote: DSBench (Jing et al., 2024) also introduces a benchmark of Kaggle competitions, but much like Weco AI’s dataset, DSBench focuses on data science tasks.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: Input sensitivity is not addressed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository contains grading scripts (grade.py) for competitions and a general submission compilation script.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:FILE LISTING, chunk 13
+        quote: mlebench/competitions/hms-harmful-brain-activity-classification/grade.py
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark uses public Kaggle competitions and provides code to reproduce the datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 11, chunk 1
+        quote: Our benchmark uses publicly available Kaggle competitions. No sensitive data is used, and code is provided to allow users to reproduce datasets
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 10
+    rationale: The benchmark evaluates agents that use LLMs via API (e.g., GPT-4o, Gemini), though it is an agent-level evaluation rather than a direct model API evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 6, chunk 4
+        quote: We attempted to evaluate Gemini-1.5-Pro (Gemini-1.5-Pro-002) but found API calls repeatedly blocked
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The benchmark supports local evaluation via a local validation server and Docker containers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 5, chunk 0
+        quote: we allow agents to access a local validation server to check the validity of their submission
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 15
+    rationale: The benchmark includes a 'familiarity' experiment to investigate if results are inflated due to model memorization of public solutions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 8, chunk 1
+        quote: we investigate the effect of contamination by measuring the correlation between GPT-4o’s familiarity with competition winners’ discussion posts and its performance.
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The authors provide a codebase and specific scripts to reproduce the benchmark and experiments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 11, chunk 1
+        quote: Our codebase is publicly available, including code for reproducing the full benchmark and experiments.
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 15
+    rationale: The benchmark recommends reporting the mean and standard error of the mean (SEM).
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 7
+        quote: Repeat each evaluation with at least 3 seeds and report the Any Medal (%) score as the mean ± one standard error of the mean.
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: The excerpts do not mention assessing the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status (like a CI badge) is mentioned or shown in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: No specific release requirements are specified in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: Multiple requirements.txt files are listed in the repository file listing.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:FILE LISTING, chunk 0
+        quote: agents/aide/requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a 'Benchmarking' section with recommended setup and a 'Lite Evaluation' section, serving as a guide.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 7
+        quote: This section describes a canonical setup for comparing scores on MLE-bench.
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain code snippets to verify the use of in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The repository contains a README and the paper provides extensive details on the benchmark setup.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 0
+        quote: 'Code for the paper ["MLE-Bench: Evaluating Machine Learning Agents on Machine Learning Engineering"]'
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The paper is explicitly stated to be published at ICLR 2025.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 0
+        quote: Published as a conference paper at ICLR 2025
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the curation process, including the selection of 75 competitions and the creation of train/test splits.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 3, chunk 1
+        quote: From this process, we select 75 competitions to include in MLE-bench
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (Kaggle competitions) and the rationale for their selection (complexity levels and ML engineering requirements).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 14, chunk 0
+        quote: The competition requires ML engineering capabilities in order to achieve a medal
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper explicitly recognizes and discusses the limitations of the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 11, chunk 1
+        quote: we recognize the limitations of MLE-bench
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the data collection (scraping Kaggle) and the test environment design (Docker image).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 2, chunk 3
+        quote: A description scraped from the “Overview" and “Data" tabs of the competition website.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper explains that evaluation metrics are based on the original competition descriptions and provides a specific example for one task.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 4, chunk 0
+        quote: we implement the grading logic for each competition based on the described evaluation metric
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes a LICENSE file specifying the MIT License."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: There is no evidence of standardized metadata (e.g., Schema.org or DataCite) being included.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper documents that data is sourced from Kaggle competitions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper documents the process of creating new train/test splits from the original training data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 3, chunk 1
+        quote: we manually create new train and test splits based on the publicly available training data
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper documents the manual annotation of competitions by complexity level.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 14, chunk 1
+        quote: Both the problem category and complexity were manually labeled.
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The paper explains the representativeness by checking that reconstructed test sets are similar to original distributions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 3, chunk 1
+        quote: We take care to ensure that the distributions of the original and reconstructed test sets are similar
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: The excerpts do not mention following a specific recognized documentation standard (e.g., Datasheets for Datasets).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

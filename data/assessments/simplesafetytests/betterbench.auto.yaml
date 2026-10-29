@@ -1,0 +1,418 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: simplesafetytests
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/simplesafetytests/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.08370v2
+      ref: v2
+      sha256: 45995a43eb53159c892204a72c4b6ea449f10db19145ec881934087bf71ba55b
+      chars: 59638
+    - kind: repo
+      url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+      ref: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+      sha256: 34898077ff6c4ea6684cc70535446cb399c68069f16780451fe097f6804d4222
+      chars: 19445
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the concepts it tests, specifically 'Information and Advice Seeking' and 'Instructions and Actions'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 1
+        quote: Information and Advice Seeking   Questions asked of the model that, if answered in an unsafe way, would give the user access to harmful information
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The text describes how the concepts translate to tasks, such as using imperatives for 'Instructions and Actions'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 1
+        quote: In all cases, the statements are formulated as an imperative, where the model is unambiguously instructed to do something
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that the benchmark is a 'first point of testing' to identify vulnerabilities to more sophisticated unsafe prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: we believe there is considerable value in a simple set of tests that can be used as a first point of testing.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 15
+    rationale: The text describes the negative predictive power of the scores, noting that 0% unsafe responses do not guarantee the absence of risks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: if a model returns 0% unsafe responses to SST then it only indicates that no safety risks have been found, rather than guaranteeing the absence of any safety risks.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: The benchmark uses trained annotators with domain expertise for labeling responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 2
+        quote: requires trained annotators with domain expertise given the sensitive, nuanced, and often-contentious nature of AI safety.
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas for the benchmark itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature, as seen in the references to Gardner et al. (2020) and others in the bibliography.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: The benchmark has negative predictive power (Gardner et al., 2020)
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The text mentions using binary labels (safe/unsafe) and flags from APIs, though a detailed 'informed choice' process is not fully elaborated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 7, chunk 0
+        quote: returns a binary label (safe/unsafe).
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: There is no mention of metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: Human performance levels are not provided as a baseline for the benchmark scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: Random performance levels are not included in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark evaluates several automated safety filters and demonstrates that the process could be partly automated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 7, chunk 0
+        quote: Our results demonstrate that the evaluation process could be partly automated.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 0
+    rationale: The excerpts do not explain differences between SST and other specific related benchmarks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 10
+    rationale: The text mentions the value of creating perturbations and variations to test model robustness, which addresses input sensitivity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: there is value in creating perturbations and variations of each prompt using LLMs or other AI-based tools so as to better test model robustness.
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The benchmark is available on GitHub and HuggingFace, which typically include the implementation code.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 2, chunk 3
+        quote: S IMPLE S AFETY T ESTS   is available on GitHub and HuggingFace
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The evaluation data is accessible via GitHub and HuggingFace.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 2, chunk 3
+        quote: S IMPLE S AFETY T ESTS   is available on GitHub and HuggingFace
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The authors explicitly state they prompted closed-source models via commercial APIs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 13, chunk 0
+        quote: We prompted the closed-source models at the end of January 2024, via their respective commercial APIs.
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The authors prompted open models via the Replicate API, which supports local/open model hosting.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 13, chunk 0
+        quote: We prompted the open models via the Replicate API
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: No specific script for replicating the results is mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts report accuracy and percentages but do not mention statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 15
+    rationale: The README includes a clear content warning for sensitive and harmful content.
+    evidence:
+      - source: repo
+        url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+        locator: bertiev/SimpleSafetyTests@d7aee9a9422a:README.md, chunk 0
+        quote: SimpleSafetyTests contains prompts that relate to child abuse, suicide, self-harm and eating disorders
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: The excerpts do not mention a requirements file or equivalent.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: No quick-start guide or demo is mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The excerpts do not provide code or mention in-line code comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: The excerpts do not mention the availability of code documentation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 0
+    rationale: The paper is described as a 'Preprint. Under review.', meaning it has not yet been accepted at a peer-reviewed venue.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 0
+        quote: Preprint. Under review.
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The construction process is documented, explaining that prompts were created by an author and iteratively adjusted and checked.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: The test prompts were originally created by one of the authors, and then iteratively adjusted through multiple rounds of review and editing by the other authors.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The test tasks (harm areas) and the rationale for their selection are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 2, chunk 3
+        quote: These harm areas have been selected based on the severity of the harm that they inflict, their prevalence, and the extensive prior work undertaken to document their effects.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The benchmark includes a specific section on limitations, such as negative predictive power.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 0
+        quote: 4.1   Limitations of S IMPLE S AFETY T ESTS
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The prompt design process is documented, describing the creation and iterative review of synthetic prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: The test prompts were originally created by one of the authors, and then iteratively adjusted through multiple rounds of review and editing by the other authors.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric (labeling responses as unsafe or not) and the use of majority labels are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 2
+        quote: We use the majority labels (taking 2/3 or 3/3 agreement) as the final labels for SST.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The benchmark is specified as having a Creative Commons Attribution 4.0 International Public License.
+    evidence:
+      - source: repo
+        url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+        locator: bertiev/SimpleSafetyTests@d7aee9a9422a:LICENSE, chunk 2
+        quote: Creative Commons Attribution 4.0 International Public License
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: The excerpts do not show the inclusion of standardized metadata.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data sources are documented as being synthetic and handcrafted by the authors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 1
+        quote: The test prompts are all synthetic, and none have been taken from existing datasets or real-world user interactions with LLMs.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not document data preprocessing steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The data annotation process for labeling model responses is documented, including the use of three trained annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 2
+        quote: Three annotators trained in labelling unsafe, risky and dangerous content, labeled the 3,000 model responses
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The representativeness of the data is not explained; it is noted that prompts may not be commonly used by actual users.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts mention that prompts were checked for coherence and validity, but there is no evidence that the overall code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: The paper lists several authors who are the creators of the benchmark, serving as contact persons.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 1, chunk 0
+        quote: Bertie Vidgen 1,2 , Nino Scherrer 1 , Hannah Rose Kirk 2 , Rebecca Qian 1 , Anand Kannappan 1 , Scott A. Hale 2 and Paul Röttger 3
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

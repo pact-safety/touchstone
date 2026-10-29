@@ -1,0 +1,260 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gpqa
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 56686c06f5e19865c153de0fdb11be3890014df7
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gpqa/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.12022v1
+      ref: v1
+      sha256: 2d47befe12703b826b02a05088fb387b4ceae866aa0305f972f0f03aba4eebd0
+      chars: 105883
+    - kind: repo
+      url: https://github.com/idavidrein/gpqa/tree/56686c06f5e19865c153de0fdb11be3890014df7
+      ref: 56686c06f5e19865c153de0fdb11be3890014df7
+      sha256: e3448453642c4b519ffee29193007089c3c99d6c08f12b6fbc328427d83172d8
+      chars: 6415
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: unmet
+    rationale: The excerpts describe the process of creating 'hard and Google-proof' questions, but they do not provide a precise operational definition of the phenomenon being measured (e.g., expert-level reasoning or knowledge) in terms of observable outputs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the text mentions a desire for questions that are 'hard and Google-proof', it does not explicitly state the overall scope of the phenomenon nor does it name specific excluded aspects of that phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The excerpts do not identify sub-components of the phenomenon, nor do they explicitly state that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts mention 'answer-only fine-tuning experiments' to check for spurious features, but they do not identify specific secondary abilities required by the tasks nor report control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While different prompts (Few-Shot CoT, Open-book) are mentioned, there is no report measuring the specific effect of output-format requirements on the resulting scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses a simple regex to extract answers from model responses, but the excerpts indicate the questions are multiple-choice (referencing 'answer choices'), and it explicitly states they do not use the questions in a 'free-response context'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 3, chunk 4
+        quote: the questions can also be used in a free-response context (though we do not do so in this work)
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts describe the target domains (physics, chemistry, biology) and the collection process, but do not document a specific sampling strategy used to ensure representativeness of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The dataset uses a multi-stage validation pipeline where questions are revised based on expert feedback and filtered based on the performance of expert and non-expert validators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 2, chunk 3
+        quote: the question writer then revises their question based on the feedback given by the first expert validator
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the authors test for spurious features using answer-only fine-tuning, there is no mention of a counted subset of permuted or perturbed items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation states that the benchmark is designed to satisfy desiderata for datasets suitable for scalable oversight experiments, and it compares its approach to previous work on reading comprehension and summarization datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 11, chunk 1
+        quote: In this work we hire freelancers from the platform Upwork to write hard questions, as done in previous work on datasets for reading comprehension (Pang et al., 2022b) and summarization (Wang et al., 2022).
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark does not adapt a previous dataset; it creates a new one using a specific pipeline, although it references similar efforts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark does not adapt a previous dataset; it creates a new one.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark does not adapt a previous dataset; it creates a new one.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any contamination tests performed or report their results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The text explicitly mentions the creation of a small unreleased held-out set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 6, chunk 2
+        quote: We remove 18 questions to form a small unreleased held-out set
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: While the authors use a canary string to prevent future leakage, there is no report of a search or overlap check against existing training corpora.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: met
+    rationale: The paper states the item counts for the sets and provides a power calculation regarding the effect size needed to detect differences with over 80% power.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 10, chunk 0
+        quote: containing 546, 448, and 198 questions respectively
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 12, chunk 2
+        quote: requiring large effect sizes (e.g., 50% → 60% accuracy) in order to detect differences with over 80% power
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results table (Table 5) provides point estimates for accuracy but does not include confidence intervals or standard errors for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: While the paper mentions hiring PhDs and using Upwork, it explicitly states that they do not enforce representation of any particular demographics and does not describe the demographics of the raters.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 12, chunk 3
+        quote: we do not enforce representation of any particular region or demographics
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are deterministic ground-truth answers to questions, as the paper refers to 'ground truth labels (e.g., answers to questions)' and 'objectivity of the ground-truth answers'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 11, chunk 0
+        quote: ground truth labels (e.g., answers to questions)
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 12, chunk 1
+        quote: confidence in the objectivity of the ground-truth answers to the questions
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: met
+    rationale: The authors analyze failure modes of expert validators, categorizing them into buckets and providing both descriptions and percentages.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 8, chunk 2
+        quote: We categorize what the expert validators write in their feedback and suggested revisions into eight fine-grained buckets
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not show a breakdown of failures or scores by a named confounder in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: unmet
+    rationale: The excerpts mention 'answer-only fine-tuning experiments' to check for spurious features, but do not report experiments or specific directions aimed at improving model scores on the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to the real-world application of helping scientists make progress in scientific disciplines.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 11, chunk 2
+        quote: we hope approximates the kinds of questions that may be relevant to helping scientists make future progress.
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to QuALITY, noting that QuALITY simulates expertise gaps via short text passages whereas GPQA uses real-world professional training.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 12, chunk 2
+        quote: Instead of a real-world expertise gap coming from years of professional training (as in our dataset), the expertise gap in QuALITY is simulated by familiarity with a long passage of text
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The authors state that the small size of the dataset limits the statistical power for accuracy comparisons.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 12, chunk 2
+        quote: it does not provide a lot of statistical power for accuracy comparisons, requiring large effect sizes
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,280 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: ailuminate
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/ailuminate/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.05731v2
+      ref: v2
+      sha256: 193b98f48e60a55f41c06180ed202982fab6fdd44c546d07a92eeb6357da1433
+      chars: 129165
+    - kind: repo
+      url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      ref: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      sha256: 92e9e4155001884b8cbaa3eb316cf30de8124aacacc96e638d4250619a3fd7d6
+      chars: 23836
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report describes the measured capability as the ability to resist generating undesirable outputs and lists the relevant threat models via a hazard taxonomy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 8, chunk 1
+        quote: This approach assesses each SUT’s ability to resist generating undesirable outputs.
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 14, chunk 0
+        quote: "Table 1: MLCommons’ AI risk and reliability (AIRR) hazard taxonomy."
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: met
+    rationale: The report provides a specific mapping of score levels (bins) to named grades (conclusions about performance).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 0
+        quote: "Table 2: Grading terminology. Named Grade Bin Grade Threshold"
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: unmet
+    rationale: The excerpts provide hazard definitions and grading scales, but do not show a specific example prompt (item stem) and its corresponding model response.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: unmet
+    rationale: The provided excerpts do not state the total number of evaluation items in the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the scoring method (percentage of violating responses and a five-tier scale) and mentions the expected format for SUT outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 0
+        quote: Score S Percentage of violating responses
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 2, chunk 0
+        quote: the benchmark employs an understandable five-tier grading scale (Poor to Excellent)
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report describes the creation of grading criteria via a hazard taxonomy and mentions quality control through human realism spot checks and evaluator performance assessment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 9, chunk 1
+        quote: The AIL UMINATE assessment standard provides a hazard taxonomy with detailed hazard definitions and response-evaluation guidance.
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 15, chunk 1
+        quote: Fifteen volunteers each performed realism spot checks on 30–50 prompts covering the four languages.
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: n/a
+    rationale: The benchmark uses an automatic evaluation mechanism.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 16, chunk 1
+        quote: AIL UMINATE v1.0 uses an automatic evaluation mechanism
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: n/a
+    rationale: The benchmark uses an automatic evaluation mechanism.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 16, chunk 1
+        quote: AIL UMINATE v1.0 uses an automatic evaluation mechanism
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: The benchmark uses an automatic evaluation mechanism.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 16, chunk 1
+        quote: AIL UMINATE v1.0 uses an automatic evaluation mechanism
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: unmet
+    rationale: While it mentions an 'automatic evaluation mechanism' and 'evaluator model', it does not name the specific base model used for grading or its modifications.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The report describes the automated grading process via the ModelBench software architecture, which sends prompts/responses to an evaluator for annotation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 16, chunk 1
+        quote: Send the prompt/response items to the reponse evaluator for annotation.
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report mentions that human ratings are used to assess and improve evaluator performance, and specifically notes a lack of high agreement in one instance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 16, chunk 1
+        quote: a small number of human ratings serve to assess and improve evaluator performance.
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: unmet
+    rationale: The provided excerpts do not specify the exact model versions or snapshot dates of the systems under test.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The report does not state which safety mitigations were active during testing or any adaptations to elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: The report lacks the full prompts, scaffold versions, sampling settings, and number of attempts required by the rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: unmet
+    rationale: The excerpts mention a five-tier grading scale and the existence of results, but do not provide specific representative performance statistics like mean or maximum.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: While the report mentions the goal to 'Prominently display uncertainty estimates', it does not report actual uncertainty measures or the number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report mentions testing automatic evaluators as an alternative to manual annotation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 26, chunk 1
+        quote: we also tested automatic evaluators as a more efficient alternative
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: n/a
+    rationale: The report indicates that human performance levels were not included, meaning no human baseline was used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 43, chunk 1
+        quote: "108: Human performance level is included   N"
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: n/a
+    rationale: The report indicates that human performance levels were not included, meaning no human baseline was used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 43, chunk 1
+        quote: "108: Human performance level is included   N"
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: n/a
+    rationale: The report indicates that human performance levels were not included, meaning no human baseline was used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 43, chunk 1
+        quote: "108: Human performance level is included   N"
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: unmet
+    rationale: The excerpts do not provide a reason why a human baseline would not be appropriate or feasible.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: met
+    rationale: The report provides a 'Reference' AI system for scoring comparison and explains the relative ratio calculation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 0
+        quote: Reference   Ref   AI system for scoring comparison
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: The report describes how grades are calculated and the grading scale, but it does not provide overall conclusions about a specific model's capabilities or risk level connected to specific tables or figures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state what results would overturn its conclusions, nor does it state a pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: While the report mentions that future versions will cover more languages and hazards, it does not provide a forecast of performance with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper describing a framework and initial results, not a report tied to a specific model deployment decision.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 3, chunk 1
+        quote: The AIL UMINATE   benchmark v1.0 delivers a complete evaluation framework
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe any notable disagreements over results interpretation, nor does it explicitly state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

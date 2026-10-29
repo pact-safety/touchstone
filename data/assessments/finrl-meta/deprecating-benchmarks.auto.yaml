@@ -1,0 +1,120 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: finrl-meta
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 286fef6c828a02a2ccf807c05b292d8cb28f8e95
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/finrl-meta/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2211.03107v1
+      ref: v1
+      sha256: 6f8b822edf99b1fda8f1404ecad37ccef10a81143f864bb958b7eb73bfb052a3
+      chars: 88084
+    - kind: repo
+      url: https://github.com/AI4Finance-Foundation/FinRL-Meta/tree/286fef6c828a02a2ccf807c05b292d8cb28f8e95
+      ref: 286fef6c828a02a2ccf807c05b292d8cb28f8e95
+      sha256: ba312c1bb473b325d30a5d03475fb54d11c69b7dea8d4a15d407e34edfc51519
+      chars: 38064
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain any reported scores, leaderboards, or saturation analysis to demonstrate headroom.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark documents a defense against information leakage by separating training, testing, and trading periods, and specifically addresses lag for fundamental features.
+    evidence:
+      - source: repo
+        url: https://github.com/AI4Finance-Foundation/FinRL-Meta/tree/286fef6c828a02a2ccf807c05b292d8cb28f8e95
+        locator: AI4Finance-Foundation/FinRL-Meta@286fef6c828a:README.md, chunk 11
+        quote: This pipeline address the **information leakage problem** by separating the training/testing and trading periods.
+      - source: paper
+        url: https://arxiv.org/abs/2211.03107v1
+        locator: 2211.03107v1 page 6, chunk 1
+        quote: To avoid information leakage, we use a two-month lag beyond the standard quarter end date
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark is for reinforcement learning in trading and explicitly states there are no labels or preset targets, meaning it has no classes that could be skewed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2211.03107v1
+        locator: 2211.03107v1 page 21, chunk 2
+        quote: Is there a label or target associated with each instance? No. There is not label or preset target for each instance.
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The excerpts mention that DataOps helps 'improve data quality' and that users can report bugs via GitHub, but there is no cited audit, validation pass, or error analysis reporting a low error rate for the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to 'enable near real-time paper trading and facilitate the real-world adoption of financial reinforcement learning', a task that remains current for the models used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2211.03107v1
+        locator: 2211.03107v1 page 2, chunk 1
+        quote: We aim to create an infrastructure to enable near real-time paper trading and facilitate the real-world adoption of financial reinforcement learning.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: While the benchmark mentions a 'full observability assumption' and the 'simulation-to-reality gap', it does not explicitly state a comprehensive set of simplifying assumptions for the benchmark as a whole to be validated against current use.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is described as being 'actively maintained by the AI4Finance community', and there is no evidence provided that its labels or task meanings have shifted or become unrepresentative.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2211.03107v1
+        locator: 2211.03107v1 page 2, chunk 0
+        quote: we present an openly accessible FinRL-Meta library that has been actively maintained by the AI4Finance community.
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: While a version number exists in the setup file, it is not visible alongside the benchmark name in main references, nor is there evidence that changes are recorded per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: The excerpts do not mention a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides multiple points of contact (Slack, mailing list, GitHub) and is described as being actively maintained by a community of over 10K members."
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

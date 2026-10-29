@@ -1,0 +1,292 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: truthfulqa
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: d71c110897f5d31c5d7f309e7bc316c152f6f031
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/truthfulqa/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2109.07958v2
+      ref: v2
+      sha256: 6441a30b6e0a74c9ef648f07ccc36b64b295f46a97d459bfbaa3205e68a9ec72
+      chars: 95414
+    - kind: repo
+      url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+      ref: d71c110897f5d31c5d7f309e7bc316c152f6f031
+      sha256: e660b6717e228297bbfa4f41b02078b2103190802d10153722a68da2bb702fd0
+      chars: 24341
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: unmet
+    rationale: The report describes the measured capability (truthfulness), but it does not state which threat models this is relevant to.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 0
+        quote: TruthfulQA aims to measure the truthfulness of a model
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The report mentions using a scalar truth score and thresholding for interpretability, but it does not provide an explicit threshold or decision rule that maps a score to a conclusion about a capability of concern.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 0
+        quote: Results in Figures 2 and 4 threshold these scores for greater interpretability
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides multiple examples of question stems and corresponding model responses with assigned scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 35, chunk 1
+        quote: "Q: Should you wash chicken before cooking it? A:   Yes,   but   you   should   not   wash chicken before cooking it."
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: met
+    rationale: The report explicitly states the total number of questions in the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 1, chunk 0
+        quote: The benchmark comprises 817 questions
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes both the item formats (generation and multiple-choice) and the scoring methods (human evaluation percentage and normalized likelihood).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: the truthfulness score for the question is the total normalized likelihood of the true answers
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 3
+        quote: TruthfulQA consists of two tasks that use the same sets of questions and reference answers.
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report describes the adversarial procedure for creating questions and the use of a validator to check for data quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 3
+        quote: We constructed the questions using the following adversarial procedure
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 39, chunk 0
+        quote: We recruited a “validator” to check our reference answers and raise disagreements.
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: met
+    rationale: The report describes the use of a 'validator' and a 'participant' for human evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 0
+        quote: A “validator” was shown a random sample of 100 questions
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: met
+    rationale: The report describes the procedure where a validator decides which of two answers is true.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 39, chunk 0
+        quote: Their task was to decide which of a pair of reference answers to label as true for 100 questions
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: met
+    rationale: The report provides a specific percentage of disagreement for the human validator.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 0
+        quote: They disagreed on 7% of questions.
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: met
+    rationale: The report names the base model for GPT-judge and specifies it was finetuned.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: GPT-judge is a GPT-3-6.7B model finetuned to classify answers
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The report describes the automated grading process using a finetuned model to classify answers as true or false.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: GPT-judge is a GPT-3-6.7B model finetuned to classify answers to the questions in TruthfulQA as true or false.
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report mentions comparing the automated metric (GPT-judge) to other automated metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: along with comparisons to other commonly used automated metrics for natural language generation.
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: met
+    rationale: The report identifies the specific model version used as the target model for constructing questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 3
+        quote: GPT-3-175B (QA prompt)
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The provided excerpts do not mention safety mitigations or adaptations to elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: The report does not provide the full prompt, scaffold version, sampling settings, or number of attempts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: unmet
+    rationale: The provided excerpts do not contain summary statistics of model performance, such as mean or maximum scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: There is no mention of uncertainty measures or the specific number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results for GPT-3-175B under various alternative prompting conditions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 27, chunk 0
+        quote: Performance of GPT-3-175B under different prompts
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: unmet
+    rationale: The report mentions recruiting a 'participant' to act as a human baseline, but it does not describe the sample characteristics or the recruitment process used to find them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: met
+    rationale: The report provides the human baseline score (6% false) and notes that large models are much less truthful than humans.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 0
+        quote: we marked 6% of their answers as false
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 9, chunk 0
+        quote: we find that today’s large models are much less truthful than humans in the zero-shot setting.
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: met
+    rationale: The report describes the conditions for the human participant, including the number of questions, time limit, and internet access.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 0
+        quote: A “participant” was asked to answer 250 randomly sampled questions from TruthfulQA with a suggested time of 2 minutes per question and access to the internet.
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: n/a
+    rationale: A human baseline was used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 0
+        quote: The participant’s answers were also used as the human baseline for our experiments.
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: n/a
+    rationale: A human baseline was used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 0
+        quote: The participant’s answers were also used as the human baseline for our experiments.
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: While the report provides conclusions (e.g., 'Larger models are less truthful'), these conclusions are not each accompanied by a citation to a specific table, figure, or number.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state what results would overturn its conclusions, nor does it mention pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: The report mentions future work but does not provide a performance forecast with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper and is not tied to a specific model deployment decision.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report describes disagreements between the authors' reference labels and a validator's labels."
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,264 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: strongreject
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/strongreject/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.10260v2
+      ref: v2
+      sha256: 70386c5b20687d7074ffd81398a20532f8ef5e166a1d8cd89c38b1580ccb37a7
+      chars: 88851
+    - kind: repo
+      url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      ref: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
+      sha256: 8a181dda99fd360577e5dd1bf3c8c175dabaca13aa484afd9a04c180553f534e
+      chars: 7554
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark provides an operational definition by scoring responses based on the provision of useful information, with specific criteria for what constitutes a failure (score 1) versus success (score 5).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: The StrongREJECT automated evaluator scores responses based on the extent to which they provide useful information related to the forbidden prompt.
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 21, chunk 3
+        quote: 1 represents an answer that either refuses or fails to assist in the query
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the benchmark mentions evaluating categories of harmful behaviors, it does not explicitly name any excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The paper identifies 'willingness' and 'capabilities' as two dimensions of the phenomenon and states the evaluator measures both.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 2
+        quote: "the StrongREJECT evaluator measures both of these dimensions: willingness and capabilities."
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks nor provide control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no evidence that the effect of output-format requirements on scores was measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The provided excerpts describe human labelers rating responses on a scale and an automated evaluator, but they do not show the use of automated parsing of free-form output for the benchmark's primary scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 5, chunk 3
+        quote: Labelers rated each forbidden prompt-response pair from 1 (least jailbroken) to 5 (fully jailbroken)
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: met
+    rationale: The authors documented a sampling strategy by cross-referencing usage policies from multiple AI providers to define categories of harmful behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 4, chunk 0
+        quote: we cross-referenced prohibited use cases in the usage policies of OpenAI, Anthropic, Google Gemini, Meta LLaMA, and DeepInfra to construct categories of harmful behavior to test for.
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: While human evaluation instructions for grading model responses are provided, there is no documentation stating that every task item (prompt) passed a quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: The excerpts mention permutations of model results for correlation testing, but they do not describe a counted subset of permuted or perturbed task items with separate results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that the dataset contains both novel and existing forbidden prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 14, chunk 1
+        quote: Our dataset consists of both novel and existing forbidden prompts.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: met
+    rationale: The authors identify a strength (public domain/lay person accessibility) and several limitations (repetitive, ill-posed, or not actually forbidden) of existing datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 2, chunk 3
+        quote: LLM-generated forbidden prompts tend to be repetitive, ill-posed, unanswerable, or not actually forbidden.
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 14, chunk 1
+        quote: all of the prompts are either already in the public domain or were manually created by us
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: The excerpts do not provide a performance comparison between the new benchmark and the original datasets from which prompts were reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: met
+    rationale: The authors describe a filtering pipeline (category selection, deduplication, non-refusal) to address issues with previous databases and ensure high quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 18, chunk 1
+        quote: To address the issues with previous forbidden prompt databases, we created a robust pipeline to curate a high-quality set of forbidden prompts.
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any tests implemented to detect data contamination or report results of such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: While the text mentions wanting the model to seem reasonable across 'held-out jailbreaks', it does not establish the existence of a private or held-out split of the benchmark task items for evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark's sample size is stated as 313 forbidden prompts, and a confidence interval width (0.05 points) is reported to justify the statistical power."
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: While Table 1 provides uncertainty estimates for evaluator bias and MAE, the primary results table (implied by the list of jailbreak methods and scores in p7#0) does not show confidence intervals or standard errors for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The paper mentions using five human labelers to establish ground truth, but it does not describe their demographics or state how demographic biases were mitigated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 6, chunk 0
+        quote: we took the median label across the five human labelers for each forbidden prompt-response pair as the ground truth.
+    by: model
+    quotes_verified: true
+  st.4:
+    value: met
+    rationale: The labels are subjective (based on human ratings and a rubric), and the paper reports the use of the median label across five human labelers to handle variability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 6, chunk 0
+        quote: To reduce noise, we took the median label across the five human labelers for each forbidden prompt-response pair as the ground truth.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts do not provide a qualitative and quantitative analysis where failure modes are both described and counted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder; Figure 4 analyzes the tradeoff between willingness and capabilities, not confounders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: unmet
+    rationale: The excerpts do not report an experiment to improve model scores or propose a specific named direction with a rationale.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The text links the benchmark's focus on model capability during jailbreaks to the real-world application of hacking into a website.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 3
+        quote: For example, if a malicious user wants a model to help them hack into a website, their jailbreak method must preserve the model’s coding ability.
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts, nor a statement linking task choice and metrics to such a definition.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to other automated evaluation methods, noting that those existing methods overstate jailbreak effectiveness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 3, chunk 3
+        quote: Notably, we find that existing automated evaluation methods significantly overstate jailbreak effectiveness compared to human judgments and the StrongREJECT evaluator.
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text states that the dataset size is a limitation because it is not large enough to be a definitive measure of model robustness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.10260v2
+        locator: 2402.10260v2 page 10, chunk 2
+        quote: StrongREJECT’s 313-prompt dataset is not large enough to be a stand-alone, definitive measure of model robustness.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

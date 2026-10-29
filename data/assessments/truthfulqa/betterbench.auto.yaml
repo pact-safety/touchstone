@@ -1,0 +1,406 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: truthfulqa
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: d71c110897f5d31c5d7f309e7bc316c152f6f031
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/truthfulqa/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2109.07958v2
+      ref: v2
+      sha256: 6441a30b6e0a74c9ef648f07ccc36b64b295f46a97d459bfbaa3205e68a9ec72
+      chars: 95414
+    - kind: repo
+      url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+      ref: d71c110897f5d31c5d7f309e7bc316c152f6f031
+      sha256: e660b6717e228297bbfa4f41b02078b2103190802d10153722a68da2bb702fd0
+      chars: 24341
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark defines the truthfulness objective as a claim counting as true if it describes the literal truth about the real world."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark translates the concept of truthfulness into a task of measuring whether models produce false statements in response to questions designed to elicit imitative falsehoods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 23, chunk 0
+        quote: We are primarily interested in using the generation task to measure how often large language models produce false statements.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text describes the real-world relevance of truthfulness in applications like news generation, summarization, and conversational dialog.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 8, chunk 3
+        quote: Truthfulness is relevant to many applications including generating news stories (Kreps et al., 2020; Zellers et al., 2019), summarization
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The text provides guidance on how to interpret scores, noting that poor performance indicates a lack of robustness and that the benchmark may not generalize to specialized domains."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: The excerpts mention authors and external researchers for validation, but do not specify the involvement of domain experts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark integrates domain literature by citing numerous papers on factuality, veracity, and truthfulness."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The benchmark uses multiple metrics (GPT-judge, BLEURT, etc.) and discusses the validation accuracy of the automated GPT-judge metric."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: No metric floors or ceilings are explicitly defined.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: A human baseline is included and used for experiments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 0
+        quote: The participant’s answers were also used as the human baseline for our experiments.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): A random performance level is included in the multiple-choice performance figure."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The GPT-judge automated evaluation is validated against human evaluations with high accuracy."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 10
+    rationale: The benchmark mentions that most other benchmarks are multiple choice while some require short answers, and lists other factual benchmarks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 8, chunk 3
+        quote: While most benchmarks are multiple choice, some require models to generate short (single-phrase) answers
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: Input sensitivity (e.g., prompt variations) is mentioned in the context of experiments, but not addressed as a design consideration for the benchmark's robustness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository contains an evaluation script 'evaluate.py' as mentioned in the README.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 7
+        quote: answers and scores can be generated by running `truthfulqa/evaluate.py`
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark questions and reference answers are provided in a CSV file in the repository.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 0
+        quote: The full set of benchmark questions and reference answers is contained in `TruthfulQA.csv`.
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The benchmark supports GPT-3 models via the OpenAI API.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 9
+        quote: When running GPT-3 models or using GPT-3 metrics (`judge`, `info`), you will be asked for your OpenAI API key
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The README provides instructions for local installation and running models on a GPU.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 7
+        quote: To run models on GPU, install [PyTorch](https://pytorch.org/) with CUDA.
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a specific task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: While evaluation code is provided, there is no specific script mentioned to replicate the exact results reported in the paper.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 15
+    rationale: The paper reports standard error for model performance on the generation task.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 23, chunk 0
+        quote: Error bars show ± 1 standard error.
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: The excerpts do not show an assessment of the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A requirements.txt file is listed in the file listing and mentioned in the README.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:FILE LISTING, chunk 0
+        quote: requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: A demo notebook is provided and linked in the README.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:FILE LISTING, chunk 0
+        quote: TruthfulQA-demo.ipynb
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No specific code documentation (like API docs or docstrings) is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The benchmark is introduced in a paper (2109.07958v2) which is cited as the source of the benchmark.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 0
+        quote: The paper introducing the benchmark can be found [here](https://arxiv.org/abs/2109.07958).
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the construction of the benchmark, including the number of questions and categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 2, chunk 1
+        quote: It comprises 817 questions that span 38 categories.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (zero-shot generation and multiple-choice) and the rationale (testing imitative falsehoods).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 2
+        quote: the questions test a weakness to imitative falsehoods
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 15
+    rationale: The paper defines the normative standard for truthfulness used in the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 0
+        quote: We use a strict standard, where a claim counts as true if it describes the literal truth about the real world.
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper documents limitations, such as not covering long-form generation or interactive settings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 9, chunk 1
+        quote: TruthfulQA does not cover long-form generation (e.g. news articles) or interactive settings
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The prompt design process is documented, including different prompt types like 'help' and 'harm'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 28, chunk 1
+        quote: The helpful prompt instructs GPT-3 to be truthful. The harmful prompt gives examples of answering questions like a conspiracy theorist.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The evaluation metrics (GPT-judge, BLEURT, ROUGE, BLEU) are documented in both the paper and README."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The Apache 2.0 license is specified in the README and LICENSE file.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 0
+        quote: '"license": Apache 2.0,'
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): Standardized metadata is provided in the README using schema.org format."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents that questions were written by authors and reference answers were taken from Wikipedia or other sources.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 32, chunk 0
+        quote: We take a set of true answers directly from Wikipedia (or the listed source).
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not document specific data preprocessing steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The process for constructing and verifying reference answers is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 32, chunk 0
+        quote: Reference answers for each question in TruthfulQA are constructed as follows
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The paper explains the representativeness of the data by covering 38 diverse categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 2
+        quote: The questions are diverse in style and cover 38 categories
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Datasheets for Datasets).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: While the license mentions 'issue tracking systems' as a means of communication for contributions, there is no evidence of a maintained feedback channel for users.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

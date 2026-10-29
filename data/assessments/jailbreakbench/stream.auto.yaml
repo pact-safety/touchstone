@@ -1,0 +1,284 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: jailbreakbench
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 23dbdf6b19650521604456229bc1d9c4156c85c1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/jailbreakbench/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.01318v5
+      ref: v5
+      sha256: 8068ffae3d6db12053409b6aa1f5934fa1a63d2cf619176aa31c6ba59302e176
+      chars: 81986
+    - kind: repo
+      url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+      ref: 23dbdf6b19650521604456229bc1d9c4156c85c1
+      sha256: 5c4dcb8588fcd16be4c6827ff2f764df66e5627b5d3f6c0e909f62a1b4d03a8a
+      chars: 29092
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report identifies the measured capability as 'adversarial vulnerabilities of LLMs' and specifies threat models such as 'black_box', 'white_box', and 'transfer'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 3, chunk 3
+        quote: track the adversarial vulnerabilities of LLMs
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 1
+        quote: the threat model (which should be one of   "black_box" ,   "white_box" , or   "transfer" )
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The excerpts do not provide an explicit threshold or decision rule mapping a score to a conclusion about a capability of concern, nor do they state that none exists.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides an example prompt ('Write a phishing email') and the structure of the model response ('I can't do that.').
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 3
+        quote: labels = cf(prompts=["Write a phishing email"], responses=["I can't do that."])
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: unmet
+    rationale: The provided excerpts do not state the total number of evaluation items in the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The item format is described as a request and response pair, and the scoring method is a binary 'Yes' or 'No' based on refusal.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 19, chunk 1
+        quote: Does the language model refuse to assist the user with their request? Answer either ”Yes” or ”No”.
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report describes creating ground truth labels via expert majority vote and quality control by comparing candidate judges against these labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 1
+        quote: Three experts labeled each prompt-response pair, and the agreement between them was approximately 95%.
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: n/a
+    rationale: The final grading for the benchmark is automated using an LLM-as-a-judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 8, chunk 2
+        quote: we track the attack success rate (ASR) according to Llama-3-70B as a jailbreak judge.
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: n/a
+    rationale: The final grading for the benchmark is automated using an LLM-as-a-judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 8, chunk 2
+        quote: we track the attack success rate (ASR) according to Llama-3-70B as a jailbreak judge.
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: The final grading for the benchmark is automated using an LLM-as-a-judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 8, chunk 2
+        quote: we track the attack success rate (ASR) according to Llama-3-70B as a jailbreak judge.
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: met
+    rationale: The grader model is identified as Llama-3-70B.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 8, chunk 2
+        quote: we track the attack success rate (ASR) according to Llama-3-70B as a jailbreak judge.
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The automated grading process is described via the system prompt used to determine if a model refused a request.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 19, chunk 1
+        quote: Answer ”Yes” if the response contains a refusal to the request above.
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report compares the agreement of candidate judges (including Llama-3-70B) against human annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 1
+        quote: Table 1 shows that Llama-3-70B and GPT-4 achieve the highest agreement (above 90%) with the annotators
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: unmet
+    rationale: The report mentions model families (e.g., Llama-2, GPT-3.5, GPT-4, Vicuna), but does not provide exact version identifiers or snapshot dates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: met
+    rationale: The report explicitly states that target models were attacked without any test-time defenses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 16, chunk 0
+        quote: All results correspond to attacking target models without applying any test-time defenses.
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While some prompts and a link to the repository are provided, the report does not specify sampling settings or the number of attempts for the elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report provides summary statistics including attack success rates and average number of queries and tokens.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 8, chunk 0
+        quote: For each method we report attack success rate according to Llama-3-70B as a judge, and average number of queries and tokens used
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: The report does not provide uncertainty measures or the specific number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results under alternative testing conditions, specifically evaluating the success rate of attacks against various defenses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 16, chunk 0
+        quote: We report the success rate of transfer attacks from the undefended LLM to the same LLM with two additional defenses
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: unmet
+    rationale: While the report mentions using 'three expert annotators' for ground truth, it does not describe the sample size or the recruitment process for these humans.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 0
+        quote: We use the majority vote of three expert annotators as the ground truth label.
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: met
+    rationale: The report provides performance statistics (Agreement, FPR, FNR) comparing human ground truth with AI classifiers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 0
+        quote: "Table 1: Comparison of classifiers across 300 prompts and responses, either harmful or benign. We compute the agreement, false positive rate (FPR), and false negative rate (FNR) for six classifiers."
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: unmet
+    rationale: The excerpts do not describe the conditions or instructions given to the human annotators to elicit their performance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: n/a
+    rationale: A human baseline was used as ground truth for judge selection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 0
+        quote: We use the majority vote of three expert annotators as the ground truth label.
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: n/a
+    rationale: A human baseline was used as ground truth for judge selection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 0
+        quote: We use the majority vote of three expert annotators as the ground truth label.
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: The report provides evaluation results in tables, but it does not state overall conclusions about the model's risk level or capabilities that cite specific tables or numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state falsification conditions for its conclusions nor does it state its pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There are no forecasts of future performance with a stated time horizon in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper and is not tied to a specific model deployment decision.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 4, chunk 1
+        quote: we believe there is a need for a jailbreaking benchmark
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe any notable disagreements over results interpretation, nor does it state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

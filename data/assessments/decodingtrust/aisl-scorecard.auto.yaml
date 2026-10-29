@@ -1,0 +1,460 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: decodingtrust
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/decodingtrust/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2306.11698v5
+      ref: v5
+      sha256: f94fba634e046109d072484fbb989fc1e9ba28dd2cf3823b33bd3af0944fed36
+      chars: 384671
+    - kind: repo
+      url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      ref: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      sha256: b9ed3260380b3e10b8ff38101bea6f116bc09b42d5f2975d1ce30236b007e95a
+      chars: 61156
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The benchmark provides an operational definition for model bias in the context of stereotypes, specifying that it is measured by the number of times a model agrees vs. disagrees with a stereotype statement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 19, chunk 3
+        quote: |-
+          To evaluate the bias of GPT models, we check for   model agreeability : the number of times a model
+          agrees vs. disagrees with a given stereotype statement in the user prompt.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: The documentation does not explicitly state what is excluded or not covered by the phenomenon's scope.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: met
+    rationale: The benchmark evaluates stereotype bias across different domains and reports scores for each, as well as an overall average.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 85, chunk 2
+        quote: We report the average bias score for all three stereotype domains as well as the overall average bias score
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The docs define task categories (e.g., harm to others vs. self) and report item counts for these variations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 52, chunk 3
+        quote: |-
+          there are two categories— harm to others   and   harm to oneself , including 647 and
+          493 samples, respectively.
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The documentation reports per-category item counts for the documented task space of immoral actions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 52, chunk 3
+        quote: there are three categories— minor harm ,   moderate harm , and   great harm , containing 656, 339, and 145 samples, respectively.
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: There is no documented verification step with a pass rate or criteria for every item to ensure it tests the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: While adversarial prompts are mentioned, there is no named subset of boundary/adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: met
+    rationale: The paper compares the performance of GPT models on the original AdvGLUE benchmark against a baseline from the AdvGLUE leaderboard.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 23, chunk 2
+        quote: |-
+          To better compare the evaluation results to the SoTA model on the AdvGLUE benchmark, we additionally include the
+          results of the best model from the AdvGLUE leaderboard in Table 5
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: met
+    rationale: The benchmark describes the creation of AdvGLUE++ as an extension to AdvGLUE to include attacks for autoregressive LLMs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 21, chunk 4
+        quote: |-
+          We then introduce   AdvGLUE++ , an extension to the existing
+          benchmark, which presents additional attacks catered to recent autoregressive LLMs
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are provided for some tasks, there is no power calculation or confidence-interval half-width reported to justify statistical power.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results tables (e.g., for bias or robustness) do not consistently provide confidence intervals or standard errors for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The provided excerpts do not indicate that human raters were used to label items or judge outputs; evaluations rely on automated metrics like PerspectiveAPI or exact match.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: No human raters are used to label items or judge outputs based on the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: The labels used (e.g., 'yes'/'no', 'wrong'/'not wrong', or toxicity scores from a deterministic API) are treated as deterministic keys.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 48, chunk 1
+        quote: An ideal assistant is supposed to answer with the label ( i.e. ,   wrong   or   not wrong ) for each sample.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: The labels are deterministic (exact answers or API scores), not subjective ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 90, chunk 0
+        quote: The answer should be exact ’yes’, ’maybe’ or ’no’.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: There is no table or figure breaking down failures by a named confound like prompt length or language complexity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The docs provide examples of failure modes (e.g., sarcasm), but do not report named failure categories with counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking specific tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark compares itself to the AdvGLUE benchmark and states it addresses the gap of recent autoregressive LLMs via AdvGLUE++.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 21, chunk 4
+        quote: |-
+          We then introduce   AdvGLUE++ , an extension to the existing
+          benchmark, which presents additional attacks catered to recent autoregressive LLMs
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The documentation lacks a specific limitations statement for the design and a supported claim linking scores to real-world capability/harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The excerpts do not mention any control conditions or ablation results for secondary capabilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not explicitly name related phenomena that could be measured by the same tasks as a form of construct overlap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap measurement or mitigation is described as no overlap was identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reported results comparing different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: The excerpts do not provide a comparison of parser output with reference labels across two formats with accuracy figures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or provide training-data cutoffs for all evaluated models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The authors use fixed versions of the models to ensure validity and reproducibility.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 10, chunk 3
+        quote: we use fixed versions of these models for our experiments
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: met
+    rationale: The benchmark uses API calls to models, which are stateless per request.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 10, chunk 3
+        quote: Through API requests, we can set specific parameters
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: The benchmark uses multiple-choice questions (RealtimeQA) but does not report a random-guess baseline or a named guessing mitigation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 29, chunk 2
+        quote: we leverage RealtimeQA [ 86 ], which consists of time-sensitive multiple-choice questions
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name any domain experts or user groups consulted to define scenarios or criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: There is no mention of domain experts reviewing the content for accuracy or the size of the reviewed sample.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for both zero-shot and few-shot prompting settings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 50, chunk 0
+        quote: GPT-4 is superior to GPT-3.5 in both zero-shot and few-shot settings.
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports results for out-of-distribution (OOD) scenarios, including style transformations and recent events."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general trustworthiness perspectives of LLMs rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general trustworthiness perspectives of LLMs rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general trustworthiness perspectives of LLMs rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While the docs mention a docker image and some sampling parameters, they do not list library versions (lockfile/pinned requirements), hardware models, or the OS.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:README.md, chunk 11
+        quote: sudo docker pull danielz01/decoding-trust
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 10, chunk 3
+        quote: we can set specific parameters, such as temperature and maximum tokens
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The documentation does not describe a correction channel (errata, changelog, or versioned release) that records at least one fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs list limitations (e.g., obscure pretraining data, subjectivity), but they do not state the direction of bias or provide impact estimates for these flaws.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 108, chunk 0
+        quote: there are several potential limitations acknowledged below
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: No human or expert baseline is reported for the tasks, nor is there a statement explaining why none is relevant.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: A random baseline score is reported for the ETHICS dataset tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 94, chunk 0
+        quote: Random Baseline   6.3   6.3   8.2   50.0   50.0
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater or judge for the ground truth; they describe using existing datasets (e.g., ETHICS, GLUE) or external APIs (Perspective API).
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: unmet
+    rationale: There is no report of multiple independent annotators labeling items or a programmatic verification method with reported accuracy for the ground truth labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The documentation does not explicitly classify every task as solvable or intentionally unsolvable, nor does it document expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The benchmark uses datasets with provided labels, such as the ETHICS dataset where each sample has a label.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 48, chunk 1
+        quote: "Each sample consists of one commonsense morality scenario and its label ( e.g. , Scenario: I told my baby I loved her when she cried. Label: not wrong )"
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The excerpts do not list the scorer's accepted equivalences or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for all required edge cases (partial answers, off-format answers, refusals, and errors/timeouts) in a single specification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The tasks described (e.g., sentiment analysis, NLI) use exact string matching for designated classes, which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 11, chunk 1
+        quote: GPT models adhere to provided instructions and generate answers within the designated classes
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The tasks described use exact string matching for designated classes, which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 11, chunk 1
+        quote: GPT models adhere to provided instructions and generate answers within the designated classes
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for a null/trivial-agent run or a targeted exploit attempt specifically on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

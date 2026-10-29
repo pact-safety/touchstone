@@ -1,0 +1,490 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: swe-lancer
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 4afbde31ba075992ffd96209f6533de8e450becd
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/swe-lancer/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2502.12115v4
+      ref: v4
+      sha256: 482452e87e93468c36d0f229da6a5999663a4f6e0656a50a8c5938c60a4eeb11
+      chars: 110399
+    - kind: repo
+      url: https://github.com/openai/SWELancer-Benchmark/tree/4afbde31ba075992ffd96209f6533de8e450becd
+      ref: 4afbde31ba075992ffd96209f6533de8e450becd
+      sha256: c76421ae8898c49b5cf9b23bd108a6ad3580c64d19b49c7c621935412b798e62
+      chars: 213
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The benchmark defines the target phenomenon as real-world freelance software engineering work, with observable evidence being the generation of code patches for IC SWE tasks and the selection of the best proposal for SWE Manager tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 2
+        quote: a benchmark for evaluating model performance on real-world, freelance software engineering work.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation specifies the scope as full-stack engineering work and explicitly excludes infrastructure engineering tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: infrastructure engineering tasks (e.g. refining Kubernetes cluster architectures and debugging pod failures, node crashes, or networking problems) are underrepresented
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: met
+    rationale: The benchmark identifies IC SWE and SWE Manager as distinct task types and reports separate pass rates for each in the results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 6, chunk 0
+        quote: outperforming the next-best model (o1) by 9.7% on IC SWE (Diamond) tasks and 3.4% on SWE Manager (Diamond) tasks.
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by categories (e.g., Bug Fixes, New Features) and item counts are reported for these categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 29, chunk 0
+        quote: Table 7. Number of tasks by task nature within SWE-Lancer Diamond and SWE-Lancer Full datasets.
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation reports per-category item counts for the task space in Table 7."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: Tasks were screened by at least three experienced human software engineers based on specific criteria, and a rating system was used to verify they were well-specified.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 1
+        quote: Each task in our final set was screened by at least three experienced human software engineers.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark uses original tasks sourced from Upwork and the Expensify repository rather than adapting a prior benchmark dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are provided, there is no power calculation or confidence-interval half-width compared to the smallest model gap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: Confidence intervals are reported for earnings for some models, but not for every score in the main results tables.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 2
+        quote: The 95% confidence interval for GPT-4o was $194.31 ± $17.31, while o1’s was $1,623.76 ± $56.68.
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: met
+    rationale: The documentation reproduces the rubric used by human engineers to rate if an issue was well-specified.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 17, chunk 0
+        quote: Please assign a rating from 0 to 3 using the rubric below. 0- The issue is well-specified, and it is clear what is required for a successful solution.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a check for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: "Labels are deterministic: IC SWE tasks are graded by end-to-end tests (execution-based), and SWE Manager tasks are compared against the original manager's choice."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 1, chunk 3
+        quote: SWE-Lancer evaluates IC SWE tasks using end-to-end tests created by a team of professional software engineers.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Labels are deterministic (test pass/fail or match ground truth), not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 1, chunk 3
+        quote: SWE-Lancer evaluates IC SWE tasks using end-to-end tests created by a team of professional software engineers.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: There is no table or figure breaking down failures by a named confound like format or length.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: met
+    rationale: The documentation reports named failure categories (e.g., poor instruction following, giving up early) for open-source models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 38, chunk 2
+        quote: Below, we summarize the common failure modes we observed from Deepseek-R1 and Llama 3.3 70B
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement naming the tasks, each metric, and the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to SWE-Bench Verified, noting that SWE-Lancer improves upon it by including open-ended problems and full-stack development.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 15, chunk 3
+        quote: on SWE-Bench Verified... GPT-4o currently scores 38.8%... but only 8% on SWE-Lancer Diamond IC SWE tasks – likely because SWE-Bench Verified focuses on bugfixes, and SWE-Lancer includes open-ended problems
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The docs provide a limitations statement regarding repository diversity and link performance to real-world economic value/automation potential.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 10, chunk 0
+        quote: SWE-Lancer provides a concrete framework to start tying model capabilities to potential real-world software automation potential
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: While the paper mentions ablations on tool affordances, it does not name specific secondary capabilities (like reading comprehension) and provide control conditions or results showing they do not drive scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation identifies that the benchmark includes open-ended problems and full-stack development, which distinguishes it from benchmarks focusing solely on bugfixes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 15, chunk 3
+        quote: SWE-Lancer includes open-ended problems (adding new features, reliability) and full-stack development
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: The documentation does not quantify the overlap with related phenomena or describe specific mitigation steps for that overlap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The paper specifies a JSON output format for manager tasks but does not report results under different format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no report of a prompt-perturbation experiment or a variance measure for sensitivity to wording changes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: The evaluation of SWE Management tasks involves matching the model's selection to ground truth, and the outcomes for IC SWE tasks are verified by end-to-end tests (environment state), meaning free-form parsing is not the primary scoring mechanism for the core phenomenon.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 0
+        quote: The model’s selection is evaluated by assessing whether it matches ground truth.
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper mentions that contamination is possible depending on cutoff dates and suggests filtering, but it does not report a specific overlap check result or state the training-data cutoff for every evaluated model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 1
+        quote: Depending on model cutoff date, contamination in training data is possible.
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The agents run in a Docker container with a preconfigured repository, which constitutes a static snapshot of the environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 2
+        quote: agents run in a Docker container with the repository preconfigured
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: met
+    rationale: The use of Docker containers for agents implies a reset of state per run, as they are run in a container with a preconfigured repository.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 2
+        quote: agents run in a Docker container with the repository preconfigured
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The IC SWE tasks are not multiple choice; they require modifying code and passing end-to-end tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 1
+        quote: IC SWE tasks in the Diamond set require modifying 2 files and 69 lines of code
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: met
+    rationale: The documentation states that 100 professional software engineers reviewed tasks for clarity, specificity, and executability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 0
+        quote: 100 professional software engineers reviewed the tasks, proposals, and codebase for clarity, specificity, and executability.
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: Professional software engineers reviewed the end-to-end tests, and the text specifies that each test was triple-verified.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 1
+        quote: Each test is triple-verified by professional software engineers.
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The excerpts do not report results under more than one prompting or elicitation setting; they only mention a 'default scaffold'.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There is no report of results as a separate slice for a named stress condition or shift differing from the train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general software engineering tasks from a repository rather than claiming to evaluate a specific deployed application product configuration.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general software engineering tasks from a repository rather than claiming to evaluate a specific deployed application product configuration.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general software engineering tasks from a repository rather than claiming to evaluate a specific deployed application product configuration.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation mentions a Docker image and refers to Appendix A5 for environment details, but the provided excerpts do not list sampling parameters, library versions, hardware models, or the OS.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: While the docs describe quality-control steps (human screening), they do not describe a correction channel like a changelog or errata that records at least one fix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 1
+        quote: Each task in our final set was screened by at least three experienced human software engineers.
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs name contamination as a limitation, but they do not state its direction of bias, provide an impact estimate, or specify which conclusions remain valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 1
+        quote: Contamination is a common limitation of coding benchmarks that rely on open-source repositories.
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark reports a human baseline for managerial tasks, assessing model decisions against the choices of the original hired engineering managers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 1, chunk 0
+        quote: managerial decisions are assessed against the choices of the original hired engineering managers.
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: The excerpts report performance for frontier models (GPT-4o, o1, Claude 3.5 Sonnet), but no trivial or minimal baseline (e.g., random or zero-shot naive) is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater; IC SWE tasks use end-to-end tests and SWE Manager tasks are assessed against original manager choices.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: IC SWE tasks were screened by at least three human engineers, and the text reports a validation campaign for Manager tasks with 99% agreement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 1
+        quote: Each task in our final set was screened by at least three experienced human software engineers.
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 0
+        quote: An additional validation campaign with experienced software engineers showed 99% agreement with the original chosen solutions.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: While tasks are sourced from resolved issues, there is no documentation classifying every task as solvable or intentionally unsolvable with expected behaviors for the latter.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: Reference solutions are based on original PRs that resolved the issues, and these were confirmed by executing locally.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 1
+        quote: The PR that resolved the issue actually fixes it – this fix is confirmed by executing locally.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list specific accepted equivalences or show a non-identical correct answer passing the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the specific scoring outcomes for partial answers, off-format answers, refusals, and errors/timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: Scoring for IC SWE tasks is based on end-to-end browser automation tests, not parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 1, chunk 3
+        quote: SWE-Lancer evaluates IC SWE tasks using end-to-end tests created by a team of professional software engineers. These end-to-end tests use browser automation to verify application behavior
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: Scoring for IC SWE tasks is based on end-to-end browser automation tests, not parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 1, chunk 3
+        quote: SWE-Lancer evaluates IC SWE tasks using end-to-end tests created by a team of professional software engineers. These end-to-end tests use browser automation to verify application behavior
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: While the paper claims the benchmark is 'un-hackable' and resistant to cheating, it does not report results for a null-agent run or a targeted exploit attempt on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

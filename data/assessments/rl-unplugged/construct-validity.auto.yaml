@@ -1,0 +1,238 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: rl-unplugged
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/rl-unplugged/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2006.13888v4
+      ref: v4
+      sha256: 18f7aed76d303a02d46056682fe91b3386140944d30105b395fe8bd533cfab76
+      chars: 77706
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: unmet
+    rationale: The excerpts describe the benchmark suite and the data format, but they do not provide a precise operational definition of the phenomenon being measured that specifies which observable outputs count as evidence.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.2:
+    value: met
+    rationale: The scope is stated to include a range of task domains like Atari and robotics, and specific excluded games (e.g., AirRaid) are named.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 3, chunk 1
+        quote: we include a wide range of task domains, including Atari games and simulated robotics tasks
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 19, chunk 1
+        quote: We have excluded games from our suite such as AirRaid, JourneyEscape
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The paper mentions different task domains and difficulty levels, but it does not explicitly state the phenomenon is unitary nor does it name sub-components that are scored separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts mention that the benchmark covers properties like action space and exploration difficulty, but they do not report control conditions or ablation results for these secondary abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no mention of measuring the effect of output-format requirements on model performance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses a unified API for datasets consisting of tuples of state, action, and reward, and does not use automated parsing of free-form output.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors document a sampling strategy for Atari games, ordering them by difficulty and picking every fifth game to ensure a diverse set."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: For the Atari dataset, the authors only included games where the generating agent's performance was significantly better than a random policy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 6, chunk 2
+        quote: we only include games where the online DQN’s performance that has generated the dataset was significantly better than the random policy.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items with results reported separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly mentions reaching out to include the DQN Replay dataset from Agarwal et al. [2020] as part of the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 9, chunk 1
+        quote: The first is [Agarwal et al., 2020] which release DQN Replay dataset for Atari 2600 games, a challenging and well known RL benchmark. We have reached out to the authors to include this dataset as part of our benchmark.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: While the text mentions reusing datasets or training schemes from prior work (e.g., Merel et al.), it does not analyze and report both a strength and a limitation of that prior work.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: The excerpts do not provide a performance comparison between the new benchmark and the original prior datasets/benchmarks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The text mentions modifications (e.g., sub-sampling dataset sizes), but it does not explain how these specific modifications improve construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any contamination tests or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The benchmark implements a split of tasks between online and offline policy selection, and Figure 2 explicitly shows a split into Training, Validation, and Testing data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 4, chunk 0
+        quote: Training   Validation   Testing
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the text mentions dataset sizes are in Table 1 and Table 2, it does not provide a power calculation or confidence-interval width relative to the smallest claimed gap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The excerpts do not show a results table where every score has a confidence interval or standard error; it only mentions reporting absolute normalized % performance and medians.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark uses datasets from games and simulated motor control, and no human raters are mentioned as being used for scoring.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels (scores) are based on episodic rewards and deterministic environment checks (e.g., Atari scores, motor control), not subjective human or model ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 19, chunk 2
+        quote: '"score" corresponds to the episodic reward that the offline agent receives in the environment'
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts do not provide a qualitative and quantitative analysis where failure modes are both described and counted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet according to the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors propose a specific direction for future work, suggesting the combination of behavior regularization and robust off-policy algorithms.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 8, chunk 3
+        quote: Combining behavior regularization methods ( e.g. , BCQ) with robust off-policy algorithms (REM, IQN) is a promising direction for future work.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark links its tasks (simulated robotics and Atari) to real-world applications like robots and dialog by addressing properties like partial observability and high-dimensional sensory streams.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 2, chunk 1
+        quote: Important properties of potential real-world application domains such as partial observability, high-dimensional sensory streams such as images, diverse action spaces, exploration problems, non-stationarity, and stochasticity are under-represented in the current offline RL literature.
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts, and no statement links task choice and metrics to such a definition.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to the work of [Fu et al., 2020], noting that RL Unplugged includes tasks that test memory and representation learning whereas the other's tasks are all from fully observable MDPs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 9, chunk 2
+        quote: Unlike our benchmark which includes tasks that test memory and representation learning, their tasks are all from fully observable MDPs
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: The excerpts discuss implementation difficulties and reproducibility, but do not state a limitation or trade-off concerning what the scores specifically do or do not measure regarding construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

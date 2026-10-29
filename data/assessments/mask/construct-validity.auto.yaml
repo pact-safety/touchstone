@@ -1,0 +1,276 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mask
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mask/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.03750v3
+      ref: v3
+      sha256: 9bcec5f619dcb60b733cce61f4e2ed46d54e87fd7912498c395b8b59e617d42d
+      chars: 72271
+    - kind: repo
+      url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      ref: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      sha256: 06e7088a378d52ba4ae9eabd3f465b5ecb18e46a92b427dbf8ccfb4e8ed618c2
+      chars: 3382
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark provides an operational definition of the phenomenon (lies of commission) as making statements under pressure that the model does not believe to be true.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 0
+        quote: measuring the propensity of AIs to engage in   lies of commission —making statements under pressure that they explicitly do not believe to be true
+    by: model
+    quotes_verified: true
+  def.2:
+    value: met
+    rationale: The scope is defined as lies of commission, and it explicitly excludes deception from withholding information (omission).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 2
+        quote: our framework clearly focuses on explicit falsehoods (commission). It does not measure deception from withholding true information (omission)
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: While the paper mentions 'six distinct archetypes' for prompts, it does not state that these sub-components are scored separately; it only provides a final average honesty score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no evidence in the provided text that the effect of output-format requirements on model scores was measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: unmet
+    rationale: While parser accuracy against human labels is reported, there is no mention of repeat-run consistency or a comparison across two output formats for bias.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 2
+        quote: we find an   86 . 4%   agreement with our automated evaluation pipeline
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts describe the data collection process and filtering criteria, but they do not document a sampling strategy over a described task space to ensure representativeness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The documentation describes a multi-step quality control process including FTE reviews, contributor promotion based on audits, and a final random audit of 10% of tasks to ensure an error rate below 5%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 2
+        quote: As a last step, an independent group of auditors randomly sampled 10% of completed tasks to ensure an error rate below 5%.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items, nor are such results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation states that the dataset was manually curated and designed specifically for the benchmark, rather than being adapted from a previous one.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 2
+        quote: We also release a large-scale, manually-curated dataset with over   1 , 500   examples ( 1 , 000   public examples), which we carefully design to elicit lies
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark uses a manually curated dataset designed for this work, not an adapted prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 2
+        quote: We also release a large-scale, manually-curated dataset with over   1 , 500   examples ( 1 , 000   public examples), which we carefully design to elicit lies
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark uses a manually curated dataset designed for this work, not an adapted prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 2
+        quote: We also release a large-scale, manually-curated dataset with over   1 , 500   examples ( 1 , 000   public examples), which we carefully design to elicit lies
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark uses a manually curated dataset designed for this work, not an adapted prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 2
+        quote: We also release a large-scale, manually-curated dataset with over   1 , 500   examples ( 1 , 000   public examples), which we carefully design to elicit lies
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe a contamination test or report its results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The paper explicitly mentions maintaining a separate, held-out set of 500 examples to track overfitting.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 0
+        quote: We also maintain a separate, held-out set of   500   examples to track potential overfitting.
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The benchmark reports the number of examples, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 0
+        quote: publicly releasing 1 , 000 carefully curated examples
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not show a main results table where every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: Human raters are used to label ground truth when LLMs disagree, but their demographics are not described and no bias mitigation is stated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 18, chunk 1
+        quote: If the ensemble do not agree, a human labels the ground truth via a Google search.
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The benchmark explicitly avoids subjective examples, stating that models are incentivized to lie about verifiable facts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 3
+        quote: We avoid examples where the ground-truth is subjective or widely debated. In all cases, models are incentivized to lie about verifiable facts.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While the paper mentions 'Lying' as a category in Figure 8, it does not provide a qualitative description of common failure modes or a count of specific failure instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: met
+    rationale: The paper breaks down honesty/lying rates by 'Question Type' (archetypes) in Figure 8, which serves as a named confound/variable.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 8, chunk 1
+        quote: Honesty by Question Type
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: The paper states in Figure 8 that 'No one archetype represents a disproportionate amount of honest or lying examples', but it does not discuss specific scoring biases revealed by this analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The paper reports experiments using 'Developer system prompt' and 'LoRRA' interventions specifically to improve honesty scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 9, chunk 0
+        quote: We test two baseline interventions to improve the honesty of two small Llama models and evaluate their effectiveness using MASK.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to safety-critical contexts and applications requiring access to sensitive information.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 1, chunk 1
+        quote: This is especially true in safety-critical contexts or applications that require access to sensitive information
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: While the paper defines lying and describes the honesty metric, it does not provide a single quotable statement linking the choice of tasks and each metric back to the specific definition in def.1 (which is not explicitly labeled as def.1 in the text).
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to TruthfulQA, noting that TruthfulQA measures accuracy/factual knowledge while MASK disentangles honesty from accuracy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 3, chunk 2
+        quote: even larger models have since reversed this trend, obtaining higher performance on TruthfulQA with scale
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The authors state that the LLM judge's mapping of responses can lead to misclassification noise that could bias model rankings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: leaving non-trivial room for misclassification noise that could bias model rankings
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

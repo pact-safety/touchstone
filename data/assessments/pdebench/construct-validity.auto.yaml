@@ -1,0 +1,248 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: pdebench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v7
+  repo_commit: 4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/pdebench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2210.07182v7
+      ref: v7
+      sha256: 00644323aff8a7cb40a0721bf12462047a82a6d8db38b19e88751d9530a68e49
+      chars: 154701
+    - kind: repo
+      url: https://github.com/pdebench/PDEBench/tree/4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+      ref: 4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+      sha256: 0a43b750290be108a4dc06fd121fff441d0512b3eab43c2ca84c7a12c0dc1766
+      chars: 43657
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark defines the phenomenon as using neural networks to approximate the outputs of a ground truth PDE solver.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 3, chunk 2
+        quote: we focus on using neural network models to approximate the outputs of some ground truth PDE solver
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the benchmark describes the general problem and types of PDEs, it does not explicitly name any excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The paper does not identify sub-components of the phenomenon nor does it explicitly state that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify any secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no evidence that the effect of output-format requirements on model scores was measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses binary HDF5 data files and scripts to calculate metrics from saved pickle files, indicating it does not rely on parsing free-form text output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 6, chunk 2
+        quote: The benchmark consists of different data files, one for each equation, type of initial condition, and PDE parameter, using the HDF5 [ 15 ] binary data format.
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts mention that a sampling strategy is described in another section (F.2), but that section is not provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: There is no documentation stating that every item in the dataset passed a quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: The excerpts do not mention a counted subset of permuted or perturbed items, nor separate results for such items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that it expands upon previous attempts to produce standardized PDE datasets, specifically mentioning the work of [44].
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 3, chunk 1
+        quote: Of these, the excellent work of [   44 ] is most closely related
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: met
+    rationale: The authors identify a strength of the prior work (it is 'excellent') and a limitation (it 'lacks sufficient scale and diversity of data').
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 3, chunk 1
+        quote: Of these, the excellent work of [   44 ] is most closely related, but with only four physical systems, it still lacks sufficient scale and diversity of data
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: There is no report or comparison of performance results between the new benchmark and the original prior work mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: While the authors state they provide a larger and more diverse selection than previous attempts, they do not list specific modifications to the reused dataset and how those modifications improve construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any tests implemented to detect data contamination or report results of such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The paper describes a specific split of the data into training and test sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 7, chunk 2
+        quote: "The data was split into training and test data: 90% was for training and 10% for test data."
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no mention of a search or overlap check between the benchmark source materials and any named LLM training corpora.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The excerpts do not state the total item count of the benchmark, nor do they provide a power calculation or confidence-interval width relative to a claimed gap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results table (Table 5) provides point estimates for metrics like RMSE and nRMSE, but does not include confidence intervals or standard errors for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark uses numerical simulations generated by the authors and does not use human raters.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 12, chunk 0
+        quote: We use neither crowdsourcing nor conduct research with human subjects.
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are deterministic ground truth values provided by numerical simulators, not subjective ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 2, chunk 2
+        quote: compare their predictions against the “ground truth” provided by baseline simulators used to generate the data.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While the paper mentions metrics to measure specific failure modes, it does not provide a qualitative and quantitative analysis where failure modes are both described and counted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not contain a table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors identify challenging tasks for current ML methods and propose them as specific directions for future community challenges.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 1, chunk 1
+        quote: With those metrics we identify tasks which are challenging for recent ML methods and propose these tasks as future challenges for the community.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark includes the compressible Navier-Stokes equations, which are linked to real-world applications like aerodynamics around airplane wings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 5, chunk 2
+        quote: It is applied to many real-world problems, such as the aerodynamics around airplane wings
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no statement linking the choice of tasks and metrics to a specific operational definition provided in a 'def.1' section.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: While the text mentions existing benchmarks and claims to have a wider range of PDEs, it does not name a specific existing benchmark to compare against.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text states a limitation regarding the number of samples for high-dimensional data due to storage constraints, which impacts the composition of the dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 48, chunk 0
+        quote: high-dimensional data, in particular 3D data, has a relatively small number of samples, only 100, due of storage limitations
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

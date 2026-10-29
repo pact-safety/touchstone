@@ -1,0 +1,268 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: swe-lancer
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 4afbde31ba075992ffd96209f6533de8e450becd
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/swe-lancer/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2502.12115v4
+      ref: v4
+      sha256: 482452e87e93468c36d0f229da6a5999663a4f6e0656a50a8c5938c60a4eeb11
+      chars: 110399
+    - kind: repo
+      url: https://github.com/openai/SWELancer-Benchmark/tree/4afbde31ba075992ffd96209f6533de8e450becd
+      ref: 4afbde31ba075992ffd96209f6533de8e450becd
+      sha256: c76421ae8898c49b5cf9b23bd108a6ad3580c64d19b49c7c621935412b798e62
+      chars: 213
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: unmet
+    rationale: The excerpts describe task filtering criteria and examples of tasks, but they do not provide a precise operational definition of the phenomenon being measured or specify which observable outputs count as evidence of that phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.2:
+    value: met
+    rationale: The text defines the scope as tasks from Upwork and Expensify and explicitly names infrastructure engineering tasks as underrepresented/excluded.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: infrastructure engineering tasks (e.g. refining Kubernetes cluster architectures and debugging pod failures, node crashes, or networking problems) are underrepresented
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: While the benchmark identifies different types of work (IC SWE and SWE Manager), the excerpts do not show that these sub-components are scored separately or that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the excerpts specify a JSON output format for manager tasks, there is no measurement of how these format requirements impact model performance scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses execution-based end-to-end tests for IC SWE tasks and a specific file path for manager decisions, rather than automated parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 15, chunk 0
+        quote: evaluates using execution-based end-to-end tests hand-crafted by engineers
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: met
+    rationale: The authors state they selected a representative sample of tasks from the Upwork platform.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 2
+        quote: we selected a representative sample of tasks from Upwork
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The text documents that tests underwent three rounds of validation by engineers and an automated system to ensure quality and correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 0
+        quote: Tests underwent three rounds of validation by software engineers for quality, coverage, and fairness
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a subset of permuted or perturbed items used to test LLM sensitivities, nor separate reporting for such items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that the benchmark does not reuse prior datasets, instead sourcing tasks from Upwork and the Expensify repository.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: No prior dataset or benchmark was reused to create SWE-Lancer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: No prior dataset or benchmark was reused to create SWE-Lancer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: No prior dataset or benchmark was reused to create SWE-Lancer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The paper mentions that a table shows no clear performance improvement for tasks predating cutoffs, but it does not describe a specific contamination test implemented and applied to the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The paper explicitly states that they maintain a private holdout set to mitigate contamination risks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 28, chunk 1
+        quote: We maintain a $499,200 private holdout set to mitigate risks from contamination and model browsing.
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper acknowledges that contamination is possible due to public GitHub issues, but it does not report a search or overlap check against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the number of SWE Management tasks is mentioned, the total sample size for the full benchmark is not stated, nor is there a power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: Confidence intervals are provided for only two models (GPT-4o and o1) regarding earnings, but not for every score in the main results table (e.g., pass@1 accuracies).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 2
+        quote: The 95% confidence interval for GPT-4o was $194.31 ± $17.31, while o1’s was $1,623.76 ± $56.68.
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The paper mentions using experienced software engineers to validate tests and solutions, but it does not describe their demographics or state how demographic biases were mitigated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 0
+        quote: An additional validation campaign with experienced software engineers showed 99% agreement
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: "The labels are deterministic: IC SWE tasks are graded with end-to-end tests and SWE Management tasks are evaluated by matching ground truth."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 0
+        quote: The model’s selection is evaluated by assessing whether it matches ground truth.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While common failure modes are described for open-source models, they are not counted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not provide a table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors propose a specific direction to improve open-source model performance by customizing the scaffold.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 38, chunk 2
+        quote: customizing this scaffold to better serve open-source models would likely elicit better performance
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark uses freelance software engineering jobs from Upwork to measure real-world software engineering capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 1, chunk 2
+        quote: Our benchmark evaluates frontier language models on 1,488 freelance software engineering jobs from Upwork
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts to which the tasks and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is compared to SWE-Bench Verified, noting that the latter focuses on bugfixes while SWE-Lancer includes open-ended problems and full-stack development."
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses contamination as a limitation that could lead to results measuring contamination rather than real capability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 1
+        quote: This will help ensure evaluation results measure real capability rather than contamination.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

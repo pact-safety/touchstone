@@ -1,0 +1,410 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: swe-lancer
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 4afbde31ba075992ffd96209f6533de8e450becd
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/swe-lancer/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2502.12115v4
+      ref: v4
+      sha256: 482452e87e93468c36d0f229da6a5999663a4f6e0656a50a8c5938c60a4eeb11
+      chars: 110399
+    - kind: repo
+      url: https://github.com/openai/SWELancer-Benchmark/tree/4afbde31ba075992ffd96209f6533de8e450becd
+      ref: 4afbde31ba075992ffd96209f6533de8e450becd
+      sha256: c76421ae8898c49b5cf9b23bd108a6ad3580c64d19b49c7c621935412b798e62
+      chars: 213
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: "The benchmark defines the capabilities it tests: Individual Contributor (IC) SWE tasks and SWE Manager tasks."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 1, chunk 2
+        quote: The evaluation includes   Individual Contributor (IC) SWE tasks , where models generate code patches to resolve real-world issues, and   SWE Manager tasks , where models act as technical leads
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The text describes how these capabilities translate to tasks, such as generating code patches for IC tasks and selecting implementation proposals for Manager tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 1, chunk 2
+        quote: IC SWE   tasks range in difficulty from 15-minute bug fixes to new feature requests that took weeks to close out.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The benchmark describes how the tested capabilities map to real-world economic value and labor market impacts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 1
+        quote: Model performance on SWE-Lancer maps to real-world economic value; each task in the benchmark has an associated payout
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: Professional software engineers were involved in reviewing and validating the tasks and tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 0
+        quote: 100 professional software engineers reviewed the tasks, proposals, and codebase for clarity, specificity, and executability.
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: While the paper cites other benchmarks and papers, it does not show the integration of domain literature into the benchmark design.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The benchmark uses a monetary metric and pass@k, and mentions the choice of E2E tests over unit tests for realism, though a detailed 'informed choice' process for the metric itself is not fully detailed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 15, chunk 0
+        quote: SWE-Lancer uniquely maps model performance to monetary metrics
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: The excerpts do not provide a human performance level baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: The excerpts do not provide a random performance level baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses E2E tests that were validated by both software engineers and an automated system.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 0
+        quote: Tests underwent three rounds of validation by software engineers for quality, coverage, and fairness, supplemented by an automated system
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explicitly compares itself to SWE-Bench and others, noting differences in task type (full-stack vs isolated) and evaluation (E2E vs unit tests).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 15, chunk 0
+        quote: In contrast, other benchmarks rely on pre-existing tests within repositories or tests generated by LLMs.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: The excerpts do not address input sensitivity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 0
+    rationale: The excerpts mention that end-to-end tests were developed and an evaluation harness exists, but they do not state that the evaluation code is available to the user.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The text explicitly states that a public evaluation split called SWE-Lancer Diamond is released.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 2
+        quote: we release a public evaluation split – SWE-Lancer Diamond – containing $500,800 worth of tasks.
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The benchmark reports results for models accessed via API, specifically mentioning API costs for GPT-4o and o1.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 37, chunk 2
+        quote: Model Earnings on correctly solved tasks / Model API Cost over all tasks
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The benchmark includes evaluations of open-source models like Deepseek-R1 and Llama 3.3.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 37, chunk 2
+        quote: "we also ran preliminary evaluations on two open-source models: Deepseek-R1 and Meta Llama 3.3 70B Instruct"
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: While the paper discusses contamination and suggests disabling browsing, it does not include a specific task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: The excerpts do not mention a provided script to replicate the reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 15
+    rationale: The paper reports 95% confidence intervals for the earnings of GPT-4o and o1.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 2
+        quote: The 95% confidence interval for GPT-4o was $194.31 ± $17.31, while o1’s was $1,623.76 ± $56.68.
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no mention of assessing the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: The excerpts do not mention the implementation of a build status or equivalent system.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: The excerpts do not mention a requirements file or equivalent.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: No quick-start guide or demo is mentioned in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 10
+    rationale: The excerpts show code snippets containing in-line comments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 22, chunk 0
+        quote: |-
+          {/* Remove   onValueChange so this field uses the
+          form’s standard   validation   */}
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: There is no mention of available code documentation for the benchmark itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 0
+    rationale: The excerpts do not state that the accompanying paper has been accepted at a peer-reviewed venue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The benchmark construction process is explicitly documented as a pipeline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 1
+        quote: "To ensure our dataset consists of high-quality and representative tasks, we implemented the following pipeline:"
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The text documents the nature of the tasks and the rationale for using real freelance tasks to reflect economic value.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 1
+        quote: Because they draw from real tasks, SWE-Lancer payouts uniquely reflect true economic value rather than theoretical estimates.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: A dedicated 'Limitations' section is provided, discussing repository diversity and scope.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: |-
+          4. Limitations 
+          Diversity of repositories and tasks.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The data collection process (sourcing from Upwork/Expensify) and test environment (Azure VM/Docker) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 0
+        quote: Each agent is executed within a Microsoft Azure Standard D2as v4 virtual machine with 2 vCPUs and 8GB RAM.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metrics (percent of tasks resolved and total payout) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 1
+        quote: We track the percent of tasks resolved and the total payout earned by the model
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: No applicable license for the benchmark is specified in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique, persistent identifier (like a DOI or handle) for the dataset is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: There is no mention of standardized metadata (e.g., Schema.org) being included.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data source (Upwork/Expensify) and collection method are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 0
+        quote: We sourced real tasks that were previously solved by paid contributors.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The preprocessing/filtering steps (manual screening by engineers) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 1
+        quote: We manually filtered tasks according to the following criteria.
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The annotation/validation process (rating issues 0-3) is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 1
+        quote: we asked software engineers to rate each issue from 0-3 (below) and only accepted issues where the majority of human engineers rated them as 0.
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 10
+    rationale: The text mentions the representativeness of the Expensify repository for full-stack work, though it also notes limitations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: While we believe the Expensify repository is representative of full-stack engineering work
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: The excerpts do not mention following a recognized documentation standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not provide any information regarding whether the code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person for the benchmark is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

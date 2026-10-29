@@ -1,0 +1,444 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: pdebench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v7
+  repo_commit: 4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/pdebench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2210.07182v7
+      ref: v7
+      sha256: 00644323aff8a7cb40a0721bf12462047a82a6d8db38b19e88751d9530a68e49
+      chars: 154701
+    - kind: repo
+      url: https://github.com/pdebench/PDEBench/tree/4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+      ref: 4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+      sha256: 0a43b750290be108a4dc06fd121fff441d0512b3eab43c2ca84c7a12c0dc1766
+      chars: 43657
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark defines the general learning problem as approximating solutions to PDEs, which are vector-valued functions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark describes how the capability of simulating physical systems translates to tasks like forward and inverse problems using specific PDEs."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explicitly states that finding surrogate models for these dynamics is a necessary precondition for real-world application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 5, chunk 1
+        quote: Finding a surrogate model which can approximate these challenging dynamics with high fidelity we argue is a necessary precondition to applying such models in the real world.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The authors describe why standard RMSE is not a good proxy for evaluation in certain regimes, providing guidance on interpretation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 3, chunk 0
+        quote: the standard error measure in ML, the RMSE on test data, is not a good proxy for evaluating ML models, in particular in turbulent and non-smooth regimes
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The dataset was created by a team including senior researchers and professors from NEC Labs Europe and the University of Stuttgart."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature, citing specific equations like the Fitzhugh-Nagumo equation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 23, chunk 2
+        quote: The reaction functions for the activator and inhibitor are defined by the Fitzhugh-Nagumo equation [25]
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The authors justify the use of multiple metrics (nRMSE, cRMSE, bRMSE, fRMSE) to capture physical properties beyond standard RMSE.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 3, chunk 0
+        quote: To evaluate ML methods for scientific problems, we consider several metrics that go beyond the standard RMSE and include properties of the underlying physics.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: There is no mention of metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: Human performance levels are not provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: Random performance levels are not provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: While automatic metrics are used, there is no evidence of a validation process for the evaluation method itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The authors explain differences from related work, specifically noting that previous benchmarks lacked scale and diversity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 3, chunk 1
+        quote: Of these, the excellent work of [ 44 ] is most closely related, but with only four physical systems, it still lacks sufficient scale and diversity of data
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 15
+    rationale: The benchmark specifically includes PDEs that exhibit sensitive dependence on initial conditions to challenge models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 5, chunk 1
+        quote: The PDEs exhibit a variety of behaviors of real-world significance which are known to challenge emulators, such as sharp shock formation dynamics, sensitive dependence on initial conditions
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository contains specific scripts for training and evaluating models, as well as a script for calculating evaluation metrics.
+    evidence:
+      - source: repo
+        url: https://github.com/pdebench/PDEBench/tree/4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+        locator: pdebench/PDEBench@4ff3e3a4aa15:README.md, chunk 9
+        quote: "`train_models_forward.py` is the main script to train and evaluate the model."
+      - source: repo
+        url: https://github.com/pdebench/PDEBench/tree/4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+        locator: pdebench/PDEBench@4ff3e3a4aa15:README.md, chunk 9
+        quote: "`metrics.py` is the script to evaluate the trained models based on various evaluation metrics described in our paper."
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark provides both downloadable datasets via a repository and source code to generate data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 48, chunk 1
+        quote: the dataset is freely and publicly available and accessible.
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 48, chunk 1
+        quote: we emphasize that we provide the data generation source code.
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: The excerpts do not mention support for evaluating models via an API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The benchmark provides scripts to train and evaluate models locally using PyTorch and other libraries.
+    evidence:
+      - source: repo
+        url: https://github.com/pdebench/PDEBench/tree/4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+        locator: pdebench/PDEBench@4ff3e3a4aa15:README.md, chunk 9
+        quote: "`train_models_forward.py` is the main script to train and evaluate the model."
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The authors explicitly state that they include instructions and code needed to reproduce the main experimental results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 11, chunk 1
+        quote: We include the parameters used to reproduce the datasets in Appendix D and instructions to run the code in the README file in our code repository.
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 15
+    rationale: The authors report mean and standard deviation values for errors in their results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 11, chunk 1
+        quote: The mean and standard deviation values for the errors are reported in the Figure 2.
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 15
+    rationale: The authors assessed the dataset for offensive or harmful content and concluded none exists.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 46, chunk 0
+        quote: |-
+          Does the dataset contain data that, if viewed directly, might be offensive, insulting, threatening, or might otherwise cause anxiety? (If so, please describe why.)
+          No.
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status implementation (e.g., CI/CD badges).
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: The excerpts do not mention a requirements file (e.g., requirements.txt).
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 10
+    rationale: The paper mentions providing an 'easy on-ramp' and the repo provides a 'Directory Tour', but a formal quick-start guide is not explicitly shown.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 2, chunk 3
+        quote: providing an easy on-ramp to be extended
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: No excerpts show the actual source code to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The paper explicitly states that training code and configurations are well documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 7, chunk 2
+        quote: Training code and configurations are open and well documented
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The repository links to a NeurIPS 2022 paper, which is a peer-reviewed venue.
+    evidence:
+      - source: repo
+        url: https://github.com/pdebench/PDEBench/tree/4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+        locator: pdebench/PDEBench@4ff3e3a4aa15:README.md, chunk 0
+        quote: The code repository for the NeurIPS 2022 paper
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the general learning problem and the PDEs covered as part of the benchmark description.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 3, chunk 3
+        quote: In the following we describe the general learning problem addressed with the benchmark, the currently covered PDEs
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper describes the PDEs used and the rationale for choosing them to be challenging for SciML.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 1, chunk 1
+        quote: ranging from relatively common examples to more realistic and difficult problems
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: No documentation of assumptions regarding normative properties is found in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper contains a dedicated 'Limitations' section.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 10, chunk 1
+        quote: Limitations   While PDEB ENCH   provides an easy-to-use, modular and extensible approach
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The data collection process is documented, stating it was obtained via numerical simulations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 46, chunk 1
+        quote: All the dataset were obtained by performing computationally expensive numerical simulations for each PDEs.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper describes several evaluation metrics (RMSE, nRMSE, etc.) and provides a summary table.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 6, chunk 0
+        quote: the proposed benchmark includes several novel metrics which we believe provide a deeper and more holistic understanding
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: Both the dataset (CC BY) and the code (MIT) licenses are specified.
+    evidence:
+      - source: repo
+        url: https://github.com/pdebench/PDEBench/tree/4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+        locator: pdebench/PDEBench@4ff3e3a4aa15:README.md, chunk 21
+        quote: MIT licensed, except where otherwise stated.
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): A permanent DOI is provided for the dataset via DaRUS."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 15
+    rationale: The benchmark uses DaRUS, which provides standardized metadata blocks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 44, chunk 0
+        quote: can be described with an extensive set of metadata, organized in metadata blocks
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data sources (numerical simulations) and the process are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 46, chunk 1
+        quote: All the dataset were obtained by performing computationally expensive numerical simulations for each PDEs.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 10
+    rationale: The paper mentions rejecting meaningless solutions (NaNs), but detailed preprocessing steps are minimal.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 47, chunk 2
+        quote: At most we rejected meaningless solutions because of the failure of numerical simulations
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The data is generated by simulation, so manual annotation is not applicable, but the rule requires documentation if applicable; here it is not applicable but no 'n/a' is allowed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 10
+    rationale: The authors state the datasets are intended to be representative of challenging systems, though they admit it is difficult to represent the whole scope.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 45, chunk 0
+        quote: The datasets that we provide are intended to be representative of challenging physical systems.
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 15
+    rationale: The benchmark explicitly follows the FAIR data principles.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 6, chunk 3
+        quote: D A RUS follows the Findable, Accessible, Interoperable and Reusable (FAIR) data principles
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not provide any evidence that code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 15
+    rationale: The documentation explicitly states that errors can be submitted via a GitHub bugtracker, which serves as a maintained feedback channel.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 49, chunk 1
+        quote: Errors may be submitted via the bugtracker on github.
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 10
+    rationale: The text states that email addresses for the owner/curator are provided in the main body of the paper, but those specific addresses are not present in the provided excerpts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 49, chunk 0
+        quote: E-mail addresses are provided in the main-body of the paper.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

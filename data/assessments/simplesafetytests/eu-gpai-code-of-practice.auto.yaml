@@ -1,0 +1,228 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: simplesafetytests
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/simplesafetytests/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.08370v2
+      ref: v2
+      sha256: 45995a43eb53159c892204a72c4b6ea449f10db19145ec881934087bf71ba55b
+      chars: 59638
+    - kind: repo
+      url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+      ref: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+      sha256: 34898077ff6c4ea6684cc70535446cb399c68069f16780451fe097f6804d4222
+      chars: 19445
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: The number of test items is stated, but there is no power calculation or confidence interval provided to justify the sample size as sufficient.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: SST is currently limited to the English language, with ten prompts each across five harm areas ( n = 100 ).
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The benchmark does not report significance tests, confidence intervals for score differences, or statistical power figures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: While temperature and max tokens are provided, the full prompt template and harness/scaffold version are missing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 13, chunk 0
+        quote: We set temperature for all models to 0.01 and the max token length to 1,048.
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: No named control against confounds or shortcuts (like answer-position balancing or blind baselines) is described with its result.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no mention of canary strings, private test splits, or contamination analysis to prevent test data from being used in training.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: "Results are reported for two different conditions: with and without a safety-emphasising system prompt."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 0
+        quote: We test all LLMs with and without a system prompt.
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: While the paper mentions labeling responses, it does not report a detailed manual inspection of trajectories for error analysis or grader failures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark describes using three trained annotators and reports a Fleiss' Kappa agreement figure.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 2
+        quote: Fleiss’ Kappa is 0.83, which indicates very strong agreement
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: There is no evidence that the benchmark releases full model outputs or reasoning traces for evaluator inspection.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: The documentation does not include checks for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: unmet
+    rationale: While the creation process is described, there is no information on how the benchmark is versioned and maintained (changes, fixes, retirement).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: The test prompts were originally created by one of the authors, and then iteratively adjusted through multiple rounds of review and editing by the other authors.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: met
+    rationale: The documentation describes the input/output format (prompt and response concatenation), the tools used (commercial and Replicate APIs), and generation parameters like temperature and max token length.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 3
+        quote: the response given the prompt (i.e. the prompt and the response are concatenated)
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 13, chunk 0
+        quote: We set temperature for all models to 0.01 and the max token length to 1,048.
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The authors explicitly state that the test prompts are synthetic and not derived from real-world user interactions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 1
+        quote: The test prompts are all synthetic, and none have been taken from existing datasets or real-world user interactions with LLMs.
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The spread of the evaluation is described by the number of prompts and their distribution across harm areas and categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: In total, there are 100 prompts, equally split into five harm areas and two prompt categories.
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation or a statement that the authors reproduced their headline numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: unmet
+    rationale: The paper is explicitly labeled as a preprint and under review, and no independent third-party reproductions are cited.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 8, chunk 0
+        quote: Preprint. Under review.
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The test prompts are available for public download on GitHub and HuggingFace.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 2, chunk 3
+        quote: S IMPLE S AFETY T ESTS   is available on GitHub and HuggingFace with an open-source license.
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: unmet
+    rationale: While the dataset is released, there is no evidence of a released runnable harness or scoring code in a repository.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: met
+    rationale: The paper documents how items were constructed (iterative review), how models were queried (temperature, max tokens), and how outputs were scored (human labeling and safety filters).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: The test prompts were originally created by one of the authors, and then iteratively adjusted through multiple rounds of review and editing
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: The software environment is not pinned with a lockfile or container, and the total compute needed for a full run is not stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: met
+    rationale: The specific zero-shot prompt used to query GPT-4 for safety assessment is released in the text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 14, chunk 1
+        quote: "The prompt given to OpenAI’s GPT-4 to assess the safety of responses (given the prompt) is as follows: “Here is an interaction between a user and a model."
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The benchmark evaluates models using public APIs (Replicate and commercial APIs).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 13, chunk 0
+        quote: We prompted the open models via the Replicate API at the beginning of November 2023.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

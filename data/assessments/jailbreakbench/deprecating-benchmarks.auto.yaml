@@ -1,0 +1,136 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: jailbreakbench
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 23dbdf6b19650521604456229bc1d9c4156c85c1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/jailbreakbench/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.01318v5
+      ref: v5
+      sha256: 8068ffae3d6db12053409b6aa1f5934fa1a63d2cf619176aa31c6ba59302e176
+      chars: 81986
+    - kind: repo
+      url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+      ref: 23dbdf6b19650521604456229bc1d9c4156c85c1
+      sha256: 5c4dcb8588fcd16be4c6827ff2f764df66e5627b5d3f6c0e909f62a1b4d03a8a
+      chars: 29092
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark reports attack success rates (ASRs) for various models and attacks that are well below the maximum (100%), showing clear headroom for improvement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 16, chunk 0
+        quote: Attack success rates by source. We report the attack success rates of each data source used to curate JBB-Behaviors .
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 16, chunk 0
+        quote: GPT-4 PAIR 31% 28% 44% GCG 2% 0% 11% JB-Chat 0% 0% 0% Prompt with RS 73% 89% 81%
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The benchmark provides a public dataset of behaviors and evaluations on HuggingFace, but the excerpts do not document a contamination defense such as a private held-out set or regular refreshing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark explicitly states that the JBB-Behaviors dataset was curated to be balanced across categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 14, chunk 2
+        quote: Notably, JBB-Behaviors was curated to cover a diverse and balanced span of categories
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark creators conducted a validation pass using three experts, reporting a high agreement rate of approximately 95%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 1
+        quote: Three experts labeled each prompt-response pair, and the agreement between them was approximately 95%
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to track progress in jailbreaking attacks and defenses, which remains current as LLMs are deployed in safety-critical domains.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 1, chunk 2
+        quote: as LLMs are deployed in safety-critical domains, it is of pronounced importance to effectively benchmark the progress of jailbreaking attacks and defenses
+    by: model
+    quotes_verified: true
+  c6:
+    value: met
+    rationale: The benchmark explicitly states its simplifying assumptions, such as focusing solely on text and not allowing system prompt modification.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 9, chunk 3
+        quote: Our benchmark does not currently offer such option and focuses solely on text.
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark's content is maintained and there is no evidence provided that the labels or task meanings have shifted since creation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 4, chunk 0
+        quote: we strive to make our benchmark community-driven, prioritizing clear guidelines for adding new attacks, models, and defenses.
+    by: model
+    quotes_verified: true
+  r1:
+    value: met
+    rationale: The benchmark provides an explicit version identifier (v1.0) and a maintenance plan for versioning updates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 22, chunk 1
+        quote: "Current version: v1.0"
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no stated plan for what happens to artifacts at the end of life or a specific archive policy for deprecation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The project is actively maintained (updated 06/2024) and provides an issue tracker/repository for contact.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 22, chunk 1
+        quote: "Maintenance status: Actively Maintained"
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

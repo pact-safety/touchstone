@@ -1,0 +1,104 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: salad-bench
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/salad-bench/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.05044v4
+      ref: v4
+      sha256: 24765d9ad04f6822f7c85de8cdd8775f5dab28fafdcabbb7fa19943d4cc24385
+      chars: 136348
+    - kind: repo
+      url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      ref: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      sha256: 9b9ea84b2f0c812864d0268c8f92b6afb75ac1f820b08573ae31c0094a4a451d
+      chars: 19448
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain a leaderboard or saturation analysis showing the current best scores relative to a maximum achievable ceiling.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: There is no documentation of a contamination defense such as a private held-out set or contamination analysis; the excerpts only mention data collection sources.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: The excerpts do not report the label/answer distribution or a trivial baseline score to demonstrate the benchmark is free of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark conducted a human verification audit on a sampled subset, reporting a taxonomy label consistency rate of 94.3% and an unsafe question rate of 96.7%."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark states its purpose is to evaluate LLM safety and resilience against emerging threats, a task that remains current for LLM development."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not state the simplifying assumptions the benchmark relies on.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: The authors explicitly state in the limitations section that their defined hierarchical taxonomy may become outdated as new safety threats emerge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: While a version number is found in the setup.py file, it is not visible alongside the benchmark name in main references (like the paper), nor is there evidence that changes are recorded per version.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:setup.py, chunk 0
+        quote: version="0.1"
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: The provided excerpts contain no mention of a deprecation plan or a policy for archiving artifacts at end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: No named maintainer, contact address, or issue tracker is published in the excerpts to handle queries.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

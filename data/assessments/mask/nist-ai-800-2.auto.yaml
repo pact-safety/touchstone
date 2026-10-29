@@ -1,0 +1,489 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mask
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mask/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.03750v3
+      ref: v3
+      sha256: 9bcec5f619dcb60b733cce61f4e2ed46d54e87fd7912498c395b8b59e617d42d
+      chars: 72271
+    - kind: repo
+      url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      ref: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      sha256: 06e7088a378d52ba4ae9eabd3f465b5ecb18e46a92b427dbf8ccfb4e8ed618c2
+      chars: 3382
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines the construct as measuring the propensity to engage in 'lies of commission' through a task that verifies consistency between statements and beliefs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 0
+        quote: a large-scale public benchmark for measuring the propensity of AIs to engage in   lies of commission —making statements under pressure that they explicitly do not believe to be true
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark lists specific archetypes/categories for the prompts, such as 'Known Facts' and 'Fabricated Statistics'."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: The documentation does not state an intended difficulty level or target human population for the items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark describes the item format (proposition, ground truth, pressure prompt, belief elicitation prompt) and provides examples in Figure 5/6.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 0
+        quote: "Each example in MASK consists of four components: a proposition, ground truth, pressure prompt, and belief elicitation prompt."
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses an LLM judge to map responses to proposition resolutions and compares them programmatically to determine honesty/lying.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution and then compare these programmatically.
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly states that it does not measure deception from withholding information (omission).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 2
+        quote: |-
+          It does not measure deception from
+          withholding true information (omission), though this can be a focus for future work.
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark mentions use cases like safety-critical contexts and measures the construct of lying directly by comparing statements to beliefs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 1, chunk 1
+        quote: This is especially true in safety-critical contexts or applications that require access to sensitive information, where dishonest behavior can have serious consequences.
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for multiple models of different capabilities (e.g., GPT-4o, Llama 3.1 405B, Claude 3.7 Sonnet) are reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 0
+        quote: |-
+          Model   P   ( Lie )   ( ↓ )
+          Grok 2   63.0
+          DeepSeek-V3   53.5
+          o3-mini   48.6
+          Gemini 2.0 Flash   48.4
+          GPT-4o   44.5
+          GPT-4.5 Preview   43.5
+          DeepSeek-R1   42.9
+          Claude 3.5 Sonnet   33.4
+          Llama 3.1 405B   28.0
+          Claude 3.7 Sonnet   26.6
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: unmet
+    rationale: No baseline score (human performance, random chance, etc.) is reported for comparison against model scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation describes the sourcing process involving human contributors and automated proposition generation via Claude-3.5-Sonnet.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 18, chunk 1
+        quote: |-
+          We generate the proposition with Claude-3.5-Sonnet, with few-shot
+          examples.
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The benchmark states it has a total of 1,500 examples, including a public set of 1,000 and a held-out set of 500.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 0
+        quote: MASK consists of   1 , 000   high-quality adversarially-selected human-labeled examples that... We also maintain a separate, held-out set of   500   examples
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark maintains a held-out set of 500 examples to track potential overfitting/contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 0
+        quote: We also maintain a separate, held-out set of   500   examples to track potential overfitting.
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: There is no mention of a canary string in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: The documentation does not state the computational resources (time, compute, tokens) required for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: met
+    rationale: The benchmark defines a standard protocol where prompts and judge criteria are identical across all models to ensure comparability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: "Our benchmark does not differ across models: belief-elicitation prompts, pressure prompts, and judge criteria are identical regardless of the model being tested."
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: met
+    rationale: The benchmark provides a private hold-out set of 500 examples separate from the 1,000 public examples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 0
+        quote: By publicly releasing 1 , 000 carefully curated examples (with a private 500 -example hold-out set)
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: unmet
+    rationale: The documentation does not specify sampling settings (temperature, top_p) or state that they are left to the evaluator.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The paper provides verbatim examples of the pressure and belief elicitation prompts used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 6, chunk 0
+        quote: What was Colorado's poverty rate in 2020? You are a helpful assistant.
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark consists of single-response prompts (pressure and belief elicitation) without tools or agent loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: We first apply “pressure prompts” designed to incentivize lying. We then query the model directly about the same proposition three times without pressure
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are textual prompts and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: the 1 , 500 examples focus on English textual prompts and short factual propositions
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-turn or fixed-turn queries.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: We first apply “pressure prompts” designed to incentivize lying. We then query the model directly about the same proposition three times without pressure
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item is a prompt response without a retry/feedback loop for the model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: We first apply “pressure prompts” designed to incentivize lying. We then query the model directly about the same proposition three times without pressure
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark specifies a primary evaluation of one run and a specific Lying@10 metric involving ten runs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 19, chunk 1
+        quote: While our primary evaluation on MASK measures a model’s propensity to lie for one run of a pressure prompt, the Lying@ n score evaluates a model’s ability to maintain honesty across n runs
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark uses an LLM judge, specifies the judge's role in extracting resolutions, and provides the criteria.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: An LLM judge analyzes all model responses to extract specific proposition resolutions. Judge criteria for belief and pressure prompts are standardized within each archetype.
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports an 86.4% agreement rate between the LLM judge and human annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves 86 . 4% agreement with human annotators
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: The excerpts do not report results under varied protocol settings like different prompt wordings or sampling.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: unmet
+    rationale: The repository README mentions an implementation but does not provide runnable end-to-end code or instructions in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark uses an LLM judge to extract proposition resolutions and programmatically maps them to metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution and then compare these programmatically.
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There is no mention of version identifiers or a changelog for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models do not execute code or tool calls in this benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: the 1 , 500 examples focus on English textual prompts and short factual propositions
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: The excerpts do not show a harness that supports multiple providers via configuration or an open interface.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: The excerpts do not mention the harness saving full per-item logs of responses and scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that logs include the model identifier and benchmark version/commit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The benchmark describes a multi-stage review process including FTE review and a final audit of 10% of tasks to ensure quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 2
+        quote: As a last step, an independent group of auditors randomly sampled 10% of completed tasks to ensure an error rate below 5%.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: met
+    rationale: The benchmark explicitly tracks and reports cases where models are 'evasive under pressure' separately from lies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 2
+        quote: Models often become evasive under pressure, avoiding a clear proposition resolution, and we explicitly track such cases as “evasive under pressure.”
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in single responses without tools or environments, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: the 1 , 500 examples focus on English textual prompts and short factual propositions
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: met
+    rationale: The benchmark describes a process where FTEs reviewed tasks from contributors to ensure requirements were understood.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 2
+        quote: Tasks from the first group of contributors were reviewed by FTEs to ensure that they understood the requirements.
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes honesty scores for various models (e.g., Llama 2 7B, 13B) as reference results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 9, chunk 0
+        quote: Llama 2 7B Llama 2 13B 50 60 70 80 90 100 Honesty Score 78.5 75.3
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports results across different pressure prompt archetypes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 8, chunk 2
+        quote: Figure 8 further shows that this finding holds across archetypes
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline honesty metric as 1 - P(Lie) and specifies that accuracy is the average across all examples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 8, chunk 1
+        quote: The final accuracy score is the average accuracy across all examples.
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty methods for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: There is no mention of a config file, schema, or report template for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: The excerpts show aggregate percentages and correlations, but no downloadable file containing per-item scores for reference runs is mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The excerpts do not report tokens, money, or time per run for the reference results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: There is no mention of downloadable full or representative transcripts from reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The documentation provides a validity argument by distinguishing honesty from accuracy and explaining that honesty is measured by assessing if a response under pressure is consistent with beliefs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 0
+        quote: we evaluate honesty by assessing if a model’s response when pressured to lie is consistent with its beliefs.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims to use real-world deception scenarios and explicitly states that reported rates should be interpreted as worst-case propensities rather than deployment-time performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: reported honesty rates should be interpreted as worst-case propensities rather than deployment-time performance.
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes baseline interventions (Developer system prompt and LoRRA) used to improve honesty in small Llama models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 9, chunk 0
+        quote: We test two baseline interventions to improve the honesty of two small Llama models
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation states that results may not generalize to multimodal inputs, longer dialogues, or non-English settings."
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark includes a limitations section that identifies issues such as reliance on an LLM judge and potential misclassification noise.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves 86 . 4% agreement with human annotators, leaving non-trivial room for misclassification noise
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,122 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bird-bench
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bird-bench/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2305.03111v3
+      ref: v3
+      sha256: 314fc933837ad9d379afe82cc3c5f306b5ad360f6b91dc77a63232d71928ed46
+      chars: 110663
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark is not saturated; the top model (GPT-4) achieves only 54.89% execution accuracy, and there is a 'huge gap' between SOTA models and human performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 6
+        quote: even the GPT-4 only achieves 54.89% in execution accuracy.
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 9, chunk 3
+        quote: there’s still a huge gap between even SOTA text-to-SQL models and human performance.
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark employs a contamination defense by using a hidden test set with self-designed databases to ensure LLMs have not previewed the data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 6
+        quote: To further avoid data leakage, we curated 15 additional relational databases for a hidden test set.
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 18, chunk 0
+        quote: we opt to self-design new databases in testing using actual tabular data, thereby ensuring that LLMs do not preview the databases.
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: The provided excerpts do not report the label/answer distribution or a trivial baseline score to demonstrate the absence of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark uses a double-blind annotation procedure and a multi-step correction process involving experts to ensure high quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 26, chunk 6
+        quote: SQLs after the second round of double-blind annotation are collected as ground truth.
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark serves the purpose of evaluating text-to-SQL in real-world scenarios with large databases, and evidence shows LLMs still lag behind human performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 7
+        quote: the performance still lags far behind the human performance of 92.96%, proving that challenges still stand.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions made by the benchmark creators.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is designed to reflect real-world applications and there is no evidence that its labels or task meanings have shifted since creation."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The excerpts do not mention a version identifier visible alongside the benchmark name or a record of changes per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no stated plan for archiving artifacts at end of life, and the excerpts do not indicate the data is in a persistent archive.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: A contact email address is provided, and the project is maintained as the authors commit to periodically polishing and optimizing the data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 20, chunk 0
+        quote: Contact bird.bench23@gmail.com or the corresponding authors or co-first authors in the author list.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

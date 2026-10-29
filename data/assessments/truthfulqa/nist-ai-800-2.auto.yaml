@@ -1,0 +1,498 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: truthfulqa
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: d71c110897f5d31c5d7f309e7bc316c152f6f031
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/truthfulqa/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2109.07958v2
+      ref: v2
+      sha256: 6441a30b6e0a74c9ef648f07ccc36b64b295f46a97d459bfbaa3205e68a9ec72
+      chars: 95414
+    - kind: repo
+      url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+      ref: d71c110897f5d31c5d7f309e7bc316c152f6f031
+      sha256: e660b6717e228297bbfa4f41b02078b2103190802d10153722a68da2bb702fd0
+      chars: 24341
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines the construct as truthfulness (specifically avoiding imitative falsehoods) and the task as generating answers to questions.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 0
+        quote: A benchmark for measuring whether models mimic human falsehoods.
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The documentation lists specific subject areas such as health, law, finance, and politics.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 2
+        quote: The benchmark comprises 817 questions that span 38 categories, including health, law, finance and politics.
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: The documentation does not state a target difficulty level or population (e.g., expert or undergraduate).
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark specifies both generation and multiple-choice formats and provides example questions and answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: the main task (generation), we use human evaluation to score models on truthfulness and informativeness
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark describes human evaluation and an automated 'GPT-judge' model to classify answers as true or false.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: GPT-judge is a GPT-3-6.7B model finetuned to classify answers to the questions in TruthfulQA as true or false.
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly states that it does not cover long-form generation or interactive settings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 9, chunk 1
+        quote: TruthfulQA does not cover long-form generation (e.g. news articles) or interactive settings (e.g. extended chat with an adversarial human).
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: unmet
+    rationale: While it mentions the value of testing models expected to be truthful, it does not name a specific threat model or state if it is a proxy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for multiple models of different capabilities (GPT-3, GPT-J, GPT-2, UnifiedQA) are reported.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 6
+        quote: "| GPT-3 175B | 20.44 | 97.55 | 20.56 | -0.54 | -17.17 | -17.18 | 0.21 | 0.33 |"
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: A human baseline score of 94% is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 1, chunk 0
+        quote: The best model was truthful on 58% of questions, while human performance was 94%.
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation describes an adversarial procedure using GPT-3-175B to source and filter questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 3
+        quote: We constructed the questions using the following adversarial procedure, with GPT-3-175B (QA prompt) as the target model
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The total item count of 817 questions is stated.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 0
+        quote: The benchmark comprises 817 questions that are designed to induce false answers
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: The excerpts do not mention a private split, date-based creation, or contamination analysis for TruthfulQA itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: The only canary string mentioned is for BIG-bench, not TruthfulQA.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: The documentation does not state the compute, token, or hardware resources needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: met
+    rationale: The benchmark recommends specific prompts and hyperparameters for straightforward comparison.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 2
+        quote: For straightforward comparison to our true-zero-shot baselines, we recommend using our prompts and hyperparameters.
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: The excerpts do not mention a separate development or validation split for the benchmark items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies that greedy decoding with temperature set to zero was used for reported results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 3
+        quote: Answers are generated using greedy decoding (i.e. temperature set to zero).
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The exact prompt texts for various settings (QA, helpful, harmful, etc.) are provided in Appendix E.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 2
+        quote: Appendix E contains the set of all prompts.
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark consists of single-response generation or multiple-choice tasks without tools or agent loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 2
+        quote: A model generates a full-sentence answer given a prompt and question.
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The tasks are standard text generation/multiple-choice and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 2
+        quote: A model generates a full-sentence answer given a prompt and question.
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-turn question-answering tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 2
+        quote: A model generates a full-sentence answer given a prompt and question.
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission with no retry or feedback mechanism.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 2
+        quote: A model generates a full-sentence answer given a prompt and question.
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark reports results based on single samples (greedy decoding) and discusses aggregation for 'Best of 20' samples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 30, chunk 0
+        quote: “Sample” takes a single sample.
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The judge model (GPT-3-6.7B), its purpose (classify true/false), and the training data are specified.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 16, chunk 0
+        quote: GPT-judge is a GPT-3-6.7B model finetuned to classify answers to the questions in TruthfulQA as true or false.
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports that GPT-judge achieved 90-96% accuracy on held-out models compared to human evaluations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 3, chunk 1
+        quote: We finetuned GPT-3 on human evaluations of whether an answer is true or false and achieved 90-96% accuracy on held-out models
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The benchmark reports results under different prompt settings and different sampling temperatures.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 30, chunk 0
+        quote: "Figure 19: Truthfulness of GPT-3 with different temperatures."
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a public repository with an evaluation script (evaluate.py) and installation instructions.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 7
+        quote: answers and scores can be generated by running `truthfulqa/evaluate.py` with the appropriate flags.
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: n/a
+    rationale: The primary scoring for the generation task is done by a judge model (GPT-judge) or human evaluation, requiring no programmatic extraction of a specific format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: we use human evaluation to score models on truthfulness and informativeness
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: met
+    rationale: The benchmark has versioned data (v0) and a changelog of updates (e.g., Jan 2025, Oct 2021).
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 11
+        quote: The original benchmark (questions, fine-tuning datasets, and multiple-choice) can be found at `data/v0/`.
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models in this benchmark do not execute code or tool calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 2
+        quote: A model generates a full-sentence answer given a prompt and question.
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: met
+    rationale: The evaluation script supports multiple model families (GPT-3, GPT-J, GPT-2, UnifiedQA) via configuration flags.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 8
+        quote: List of models to run (see below)
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: met
+    rationale: The evaluation script allows specifying an output path for results, and the README describes adding model answers to an input file for scoring.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 8
+        quote: Location of results file
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the logs automatically record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The authors used a validator to check reference answers, finding disagreement on 7% of questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 39, chunk 0
+        quote: We recruited a “validator” to check our reference answers and raise disagreements.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: met
+    rationale: The benchmark explicitly handles refusals (e.g., 'I have no comment') as a way to avoid gaming the truthfulness metric.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 4
+        quote: Since this can be gamed with a model that responds "I have no comment" to every question, the secondary objective is the percentage of the model's answers that are informative.
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 2
+        quote: A model generates a full-sentence answer given a prompt and question.
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: There is no documentation that task instructions were reviewed for clarity by more than one person or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes reference results for several models (GPT-3, GPT-J, etc.) with specific metrics.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 6
+        quote: This table shows the current performance of large language models on TruthfulQA
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports results broken down by category of question.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 1
+        quote: Figure 13 shows results broken down by category of question.
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline metric for generation as the percentage of responses judged true or informative by humans, and defines the multiple-choice metric as the normalized likelihood of true answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: a model’s score is the percentage of its responses that a human judges to be true or informative
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: The truthfulness score for the question is the total normalized likelihood of the true answers
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty methods for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The repository provides a README that lists the specific flags and details (metrics, presets, input/output paths) required to run the evaluation protocol."
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: While the benchmark provides a CSV of questions and reference answers, there is no evidence of a downloadable file containing per-item scores for a reference run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: met
+    rationale: The benchmark reports the estimated total compute used for the main experiments in the paper.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 7
+        quote: For the main experiments in the paper, we used an estimated total compute of 0.022 pfs-days.
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: The excerpts show examples of answers in figures, but do not provide a downloadable file of full or representative transcripts for a reference run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The documentation provides a validity argument by explaining that the benchmark uses an adversarial procedure to create questions that elicit imitative falsehoods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 3
+        quote: We constructed the questions using the following adversarial procedure
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark claims the questions resemble real-world questions but explicitly states they were not collected from a deployed system."
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes the human baseline, including the number of questions answered and the time limit provided to the participant.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 0
+        quote: A “participant” was asked to answer 250 randomly sampled questions from TruthfulQA with a suggested time of 2 minutes per question
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The documentation explicitly states that strong performance does not imply truthfulness in specialized domains and that it cannot be concluded that a model will be truthful on other kinds of tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 9, chunk 1
+        quote: Strong performance on TruthfulQA does not imply that a model will be truthful in a specialized domain
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The documentation notes a limitation regarding the adversarial procedure, stating that the target model might answer falsely due to unusual syntax rather than learned falsehoods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 3
+        quote: the target model might answer a question falsely because it has unusual syntax and not because the false answer was learned during training
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

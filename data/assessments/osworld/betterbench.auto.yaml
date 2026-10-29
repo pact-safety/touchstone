@@ -1,0 +1,471 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: osworld
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 044bc33901cb893808e3f91ebc9a17ed8e54b44c
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/osworld/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.07972v2
+      ref: v2
+      sha256: e101f46bd83ffcc2c8a40ddbf41b5d1f8e42c5de594ddb7eb9dbc17eb190d291
+      chars: 161795
+    - kind: repo
+      url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+      ref: 044bc33901cb893808e3f91ebc9a17ed8e54b44c
+      sha256: 71716cfce837c2e4a71032f904cde16d088c61e547f2901257d1e086bce68109
+      chars: 74717
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 10
+    rationale: The benchmark is described as evaluating 'open-ended computer tasks' and 'the capability' of agents, but a formal definition of the specific capability/concept is not explicitly provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 0
+        quote: evaluating open-ended computer tasks that involve arbitrary apps
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The text explains that the capability translates to tasks involving raw keyboard and mouse control of real applications across OSs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 2
+        quote: allows free-form raw keyboard and mouse control of real computer applications
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The benchmark uses real-world computer tasks and use cases experienced by real users to simulate real-world scenarios.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 2
+        quote: Each task example is based on real-world computer use cases experienced by real users
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: There is no description of how the resulting scores should or should not be interpreted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: The annotators are described as college students with basic skills, not domain experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 9, chunk 2
+        quote: annotators being computer science major college students who possess basic software usage skills
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 15
+    rationale: The benchmark explicitly states that tasks are based on real-world computer use cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 2
+        quote: Each task example is based on real-world computer use cases experienced by real users
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: There is no mention of integrating domain literature into the design.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The authors mention designing example-specific evaluation metrics because tasks defy a single metric, though the 'informed' process is not detailed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 4, chunk 4
+        quote: we design example-specific evaluation metrics including pre-setup, post-processing
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: No mention of metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: Human performance is explicitly measured and reported as 72.36%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 9, chunk 2
+        quote: the human performance on our tasks was approximately 72.36%
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: No random performance level is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses execution-based evaluation with scripts and provides a validation script for the Windows guest.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:docs/python-test-evaluation.md, chunk 4
+        quote: python scripts/validate_python_windows_guest.py --guest-url http://GUEST:5000 --output windows-results.json
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains differences from other benchmarks, such as using raw mouse/keyboard actions and an executable environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 8, chunk 2
+        quote: OSW ORLD take utilizes raw mouse and keyboard actions that is universal to the computer environment, rather than focusing on specific computer applications
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 15
+    rationale: The benchmark specifically addresses input sensitivity by testing different screenshot resolutions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 13, chunk 1
+        quote: to evaluate the impact of resolution changes on model recognition ability and accuracy
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The benchmark provides reliable evaluation scripts as part of its open-source release.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 3, chunk 1
+        quote: We open-source OSW ORLD environment and benchmark, including environment initial state setup, reliable evaluation scripts
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark's data and environment are publicly available.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 1, chunk 2
+        quote: Our code, environment, baseline models, and data are publicly available at   https://os-world.github.io
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The setup guidelines explicitly provide environment variables for OpenAI and Anthropic API keys.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:SETUP_GUIDELINE.md, chunk 10
+        quote: |-
+          # API Keys (if using)
+          # export OPENAI_API_KEY="your_openai_api_key"
+          # export ANTHROPIC_API_KEY="your_anthropic_api_key"
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The README provides instructions for local evaluation by implementing the agent interface and running it via scripts.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:README.md, chunk 13
+        quote: |-
+          ### Local Evaluation
+          Please start by reading through the [agent interface]
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The benchmark provides scripts to run the benchmark and obtain results, including a specific script to show results.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:README.md, chunk 11
+        quote: |-
+          You can then run the following command to obtain the result:
+
+          ```bash
+          # Basic usage with default parameters
+          python show_result.py
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not report statistical significance or uncertainty quantification of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: While safety is discussed, there is no assessment of the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: The setup guide explicitly mentions installing dependencies from a requirements.txt file.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:SETUP_GUIDELINE.md, chunk 8
+        quote: pip install -r requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README contains a 'Quick Start' section with a minimal example script.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:README.md, chunk 8
+        quote: |-
+          ## 🚀 Quick Start
+          Run the following minimal example to interact with the environment:
+
+          ```bash
+          # Basic usage with default settings
+          python quickstart.py
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 10
+    rationale: The paper mentions that agents plan steps in their code comments, implying the use of in-line comments in the agent code.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 15, chunk 2
+        quote: despite planning detailed and accurate steps in their code comments
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The repository provides a dedicated documentation link and a setup and evaluation guide.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:README.md, chunk 0
+        quote: <a href="https://timothyxxx.github.io/OSWorld/">Doc</a>
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The provided excerpts are from a paper (2404.07972v2) which is linked in the README, indicating a formal publication.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:README.md, chunk 0
+        quote: <a href="https://arxiv.org/abs/2404.07972">Paper</a>
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the benchmark construction, including the number of tasks and the environment setup.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 6, chunk 2
+        quote: The environment preparation, annotation process, data statistics, and human performance are described in this section.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the tasks (369 on Ubuntu, 43 on Windows) and the rationale for software selection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 6, chunk 2
+        quote: We introduce the OSW ORLD   benchmark, which encompasses 369 real computing tasks defined and executed on Ubuntu.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper discusses limitations such as the lack of fine-grained data for certain tasks and safety metric gaps.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 18, chunk 1
+        quote: However, there still lacks a reliable metric to assess the safety of an agent developed in an isolated environment.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the test environment design, specifically the use of virtual machines.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 23, chunk 0
+        quote: virtual machines can operate their own kernel and system, enabling compatibility with a wide variety of operating systems
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper and documentation describe the use of example-specific evaluation metrics and scripts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 4, chunk 4
+        quote: we design example-specific evaluation metrics including pre-setup, post-processing, and
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The repository includes a LICENSE file specifying the Apache License, Version 2.0.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:LICENSE, chunk 11
+        quote: Licensed under the Apache License, Version 2.0 (the "License")
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: The excerpts do not show the inclusion of standardized metadata (e.g., Dublin Core).
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents that tasks were collected from authors, forums, tutorials, and guidelines.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 6, chunk 4
+        quote: collected from authors and diverse sources such as forums, tutorials, guidelines,   etc.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper describes the preprocessing/configuration procedure divided into three stages.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 4, chunk 4
+        quote: "The procedure is divided into three stages: start the VM emulator, prepare files (download the files or scripts from the cloud,   etc. optional), and execute reprocessing commands"
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper describes the annotation process and the quality control involving multiple authors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 7, chunk 4
+        quote: Once annotation is finished, each example is attempted by two authors who did not participate in annotating that specific example
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The paper explains the representativeness of the software selected based on popularity and diversity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 26, chunk 3
+        quote: "We adopt standards that consider: 1) Availability... 3) Popularity... 5) Diversity of categories - the software should be diverse to adequately represent and cover a wide range of real-world cases."
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Sphinx, ReadTheDocs standard).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 15
+    rationale: The documentation lists multiple maintained feedback channels, including GitHub issues and a Discord server.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:SETUP_GUIDELINE.md, chunk 12
+        quote: |-
+          Open an issue on [GitHub](https://github.com/xlang-ai/OSWorld/issues)
+          - Join our [Discord](https://discord.gg/4Gnw7eTEZR)
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: Specific contact email addresses for leaderboard submission and maintainers are listed.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:SETUP_GUIDELINE.md, chunk 12
+        quote: |-
+          For leaderboard submission, contact:
+          - tianbaoxiexxx@gmail.com
+          - yuanmengqi732@gmail.com
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

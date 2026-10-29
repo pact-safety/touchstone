@@ -1,0 +1,396 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gaia
+standard: abc
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gaia/abc/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.12983v1
+      ref: v1
+      sha256: ed50199799b28126a193080d35d4b629d544261f29ca71a97f4cdf49eca81c1b
+      chars: 83727
+  excerpt_chars: 40000
+verdicts:
+  O.a.1:
+    value: unmet
+    rationale: The benchmark mentions normalization tied to the ground truth type, but does not document specific equivalences (like case or synonyms) nor show an equivalent answer being accepted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth (up to some normalization that is tied to the “type” of the ground truth)
+    by: model
+    quotes_verified: true
+  O.a.2:
+    value: unmet
+    rationale: There is no evidence that extra words around a correct answer are ignored; the system prompt explicitly tells models to use 'as few words as possible'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 22, chunk 1
+        quote: YOUR FINAL ANSWER should be a number OR as few words as possible
+    by: model
+    quotes_verified: true
+  O.a.3:
+    value: unmet
+    rationale: The excerpts do not provide evidence or test cases showing that an answer negating the ground truth is scored as incorrect.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.4:
+    value: unmet
+    rationale: The excerpts do not mention how the matcher handles lists of all possible answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.5:
+    value: unmet
+    rationale: While the benchmark uses factoid answers, it does not provide a test or evidence showing that a generic guess (like 'yes' or a single digit) fails for every item.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.b.1:
+    value: n/a
+    rationale: The benchmark uses quasi-exact string matching for evaluation, not an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  O.b.2:
+    value: n/a
+    rationale: The benchmark uses quasi-exact string matching for evaluation, not an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  O.c.1:
+    value: n/a
+    rationale: Outputs are scored by matching a final answer string, not by test cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  O.c.2:
+    value: n/a
+    rationale: Outputs are scored by matching a final answer string, not by test cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  O.d.1:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.2:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.3:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.1:
+    value: n/a
+    rationale: End-to-end testing of code is not used for scoring; scoring is based on the final answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  O.e.2:
+    value: n/a
+    rationale: End-to-end testing of code is not used for scoring; scoring is based on the final answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  O.f.1:
+    value: n/a
+    rationale: Outcomes are scored by matching a final answer string, not by environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  O.f.2:
+    value: n/a
+    rationale: Outcomes are scored by matching a final answer string, not by environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  O.f.3:
+    value: n/a
+    rationale: Outcomes are scored by matching a final answer string, not by environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  O.g.1:
+    value: met
+    rationale: The system prompt explicitly defines the required answer formats (number, few words, or comma separated list).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 22, chunk 1
+        quote: YOUR FINAL ANSWER should be a number OR as few words as possible OR a comma separated list of numbers and/or strings
+    by: model
+    quotes_verified: true
+  O.g.2:
+    value: unmet
+    rationale: The benchmark does not state the answer-space size or the resulting chance success rate.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.h.1:
+    value: n/a
+    rationale: The benchmark uses exact/quasi-exact matching for a single correct answer, not a continuous quality metric.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: There is only one correct answer. Hence, evaluation is done via quasi exact match
+    by: model
+    quotes_verified: true
+  T.1:
+    value: unmet
+    rationale: The excerpts list tools used (e.g., Python), but do not specify versions or provide a lockfile.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.2:
+    value: n/a
+    rationale: The benchmark relies on interactions with the real world and does not provide a specific set of API tools to be consistently accessible.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: GAIA does not specify possible APIs, and relies on interactions with the real world.
+    by: model
+    quotes_verified: true
+  T.3:
+    value: n/a
+    rationale: The benchmark relies on interactions with the real world and does not provide a specific set of API tools.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: GAIA does not specify possible APIs, and relies on interactions with the real world.
+    by: model
+    quotes_verified: true
+  T.4:
+    value: unmet
+    rationale: There is no mention of a fresh environment or clearing residual data between runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.5:
+    value: unmet
+    rationale: The excerpts do not provide container or harness configurations showing that answers are absent from the filesystem.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.6:
+    value: unmet
+    rationale: The benchmark explicitly relies on the live web, and the authors acknowledge that evidence on the web might change over time.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 3
+        quote: Designing questions can be delicate when a source of truth is hosted on the web. First, the evidence might change over time.
+    by: model
+    quotes_verified: true
+  T.7:
+    value: met
+    rationale: Ground truth labels were checked by independent annotators during a validation phase.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 19, chunk 1
+        quote: After question creation, we ask two new independent annotators to answer the questions to check it is not ambiguous.
+    by: model
+    quotes_verified: true
+  T.8:
+    value: met
+    rationale: The tasks were solved by human annotators during the creation and validation phases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 2
+        quote: Human score refers to the score obtained by our annotators when validating the questions.
+    by: model
+    quotes_verified: true
+  T.9:
+    value: unmet
+    rationale: While GPT-4 + plugins is called an 'oracle' estimate, it is not an automated reference solver that ships with the benchmark to solve all tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 1
+        quote: our score for GPT4 with plugins is an “oracle” estimate of GPT4 potential with more stable and automatically selected plugins
+    by: model
+    quotes_verified: true
+  T.10:
+    value: unmet
+    rationale: There is no documentation of an exploit audit of the implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.1:
+    value: met
+    rationale: The benchmark releases a developer set of questions and a leaderboard.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 3, chunk 1
+        quote: We release a developer set of 166 annotated questions and release the remaining 300 questions without annotations
+    by: model
+    quotes_verified: true
+  R.2:
+    value: met
+    rationale: The benchmark provides a link to the code on Hugging Face and mentions providing the scoring function.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 1, chunk 1
+        quote: "Code:   https://huggingface.co/gaia-benchmark"
+    by: model
+    quotes_verified: true
+  R.3:
+    value: met
+    rationale: The benchmark uses a private held-out set of answers to power a leaderboard to prevent contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 1, chunk 1
+        quote: We release our questions while retaining answers to 300 of them to power a leader-board
+    by: model
+    quotes_verified: true
+  R.4:
+    value: met
+    rationale: The authors describe a process of evolving the benchmark by removing broken questions and adding new ones.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 10, chunk 0
+        quote: year-by-year through the removal of broken questions and the addition of new ones might be an important component
+    by: model
+    quotes_verified: true
+  R.5:
+    value: unmet
+    rationale: While capabilities and outcomes are mentioned, there is no single statement explaining why the specific measure indicates the capability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.6:
+    value: met
+    rationale: The benchmark explicitly states it aims to evaluate AI systems rather than specific architectures.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 10, chunk 0
+        quote: GAIA   aims at evaluating AI systems rather than the current architectural standard.
+    by: model
+    quotes_verified: true
+  R.7:
+    value: met
+    rationale: The benchmark uses a validation phase with independent annotators to identify and repair ambiguous questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 3
+        quote: We estimate the creation of a question, including its validation by two supplementary annotators and potential repairs
+    by: model
+    quotes_verified: true
+  R.8:
+    value: unmet
+    rationale: The excerpts mention limitations (like not evaluating the trace), but do not name the likely direction of effect on results for each flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.9:
+    value: unmet
+    rationale: There is no numerical estimation of the impact of a known flaw on the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.10:
+    value: unmet
+    rationale: The main results table (Table 4) does not provide confidence intervals or significance tests for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.11:
+    value: unmet
+    rationale: No specific caveat is provided that tells the user which conclusions should not be drawn due to named flaws.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.12:
+    value: met
+    rationale: The benchmark reports scores for human annotators as a baseline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 1
+        quote: Human annotator**   93.9   91.8   87.3   6.8   10.5   17.7
+    by: model
+    quotes_verified: true
+  R.13:
+    value: unmet
+    rationale: No score for a do-nothing or trivial agent is reported; only LLMs, humans, and search engines are listed.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

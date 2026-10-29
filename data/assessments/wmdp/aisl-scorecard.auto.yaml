@@ -1,0 +1,518 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: wmdp
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v7
+  repo_commit: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/wmdp/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2403.03218v7
+      ref: v7
+      sha256: 0f9e262077b9de1ede69f1e049d9d397340173a18847aa5ad06aa65a3a2c4137
+      chars: 106883
+    - kind: repo
+      url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+      ref: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+      sha256: 5b9f7623b08bde37498bc7f876403cf49c0c5bdbe45717ffd26a864afcd3b1db
+      chars: 7077
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The benchmark operationalizes the target phenomenon (hazardous knowledge) as QA accuracy on the WMDP dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 8, chunk 3
+        quote: We operationalize this as reducing a model’s QA accuracy on WMDP
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation defines the scope as offensive knowledge and explicitly excludes defensive knowledge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 3, chunk 0
+        quote: we primarily include offensive knowledge, as unlearning defensive knowledge (e.g., biosafety protocols) may prevent benevolent use cases of LLMs
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: While the dataset has categories (Bio, Cyber, Chem), the results in Table 1 and Figure 8 report aggregate scores for Bio and Cyber rather than independent scores for every named sub-component (e.g., 'Dual-use Virology').
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The docs define the task space by categories (Bio, Cyber, Chem) and report item counts for these categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 21, chunk 1
+        quote: |-
+          Category   Count
+          Bio
+          Dual-use Virology   228
+          Bioweapons & Bioterrorism   197
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The documentation provides a detailed breakdown of item counts for every category within the task space.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 21, chunk 1
+        quote: |-
+          A.1   Dataset Breakdown 
+          Category   Count
+          Bio
+          Dual-use Virology   228
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The documentation states that all questions were checked by at least two experts to ensure quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: To ensure quality, all of our questions were checked by at least two experts from different organizations.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: met
+    rationale: The docs describe collecting questions 'near the boundary' to approximate sensitive information in chemistry.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: we approximate especially sensitive information by collecting questions near the boundary
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark is presented as a newly released dataset developed by a consortium, not an adaptation of a prior benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 1, chunk 2
+        quote: we publicly release the   W eapons of   M ass   D estruction   P roxy (WMDP) benchmark
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 1, chunk 2
+        quote: we publicly release the   W eapons of   M ass   D estruction   P roxy (WMDP) benchmark
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: The item count is stated, but there is no power calculation or confidence-interval half-width reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 1, chunk 2
+        quote: a dataset of   3 , 668   multiple-choice questions
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The results tables (e.g., Table 1) report point estimates of accuracy without confidence intervals or standard errors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 10, chunk 3
+        quote: "Table 1: RMU outperforms baselines, decreasing accuracy on WMDP"
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The benchmark uses multiple-choice questions with deterministic keys; no human raters are used to judge model outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: No human raters are used to judge outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: Every label comes from a deterministic key (the correct multiple-choice option).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Every label comes from a deterministic key (the correct multiple-choice option).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: There is no table or figure breaking down failures by a named confound like prompt length or language complexity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The docs do not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not provide a single statement linking the specific tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: unmet
+    rationale: The paper mentions other safety strategies (filtering, RLHF) but does not compare WMDP against a named prior benchmark of the same construct to state a concrete gap addressed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The docs provide a limitations statement regarding the static nature of the benchmark and link performance to the real-world capability of developing weapons.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 1
+        quote: WMDP is a static benchmark which cannot anticipate the evolving landscape of cyber and biological risks
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation identifies that memorized facts from training data could be a related phenomenon measured by the same tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 1
+        quote: models that have memorized key biological concepts from the training data may be equally likely to do well on a particular multiple choice question
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: The overlap with memorized facts mentioned in iv.02 is not quantified, nor is a mitigation described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no results reported comparing different output formats or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The benchmark uses multiple-choice questions where the answer is the top logit among four options, involving no parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or training cutoffs for every evaluated model; it only suggests this as future work.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 1
+        quote: future work in this area could include generating questions from scientific papers that were only released after a model’s training date cutoff
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark is explicitly described as a static benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 1
+        quote: WMDP is a static benchmark
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of zero-shot multiple-choice questions based on logits, which are single stateless model calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: We use the default lm-evaluation-harness zero-shot format for MMLU and WMDP
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: The benchmark uses a four-choice multiple-choice format but does not report a random-guess baseline or a named guessing mitigation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 0
+        quote: we design WMDP as a dataset of four-choice multiple-choice questions
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: met
+    rationale: The documentation states that external biosecurity experts were consulted to formulate the areas of biological information covered in the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 6, chunk 1
+        quote: We consulted with external biosecurity experts when formulating these areas
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The docs state that domain experts were used to flag sensitive information and that for specific categories, two additional domain experts cross-checked each question.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 8, chunk 1
+        quote: on each question, two additional domain experts were tasked with determining whether the question constitutes sensitive information.
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The documentation only mentions using a zero-shot question-answer format and does not report results under multiple different prompting settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There is no report of results as a separate slice for a named stress condition or shift with an associated item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general hazardous knowledge in biology, chemistry, and cyber, rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general hazardous knowledge in biology, chemistry, and cyber, rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general hazardous knowledge in biology, chemistry, and cyber, rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While some hyperparameters and a library version are mentioned, the documentation lacks a full list of software versions (lockfile), hardware models, and the OS or container image.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 11, chunk 1
+        quote: we use lm-evaluation-harness v0.4.2
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention an independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The docs mention expert quality control for questions, but there is no described correction channel (errata/changelog) recording at least one fix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: To ensure quality, all of our questions were checked by at least two experts from different organizations.
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The documentation does not explicitly name and analyze unavoidable flaws according to the required criteria (bias direction, impact estimate, and valid conclusions).
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: No human or expert baseline is reported for the tasks, nor is there a statement explaining why one is not relevant.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: The documentation reports that the RMU method drops performance to near random accuracy, which serves as a trivial baseline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 11, chunk 1
+        quote: RMU is able to drop performance to near random accuracy on WMDP-Bio and WMDP-Cyber
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The benchmark uses multiple-choice questions with top logit selection, not a model rater for ground truth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: No model is used as a rater or judge for the benchmark's ground truth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: No model is used as a rater or judge for the benchmark's ground truth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: No model is used as a rater or judge for the benchmark's ground truth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The documentation states that all questions were checked by at least two experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: all of our questions were checked by at least two experts from different organizations
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: There is no documentation classifying every task as solvable or intentionally unsolvable with expected behaviors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The benchmark uses multiple-choice questions with gold labels (answers) checked by experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: all of our questions were checked by at least two experts from different organizations
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The benchmark uses a strict multiple-choice format (A, B, C, D) and does not list equivalences or show non-identical correct answers passing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: Scoring is based on the top logit of four fixed choices, which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: Scoring is based on the top logit of four fixed choices, which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: While adversarial attacks (GCG) were used to test the model's knowledge, there is no report of a null-agent run or targeted exploit attempt on the scorer itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

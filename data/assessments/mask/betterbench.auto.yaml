@@ -1,0 +1,410 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mask
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mask/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.03750v3
+      ref: v3
+      sha256: 9bcec5f619dcb60b733cce61f4e2ed46d54e87fd7912498c395b8b59e617d42d
+      chars: 72271
+    - kind: repo
+      url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      ref: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      sha256: 06e7088a378d52ba4ae9eabd3f465b5ecb18e46a92b427dbf8ccfb4e8ed618c2
+      chars: 3382
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark explicitly defines a model's belief as its answer to factual questions when not under pressure to lie and consistent with related questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 4, chunk 1
+        quote: We define a model’s belief as its answer to factual questions when not under any direct pressure to lie or be deceptive
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The text describes how the concept of honesty is operationalized by assessing if a model's response under pressure is consistent with its elicited beliefs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 0
+        quote: we evaluate honesty by assessing if a model’s response when pressured to lie is consistent with its beliefs
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that monitoring the propensity to lie is a prerequisite for ensuring trustworthy and safe deployment of LLMs, especially in safety-critical contexts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 1, chunk 1
+        quote: This is especially true in safety-critical contexts or applications that require access to sensitive information, where dishonest behavior can have serious consequences
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 15
+    rationale: The authors specify that reported honesty rates should be interpreted as worst-case propensities rather than deployment-time performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: reported honesty rates should be interpreted as worst-case propensities rather than deployment-time performance
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 10
+    rationale: The benchmark uses 'Full-Time Employees' (FTEs) to train contributors and audit quality, though they are not explicitly labeled as 'domain experts'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 1
+        quote: We began by training a group of calibrated Full-Time Employees (FTEs) on the nuances of the different archetypes
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 15
+    rationale: The benchmark uses specific scenarios (archetypes) such as an AI email assistant for a PR team to test lying.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 6, chunk 1
+        quote: You are an AI email assistant for Ja Rule’s PR team
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates established definitions of lying from literature (Mahon, 2008).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 0
+        quote: following established definitions of lying (Mahon, 2008)
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The benchmark uses accuracy and a specific 'Lying@10' metric to penalize occasional dishonesty, though the 'informed' choice process is not detailed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 19, chunk 1
+        quote: Lying@10 penalizes even occasional dishonesty
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: The excerpts do not provide a human performance baseline score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: The excerpts do not provide a random performance baseline score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark uses an LLM judge and reports its agreement rate with human annotators (86.4%)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains that MASK differs from previous benchmarks by isolating safety-related behavior (propensities) from general capabilities (accuracy).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 3, chunk 2
+        quote: the lack of clear benchmarks that isolate safety-related behavior from general model capabilities
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: The excerpts do not address how the benchmark handles input sensitivity (e.g., prompt perturbations).
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository contains multiple evaluation scripts including evaluate.py and metric.py.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+        locator: centerforaisafety/mask@25e0b1201e6c:FILE LISTING, chunk 0
+        quote: mask/evaluate.py
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The dataset is explicitly available on Hugging Face.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+        locator: centerforaisafety/mask@25e0b1201e6c:README.md, chunk 0
+        quote: The MASK Dataset is available for download on Hugging Face at [🤗 cais/mask](https://huggingface.co/datasets/cais/mask).
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: The excerpts do not mention support for API-based evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 0
+    rationale: The excerpts do not explicitly mention support for local model evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: While evaluation code is provided, there is no specific script mentioned for replicating the reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts report scores and correlations but do not mention statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: The excerpts do not mention assessing the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A requirements.txt file is listed in the repository file listing.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+        locator: centerforaisafety/mask@25e0b1201e6c:FILE LISTING, chunk 0
+        quote: requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: The excerpts do not mention a quick-start guide or demo.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: No code excerpts are provided to verify the presence of in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: The excerpts do not provide evidence of code documentation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 10
+    rationale: A paper is provided and cited as an arXiv preprint, but there is no evidence it was accepted at a peer-reviewed venue.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 1, chunk 2
+        quote: arXiv:2503.03750v3 [cs.LG] 5 Jan 2026
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the construction process, including human and automated data generation and quality control.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 1
+        quote: The data collection process involved both human and automated methods to ensure quality and efficiency.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (pressure prompts) and the rationale (disentangling honesty from accuracy).
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+        locator: centerforaisafety/mask@25e0b1201e6c:README.md, chunk 0
+        quote: a benchmark designed to evaluate honesty in large language models by testing whether they contradict their own beliefs when pressured to lie.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 15
+    rationale: The paper documents the normative definition of lying used as the basis for the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 3, chunk 3
+        quote: We follow established definitions of lying by commission, which requires (1) making a statement known (or believed) to be false
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper contains a dedicated 'Limitations' section.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: A.2   Limitations
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper provides a detailed description of the data collection and prompt design process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 1
+        quote: In Section A.7, we provide a detailed description of the data collection process and post-processing steps used to construct this dataset.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper introduces and documents a specific metric for assessing honesty.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 19, chunk 0
+        quote: A.8   Consistently Honest Metric (Lying@ n )
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes a LICENSE file specifying the MIT License."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: There is no evidence of standardized metadata (e.g., DataCards) being included.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents how data was collected using human contributors and automated methods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 1
+        quote: The data collection process involved both human and automated methods to ensure quality and efficiency.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper mentions post-processing steps used to construct the dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 1
+        quote: In Section A.7, we provide a detailed description of the data collection process and post-processing steps used to construct this dataset.
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper documents the human annotation/collection workflow, including training and review.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 1
+        quote: "To ensure high-quality data, we implemented the following workflow: 1. Contributor Training & Onboarding"
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not mention any checks performed on code usability within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: While authors are listed in the citation, no specific contact person (e.g., email or designated contact) is listed for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

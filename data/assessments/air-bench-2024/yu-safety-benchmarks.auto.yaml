@@ -1,0 +1,334 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: air-bench-2024
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/air-bench-2024/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2407.17436v2
+      ref: v2
+      sha256: 5bbae6c7732e0ea6c5324379b3b053372f800f427a013cf25133d809f522d760
+      chars: 122492
+    - kind: repo
+      url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      ref: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      sha256: f677af44b2ed98ceab0cba0738c6a9e6e346ab27b2feb66c7c4c9c24ee48ab01
+      chars: 23468
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark lists numerous risk types (e.g., Discrimination/Bias, Privacy) and specifies the refusal rate as the primary metric.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 18, chunk 5
+        quote: 14. Discrimination/Bias
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 6, chunk 1
+        quote: we use the refusal rate (percentage of scores that are 1) as the primary metric to assess model alignment with safety guidelines
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: unmet
+    rationale: The excerpts do not document specific risks the benchmark does not cover or explicit deployment assumptions like language or turn limits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: unmet
+    rationale: There is no statement acknowledging that a good score does not guarantee safety against untested or emergent risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark compares its coverage against HEx-PHI, HarmBench, and SALAD-Bench, noting that critical categories like Automated Decision Making are absent in them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 4, chunk 0
+        quote: HEx-PHI covers 51% (23/45) of these categories, HarmBench covers 26% (12/45) with a unique focus on catastrophic risks, and SALAD-Bench, the most comprehensive, covers 71% (32/45).
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: met
+    rationale: The benchmark describes using LLMs (GPT-4o) to generate diverse and specific risky instructions to identify failure modes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 4
+        quote: Each prompt is meticulously crafted to mimic real-world scenarios, maximizing the benchmark’s ability to identify failure modes
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: While the LICENSE mentions contributions, there is no documented process or portal explaining how outside contributions are integrated and credited.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: met
+    rationale: The benchmark states a plan to update the taxonomy regularly to keep pace with emerging risks in regulations and policies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 11, chunk 0
+        quote: we plan to update the AIR taxonomy regularly, incorporating new regulatory efforts to maintain the benchmark’s relevance and comprehensiveness
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The excerpts describe a pipeline of sending prompts to models and extracting scores, but do not mention multi-agent or interactive evaluation settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: The excerpts do not discuss or test distribution shift as a safety-critical issue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: The benchmark mentions a human alignment study involving authors, but does not document annotator selection, disagreement patterns, or demographics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: There is no mention of contamination detection or the temporal validity/retirement date of the evaluation sets.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results as 'refusal rates', which satisfies the requirement to label results as rates or frequencies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 6, chunk 2
+        quote: Figure 4 ( a ) illustrates the refusal rates
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark explicitly mentions that assuming the model is the entire system may not reflect real-world implementations with human oversight, which is a factor limiting generalization.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 9, chunk 2
+        quote: our benchmark assumes the model is the entire system, which may not reflect real-world implementations where human oversight or additional checks may be in place
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: While the benchmark maps categories to the EU AI Act, it does not cite a source to justify the specific severity levels or harm weightings of its own scale.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The excerpts do not state whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: met
+    rationale: The benchmark states it incorporates best practices from leading research.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 3
+        quote: AIR-B ENCH 2024 incorporates best practices from leading research
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: No confidence intervals, standard errors, or worst-case bounds are reported for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: met
+    rationale: The benchmark reports a Cohen's Kappa score to measure agreement between human evaluators and autograders.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 1
+        quote: the Cohen’s Kappa score between human evaluators and the Autograders was found to be 0.86
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across all three required dimensions (random seeds, prompt rephrasings, and evaluator versions).
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin when extrapolating to deployment risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: unmet
+    rationale: The benchmark lists risk categories (e.g., 'Violence & Extremism'), but does not provide operational definitions explaining what counts as an instance for each.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: met
+    rationale: The benchmark states that its risk categories are based on government regulations and company policies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 1, chunk 0
+        quote: A Safety Benchmark Based on Risk Categories from Regulations and Policies
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The excerpts do not mention any contested normative choices or value conflicts in the definitions of harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark explains that its prompts mimic real-world scenarios to identify failure modes and assess alignment with real-world safety concerns.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 4
+        quote: Each prompt is meticulously crafted to mimic real-world scenarios, maximizing the benchmark’s ability to identify failure modes
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: While temperature is recorded, the access date and system prompt for the reported runs are not provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing or reporting random seeds for data sampling, inference, or evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The judge model (GPT-4o) is named, but the scoring rubric and annotation guidelines do not have associated versions, dates, or commit hashes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: A public code repository is provided with a README that references HELM documentation for reproduction.
+    evidence:
+      - source: repo
+        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:README.md, chunk 8
+        quote: For details, please refer to the [HELM documentation](https://crfm-helm.readthedocs.io/)
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The prompts are stated to be generated by LLMs (synthetic) and the benchmark reports validation via a human alignment study.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 5, chunk 4
+        quote: we conducted a meticulous human alignment study to understand the accuracy of our evaluation results
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark argues that prompts are crafted to mimic real-world scenarios to identify failure modes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 4
+        quote: Each prompt is meticulously crafted to mimic real-world scenarios, maximizing the benchmark’s ability to identify failure modes
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: unmet
+    rationale: The excerpts describe single-turn prompts and do not mention multi-turn evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark uses synthetic/generated data rather than in-the-wild collection constrained by privacy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 4, chunk 1
+        quote: "Generation : Scaled generation of initial set of base instructions"
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: met
+    rationale: The benchmark acknowledges it is static and states a plan to update the taxonomy regularly to keep pace with emerging risks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 11, chunk 0
+        quote: we plan to update the AIR taxonomy regularly, incorporating new regulatory efforts to maintain the benchmark’s relevance
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that affected communities were consulted to assess if scenarios reflect their experienced harms.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark explicitly states that it assumes the model is the entire system.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 9, chunk 2
+        quote: our benchmark assumes the model is the entire system
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: met
+    rationale: The benchmark states that assuming the model is the system may not reflect real-world implementations and suggests a need for stronger safeguards or clearer guidelines.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 9, chunk 2
+        quote: our benchmark assumes the model is the entire system, which may not reflect real-world implementations where human oversight or additional checks may be in place
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

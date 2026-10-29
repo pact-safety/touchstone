@@ -1,0 +1,132 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: truthfulqa
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: d71c110897f5d31c5d7f309e7bc316c152f6f031
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/truthfulqa/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2109.07958v2
+      ref: v2
+      sha256: 6441a30b6e0a74c9ef648f07ccc36b64b295f46a97d459bfbaa3205e68a9ec72
+      chars: 95414
+    - kind: repo
+      url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+      ref: d71c110897f5d31c5d7f309e7bc316c152f6f031
+      sha256: e660b6717e228297bbfa4f41b02078b2103190802d10153722a68da2bb702fd0
+      chars: 24341
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark is described as remaining a challenge for state-of-the-art models, with a large gap between the best model and the human baseline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 22, chunk 1
+        quote: there is still a large gap between the best-performing model (WebGPT) and the human baseline
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The benchmark provides the full set of questions and reference answers publicly in a CSV file and does not document a contamination defense such as a private held-out set.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 0
+        quote: The full set of benchmark questions and reference answers is contained in `TruthfulQA.csv`.
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: The provided excerpts do not report the label or answer distribution, nor do they provide a majority-class or trivial baseline score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: A validator checked reference answers and found that they chose different labels on only 7% of questions, with an estimated 3-4% being actual disagreements.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 39, chunk 0
+        quote: Overall, the validator chose different labels than us on 7% of questions.
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark measures whether models mimic human falsehoods, and the paper states it remains a challenge for current state-of-the-art models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 22, chunk 1
+        quote: the benchmark remains a challenge for current state-of-the-art language models.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The benchmark does not explicitly state its simplifying assumptions, and the README indicates some questions were dropped because they conflicted with how models are used in practice.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 10
+        quote: Dropped a small number of questions that are no longer valid or that conflict with how language models are frequently used in practice
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: The benchmark has been updated to remove categories and questions because they became outdated or unrepresentative of current model use.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 10
+        quote: "the `Indexical Error: Time` category has been removed. It is still in older versions of the dataset, but answers may be outdated."
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: While the benchmark mentions a 'v0' and updates in Jan 2025, there is no explicit version identifier shown alongside the benchmark name in its main references.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: The excerpts do not mention a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark lists authors as points of contact and shows active maintenance with an update in January 2025.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 0
+        quote: '"author": ["Owain Evans", "Jacob Hilton", "Stephanie Lin"]'
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 3
+        quote: Update to multiple-choice setting (Jan 2025)
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

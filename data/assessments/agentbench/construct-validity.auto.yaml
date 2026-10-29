@@ -1,0 +1,254 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentbench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: d1e4a10db08c87075c78972e48ecc182be03e2d5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentbench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.03688v3
+      ref: v3
+      sha256: 7cd79af6c52326b66ffb8a091846a2500987cb0fb0b82ef9eee095868080c8e6
+      chars: 195183
+    - kind: repo
+      url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+      ref: d1e4a10db08c87075c78972e48ecc182be03e2d5
+      sha256: 38676ac447342263b64538034b78c1a541f2759db9637e751b24ae760546faa0
+      chars: 73189
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: unmet
+    rationale: The excerpts do not provide a precise operational definition of the overall phenomenon being measured by AgentBench, only specific task details.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: There is no statement defining the overall scope of the phenomenon nor any explicitly named excluded aspects.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The benchmark identifies sub-components (metrics) for the LTP system and measures them separately.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 35, chunk 0
+        quote: "Round Efficiency (RE):   How fast the model can guess out the truth within the maximum round. •   Query Relevance (QR):   Relevance between model’s questions and the truth. •   Game Progress (GP):   Progress before a game end"
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks nor provide corresponding control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the text mentions that 'Invalid Format errors frequently occur due to stringent formatting requirements', it does not provide a measurement of how these requirements specifically impact the resulting scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 8, chunk 2
+        quote: In Database and Digital Card Game tasks,   Invalid Format   errors frequently occur due to stringent formatting requirements
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses simulated environments to execute actions and determine success, rather than parsing free-form output for correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 39, chunk 0
+        quote: After receiving the action from the model, the environment provides feedback
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts mention that datasets are 'publicly available' and that they 'sample and categorize' for specific tasks, but they do not document a sampling strategy over a described task space to ensure representativeness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: While one specific task (augmented query statements) is mentioned to pass unit test scripts, there is no evidence that every item across the entire benchmark passed a documented quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items, nor are any such results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that it adapts the Mind2Web benchmark and uses existing SQL datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 5, chunk 3
+        quote: Compared to Mind2Web’s original setting, we make adaptations
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 25, chunk 1
+        quote: We elaborate on the data augmentation of three types of DB tasks based on the existing SQL datasets
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: While the text mentions adaptations, it does not report specific strengths and limitations of the prior work being adapted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: The provided excerpts do not show a performance comparison between the new benchmark and the original versions of the reused datasets.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The text mentions modifications (e.g., adapting Mind2Web for prompted LLMs and augmenting SQL datasets), but it does not explain how these specific modifications improve construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any contamination tests or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split for the benchmark; the excerpts only mention a 'standard' test set and an 'out of distribution' split from an external dataset (ALFWorld).
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper does not report a search or overlap check of its source materials against any named training corpora or models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The excerpts do not state the total item count for the benchmark, nor do they provide power calculations or confidence-interval widths.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results are mentioned as being in Table 3, but the provided excerpts do not show the table or any confidence intervals/standard errors for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The excerpts describe automated evaluation methods such as checking pipelines, hash comparisons, and F1 scores, with no mention of human raters being used for scoring.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are based on deterministic keys such as 'gold standard answers', 'hash of the table', and 'checking method to judge the correctness', which are not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 27, chunk 1
+        quote: calculated by comparing the model’s predicted answers to the gold standard answers
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 25, chunk 1
+        quote: compare the hash of the table after the agent’s operation with the hash of the table after the correct SQL operation
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While common errors are described (e.g., Invalid Format, Invalid Action), the excerpts do not provide counts for these failure modes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 47, chunk 0
+        quote: |-
+          Invalid Format ,   Invalid Action , and   Text Limit Exceeded 
+          are common errors.
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not show a table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The paper proposes specific directions to improve LLM agents, such as introducing code training and alignment training over high-quality data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 3, chunk 2
+        quote: a proper strategy of introducing code training can help improve LLM-as-Agent. Alignment training over high-quality data (e.g., data generated by   gpt-4 ) could also help improve LLM agents.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to real-world challenges and specifically mentions the 'House Holding' environment as a simulated domestic setting.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 2, chunk 1
+        quote: A GENT B ENCH   is the first systematic benchmark to evaluate LLM-as-Agent on a wide array of real-world challenges
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition (def.1) in the excerpts, nor a statement linking task choice and metrics to such a definition.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to Mind2Web, noting that AgentBench makes adaptations to allow evaluation on prompted LLMs without fine-tuning.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 5, chunk 3
+        quote: Compared to Mind2Web’s original setting, we make adaptations to allow its evaluation on prompted LLMs without additional fine-tuning.
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: While the text discusses performance analysis and failure causes, it does not state a limitation or design trade-off specifically concerning what the scores do or do not measure.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

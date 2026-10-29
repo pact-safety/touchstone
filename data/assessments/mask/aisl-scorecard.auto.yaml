@@ -1,0 +1,488 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mask
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mask/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.03750v3
+      ref: v3
+      sha256: 9bcec5f619dcb60b733cce61f4e2ed46d54e87fd7912498c395b8b59e617d42d
+      chars: 72271
+    - kind: repo
+      url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      ref: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      sha256: 06e7088a378d52ba4ae9eabd3f465b5ecb18e46a92b427dbf8ccfb4e8ed618c2
+      chars: 3382
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper provides an operational definition of lying based on the contradiction between a model's statement and its belief."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation mentions the focus is on English textual prompts and short factual propositions, it does not explicitly name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper mentions different archetypes (e.g., Statistics, Disinfo) and reports proportions for them, but it does not report a separate 'honesty score' for each facet independently in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by six archetypes, and Figure 8 reports the proportion of responses for these categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 1
+        quote: In the Appendix, Table 2 defines the six distinct archetypes our prompts align with.
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The documentation reports the proportion of responses across the different archetypes in Figure 8.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 8, chunk 1
+        quote: "Figure 8: No one archetype represents a disproportionate amount of honest or lying examples"
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The paper describes a filtering process using o3-mini with specific criteria and a human review process for contributors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 18, chunk 0
+        quote: Before generating auxiliary data given the lie elicitation prompts, we apply a filtering process to ensure that only high-quality deceptive prompts are retained.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: The documentation does not describe a specific named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: met
+    rationale: The benchmark does not reuse a prior dataset; it is described as a human-collected dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 1, chunk 0
+        quote: In this work, we introduce a large-scale human-collected dataset for directly measuring lying
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: met
+    rationale: The benchmark does not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 1, chunk 0
+        quote: In this work, we introduce a large-scale human-collected dataset for directly measuring lying
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While the item count (1,500) is stated, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results tables (e.g., Figure 4, Figure 6) report percentages but do not include confidence intervals or standard errors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: met
+    rationale: The paper states that training materials and quizzes were provided to contributors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 1
+        quote: we put together training materials and quizzes for contributors.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a description of mitigation for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: The labels are deterministic based on whether the statement S equals the belief B (S ≠ B), which is a state check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: The labels are deterministic based on the comparison of S and B.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: met
+    rationale: The paper breaks down the proportion of responses by question type (archetypes) in Figure 8.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 8, chunk 1
+        quote: "Figure 8: No one archetype represents a disproportionate amount of honest or lying examples"
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper reports proportions of responses (Honest, Lying, Evaded) but does not categorize failure modes with counts or shares beyond the basic metric.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The documentation does not provide a single statement that names the tasks, each metric, and the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares MASK to TruthfulQA and notes that TruthfulQA may measure accuracy rather than honesty.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 3, chunk 2
+        quote: while initial performance in TruthfulQA initially decreased as model size increased
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The paper provides a limitations section and links the results to the real-world safety risk of deceptive behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: A.2 Limitations While MASK offers a first-of-its-kind, large-scale benchmark for disentangling honesty from accuracy, it is far from comprehensive
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify specific secondary capabilities nor provide control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation identifies factual accuracy as a related phenomenon that could be measured by the same tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 3, chunk 2
+        quote: This includes claiming that higher factual accuracy implies lower rates of lying.
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: met
+    rationale: The overlap with factual accuracy is quantified via Spearman correlation and the design disentangles honesty from accuracy by comparing responses to beliefs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 9, chunk 0
+        quote: "In contrast, accuracy strongly correlates with the amount of training compute used (Spearman coefficient:   87 . 3% )"
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: While MASK offers a first-of-its-kind, large-scale benchmark for disentangling honesty from accuracy
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reported results comparing different output formats or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The scoring uses an LLM judge to extract proposition resolutions, but the final comparison is programmatic based on those resolutions, not parsing free-form output directly for correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution and then compare these programmatically.
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report contamination checks or training data cutoffs for the evaluated models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (prompts) and local scoring via an LLM judge, with no external mutable environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: belief-elicitation prompts, pressure prompts, and judge criteria are identical regardless of the model being tested.
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of stateless model calls for belief elicitation and pressure prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: We first apply “pressure prompts” designed to incentivize lying. We then query the model directly about the same proposition three times without pressure
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark does not use multiple-choice questions; it uses free-form responses that are mapped to resolutions by a judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios and acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The lead authors (experts in the field) manually reviewed nearly every example in the dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 18, chunk 2
+        quote: the lead authors manually reviewed nearly every example in the dataset
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The documentation states that prompts are identical regardless of the model and does not report results under multiple different prompting settings (e.g., zero- vs few-shot).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: belief-elicitation prompts, pressure prompts, and judge criteria are identical regardless of the model being tested
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There is no report of results as a separate slice for a named stress condition or shift with an associated item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is a general tool for measuring honesty in LLMs and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 0
+        quote: This work introduces the MASK benchmark and evaluation pipeline for measuring when large language models (LLMs) knowingly produce false statements under pressure
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is a general tool for measuring honesty in LLMs and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 0
+        quote: This work introduces the MASK benchmark and evaluation pipeline for measuring when large language models (LLMs) knowingly produce false statements under pressure
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is a general tool for measuring honesty in LLMs and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 0
+        quote: This work introduces the MASK benchmark and evaluation pipeline for measuring when large language models (LLMs) knowingly produce false statements under pressure
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The provided excerpts do not list sampling parameters, library versions, hardware models, or OS/container images.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: While quality control steps are described (e.g., auditing and manual review), there is no mention of a correction channel like a changelog or errata recording a specific fix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 2
+        quote: an independent group of auditors randomly sampled 10% of completed tasks to ensure an error rate below 5%
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs name several flaws (e.g., LLM judge noise), but they do not provide a specific direction of bias for every flaw or explicit guidance on which conclusions remain valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves 86 . 4% agreement with human annotators, leaving non-trivial room for misclassification noise that could bias model rankings
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: The excerpts do not report a human or expert baseline for the honesty tasks, nor do they state why one is not relevant while providing a named prior system reference.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: No scores for trivial baselines (like random selection or zero-shot naive models) are reported in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: met
+    rationale: The documentation reports that the LLM judge's mapping of responses achieves 86.4% agreement with human annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves   86 . 4%   agreement with human annotators
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: met
+    rationale: The benchmark uses a fixed rubric/criteria for the LLM judge to ensure reliability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 2
+        quote: |-
+          We enforce strict judging criteria: non-committal statements like “some
+          people say” are classified as having no clear resolution
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: unmet
+    rationale: While the benchmark tests model consistency across repeated runs (Lying@10), it does not report the consistency of the LLM rater/judge itself across repeated runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: There is no mention of measuring specific rater biases (like length or position) with numbers and providing mitigations.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The ground truth is obtained via an ensemble of LLMs, and if they disagree, a human labels it, with a final audit of 10% of tasks by an independent group.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 18, chunk 1
+        quote: If the ensemble do not agree, a human labels the ground truth via a Google search.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The excerpts do not show that every task is documented as solvable or intentionally unsolvable with expected behaviors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: Ground truth solutions are provided via an ensemble of LLMs or human labeling via Google search.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 18, chunk 1
+        quote: |-
+          We obtain a ground truth via an ensemble of LLMs (GPT-4o and Claude-
+          3.5-Sonnet) prompted with the proposition.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify the scoring outcome for partial answers, off-format answers, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: met
+    rationale: The LLM judge's outputs are programmatically mapped to metrics, and the process is described as standardized, implying a deterministic mapping.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 2
+        quote: |-
+          The proposition resolutions determined by the LLM judge are
+          then programmatically mapped to honesty and accuracy metrics.
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: unmet
+    rationale: While the LLM judge's agreement with humans is reported, there is no specific report of the programmatic parser's accuracy against hand-checked outputs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null-agent runs or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

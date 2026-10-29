@@ -1,0 +1,406 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: harmbench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/harmbench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.04249v2
+      ref: v2
+      sha256: 580c29edfdd4e7940ed6c0ccdc4c23b74768be3e812d857f28a97a70592eec05
+      chars: 175045
+    - kind: repo
+      url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      ref: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      sha256: b5be49ee33386aad4099cc19a25d96e7938ea0928a746c13cf196d5583b43430
+      chars: 68399
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the problem as targeted red teaming where inputs are optimized to cause a generative AI to generate a specific type of output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 16, chunk 0
+        quote: we use “red teaming” to mean the problem of targeted red teaming described in Section 3.1, where inputs are optimized to cause a generative AI to generate a specific type of output.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark translates the concept of red teaming into tasks involving specific harmful behaviors, which are evaluated using a classifier to determine if the model exhibited the behavior."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text describes how the benchmark helps ensure LLMs are developed and deployed safely by enabling the development of stronger attacks and defenses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 2, chunk 1
+        quote: Ultimately, we hope HarmBench can enable collaborative development of stronger attacks and defenses, helping provide tools for ensuring LLMs are developed and deployed safely.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The text provides a specific warning against optimizing directly on the test metric to avoid overfitting, though it doesn't provide a comprehensive guide on all interpretations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 19, chunk 1
+        quote: Under no circumstances do we allow directly optimizing on the HarmBench test metric.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: The excerpts do not mention the involvement of domain experts in the design process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature, specifically referencing acceptable use policies from AI companies and literature on malicious use of LLMs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 19, chunk 3
+        quote: These categories were determined by referencing acceptable use policies at OpenAI, Anthropic, Meta, and Inflection AI, as well as literature on the potential for malicious use of LLMs
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The choice of metric is informed by an analysis of how token generation length affects ASR, leading to the proposal of a more robust metric and standardized parameters."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: The excerpts do not provide a human performance level for comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: The excerpts do not provide a random performance level.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses a validated automatic evaluation via a classifier that is compared against GPT-4 and human labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 21, chunk 0
+        quote: While previous classifiers and metrics failed to recognize these scenarios, our classifier matches GPT-4 performance on these sets.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explicitly explains differences between its approach (automated red teaming) and related benchmarks/methods (adversarial perturbations).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 16, chunk 0
+        quote: Table 2. Differences between adversarial perturbations and automated red teaming.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): Input sensitivity is addressed by analyzing how the number of generated tokens (an evaluation parameter) impacts the ASR."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository provides a script to run the evaluation pipeline.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 5
+        quote: python ./scripts/run_pipeline.py --methods ZeroShot,PEZ,TAP --models baichuan2_7b,mistral_7b,llama2_70b --step 1.5 --mode local
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository contains a data folder with multimodal behavior images and mentions test_cases.json files."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The benchmark explicitly supports numerous closed-source APIs.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 3
+        quote: HarmBench has out-of-the-box support for transformers-compatible LLMs, numerous closed-source APIs
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The pipeline supports running in 'local' mode for models on the current machine.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:docs/evaluation_pipeline.md, chunk 14
+        quote: In the `local` mode, steps of the pipeline are sequentially run on the current machine.
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: The excerpts do not mention globally unique identifiers or encryption of instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The run_pipeline.py script is provided to execute the evaluation steps.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 5
+        quote: python ./scripts/run_pipeline.py --methods ZeroShot,PEZ,TAP --models baichuan2_7b,mistral_7b,llama2_70b --step 1.5 --mode local
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not report statistical significance or uncertainty quantification of results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: While the benchmark deals with harmful content, it does not assess the need for warnings for that content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: The README provides a command to install dependencies from a requirements.txt file.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 3
+        quote: pip install -r requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README contains a 'Quick Start' section with installation and pipeline execution instructions.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 1
+        quote: ☕ Quick Start ☕
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code files to verify the presence of in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The repository includes dedicated documentation files for codebase structure, configs, and the evaluation pipeline.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 8
+        quote: |-
+          For more details documentation about each component in the framework
+            - [**Codebase Structure**](./docs/codebase_structure.md)
+            - [**Method and Model Configs**](./docs/configs.md)
+            - [**Evaluation Pipeline**](./docs/evaluation_pipeline.md)
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 10
+    rationale: The excerpts include a paper (2402.04249v2), but there is no evidence that it has been accepted at a peer-reviewed venue (it is formatted as an arXiv paper).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 1, chunk 3
+        quote: arXiv:2402.04249v2 [cs.LG] 27 Feb 2024
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the systematic design of the benchmark to satisfy breadth, comparability, and robust metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 1, chunk 3
+        quote: we identify three desirable properties for red teaming evaluations—breadth, comparability, and robust metrics—and we systematically design HarmBench to satisfy them.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the categories of behaviors (standard, contextual, multimodal) and the rationale for their inclusion.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 4, chunk 1
+        quote: our proposed benchmark contains novel functional categories and modalities of behaviors, including contextual behaviors, copyright behaviors, and multimodal behaviors.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 0
+    rationale: The excerpts do not explicitly document the limitations of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the prompt design process for classifiers, including the use of GPT-4 prompts and human-labeled validation sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 20, chunk 1
+        quote: Once we have the validation set, we tune a GPT-4 prompts to obtain high accuracy on it.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper documents the use of Attack Success Rate (ASR) and the development of robust classifiers as the evaluation metric.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 26, chunk 0
+        quote: Figure 11. Attack success rate (ASR) averaged across all attacks
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository contains a LICENSE file specifying the MIT License."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: The excerpts do not show the inclusion of standardized metadata (e.g., DataCards).
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents that context strings were sourced from public websites and journal articles.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 39, chunk 3
+        quote: context strings were sourced from public websites and journal articles that can be easily found online
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not document specific data preprocessing steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper documents the annotation process, including the use of human labels and specific annotation criteria.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 18, chunk 1
+        quote: We developed these criteria over a period of several months, building on the annotation criteria used for TDC 2023
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no evidence that the documentation follows a recognized standard (e.g., Sphinx, ReadTheDocs).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

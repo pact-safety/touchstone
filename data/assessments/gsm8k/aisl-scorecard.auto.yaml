@@ -1,0 +1,434 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gsm8k
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 3101c7d5072418e28b9008a6636bde82a006892c
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gsm8k/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.14168v2
+      ref: v2
+      sha256: d5f50406113e835544f59130d94bbea960dc894a4c89b2cd554a04f0a100c1bd
+      chars: 46512
+    - kind: repo
+      url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+      ref: 3101c7d5072418e28b9008a6636bde82a006892c
+      sha256: 20bd770b749ea24df5479cc6e9770f6581e3679d195ba77037c2c1effa4f61e2
+      chars: 7821
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines the target phenomenon as multi-step mathematical reasoning and specifies that evidence of it is the ability to solve grade school math word problems.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 1, chunk 0
+        quote: they still struggle to robustly perform multi-step mathematical reasoning
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The scope is defined as grade school math, and it explicitly excludes concepts beyond early Algebra.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 1
+        quote: Problems require no concepts beyond the level of early Algebra
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper does not name distinct facets of the phenomenon or report independent scores for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: unmet
+    rationale: While the task space is defined, the documentation does not report item counts along a difficulty or variation dimension.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation does not report per-category item counts or a stratified sampling plan.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The dataset was created by human workers and underwent quality control based on answer agreement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: After performing extensive quality control based on workers’ answer agreement
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark is presented as a new curated dataset created by human writers, not an adaptation of a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: The item count is stated, but no power calculation or confidence-interval half-width is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results (solve rates) do not consistently report confidence intervals or standard errors for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: While it mentions instructing contractors, the actual instructions or training materials are not reproduced.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a check for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: The labels are deterministic (correct or incorrect based on the final numeric answer).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 7, chunk 1
+        quote: Training solutions are labeled as correct or incorrect based solely on whether they reach the correct final answer
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: The labels are deterministic (correct or incorrect based on the final numeric answer).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 7, chunk 1
+        quote: Training solutions are labeled as correct or incorrect based solely on whether they reach the correct final answer
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The paper mentions arithmetic mistakes as a common error, but does not provide a table or figure breaking down failures by a named confound.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper identifies arithmetic mistakes as a common source of error, but does not provide counts or shares for named failure categories.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking the tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares GSM8K to several prior benchmarks (AQuA-RAT, MathQA) and states it addresses gaps like problem templatization and poor quality control.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 4, chunk 0
+        quote: AQuA-RAT (Ling et al., 2017) contains 100K problems, but this dataset unfortunately suffers from both a high degree of problem templatization and poor quality control
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The documentation lacks a specific limitations statement for the design and a supported claim linking scores to real-world capability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation identifies reading comprehension as a difficulty/capability, but does not provide a control condition or ablation result showing it does not drive scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation names related phenomena such as reading comprehension and commonsense question answering that overlap with the tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 4, chunk 1
+        quote: GSM8K’s main difficulty lies in both properly interpreting a question and reasoning through the steps to solve it.
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: There is no quantification of the overlap with related phenomena or description of mitigation steps taken to address it.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The documentation does not report results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment or variance measure for sensitivity to wording changes is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: Scoring involves parsing the numeric value following a specific token, which is a fixed extraction rather than parsing free-form output formats for bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report contamination checks or provide the training-data cutoff for the evaluated GPT-3 models relative to the benchmark release date.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs and local scoring (parsing a token), involving no external or mutable environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of single model calls (sampling a solution) for each test problem.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 6, chunk 1
+        quote: Test performance is determined by a single low temperature ( T = 0) sample for each test problem.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark does not use multiple choice questions; it requires generating a natural language solution and a final numeric answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: solutions primarily involve performing a sequence of elementary calculations using basic arithmetic operations (+ − ×÷ ) to reach the final answer
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation mentions hiring freelance contractors and using Surge AI for data collection, but it does not name specific domain experts or user groups who defined the evaluation scenarios and acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While the docs mention that contractors re-solved problems to check for agreement, they do not specify the reviewers' professional credentials or the exact sample size of the final review round.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The results compare performance between models that output the final answer directly versus those that generate a full natural language solution.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 7, chunk 1
+        quote: If we instead finetune a 6B model to directly output the final answer without any intermediate steps, performance drops drastically from 20.6% to 5.2%.
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not report results for a separate slice based on a named stress condition or shift that differs from the train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is presented as a general dataset to diagnose failures of language models in mathematical reasoning, not as an evaluation for a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is presented as a general dataset to diagnose failures of language models in mathematical reasoning, not as an evaluation for a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is presented as a general dataset to diagnose failures of language models in mathematical reasoning, not as an evaluation for a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While sampling parameters and some hyperparameters are listed, there is no mention of library versions, hardware models, or OS/container images.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The docs mention quality control for data collection, but they do not describe a correction channel (like a changelog or versioned release) that records at least one fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs name a flaw regarding calculator implementation bugs, but they do not state the direction of bias or provide guidance on which conclusions remain valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 17, chunk 0
+        quote: We note that the original version of our calculator, used for all results in this paper, had some minor implementation bugs.
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The documentation states that a bright middle school student should be able to solve every problem, establishing a human baseline for the task.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: A bright middle school student should be able to solve every problem.
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: No scores for trivial baselines (like random selection or zero-shot naive models) are reported in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The benchmark uses human-created problems and a programmatic check of the final numeric answer, not a model as a rater for the ground truth.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The benchmark uses human-created problems and a programmatic check of the final numeric answer, not a model as a rater for the ground truth.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The benchmark uses human-created problems and a programmatic check of the final numeric answer, not a model as a rater for the ground truth.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The benchmark uses human-created problems and a programmatic check of the final numeric answer, not a model as a rater for the ground truth.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The documentation states that workers re-solved problems and agreement with original solutions was checked, with a reported disagreement rate of 1.7%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 15, chunk 0
+        quote: We checked whether their final answers agreed with the original solutions, and any problems that produced disagreements were either repaired or discarded.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: There is no documentation classifying tasks as solvable or intentionally unsolvable, nor expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: Reference solutions were created by human writers and verified through a process where other workers re-solved them to check for agreement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 15, chunk 0
+        quote: We checked whether their final answers agreed with the original solutions
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: "While the format is specified (numeric value after ####), there is no list of accepted equivalences or evidence that non-identical correct answers pass."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, or refusals.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The parser is a simple string extraction of the value following a specific token, which is deterministic by nature in the provided Python logic description."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: unmet
+    rationale: There is no report of the parser's accuracy measured against a set of manually verified outputs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: No results are reported for null-agent runs or targeted exploit attempts against the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,410 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mmlu
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 4450500f923c49f1fb1dd3d99108a0bd9717b660
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mmlu/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2009.03300v3
+      ref: v3
+      sha256: 7172c1ed9e93c939e3919d339a15a3ca9cbfda291b77fe8dbe23d58106d61e3f
+      chars: 85242
+    - kind: repo
+      url: https://github.com/hendrycks/test/tree/4450500f923c49f1fb1dd3d99108a0bd9717b660
+      ref: 4450500f923c49f1fb1dd3d99108a0bd9717b660
+      sha256: eed8d915241a233d93ad42a15c1ac43e910fcf74495c82ec0ba568dffae66c8f
+      chars: 4473
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested capability as multitask accuracy, world knowledge, and problem solving ability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 1, chunk 0
+        quote: We propose a new test to measure a text model’s multitask accuracy.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark translates the capability into a task of classification accuracy on multiple choice questions across 57 subjects.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 10
+    rationale: The text mentions that legal understanding is necessary to constrain open-world machine learning models, providing a real-world application for one of the tested concepts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 4, chunk 1
+        quote: Legal understanding is also necessary for understanding and following rules and regulations, a necessary capability to constrain open-world machine learning models.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design or creation of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature by drawing questions from undergraduate courses, Oxford University Press books, and professional exams.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 3
+        quote: It also includes questions designed for undergraduate courses and questions designed for readers of Oxford University Press books.
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of classification accuracy on multiple choice questions is justified as being simple to evaluate compared to NLG.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: NLG is notoriously difficult to evaluate and lacks a standard metric (Sai et al., 2020). Consequently, we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: Human performance levels are provided for both unspecialized humans and experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 3
+        quote: Unspecialized humans from Amazon Mechanical Turk obtain 34 . 5% accuracy on this test.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: A random baseline of 25% is explicitly provided in the results table and text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 5, chunk 3
+        quote: Random Baseline   25.0   25.0   25.0   25.0   25.0
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: While automatic evaluation is used, there is no evidence of a validation process for the automatic evaluation method itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explains differences from previous multitask NLP benchmarks, specifically regarding the lack of required training sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 7, chunk 3
+        quote: A major distinction between our benchmark and previous multitask NLP benchmarks is that we do not require large training sets.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 10
+    rationale: The text mentions that the appendix includes a section on format sensitivity and provides an example of how removing a token affects accuracy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 11, chunk 0
+        quote: It also includes sections on fine-tuning, error analysis, and format sensitivity.
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The paper and repository both state that the evaluation code is available.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 2, chunk 2
+        quote: The test and code is available at github.com/hendrycks/test.
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The repository provides a download link for the test data, and the paper mentions providing dev, val, and test sets.
+    evidence:
+      - source: repo
+        url: https://github.com/hendrycks/test/tree/4450500f923c49f1fb1dd3d99108a0bd9717b660
+        locator: hendrycks/test@4450500f923c:README.md, chunk 0
+        quote: the test is available for download [**here**](https://people.eecs.berkeley.edu/~hendrycks/data.tar)
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The repository explicitly mentions containing OpenAI API evaluation code.
+    evidence:
+      - source: repo
+        url: https://github.com/hendrycks/test/tree/4450500f923c49f1fb1dd3d99108a0bd9717b660
+        locator: hendrycks/test@4450500f923c:README.md, chunk 0
+        quote: This repository contains OpenAI API evaluation code
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 10
+    rationale: The paper describes evaluating UnifiedQA and RoBERTa, which are typically local models, though it doesn't explicitly state 'local model support' as a feature.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 5, chunk 1
+        quote: We evaluate GPT-3 (Brown et al., 2020) and UnifiedQA (Khashabi et al., 2020).
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption of evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a specific task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: While code is available, there is no mention of a specific script designed to replicate the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts report accuracy percentages but do not mention statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no mention of assessing the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: No requirements file (e.g., requirements.txt) is mentioned or shown in the file listing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: No quick-start guide or demo is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The excerpts do not provide the content of the code files to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No specific code documentation is provided beyond the README.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The paper was published as a conference paper at ICLR 2021.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 18, chunk 0
+        quote: Published as a conference paper at ICLR 2021
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 10
+    rationale: The paper mentions the benchmark consists of 57 tasks and questions were manually collected from online sources.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 2
+        quote: The questions in the dataset were manually collected by graduate and undergraduate students from freely available sources online.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (57 subjects across STEM, humanities, etc.) and the rationale (measuring knowledge acquired during pretraining).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 1, chunk 3
+        quote: We design the benchmark to measure knowledge acquired during pretraining by evaluating models exclusively in zero-shot and few-shot settings.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: No documentation of assumptions regarding normative properties is found.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper includes a section specifically titled 'Model Limitations'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 8, chunk 1
+        quote: Model Limitations. We find that current large-scale Transformers have wide room for improvement.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: "The prompt design process is documented, including the use of few-shot examples and the 'Answer: ' suffix."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 6, chunk 1
+        quote: We begin each prompt with “The following are multiple choice questions (with answers) about [subject].”
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric is explicitly stated as classification accuracy on multiple choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository contains a LICENSE file specifying the MIT License."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: No standardized metadata (e.g., Schema.org or DataCite) is included.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data sources are documented as freely available sources online, including practice tests like the GRE and USMLE.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 2
+        quote: These include practice questions for tests such as the Graduate Record Examination and the United States Medical Licensing Examination.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: No data preprocessing steps are documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The data was collected from existing sources, and no specific annotation process is documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The representativeness of the data is not explicitly explained.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding when the code usability was last checked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 10
+    rationale: The repository README provides a way for users to provide feedback or updates via pull requests or by reaching out to the authors.
+    evidence:
+      - source: repo
+        url: https://github.com/hendrycks/test/tree/4450500f923c49f1fb1dd3d99108a0bd9717b660
+        locator: hendrycks/test@4450500f923c:README.md, chunk 0
+        quote: If you want to have your model added to the leaderboard, please reach out to us or submit a pull request.
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: The README lists several individuals associated with the project, including Dan Hendrycks, with links to their personal/professional pages.
+    evidence:
+      - source: repo
+        url: https://github.com/hendrycks/test/tree/4450500f923c49f1fb1dd3d99108a0bd9717b660
+        locator: hendrycks/test@4450500f923c:README.md, chunk 0
+        quote: by [Dan Hendrycks](https://people.eecs.berkeley.edu/~hendrycks/), [Collin Burns](http://collinpburns.com), [Steven Basart](https://stevenbas.art)
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

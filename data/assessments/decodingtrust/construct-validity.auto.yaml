@@ -1,0 +1,268 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: decodingtrust
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/decodingtrust/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2306.11698v5
+      ref: v5
+      sha256: f94fba634e046109d072484fbb989fc1e9ba28dd2cf3823b33bd3af0944fed36
+      chars: 384671
+    - kind: repo
+      url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      ref: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      sha256: b9ed3260380b3e10b8ff38101bea6f116bc09b42d5f2975d1ce30236b007e95a
+      chars: 61156
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark provides an operational definition for measuring bias via 'model agreeability', specifying that evidence consists of the number of times a model includes specific phrases like 'I agree' in its response.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 19, chunk 3
+        quote: |-
+          To evaluate the bias of GPT models, we check for   model agreeability : the number of times a model
+          agrees vs. disagrees with a given stereotype statement in the user prompt.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While some scopes are mentioned for specific tests (e.g., in-distribution vs OOD knowledge), there is no statement that defines the overall scope of the phenomenon and explicitly names excluded aspects.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The benchmark identifies sub-components of counterfactual examples (revise hypothesis and revise premise) and explicitly states they are experimented with separately.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 33, chunk 3
+        quote: |-
+          SNLI-CAD introduces two ways to generate counterfactual examples:   revise hypothesis 
+          (SNLI-RH) and   revise premise   (SNLI-RP), and we experiment with both subsets separately.
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the excerpts mention output formats and instruction-following, they do not provide a measurement of how specific output-format requirements impact the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The provided excerpts do not show the use of automated parsing of free-form output; the demonstration templates show constrained outputs like '[yes|no]', and the repo mentions 'parsed results' without describing a free-form parser validation process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 90, chunk 1
+        quote: Assistant   [yes|no|maybe]
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: met
+    rationale: The benchmark documents a sampling strategy for the nontoxic subset of the RealToxicityPrompts dataset, using uniform sampling from the pool.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 12, chunk 2
+        quote: a subset of 1.2K nontoxic task prompts, uniformly sampled from the entire nontoxic prompt pool within the dataset.
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The AdvGLUE dataset construction included a human validation step for annotations and a filtering process to ensure quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 22, chunk 1
+        quote: further validated by humans for reliable annotations. ... It employs a careful filtering process to ensure a high-quality benchmark.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the text mentions word-level and sentence-level perturbations (e.g., AdvGLUE, style transformations), there is no evidence of a counted subset of these items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states the reuse of the Enron Email dataset and the ETHICS and Jiminy Cricket datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 40, chunk 2
+        quote: we present a proof-of-concept evaluation of the training data leakage of GPT models, using the Enron Email dataset
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: While the documentation mentions reusing datasets, it does not analyze or report specific strengths and limitations of those prior works.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: met
+    rationale: The benchmark compares the performance of GPT models against the state-of-the-art (SoTA) model from the original AdvGLUE leaderboard.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 23, chunk 2
+        quote: To better compare the evaluation results to the SoTA model on the AdvGLUE benchmark, we additionally include the results of the best model from the AdvGLUE leaderboard
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The documentation mentions using a preprocessed version of the Enron dataset and adding jailbreaking prompts to others, but it does not explain how these modifications improve construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any specific test implemented to detect data contamination or report the results of such a test.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of the benchmark items to prevent contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper does not report a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While some sample sizes are mentioned for specific datasets (e.g., ETHICS), there is no overall benchmark sample size reported nor any power calculation or confidence-interval width provided against claimed gaps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The excerpts do not show a main results table where every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The provided excerpts indicate the use of automatic evaluations (PerspectiveAPI) and existing datasets; there is no mention of the benchmark using its own human raters for scoring.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels described in the excerpts are deterministic keys, such as 'wrong' or 'not wrong' for ETHICS and 'entailment, contradiction, or neutral' for BBNLI.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 48, chunk 1
+        quote: An ideal assistant is supposed to answer with the label ( i.e. ,   wrong   or   not wrong ) for each sample.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While the text provides qualitative examples of failure modes (e.g., textual perturbations), it does not provide a quantitative count of these specific failure modes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: met
+    rationale: The benchmark breaks down fairness performance (failures/scores) by named confounders (sensitive attributes) such as sex, race, and age in Table 30.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 55, chunk 2
+        quote: We evaluate the fairness of GPT models on multiple sensitive attributes, including sex, race, and age.
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: met
+    rationale: The error analysis reveals and discusses scoring biases, specifically noting that bias scores are higher for religion than race and gender.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 86, chunk 0
+        quote: bias scores are higher for religion than race and gender under both settings
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors propose a specific direction to improve model scores by adding an 'I don't know' option to investigate and handle uncertain knowledge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 30, chunk 0
+        quote: we conduct experiments with an added “I don’t know” option to investigate the model’s preferences under uncertain events or knowledge
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark uses RealtimeQA, which is explicitly linked to real-world events from sources like CNN and USAToday.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 29, chunk 2
+        quote: we leverage RealtimeQA [   86   ], which consists of time-sensitive multiple-choice questions ranging from 2020 to 2023 that are relevant to real-world events from sources such as CNN, USAToday, and THE WEEK.
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts, nor a statement linking task choice and each metric to such a definition.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark compares its results on AdvGLUE against the state-of-the-art (SoTA) model from the AdvGLUE leaderboard, noting that GPT-3.5 is 'only on par' with it.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 23, chunk 2
+        quote: meaning that GPT-3.5 is only on par with the existing SoTA model in terms of average robust accuracy.
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses a trade-off between prediction accuracy and fairness, which concerns what the scores measure.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 55, chunk 3
+        quote: indicating a trade-off between prediction accuracy and fairness.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

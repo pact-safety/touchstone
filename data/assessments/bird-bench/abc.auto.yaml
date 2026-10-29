@@ -1,0 +1,384 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bird-bench
+standard: abc
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bird-bench/abc/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2305.03111v3
+      ref: v3
+      sha256: 314fc933837ad9d379afe82cc3c5f306b5ad360f6b91dc77a63232d71928ed46
+      chars: 110663
+  excerpt_chars: 40000
+verdicts:
+  O.a.1:
+    value: met
+    rationale: The benchmark uses execution accuracy, where predicted SQLs are valid if their result sets align with ground-truth result sets, effectively normalizing semantically equivalent SQLs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 1
+        quote: the term "valid SQLs" refers to predicted SQL queries whose result sets align with those of the ground-truth SQLs
+    by: model
+    quotes_verified: true
+  O.a.2:
+    value: n/a
+    rationale: The benchmark scores based on the result set of the executed SQL, not by string matching the SQL or the answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  O.a.3:
+    value: n/a
+    rationale: The benchmark scores based on the result set of the executed SQL, not by substring matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  O.a.4:
+    value: n/a
+    rationale: The benchmark scores based on the result set of the executed SQL, not by substring matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  O.a.5:
+    value: n/a
+    rationale: The benchmark scores based on the result set of the executed SQL, not by substring matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  O.b.1:
+    value: n/a
+    rationale: No LLM judge is used; scoring is based on execution results (EX) and efficiency (VES).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: Execution Accuracy (EX) EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  O.b.2:
+    value: n/a
+    rationale: No LLM judge is used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: Execution Accuracy (EX) EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  O.c.1:
+    value: met
+    rationale: Experts review the SQL pairs to ensure validness and alignment, and the double-blind process is used to gather ground truth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 4, chunk 2
+        quote: Experts evaluate each text-to-SQL pair to ensure the highest quality of data.
+    by: model
+    quotes_verified: true
+  O.c.2:
+    value: unmet
+    rationale: There is no mention of objective metrics like code coverage used to measure the quality of the test cases (SQLs).
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.1:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.2:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.3:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.1:
+    value: n/a
+    rationale: End-to-end testing of the generated code is performed via execution, but no coverage figure for the code being tested is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.2:
+    value: met
+    rationale: The benchmark minimizes randomness by setting temperature to 0 and runs VES 100 times to evaluate average results, dropping outliers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 3
+        quote: we set the temperature as 0 to ensure reproduction
+    by: model
+    quotes_verified: true
+  O.f.1:
+    value: n/a
+    rationale: Outcomes are scored by the result set of the SQL execution, not by matching a modified environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  O.f.2:
+    value: n/a
+    rationale: Outcomes are not scored by matching environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  O.f.3:
+    value: n/a
+    rationale: Outcomes are not scored by matching environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  O.g.1:
+    value: met
+    rationale: The benchmark provides a 1-shot pseudo example to teach the model the output format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 3
+        quote: we provide a 1-shot pseudo example for ChatGPT to learn the procedure of thinking and output format
+    by: model
+    quotes_verified: true
+  O.g.2:
+    value: unmet
+    rationale: The answer-space size and resulting chance success rate are not stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.h.1:
+    value: n/a
+    rationale: No continuous quality metric is used; EX is a proportion and VES is an efficiency ratio, but no exploit attempts against them are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.1:
+    value: unmet
+    rationale: The excerpts do not specify versions for the tools or packages used in the task environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.2:
+    value: n/a
+    rationale: The benchmark uses a database and LLM APIs for generation, but the evaluation harness itself does not use external API tools for the task execution; it compares SQL results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.3:
+    value: n/a
+    rationale: No external API tools are used in the evaluation process itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.4:
+    value: unmet
+    rationale: There is no mention of clearing residual data or starting each task from a fresh environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.5:
+    value: unmet
+    rationale: The excerpts do not provide container or harness configurations showing that answers are absent from the filesystem.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.6:
+    value: unmet
+    rationale: The excerpts do not state that the environment is frozen via containers or snapshots.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.7:
+    value: met
+    rationale: Ground truth SQLs were collected after a second round of double-blind annotation and discussion with experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 26, chunk 6
+        quote: SQLs after the second round of double-blind annotation are collected as ground truth.
+    by: model
+    quotes_verified: true
+  T.8:
+    value: met
+    rationale: The benchmark reports human performance of 92.96%, indicating that the vast majority of tasks were solved by humans.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 1, chunk 1
+        quote: human result of 92.96%
+    by: model
+    quotes_verified: true
+  T.9:
+    value: unmet
+    rationale: No automated Oracle solver that solves all challenges is mentioned as shipping with the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.10:
+    value: unmet
+    rationale: There is no documentation of an exploit audit of the implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.1:
+    value: met
+    rationale: The benchmark provides a link to the source code and leaderboard, and mentions that databases are sourced from open platforms.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 1, chunk 2
+        quote: "The leaderboard and source code are available:   https://bird-bench.github.io/"
+    by: model
+    quotes_verified: true
+  R.2:
+    value: met
+    rationale: The source code for the benchmark is explicitly stated as available via a provided URL.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 1, chunk 2
+        quote: "The leaderboard and source code are available:   https://bird-bench.github.io/"
+    by: model
+    quotes_verified: true
+  R.3:
+    value: met
+    rationale: The benchmark uses a hidden test set to avoid data leakage.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 6
+        quote: To further avoid data leakage, we curated 15 additional relational databases for a hidden test set.
+    by: model
+    quotes_verified: true
+  R.4:
+    value: unmet
+    rationale: There is no mention of a versioned update process or a dated update schedule to avoid overfitting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.5:
+    value: unmet
+    rationale: While it defines metrics like EX and VES, it does not provide a single statement linking a specific agent capability to an outcome measure and explaining why that measure indicates the capability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.6:
+    value: met
+    rationale: The benchmark evaluates text-to-SQL parsers, specifically mentioning fine-tuning (FT) and in-context learning (ICL) models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 6
+        quote: We evaluate the performance of state-of-the-art text-to-SQL parsers
+    by: model
+    quotes_verified: true
+  R.7:
+    value: met
+    rationale: Quality control is described via expert review and double-blind annotation, and a correction channel is mentioned where erroneous SQLs were fixed by experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 26, chunk 6
+        quote: their erroneous SQLs could be fixed by experts and learn how to generate good-quality SQLs
+    by: model
+    quotes_verified: true
+  R.8:
+    value: met
+    rationale: The benchmark identifies a flaw regarding 'ORDER BY' usage and discusses its likely effect (false positives).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 24, chunk 5
+        quote: this may result in false positives for questions utilizing "ORDER BY."
+    by: model
+    quotes_verified: true
+  R.9:
+    value: met
+    rationale: The impact of the 'ORDER BY' flaw is numerically estimated as accounting for less than 1% of the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 24, chunk 5
+        quote: such instances are uncommon, accounting for less than 1% of B IRD .
+    by: model
+    quotes_verified: true
+  R.10:
+    value: unmet
+    rationale: The results tables provided do not include confidence intervals or significance tests for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.11:
+    value: unmet
+    rationale: While flaws are named, there is no stated caveat explaining which specific conclusions should not be drawn from the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.12:
+    value: met
+    rationale: Human performance is reported in the results tables for both EX and VES metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 7, chunk 0
+        quote: Human Performance   -   -   72.37   92.96   (+20.59)
+    by: model
+    quotes_verified: true
+  R.13:
+    value: unmet
+    rationale: There is no report of a do-nothing or trivial agent's score.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

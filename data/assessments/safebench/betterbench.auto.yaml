@@ -1,0 +1,409 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: safebench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/safebench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2206.09682v4
+      ref: v4
+      sha256: 0f1ee84ff0998412400a2386114317e04c56257dd55b94c35c1dc453071e1916
+      chars: 89356
+    - kind: repo
+      url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      ref: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      sha256: 02e5136e8abf04e38804e42a946027be2a6e7b35dc16ed7a2a5b7e9b88ea4564
+      chars: 65011
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 10
+    rationale: The benchmark focuses on the 'safety evaluation of autonomous vehicles', but a formal definition of the 'capability' or 'concept' is not explicitly provided in a single definition statement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 1, chunk 0
+        quote: "SafeBench: A Benchmarking Platform for Safety Evaluation of Autonomous Vehicles"
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 10
+    rationale: The text describes using safety-critical scenarios to evaluate AD algorithms, though the exact translation process is described across multiple sections rather than a single mapping.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 6, chunk 3
+        quote: We test various types of algorithms based on the safety-critical scenarios in SafeBench.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that the benchmark helps researchers identify weaknesses in AD systems to develop safer algorithms for real-world applications.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 10, chunk 3
+        quote: help researchers and practitioners to identify weaknesses in existing AD systems and further develop safe AD algorithms
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: There is no description of how the resulting scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: The excerpts do not mention the involvement of domain experts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain knowledge such as traffic rules and physical laws into the generation process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 5, chunk 2
+        quote: we develop novel generation algorithms that integrate domain knowledge into the generation process.
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of metrics is informed by a tiered structure (Safety, Functionality, Etiquette) with weights reflecting the importance of safety.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 17, chunk 2
+        quote: Metrics in Safety Level are assigned the highest weights since they focus on serious violations of traffic rules.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: No human performance level is provided for comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: No random performance level is provided for comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: While automatic metrics are used, there is no evidence of a validation process for the automatic evaluation itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains that existing platforms are developed on different designs, making it challenging to compare results, which SafeBench aims to address.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 2, chunk 1
+        quote: existing evaluation tools and platforms are usually based on their own design... This makes it very challenging to fairly compare different AD algorithms
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 15
+    rationale: The benchmark specifically tests how different input state spaces (4D, BEV, Cam) affect performance, addressing input sensitivity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 21, chunk 2
+        quote: a large performance gap between evaluation results on benign and safety-critical scenarios always exists no matter what kind of input information we provide
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository contains evaluation code, including an environment class and evaluator logic.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/submission.md, chunk 2
+        quote: "class evaluator_environment:"
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark includes integrated testing scenarios and a mechanism for generating them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 2, chunk 4
+        quote: In SafeBench, we have integrated 2 , 352 testing scenarios
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 10
+    rationale: The repository contains a flask REST API for object detection, suggesting API support, though not explicitly detailed for all evaluation tasks.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:FILE LISTING, chunk 3
+        quote: safebench/agent/object_detection/utils/flask_rest_api/restapi.py
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The documentation explicitly mentions a local evaluation mode.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/submission.md, chunk 7
+        quote: LOCAL_EVALUATION = True
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: No specific script for replicating the reported results is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts report average precision and collision rates, but do not mention statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: The excerpts do not mention assessing the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: The installation guide explicitly mentions a requirements.txt file for installing necessary packages.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/installation.md, chunk 0
+        quote: pip install -r requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The documentation index includes a 'run_example' section under 'Getting Started', which serves as a quick-start guide."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code with in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The repository contains a dedicated documentation site with sections for components, tracks, and API functions.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/index.rst, chunk 0
+        quote: Documentation of Safebench
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The paper is available on arXiv (2206.09682), which is a standard venue for AI research, and the README links to it.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:README.md, chunk 0
+        quote: "[![](https://img.shields.io/badge/Paper-2206.09682-b31b1b.svg)](https://arxiv.org/pdf/2206.09682.pdf)"
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the construction of the benchmark, including the use of Carla and the integration of scenario generation algorithms.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 2, chunk 2
+        quote: we design SafeBench based on the open-sourced simulation platform Carla
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents specific test scenarios (e.g., Red-light Running) and the rationale for their use in safety evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 18, chunk 1
+        quote: Red-light Running   When the ego vehicle is going straight at an intersection, a crossing vehicle runs a red light.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper contains a dedicated 'Limitations' section discussing simulation vs real-world conditions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 10, chunk 3
+        quote: Limitations   Although simulation is a useful and necessary tool for evaluating AD systems
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the prompt/scenario design process, including the use of rule-based and optimization-based generation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 5, chunk 3
+        quote: use grid search to generate safety-critical scenario parameters for all the   8   traffic scenarios
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper and documentation detail the evaluation metrics, including safety, functionality, and etiquette levels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 5, chunk 3
+        quote: "we evaluate the performance of AD algorithms on 3 levels:   Safety level ,   Functionality level , and   Etiquette level"
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The project specifies the MIT license in the README and a dedicated LICENSE file."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: The excerpts do not show the use of standardized metadata (e.g., Dublin Core).
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents that data is generated using the Carla simulator and specific generation algorithms.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 2, chunk 2
+        quote: we design SafeBench based on the open-sourced simulation platform Carla
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not document data preprocessing steps, as the data is simulated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The data is generated via simulation; no human annotation process is mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper explains the representativeness of the data by using 10 diverse driving routes to ensure generalization."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Sphinx is used, but not cited as a standard).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users; the 'feedback' mentioned in the excerpts refers to technical environment feedback for agents.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: The documentation explicitly lists multiple contact persons along with their email addresses.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/reference.md, chunk 0
+        quote: |-
+          The source code of Safebench is contributed by:
+          - Wenhao Ding, CMU, wenhaod@andrew.cmu.edu
+          - Chejian Xu, UIUC, chejian2@illinois.edu
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

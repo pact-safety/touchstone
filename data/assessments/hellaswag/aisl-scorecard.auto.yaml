@@ -1,0 +1,435 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: hellaswag
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/hellaswag/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1905.07830v1
+      ref: v1
+      sha256: 94a483f8855c461b4cdea4ba6f9c7e8b1238816e21ce24f6ef0338690ccb2774
+      chars: 56552
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: unmet
+    rationale: The documentation mentions 'commonsense NLI' and 'physically situated commonsense reasoning' but does not provide a precise operational definition stating which observable outputs count as evidence of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation describes the dataset's composition, it does not explicitly state what is in scope and name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: n/a
+    rationale: The paper describes the task as a single construct of commonsense NLI/reasoning without naming distinct facets that require independent scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 9, chunk 1
+        quote: In this paper, we presented HellaSwag , a new dataset for physically situated commonsense reasoning.
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The docs define the task space using categories (in-domain vs zero-shot) and report item counts for these dimensions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 5, chunk 3
+        quote: one containing 5k ‘in-domain’ examples that come from categories as seen during training (Figure 8), and another with 5k ‘zero-shot’ examples from randomly chosen held-out categories.
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation reports per-category item counts for the documented task space (ActivityNet and WikiHow)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: Every item passed a human validation step to filter out realistic machine-generated endings, and the criteria (highest agreement/probability) are described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 5, chunk 3
+        quote: During human validation, crowd workers are given a context and six ending choices, of which one is the true ending, and the other five are from AF.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion beyond the general adversarial filtering of the whole set.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: met
+    rationale: Figure 4 compares BERT's performance on the original SWAG dataset versus the adapted HellaSwag benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 1
+        quote: "Figure 4: BERT validation accuracy when trained and evaluated under several versions of SWAG, with the new dataset HellaSwag as comparison."
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: met
+    rationale: The paper explains that they expanded the domain to WikiHow to increase context diversity and generation length to remove artifacts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 1
+        quote: We expand on the SWAG’s original video-captioning domain by using WikiHow articles, greatly increasing the context diversity and generation length.
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are stated, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results table (Table 1) reports accuracy percentages but does not provide confidence intervals or standard errors for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: The paper mentions using Mechanical Turk and a qualification HIT, but does not publish or reproduce the actual rater instructions or training materials.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a description of mitigation for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: "The labels are deterministic: the ground truth is the actual next caption of the video."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 3
+        quote: Only one choice is right – the actual next caption of the video.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: "The labels are deterministic: the ground truth is the actual next caption of the video."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 3
+        quote: Only one choice is right – the actual next caption of the video.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper breaks down performance by the confound of context presence (Ending Only) in Figure 4."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper provides qualitative examples of failures (e.g., BERT picking incoherent answers based on word matching), but does not report named failure categories with counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement that names the tasks, metrics, and the construct from cv.01 with a stated reason in the required format.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to SWAG, and it is stated that HellaSwag addresses the gap of 'artifacts' and 'spurious patterns' found in SWAG.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 4, chunk 2
+        quote: To evaluate this claim requires us to try making a new evolution of the SWAG dataset, one in which artifacts are removed. In this section, we do just that by introducing HellaSwag .
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The paper does not provide a limitations statement specific to the design nor a claim linking scores to a real-world capability or harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablations for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap with related phenomena is measured or mitigated as no overlap was identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reports of results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The models are trained to return a logit for an ending in a four-way cross-entropy loss, which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: |-
+          given a context and an ending, return a   logit 
+          for that ending.
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or provide training-data cutoffs for all evaluated models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs and local scoring without an external or mutable environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The task consists of predicting a logit for a given context and ending, which is a single stateless model call.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: |-
+          given a context and an ending, return a   logit 
+          for that ending.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark uses a multiple-choice format and reports the random-guess baseline of 25%."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation mentions crowd workers for validation, but does not name domain experts or user groups consulted to define evaluation scenarios and acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While crowd workers performed human evaluation, the documentation does not specify their field or credentials, nor does it state that all items or a specific sample size were reviewed for accuracy and relevance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The excerpts describe the model architecture and training, but do not report results under more than one prompting or elicitation setting (e.g., zero- vs few-shot prompting).
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: met
+    rationale: Results are reported as separate slices for 'Zero-Shot' and 'In-Domain' conditions, with specific item counts provided for these subsets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 0
+        quote: |-
+          Overall   In-Domain   Zero-Shot   ActivityNet   WikiHow
+          Model   Val   Test   Val   Test   Val   Test   Val   Test   Val   Test
+          Split Size Ñ   10K   10K   5K   5K   5K   5K   3.2K   3.5K   6.8K   6.5K
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is presented as a general testbed for NLI models and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is presented as a general testbed for NLI models and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is presented as a general testbed for NLI models and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation mentions some hyperparameters (batch size, warmup) but fails to list library versions, hardware models, or OS/container images.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: While the docs describe a data curation process to fix issues with ground truth, they do not provide a correction channel like a changelog or versioned release recording a fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The documentation does not explicitly name unavoidable flaws with their direction of bias and impact estimates as required.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: A human baseline is reported for the task, showing performance over 95%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 2
+        quote: human performance is over 95%
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation reports a 'Chance' baseline score of 25.0%."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The benchmark uses human annotators for validation and ground truth, not a model rater to assign final labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The benchmark uses human annotators for validation and ground truth, not a model rater to assign final labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The benchmark uses human annotators for validation and ground truth, not a model rater to assign final labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The benchmark uses human annotators for validation and ground truth, not a model rater to assign final labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The documentation states that human evaluation is performed by combining five independent workers via majority vote.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 2
+        quote: asking five independent crowd workers to solve the same four-way multiple choice problems; their predictions are combined via majority vote
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: There is no documentation classifying every task as solvable or intentionally unsolvable, nor expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The dataset uses actual next captions from videos as the verified ground-truth solutions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 3
+        quote: Only one choice is right – the actual next caption of the video
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, refusals, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The task is a four-way multiple choice problem where the model returns a logit for the ending, involving no parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: given a context and an ending, return a   logit for that ending
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The task is a four-way multiple choice problem where the model returns a logit for the ending, involving no parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: given a context and an ending, return a   logit for that ending
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

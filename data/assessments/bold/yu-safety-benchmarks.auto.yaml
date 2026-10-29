@@ -1,0 +1,322 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bold
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bold/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2101.11718v1
+      ref: v1
+      sha256: be88679e16de72d41bbb3a6018df6edfd9ac84074663d8ecee3beca27cfc4487
+      chars: 90339
+    - kind: repo
+      url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      ref: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      sha256: 2678000f25d85f0362a62c15f354ad6954f52f71c22f55f80999b5ce8f3c9a28
+      chars: 24778
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark identifies bias in five domains and lists specific metrics used to measure them, including sentiment, regard, psycholinguistic norms, toxicity, and gender polarity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 1
+        quote: "to measure biases from multiple angles we augment various existing bias metrics like sentiment and regard with novel bias metrics: psycholinguistic norms, toxicity, and gender polarity."
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark specifies it evaluates English language generation and notes that its prompts may not reflect the full diversity of text beginnings models encounter.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 1
+        quote: evaluating bias in open-ended English language generation
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 5
+        quote: This may pose a challenge in collecting prompts that accurately reflect the diversity and structure of text beginnings that text generation models are subjected to.
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: unmet
+    rationale: The excerpts do not contain a statement that a good score does not guarantee safety against untested or emergent risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark compares itself to StereoSet and Nangia et al., noting that BOLD uses generation prompts and direct bias measurement rather than ranking stereotypical vs unbiased sentences.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 4
+        quote: Both the dataset and evaluation metrics in [ 25 ] and [ 26 ] are fundamentally different from the work presented here.
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: unmet
+    rationale: No concrete mechanism for discovering novel risks outside existing categories (like fuzzing or red-teaming) is described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: met
+    rationale: The repository provides a CONTRIBUTING.md file that outlines a pull-request process for community contributions.
+    evidence:
+      - source: repo
+        url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+        locator: amazon-science/bold@3ad652c773f5:CONTRIBUTING.md, chunk 1
+        quote: "To send us a pull request, please: 1. Fork the repository. 2. Modify the source"
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The documentation does not state a process or cadence for how and when new risks are incorporated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The benchmark focuses on open-ended generation from prompts and does not include multi-agent or interactive evaluation settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: There is no discussion of distribution shift framed as a safety-critical issue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: met
+    rationale: The benchmark documents annotator selection (AMT, approval rate, country) and the use of majority agreement to handle disagreement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 3
+        quote: we restrict the country of crowd workers to United States, Great Britain or India
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 3
+        quote: only those labels are accepted that have a majority agreement on the chosen label
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: The excerpts do not mention contamination detection or the temporal validity/retirement date of the evaluation set.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results using the term 'proportion', which is an allowed label for rates/frequencies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 7, chunk 2
+        quote: the proportion of texts with negative sentiments is highest for Atheism ( 13 . 21% )
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark explicitly names the limited set of demographic domains and groups as a factor limiting its scope and generalization.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: BOLD considers a limited set of demographic domains and a specific subset of groups within each domain.
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: The provided excerpts do not show a severity scale or harm weighting that cites a source for its levels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not state whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: Confidence intervals, standard errors, or worst-case bounds are not reported for the main metrics in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: unmet
+    rationale: While the benchmark uses human raters and reports majority agreement, it does not report a specific inter-rater agreement statistic like Cohen's kappa.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across random seeds, prompt rephrasings, and evaluator versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin for deployment risk extrapolation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: met
+    rationale: The benchmark provides operational definitions for gender polarity (unigram matching) and sentiment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 4, chunk 4
+        quote: Our first gender polarity metric (termed   unigram matching ) counts the total number of male and female specific tokens in the text.
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: met
+    rationale: The benchmark states that psycholinguistic norms are assigned by expert psychologists.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 4, chunk 2
+        quote: psycholinguistic norms are numeric ratings assigned by expert psychologists to words
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The excerpts do not name any specific value choice in the harm definitions as being contested.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: unmet
+    rationale: The benchmark does not explicitly articulate the relationship between its measured proxies and real-world safety concerns.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: While inference parameters are listed, the access date and system prompt are not recorded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing or reporting random seeds for sampling or inference.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The judge models and rubrics are mentioned, but they do not carry versions, dates, or commit hashes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): A public code repository is provided via the provided file listing and links in the paper."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The prompts are stated to be extracted from Wikipedia, and the benchmark validates automatic metrics using human annotations from crowd workers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 4
+        quote: BOLD consists of language generation prompts extracted from Wikipedia sentences.
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark justifies using Wikipedia because it represents diverse backgrounds and has quality control, and it states limitations regarding demographic coverage.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 5
+        quote: Because it provides articles from many domains and demographics, represents authors from diverse background, and contains a quality control procedure, we take English Wikipedia as a source for gathering prompts
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: unmet
+    rationale: The benchmark evaluates single-turn generations from prompts and does not include multi-turn evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark uses prompts extracted from Wikipedia rather than in-the-wild user logs constrained by privacy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 4
+        quote: BOLD consists of language generation prompts extracted from Wikipedia sentences.
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: There is no stated update cycle tied to changes in risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: Crowd workers were used for validation, but there is no evidence that affected communities were consulted to assess if scenarios reflect their lived experience.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark specifies it evaluates the language models (LMs) themselves.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: Our experiments on evaluating the biases in three different LMs
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not explicitly state that model-level scores are not system-level safety.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

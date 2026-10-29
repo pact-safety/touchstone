@@ -1,0 +1,260 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gsm8k
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 3101c7d5072418e28b9008a6636bde82a006892c
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gsm8k/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.14168v2
+      ref: v2
+      sha256: d5f50406113e835544f59130d94bbea960dc894a4c89b2cd554a04f0a100c1bd
+      chars: 46512
+    - kind: repo
+      url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+      ref: 3101c7d5072418e28b9008a6636bde82a006892c
+      sha256: 20bd770b749ea24df5479cc6e9770f6581e3679d195ba77037c2c1effa4f61e2
+      chars: 7821
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The paper defines performance based on whether the model's final answer is correct.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 5, chunk 1
+        quote: we judge performance by autoregressively sampling a single low temperature solution and checking whether the final answer is correct
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the scope is described as grade school math, no specific excluded aspects of the phenomenon are named.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The paper does not name sub-components of the phenomenon nor does it explicitly state that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they provide control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: met
+    rationale: The authors measured the impact of requiring the model to generate a full natural language solution versus directly outputting the final answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 7, chunk 1
+        quote: If we instead finetune a 6B model to directly output the final answer without any intermediate steps, performance drops drastically from 20.6% to 5.2%
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The excerpts do not mention the use of automated parsing for free-form output; they only state that solutions are labeled based on whether they reach the correct final answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 7, chunk 1
+        quote: Training solutions are labeled as correct or incorrect based solely on whether they reach the correct final answer.
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts mention design principles for diversity and quality, but do not document a specific sampling strategy over a described task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The authors performed quality control based on worker agreement to ensure the high quality of the problems.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: After performing extensive quality control based on workers’ answer agreement, we estimate that less than 2 percent of problems contain breaking errors.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items with results reported separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation states that the dataset was created by human problem writers and contractors, rather than adapting a previous dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark does not reuse or adapt a prior dataset; it was created from scratch using human contractors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 15, chunk 0
+        quote: We initially collected a starting set of a thousand problems and natural language solutions by hiring freelance contractors on Upwork
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark does not reuse or adapt a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 15, chunk 0
+        quote: We initially collected a starting set of a thousand problems and natural language solutions by hiring freelance contractors on Upwork
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark does not reuse or adapt a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 15, chunk 0
+        quote: We initially collected a starting set of a thousand problems and natural language solutions by hiring freelance contractors on Upwork
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any tests implemented to detect data contamination or report results from such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The paper explicitly states that the dataset was segmented into training and test problems, creating a held-out set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: We segmented these into 7.5K training problems and 1K test problems.
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is stated, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: We segmented these into 7.5K training problems and 1K test problems.
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The excerpts do not provide a main results table where every score has a confidence interval or standard error; only a mention of mean and standard deviation for specific runs in Figure 5.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: While the paper mentions human problem writers and contractors, it does not describe their demographics or state specific bias mitigation for recruitment and instructions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers.
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: Every label comes from a deterministic key (the correct final numeric answer), making the labels non-subjective.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 1
+        quote: the final numeric solution is the final line of the solution, preceded by `####`.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While a common failure mode (arithmetic mistakes) is described, there are no counts provided for these failures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not provide a table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors report an experiment to improve scores by training models to use a calculator to mitigate arithmetic errors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 6, chunk 0
+        quote: To mitigate this issue, we train all models to use a calculator by injecting calculation annotations into the training set.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: unmet
+    rationale: The excerpts mention the benchmark is for 'grade school math word problems' and to 'diagnose the failures of current models', but they do not name a specific real-world application linked to the tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts, nor a statement linking task choice and metrics to such a definition.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is compared to the approach by Shen et al. (2021a), noting a difference in the focus on natural language solutions over pure mathematical expressions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: While the text mentions implementation bugs in the calculator, it does not discuss design trade-offs or limitations concerning what the scores do or do not measure (construct validity).
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

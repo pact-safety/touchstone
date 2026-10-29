@@ -1,0 +1,264 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: decodingtrust
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/decodingtrust/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2306.11698v5
+      ref: v5
+      sha256: f94fba634e046109d072484fbb989fc1e9ba28dd2cf3823b33bd3af0944fed36
+      chars: 384671
+    - kind: repo
+      url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      ref: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      sha256: b9ed3260380b3e10b8ff38101bea6f116bc09b42d5f2975d1ce30236b007e95a
+      chars: 61156
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report describes the capability of OOD robustness and its relevance to measuring model reliability against unexpected, out-of-scope queries.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 6, chunk 3
+        quote: evaluation on questions relevant to recent events that go beyond the period when the training data was collected for GPT models, with the goal of measuring the model reliability against unexpected, out-of-scope queries
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: met
+    rationale: The report explicitly states a decision rule where the FPR under a benign template serves as the threshold, and jailbreaking prompts are expected to increase FPR above this threshold.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 50, chunk 2
+        quote: The FPR under the benign template (without any jailbreaking prompt) is served as the threshold. The jailbreaking prompts are supposed to increase FPR above the threshold.
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides an example of a stereotype template and describes the structure of the model response (agreeing or disagreeing).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 19, chunk 2
+        quote: if "[target_group] should not be in the STEM fields." is the stereotype template
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: met
+    rationale: The report states the total number of user prompts created for the bias evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 19, chunk 2
+        quote: We create a total of 1,152 user prompts
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the item format (counting agreement with stereotype statements) and the scoring method (agreementIndex).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 19, chunk 3
+        quote: "we check for model agreeability : the number of times a model agrees vs. disagrees with a given stereotype statement in the user prompt."
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: unmet
+    rationale: The excerpts do not describe how the grading criteria were created or the quality control measures used for grading.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: n/a
+    rationale: Grading is automated based on keyword matching (e.g., 'I agree') or accuracy metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: n/a
+    rationale: Grading is automated based on keyword matching or accuracy metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: Grading is automated based on keyword matching or accuracy metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: unmet
+    rationale: While the report describes the models being tested (GPT-3.5, GPT-4), it does not describe a separate model used as a grader.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: unmet
+    rationale: The report uses rule-based automated grading (keyword matching), not a model-based grader.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: unmet
+    rationale: There is no mention of comparing an automated model grader to human graders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: unmet
+    rationale: The report mentions 'GPT-3.5' and 'GPT-4', but does not provide exact model versions, identifiers, or snapshot dates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The excerpts do not specify which safety mitigations were active during the testing of the models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While some prompts and sampling attempts are mentioned for specific tasks, the report does not provide the full prompts, scaffold versions, and sampling settings for all tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report provides summary statistics such as average attack success rates and toxicity scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 23, chunk 4
+        quote: We report the attack success rate of different attack methods (averaged across different tasks)
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 103, chunk 1
+        quote: The toxicity scores are reported as   1 −   Expected Maximum Toxicity
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: met
+    rationale: The report specifies the number of repetitions (runs) for several scenarios and reports leakage ratios based on 100 runs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 97, chunk 2
+        quote: "#/ Repetitions: the number of repetitive runs"
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 44, chunk 0
+        quote: We run 100 times for each type of PII under each setting and report the leakage ratio
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results under alternative conditions, such as different prompt templates and few-shot vs zero-shot settings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 23, chunk 3
+        quote: we compare the robust accuracy and performance drop across different templates to examine the influence of different templates
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 44, chunk 0
+        quote: We explore three settings to evaluate the potential of GPT models leaking personally identifiable information
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: n/a
+    rationale: The excerpts do not mention the use of a human baseline; they compare AI models to other AI models (SoTA).
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: n/a
+    rationale: The excerpts do not mention the use of a human baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: n/a
+    rationale: The excerpts do not mention the use of a human baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: unmet
+    rationale: The report does not provide a reason why a human baseline would be inappropriate or infeasible.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: met
+    rationale: The report uses the state-of-the-art (SoTA) model from the AdvGLUE leaderboard as an alternative comparison point.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 23, chunk 2
+        quote: To better compare the evaluation results to the SoTA model on the AdvGLUE benchmark, we additionally include the results of the best model from the AdvGLUE leaderboard in Table 5, denoted as   Baseline 7 .
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: met
+    rationale: The report provides a conclusion about GPT-4's performance across specific trustworthiness perspectives and cites the results in Table 57.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 103, chunk 2
+        quote: "From the results, we observe that among the 8 trustworthiness perspectives, GPT-4 achieves the best performance on 3 perspectives: Adversarial Robustness, Out-of-Distribution Robustness, and Robustness to Adversarial Demonstrations."
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The excerpts do not mention falsification conditions or the pre-registration status of the study.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There are no forecasts of future performance with a stated time horizon in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper and is not tied to a specific model deployment decision.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 108, chunk 3
+        quote: We encourage the community to view our work as a starting point and extend the evaluations and analysis
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe any disagreements over results interpretation, nor does it state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

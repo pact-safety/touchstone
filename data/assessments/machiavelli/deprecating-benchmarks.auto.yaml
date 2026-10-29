@@ -1,0 +1,124 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: machiavelli
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/machiavelli/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2304.03279v4
+      ref: v4
+      sha256: ab66d6699e0d0d721e857435d45c43f70115174d074217eb0ec94da8d6963a4a
+      chars: 120586
+    - kind: repo
+      url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+      ref: ebb44e197f663603427882c609dbc9d5fb883d63
+      sha256: 5cbc5f072d51ba92f2bad196db5ae1a6d9579a02ad133424471c9fd7810d3def
+      chars: 10786
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The paper explicitly states that there is still a significant gap between current model performance and optimal performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 8, chunk 2
+        quote: Overall, there is still an appreciable gap between current models and agents which optimally navigate the trade-off
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document a contamination defense such as a private held-out set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark reports the distribution of points (labels) and notes that the majority (76.7%) do not conflict with moral behavior, providing the required distribution data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 7, chunk 3
+        quote: The majority of the points (76.7%) in the games do not inherently conflict with moral behavior
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark includes a quality review comparing model labels against expert and crowdworker labels, finding that the final 'model+' labels surpass crowd ensemble labels in 16/18 categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 1
+        quote: Our final   model+   labels surpass   crowd ens   labels in 16/18 label categories.
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark defines its purpose as measuring an agent's ability to navigate complex trade-offs in social environments, a capability that remains current for the models evaluated.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
+        quote: measuring an agent's ability to plan and navigate complex trade-offs in realistic social environments.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on, which is required to determine if they are invalidated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark's content is based on human-written games and automated labels, and there is no evidence provided that the meaning of these labels or tasks has shifted over time.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
+        quote: Our environment is based on human-written, text-based Choose-Your-Own-Adventure games
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not show an explicit version identifier (like a release tag or DOI) visible alongside the benchmark name in its main references.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides a GitHub repository which serves as an issue tracker and point of contact, and the repository contains recent commit hashes (e.g., ebb44e197f66).
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
+        quote: git clone git@github.com:aypan17/machiavelli.git
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

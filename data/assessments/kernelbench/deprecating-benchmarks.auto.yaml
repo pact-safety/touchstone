@@ -1,0 +1,120 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: kernelbench
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/kernelbench/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2502.10517v1
+      ref: v1
+      sha256: f6072136b7d8f41a6def6400915f3fb3f4bcfba4e9cb93d30095dd2663a45276
+      chars: 106453
+    - kind: repo
+      url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      ref: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      sha256: d76ec364b922087b6756c8586e2de8d26b3fb2adc80fad7e85ea241a650143da
+      chars: 38422
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark is far from saturation, as frontier models like OpenAI-o1 and DeepSeek-R1 match the baseline on less than 20% of tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 2, chunk 1
+        quote: OpenAI-o1 and DeepSeek-R1 matching the PyTorch Eager baseline on   <   20% of the tasks.
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document any contamination defense such as a private test set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: There is no report of the label/answer distribution or a trivial baseline to demonstrate the benchmark is free of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts do not mention any audit, validation pass, or error analysis of the benchmark's own labels or data quality; they only discuss the errors made by the models being tested.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states that its task of generating efficient GPU kernels serves to lower costs and reduce energy consumption, and it notes that current models still fall short of the baseline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 10, chunk 2
+        quote: success on KernelBench directly maps to production value and real-world impacts (lowering costs and reducing energy consumption at scale)
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 1, chunk 1
+        quote: frontier reasoning models perform the best out of the box but still fall short overall
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The excerpts do not explicitly state the simplifying assumptions the benchmark relies on, which is required to determine if they are contradicted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is very recent (February 2025) and there is no evidence that its task wording or labels have shifted in meaning since creation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 1, chunk 0
+        quote: February 18, 2025
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides explicit version identifiers (v0 and v0.1) in the README, with links to specific git branches for each version."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no stated deprecation plan or policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The project is hosted on GitHub (implied by the repo excerpts), which provides an issue tracker, and the README indicates active maintenance with recent updates to v0.1.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 0
+        quote: We continue to update and improve the repo.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

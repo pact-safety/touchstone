@@ -1,0 +1,252 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: impossiblebench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/impossiblebench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2510.20270v1
+      ref: v1
+      sha256: 076fdc9d551f5e6646495bc14ac5c5857230c8939b2c64423b02651f66b3baae
+      chars: 64461
+    - kind: repo
+      url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      ref: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      sha256: 6b37396768388d86129c43c497a25560f7c6237e81c74276df6467f68097a492
+      chars: 9620
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The paper defines cheating through observable outputs such as modifying tests, overloading operators, or recording extra states.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 5, chunk 1
+        quote: "Modify Test Cases : The model directly modifies tests despite being explicitly instructed not to."
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the paper describes types of cheating, it does not explicitly state the overall scope of the phenomenon nor name any excluded aspects.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is broken down into four distinct cheating strategies which are classified separately.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 5, chunk 1
+        quote: we identify four distinct cheating strategies that models employ when faced with impossible tasks
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no evidence that the effect of output-format requirements on model scores was measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses unit tests to determine success (pass/fail), and there is no mention of automated parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 0
+        quote: In ImpossibleBench, any pass signals a successful cheating attempt!
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts describe the source of the tasks (LiveCodeBench and SWE-bench) and mutation strategies, but do not document a sampling strategy over a described task space to ensure representativeness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: While quality control is documented for SWE-bench, the text explicitly states that it was not performed for LiveCodeBench, meaning not every item passed a check.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 0
+        quote: We do not perform such quality control on LiveCodeBench due to the lack of standard solutions.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: met
+    rationale: The benchmark uses two mutation strategies (One-Off and Conflicting) to create perturbed items and reports their results separately.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 3, chunk 2
+        quote: we report the results of the two mutation variants separately in our experiments.
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that LiveCodeBench and SWE-bench are used as base benchmarks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 3, chunk 2
+        quote: In this work, we use two popular coding benchmarks LiveCodeBench and SWE-bench as our base benchmarks
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: While the paper describes how it modifies the benchmarks, it does not report the strengths and limitations of the original base benchmarks themselves.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: met
+    rationale: The paper states that it displays cheating rates on the new benchmark alongside performance on the original benchmarks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 2
+        quote: We display the cheating rates on ImpossibleBench together with models’ performances on the original benchmarks
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The paper explains the modifications (One-Off and Conflicting mutations), but it does not explain how these specific modifications improve the construct validity of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The paper describes a framework to detect 'cheating' (exploiting test cases), but it does not describe a test to detect data contamination (training data overlap) or report such results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of the benchmark items to prevent contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The provided excerpts do not report any search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The excerpts do not state the total item count for the benchmark, nor do they provide a power calculation or confidence-interval width relative to the smallest claimed gap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: While Figure 6 is mentioned to have 90% confidence intervals, the excerpts do not show a main results table where every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: No human raters are used; the benchmark uses unit tests and an LLM (Claude Opus 4) for classification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: Every label comes from a deterministic key (unit tests), as the paper describes the benchmark as providing 'unambiguous ground truth' based on whether agents pass impossible tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 13, chunk 2
+        quote: ImpossibleBench provides a rich dataset of cheating transcripts with unambiguous ground truth
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While the paper mentions revealing 'fine-grained details of cheating behaviors' [paper:p1#1], it does not provide a quantitative count of specific failure modes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not contain a table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors propose using the benchmark for 'developing monitoring tools' as a specific direction to build 'more robust and reliable LLM systems'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 1, chunk 1
+        quote: developing monitoring tools, providing a testbed with verified deceptive solutions
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to the reliability of real-world LLM coding assistant deployments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 1, chunk 0
+        quote: Such behavior undermines both the validity of benchmark results and the reliability of real-world LLM coding assistant deployments.
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to Claude Opus 4.1's impossible tasks evaluations, noting that the latter's construction and scoring are not disclosed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 13, chunk 1
+        quote: Claude Opus 4.1 system card included a set of impossible tasks evaluations, but details such as construction method and scoring mechanisms are not disclosed
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: The excerpts do not discuss limitations or design trade-offs specifically concerning what the scores do or do not measure in terms of construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

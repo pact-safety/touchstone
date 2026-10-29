@@ -1,0 +1,116 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: osworld
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 044bc33901cb893808e3f91ebc9a17ed8e54b44c
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/osworld/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.07972v2
+      ref: v2
+      sha256: e101f46bd83ffcc2c8a40ddbf41b5d1f8e42c5de594ddb7eb9dbc17eb190d291
+      chars: 161795
+    - kind: repo
+      url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+      ref: 044bc33901cb893808e3f91ebc9a17ed8e54b44c
+      sha256: 71716cfce837c2e4a71032f904cde16d088c61e547f2901257d1e086bce68109
+      chars: 74717
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark shows a significant gap between the best model performance (max 12.24%) and human-level performance (72.36%), indicating clear headroom."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document any contamination defense such as a private held-out test set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: There is no report of the label/answer distribution or a trivial baseline score to determine if the benchmark is free of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark describes a multi-stage quality control process where examples are scrutinized three times and then attempted by authors who did not participate in the original annotation to provide feedback.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 7, chunk 4
+        quote: each example is further scrutinized and iterated upon by different individuals three times
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark serves the purpose of developing autonomous digital agents for real-world computer use, and the text explicitly states that existing models are still far from capable, meaning the task is not solved.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 17, chunk 2
+        quote: demonstrating that existing multi-modal models are far from capable computer agents
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on, which is required to determine if they are contradicted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is designed for real-world computer use and includes dynamic functions to handle real-time data, ensuring the content remains representative and not frozen/outdated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 5, chunk 2
+        quote: we include dynamic functions (such as crawler scripts) inside getter to obtain the real-time values
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: While the README mentions updates and a 'latest version', there is no explicit version identifier (like a DOI or release tag) shown alongside the benchmark name in its main references.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: The provided excerpts contain no mention of a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides multiple points of contact, including an issue tracker and email addresses, and the README shows updates as recent as July 2025.
+    evidence:
+      - source: repo
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+        locator: xlang-ai/OSWorld@044bc33901cb:SETUP_GUIDELINE.md, chunk 12
+        quote: Open an issue on [GitHub](https://github.com/xlang-ai/OSWorld/issues)
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

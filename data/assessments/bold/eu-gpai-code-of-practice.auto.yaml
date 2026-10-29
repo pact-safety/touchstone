@@ -1,0 +1,220 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bold
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bold/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2101.11718v1
+      ref: v1
+      sha256: be88679e16de72d41bbb3a6018df6edfd9ac84074663d8ecee3beca27cfc4487
+      chars: 90339
+    - kind: repo
+      url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      ref: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      sha256: 2678000f25d85f0362a62c15f354ad6954f52f71c22f55f80999b5ce8f3c9a28
+      chars: 24778
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: The number of test items is stated, but there is no justification (like a power calculation or confidence interval analysis) explaining why this number is sufficient for the comparisons.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 1, chunk 0
+        quote: consists of 23,679 English text generation prompts
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: While the benchmark reports p-values for significance, it does not report a statistical power figure or minimum detectable difference.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 5
+        quote: "p-value in binomial proportion test: 0.204"
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: met
+    rationale: The documentation provides sampling settings (temperature, max tokens, top-k, top-p) and prompt examples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 12, chunk 2
+        quote: set max sentence length to 15 , temperature to 0 . 7
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The excerpts do not describe any specific control against confounds or shortcuts, such as answer-position balancing or prompt-format perturbation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no mention of contamination safeguards, canary strings, or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: The excerpts do not report results from repeated runs with different seeds or sessions, nor from varied conditions like prompt variants.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The paper reports a manual inspection of model outputs by crowd workers to validate automated metrics, stating the sample size and findings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 8, chunk 4
+        quote: we take a random sample of data consisting of 1,960 texts from the gender domain and ask crowd workers to label each text
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark describes using crowd workers and ensures label quality through majority agreement among at least three workers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 3
+        quote: Each text in our AMT experiments is shown to at least three crowd workers and only those labels are accepted that have a majority agreement
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: The excerpts do not show that the harness stores or releases full model outputs per item for evaluator inspection.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: There is no documentation of checks for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: unmet
+    rationale: While the source of prompts (Wikipedia) is mentioned, there is no description of the review process for item creation or a versioning/maintenance plan for the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 1
+        quote: Our LM prompts are extracted from English Wikipedia articles
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: While hyperparameters and tools are mentioned, the documentation does not describe the input/output formats, interaction length, or specific access restrictions of the sandbox/environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The authors explicitly state that the dataset's demographic domains are limited and do not cover the full spectrum of real-world diversity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: the groups considered in this study do not cover an entire spectrum of the real-world diversity
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The excerpts mention domains (gender, race) but do not provide counts or proportions to describe the spread of the evaluation environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation or a statement that the authors reproduced their own headline numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: met
+    rationale: The paper was published in FAccT '21, which is a peer-reviewed venue.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 11, chunk 0
+        quote: FAccT ’21, March 3–10, 2021, Virtual Event, Canada
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The README states that prompts can be downloaded from the prompts folder in the repository.
+    evidence:
+      - source: repo
+        url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+        locator: amazon-science/bold@3ad652c773f5:README.md, chunk 1
+        quote: Download a copy of the language model prompts inside prompts folder.
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: unmet
+    rationale: While a repository is mentioned, there is no evidence that the scoring code or harness is released and runnable without author help.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: met
+    rationale: The paper describes how prompts are gathered from Wikipedia, how models are queried, and how metrics like sentiment and toxicity are used for scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 5
+        quote: we take English Wikipedia as a source for gathering prompts
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: There is no evidence of a pinned software environment (lockfile/container) or a statement of the compute needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: met
+    rationale: The prompts are released in the repository's prompts folder as json files.
+    evidence:
+      - source: repo
+        url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+        locator: amazon-science/bold@3ad652c773f5:README.md, chunk 1
+        quote: There is one json file for each domain which consists of prompts for all the sub-groups in that domain.
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The benchmark uses open weights/publicly available models like BERT and GPT-2.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: We also show that GPT-2, CTRL-THT, and CTRL-OPN conform more to social biases than BERT and CTRL-WIKI.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

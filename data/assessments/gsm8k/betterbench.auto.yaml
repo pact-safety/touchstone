@@ -1,0 +1,410 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gsm8k
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 3101c7d5072418e28b9008a6636bde82a006892c
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gsm8k/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.14168v2
+      ref: v2
+      sha256: d5f50406113e835544f59130d94bbea960dc894a4c89b2cd554a04f0a100c1bd
+      chars: 46512
+    - kind: repo
+      url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+      ref: 3101c7d5072418e28b9008a6636bde82a006892c
+      sha256: 20bd770b749ea24df5479cc6e9770f6581e3679d195ba77037c2c1effa4f61e2
+      chars: 7821
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark is defined as a dataset of high quality problems at the grade school math level.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 2, chunk 0
+        quote: we are releasing GSM8K, a dataset of 8.5K high quality problems at the grade school math level.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The text describes that the task involves performing a sequence of elementary calculations using basic arithmetic operations to reach a final answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: solutions primarily involve performing a sequence of elementary calculations using basic arithmetic operations (+ − ×÷ ) to reach the final answer.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 0
+    rationale: The excerpts do not describe how knowing about the tested capability is helpful in the real world.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not provide instructions on how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 10
+    rationale: The dataset was created by human problem writers/contractors, though it is not explicitly stated they are 'domain experts'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers.
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: While other datasets and papers are cited, there is no evidence that domain literature (math education/theory) was integrated into the design.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of 'Test Solve Rate (%)' is used and justified as a relevant metric due to the diversity of the problems.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: By creating each individual problem to be relatively unique, held-out test performance becomes a far more relevant metric.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: No metric floors or ceilings are mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 10
+    rationale: The text mentions the performance level of a 'bright middle school student'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: A bright middle school student should be able to solve every problem.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: No random performance level is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses an automatic evaluation by checking whether the final answer is correct.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 5, chunk 1
+        quote: we judge performance by autoregressively sampling a single low temperature solution and checking whether the final answer is correct.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains differences between GSM8K and other datasets like MATH, Dolphin18K, and LogiQA.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 4, chunk 1
+        quote: However, we note that GSM8K is larger, provides natural language solutions, and consists of problems that on average require more steps to solve.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: While the paper mentions 'high sensitivity to individual mistakes' in reasoning, it does not address input sensitivity (e.g., prompt variations).
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 10
+    rationale: The repository provides some code for training, sampling, and solution extraction, but it is explicitly described as being for illustrative purposes and not used for the paper's experiments.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 6
+        quote: We include this code for illustrative purposes only. This pipeline was not used for any experiments in the paper.
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The evaluation data is accessible via the provided file listing and README.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:FILE LISTING, chunk 0
+        quote: grade_school_math/data/test.jsonl
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: There is no mention of support for evaluating models via API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 10
+    rationale: The repository provides scripts to train and sample from a model locally, though they are for illustrative purposes.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 6
+        quote: python train.py
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: While illustrative code is provided, there is no script specifically intended to replicate the paper's results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not report statistical significance or uncertainty quantification for the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no assessment of the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent implementation is mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: No specific release requirements are specified in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): A setup.py file is present in the file listing, which serves as an equivalent to a requirements file."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a basic example of training and sampling, which serves as a quick-start guide.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 6
+        quote: We present a basic example of training a GPT2 sized model and using the calculator in the sampling process.
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain the source code itself to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No separate code documentation is provided beyond the README.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The benchmark is accompanied by a paper that is cited as an arXiv preprint, which is a standard venue for this field.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 6
+        quote: journal={arXiv preprint arXiv:2110.14168}
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the design principles and the process of creating the dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: We created GSM8K based on the following design principles.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The test tasks (grade school math problems) and the rationale (probing informal reasoning) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 2, chunk 1
+        quote: useful for probing the informal reasoning ability of large language models.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 15
+    rationale: The benchmark documents the assumption that a bright middle school student should be able to solve the problems.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 1
+        quote: A bright middle school student should be able to solve every problem.
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 10
+    rationale: The documentation mentions that some problems may contain breaking errors or ambiguities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 15, chunk 0
+        quote: We estimate this to be the fraction of problems that contain breaking errors or ambiguities.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The data collection process involving Upwork and Surge AI is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 15, chunk 0
+        quote: We initially collected a starting set of a thousand problems and natural language solutions by hiring freelance contractors on Upwork
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric is described as the test solve rate.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 11, chunk 0
+        quote: Test Solve Rate (%)
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The MIT License is explicitly provided in the LICENSE file."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: There is no evidence of standardized metadata (e.g., Schema.org or DataCite) being used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data sources (human contractors via Upwork and Surge AI) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 15, chunk 0
+        quote: We then worked with Surge AI ( surgehq.ai ), an NLP data labeling platform, to scale up our data collection.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The process of injecting calculator annotations as a preprocessing step is documented.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 2
+        quote: To mitigate this issue, we train our models to use a calculator by injecting calculation annotations into the training set.
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The annotation process, including the use of human writers and agreement checks, is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 15, chunk 0
+        quote: We checked whether their final answers agreed with the original solutions, and any problems that produced disagreements were either repaired or discarded.
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The representativeness is explained through the goal of high diversity and avoiding templates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: We actively avoid designing problems that are drawn from the same linguistic template
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Datasheets for Datasets).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not provide any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,462 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: procgen
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/procgen/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1912.01588v2
+      ref: v2
+      sha256: 723d1ff3392b3bda3a5f5d8d2399ebf50163d81bc5a2da26168f61046f6b56f7
+      chars: 57097
+    - kind: repo
+      url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+      ref: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
+      sha256: c05caebb45027315d9f15fbaf1c83eac4407526940d4444c6ba9a07f0ffdd9a7
+      chars: 52460
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The benchmark defines its target as measuring sample efficiency and generalization, with generalization specifically evidenced by training on a finite set and testing on the full distribution.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 1, chunk 0
+        quote: designed to benchmark both sample efficiency and generalization in reinforcement learning
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 1
+        quote: When evaluating generalization, we train on a finite set of levels and we test on the full distribution of levels.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation describes what is in scope (16 environments), it does not explicitly name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper discusses facets like exploration and memory, but does not provide independent scores for these facets in a table or figure; it primarily reports normalized return.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space consists of 16 environments, and the paper reports item counts (training set sizes) across a variation dimension (100 to 100,000 levels).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 4, chunk 0
+        quote: For each environment, we construct several training sets ranging in size from 100 to 100,000 levels.
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation does not report per-category item counts or a stratified sampling plan; it mentions training on a 'finite set' and testing on the 'full distribution'.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: There is no documented verification step or pass rate for individual generated items to ensure they test the target phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: The documentation mentions some levels may be unsolvable or cause immediate death, but does not define a named subset of boundary/adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark introduces new procedurally generated environments rather than reusing a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 1, chunk 0
+        quote: We introduce Procgen Benchmark, a suite of 16 procedurally generated game-like environments
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark reuses no prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 1, chunk 0
+        quote: We introduce Procgen Benchmark, a suite of 16 procedurally generated game-like environments
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While training set sizes are stated, there is no power calculation or confidence-interval half-width reported relative to model gaps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results figures (e.g., Figure 2, 5) show standard deviation, but the results tables/leaderboards are not provided in the excerpts with confidence intervals for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The benchmark uses automated rewards (normalized return) and does not use human raters to label items or judge outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 1
+        quote: we define the normalized return to be R norm = ( R − R min ) / ( R max − R min )
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: No human raters are used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 1
+        quote: we define the normalized return to be R norm = ( R − R min ) / ( R max − R min )
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: Labels (rewards) are derived from a deterministic key (game engine state/score), not subjective ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 1
+        quote: we define the normalized return to be R norm = ( R − R min ) / ( R max − R min )
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Labels are deterministic, not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 1
+        quote: we define the normalized return to be R norm = ( R − R min ) / ( R max − R min )
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The paper does not provide a table or figure breaking down failures by a named confound like formatting or prompt length.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The documentation does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking specific tasks and metrics to the construct from cv.01 with a stated reason as required.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to the Arcade Learning Environment (ALE), noting that ALE's low emphasis on generalization is a drawback that Procgen addresses via procedural generation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 1, chunk 1
+        quote: overfitting pervades classic benchmarks like the Arcade Learning Environment (ALE)... the low emphasis on generalization presents a significant drawback.
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The documentation lacks a specific limitations statement for the design and a supported claim linking scores to a real-world capability or harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablations for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation identifies exploration and memory as core capabilities that can be evaluated using the environments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 12, chunk 2
+        quote: Procgen environments can also shed light on the core capabilities of exploration and memory
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: There is no quantification of the overlap between generalization and exploration/memory, nor described mitigation steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The benchmark uses RL environment interactions rather than prompt-based output formats, and no format-sensitivity tests are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiments or variance measures for prompt wording are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The benchmark evaluates RL agents based on environment state/returns, not by parsing free-form text output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 1
+        quote: we calculate the mean normalized return
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report contamination checks or training data cutoffs for the evaluated models (PPO, Rainbow).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The documentation states that environments are kept in their originally released form to ensure reproducibility.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 14
+        quote: we plan to keep the environments in their originally released form, in order to ease the reproducibility of results
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of RL episodes where the agent interacts with the environment; the items are not single stateless model calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 4, chunk 2
+        quote: If the agent fails at any point, the episode terminates
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark does not use multiple-choice questions; it uses episodic returns from environment interaction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 1
+        quote: we calculate the mean normalized return
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: There is no mention of domain experts reviewing the content for accuracy or the size of the sample reviewed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The provided excerpts do not report results under more than one prompting or elicitation setting; they focus on RL training and model architectures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: met
+    rationale: The benchmark reports results for a separate test slice (held out levels) to measure generalization, distinct from the training set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 5, chunk 0
+        quote: To benchmark generalization, we recommend training on 500 levels from each environment and testing on held out levels
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is a general RL evaluation suite and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is a general RL evaluation suite and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is a general RL evaluation suite and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation does not provide a complete list of required hardware models, OS, or a lockfile/pinned requirements for the environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: met
+    rationale: The documentation provides a changelog that records multiple fixes (e.g., render options and interactive script).
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 22
+        quote: See [CHANGES](CHANGES.md) for changes present in each release.
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:CHANGES.md, chunk 0
+        quote: fix render option for gym environment
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: While the docs name several flaws (e.g., in 'bigfish' and 'caveflyer'), they do not state the direction of bias, provide impact estimates, or specify which conclusions remain valid.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 14
+        quote: In ~0.5% of levels, the player spawns next to an enemy and will die in a single step regardless of which action is taken.
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: No human or expert baseline is reported, nor is there a statement explaining why one is not relevant.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: The documentation reports that a random agent is extraordinarily unlikely to encounter reward in specific exploration levels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 12, chunk 3
+        quote: On these levels, a random agent is extraordinarily unlikely to encounter any reward.
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The excerpts describe a reinforcement learning benchmark based on episodic returns and game rules, with no mention of a model being used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The excerpts describe a reinforcement learning benchmark based on episodic returns and game rules, with no mention of a model being used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The excerpts describe a reinforcement learning benchmark based on episodic returns and game rules, with no mention of a model being used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The excerpts describe a reinforcement learning benchmark based on episodic returns and game rules, with no mention of a model being used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: unmet
+    rationale: There is no mention of multiple human annotators labeling items or a programmatic verification method with reported accuracy for the ground truth labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: While the docs state that the generation 'strives to make all levels solvable', it explicitly says this is 'not strictly guaranteed', and it does not classify every task as solvable or intentionally unsolvable.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 2, chunk 1
+        quote: The procedural generation in each environment strives to make all levels solvable, but this is not strictly guaranteed.
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: unmet
+    rationale: The excerpts describe game goals and rewards, but do not provide verified ground-truth solutions for the procedurally generated levels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The excerpts do not list accepted equivalences for the scorer or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, refusals, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: Scoring is based on raw episodic returns (rewards) from the environment, which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 0
+        quote: We report the mean raw episodic return
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: Scoring is based on raw episodic returns (rewards) from the environment, which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 0
+        quote: We report the mean raw episodic return
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null/trivial-agent runs or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

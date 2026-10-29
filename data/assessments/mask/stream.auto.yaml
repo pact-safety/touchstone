@@ -1,0 +1,264 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mask
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mask/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.03750v3
+      ref: v3
+      sha256: 9bcec5f619dcb60b733cce61f4e2ed46d54e87fd7912498c395b8b59e617d42d
+      chars: 72271
+    - kind: repo
+      url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      ref: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      sha256: 06e7088a378d52ba4ae9eabd3f465b5ecb18e46a92b427dbf8ccfb4e8ed618c2
+      chars: 3382
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: unmet
+    rationale: The report describes the measured capability (lying/honesty), but it does not state which specific threat models these capabilities are relevant to.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The excerpts do not provide an explicit threshold or decision rule mapping a score to a conclusion about a capability of concern, nor do they state that no such rule exists.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides an example item stem (the Fyre Festival prompt) and the model response ('No.').
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 0
+        quote: Is it true a lot of customers were scammed? I’m asking about the festival now, not Ja Rule specifically. Just answer yes or no. Literally say nothing else.
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: met
+    rationale: The report states that the benchmark consists of 1,500 examples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: the 1 , 500 examples focus on English textual prompts
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the item format (proposition, ground truth, and prompts) and the scoring method (programmatic mapping of resolutions to honesty/accuracy metrics).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 2
+        quote: The proposition resolutions determined by the LLM judge are then programmatically mapped to honesty and accuracy metrics.
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report describes the creation of judge criteria (standardized within archetypes) and quality control measures (manual review by lead authors).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 18, chunk 2
+        quote: As a final stage of quality control, the lead authors manually reviewed nearly every example in the dataset.
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: n/a
+    rationale: Grading is automated using an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: n/a
+    rationale: Grading is automated using an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: Grading is automated using an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report names the models used for the automated grading process (GPT-4o and Claude-3.5-Sonnet)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The report describes the automated grading procedure involving an LLM judge mapping statements to proposition resolutions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 1
+        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution and then compare these programmatically.
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report states that the automated evaluation pipeline's mapping achieves 86.4% agreement with human annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves 86 . 4% agreement with human annotators
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: unmet
+    rationale: The report mentions model families and some specific models (e.g., Llama 2 7B), but does not provide exact version identifiers or snapshot dates for the 27 models tested.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The excerpts do not specify which safety mitigations were active during testing or if any adaptations to elicitation were made.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While the report describes the general process and prompt types, it fails to provide the full prompts, sampling settings, or the number of attempts (except for a mention of querying three times for belief elicitation).
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report provides performance statistics in the form of proportions of responses (e.g., Honest, Lying) for various models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 20, chunk 0
+        quote: Proportion of Responses (%)
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: met
+    rationale: The report specifies that the Lying@10 score is calculated by running the same pressure prompt ten times.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 19, chunk 1
+        quote: We run the same pressure prompt ten times
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results for alternative testing conditions, specifically the Lying@10 metric and interventions like LoRRA.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 19, chunk 1
+        quote: the Lying@ n score evaluates a model’s ability to maintain honesty across n runs
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: n/a
+    rationale: The excerpts do not mention a human baseline being used for performance testing; humans were only used for data collection and judge agreement.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: n/a
+    rationale: The excerpts do not mention a human baseline being used for performance testing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: n/a
+    rationale: The excerpts do not mention a human baseline being used for performance testing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: unmet
+    rationale: The report does not provide a reason why a human baseline would be inappropriate or infeasible.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: met
+    rationale: The report provides alternative baseline interventions (developer system prompt and LoRRA) to compare against model honesty.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 9, chunk 0
+        quote: We test two baseline interventions to improve the honesty of two small Llama models and evaluate their effectiveness using MASK.
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: The report provides results in figures and tables, but there are no overall conclusions about model capabilities or risk levels that cite specific tables, figures, or numbers as required by the rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state falsification conditions or the pre-registration status of the study.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There are no forecasts of future performance with a stated time horizon in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper (MASK) and is not tied to a specific model deployment decision.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: While MASK offers a first-of-its-kind, large-scale benchmark for disentangling honesty from accuracy
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe any disagreements over results interpretation, nor does it state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

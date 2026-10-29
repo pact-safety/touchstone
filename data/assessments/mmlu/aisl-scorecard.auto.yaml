@@ -1,0 +1,466 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mmlu
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 4450500f923c49f1fb1dd3d99108a0bd9717b660
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mmlu/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2009.03300v3
+      ref: v3
+      sha256: 7172c1ed9e93c939e3919d339a15a3ca9cbfda291b77fe8dbe23d58106d61e3f
+      chars: 85242
+    - kind: repo
+      url: https://github.com/hendrycks/test/tree/4450500f923c49f1fb1dd3d99108a0bd9717b660
+      ref: 4450500f923c49f1fb1dd3d99108a0bd9717b660
+      sha256: eed8d915241a233d93ad42a15c1ac43e910fcf74495c82ec0ba568dffae66c8f
+      chars: 4473
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The benchmark defines the target phenomenon as multitask accuracy, specifically measuring classification accuracy on multiple choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation specifies the scope as 57 subjects across STEM, humanities, and social sciences, and explicitly excludes multimodal information.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 7, chunk 3
+        quote: we design our benchmark to capture a diverse array of tasks in a text-only format
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark names 57 tasks (sub-components) and reports accuracy for them individually in Figure 6."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by subjects (STEM, humanities, etc.) and difficulty levels (Elementary to Professional), with total item counts reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 3
+        quote: We collected 15908 questions in total
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The documentation reports that each subject contains at least 100 test examples, showing a distribution across the task space.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 3
+        quote: Each subject contains 100 test examples at the minimum
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: While it mentions questions were manually collected, there is no documented verification step with a pass rate or specific criteria for each item.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark creates its own test from freely available sources rather than adapting a prior benchmark dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 2
+        quote: The questions in the dataset were manually collected by graduate and undergraduate students from freely available sources online
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset/benchmark to adapt, but collects raw questions from sources.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 2
+        quote: The questions in the dataset were manually collected by graduate and undergraduate students from freely available sources online
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: The total item count is stated, but no power calculation or confidence-interval half-width is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results (e.g., Table 1 or Figure 6) do not show confidence intervals or standard errors for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The benchmark uses multiple-choice questions with deterministic keys; no human raters are used to judge model outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: No human raters are used to label items or judge outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: Every label comes from a deterministic key (the correct option of a multiple-choice question).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Every label comes from a deterministic key (the correct option of a multiple-choice question).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The paper mentions that UnifiedQA is more sensitive to formatting, but does not provide a table or figure breaking down failures by a named confound.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper provides qualitative examples of mistakes, but does not report named failure categories with counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking the specific tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to GLUE and SuperGLUE, stating that those benchmarks evaluate linguistic skills rather than overall language understanding.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 1, chunk 2
+        quote: While these benchmarks evaluate linguistic skills more than overall language understanding
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The docs provide a limitation regarding multimodal information and link performance on Law/Morality tasks to the real-world capability of alignment with human values.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 8, chunk 1
+        quote: For future systems to be aligned with human values, high performance on these tasks is crucial
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not report control conditions or ablation results for secondary capabilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap measurement or mitigation is described as no overlap was identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reports of results under at least two output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The scoring is based on the highest probability of tokens 'A', 'B', 'C', and 'D', which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 6, chunk 1
+        quote: The model then produces probabilities for the tokens “A,” “B,” “C,” and “D,” and we treat the highest probability option as the prediction.
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report a contamination check result or training-data cutoff for every evaluated model (e.g., UnifiedQA, RoBERTa, ALBERT, GPT-2).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs and local scoring (classification accuracy on MCQs) without an external mutable environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions.
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: Each item is a single stateless model call producing probabilities for tokens.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 6, chunk 1
+        quote: The model then produces probabilities for the tokens “A,” “B,” “C,” and “D,”
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: The benchmark uses multiple choice questions, but does not report a random-guess baseline together with a named guessing mitigation like chance-corrected scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: The documentation does not name the credentials of reviewers or state the size of the sample reviewed for accuracy and relevance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for both zero-shot and few-shot prompting settings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 6, chunk 1
+        quote: For zero-shot evaluation, we append the question to the prompt. For few-shot evaluation, we add up to   5   demonstration examples
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There is no report of results as a separate slice for a named stress condition or shift with an associated item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general knowledge across 57 subjects and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 8, chunk 3
+        quote: By covering 57 subjects at varying levels of difficulty, the test assesses language understanding in greater breadth and depth than previous benchmarks.
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general knowledge across 57 subjects and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 8, chunk 3
+        quote: By covering 57 subjects at varying levels of difficulty, the test assesses language understanding in greater breadth and depth than previous benchmarks.
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general knowledge across 57 subjects and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 8, chunk 3
+        quote: By covering 57 subjects at varying levels of difficulty, the test assesses language understanding in greater breadth and depth than previous benchmarks.
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation does not list library versions, hardware models, or OS/container images.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The excerpts do not describe quality-control steps or a correction channel (errata/changelog) recording a fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The documentation does not name specific unavoidable flaws with their bias direction, impact estimates, and valid conclusions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: While the text mentions humans, it does not report a specific human or expert baseline score for the tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: The documentation reports a random baseline score of 25.0% across disciplines.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 5, chunk 3
+        quote: Random Baseline   25.0   25.0   25.0   25.0   25.0
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The benchmark uses a multiple-choice format where the highest probability token is the prediction, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The benchmark uses a multiple-choice format where the highest probability token is the prediction, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The benchmark uses a multiple-choice format where the highest probability token is the prediction, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The benchmark uses a multiple-choice format where the highest probability token is the prediction, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: unmet
+    rationale: There is no report of multiple annotators labeling items independently or a programmatic verification method with documented accuracy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The documentation does not classify every task as solvable or intentionally unsolvable, nor does it document expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The benchmark provides ground-truth answers for the multiple-choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 0
+        quote: The green checkmark is the ground truth.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The benchmark uses a strict multiple-choice format; there is no list of accepted equivalences or examples of non-identical correct answers passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, refusals, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: Scoring is based on token probabilities for A, B, C, and D, which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 6, chunk 1
+        quote: The model then produces probabilities for the tokens “A,” “B,” “C,” and “D,” and we treat the highest probability option as the prediction.
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: Scoring is based on token probabilities for A, B, C, and D, which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 6, chunk 1
+        quote: The model then produces probabilities for the tokens “A,” “B,” “C,” and “D,” and we treat the highest probability option as the prediction.
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null/trivial-agent runs or targeted exploit attempts on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

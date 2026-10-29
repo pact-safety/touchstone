@@ -1,0 +1,366 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: ailuminate
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/ailuminate/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.05731v2
+      ref: v2
+      sha256: 193b98f48e60a55f41c06180ed202982fab6fdd44c546d07a92eeb6357da1433
+      chars: 129165
+    - kind: repo
+      url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      ref: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      sha256: 92e9e4155001884b8cbaa3eb316cf30de8124aacacc96e638d4250619a3fd7d6
+      chars: 23836
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark lists 12 hazard categories and specifies that it uses an automatic evaluation mechanism based on specialized LLM models fine-tuned for assessment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 8, chunk 0
+        quote: The AIL UMINATE   evaluator employs an ensemble of specialized LLM models fine-tuned to automate evaluation
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark documents excluded risks (multiturn dynamics) and deployment assumptions (single-turn, text only, English).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 7, chunk 2
+        quote: "acknowledging certain more-complex issues are unaddressed: • Hazards that emerge through extended dialogue. • Multiturn-conversation dynamics"
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 9, chunk 1
+        quote: general-purpose chatbot systems, single-turn interactions, text only, with a common-denominator approach to locale
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: met
+    rationale: The text explicitly states that no evaluation system can guarantee safety.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 3, chunk 1
+        quote: no evaluation system can guarantee safety
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: unmet
+    rationale: While the text mentions relationships with existing taxonomies, it does not name a specific prior benchmark and compare risk categories or methods.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: met
+    rationale: The benchmark describes using expert psychiatric knowledge to annotate responses that average human annotators might miss, which is a concrete mechanism for discovering novel risks in a specific category.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 23, chunk 0
+        quote: The project employed expert psychiatric knowledge to annotate unacceptable SUT responses that the average human annotator may miss.
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: met
+    rationale: The contributing guide describes a pull-request process via GitHub and requires a signed CLA for integration.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:CONTRIBUTING.md, chunk 0
+        quote: outside pull requests are very welcome too. ... Modify the project in your own fork and issue a pull request once you want other developers to take a look
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: met
+    rationale: The benchmark describes a process of periodic review and updating of prompts and tasks to ensure coverage.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 45, chunk 0
+        quote: Periodically review the SUT task, update to match user expectations, update existing prompts, source new prompts to ensure coverage, and create a new versioned release of the benchmark
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The benchmark explicitly states that it currently evaluates only single-turn conversations and that multiturn dynamics are reserved for future versions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 7, chunk 1
+        quote: The current benchmark version evaluates single-turn conversations consisting of one prompt-response pair.
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: The benchmark mentions distribution shift as a failure mode (#022), but it does not frame it as a safety concern; it is listed under 'Correctness'.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: met
+    rationale: The benchmark documents sourcing prompts from different geographic locales and from multiple populations with distinct demographic attributes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 32, chunk 0
+        quote: Source prompts from multiple populations with distinct prompt writer demographic attributes
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 32, chunk 0
+        quote: Source prompt vendors from different geographic locales
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: met
+    rationale: The benchmark holds a private prompt set for benchmarking and describes a process for periodically introducing new prompts to monitor for performance differences.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 1
+        quote: 12,000 Private Prompts for benchmarking
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 42, chunk 0
+        quote: Periodically introduce new test set prompts and monitor for statistical differences in performance across new and old items
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports the score as a percentage of violating responses, which is a proportion.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 0
+        quote: Score S Percentage of violating responses
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark explicitly names the use of single-prompt interactions and the lack of intricate contexts as limitations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: nor tests sustained interactions with intricate contexts
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: met
+    rationale: The report cites OECD definitions to justify its definitions of hazard and risk.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 9, chunk 2
+        quote: This report adheres to the OECD definitions [OECD, 2024]
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark provides a five-tier scale but does not state if the intervals are equal, power-law, or catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: met
+    rationale: The benchmark mentions future requirements consistent with the NIST AI Risk Management Framework.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 27, chunk 1
+        quote: consistent with shared industrial practices as developed in various settings, such as the NIST AI Risk Management Framework
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: While it mentions computing upper and lower score bounds for evaluator error, it does not report confidence intervals or standard errors for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: unmet
+    rationale: The benchmark mentions measuring interrater reliability in its mitigation table, but does not report a specific statistic like Cohen's kappa.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark identifies sources of variance (seeds/responses/evaluators) but does not report the actual variance across all three.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin for deployment risk extrapolation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: unmet
+    rationale: The benchmark lists 12 hazard categories but does not provide operational definitions (what counts as an instance) for each.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: met
+    rationale: The benchmark states that it adheres to OECD definitions for hazards and risk.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 9, chunk 2
+        quote: This report adheres to the OECD definitions [OECD, 2024]
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The excerpts do not name any specific value choice in the harm definitions as being contested.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark uses sentiment analysis of responses to prompt-pairs as a proxy for implicit stereotype reinforcement to measure bias.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 25, chunk 1
+        quote: using sentiment analysis of the associated responses as a proxy for implicit stereotype reinforcement to measure bias
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: The excerpts do not record the specific interface, access date, inference parameters, and system prompt for the reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing and reporting random seeds for data sampling, model inference, and evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The excerpts do not provide versions, dates, or commit hashes for the judge model, scoring rubric, and annotation guidelines.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: The benchmark provides a public code repository (ModelBench) on GitHub.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 16, chunk 1
+        quote: Called ModelBench ( https://github.com/mlcommons/modelbench )
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The benchmark states prompts were engineered by contracted companies and provides validation for synthetic multimodal prompts (handwritten or filtered from Adversarial Nibbler).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: MLCommons contracted with companies to engineer the prompts
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark acknowledges that it uses single-prompt interactions and does not employ prompts recorded from real user interactions due to privacy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: It neither employs prompts recorded from real, unknowing user interactions
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: unmet
+    rationale: The benchmark explicitly states it evaluates single-turn conversations and reserves multi-turn dynamics for future versions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 7, chunk 1
+        quote: The current benchmark version evaluates single-turn conversations
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: met
+    rationale: The benchmark states that using real user interactions would be almost impossible given user privacy requirements.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: doing so would be almost impossible given user privacy requirements
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: met
+    rationale: The benchmark has a versioning system (v1.0) and a stated update cycle that includes reviewing the SUT task and creating new versioned releases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 45, chunk 0
+        quote: Periodically review the SUT task, update to match user expectations, update existing prompts, source new prompts to ensure coverage, and create a new versioned release of the benchmark
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: The excerpts do not describe consultations with affected communities to assess if scenarios reflect their experienced harms.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark specifies it focuses on general-purpose chatbots (SUT) and mentions the use of APIs which may include additional safeguards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 7, chunk 1
+        quote: The benchmark focuses on general-purpose chatbots (the system under test, or SUT)
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: met
+    rationale: The benchmark states results should be interpreted as system-level risk and that no evaluation system can guarantee safety.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 3, chunk 1
+        quote: The benchmark results should be interpreted strictly as system-level risk and reliability measurements in specific hazard categories and use cases. In other words, although these results provide valuable insights, no evaluation system can guarantee safety.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

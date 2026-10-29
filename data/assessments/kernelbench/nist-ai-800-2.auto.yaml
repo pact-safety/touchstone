@@ -1,0 +1,498 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: kernelbench
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/kernelbench/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2502.10517v1
+      ref: v1
+      sha256: f6072136b7d8f41a6def6400915f3fb3f4bcfba4e9cb93d30095dd2663a45276
+      chars: 106453
+    - kind: repo
+      url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      ref: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      sha256: d76ec364b922087b6756c8586e2de8d26b3fb2adc80fad7e85ea241a650143da
+      chars: 38422
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines the construct as the ability to generate efficient GPU kernels and the task as transpiling PyTorch operators to CUDA kernels.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 0
+        quote: A benchmark and environment for evaluating LLMs' ability to generate efficient GPU kernels
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 1
+        quote: We structure the problem for LLMs to transpile operators described in PyTorch to CUDA kernels
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark lists four levels of categories covering single-kernel operators, fusion patterns, and model architectures."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The documentation states that the benchmark is challenging and that difficulty increases as the speedup threshold is raised.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 1, chunk 1
+        quote: KernelBench remains a challenging benchmark, with its difficulty increasing as we raise speedup threshold p
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The format is described as generating CUDA kernels from PyTorch descriptions, and a one-shot example (an 'add' operator) is mentioned.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 5, chunk 1
+        quote: The example is simple, containing only an add operator (See Appendix C.1).
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 1
+        quote: We structure the problem for LLMs to transpile operators described in PyTorch to CUDA kernels
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: Grading is based on a metric 'fast_p' which requires both functional correctness (output equivalence) and a speedup over a PyTorch baseline.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 3
+        quote: "we use a metric `fast_p`: fraction of tasks that are both correct and have a speedup greater than threshold `p`"
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 17, chunk 0
+        quote: For correctness , we set num correctness to 5, where we check equivalence of output between reference architecture Model and generated architecture
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: unmet
+    rationale: The documentation does not explicitly name areas or task types that the benchmark does not cover relative to the construct.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark states that success on the tasks leads to real-world impact (use case) and measures the ability to generate performant kernels directly.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: LM success on the task can directly lead to real world impact.
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome; it measures current performance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): Scores for multiple models of different capabilities (e.g., Llama-3.1 70B, DeepSeek-V3, DeepSeek-R1) are reported across different levels."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: The benchmark uses PyTorch Eager and torch.compile as baseline measures for performance comparison.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 18, chunk 1
+        quote: all performance analysis is evaluated against PyTorch Eager.
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: unmet
+    rationale: While it lists categories, it does not describe the specific sourcing process or report on templating/near-duplicates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The item count is provided for Level 1, Level 2, and Level 3."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private test split, contamination analysis, or specific creation dates to reduce contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: No canary strings are mentioned in the provided documentation or data descriptions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation specifies the hardware used (NVIDIA L40S), the software environment (Python 3.10, PyTorch 2.5.0), and the model interfaces supported via scripts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 17, chunk 0
+        quote: All evaluations are conducted on a bare-metal NVIDIA L40S GPU
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 17, chunk 0
+        quote: Our environment uses Python 3.10 , PyTorch 2.5.0+cu124 , and CUDA 12.4
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol for comparison nor specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: There is no mention of a separate development, validation, or training split that does not overlap with the test items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The paper specifies sampling temperatures for different models (Deepseek-V3, Llama 3.1-70B) and mentions greedy decoding (temperature=0) for the baseline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 21, chunk 1
+        quote: Specifically we use temperature = 1 . 6 for Deepseek-V3 and temperature = 0 . 7 for Llama 3.1-70B
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 19, chunk 3
+        quote: We sample the model with greedy decoding to ensure deterministic output, which is setting temperature = 0
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The paper provides the exact prompt text used for the one-shot baseline and iterative refinement in the appendices.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 22, chunk 1
+        quote: Name your new improved output architecture ModelNew . Output the new code in codeblocks . , → Please generate real code , NOT pseudocode
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: met
+    rationale: The benchmark describes an environment that provides compiler and profiler feedback for iterative refinement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 2, chunk 1
+        quote: our environment enables the LM to iterate with compiler and profiler feedback to refine performance
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: met
+    rationale: The benchmark specifies the use of NVIDIA GPUs (e.g., L40S) and provides a high-throughput evaluation system involving nvcc compilation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 36, chunk 0
+        quote: We compile the model-generated kernels with nvcc for a specified hardware into a binary
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 5, chunk 1
+        quote: We profile the generated code on an NVIDIA L40S GPU
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: met
+    rationale: The benchmark specifies a fixed budget of 10 inference calls for repeated sampling and iterative refinement experiments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 8, chunk 3
+        quote: we compare repeated sampling and iterative refinement given a fixed budget of 10 inference calls
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: met
+    rationale: The benchmark specifies a budget of 10 calls and provides raw compiler and execution feedback from stdout.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 8, chunk 3
+        quote: given a fixed budget of 10 inference calls
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 21, chunk 2
+        quote: < Raw Compiler and Execution Feedback from stdout >
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark uses a one-shot baseline (single sample) and also evaluates repeated sampling and iterative refinement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 19, chunk 3
+        quote: We sample the model with greedy decoding to ensure deterministic output
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: n/a
+    rationale: The benchmark uses automated correctness checks (comparing outputs to PyTorch) and timing, not an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We compare the Model output to the LM-generated ModelNew output
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: n/a
+    rationale: No LLM judge is used to score responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We compare the Model output to the LM-generated ModelNew output
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The paper reports results under different protocol settings, specifically comparing one-shot baseline, repeated sampling, and iterative refinement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 8, chunk 3
+        quote: we compare repeated sampling and iterative refinement given a fixed budget of 10 inference calls
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a public repository with runnable scripts for generation and evaluation.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 8
+        quote: uv run python scripts/eval_from_generations.py run_name=test_hf_level_1 dataset_src=local level=1 num_gpu_devices=8 timeout=300
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark requires the model to output code in codeblocks and provides logic to check correctness against reference operators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 22, chunk 1
+        quote: Output the new code in codeblocks
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark has identifiable versions (v0, v0.1) linked in the README."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: met
+    rationale: The benchmark recommends using 'modal' cloud functions to standardize the evaluation environment for running kernels.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:EVAL.md, chunk 1
+        quote: we recommend using `modal` and we have provided / are adding more various modal cloud functions to standardize the evaluation environment
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: met
+    rationale: The harness supports multiple providers (google, deepseek) via configuration settings in the scripts.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 6
+        quote: server_type=google model_name=gemini/gemini-2.5-flash
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 7
+        quote: server_type=deepseek model_name=deepseek-chat
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: met
+    rationale: The harness stores generated kernels in a runs directory and provides analysis scripts to compute performance from these results.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 8
+        quote: We provide `scripts/benchmark_eval_analysis.py` to analyze the eval results to compute success rate, timing metric, and overall benchmark performance `fast_p`
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the output logs automatically record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: unmet
+    rationale: The documentation does not describe a validation step to ensure items were checked for solvability and correctly keyed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The benchmark tasks involve generating GPU kernels from PyTorch code, which is not likely to trigger safety or harm-related safeguards.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 0
+        quote: Specifically we task LLM to generate correct and efficient CUDA / DSL kernels for PyTorch programs on a target GPU
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: met
+    rationale: The benchmark uses an automated verification process (comparing outputs to PyTorch) and describes a high-throughput system that separates generation from evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: KernelBench is automatically verifiable . Given a task, we randomly generate input tensors of the prescribed shape and precision and collect the PyTorch Model output
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: There is no documentation stating that task instructions were reviewed for clarity by multiple people or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper publishes reference results (Table 1) for multiple models (GPT-4o, o1, etc.) using the fast_1 metric on NVIDIA L40S."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports results separately for different levels (Level 1, 2, 3).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 5, chunk 2
+        quote: KernelBench Level 1 2 3
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline metric 'fast_p' and specifies that it is the fraction of tasks that are both correct and meet a speedup threshold.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 2
+        quote: "we define a metric `fast_p`: fraction of tasks that are both correct and have a speedup greater than threshold `p`"
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: While the paper mentions calculating standard deviation for timing trials, it does not report standard errors or confidence intervals for the final benchmark scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: The documentation mentions scripts for analysis but does not provide a structured report template or schema for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: The excerpts do not show that per-item scores for reference runs are published in a downloadable file.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The excerpts do not report the cost (tokens, money, or time) of the reference runs next to their scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: There is no mention of downloadable full or representative transcripts from reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument that its tasks are based on real-world deep learning workloads and that success leads to real-world impact.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 3, chunk 2
+        quote: KernelBench instead curates a set of 250 diverse kernels from real-world, modern deep learning workloads
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims real-world representativeness and notes that results can be affected by cluster power and software versions, which differ from a standardized benchmark environment.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 8
+        quote: cluster power, software version, all affect timing results
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes the baseline as PyTorch reference operators and specifies the conditions for the one-shot baseline, including greedy decoding (temperature=0).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 19, chunk 3
+        quote: We sample the model with greedy decoding to ensure deterministic output, which is setting temperature = 0.
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: unmet
+    rationale: The documentation does not explicitly name a conclusion that the scores should not be taken to show.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents limitations, such as the fact that evaluation has been limited to GPUs so far.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 10, chunk 2
+        quote: our evaluation has also been limited to GPUs so far
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

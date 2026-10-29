@@ -1,0 +1,346 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: wmdp
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v7
+  repo_commit: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/wmdp/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2403.03218v7
+      ref: v7
+      sha256: 0f9e262077b9de1ede69f1e049d9d397340173a18847aa5ad06aa65a3a2c4137
+      chars: 106883
+    - kind: repo
+      url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+      ref: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+      sha256: 5b9f7623b08bde37498bc7f876403cf49c0c5bdbe45717ffd26a864afcd3b1db
+      chars: 7077
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark names risk types (biosecurity, cybersecurity, and chemical security) and states the measurement method (QA accuracy using top logit).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 11, chunk 1
+        quote: we evaluate the QA accuracy of models on WMDP. We use a zero-shot question-answer format (Appendix B.1), taking the top logit between A , B , C , and D as the answer choice.
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark states it does not cover risks from open-source models where weights are downloadable and assumes an API-access threat model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 2
+        quote: for models with publicly downloadable weights, unlearned information can be trivially re-introduced by malicious actors (Lynch et al., 2024). If open-source models reach similar capabilities to closed-source models in the future, these risks will remain unaddressed by this work.
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 2
+        quote: WMDP focuses on reducing risk for API-access models (Section 1)
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: met
+    rationale: The text explicitly states that scores on WMDP do not capture the full extent of risk and can yield a false sense of safety.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 2
+        quote: scores on WMDP do not capture the full extent of malicious use risk. As a result, benchmarking on only WMDP may yield a false sense of model safety after unlearning.
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: unmet
+    rationale: The excerpts do not mention a comparison of coverage or methods against a specific named prior benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: unmet
+    rationale: While the paper mentions red-teaming as a general strategy or future step, it does not describe a concrete mechanism used by the benchmark to discover novel risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: The excerpts mention the benchmark is open-source and available on HuggingFace, but do not document a specific process for community contributions, integration, or credit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The benchmark is described as static and does not provide a process or cadence for incorporating new risks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 1
+        quote: WMDP is a static benchmark which cannot anticipate the evolving landscape of cyber and biological risks
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The benchmark uses multiple-choice questions and explicitly notes it neglects hazards that surface in end-to-end evaluations; it does not include multi-agent or interactive settings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 0
+        quote: WMDP consists of four-way multiple choice questions, potentially neglecting hazards that only surface in larger end-to-end evaluations.
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: There is no discussion of distribution shift framed as a safety-critical issue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: The benchmark mentions questions were checked by experts, but does not document annotator selection, disagreement patterns, or demographics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: all of our questions were checked by at least two experts from different organizations.
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: The benchmark mentions a private set for proxy validation, but does not describe a contamination check or state a temporal validity/retirement date for the set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 13, chunk 2
+        quote: We can evaluate whether WMDP is a proxy for hazardous knowledge by examining if performance on WMDP correlates with performance on the private set.
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: unmet
+    rationale: The excerpts do not show results labeled as rates, frequencies, or proportions, nor do they show calibration for the use of 'probability' or 'risk'.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark identifies that multiple choice questions do not test if a model will reveal information to a user during an attack, and that it is a static benchmark that cannot anticipate evolving risks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 1
+        quote: multiple choice questions only test for whether the model retains hazardous knowledge; these questions do not test whether the model will reveal that information to the end-user
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: While the benchmark mentions hazard levels (green, yellow, red), it does not cite a source to justify the severity scale or harm weighting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not state whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: met
+    rationale: The benchmark mentions informing the NIST AI Risk Management Framework.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 28, chunk 2
+        quote: informing the National Institutes of Standards and Technology’s AI Risk Management Framework (NIST, 2023; White House, 2023)
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: The excerpts do not report confidence intervals, standard errors, or worst-case bounds for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: unmet
+    rationale: While an LLM judge (GPT-4) is used for MT-Bench, no inter-rater agreement statistic like Cohen's kappa is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: "The benchmark does not report score variance across all three required dimensions: random seeds, prompt rephrasings, and evaluator versions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin when extrapolating to deployment risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: met
+    rationale: The benchmark targets hazardous capabilities in biosecurity, cybersecurity, and chemistry, and provides operational definitions for these as reducing QA accuracy on the WMDP dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 8, chunk 3
+        quote: We operationalize this as reducing a model’s QA accuracy on WMDP
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: met
+    rationale: The benchmark states that questions were written and checked by academics and technical consultants in the relevant fields.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: Our questions are written by academics and technical consultants in biosecurity, cybersecurity, and chemistry.
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The excerpts do not name any specific value choices in the harm definitions as being contested.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark states that QA accuracy on WMDP is a proxy for hazardous knowledge and relates it to the risk of models helping malicious actors develop weapons.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 13, chunk 2
+        quote: We can evaluate whether WMDP is a proxy for hazardous knowledge
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: The excerpts do not record the access date, inference parameters (temperature, top-p), or the specific system prompt used for the reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing or reporting random seeds for data sampling, inference, or evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The benchmark does not provide versions, dates, or commit hashes for the judge model, scoring rubric, or annotation guidelines.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: The benchmark provides a public website for datasets, code, and models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 3, chunk 2
+        quote: we release our datasets, code, and models publicly at https://wmdp . ai
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The prompts are stated to be expert-written, and the benchmark reports validation by having questions checked by at least two experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: all of our questions were checked by at least two experts from different organizations.
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark states limitations regarding multiple-choice questions not testing if a model will reveal information in a helpful manner during an attack.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 1
+        quote: multiple choice questions only test for whether the model retains hazardous knowledge; these questions do not test whether the model will reveal that information
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: n/a
+    rationale: The benchmark targets static knowledge of hazardous topics (QA accuracy) rather than risks that emerge over extended multi-turn interaction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 0
+        quote: we design WMDP as a dataset of four-choice multiple-choice questions.
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark uses expert-written questions and synthetic proxies rather than in-the-wild data collection constrained by privacy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 4, chunk 3
+        quote: a dataset of 3 , 668 expert-written, multiple-choice questions
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: While it mentions being a static benchmark, it does not define a stated update cycle tied to changes in risk.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 1
+        quote: WMDP is a static benchmark which cannot anticipate the evolving landscape of cyber and biological risks
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: The benchmark used experts to write the questions, but there is no evidence of consulting the affected communities to assess if scenarios reflect their experienced harms.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark explicitly states it focuses on reducing risk for API-access models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 2
+        quote: WMDP focuses on reducing risk for API-access models
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: met
+    rationale: The benchmark states that scores do not capture the full extent of risk and suggests other benchmarks (e.g., open-ended conversations) are needed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 2
+        quote: scores on WMDP do not capture the full extent of malicious use risk. ... benchmarks that assess open-ended conversations may be a more promising method
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

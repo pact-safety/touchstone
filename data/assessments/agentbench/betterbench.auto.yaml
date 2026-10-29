@@ -1,0 +1,447 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentbench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: d1e4a10db08c87075c78972e48ecc182be03e2d5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentbench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.03688v3
+      ref: v3
+      sha256: 7cd79af6c52326b66ffb8a091846a2500987cb0fb0b82ef9eee095868080c8e6
+      chars: 195183
+    - kind: repo
+      url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+      ref: d1e4a10db08c87075c78972e48ecc182be03e2d5
+      sha256: 38676ac447342263b64538034b78c1a541f2759db9637e751b24ae760546faa0
+      chars: 73189
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the concept of evaluating LLMs as agents and identifies specific capabilities like long-term reasoning and decision-making.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 3, chunk 2
+        quote: We introduce the concept of evaluating LLMs as agents and present A GENT B ENCH
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark describes how capabilities like lateral reasoning translate to tasks such as guessing plots in a puzzle game.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:docs/Introduction_en.md, chunk 4
+        quote: To assess LLMs’ lateral reasoning prowess, a diverse puzzle dataset is curated from web of varied levels of difficulty.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The benchmark mentions that the environments are based on real-world scenarios to offer a practical testbed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 3, chunk 2
+        quote: It defines eight distinct environments of 3 types based on real-world scenarios, offering a practical testbed for LLMs’ wide array of capabilities.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 15
+    rationale: The benchmark describes use cases such as assisting human interaction with computer interfaces.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 4, chunk 1
+        quote: a very practical mission for LLM agents is to assist human interaction with computer interfaces.
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature and datasets such as GrailQA and ComplexWebQuestions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 26, chunk 2
+        quote: compiled a dataset sourced from pre-existing knowledge base question answering (KBQA) datasets on F REEBASE , including GrailQA (Gu et al., 2021), ComplexWebQuestions (Talmor & Berant, 2018)
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The benchmark provides a rationale for its metrics, such as using Task Success Rate as a rigorous measure.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 43, chunk 2
+        quote: for the Task Success Rate , a task is considered successful only if all the steps have been successful, making it a rigorous measure.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 10
+    rationale: The benchmark mentions human validation for the LTP system and compares automatic evaluation to it, though a specific performance level value is not provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 35, chunk 0
+        quote: We evaluate the LTP System by human validation, validating system’s accuracy on milestone recognition and fact verification.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: The benchmark includes a random action strategy as a baseline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 30, chunk 1
+        quote: The first strategy is a simply random action from all available action spaces.
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses automatic evaluation and validates it against human evaluation for the LTP system.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 35, chunk 0
+        quote: We compare the Single Game Accuracy and Query Relevance between automatic evaluation and human evaluation
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explains differences from previous benchmarks, noting they often focus on narrow commonsense grounding or single environments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 2, chunk 2
+        quote: But they often suffer from the limitation of closed, discrete action spaces, as well as their primarily narrow focus on models’ commonsense grounding.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: The excerpts do not address input sensitivity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The documentation provides specific entry points and instructions for launching evaluations using the provided toolkit.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:docs/Entrance_en.md, chunk 0
+        quote: "The main entry points of the framework are:"
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark provides associated datasets and environments that are openly accessible.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 3, chunk 3
+        quote: Complemented by its associated datasets and environments, this toolkit is now openly accessible to the broader research community.
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The toolkit is specifically designed to interact with APIs via the HTTP protocol.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 6, chunk 2
+        quote: This toolkit is meticulously designed to interact with APIs, simplifying the process of adapting and testing different LLMs.
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: Local models are supported, with FastChat mentioned as a server for local models.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:docs/Introduction_en.md, chunk 8
+        quote: Fastchat currently serves as the Server for local models.
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: The excerpts do not mention adding globally unique identifiers to evaluation instances or encrypting them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: There is no mention of a specific task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The repository provides an automated script to start the task server for replication.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:README.md, chunk 7
+        quote: Manual starting might be cumbersome; hence, we provide an automated script.
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts describe scoring and validity analysis but do not report statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no mention of assessing the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: The excerpts do not show the implementation of a build status or equivalent monitoring system for the codebase.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A requirements.txt file is explicitly listed in the file listing and mentioned in the quick start guide.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:FILE LISTING, chunk 5
+        quote: requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README contains a 'Quick Start' section with a one-command setup using Docker Compose.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:README.md, chunk 1
+        quote: |-
+          ### Quick Start
+
+          We support a quick one-command setup for all the above tasks using Docker Compose.
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code files to verify the presence of in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes multiple documentation files such as Introduction, Configuration, and Entrance guides."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The accompanying paper is explicitly stated to be published at ICLR 2024.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 3, chunk 0
+        quote: Published as a conference paper at ICLR 2024
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper provides 'Construction Details' for several environments like ALFWorld and Mind2Web.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 38, chunk 1
+        quote: |-
+          G.1   D ATASET   D ETAILS 
+          Construction Details.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper describes the tasks and the rationale for choosing specific environments (e.g., KG as a testing ground for decision-making).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 4, chunk 3
+        quote: we propose KG as a representative testing ground to assess the decision-making abilities of AI agents.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 10
+    rationale: The paper mentions 'limitations' of traditional frameworks and performs a 'validity analysis' to discern model limitations, though a dedicated limitations section for the benchmark itself is not explicitly shown.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 20, chunk 0
+        quote: They often suffer from several limitations
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the data collection and construction process for environments like Mind2Web.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 42, chunk 2
+        quote: |-
+          Construction Details. Mind2Web covers domains of Travel, Information, Sevice, Shopping, and
+          Entertainment, assembled using SimilarWeb ranking as a reference.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper documents specific evaluation metrics such as SR for SQL and F1 for KG.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 4, chunk 3
+        quote: We adopt the   SR   as the main evaluation metric.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The repository includes a LICENSE file specifying the Apache License, Version 2.0.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:LICENSE, chunk 11
+        quote: Licensed under the Apache License, Version 2.0 (the "License")
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: There is no evidence of standardized metadata (e.g., Schema.org or DataCite) being included.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents data sources, such as ALFWorld and Mind2Web, and how they were assembled.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 38, chunk 1
+        quote: The ALFWorld benchmark comprises of textual environments designed to mimic household scenarios
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper documents preprocessing steps, such as ranking and filtering HTML elements using DeBERTa for Mind2Web.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 43, chunk 1
+        quote: |-
+          Mind2Web proposes to rank and filter the
+          HTML elements with a small language model, e.g., DeBERTa, to enhance inference efficiency.
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper mentions the use of annotators for Mind2Web and re-annotation using Claude-2 for bias validation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 26, chunk 1
+        quote: we re-annotated a small batch of data using Claude-2.
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The paper explains the representativeness of the KG environment as a testing ground for decision-making.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 4, chunk 3
+        quote: we propose KG as a representative testing ground to assess the decision-making abilities of AI agents.
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: The excerpts do not indicate that the documentation follows a recognized standard (e.g., Sphinx, ReadTheDocs).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 15
+    rationale: The README provides a specific email address for users to contact with questions or contributions, serving as a maintained feedback channel.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:README.md, chunk 4
+        quote: Please contact [agentbench_fc&#64;googlegroups.com](mailto:agentbench_fc@googlegroups.com) if you have any questions
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: While a group email is provided, no specific individual contact person is listed.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

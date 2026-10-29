@@ -1,0 +1,120 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: decodingtrust
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/decodingtrust/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2306.11698v5
+      ref: v5
+      sha256: f94fba634e046109d072484fbb989fc1e9ba28dd2cf3823b33bd3af0944fed36
+      chars: 384671
+    - kind: repo
+      url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      ref: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      sha256: b9ed3260380b3e10b8ff38101bea6f116bc09b42d5f2975d1ce30236b007e95a
+      chars: 61156
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain a leaderboard, saturation analysis, or reported top scores compared to a maximum achievable ceiling.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The excerpts do not document a contamination defence; instead, they acknowledge that pretraining data is obscure and that models potentially memorize training data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 108, chunk 0
+        quote: As the pretraining data of GPT-3.5 and GPT-4 is not publicly available, it is challenging to reason why sometimes the models fail
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: There is no report of the overall label or answer distribution being balanced, nor is a trivial baseline provided for the benchmark as a whole.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: While the benchmark mentions a 'careful filtering process' for AdvGLUE, there is no cited audit or error analysis reporting a specific low error rate for the overall benchmark data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 22, chunk 1
+        quote: It employs a careful filtering process to ensure a high-quality benchmark.
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark identifies the capability it serves (e.g., identifying unknown knowledge or robustness against adversarial attacks) and these remain current challenges for LLMs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 29, chunk 2
+        quote: Consequently, the ability to identify unknown knowledge is crucial for GPT models.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on to reflect real-world complexity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is maintained by designated individuals and includes a mechanism for updates and corrections to prevent it from becoming outdated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 110, chunk 0
+        quote: Please contact Boxin Wang ( boxinw2@illinois.edu ) and Prof. Bo Li ( lbo@illinois.edu ), who are responsible for maintenance.
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not show an explicit version identifier (like a release tag or DOI) visible alongside the benchmark name in its main references.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no stated plan for archiving artifacts at the end of life, nor is there evidence that the data and generating code are in a persistent archive.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides named maintainers, email addresses, and a GitHub issue tracker, and the project is maintained as indicated by the recent 2023 citation and installation instructions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 110, chunk 0
+        quote: Please contact Boxin Wang ( boxinw2@illinois.edu ) and Prof. Bo Li ( lbo@illinois.edu ), who are responsible for maintenance.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

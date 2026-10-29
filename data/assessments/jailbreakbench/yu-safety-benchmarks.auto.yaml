@@ -1,0 +1,356 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: jailbreakbench
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 23dbdf6b19650521604456229bc1d9c4156c85c1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/jailbreakbench/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.01318v5
+      ref: v5
+      sha256: 8068ffae3d6db12053409b6aa1f5934fa1a63d2cf619176aa31c6ba59302e176
+      chars: 81986
+    - kind: repo
+      url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+      ref: 23dbdf6b19650521604456229bc1d9c4156c85c1
+      sha256: 5c4dcb8588fcd16be4c6827ff2f764df66e5627b5d3f6c0e909f62a1b4d03a8a
+      chars: 29092
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark evaluates jailbreaking risks and uses a classifier (judge) to measure success.
+    evidence:
+      - source: repo
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 1
+        quote: Jailbreakbench is an open-source robustness benchmark for jailbreaking large language models (LLMs)
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 2, chunk 2
+        quote: Evaluating the success of jailbreak attacks is challenging given the subjective nature of judging the appropriateness of a LLM’s response. We perform a rigorous human evaluation to compare six jailbreak classifiers.
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark documents that it does not cover non-text modalities and excludes the ability for attackers to modify system prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 9, chunk 3
+        quote: Our benchmark does not currently offer such option and focuses solely on text.
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 9, chunk 3
+        quote: we do not allow attackers to modify the system prompt
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: met
+    rationale: The benchmark explicitly warns that using only existing attacks without adaptive attacks is an unsuitable use case for evaluating robustness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 23, chunk 1
+        quote: "Unsuitable use cases: Using this benchmark to evaluate the robustness of LLMs and defenses by using only the existing attacks (especially, only against the existing precomputed jailbreak prompts), without employing an adaptive attack with a thorough security evaluation."
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark compares its dataset to prior benchmarks like HarmBench and AdvBench.
+    evidence:
+      - source: repo
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 1
+        quote: comprises a list of 200 distinct benign and misuse behaviors---both original and sourced from prior work (in particular, [Trojan Detection Challenge](https://trojandetection.ai/)/[HarmBench](https://harmbench.org) and [AdvBench](https://github.com/llm-attacks/llm-attacks/blob/main/data/advbench/harmful_behaviors.csv))
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: met
+    rationale: The benchmark provides a standardized pipeline for red-teaming LLMs to generate jailbreaks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 2, chunk 1
+        quote: Pipeline for red-teaming LLMs. We provide a standardized pipeline for red-teaming LLMs.
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: met
+    rationale: The benchmark provides a route for contributions via GitHub issues for attacks and pull requests for defenses, including metadata for credit.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 1
+        quote: To submit artifacts, users can submit an issue within the JailbreakBench repository, which includes fields for the zipped submissions folder and other metadata, including the paper title and author list.
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 2
+        quote: To add a new defense to our repository, users can submit a pull request as detailed in the JailbreakBench repository’s README file.
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: met
+    rationale: The benchmark states it intends to periodically update the benchmark as the field develops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 9, chunk 1
+        quote: intend to periodically update this benchmark as the field develops
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: There is no evidence of multi-agent or interactive evaluation settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: The excerpts do not mention distribution shift as a safety concern.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: The benchmark does not document annotator selection, disagreement patterns, or demographics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: While the dataset is versioned, there is no mention of contamination detection or a specific temporal validity period.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results as 'attack success rate (ASR)' and 'refusal rates'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 8, chunk 2
+        quote: we track the attack success rate (ASR)
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 9, chunk 0
+        quote: We compute refusal rates
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark explicitly mentions that it focuses solely on text, excluding other modalities, which limits generalization.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 9, chunk 3
+        quote: Our benchmark does not currently offer such option and focuses solely on text.
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: met
+    rationale: The behaviors and their categories are chosen with reference to OpenAI's usage policies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 15, chunk 1
+        quote: which are chosen with reference to OpenAI’s usage policies.
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The excerpts do not specify the semantics of the severity scale (e.g., equal intervals or power-law).
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name a specific established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: The authors explicitly state they did not report error bars.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 20, chunk 1
+        quote: Did you report error bars (e.g., with respect to the random seed after running experiments multiple times)? [No]
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: unmet
+    rationale: While the benchmark reports agreement percentages (e.g., 95%), it does not report a specific inter-rater reliability statistic like Cohen's kappa.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 1
+        quote: Three experts labeled each prompt-response pair, and the agreement between them was approximately 95%.
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across random seeds, prompt rephrasings, and evaluator versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin for deployment risk extrapolation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: met
+    rationale: The benchmark provides a table of harm categories with descriptions that serve as operational definitions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 15, chunk 1
+        quote: |-
+          Category   Description 
+          Harassment/Discrimination   Generation of hateful, harassing, or violent content
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: met
+    rationale: The benchmark explicitly states that behaviors are chosen based on OpenAI's usage policies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 15, chunk 1
+        quote: which are chosen with reference to OpenAI’s usage policies.
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The provided excerpts do not mention any contested normative choices or value conflicts in the harm definitions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: unmet
+    rationale: The benchmark does not articulate the relationship between its measured proxy (jailbreak success rate) and real-world safety concerns.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: While system prompts and inference parameters (greedy/temp 0) are mentioned, the excerpts do not show that access dates were recorded for all reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: met
+    rationale: The benchmark uses greedy deterministic sampling for inference, which satisfies the rule for inference seeds.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 4
+        quote: all model use greedy, deterministic sampling (i.e., with temperature equal to zero)
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The judge model (Llama-3-70B) is named, but there is no version, date, or commit hash provided for the scoring rubric or annotation guidelines.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): A public GitHub repository is provided with instructions to reproduce the evaluations."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The source of prompts is stated (original, AdvBench, TDC/HarmBench), and validation is reported via human expert labels for the judge selection dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 15, chunk 2
+        quote: together with three human expert labels per jailbreak prompt
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: unmet
+    rationale: The benchmark does not provide a justification for why these specific scenarios represent real-world use or state the limitations of their synthetic nature.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: unmet
+    rationale: The excerpts describe single-turn prompt-response pairs and do not mention multi-turn evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: met
+    rationale: The benchmark does not use in-the-wild data, making this item n/a per the decision rule.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 20, chunk 2
+        quote: We use publicly available datasets and models.
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: met
+    rationale: The benchmark has a version (v1.0) and a stated plan to periodically update as the field develops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 22, chunk 1
+        quote: "Current version: v1.0"
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that affected communities were consulted to assess the scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark specifies it focuses on the model's response to a prompt, and mentions the use of system prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 1, chunk 1
+        quote: includes a clearly defined threat model, system prompts, chat templates, and scoring functions
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

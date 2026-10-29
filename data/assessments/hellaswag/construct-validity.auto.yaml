@@ -1,0 +1,268 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: hellaswag
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/hellaswag/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1905.07830v1
+      ref: v1
+      sha256: 94a483f8855c461b4cdea4ba6f9c7e8b1238816e21ce24f6ef0338690ccb2774
+      chars: 56552
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: unmet
+    rationale: The excerpts describe the dataset construction and examples of tasks, but they do not provide a precise operational definition of the phenomenon being measured or specify which observable outputs count as evidence of that phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: The excerpts do not state the scope of the phenomenon nor do they name any excluded aspects.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The excerpts do not identify sub-components of the phenomenon, nor do they explicitly state that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they provide control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the model format is described, there is no measurement of how different output-format requirements impact the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The models are evaluated by returning a logit for a specific ending in a four-way cross-entropy loss setup, rather than parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: |-
+          given a context and an ending, return a   logit 
+          for that ending
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts mention using WikiHow to increase diversity and a 'Goldilocks zone' for context length, but they do not document a sampling strategy over a described task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The text describes using several rounds of human filtering and annotation to ensure high agreement and filter false negatives.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 5, chunk 2
+        quote: we ensure high human agreement through several rounds of annotation
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the paper mentions variants like 'Ending Only' and 'Shuffled', it does not report results for a counted subset of these perturbed items separately from the main score in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that HellaSwag expands upon the original SWAG dataset's domain.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 1
+        quote: We expand on the SWAG’s original video-captioning domain
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: met
+    rationale: The text identifies a strength of the prior work (SWAG is a dataset for commonsense NLI) and a limitation (models learn dataset-specific distributional biases).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 3
+        quote: SWAG is a dataset for commonsense NLI.
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 0
+        quote: they largely learn to pick up on dataset-specific distributional biases
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: met
+    rationale: The paper compares the performance of a model (ESIM + ELMo) on both SWAG and HellaSwag.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 2
+        quote: while ESIM + ELMo obtained 59% accuracy on SWAG, it obtains only 33.3% accuracy on HellaSwag
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper explains the modification of adding WikiHow articles to increase diversity and length, which makes the benchmark more robust to deep pretrained models."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe a specific test to detect data contamination or report its results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The paper explicitly mentions the use of validation and test sets, as well as a dummy test set of held-out data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 0
+        quote: We report results on the full validation and test sets
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 4, chunk 3
+        quote: evaluated in a four-way setting on the dummy test set of held-out data.
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the total dataset size is mentioned, there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 5, chunk 3
+        quote: In total, there are 70k dataset examples.
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results table (Table 1) reports accuracy percentages but does not provide confidence intervals or standard errors for the scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 0
+        quote: "Table 1: Performance of models, evaluated with accuracy (%)"
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The paper mentions using crowd workers for validation and evaluation, but it does not describe their demographics or state how demographic biases were mitigated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 2
+        quote: asking five independent crowd workers to solve the same four-way multiple choice problems
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are deterministic as the task is a multiple-choice problem with one true ending (ground truth).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 5, chunk 3
+        quote: crowd workers are given a context and six ending choices, of which one is the true ending
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While the paper provides qualitative examples of failures (e.g., BERT's incoherent choice in a WikiHow example), it does not provide a quantitative count of these failure modes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper breaks down BERT's performance by a named confound (omitting context) in Figure 4, showing a drop from 86.7% to 74.8%."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: met
+    rationale: The error analysis regarding the omission of context leads the authors to discuss a potential scoring bias in the endings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 2
+        quote: suggesting a bias exists in the endings themselves.
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors report specific hyperparameter changes (batch size and warmup) used to improve model stability and adaptation when creating HellaSwag.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 11, chunk 2
+        quote: We use a batch size of 64 examples rather than 16, and warm the model up for 20% of the dataset
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: unmet
+    rationale: The excerpts mention the task of 'commonsense NLI' and 'how the world works', but do not name a specific real-world application linked to the tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no statement linking the choice of tasks and metrics to a specific operational definition provided in a 'def.1' section.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to SWAG, noting that HellaSwag is more challenging for models like BERT.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 1
+        quote: with the new dataset   HellaSwag   as comparison
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses the limitation that models might answer correctly by picking up on spurious patterns rather than world states.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 9, chunk 0
+        quote: Alternatively, future models might answer correctly only by picking up on spurious patterns
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

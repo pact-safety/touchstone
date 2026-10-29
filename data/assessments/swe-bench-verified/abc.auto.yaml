@@ -1,0 +1,326 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: swe-bench-verified
+standard: abc
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/swe-bench-verified/abc/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2310.06770v3
+      ref: v3
+      sha256: bb04e03876fea31f46a22061ba431ccce08c460a411530b20d66ac670aa8d807
+      chars: 162878
+    - kind: repo
+      url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+      ref: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+      sha256: 13c9768a7e92d37b0405c4bf5faab5c6168e1c40446f565bb6e1f80d693847b4
+      chars: 120623
+  excerpt_chars: 40000
+verdicts:
+  O.a.1:
+    value: n/a
+    rationale: The benchmark uses execution-based testing (pass/fail status of tests) rather than string matching of answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.2:
+    value: n/a
+    rationale: The benchmark uses execution-based testing rather than string matching of answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.3:
+    value: n/a
+    rationale: The benchmark uses execution-based testing rather than substring matching of answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.4:
+    value: n/a
+    rationale: The benchmark uses execution-based testing rather than substring matching of answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.5:
+    value: n/a
+    rationale: The benchmark uses execution-based testing rather than substring matching of answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.b.1:
+    value: n/a
+    rationale: No LLM judge is used; correctness is determined by test execution.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.b.2:
+    value: n/a
+    rationale: No LLM judge is used; correctness is determined by test execution.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.c.1:
+    value: unmet
+    rationale: While tests are extracted from merged PRs, there is no documentation of a specific review step stating who reviewed the tests and the share covered.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.c.2:
+    value: unmet
+    rationale: The excerpts mention calculating Cyclomatic and Halstead complexity for the modified functions, but not as a measure of the test-suite quality itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.1:
+    value: n/a
+    rationale: Fuzz testing is not used; the benchmark uses unit/end-to-end tests from PRs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.2:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.3:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.1:
+    value: unmet
+    rationale: No coverage figure for the tested code is reported, nor is there a list of components shown to be exercised.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.2:
+    value: unmet
+    rationale: There is no evidence or demonstration that tests give the same result on repeat runs to prevent flakiness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.1:
+    value: n/a
+    rationale: Outcomes are scored by test execution (pass/fail), not by matching a specific environment state snapshot.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.2:
+    value: n/a
+    rationale: Outcomes are scored by test execution, not by matching environment state.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.3:
+    value: n/a
+    rationale: Outcomes are scored by test execution, not by matching environment state.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.g.1:
+    value: met
+    rationale: The benchmark provides an example of the diff format expected for the answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 8, chunk 4
+        quote: an example of the diff format we expect the answer to be in
+    by: model
+    quotes_verified: true
+  O.g.2:
+    value: n/a
+    rationale: Answers are scored by test execution, not by matching a final answer string/value.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.h.1:
+    value: n/a
+    rationale: No continuous quality metric is used for scoring; the benchmark uses binary test pass/fail results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.1:
+    value: unmet
+    rationale: The excerpts mention finding the Python version and dependencies, but do not show that every tool and package has a stated version or lockfile entry.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.2:
+    value: n/a
+    rationale: The benchmark uses Docker for local execution of tests; there is no evidence of external API tools required for the task execution itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.3:
+    value: n/a
+    rationale: The benchmark uses Docker for local execution of tests; there is no evidence of external API tools required for the task execution itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.4:
+    value: met
+    rationale: The harness uses Docker to ensure consistent environments, and the documentation describes cleaning up instance-specific resources.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 1
+        quote: set `--cache_level=env` and `--clean=True` when running `swebench.harness.run_evaluation` to only dynamically remove instance images after they are used
+    by: model
+    quotes_verified: true
+  T.5:
+    value: unmet
+    rationale: The excerpts do not provide evidence that the agent's filesystem or network is configured to prevent access to ground truth answers and tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.6:
+    value: met
+    rationale: The benchmark uses Docker images to ensure the evaluation environment is reproducible and consistent.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 2
+        quote: Docker is required for consistent evaluation environments. This ensures that the evaluation is reproducible across different systems.
+    by: model
+    quotes_verified: true
+  T.7:
+    value: met
+    rationale: The benchmark verifies the usability of task instances via execution of tests before and after the solution is applied.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 16, chunk 2
+        quote: We verify the usability of a task instance via execution.
+    by: model
+    quotes_verified: true
+  T.8:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): SWE-bench Verified specifically contains instances confirmed to be solvable by engineers."
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.9:
+    value: unmet
+    rationale: While reference patches (gold patches) are provided, there is no mention of an automated Oracle solver that ships with the benchmark to solve all tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.10:
+    value: unmet
+    rationale: There is no documentation of an exploit audit of the implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.1:
+    value: met
+    rationale: The benchmark tasks are available as an open-sourced JSON file and via Hugging Face.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 20, chunk 1
+        quote: We save all finalized task instances to a single .json file that is open sourced and available for download.
+    by: model
+    quotes_verified: true
+  R.2:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a public evaluation harness using Docker."
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.3:
+    value: unmet
+    rationale: While the paper mentions disjoint training/evaluation repositories to avoid contamination, it does not describe a private held-out split, rotating split, or canary string for the benchmark release.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.4:
+    value: met
+    rationale: The documentation describes a process for updating the benchmark with new instances based on PR dates to maintain temporal robustness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 16, chunk 3
+        quote: SWE-bench can simply be updated to produce new task instances based on PRs created after any LM’s training date.
+    by: model
+    quotes_verified: true
+  R.5:
+    value: unmet
+    rationale: The excerpts do not contain a statement that explicitly links a specific agent capability to an outcome measure and explains why that measure indicates the capability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.6:
+    value: met
+    rationale: The benchmark explicitly states it evaluates large language models (LMs).
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 0
+        quote: SWE-bench is a benchmark for evaluating large language models on real-world software engineering tasks.
+    by: model
+    quotes_verified: true
+  R.7:
+    value: unmet
+    rationale: While quality control steps (execution-based validation) are described, there is no recorded correction channel with a specific fix (like an errata or changelog) provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.8:
+    value: unmet
+    rationale: The excerpts do not name unavoidable flaws and their likely direction of effect on results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.9:
+    value: unmet
+    rationale: There is no numerical estimation of the impact of a known unavoidable flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.10:
+    value: unmet
+    rationale: The results tables provided (e.g., Table 18) show percentages but do not include confidence intervals or significance tests for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.11:
+    value: unmet
+    rationale: No stated caveats are attached to named flaws to guide which conclusions should not be drawn.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.12:
+    value: unmet
+    rationale: No human or expert baseline scores are reported in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.13:
+    value: unmet
+    rationale: No score for a do-nothing or trivial agent is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

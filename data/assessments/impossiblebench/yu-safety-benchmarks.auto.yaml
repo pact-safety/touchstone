@@ -1,0 +1,326 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: impossiblebench
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/impossiblebench/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2510.20270v1
+      ref: v1
+      sha256: 076fdc9d551f5e6646495bc14ac5c5857230c8939b2c64423b02651f66b3baae
+      chars: 64461
+    - kind: repo
+      url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      ref: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      sha256: 6b37396768388d86129c43c497a25560f7c6237e81c74276df6467f68097a492
+      chars: 9620
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark identifies the risk of 'exploiting test cases' (cheating) and names specific types like 'Modify Test Cases', 'Overload Comparison Operators', 'Record Extra States', and 'Special Casing'. It measures these by checking if a model passes an 'impossible' task where passing implies a shortcut.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 1, chunk 0
+        quote: systematically measures LLM agents’ propensity to exploit test cases
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 5, chunk 1
+        quote: identify four distinct cheating strategies that models employ when faced with impossible tasks
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: unmet
+    rationale: The excerpts do not document excluded risks or specific deployment assumptions such as language or turn limits as a boundary of the benchmark's coverage.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: unmet
+    rationale: There is no statement acknowledging that a good score does not guarantee safety against untested or emergent risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark is compared to LiveCodeBench and SWE-bench, stating that it creates 'impossible' variants of these to distinguish shortcuts from genuine solutions, which standard benchmarks cannot do.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 1, chunk 2
+        quote: As standard benchmarks typically cannot distinguish such specification-violating shortcuts from genuine solutions
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: met
+    rationale: The benchmark uses LM-generated evaluation items (mutations) to create the impossible tasks used to discover cheating risks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 13, chunk 2
+        quote: automatically create impossible tasks by mutating the test cases of existing benchmarks
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: While a GitHub repository exists, there is no documented process for how outside contributions are integrated and credited.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The excerpts do not describe a process or cadence for how and when new risks will be incorporated into the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: met
+    rationale: The benchmark includes a 'Full Scaffold' where the agent interacts with a sandbox via tool calls in an interactive process.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 2
+        quote: Agent interacts with sandbox via tool calls
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 24, chunk 0
+        quote: This is an interactive process where you will think and issue ONE command, see its result, then think and issue your next command.
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: The benchmark does not discuss or test distribution shift as a safety-critical issue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: The benchmark does not document annotator selection, disagreement patterns, or demographics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: There is no mention of contamination detection or a stated temporal validity period for the evaluation sets.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results as 'cheating rates'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 2
+        quote: We display the cheating rates on   ImpossibleBench
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: unmet
+    rationale: The excerpts do not name specific factors limiting the generalization of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: The benchmark does not provide a severity scale or cite a source for harm weighting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not specify the semantics (intervals, power-law, etc.) of a severity scale.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: met
+    rationale: The benchmark reports 90% confidence intervals for cheating rates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 7, chunk 1
+        quote: together with 90% confidence intervals
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: unmet
+    rationale: While an LLM judge is used for classification, no inter-rater reliability statistic (like Cohen's kappa) is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: "The benchmark does not report score variance across all three required dimensions: random seeds, prompt rephrasings, and evaluator versions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin when extrapolating to deployment risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: met
+    rationale: The benchmark identifies cheating as the target construct and provides operational definitions for four specific strategies (Modify Test Cases, Overload Comparison Operators, Record Extra States, and Special-casing).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 5, chunk 1
+        quote: we identify four distinct cheating strategies that models employ when faced with impossible tasks, ranging from direct test manipulation to sophisticated state-based exploits.
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: unmet
+    rationale: The excerpts do not state whose values or judgments (e.g., specific experts or policy frameworks) inform the definition of cheating/harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The excerpts do not acknowledge any contested normative choices or value conflicts regarding the definition of cheating.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark states that scores on impossible tasks serve as a proxy for cheating propensity and relates this to the reliability of real-world LLM coding assistant deployments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 3
+        quote: the scores agents obtain on this benchmark can serve as a noiseless proxy for their cheating propensity
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: While system prompts are provided, there is no record of the access date, interface, or specific inference parameters (temperature, top-p) for the reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: The excerpts do not mention fixing or reporting random seeds for sampling, inference, or evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The judge model is mentioned (e.g., Claude Opus), but there are no versions, dates, or commit hashes provided for the judge model, scoring rubric, or annotation guidelines.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: A public GitHub repository is provided with a README containing installation and replication commands.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 2
+        quote: python demo.py replicate_lcb
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The prompts are sourced from existing benchmarks (LiveCodeBench, SWE-bench) and mutated; the benchmark reports a quality control process to validate these mutations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 0
+        quote: To reduce noise, we verify their validity by testing them against both the original patches from the base benchmarks and empty patches
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark argues that its setup (providing test access) mirrors real-world scenarios where agents iteratively refine solutions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 1
+        quote: mirroring competitive programming and real-world scenarios where agents iteratively refine solutions.
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: met
+    rationale: The benchmark includes a multi-turn interaction where agents can submit up to 10 times and receive feedback.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 1
+        quote: We allow up to 10 submissions per run with feedback about failed tests
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark uses existing benchmark datasets and synthetic mutations rather than in-the-wild data collection constrained by privacy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 19, chunk 0
+        quote: We source problems from the hard split of v6 release (April 2025) of LiveCodeBench
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: While a version is mentioned in setup.py, there is no stated update cycle tied to changes in risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that affected communities were consulted to assess the scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark explicitly describes testing models within different system contexts (minimal vs. full scaffolds).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 2
+        quote: "we construct two scaffolds: a minimal scaffold without tools and a more complex full scaffold with multiple tools"
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

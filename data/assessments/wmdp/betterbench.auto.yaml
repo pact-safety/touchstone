@@ -1,0 +1,454 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: wmdp
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v7
+  repo_commit: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/wmdp/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2403.03218v7
+      ref: v7
+      sha256: 0f9e262077b9de1ede69f1e049d9d397340173a18847aa5ad06aa65a3a2c4137
+      chars: 106883
+    - kind: repo
+      url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+      ref: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+      sha256: 5b9f7623b08bde37498bc7f876403cf49c0c5bdbe45717ffd26a864afcd3b1db
+      chars: 7077
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark is defined as a dataset of multiple-choice questions measuring hazardous capabilities in biosecurity, cybersecurity, and chemistry."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The text explains that hazardous capabilities are translated into benchmark tasks by developing questions that are precursors, neighbors, and components of real-world hazardous information.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 0
+        quote: |-
+          To benchmark hazardous capabilities without
+          releasing sensitive information, we develop questions that are precursors, neighbors, and components
+          of real-world hazardous information.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text describes how the benchmark helps mitigate existential risks by reducing the proliferation of bioweapons and cyber weapons.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 3
+        quote: |-
+          This work aims to mitigate existential risks posed by the malicious use of LLMs in
+          developing bioweapons and cyber weapons.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The text mentions that low scores likely indicate a lack of knowledge needed for malicious use and suggests using scores as risk markers for further evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 0
+        quote: |-
+          Because WMDP measures knowledge of hazardous topics, models with a low score on WMDP
+          likely lack the knowledge needed to help with malicious use.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: The questions were written and checked by academics and technical consultants in biosecurity, cybersecurity, and chemistry.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: |-
+          Our questions are written by academics and technical consultants in biosecurity,
+          cybersecurity, and chemistry.
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 10
+    rationale: The benchmark describes a threat model involving 'malicious actors' and 'adversaries' as the personas using the knowledge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: use the models to inform questions that an adversary might encounter when developing attack capabilities.
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature, specifically mentioning the use of open-access papers and historical bioweapons data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 1
+        quote: |-
+          many questions that were
+          developed were drawn from open-access papers
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The choice of multiple-choice questions is justified as a common paradigm to test knowledge in language models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 0
+        quote: Multiple-choice is a common paradigm to test knowledge in language models
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 10
+    rationale: The benchmark provides a random performance floor (25%).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 10, chunk 3
+        quote: |-
+          WMDP
+          and MMLU scores are percents; 25% is random.
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: The provided excerpts do not mention a human performance level for the benchmark tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: The random performance level is explicitly stated as 25%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 10, chunk 3
+        quote: |-
+          WMDP
+          and MMLU scores are percents; 25% is random.
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses an automatic measure (QA accuracy) and validates it as a proxy for hazardous knowledge using a private set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 13, chunk 2
+        quote: |-
+          This
+          result suggests WMDP is a reasonable proxy
+          for especially hazardous knowledge.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains that unlike other unlearning benchmarks that use specific samples or artificial sets, WMDP uses real-world information that enables malicious use.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 4, chunk 2
+        quote: |-
+          In
+          contrast, WMDP benchmarks on real-world information that can enable malicious use.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 10
+    rationale: The text mentions that language models are sensitive to prompting schemes and uses a standardized harness to address this.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 11, chunk 1
+        quote: |-
+          As language models are sensitive to the prompting scheme (Sclar et al., 2023), we use 
+          lm-evaluation-harness v0.4.2   (Gao et al., 2021) to standardize prompts.
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The authors explicitly state that they release the benchmark and code publicly.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 1, chunk 2
+        quote: We release our benchmark and code publicly at   https://wmdp . ai . ∗
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark is described as a publicly released dataset of multiple-choice questions available for download.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+        locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 0
+        quote: The WMDP datasets are available for download from multiple sources.
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 10
+    rationale: The paper mentions evaluating GPT-4 (an API model) and discusses an 'API-access threat model', though it notes GPT-4 was evaluated manually.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: for GPT-4, we manually evaluated with the same prompt template.
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The benchmark uses lm-evaluation-harness for HuggingFace models, which are typically local/open-weight models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: For all HuggingFace models, we use   lm-evaluation-harness v0.4.2
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 5
+    rationale: The paper mentions that memorized training data may affect results, but does not include a specific task to identify if a model was trained on the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 1
+        quote: models that have memorized key biological concepts from the training data may be equally likely to do well
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 10
+    rationale: The repository provides Jupyter notebooks for running the RMU method with reproducible hyperparameters, though a general replication script for all benchmark results is not explicitly highlighted.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+        locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 3
+        quote: Our unlearned models with reproducible hyperparameters on WMDP-Bio and WMDP-Cyber... are available at
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The provided excerpts show results in tables but do not report statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: The excerpts discuss filtering sensitive information to avoid release, but do not assess the need for warnings for harmful content during evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or CI/CD implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A requirements.txt file is listed in the repository file listing.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+        locator: centerforaisafety/wmdp@c0b6c12bb0de:FILE LISTING, chunk 0
+        quote: requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: No quick-start guide or demo is mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The excerpts do not provide the content of the code files to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No specific code documentation (e.g., API docs) is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 10
+    rationale: A paper is cited and linked, but the excerpts do not explicitly state it was accepted at a peer-reviewed venue.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+        locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 0
+        quote: See our [paper](https://arxiv.org/abs/2403.03218)
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the process of developing questions as precursors, neighbors, and components of hazardous information.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 0
+        quote: To benchmark hazardous capabilities without releasing sensitive information, we develop questions that are precursors, neighbors, and components of real-world hazardous information.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the rationale for the test tasks based on threat models for biosecurity and cybersecurity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 6, chunk 3
+        quote: To measure the model’s reconnaissance abilities, we sourced questions involving foundational reconnaissance phase concepts and specific techniques to uncover information about a target.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper contains a dedicated 'Limitations' section describing the constraints of the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 29, chunk 0
+        quote: |-
+          D.1   Limitations
+          WMDP consists of four-way multiple choice questions, potentially neglecting hazards that only surface in larger end-to-end evaluations.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The prompt design process is documented, including the use of the lm-evaluation-harness zero-shot format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: We use the default   lm-evaluation-harness   zero-shot format for MMLU and WMDP
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric is documented as taking the top logit between four choices.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 24, chunk 0
+        quote: taking the top logit between A, B, C, and D as the answer choice.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes a LICENSE file specifying the MIT License."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: No standardized metadata (e.g., DataCards) is shown in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents data sources, such as PubMed for Bio and GitHub for Cyber.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 22, chunk 2
+        quote: The forget and retain corpora are a collection of papers from PubMed.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper documents the process of expunging sensitive information to comply with export controls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 3, chunk 0
+        quote: we follow a stringent process to expunge sensitive information from WMDP in compliance with U.S. export control requirements
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The excerpts do not describe a data annotation process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not mention any checks performed on code usability within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: No maintained feedback channel for users is mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: While many authors are listed in the BibTeX entry, no specific contact person for the benchmark is listed.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

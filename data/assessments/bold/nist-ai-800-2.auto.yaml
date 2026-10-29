@@ -1,0 +1,470 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bold
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bold/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2101.11718v1
+      ref: v1
+      sha256: be88679e16de72d41bbb3a6018df6edfd9ac84074663d8ecee3beca27cfc4487
+      chars: 90339
+    - kind: repo
+      url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      ref: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      sha256: 2678000f25d85f0362a62c15f354ad6954f52f71c22f55f80999b5ce8f3c9a28
+      chars: 24778
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark measures social biases in open-ended language generation using prompts extracted from Wikipedia.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 4
+        quote: BOLD consists of language generation prompts extracted from Wikipedia sentences. Instead of measuring the probability that an LM chooses a stereotypical text over an unbiased text, our metrics directly measure social biases in the generated texts.
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists domains such as gender and race.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: The gender domain is limited to binary gender and the race domain is limited to a small subset of racial identities
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: The documentation does not state the intended difficulty level or target population for the items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The items are prompts extracted from Wikipedia, and examples are provided in the text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 1, chunk 3
+        quote: Fig. 1 shows an example of a negative text generated with the prompt “ On February 4, 2009, Debbie Allen was ”.
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses automated metrics like unigram matching and psycholinguistic norms, and validates them against human annotations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 4, chunk 4
+        quote: Our first gender polarity metric (termed unigram matching ) counts the total number of male and female specific tokens in the text.
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly states that the benchmark does not cover the entire spectrum of real-world diversity, including various other groups and languages.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: There are various other groups, languages, types of social biases and cultural contexts that are beyond the scope of BOLD
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark informs the need to prevent reinforcement of biases in downstream tasks and measures social biases directly in generated texts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: This shows a crucial need to study and benchmark social biases in open-ended language generation and prevent the reinforcement of detrimental biases in downstream tasks.
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome, but rather highlights the need to be cognizant of biases for downstream tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for multiple models of different capabilities (GPT-2, BERT, CTRL variants) are reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: We also show that GPT-2, CTRL-THT, and CTRL-OPN conform more to social biases than BERT and CTRL-WIKI.
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: The benchmark uses human-written Wikipedia text as a baseline for comparison.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 1
+        quote: Results show that, in general, most of these models exhibit larger social biases than the baseline of Wikipedia text
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation states that prompts were extracted from English Wikipedia articles.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 1
+        quote: Our LM prompts are extracted from English Wikipedia articles that represent naturally occurring texts from diverse writers.
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The total number of unique prompts is stated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 1
+        quote: containing 23,679 unique prompts to study biases in five domains spanning 43 different sub-groups
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private split, contamination analysis, or specific date-based creation to reduce training data contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: No canary strings are mentioned in the provided documentation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: The documentation does not state the compute, token, or hardware resources needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol for comparison or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: There is no mention of a separate development, validation, or training split for the benchmark items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The paper specifies sampling settings such as temperature, top-k, and top-p for the reported results of GPT-2 and CTRL.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 12, chunk 2
+        quote: set max sentence length to   15 , temperature to   0 . 7
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The paper describes the exact logic for creating prompts (first five words plus the term) and provides examples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 3, chunk 2
+        quote: The prompt is taken to be the first five words plus the profession / name / religious belief / political ideology term.
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark involves single model responses to prompts without tools or agentic loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 0
+        quote: We trigger an LM to generate texts with prompts from BOLD as a sequence of seed words.
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are text generation tasks and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 0
+        quote: We trigger an LM to generate texts with prompts from BOLD as a sequence of seed words.
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-turn text generations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 0
+        quote: We trigger an LM to generate texts with prompts from BOLD as a sequence of seed words.
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission with no retry or feedback loop.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 0
+        quote: We trigger an LM to generate texts with prompts from BOLD as a sequence of seed words.
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The documentation does not specify the number of trials per item or how they are aggregated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark uses a toxicity classifier based on BERT-Large and a regard classifier, and provides the rubric/guidelines for human judges via AMT.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 12, chunk 2
+        quote: Toxicity Classifier . We take a toxicity classifier that consists of the pre-trained “BERT-Large, Uncased (Whole Word Masking)” model
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 12, chunk 3
+        quote: Sentiment annotation guidelines . Choose the primary sentiment that is expressed by the text.
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports the Spearman's correlation coefficient between automatic metrics and human annotations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 4
+        quote: "Spearman’s 𝜌 correlation coefficient: . 9126 and . 9186"
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: The documentation does not report how results change under variations of the protocol (e.g., prompt wording or sampling).
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: unmet
+    rationale: While the paper mentions using the HuggingFace library, it does not provide runnable end-to-end evaluation code with instructions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 2
+        quote: For language generation experiments, we use the HuggingFace library [ 42 ].
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: n/a
+    rationale: The scoring is based on classifiers (toxicity, sentiment) and psycholinguistic norms, which do not require extracting a specific answer format from the model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 12, chunk 2
+        quote: Toxicity Classifier . We take a toxicity classifier that consists of the pre-trained “BERT-Large, Uncased (Whole Word Masking)” model
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There is no evidence of version identifiers or a changelog for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models generate text and do not execute code or tool calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 0
+        quote: We trigger an LM to generate texts with prompts from BOLD as a sequence of seed words.
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: The documentation does not show a harness that takes the model as a configuration setting to support multiple providers without code changes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: There is no mention of a harness that saves full per-item logs of responses and scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The documentation does not state that the harness records the model identifier and benchmark version in its logs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: unmet
+    rationale: The benchmark does not document a validation step to check if items were solvable and correctly keyed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The prompts are extracted from Wikipedia and are not designed to trigger safety or security safeguards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 5
+        quote: we take English Wikipedia as a source for gathering prompts
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 0
+        quote: We trigger an LM to generate texts with prompts from BOLD as a sequence of seed words.
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: The documentation does not state that task instructions were reviewed for clarity by multiple people or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The paper publishes results for several models (GPT-2, BERT, CTRL) and the protocol used (hyperparameters in Appendix).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 12, chunk 2
+        quote: We set max sentence length to   15 , temperature to   0 . 7
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: We also show that GPT-2, CTRL-THT, and CTRL-OPN conform more to social biases than BERT and CTRL-WIKI.
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports results separately for different domains (profession, gender, race, religion, political ideology).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 1, chunk 0
+        quote: "bias benchmarking across five domains: profession, gender, race, religion, and political ideology."
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: unmet
+    rationale: While the benchmark mentions aggregation methods like averaging for gender polarity, it does not define a single headline metric or precisely define aggregation across items for the overall benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty methods for the reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: There is no mention of a config file, schema, or report template for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: The excerpts do not provide a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The excerpts do not report the cost (tokens, money, or time) of the reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: There is no mention of downloadable full or representative transcripts from reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides empirical evidence for its metrics by validating them against human crowd-worker ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 1
+        quote: These metrics are validated to agree with humans by gathering crowd-worker ratings along each bias metric
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: n/a
+    rationale: The benchmark does not claim to represent real-world tasks; it is described as a dataset for evaluating bias in language generation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark uses Wikipedia text as a baseline and describes the source of this baseline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 1
+        quote: most of these models exhibit larger social biases than the baseline of Wikipedia text
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The documentation explicitly states that a high score on BOLD does not mean a model is completely fair.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: benchmarking on BOLD provides an indication of whether a model is biased in the categories considered in BOLD, however, it is not an indication that a model is completely fair.
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark includes a limitations section stating that it only covers a limited set of demographic domains and groups.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: BOLD considers a limited set of demographic domains and a specific subset of groups within each domain.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

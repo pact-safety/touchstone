@@ -1,0 +1,350 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentbench
+standard: abc
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: d1e4a10db08c87075c78972e48ecc182be03e2d5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentbench/abc/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.03688v3
+      ref: v3
+      sha256: 7cd79af6c52326b66ffb8a091846a2500987cb0fb0b82ef9eee095868080c8e6
+      chars: 195183
+    - kind: repo
+      url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+      ref: d1e4a10db08c87075c78972e48ecc182be03e2d5
+      sha256: 38676ac447342263b64538034b78c1a541f2759db9637e751b24ae760546faa0
+      chars: 73189
+  excerpt_chars: 40000
+verdicts:
+  O.a.1:
+    value: met
+    rationale: The benchmark documents that for single number answers, equivalent representations like '5.0' and '+5' are accepted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 25, chunk 0
+        quote: If the answer is a single number, all equivalent representations are accepted (e.g., 5, "5.0", ’+5’ are considered identical).
+    by: model
+    quotes_verified: true
+  O.a.2:
+    value: unmet
+    rationale: There is no documentation stating that extra words around a correct answer are ignored or do not cause failure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.3:
+    value: unmet
+    rationale: The excerpts do not provide evidence that an answer negating the ground truth is specifically scored as incorrect.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.4:
+    value: unmet
+    rationale: There is no evidence that listing all possible answers is prevented from scoring as correct.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.5:
+    value: unmet
+    rationale: The excerpts do not show that generic guesses are tested or proven to score incorrect for every item.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.b.1:
+    value: unmet
+    rationale: While human validation is mentioned for the LTP system, the required reporting of judge accuracy, self-consistency, and human agreement is not present.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.b.2:
+    value: unmet
+    rationale: No adversarial input results or specific judge defenses (like injection filters) are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.c.1:
+    value: met
+    rationale: The benchmark documents a cross-verification step for each evaluation sample to ensure correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 22, chunk 1
+        quote: Finally, we conduct a cross verification for each evaluation sample to make sure it’s correct.
+    by: model
+    quotes_verified: true
+  O.c.2:
+    value: unmet
+    rationale: No objective metrics for test-suite quality, such as code coverage, are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.1:
+    value: unmet
+    rationale: Fuzz testing is not mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.2:
+    value: unmet
+    rationale: Fuzz testing is not mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.3:
+    value: unmet
+    rationale: Fuzz testing is not mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.1:
+    value: unmet
+    rationale: No coverage figures or lists of exercised components for end-to-end testing are provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.2:
+    value: unmet
+    rationale: There is no evidence showing that tests give the same result on repeat runs to prevent flakiness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.1:
+    value: unmet
+    rationale: The excerpts do not show that valid end states are enumerated or checked via a goal predicate for state matching.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.2:
+    value: unmet
+    rationale: There is no evidence that scoring checks if unrelated states were damaged.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.3:
+    value: unmet
+    rationale: No no-op or single-write baseline is shown to fail the state check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.g.1:
+    value: met
+    rationale: The prompt for the database task explicitly specifies the required JSON format for the final answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 26, chunk 0
+        quote: 'Final   Answer:   ["ANSWER1",   "ANSWER2",   ...]'
+    by: model
+    quotes_verified: true
+  O.g.2:
+    value: unmet
+    rationale: The answer-space size and resulting chance success rate are not stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.h.1:
+    value: unmet
+    rationale: No exploit attempts against a continuous quality metric and their results are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.1:
+    value: unmet
+    rationale: The provided excerpts do not list versions for tools or packages, nor do they mention a lockfile.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.2:
+    value: unmet
+    rationale: While the harness mentions an '--auto-retry' parameter, it does not document how it handles rate limits for external API tools.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:docs/Entrance_en.md, chunk 2
+        quote: "- `[--auto-retry]`: Auto retry failed samples."
+    by: model
+    quotes_verified: true
+  T.3:
+    value: unmet
+    rationale: There is no documentation stating that API outages are detected to stop the run or exclude the task.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.4:
+    value: met
+    rationale: The framework ensures that each worker is responsible for a single test case, and the use of Docker images for complex environments supports fresh starts.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:docs/Introduction_en.md, chunk 12
+        quote: Each worker is responsible for a single test case
+    by: model
+    quotes_verified: true
+  T.5:
+    value: unmet
+    rationale: The excerpts do not provide container or harness configurations proving that answers and tests are absent from the agent's filesystem.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.6:
+    value: met
+    rationale: The benchmark uses Docker images to encapsulate tasks with complex environments, which freezes the environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 6, chunk 2
+        quote: we encapsulate tasks with complex environments into Docker images.
+    by: model
+    quotes_verified: true
+  T.7:
+    value: met
+    rationale: The documentation states that a cross verification was conducted for each evaluation sample to ensure correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 22, chunk 1
+        quote: Finally, we conduct a cross verification for each evaluation sample to make sure it’s correct.
+    by: model
+    quotes_verified: true
+  T.8:
+    value: met
+    rationale: The benchmark includes reference solutions (bash scripts) that are verified to produce correct results when executed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 21, chunk 2
+        quote: The bash scripts that serve as reference solutions. In other words, if executing them in the interaction, results are correct.
+    by: model
+    quotes_verified: true
+  T.9:
+    value: unmet
+    rationale: While reference scripts exist for some tasks (OS), there is no evidence of an automated Oracle solver that ships with the benchmark and solves all challenges.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.10:
+    value: unmet
+    rationale: There is no documentation of an exploit audit of the implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.1:
+    value: met
+    rationale: The text explicitly states that all datasets are publicly available.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 6, chunk 1
+        quote: All datasets are publicly available.
+    by: model
+    quotes_verified: true
+  R.2:
+    value: met
+    rationale: The benchmark provides a unified evaluation toolkit and a framework with a Client, Agent Server, and Task Server.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 2, chunk 4
+        quote: we develop a unified evaluation toolkit for LLMs to operate on diverse customized agent tasks
+    by: model
+    quotes_verified: true
+  R.3:
+    value: unmet
+    rationale: While Dev and Test splits are mentioned, there is no description of a private held-out split, rotating split, or canary string used to prevent contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.4:
+    value: unmet
+    rationale: There is no documented versioned update or dated update schedule to avoid overfitting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.5:
+    value: met
+    rationale: The benchmark states it uses KG to assess decision-making abilities and uses answer F1 as the metric.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:docs/Introduction_en.md, chunk 2
+        quote: we propose KG as a representative testing ground to assess the decision-making abilities of AI agents. We adopt question answering as the basic task formulation and consequently the answer F1 as the metric.
+    by: model
+    quotes_verified: true
+  R.6:
+    value: met
+    rationale: The benchmark explicitly states it evaluates LLMs acting as agents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 1, chunk 0
+        quote: a multi-dimensional benchmark that consists of 8 distinct environments to assess LLM-as-Agent’s reasoning and decision-making abilities.
+    by: model
+    quotes_verified: true
+  R.7:
+    value: unmet
+    rationale: While quality control (unit tests) is mentioned, there is no recorded correction channel like a changelog or errata with a specific fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.8:
+    value: unmet
+    rationale: The excerpts do not name specific unavoidable flaws and their likely direction of effect on results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.9:
+    value: unmet
+    rationale: There is no numerical estimation of the impact of a known unavoidable flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.10:
+    value: unmet
+    rationale: The results tables mentioned do not include confidence intervals or significance tests for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.11:
+    value: unmet
+    rationale: There are no stated caveats attached to named flaws guiding which conclusions should not be drawn.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.12:
+    value: unmet
+    rationale: No human or expert baseline scores are reported; only LLM and heuristic baselines are mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.13:
+    value: met
+    rationale: A random action strategy is used as a baseline for the Digital Card Game.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 30, chunk 1
+        quote: The first strategy is a simply random action from all available action spaces.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

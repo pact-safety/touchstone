@@ -1,0 +1,346 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mask
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mask/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.03750v3
+      ref: v3
+      sha256: 9bcec5f619dcb60b733cce61f4e2ed46d54e87fd7912498c395b8b59e617d42d
+      chars: 72271
+    - kind: repo
+      url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      ref: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      sha256: 06e7088a378d52ba4ae9eabd3f465b5ecb18e46a92b427dbf8ccfb4e8ed618c2
+      chars: 3382
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark evaluates 'lies of commission' (specifically misinformation and fabricated statistics) and measures them using the proportion of examples on which a model lies (P(Lie)).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 0
+        quote: a large-scale public benchmark for measuring the propensity of AIs to engage in lies of commission
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 0
+        quote: span misinformation, fabricated statistics, and other real-world deception scenarios
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 0
+        quote: Model P ( Lie ) ( ↓ )
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark documents that it does not cover 'deception from withholding true information (omission)' and assumes 'English textual prompts'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 2
+        quote: It does not measure deception from withholding true information (omission)
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: the 1 , 500 examples focus on English textual prompts
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: met
+    rationale: The benchmark states that reported honesty rates should be interpreted as worst-case propensities rather than deployment-time performance, acknowledging it doesn't address interactive mitigations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: reported honesty rates should be interpreted as worst-case propensities rather than deployment-time performance
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark compares itself to TruthfulQA, noting that TruthfulQA measures accuracy (beliefs matching ground truth) while MASK measures honesty (statements matching beliefs).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 3, chunk 2
+        quote: while initial performance in TruthfulQA initially decreased as model size increased
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: unmet
+    rationale: The excerpts describe how the dataset was collected (human and automated), but do not describe a mechanism for discovering novel risks outside existing categories.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: While a GitHub link is provided, there is no documented process for how outside contributions are integrated and credited.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The excerpts do not state a process or cadence for how and when new risks will be incorporated into the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The benchmark explicitly states that it tests models in isolation and does not address multi-step planning or collusion between agents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: may miss other real-world incentives to deceive, such as multi-step planning or collusion between agents
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: There is no mention of distribution shift being tested or framed as a safety concern.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: The benchmark mentions using human annotators and FTEs for quality control, but does not document annotator selection, disagreement patterns, or demographics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: The benchmark mentions a private hold-out set to track overfitting, but does not describe a contamination check or state the temporal validity/retirement date of the set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 5, chunk 0
+        quote: We also maintain a separate, held-out set of 500 examples to track potential overfitting
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results as proportions and percentages of responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 7, chunk 0
+        quote: Proportion of Responses (%)
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark explicitly names factors limiting generalization, such as the focus on English textual prompts and short factual propositions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: the 1 , 500 examples focus on English textual prompts and short factual propositions, so the results may not generalize
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: The excerpts do not provide a severity scale or cite a source for harm weighting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not state whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: Confidence intervals, standard errors, or worst-case bounds are not reported for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: met
+    rationale: The benchmark reports the agreement percentage between the LLM judge and human annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves 86 . 4% agreement with human annotators
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across all three required dimensions (random seeds, prompt rephrasings, and evaluator versions).
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin when extrapolating to deployment risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: met
+    rationale: The benchmark targets 'lies of commission' and provides an operational definition based on Mahon (2008).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 3, chunk 3
+        quote: We follow established definitions of lying by commission, which requires (1) making a statement known (or believed) to be false, and (2) intending the receiver to accept the statement as true (Mahon, 2008).
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: unmet
+    rationale: The excerpts do not state whose values (experts, policy, or communities) inform the judgments of harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The excerpts do not name any contested value choices in the harm definitions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark explains that it measures the propensity to lie (the proxy) to understand model lying and its relation to safety-critical contexts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 0
+        quote: Our MASK evaluation verifies consistency between statements and beliefs, creating a valid construct for understanding model lying.
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: The excerpts do not record the access date or specific inference parameters (temperature, top-p) for the reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing or reporting random seeds for data sampling, inference, or evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The judge model and scoring rubric are mentioned, but they do not carry a version, date, or commit hash in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: A public code repository is provided with a README and implementation files to enable replication.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+        locator: centerforaisafety/mask@25e0b1201e6c:README.md, chunk 0
+        quote: This repository contains the implementation for MASK (Model Alignment between Statements and Knowledge)
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The prompts are stated to be manually collected by humans, and a filtering process is described as validation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 1
+        quote: we manually collected lie elicitation prompts for all archetypes.
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark argues that the scenarios are realistic and explicitly states limitations regarding their generalizability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: the 1 , 500 examples focus on English textual prompts and short factual propositions, so the results may not generalize to multimodal inputs
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: unmet
+    rationale: The benchmark focuses on short factual propositions and explicitly states it does not generalize to longer dialogues.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: the 1 , 500 examples focus on English textual prompts and short factual propositions, so the results may not generalize to multimodal inputs, longer dialogues
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark uses human-collected and synthetic data, not in-the-wild data constrained by privacy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 1
+        quote: we manually collected lie elicitation prompts for all archetypes.
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: While it mentions an iteration process for design, it does not state a versioned update cycle tied to changes in risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that affected communities were consulted to assess the scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark explicitly states that it tests models in isolation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: because MASK tests models in isolation, it does not address interactive mitigations
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: met
+    rationale: The benchmark states that reported honesty rates are worst-case propensities rather than deployment-time performance and mentions the need for interactive mitigations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 1
+        quote: reported honesty rates should be interpreted as worst-case propensities rather than deployment-time performance.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

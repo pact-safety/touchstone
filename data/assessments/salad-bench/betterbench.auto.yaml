@@ -1,0 +1,421 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: salad-bench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/salad-bench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.05044v4
+      ref: v4
+      sha256: 24765d9ad04f6822f7c85de8cdd8775f5dab28fafdcabbb7fa19943d4cc24385
+      chars: 136348
+    - kind: repo
+      url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      ref: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      sha256: 9b9ea84b2f0c812864d0268c8f92b6afb75ac1f820b08573ae31c0094a4a451d
+      chars: 19448
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested capability as LLM safety and provides a detailed taxonomy of safety domains and tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 14, chunk 2
+        quote: In this section, we give detailed definitions of our taxonomy across safety domains and tasks.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark describes how safety capabilities translate into tasks via a hierarchical taxonomy of domains, tasks, and categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 2, chunk 2
+        quote: SALAD-Bench introduces a structured hierarchy with three levels, comprising 6 domains, 16 tasks, and 66 categories
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that safety benchmarks are crucial for identifying potential harms in LLMs to improve security and safety.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 9, chunk 3
+        quote: Safety benchmarks are crucial for identifying potential harms in LLMs. Our research aims to improve LLM security and safety
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how the benchmark scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: Human annotators and paper authors (experts) were involved in verification and labeling.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 4, chunk 0
+        quote: three human annotators are involved by labeling and cross-checking to obtain convincing human labels as ground-truth.
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature and previous works on jailbreaking and safety filters.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 13, chunk 4
+        quote: Another innovative approach is proposed in Kumar et al. (2023), which offers certifiable robustness
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The benchmark uses metrics like Accuracy, ASR, and F1, and compares its evaluator (MD-Judge) against others, though a detailed 'informed choice' process for the metric itself is not fully detailed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 7, chunk 2
+        quote: Evaluation results of F1 scores are detailed in Table 3. The comprehensive outcomes reveal that MD-Judge markedly surpasses its counterparts
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: There is no mention of metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: The excerpts do not provide a human performance level baseline for the benchmark tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: The excerpts do not provide a random performance level baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses a fine-tuned LLM-based evaluator (MD-Judge) and validates it against other evaluators and human labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 7, chunk 2
+        quote: Above promising results prove that our MD-Judge has reliable evaluation capability in safety aspects.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The paper explicitly explains the shortcomings of prior benchmarks (limited scope, human-reliance) and how SALAD-Bench differs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 2, chunk 2
+        quote: Considering limitations of existing benchmarks, we propose a challenging benchmark namely SALAD-Bench
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark addresses input sensitivity by creating attack-enhanced subsets to test robustness against adversarial prompts."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 10
+    rationale: The README provides installation instructions and a QuickStart code snippet for the evaluator, suggesting code is available, though a full evaluation script is not explicitly shown.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 4
+        quote: "pip install -e .  # install salad-bench"
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 10
+    rationale: The paper describes the data collection and generation mechanism (self-instructed via fine-tuned GPT-3.5), and the README mentions the benchmark contains 21k questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 3, chunk 2
+        quote: the fine-tuned GPT can be utilized for self-instructed data generation
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 10
+    rationale: The paper mentions measuring money cost from calling APIs for evaluators, implying API support, but does not explicitly state the benchmark supports model evaluation via API.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 18, chunk 2
+        quote: money cost from calling APIs
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 10
+    rationale: The paper mentions evaluating open-sourced models and following their chat templates, which typically implies local model support.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 6, chunk 2
+        quote: When generating from open-sourced models, we strictly follow its chat template
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a specific task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: No specific script to replicate the reported results is mentioned or provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The results are reported as scores (accuracy, F1, etc.), but there is no mention of statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (5): The paper mentions restricting access to authorized researchers to mitigate risks of sensitive content, but does not assess the need for warnings."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 10
+    rationale: The README provides a list of pip install commands for dependencies, which serves as an equivalent to a requirements file.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 4
+        quote: |-
+          pip install transformers==4.36.1
+          pip install ray
+          pip install flash-attn
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README contains a dedicated 'QuickStart' section with code examples.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 4
+        quote: <h2 id="quick-start">🚀 QuickStart</h2>
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code files to verify the presence of in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No specific code documentation (like API docs or docstrings) is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The README explicitly states that the benchmark was accepted to the Findings of ACL2024, a peer-reviewed venue."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the construction procedure, including taxonomy definition and data collection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 3, chunk 0
+        quote: In the following, we discuss the construction procedure.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (6 domains, 16 tasks, 66 categories) and the rationale for their structure.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 2, chunk 2
+        quote: SALAD-Bench introduces a structured hierarchy with three levels, comprising 6 domains, 16 tasks, and 66 categories
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions regarding normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper contains a dedicated 'Limitations' section detailing three main limitations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 9, chunk 3
+        quote: |-
+          7   Limitations 
+          This paper has three main limitations.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the data collection process, including sources and the use of self-instruction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 3, chunk 2
+        quote: |-
+          2.2   Data Collection
+          Collection of original questions.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper documents the evaluation metrics, specifically mentioning F1 scores for the MD-Judge evaluator.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 7, chunk 2
+        quote: Evaluation results of F1 scores are detailed in Table 3.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The repository includes a LICENSE file specifying the Apache License, Version 2.0.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:LICENSE, chunk 11
+        quote: Licensed under the Apache License, Version 2.0 (the "License")
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: The excerpts do not show the inclusion of standardized metadata (e.g., DataCards).
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper lists specific data sources (e.g., HH-harmless, Advbench) and the collection method.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 0
+        quote: "Table 9: Data source of base set in SALAD-Bench."
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper documents preprocessing steps such as deduplication using LSH and filtration using reward models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 3, chunk 3
+        quote: To tackle content duplication, we use the Locality-Sensitive Hashing algorithm
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper documents the annotation process, including the use of a shared excel sheet and human verification.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 1
+        quote: We use a shared excel sheet as a tool for collaborative annotation
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not provide an explanation of the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., ISO).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: While a list of authors is provided in the bibtex, no specific contact person (such as an email or designated maintainer) is listed in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

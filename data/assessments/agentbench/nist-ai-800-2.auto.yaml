@@ -1,0 +1,472 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentbench
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: d1e4a10db08c87075c78972e48ecc182be03e2d5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentbench/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.03688v3
+      ref: v3
+      sha256: 7cd79af6c52326b66ffb8a091846a2500987cb0fb0b82ef9eee095868080c8e6
+      chars: 195183
+    - kind: repo
+      url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+      ref: d1e4a10db08c87075c78972e48ecc182be03e2d5
+      sha256: 38676ac447342263b64538034b78c1a541f2759db9637e751b24ae760546faa0
+      chars: 73189
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark identifies the construct as reasoning and decision-making abilities and specifies the tasks as 8 distinct environments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 1, chunk 0
+        quote: a multi-dimensional benchmark that consists of 8 distinct environments to assess LLM-as-Agent’s reasoning and decision-making abilities
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists the specific task categories/environments it covers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 1, chunk 1
+        quote: Operating System Database Knowledge Graph Digital Card Game Lateral Thinking Puzzle House-holding Web Shopping Web Browsing
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: While it mentions 'varying difficulty levels' for one task and a formula for another, it does not state the overall intended difficulty or target population for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark describes the interactive format and provides a specific prompt example showing the 'Thought' and 'Action' structure.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 41, chunk 0
+        quote: |-
+          Your response should use the following format:
+          Thought:
+          I think ... Action:
+          click[something]}
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark describes multiple grading methods including F1 score, Exact Match, and execution-based success rates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 27, chunk 1
+        quote: We use F1 score as the primary evaluation metric in our study, calculated by comparing the model’s predicted answers to the gold standard answers.
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: unmet
+    rationale: The documentation does not explicitly name areas or task types that the construct implies but are not covered.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: unmet
+    rationale: The documentation does not name a specific intended use case or threat model, nor does it state if it measures the construct directly or via proxy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark makes no claim that its scores predict any downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for multiple models of different capabilities (e.g., GPT-4 vs OSS models) are reported, allowing for headroom analysis.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 8, chunk 1
+        quote: most OSS LLMs perform far poorer than API-based LLMs in A GENT B ENCH (Avg. 0.51 v.s. 2.32)
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: unmet
+    rationale: No baseline measure such as human performance or random chance is reported for the benchmark tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation states the sources of the items, including pre-existing datasets like ALFWorld and GrailQA."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: unmet
+    rationale: While some subset counts are mentioned (e.g., 1,663 questions for KG), the total item count for the full test set is not stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private test split, contamination analysis, or specific dates to reduce training-data contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: No canary strings are mentioned in the provided documentation or data excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation specifies hardware requirements (RAM) and the agent interfaces supported via the toolkit.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:README.md, chunk 3
+        quote: the `webshop` environment requires ~16GB of RAM to start
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation describes how scores are calculated for comparison, but it does not define a reference protocol specifying which settings may or may not vary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: There is no mention of a separate development, validation, or training split that does not overlap with the test items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies that temperature=0 was used for all tasks to ensure reproducibility.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 7, chunk 3
+        quote: To ensure reproducible results, we set temperature=0   (i.e., greedy decoding) in the inference on all tasks
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The paper provides verbatim prompt examples for different tasks (e.g., MySQL database and battle game).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 25, chunk 2
+        quote: |-
+          I   will   ask   you   a   question,   then   you   should   help   me   operate   a   MySQL
+          database   with   SQL   to   answer   the   question.
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: met
+    rationale: The benchmark specifies the use of docker containers and specific tools like SQL for DB tasks and bash for OS tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 25, chunk 0
+        quote: |-
+          a MySQL
+          database is initialized in a docker container
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: met
+    rationale: The benchmark provides docker build commands and docker-compose files to set up the execution environments.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:README.md, chunk 2
+        quote: docker build -t local-os/default -f ./data/os_interaction/res/dockerfiles/default data/os_interaction/res/dockerfiles
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: met
+    rationale: The benchmark specifies round limits as a stopping condition for several tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 22, chunk 2
+        quote: the model will be judged that it fail to solve the problem if exceeding round limit (8 by default)
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: unmet
+    rationale: While some tasks mention a number of attempts for format (e.g., 5 chances), the benchmark does not consistently state both the number of attempts and the feedback given for incorrect submissions across the board.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The documentation does not specify the number of trials per item or how they are aggregated (e.g., pass@k).
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark uses gpt-3.5-turbo as a judge for automatic evaluation in certain tasks and specifies the expected answer format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 34, chunk 2
+        quote: |-
+          In automatic evaluation, we limit the answer to be mostly "Yes", "No", or "Irrelevant", and
+          extract the answer from   gpt-3.5-turbo ’s responses.
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: unmet
+    rationale: There is no reported numerical agreement between the LLM judge and human graders or other judges.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: The provided excerpts do not report results under varied protocol settings to analyze sensitivity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a public repository with runnable code and instructions to start task workers and agents.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:README.md, chunk 7
+        quote: python -m src.client.agent_test --config configs/agents/api_agents.yaml --agent gpt-3.5-turbo-0613
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark specifies required output formats (e.g., JSON) and describes the checking pipeline for extracting/verifying answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 32, chunk 2
+        quote: return   your   move   with   following   JSON   format
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: The excerpts do not show a versioning system with a changelog or release notes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: met
+    rationale: The benchmark runs model-generated code/tool calls inside docker containers, and provides the dockerfiles.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 22, chunk 2
+        quote: |-
+          We create a docker container with a specific image, and we run an initialization
+          bash script
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: met
+    rationale: The harness supports different agents via configuration files (e.g., openai-chat.yaml).
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:README.md, chunk 7
+        quote: Fill in your OpenAI API Key at the correct location in `configs/agents/openai-chat.yaml`
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: The excerpts do not explicitly state that the harness saves full per-item logs containing transcripts and scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the output logs include the model identifier and benchmark version/commit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The benchmark describes a cross-verification step and unit tests to ensure samples are correct and solvable.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 22, chunk 1
+        quote: |-
+          Finally, we conduct a cross verification for each evaluation sample
+          to make sure it’s correct.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: unmet
+    rationale: The documentation does not specify how refusals are scored or reported separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: met
+    rationale: The benchmark uses isolated docker containers for execution, which acts as a design choice against cheating/contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 25, chunk 0
+        quote: |-
+          a MySQL
+          database is initialized in a docker container
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: There is no documentation stating that task instructions were reviewed for ambiguity by multiple people or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes results for various models (e.g., gpt-4) in Table 3, allowing evaluators to compare.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 7, chunk 0
+        quote: "Table 3: Test set (standard) results of A GENT B ENCH"
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports results categorized by validity analysis (Completed, Context Limit Exceeded, etc.).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 45, chunk 2
+        quote: we have demarcated the results into five distinct categories
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the overall score calculation by resizing task average scores and averaging them across tasks, and identifies the Success Rate as a measure of performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 7, chunk 4
+        quote: |-
+          we produce the overall score by first resizing each task’s average score to   1   across all the
+          models we evaluate and then averaging the scores across all tasks for each model
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 39, chunk 1
+        quote: We employ the overall   Success Rate   as a measure of model performance
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty methods for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: met
+    rationale: The benchmark provides configuration files (e.g., start_task.yaml and default.yaml) to capture protocol settings.
+    evidence:
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:docs/Entrance_en.md, chunk 1
+        quote: The configuration file for start_task is `configs/start_task.yaml`
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: THUDM/AgentBench@d1e4a10db08c:docs/Entrance_en.md, chunk 2
+        quote: Default is `configs/assignments/default.yaml`
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: There is no mention of a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The excerpts do not report tokens, money, or time per run for the reference results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: The excerpts do not provide downloadable full or representative transcripts of reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument by stating it defines environments based on real-world scenarios to test a wide array of capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 3, chunk 2
+        quote: It defines eight distinct environments of 3 types based on real-world scenarios, offering a practical testbed for LLMs’ wide array of capabilities
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: unmet
+    rationale: While the benchmark claims to be based on real-world scenarios, it does not state specific respects in which its conditions differ from real deployment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes the baseline game agent used in the digital card game scenario and the environment (Ubuntu 20.04) under which it was measured.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 30, chunk 2
+        quote: We initiated the modified game logic environment, which uses pybind to compile, and the baseline game agent under the Ubuntu 20.04 environment
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: unmet
+    rationale: The documentation does not name specific conclusions that the scores should not be taken to show.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents a limitation regarding the potential compromise of logical reasoning capacity and situational awareness due to code tuning.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 56, chunk 0
+        quote: the downside of code tuning appears to be a potential compromise in the model’s logical reasoning capacity and situational awareness
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

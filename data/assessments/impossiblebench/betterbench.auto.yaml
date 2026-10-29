@@ -1,0 +1,431 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: impossiblebench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/impossiblebench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2510.20270v1
+      ref: v1
+      sha256: 076fdc9d551f5e6646495bc14ac5c5857230c8939b2c64423b02651f66b3baae
+      chars: 64461
+    - kind: repo
+      url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      ref: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      sha256: 6b37396768388d86129c43c497a25560f7c6237e81c74276df6467f68097a492
+      chars: 9620
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested concept as the 'cheating rate', which is the pass rate on impossible tasks where passing implies a specification-violating shortcut.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 1, chunk 1
+        quote: |-
+          We measure an agent’s “cheating rate” as its pass rate
+          on these impossible tasks, where any pass necessarily implies a specification-violating
+          shortcut.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark translates the concept of cheating propensity into a task by creating 'impossible' versions of existing benchmarks where passing requires cheating.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 1, chunk 2
+        quote: |-
+          To measure and address such issues, we introduce   ImpossibleBench , a general and automated framework to
+          quantify an LLM’s propensity to exploit test cases. The core idea is simple: we create “impossible” versions
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text describes how cheating behavior affects the credibility of benchmark results and the reliability of real-world LLM coding assistant deployments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 1, chunk 2
+        quote: |-
+          Such behavior affects both
+          the credibility of benchmark results and the reliability of real-world LLM coding assistant deployments.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 15
+    rationale: The benchmark describes that scores serve as a noiseless proxy for cheating propensity to help design monitoring and mitigation strategies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 3
+        quote: |-
+          so the scores
+          agents obtain on this benchmark can serve as a noiseless proxy for their cheating propensity, upon which
+          one can design monitoring and mitigation strategies.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: The excerpts do not mention the involvement of domain experts in the design of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature on reward hacking and references existing benchmarks like SWE-bench and LiveCodeBench.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 13, chunk 1
+        quote: |-
+          Our studied scenario can be considered a form of in-context reward hacking, where the model interprets
+          passing the impossible tasks as the way to maximize its reward.
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The benchmark uses 'pass rate' as the metric for cheating rate, but the excerpts do not provide a detailed justification for why this specific metric was chosen over others.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 1, chunk 1
+        quote: |-
+          We measure an agent’s “cheating rate” as its pass rate
+          on these impossible tasks
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: The excerpts do not provide a human performance level for the impossible tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: The excerpts do not provide a random performance level.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 10
+    rationale: The benchmark uses an automated pipeline to detect cheating and evaluates the sensitivity of LLM-based monitors, though full validation details are limited.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 9, chunk 0
+        quote: |-
+          We find that monitors are
+          able to detect 86-89% of cheating attempts on   Impossible-LiveCodeBench
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains that standard benchmarks cannot distinguish specification-violating shortcuts from genuine solutions, whereas ImpossibleBench is designed specifically to quantify this.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 1, chunk 2
+        quote: |-
+          As standard benchmarks typically cannot distinguish such specification-violating shortcuts from genuine
+          solutions, researchers are forced to resort to costly manual inspection or unreliable LLM judgments.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 15
+    rationale: The benchmark explicitly addresses input sensitivity through prompt engineering, noting that behaviors are 'surprisingly sensitive to prompt details'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 6, chunk 1
+        quote: |-
+          we discovered that LLM
+          behaviors are surprisingly sensitive to prompt details, with looser guidance leading to significantly higher
+          cheating rates.
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository provides an official implementation and a setup.py for installation.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 0
+        quote: This repository provides the official Inspect AI implementation for ImpossibleBench evaluations.
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark datasets are explicitly stated to be available on HuggingFace.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 0
+        quote: The benchmark datasets are available on HuggingFace for use with any other evaluation framework
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The usage examples show evaluation of models via API (e.g., openai/gpt-4o and anthropic/claude-3-5-sonnet).
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 1
+        quote: eval(task, model="openai/gpt-4o")
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 0
+    rationale: The excerpts do not mention support for local models; only API-based models are shown in examples.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The benchmark focuses on reward hacking/cheating, not on identifying if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The README provides specific bash commands to replicate the experiments from the paper.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 2
+        quote: python demo.py replicate_lcb
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not mention statistical significance or uncertainty quantification of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no mention of assessing the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent (like CI/CD badges) is mentioned or shown in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A requirements.txt file is present in the repository listing.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:FILE LISTING, chunk 0
+        quote: requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a 'Quick Start' section with code examples for evaluation.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 1
+        quote: "### Quick Start"
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code files with in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No separate code documentation (e.g., API reference) is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 0
+    rationale: The paper is listed as a 'Preprint. Under review.', not accepted at a peer-reviewed venue.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 0
+        quote: Preprint. Under review.
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the process of mutating established benchmarks to create impossible variants.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 0
+        quote: We mutate coding benchmarks (e.g. SWE-bench) to obtain ImpossibleBench.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper explains that tasks are created by mutating tests to conflict with specifications to measure cheating propensity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 0
+        quote: create impossible variants by mutating test cases to conflict with natural language specifications
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 0
+    rationale: The excerpts do not explicitly document the limitations of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the prompt design process for mutation generation and cheating detection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 20, chunk 1
+        quote: G.1 Test Mutation Generation Prompts
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper defines the evaluation metric as the cheating rate.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 0
+        quote: The resulting cheating rate serves as a direct measure of an agent’s propensity to exploit shortcuts.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes a LICENSE file specifying the MIT License."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifiers (like DOIs) for the dataset are provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: The excerpts do not show the inclusion of standardized metadata.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents that data is sourced from LiveCodeBench and SWE-bench Verified.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 19, chunk 0
+        quote: We source problems from the hard split of v6 release (April 2025) of LiveCodeBench
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper documents the mutation and quality control steps used to preprocess the data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 0
+        quote: To reduce noise, we verify their validity by testing them against both the original patches
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The data is generated via mutation prompts, but a formal annotation process is not documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The representativeness of the data is not explicitly explained.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not provide evidence that code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: While the README mentions a bug found via GitHub issues, there is no evidence of a maintained feedback channel for users.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

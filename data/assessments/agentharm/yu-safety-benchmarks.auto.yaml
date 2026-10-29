@@ -1,0 +1,332 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentharm
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentharm/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.09024v3
+      ref: v3
+      sha256: 069d9f1f129c89ecea4342857223e99992754add9a15fc5aabdf03388d011adc
+      chars: 104704
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark names 11 harm categories (including fraud, cybercrime, and harassment) and specifies that it uses a 'Harm Score' based on predefined manually written conditions and a semantic LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 1, chunk 0
+        quote: covering 11 harm categories including fraud, cybercrime, and harassment
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 2
+        quote: The majority of our grading criteria checks are predefined, manually written conditions
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark documents a deployment assumption regarding language (English only) and a risk/scenario it does not cover (multi-turn attacks from the user).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 2
+        quote: The prompts are only in English
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 3
+        quote: We do not consider multi-turn attacks
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: unmet
+    rationale: The excerpts do not contain a statement acknowledging that a good score does not guarantee safety against untested or emergent risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark compares itself to prior benchmarks (e.g., those focusing on cybersecurity like Zhang et al., 2024a) and notes a difference in coverage (broader harm categories vs single domain).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 0
+        quote: Multiple recent benchmarks have prioritized more complex tasks within a single domain, such as cybersecurity (Zhang et al., 2024a; Anurin et al., 2024), instead of broader coverage of harm categories as in AgentHarm
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: unmet
+    rationale: The excerpts do not describe a concrete mechanism for discovering novel risks outside existing categories, such as fuzzing or red-teaming processes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: While the benchmark is released publicly on HuggingFace, there is no documented process for community contributions, integration, or credit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The excerpts do not state a process or cadence for how and when new risks will be incorporated into the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: met
+    rationale: The benchmark specifically evaluates LLM agents using multi-step tool calls and multi-turn interactions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 0
+        quote: AgentHarm evaluates the performance of LLM agents that have to execute multi-step tool calls to fulfill user requests
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: The excerpts do not discuss or test distribution shift as a safety-critical issue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: The benchmark mentions human reviewers, but does not document annotator selection, disagreement patterns, or demographics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: met
+    rationale: The benchmark implements contamination detection via a canary string and a private test set, though it does not specify a temporal validity date.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: we introduce a canary string in our repository that helps to filter them out from training sets
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: to prevent any possibility of dataset contamination, we collect an entirely private set
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results as 'harm score' and 'refusal rate' using percentages, which are proportions/rates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 7, chunk 3
+        quote: increasing its harm score from 48.4% to 72.7% and decreasing refusal rate from 48.9% to 13.6%
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark explicitly names the use of synthetic tools and the limitation of English-only prompts as factors affecting generalization.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 1
+        quote: Using synthetic tools makes these tasks easier and less realistic, which means they act as proxies for harm
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: met
+    rationale: The benchmark justifies its malicious behavior design by citing the terms of use of major LLM providers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: We have designed our tasks following the terms of use of major LLM providers, such as OpenAI and Anthropic.
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The excerpts do not specify the semantics of the severity scale (e.g., equal intervals or power-law).
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: While a standard deviation is mentioned for one model in a specific test, confidence intervals or worst-case bounds for main metrics are not reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: unmet
+    rationale: The benchmark uses LLM judges and human reviewers, but no inter-rater reliability statistic (like Cohen's kappa) is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: "The benchmark does not report score variance across all three required dimensions: random seeds, prompt rephrasings, and evaluator versions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin for deployment risk extrapolation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: unmet
+    rationale: The benchmark lists 11 harm categories but does not provide operational definitions for what counts as an instance of each.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: met
+    rationale: The benchmark states that tasks were designed following the terms of use of major LLM providers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: We have designed our tasks following the terms of use of major LLM providers, such as OpenAI and Anthropic.
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The excerpts do not name any contested value choices in the harm definitions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark explains that its complexity and realism provide a signal of the model's real misuse potential.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: We believe the complexity and realism of this benchmark are sufficient to provide a signal of the model’s real misuse potential
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: While temperature is mentioned, the access date and full interface details for all reported runs are not recorded in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing or reporting random seeds for data sampling or inference.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The judge model and rubrics are mentioned, but they do not carry specific versions, dates, or commit hashes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: The benchmark mentions a repository and the use of the Inspect framework for implementation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 3
+        quote: thanks to the parallelized implementation of the   Inspect   framework.
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: unmet
+    rationale: The prompts are described as 'manually written' (synthetic), but no validation of these synthetic prompts is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: All tasks are manually written and reviewed by separate human reviewers.
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark argues that its complexity and realism signal real misuse potential.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: We believe the complexity and realism of this benchmark are sufficient to provide a signal of the model’s real misuse potential
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: met
+    rationale: The benchmark explicitly requires and evaluates multi-turn agent interactions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 2
+        quote: continuing to require coherent multi-turn agent interactions.
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark uses synthetic tools and tasks rather than in-the-wild data collection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: opting to use a predefined tool set and not include real world interactions.
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: There is no stated update cycle tied to changes in risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that affected communities were consulted on the scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark specifies it uses a basic agentic setting with a simple while loop for tool execution.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: we consider a basic agentic setting, i.e., direct prompting with a simple while loop
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

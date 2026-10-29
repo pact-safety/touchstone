@@ -1,0 +1,132 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mlcommons-ai-safety-v0-5
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 79accfe1424a7994399154ae34fd960fe93a4259
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mlcommons-ai-safety-v0-5/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.12241v2
+      ref: v2
+      sha256: 948815b355a66f0403dbc0bdba07c085f1ab11bab2bc65a658b165a3add1ddcb
+      chars: 185943
+    - kind: repo
+      url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+      ref: 79accfe1424a7994399154ae34fd960fe93a4259
+      sha256: 784dbe1c8138124c20130b3f9e07d42713cf17bf95330a1ddb43f5db95eca9ed
+      chars: 56881
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain any reported scores, leaderboards, or saturation analysis to demonstrate headroom.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark implements a contamination defence by requiring publishers not to train on the dataset and by not publishing model responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 8, chunk 0
+        quote: Publishers do not train directly on or against the benchmark dataset
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 7, chunk 2
+        quote: We do not publish model responses to prompts
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: The excerpts explicitly state that the full dataset is 'heavily imbalanced', with 95.2% labelled as 'Not Unsafe'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 23, chunk 1
+        quote: The heavily imbalanced nature of the full dataset of 560,170 responses (of which only 533,125 or 95.2% are labelled Not Unsafe)
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark reports high inter-annotator agreement (Cohen's Kappa 0.79) and uses a majority vote to establish gold standard labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 23, chunk 0
+        quote: Inter-annotator agreement, as measured by the average Cohen’s Kappa score, is 0.79
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark identifies its purpose as serving model providers, integrators, and regulators to identify safety weaknesses, a purpose that remains current.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 6, chunk 1
+        quote: "The v0.5 AI Safety Benchmark has been developed for three key audiences: model providers, model integrators, and AI standards makers and regulators."
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The benchmark does not explicitly state its simplifying assumptions, and it acknowledges limitations regarding the lack of diversity in its template-based approach.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark's content is maintained through a structured taxonomy and templates, and there is no evidence provided that the labels or task meanings have shifted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 54, chunk 1
+        quote: each prompt contains a label for the hazard category, as well as subcategory and sub-subcategory where applicable.
+    by: model
+    quotes_verified: true
+  r1:
+    value: met
+    rationale: The benchmark uses an explicit version identifier (v0.5) and states that updates will be managed with precise version numbers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 7, chunk 1
+        quote: Updates will be managed and maintained through ModelGauge and ModelBench, with precise version numbers and process management.
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: While the benchmark mentions 'dataset deprecation conditions', it does not provide a plan for archiving artifacts (data and code) at end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: A contact method (MLCommons website) is provided, and the project is active as evidenced by the release of v0.5.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 55, chunk 0
+        quote: How can the owner/curator/manager of the dataset be contacted? Contact MLCommons via the website.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,120 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mmlu
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 4450500f923c49f1fb1dd3d99108a0bd9717b660
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mmlu/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2009.03300v3
+      ref: v3
+      sha256: 7172c1ed9e93c939e3919d339a15a3ca9cbfda291b77fe8dbe23d58106d61e3f
+      chars: 85242
+    - kind: repo
+      url: https://github.com/hendrycks/test/tree/4450500f923c49f1fb1dd3d99108a0bd9717b660
+      ref: 4450500f923c49f1fb1dd3d99108a0bd9717b660
+      sha256: eed8d915241a233d93ad42a15c1ac43e910fcf74495c82ec0ba568dffae66c8f
+      chars: 4473
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The paper states that the best models still require substantial improvements to reach expert-level accuracy, indicating clear headroom.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 1, chunk 0
+        quote: on every one of the 57 tasks, the best models still need substantial improvements before they can reach expert-level accuracy
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark provides a contamination analysis suggesting exact questions were not memorized and mentions a defense of providing question sources to reduce future leakage.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 14, chunk 0
+        quote: This suggests that our   exact   questions were not memorized.
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: The provided excerpts do not report the label/answer distribution or a trivial baseline score to demonstrate balance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts do not contain a cited audit, validation pass, or error analysis reporting a low error rate for the labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to measure how models learn and apply knowledge, and the text indicates that state-of-the-art models still struggle with this, meaning the task is not solved.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 8, chunk 3
+        quote: measures how well text models can learn and apply knowledge encountered during pretraining
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 2, chunk 1
+        quote: state-of-the-art models still struggle at learning and applying knowledge from pretraining
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The excerpts do not explicitly state the simplifying assumptions the benchmark relies on.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: There is no evidence in the excerpts that the benchmark's content is maintained or that an audit has checked for semantic drift.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not mention a version identifier or a system for recording changes per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides a list of named maintainers and an issue tracker (via the GitHub repository) for queries and contributions.
+    evidence:
+      - source: repo
+        url: https://github.com/hendrycks/test/tree/4450500f923c49f1fb1dd3d99108a0bd9717b660
+        locator: hendrycks/test@4450500f923c:README.md, chunk 0
+        quote: If you want to have your model added to the leaderboard, please reach out to us or submit a pull request.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,120 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: webarena
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dce04686a56253aefba7b18a4fa0937cf1dc987b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/webarena/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2307.13854v4
+      ref: v4
+      sha256: 6bfafefb66f717293e727f9604f112ebfa3489ab976fa28bcd8be90af3a55973
+      chars: 80125
+    - kind: repo
+      url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+      ref: dce04686a56253aefba7b18a4fa0937cf1dc987b
+      sha256: dc81380d8c504549f05bbf8023a510ce4bd463bf2004e4e6748d368274aaff44
+      chars: 24189
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The best reported model score (14.41%) is significantly lower than the human performance ceiling (78.24%), leaving clear headroom.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 1
+        quote: our best GPT-4-based agent only achieves an end-to-end task success rate of 14.41%, significantly lower than the human performance of 78.24%
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document a contamination defense such as a private test set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: There is no report of the label/answer distribution or a trivial baseline score to determine if the benchmark is free of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: While the paper describes an annotation process with double-checking and a third annotator for disagreements, it does not provide a cited audit or error analysis reporting a specific low error rate for the final released data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark serves the purpose of measuring agents on tasks humans care about, and the results show that state-of-the-art models (GPT-4) are far from solving it.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 1
+        quote: current state-of-the-art large language models are far from perfect performance in these real-life tasks
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on, which is required to determine if they are contradicted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark uses content extracted from real-world counterparts to preserve authenticity, and there is no evidence provided that the meaning of the tasks has shifted since creation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: The content populating these websites is extracted from their real-world counterparts, preserving the authenticity of the content served on each platform.
+    by: model
+    quotes_verified: true
+  r1:
+    value: met
+    rationale: The benchmark provides an explicit version identifier (v0.2.0) linked to a release tag in the README.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 3
+        quote: The current version ([v0.2.0](https://github.com/web-arena-x/webarena/releases/tag/v0.2.0))
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The project is hosted on GitHub (implied by the release link and README structure), which provides an issue tracker, and it has been active within the last 12 months (last update 12/20/2024).
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 2
+        quote: "[12/20/2024] Check out our new benchmark"
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

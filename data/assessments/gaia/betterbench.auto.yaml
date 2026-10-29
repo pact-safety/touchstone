@@ -1,0 +1,408 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gaia
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gaia/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.12983v1
+      ref: v1
+      sha256: ed50199799b28126a193080d35d4b629d544261f29ca71a97f4cdf49eca81c1b
+      chars: 83727
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the capabilities it tests, such as web browsing, multi-modality, coding, and diverse filetype reading.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 18, chunk 0
+        quote: Based on the set of tools that were mentionned by the annotators, we defined capabilities required by   GAIA .
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark describes how capabilities translate to tasks by listing specific tools and examples for each capability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 18, chunk 0
+        quote: "Web browsing : tools related to search the web and browse websites. Examples:   Web browser, Search engine, Website widget access, Access to YouTube, Google Street View ."
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The benchmark states that tasks are rooted in practical use cases and that solving them represents a milestone toward AGI.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 2, chunk 1
+        quote: Tasks for AI assistants, given their need for access to a diverse and uncertain world, meet this criterion while being inherently rooted in practical use cases.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The text mentions that a system solving GAIA can be assessed in the context of t-AGI, though it doesn't provide extensive guidelines on interpretation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 3, chunk 0
+        quote: Consequently, a system capable of solving   GAIA   can be assessed in the context of t-AGI
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: The excerpts mention 'annotators' and 'non experts', but do not specify the involvement of domain experts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 15
+    rationale: The benchmark explicitly mentions that the tasks reflect real use cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 2, chunk 1
+        quote: Some questions come with additional evidence, such as images, reflecting real use cases
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: There is no mention of integrating domain literature into the benchmark design.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of factoid, concise, and unambiguous answers is justified to allow for simple and robust automatic evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 2, chunk 2
+        quote: yet admit a unique, factual answer, allowing a simple and robust automatic evaluation.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: Human performance levels are provided, specifically a 92% success rate.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 1, chunk 0
+        quote: we show that human respondents obtain 92% vs. 15% for GPT-4 equipped with plugins.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: The excerpts do not provide a random performance baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses a validated automatic evaluation based on unique factual answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 2, chunk 2
+        quote: yet admit a unique, factual answer, allowing a simple and robust automatic evaluation.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explains differences from other benchmarks like ToolQA, Gorilla, and OpenAGI.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: The core difference with   GAIA   is that their tasks focus on current model capabilities rather than upcoming advancements.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: The excerpts do not address input sensitivity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The paper provides a link to the code for the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 1, chunk 1
+        quote: "Code:   https://huggingface.co/gaia-benchmark"
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The paper states that questions are released and a developer set is provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 1, chunk 1
+        quote: We release our questions
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The benchmark explicitly supports evaluation via API access.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 0
+        quote: Evaluating LLMs with   GAIA   only requires the ability to prompt the model,   i.e   an API access.
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 0
+    rationale: The excerpts do not mention support for local models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a specific task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: No script to replicate results is mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 10
+    rationale: The paper mentions reporting average results when running models multiple times, which is a basic form of uncertainty quantification.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 0
+        quote: Whenever an API is available, we run the model three times and report the average results.
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no mention of assessing the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent implementation is mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: The excerpts do not mention a requirements file or equivalent.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: No quick-start guide or demo is mentioned in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The excerpts do not show the use of in-line code comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No general code documentation is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The text is presented as a paper (arXiv:2311.12983v1), which is a standard venue for such benchmarks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 1, chunk 3
+        quote: arXiv:2311.12983v1 [cs.CL] 21 Nov 2023
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The benchmark construction process is detailed, including the question creation phase and validation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 19, chunk 0
+        quote: Question creation phase. We provided the annotators with a seed set of GAIA questions
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The rationale for the tasks (targeting conceptually simple but tedious real-world tasks) is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 1
+        quote: Our first principle is to target questions that are conceptually simple although potentially tedious for humans
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper explicitly lists limitations, such as missing evaluations of traces and lack of linguistic diversity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 10, chunk 2
+        quote: Limitations While GAIA attempts to circumvent current pitfalls of LLM benchmarks, some limitation remains.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The data collection process (human annotators and instructions) and prompt design (system prompt) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 19, chunk 0
+        quote: We provided the annotators with a seed set of GAIA questions we devised ourselves, accompanied with the following instructions
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric is documented as a quasi exact match between the model's answer and the ground truth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: No applicable license is specified in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 10
+    rationale: The paper mentions providing meta-data in supplementary material and using a datacard format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 1
+        quote: We provide questions along various with meta-data in supplementary material.
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data sources (Wikipedia, arXiv, etc.) and the collection process via human annotators are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 1
+        quote: Examples of sources of truth are trusted web pages that have low chance to disappear anytime soon e.g. , Wikipedia, Papers With Code, or arXiv.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not document specific data preprocessing steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The annotation process, including the use of curators and independent annotators for validation, is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 17, chunk 2
+        quote: building GAIA required the work of Curators, who devised the questions and their answer, and Annotators
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The representativeness of the data is not explicitly explained in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 10
+    rationale: The documentation mentions following the Bender and Friedman (2018) standard for the datacard.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 17, chunk 1
+        quote: We follow (Bender and Friedman, 2018) for the creation of this datacard
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not mention any checks of code usability performed within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

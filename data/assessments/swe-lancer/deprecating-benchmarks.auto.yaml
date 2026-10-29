@@ -1,0 +1,132 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: swe-lancer
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 4afbde31ba075992ffd96209f6533de8e450becd
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/swe-lancer/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2502.12115v4
+      ref: v4
+      sha256: 482452e87e93468c36d0f229da6a5999663a4f6e0656a50a8c5938c60a4eeb11
+      chars: 110399
+    - kind: repo
+      url: https://github.com/openai/SWELancer-Benchmark/tree/4afbde31ba075992ffd96209f6533de8e450becd
+      ref: 4afbde31ba075992ffd96209f6533de8e450becd
+      sha256: c76421ae8898c49b5cf9b23bd108a6ad3580c64d19b49c7c621935412b798e62
+      chars: 213
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark is explicitly described as 'largely unsaturated' for IC SWE tasks, and the best model's scores (26.2% and 44.9%) leave significant headroom below the maximum possible payout.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 3
+        quote: IC SWE tasks, which remain largely unsaturated
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 2
+        quote: the best performing model – Claude 3.5 Sonnet – scores 26.2% on IC SWE tasks and 44.9% on SWE Management tasks
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark employs a private holdout set to mitigate contamination and browsing risks, and reports limited impact of contamination for tasks predating model cutoffs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 2
+        quote: To avoid contamination via training or search (e.g., for models that can browse the internet), we keep the remaining set as a private holdout
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 1
+        quote: Table 4 in Appendix A2 shows no clear performance improvement for tasks predating the models’ knowledge cutoffs, suggesting limited impact of contamination for those tasks
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark consists of software engineering tasks graded by end-to-end tests rather than class labels, meaning there are no classes or labels that could be skewed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 1
+        quote: each IC SWE task is graded with end-to-end tests mirroring how experienced engineers would evaluate them
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark describes a rigorous quality review process where tasks were reviewed by multiple engineers and tests underwent three rounds of validation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 0
+        quote: Tests underwent three rounds of validation by software engineers for quality, coverage, and fairness
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark evaluates real-world software engineering and management skills, which are stated as current needs for AI model development.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 2
+        quote: improves realism of model benchmarks by evaluating more complex full-stack software engineering and management skills.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The benchmark does not explicitly state its simplifying assumptions, although it mentions a limitation regarding multimodal inputs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark uses real-world tasks from a specific timeframe (2023-2024) and maintains their original context from Upwork.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 1
+        quote: Issues are posed exactly as written on Upwork
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not mention a version identifier, release tag, or DOI associated with the benchmark name, nor do they describe how changes are recorded per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving the benchmark's data and generating code in a persistent archive.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: The excerpts do not provide a named maintainer, contact address, or a dedicated issue tracker for the benchmark itself to handle queries.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

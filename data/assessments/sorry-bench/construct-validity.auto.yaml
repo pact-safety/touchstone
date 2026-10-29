@@ -1,0 +1,264 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: sorry-bench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 7da10addffb6790cfeb75281eaffb5a176861653
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/sorry-bench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2406.14598v2
+      ref: v2
+      sha256: fe31599122d08611c6bac3a042fc6b7d05b557f6ba91af36573c3bf3a37a33bd
+      chars: 148248
+    - kind: repo
+      url: https://github.com/SORRY-Bench/sorry-bench/tree/7da10addffb6790cfeb75281eaffb5a176861653
+      ref: 7da10addffb6790cfeb75281eaffb5a176861653
+      sha256: 7a31c4534e91c0b0475a847941f53cbf6b1b580cac9ba2b34cf97d2f5f171b2d
+      chars: 12638
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The paper provides an operational definition of 'fulfillment' and 'compliance' based on the model providing substantial content that assists with unsafe intent.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 3, chunk 4
+        quote: Both terms refer to when models execute the given potentially unsafe instruction by providing substantial content that can assist with the unsafe intent.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the paper mentions a 44-class taxonomy and the need to understand the scope of safety, it does not explicitly name any excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is broken down into a 44-class taxonomy of safety categories, and the text discusses measuring fulfillment rates for these specific categories separately.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 35, chunk 0
+        quote: We study the correlations between each pair of categories using the model’s fulfillment rates as the corresponding features.
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify any secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors measured the impact of missing prompt format tokens on model fulfillment rates."
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses an LLM-as-a-judge to classify responses as 'refusal' or 'fulfillment', which is a classification task rather than automated parsing of free-form output into structured data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: we evaluate these responses as either in “refusal” or “fulfillment” of the corresponding user request
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts mention a 44-class taxonomy and a base dataset, but they do not document a specific sampling strategy used to ensure the items are representative of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: While the text mentions a 'detailed collection process to ensure high data quality' in Appendix G, the provided excerpts do not document a quality or relevance check that every item passed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: met
+    rationale: The benchmark includes 20 linguistic mutations (perturbed items) and reports their impact on safety evaluation results separately in Table 2.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: we also present an additional study on how the 20 linguistic mutations (§2.4) may impact our safety evaluation results (Table 2)
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that data points from previous datasets were used as a data bank for the benchmark construction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 23, chunk 0
+        quote: they were provided with the GPT-4 classified data points (3,656 in total) from the 10 prior datasets, and were encouraged to use these data points as a data bank.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: met
+    rationale: The authors identify a strength (they are 'valuable resources') and limitations (imbalanced categories and inconsistent coverage) of the prior datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 23, chunk 3
+        quote: benefit from these existing safety datasets (which themselves are valuable resources)
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 2, chunk 1
+        quote: we find these prior datasets are often imbalanced and result in over-representation of some fine-grained categories.
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: met
+    rationale: The authors provide a cross-comparison of benchmark scores between SORRY-Bench and four other recent safety benchmarks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 17, chunk 2
+        quote: we also provide a cross-comparison of the benchmark scores in Table 4. Specifically, we compare SORRY-Bench with 4 recent LLM safety benchmarks
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: While the authors mention making 'necessary modifications' to data points, they do not list each specific modification or explain how those specific changes improve construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any contamination tests performed or report any results from such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: The authors mention that developing a private split is a 'future step' rather than an existing feature.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 15, chunk 3
+        quote: A straightforward solution (and future step) is to develop a   private   split of SORRY-Bench
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against any named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is stated as 440, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: After obtaining each model’s 440 responses to our SORRY-Bench dataset
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results (Fig 4) are not provided in the excerpts, and the text does not state that every score in the main results table has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: While the paper mentions using 6 annotators and reports their agreement, it does not describe their demographics or state how demographic biases were mitigated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 26, chunk 0
+        quote: We have validated the inter-annotator agreements among our 6 annotators
+    by: model
+    quotes_verified: true
+  st.4:
+    value: met
+    rationale: The labels are subjective (human/model ratings) and the paper reports inter-annotator agreement statistics (Cohen Kappa).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 26, chunk 0
+        quote: Fig 6 demonstrates the Cohen Kappa agreement between each pair of annotators.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts mention that error analysis was conducted for 26 models, but they do not describe or count specific failure modes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors conduct experiments with different system prompts and prompt templates to see how they affect safety refusal scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 36, chunk 2
+        quote: our results indicate that the inclusion of a system prompt, no matter “safe” or “helpful”, consistently enhances model safety refusal
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to the critical need for safe deployment of LLMs in real-world applications.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 3, chunk 2
+        quote: ensuring their safe deployment in real-world applications becomes increasingly critical
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: The excerpts do not provide a definition labeled 'def.1' or a statement linking task choice and metrics to such a definition.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: While the paper mentions other benchmarks like MT-Bench and Chatbot Arena, it does so to justify sampling temperature, not to compare the benchmark's phenomenon evaluation or state differences in approach.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: The excerpts discuss trade-offs regarding evaluator efficiency (speed vs accuracy) and sampling temperature, but not limitations concerning what the benchmark scores do or do not measure regarding construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

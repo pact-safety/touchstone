@@ -1,0 +1,116 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: simplesafetytests
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/simplesafetytests/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.08370v2
+      ref: v2
+      sha256: 45995a43eb53159c892204a72c4b6ea449f10db19145ec881934087bf71ba55b
+      chars: 59638
+    - kind: repo
+      url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+      ref: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+      sha256: 34898077ff6c4ea6684cc70535446cb399c68069f16780451fe097f6804d4222
+      chars: 19445
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The best reported score for safety filters is 89%, leaving clear headroom below the maximum achievable score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 7, chunk 0
+        quote: The performance of the safety filters ranges from 45% (for Mistral’s CM prompt) to 89% (for the zero-shot CM prompt to GPT-4)
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document a contamination defense such as a private held-out set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: The excerpts do not report the label or answer distribution, nor do they provide a trivial baseline score to compare against.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark reports a high level of annotator agreement (92%) and a strong Fleiss' Kappa (0.83), indicating a low error rate in labeling.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 2
+        quote: In 2,750 cases (92%) all three annotators agree on the same label. Fleiss’ Kappa is 0.83, which indicates very strong agreement
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark serves to evaluate whether LLMs follow malicious instructions or answer risky questions in unsafe ways, a purpose that remains current.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 1, chunk 2
+        quote: Without proper safeguards, however, LLMs will readily follow malicious instructions and answer risky questions in unsafe ways
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions relied upon by the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: There is no evidence provided that the benchmark's content is maintained or that an audit has checked for semantic drift over time.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not mention a version identifier (like a release tag or DOI) associated with the benchmark name, nor do they describe how changes are recorded per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving the benchmark's data and code at the end of its life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark is available on GitHub, which serves as an issue tracker/contact point, and the paper was published in February 2024, indicating the project is maintained within the last 12 months.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 2, chunk 3
+        quote: S IMPLE S AFETY T ESTS   is available on GitHub
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

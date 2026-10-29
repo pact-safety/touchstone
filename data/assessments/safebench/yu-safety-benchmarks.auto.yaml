@@ -1,0 +1,318 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: safebench
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/safebench/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2206.09682v4
+      ref: v4
+      sha256: 0f1ee84ff0998412400a2386114317e04c56257dd55b94c35c1dc453071e1916
+      chars: 89356
+    - kind: repo
+      url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      ref: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      sha256: 02e5136e8abf04e38804e42a946027be2a6e7b35dc16ed7a2a5b7e9b88ea4564
+      chars: 65011
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark identifies risk types (perception attacks and planning failures) and provides specific metrics for each (mAP for perception, and collision rate/route distance for planning).
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/tracks.md, chunk 1
+        quote: The metrics we evaluate are the average of mean Average Precision on 10 different IoU thresholds, i.e. mAP@[0.5:0.05:0.95].
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/tracks.md, chunk 1
+        quote: The metrics we evaluate are collision rate, out of road length, distance to driving route, incomplete driving route, and running time.
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: unmet
+    rationale: The excerpts do not document excluded risks or specific deployment assumptions such as language or turn limits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: unmet
+    rationale: While the paper mentions that simulation cannot exactly reflect real-world conditions, it does not explicitly state that a good score does not guarantee safety against untested or emergent risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: unmet
+    rationale: The benchmark mentions other approaches but does not perform a direct comparison of coverage or risk categories against a specific named prior benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: met
+    rationale: The benchmark describes using adversary-based generation to find safety-critical scenarios.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 5, chunk 1
+        quote: "adversarial generation algorithms usually consist of two components: the scenario generator, and the victim model"
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: While there is a submission process for a challenge, there is no documented process for community contributions to the benchmark itself including integration and credit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The excerpts do not state a specific process or cadence for how and when new risks are incorporated into the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: met
+    rationale: The benchmark evaluates agents interacting with other agents (surrounding vehicles/pedestrians) in a simulator.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 3, chunk 2
+        quote: model the surrounding agents (e.g., vehicles and pedestrians) as adversarial agents to generate safety-critical driving scenarios.
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: There is no discussion of distribution shift framed as a safety-critical issue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: The benchmark uses simulation and explicitly states it does not use personal information, but it does not document annotator selection or bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: There is no mention of contamination detection or the temporal validity/retirement date of the evaluation sets.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results using terms like 'collision rate' and 'frequency'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 2, chunk 2
+        quote: We report the evaluation results based on 10 metrics, such as collision rate , frequency of running red lights
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark explicitly names simulation as a factor that cannot exactly reflect real-world conditions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 10, chunk 3
+        quote: the simulation in SafeBench cannot exactly reflect real-world conditions
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: The excerpts do not show a severity scale or harm weighting that cites a source for its levels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not state whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: Confidence intervals, standard errors, or worst-case bounds are not reported for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: n/a
+    rationale: The scoring is based on programmatic simulation metrics (e.g., collision rate, distance) rather than human or LLM judges.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 2, chunk 2
+        quote: We report the evaluation results based on 10 metrics, such as collision rate , frequency of running red lights
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across all three required dimensions (random seeds, prompt rephrasings, and evaluator versions).
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin when extrapolating to deployment risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: unmet
+    rationale: The benchmark lists safety-critical scenarios (e.g., Red-light Running) but does not provide operational definitions of what counts as an instance of harm for each.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: unmet
+    rationale: The excerpts do not state whose values or judgments (experts, policy, etc.) define the harm constructs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: There is no mention of contested normative choices or value conflicts in the definitions of harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: unmet
+    rationale: The benchmark does not explicitly articulate the relationship between its measured proxies (like collision rate) and real-world safety concerns.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: The excerpts do not record the interface, access date, inference parameters, and system prompt for the reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: While it mentions using a different random seed for a surrogate model, it does not report fixed seeds for all data sampling, inference, and evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 21, chunk 1
+        quote: we use a different random seed to produce a different training result
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The judge model, scoring rubric, and annotation guidelines are not provided with versions, dates, or commit hashes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: The benchmark provides a public website and mentions open-sourcing the platform to enable replication.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 16, chunk 0
+        quote: "Did you include the code, data, and instructions needed to reproduce the main experimental results (either in the supplemental material or as a URL)? [Yes] See on the website:   https://safebench . github . io ."
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: unmet
+    rationale: The prompts/scenarios are researcher-designed or algorithmically generated, but no validation of these synthetic scenarios is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark explicitly states that simulation cannot exactly reflect real-world conditions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 10, chunk 3
+        quote: the simulation in SafeBench cannot exactly reflect real-world conditions
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: met
+    rationale: The benchmark evaluates autonomous driving, which is inherently a multi-turn/continuous interaction process.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/components.md, chunk 0
+        quote: Safebench is a benchmarking platform based on Carla simulator for evaluating safety and security of autonomous vehicles
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: met
+    rationale: The benchmark states that no personal information was used because it relies on simulation, meaning in-the-wild data collection was not used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 21, chunk 1
+        quote: we don’t use any personal information since our experiments are based on Carla simulation
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: There is no stated update cycle tied to changes in risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that affected communities were consulted to assess the scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark specifies it tests AD algorithms within a simulation system (Carla) using a Docker container.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 4, chunk 0
+        quote: This platform runs in the Docker [ 54 ] container and is built upon the Carla simulator [ 28 ]
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: met
+    rationale: The benchmark states that simulation cannot reflect real-world conditions and that on-track testing is necessary before deployment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 10, chunk 3
+        quote: the simulation in SafeBench cannot exactly reflect real-world conditions. On-track testing is necessary before deploying AD algorithms in the real world
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,272 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bbq
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bbq/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.08193v2
+      ref: v2
+      sha256: d156a5efdfc189703ff001f36a71d6d7381866276d31713fe272d86f3e1d8b8d
+      chars: 87185
+    - kind: repo
+      url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+      ref: bea11bd97d79217245b5871acd247b9d6eb24598
+      sha256: 9cf0dc0c368f8b490f93531c0e267be45fea328c489ad58b8395b03a4b8dcfb0
+      chars: 31146
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report describes the capability being measured (biases in model predictions for QA systems) and the relevant threat models (stereotype reinforcement and stereotype attribution).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 2, chunk 5
+        quote: We focus on harms that arise when biased models are deployed as QA systems. The harms we assess reflect (i) stereotype reinforcement, which risks perpetuating biases, and (ii) stereotype attribution
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The excerpts do not provide an explicit threshold or decision rule mapping a score level to a conclusion about a capability of concern, nor do they state that none exists.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides an example item stem and the structure of the model response (multiple choice options including a specific target and UNKNOWN).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 3
+        quote: the correct answer to “Who fails at dieting?” was “the overweight person” rather than UNKNOWN
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: unmet
+    rationale: The provided excerpts do not state the total number of evaluation items in the BBQ dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the item format as multiple-choice and the scoring method as exact match.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: presented to annotators as a multiple-choice task
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we score by exact match between the top output and each answer option
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report describes the creation of grading criteria (gold labels based on templates) and quality control (human validation threshold).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: we set a threshold of 4/5 annotators agreeing with our gold label for inclusion in the final dataset
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: met
+    rationale: The report describes the number of annotators per item and their expertise/qualification criteria.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: Each item is rated by five annotators
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 1
+        quote: The qualification is open to all MTurk workers located in the US with a HIT approval rate above 98% and more than 5000 tasks completed
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: met
+    rationale: The report describes the human validation procedure using Amazon Mechanical Turk.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: We validate examples from each template on Amazon Mechanical Turk.
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: met
+    rationale: The report provides a Krippendorf's alpha value for inter-rater agreement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: Agreement between raters is high, with a Krippendorf’s α of 0.883
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: n/a
+    rationale: Grading is performed by exact match against gold labels, not by a model grader.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we score by exact match between the top output and each answer option
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: n/a
+    rationale: Grading is performed by exact match against gold labels, not by a model grader.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we score by exact match between the top output and each answer option
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: n/a
+    rationale: Grading is performed by exact match against gold labels, not by a model grader.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we score by exact match between the top output and each answer option
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: met
+    rationale: The report specifies the exact model versions tested, including specific sizes (Base, Large) and the 11B parameter version of UnifiedQA.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: We test UnifiedQA’s 11B parameter model
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we also test RoBERTa (Liu et al., 2019) and DeBERTaV3 (He et al., 2021). We test both the Base and Large models
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The provided excerpts do not mention any safety mitigations or adaptations to the elicitation process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While the report mentions input formats and fine-tuning settings, it does not provide the full prompt, scaffold version, or the number of attempts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report provides aggregate human accuracy statistics."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: The provided excerpts do not mention uncertainty measures or the number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results for a question-only baseline to assess model bias.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 8, chunk 2
+        quote: We test UnifiedQA on a question-only baseline to assess the model’s bias
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report describes the human baseline as a random sample of 300 examples from the final dataset using crowd-worker annotators."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report provides raw and aggregate human accuracy statistics."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: met
+    rationale: The report describes the conditions for human participants, including the time taken per task and the pay rate.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 2
+        quote: We estimate that each task took up to 2 minutes to complete, 13   for an effective minimum pay rate of $15/hr.
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: n/a
+    rationale: A human baseline was used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: n/a
+    rationale: A human baseline was used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: While the report states conclusions about model behavior, it does not cite a specific table, figure, or number for each conclusion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state what results would overturn its conclusions, nor does it mention pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There are no forecasts of future performance with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper and is not tied to a specific model deployment decision.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe any disagreements over results interpretation, nor does it state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

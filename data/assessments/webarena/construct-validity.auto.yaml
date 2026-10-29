@@ -1,0 +1,260 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: webarena
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dce04686a56253aefba7b18a4fa0937cf1dc987b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/webarena/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2307.13854v4
+      ref: v4
+      sha256: 6bfafefb66f717293e727f9604f112ebfa3489ab976fa28bcd8be90af3a55973
+      chars: 80125
+    - kind: repo
+      url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+      ref: dce04686a56253aefba7b18a4fa0937cf1dc987b
+      sha256: dc81380d8c504549f05bbf8023a510ce4bd463bf2004e4e6748d368274aaff44
+      chars: 24189
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark defines the phenomenon as the ability to follow NL commands and perform web-based tasks, with evidence being the programmatic verification of intermediate states or final outcomes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 6, chunk 3
+        quote: we establish reward functions r prog ( s ) that programmatically examine the intermediate states s within an execution trajectory to ascertain whether the outcome aligns with the intended result.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the benchmark describes the types of websites and tasks included, it does not explicitly name any excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The paper mentions different categories of tasks (e.g., Site Navigation, Content & Config, information-seeking), but it does not state that these sub-components are scored separately; it primarily reports an end-to-end task success rate.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the paper mentions different page rendering modes, it does not measure the effect of output-format requirements on the model's performance scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: unmet
+    rationale: The benchmark uses a language model (GPT-4) for fuzzy matching of free-form output and reports accuracy against programmatically generated variants, but it does not report repeat-run consistency or a comparison across two output formats for bias.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 17, chunk 2
+        quote: We quantitatively evaluate the correctness of GPT-4 in this case by generating different formats of a date and time duration programmatically.
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts do not document a sampling strategy used to ensure the task items are representative of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The authors describe a process where reference answers were curated, annotated twice for consistency, and finalized by a third annotator if needed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 2
+        quote: To ensure consistency and accuracy, each question was annotated twice. If the two annotators disagreed, a third annotator finalized the annotation.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that they adapted Adobe Magento's admin portal for the content management system.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 15, chunk 1
+        quote: For the content management system, we adapted Adobe Magento’s admin portal
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: While the documentation mentions adapting a portal, it does not analyze or report specific strengths and limitations of that prior work.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: There is no comparison of performance between the new benchmark and the original adapted work (Adobe Magento's admin portal).
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The documentation mentions deploying sample data from the official guide, but it does not explain how this modification improves construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any contamination tests or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of task items; the excerpts only mention a benchmark with 812 test examples.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper does not report a search or overlap check of the benchmark's source material against any named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the item count is stated as 812, there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: we release a ready-to-use benchmark with 812 long-horizon web-based tasks
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results table (Table 2) provides success rates as single percentages without confidence intervals or standard errors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 8, chunk 0
+        quote: "Table 2: The end-to-end task success rate (SR %)"
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The benchmark uses human raters (computer science graduate students), but their demographics are not described, and no bias mitigation strategy is stated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 2
+        quote: ask five computer science graduate students to perform these tasks
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The benchmark evaluates functional correctness using deterministic keys (reference answers or programs), and the fuzzy match is used to check semantic equivalence to a reference answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: We focus on evaluating the   functional correctness   of these tasks,   i.e.,   does the result of the execution actually achieve the desired goal
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: met
+    rationale: The authors describe a common failure mode (early stopping) and provide a quantitative count (54.9% of feasible tasks).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 8, chunk 1
+        quote: we observe a prevalent error pattern of early stopping due to the model’s conclusion of unachievability. For instance, GPT-4 erroneously identifies 54.9% of feasible tasks as impossible.
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not provide a table or figure breaking down failures by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors conduct an ablation study removing the 'UA hint' to improve performance, which resulted in a success rate increase for GPT-4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 8, chunk 1
+        quote: To address this, we conduct an ablation study where we remove this hint.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark links tasks to real-world applications such as online shopping, discussion forums, collaborative development, and business content management.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 1
+        quote: "Our environment comprises four fully operational, self-hosted web applications, each representing a distinct domain prevalent on the internet: online shopping, discussion forums, collaborative development, and business content management."
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to Mind2Web, noting that Mind2Web lacks functional correctness evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 9, chunk 0
+        quote: Mind2Web   (Deng et al., 2023)   ✗   ✓   ✓   ✗
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses how comparing textual surface-form action sequences (a design choice in other benchmarks) is less reliable than verifying concrete contents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 3
+        quote: This evaluation is not only more reliable (Zhong et al., 2017; Chen et al., 2021; Wang et al., 2022) than comparing the textual surface-form action sequences
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

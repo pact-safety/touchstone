@@ -1,0 +1,114 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: impossiblebench
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/impossiblebench/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2510.20270v1
+      ref: v1
+      sha256: 076fdc9d551f5e6646495bc14ac5c5857230c8939b2c64423b02651f66b3baae
+      chars: 64461
+    - kind: repo
+      url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      ref: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      sha256: 6b37396768388d86129c43c497a25560f7c6237e81c74276df6467f68097a492
+      chars: 9620
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain reported scores or a saturation analysis showing headroom between top models and the maximum achievable score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: There is no documentation of a contamination defense such as a private held-out set or regularly refreshed items; the benchmark creates variants from existing public benchmarks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: The excerpts do not report the label/answer distribution or a trivial baseline score to demonstrate the absence of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The excerpts mention a 'quality control process' for Impossible-SWEbench, but there is no cited audit, validation pass, or error analysis reporting a low error rate for the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark states its purpose is to measure the propensity of LLM agents to exploit test cases (cheating), which remains a current concern for the reliability of LLM coding assistants."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The benchmark does not explicitly state its simplifying assumptions, and there is no evidence of a validation of such assumptions against real-world complexity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is based on established benchmarks and its content is current (referencing 2025 models and data), with no evidence that its labels or task meanings have shifted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 3, chunk 1
+        quote: Starting from tasks that are known to be diverse and high quality
+    by: model
+    quotes_verified: true
+  r1:
+    value: met
+    rationale: The benchmark has an explicit version identifier '0.1.0' associated with its name in the setup configuration.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:setup.py, chunk 1
+        quote: |-
+          name="impossiblebench",
+              version="0.1.0"
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides a GitHub URL which serves as an issue tracker and point of contact, and the project is current (referenced as April 2025).
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:setup.py, chunk 1
+        quote: url="https://github.com/fjzzq2002/impossiblebench"
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

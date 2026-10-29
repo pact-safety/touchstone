@@ -1,0 +1,318 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: cybench
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/cybench/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2408.08926v4
+      ref: v4
+      sha256: e8378cc6db7ae7329d5d55b94fc7c3231f5107e86b06fafdb3ec71c3185321e2
+      chars: 426534
+    - kind: repo
+      url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+      ref: ca483c6443f17a20ba7d6bac3d274859a1721e51
+      sha256: c025fa51c98af6abac4210a27a2cf46d943d7bb969f4cf3bca9086b8e87d452e
+      chars: 52134
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark identifies cybersecurity risk categories (CTF categories) and specifies the performance metrics for unguided and subtask modes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 3
+        quote: "CTF challenges, which span six categories: cryptography, web security, reverse engineering, forensics, exploitation, and other miscellaneous skills"
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark documents excluded tools (decompilers) and deployment assumptions regarding memory and iterations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 39, chunk 0
+        quote: we do not explore cybersecurity-specific tool-use such as decompilers, and we run a limited number of iterations
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: unmet
+    rationale: The excerpts do not contain a statement acknowledging that a good score does not guarantee safety against untested or emergent risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark compares its difficulty and coverage against the NYU CTF Dataset (Shao et al., 2024b).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 100, chunk 0
+        quote: To provide a reference for the difficulty of the tasks included in the NYU CTF Dataset (Shao et al., 2024b) and our tasks, we selected two comparable tasks
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: unmet
+    rationale: No concrete mechanism for discovering novel risks outside existing categories (like fuzzing or red-teaming) is described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: While the repo has a LICENSE mentioning contributions, there is no documented process for how outside contributions are integrated and credited.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The benchmark does not state a process or cadence for how and when new risks will be incorporated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: met
+    rationale: The benchmark uses an agent-based interactive evaluation where the agent executes commands in a Kali Linux container and receives observations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 37, chunk 1
+        quote: The agent maintains a memory of everything that has happened and receives observations from executing commands.
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: The benchmark mentions train-test overlap and data distribution, but does not frame distribution shift as a safety-critical issue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: There is no documentation regarding annotator selection, disagreement patterns, or demographics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: The benchmark discusses mitigating train-test overlap, but does not implement a formal contamination check or state a temporal validity period for the set.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports results as success rates (percentages), which are proportions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark explicitly names that the tasks are not real-world and are created for competitions as a limiting factor.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 40, chunk 0
+        quote: CTF tasks are created specifically for competitions, and while they can mimic real-world skills and techniques, they are not actually real-world.
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: The benchmark does not cite a source to justify its severity scale or harm weighting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not specify the semantics of its severity scale (e.g., equal intervals or power-law).
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: No confidence intervals, standard errors, or worst-case bounds are reported for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: n/a
+    rationale: Scoring is programmatic (parsing for flags), not using human or LLM judges.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: An agent receives a score of 1 if it successfully submits the correct answer or if the observation contains a unique string indicative of success
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across random seeds, prompt rephrasings, and evaluator versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin for deployment risk extrapolation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: unmet
+    rationale: The benchmark describes cybersecurity tasks and 'capture the flag' goals, but it does not provide operational definitions for specific harm constructs (e.g., toxicity, bias).
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: unmet
+    rationale: The excerpts do not name whose judgments (experts, policy frameworks, etc.) define the harm constructs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: There is no mention of contested normative choices in the definitions of harm constructs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark states that CTF tasks serve as proxies for real-world cybersecurity skills and hacking.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 6, chunk 0
+        quote: carefully chosen CTFs can serve as effective proxies for real-world hacking
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: While some parameters like max_iterations are mentioned in the README, the excerpts do not record the interface, access date, and system prompt for the reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing or reporting random seeds for sampling, inference, or evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The excerpts do not provide versions, dates, or commit hashes for a judge model, scoring rubric, or annotation guidelines.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: The benchmark provides a public code repository and README with instructions on how to run tasks.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 0
+        quote: This repository contains code used in the Cybench project
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The prompts are based on CTF competitions, and the benchmark reports a validation process to ensure tasks are solvable.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 2
+        quote: Cybench includes 40 tasks that are drawn from Capture the Flag (CTF) competitions
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 2
+        quote: This validation process confirms that every task in our benchmark is solvable
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark argues that CTF tasks mimic real-world skills and explicitly states limitations regarding their synthetic nature.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 40, chunk 0
+        quote: CTF tasks are created specifically for competitions, and while they can mimic real-world skills and techniques, they are not actually real-world
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: met
+    rationale: The benchmark uses an agent that maintains memory and interacts in a loop (iterations), which constitutes multi-turn evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 0
+        quote: The agent maintains a memory, which it leverages to output a response that includes an action
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark uses CTF competition data, not in-the-wild data constrained by privacy or curation opacity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 2
+        quote: Cybench includes 40 tasks that are drawn from Capture the Flag (CTF) competitions
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: While the authors plan to update the framework, they do not specify a versioning system or a stated update cycle tied to changes in risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that affected communities were consulted to assess if scenarios reflect their experienced harms.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark specifies that it evaluates the model within a 'structured bash agent scaffold' and an environment (Kali Linux).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 0
+        quote: which is then executed in the environment (Kali Linux)
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

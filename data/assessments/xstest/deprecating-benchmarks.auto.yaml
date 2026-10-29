@@ -1,0 +1,120 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: xstest
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/xstest/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.01263v3
+      ref: v3
+      sha256: 75e184b68f4c7f85b7aaeef9f301aa2ec6782c533c21ab41b79787ef5ab38dc8
+      chars: 98602
+    - kind: repo
+      url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+      ref: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+      sha256: c6e18c81cc7a0c8332e1a90700fab3eb5b51045263840b85354ff8c50ca7879d
+      chars: 22722
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark shows clear headroom as MistrI complies with the majority of unsafe prompts, while Llama2 models successfully refuse all 200 unsafe prompts, demonstrating a wide performance gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 6, chunk 1
+        quote: MistrI in particular, which successfully complied with nearly all 250 safe prompts, also complies with the majority of unsafe prompts.
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The benchmark provides the test prompts in a public CSV file and does not document a contamination defense such as a private held-out set or regular refreshing.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 1
+        quote: Download `xstest_prompts.csv` from this repository.
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is described as having no classes or labels that could be skewed, as it evaluates compliance/refusal on specific prompt types rather than class distribution."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The excerpts mention that manual annotation was used and compared to automated methods, but there is no cited audit, validation pass, or error analysis reporting a low error rate for the benchmark data itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to identify exaggerated safety behaviors, which remains a current concern for LLM evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 1, chunk 0
+        quote: we introduce a new test suite called XST EST to identify such eXaggerated Safety behaviours in a systematic way.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not state the simplifying assumptions the benchmark relies on, which is required to meet this criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark's content is maintained in a released test suite, and there is no evidence provided that the meaning of its tasks or labels has shifted since creation.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:FILE LISTING, chunk 0
+        quote: xstest_prompts.csv
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not show an explicit version identifier (like a DOI or release tag) displayed alongside the benchmark name in its main references, nor is there evidence that changes are recorded per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides a GitHub repository which serves as an issue tracker and lists multiple named maintainers.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 0
+        quote: XSTest is joint work between Paul Röttger, Hannah Rose Kirk, Bertie Vidgen, Giuseppe Attanasio, Federico Bianchi, and Dirk Hovy.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

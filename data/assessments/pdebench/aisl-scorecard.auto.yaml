@@ -1,0 +1,482 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: pdebench
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v7
+  repo_commit: 4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/pdebench/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2210.07182v7
+      ref: v7
+      sha256: 00644323aff8a7cb40a0721bf12462047a82a6d8db38b19e88751d9530a68e49
+      chars: 154701
+    - kind: repo
+      url: https://github.com/pdebench/PDEBench/tree/4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+      ref: 4ff3e3a4aa1561721b5571fa3a048a0a463e0568
+      sha256: 0a43b750290be108a4dc06fd121fff441d0512b3eab43c2ca84c7a12c0dc1766
+      chars: 43657
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The paper defines the target phenomenon as finding an ML-based surrogate (emulator) of a forward propagator, where evidence of success is that predictions are 'close to the ground truth simulation'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 4, chunk 2
+        quote: predictions the emulator makes should be close to the ground truth simulation given the same inputs
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation specifies the scope as time-dependent PDEs for flow problems and explicitly excludes multi-phase flows and non-rectangular domains.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 10, chunk 1
+        quote: our main limitations are that we do not yet cover multi-phase flows or non-rectangular domains
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: met
+    rationale: The benchmark identifies distinct facets of performance (e.g., global performance vs. specific failure modes like boundary RMSE) and reports them independently in Table 18.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 39, chunk 0
+        quote: "Table 18: Error comparison between of U-Net, FNO, and PINN prediction"
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by categories of PDEs (basic and advanced) and item counts are reported for specific datasets (e.g., 1000 samples for 2D CFD).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 45, chunk 0
+        quote: the file contains 1 000 samples, with 512 × 512 spatial cells, 21 time steps, and 4 variables
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: While the docs state the datasets are 'intended to be representative', they do not report per-category item counts over the full task space or a stratified sampling plan.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The authors describe a verification step where meaningless solutions (all zeros or NaNs) resulting from numerical simulation failure were rejected.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 47, chunk 2
+        quote: At most we rejected meaningless solutions because of the failure of numerical simulations, such as data with all zeros or Nan values.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: The excerpts do not mention a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark generates its own data using numerical simulations rather than reusing a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 46, chunk 1
+        quote: All the dataset were obtained by performing computationally expensive numerical simulations for each PDEs.
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark generates its own data using numerical simulations rather than reusing a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 46, chunk 1
+        quote: All the dataset were obtained by performing computationally expensive numerical simulations for each PDEs.
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are mentioned for some datasets, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results table (Table 18) reports point estimates for errors but does not provide confidence intervals or standard errors for every score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 39, chunk 0
+        quote: "Table 18: Error comparison between of U-Net, FNO, and PINN prediction"
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The benchmark uses numerical simulations and automated metrics; no human raters are used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 12, chunk 0
+        quote: We use neither crowdsourcing nor conduct research with human subjects.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: The benchmark uses numerical simulations and automated metrics; no human raters are used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 12, chunk 0
+        quote: We use neither crowdsourcing nor conduct research with human subjects.
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: Labels are deterministic ground truth values from a PDE solver, not subjective ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 2, chunk 2
+        quote: compare their predictions against the “ground truth” provided by baseline simulators
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Labels are deterministic ground truth values from a PDE solver, not subjective ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 2, chunk 2
+        quote: compare their predictions against the “ground truth” provided by baseline simulators
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper breaks down model performance by frequency regions (low, middle, high) in Table 18, which acts as a confound/dimension of difficulty."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper discusses general observations (e.g., RMSE failing in turbulent regimes), but does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs list tasks and metrics, but they do not provide a single statement linking each specific metric to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares its approach to existing benchmarks, stating it provides a 'much wider range of PDEs' and 'much larger ready-to-use datasets'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 1, chunk 1
+        quote: A much wider range of PDEs compared to existing benchmarks, ranging from relatively common examples to more realistic and difficult problems
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The paper provides a limitations statement regarding scope (e.g., no multi-phase flows) and links high-fidelity approximation to the 'necessary precondition' for real-world application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 5, chunk 1
+        quote: Finding a surrogate model which can approximate these challenging dynamics with high fidelity we argue is a necessary precondition to applying such models in the real world.
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablations for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks, only related work in the field.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap measurement or mitigation is described as no overlap was identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There is no report on how output format requirements independently affect model scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment or variance measure for prompt sensitivity is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The benchmark evaluates regression tasks on numerical values in HDF5 files, involving no parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 45, chunk 1
+        quote: Each instance consists of numerical values in the form of an HDF5 file
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report contamination checks or training data cutoffs for the evaluated models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (HDF5 files) and local scoring, with no external or mutable environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 6, chunk 2
+        quote: The benchmark consists of different data files, one for each equation, type of initial condition, and PDE parameter, using the HDF5 [ 15 ] binary data format.
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of stateless model calls (regression on numerical arrays).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 45, chunk 1
+        quote: Each instance is an array, which elements are the values of a specific variable at a specific space and time
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark uses regression tasks on numerical values rather than multiple-choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 45, chunk 1
+        quote: These values are the target for the regression task performed by the baseline models.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: There is no mention of domain experts reviewing the content for accuracy, nor is there a statement regarding the sample size reviewed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The excerpts do not show results reported under more than one prompting or elicitation setting; the benchmark focuses on ML model architectures (FNO, U-Net, PINN) rather than prompting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: met
+    rationale: The benchmark reports results for a specific shift/stress condition (extrapolation testing) where training is limited to half the time steps to test temporal dependency.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 9, chunk 1
+        quote: The main purpose of this experiment is to test how well the ML model (FNO) learns the temporal dependency of the PDEs with limited information.
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark provides a general suite for Scientific ML and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 2, chunk 3
+        quote: we propose a versatile benchmark suite for Scientific ML
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark provides a general suite for Scientific ML and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 2, chunk 3
+        quote: we propose a versatile benchmark suite for Scientific ML
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark provides a general suite for Scientific ML and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 2, chunk 3
+        quote: we propose a versatile benchmark suite for Scientific ML
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While the docs mention hardware (RTX 2080, GTX 3090) and hyperparameters, they do not list specific library versions, a lockfile, or the OS/container image.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The documentation does not describe a correction channel (like a changelog or errata) that records at least one fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs mention a limitation regarding FNO's error increasing with decreasing diffusion coefficients, but they do not provide an impact estimate or explicit guidance on which conclusions remain valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 8, chunk 1
+        quote: Figure 3a shows that the FNO’s error increases with decreasing diffusion coefficient where a strong discontinuity appears.
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: The tasks are simulation-based and not human-centric, but the docs do not explicitly state why a human baseline is not relevant; they only report system baselines.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: The reported baselines (U-Net, FNO, PINN) are competitive ML models, not trivial baselines like random selection or zero-shot naive models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 7, chunk 2
+        quote: We trained and tested the baseline emulator models, namely U-Net, FNO, and PINN
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The benchmark uses numerical simulations as ground truth, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The benchmark uses numerical simulations as ground truth, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The benchmark uses numerical simulations as ground truth, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The benchmark uses numerical simulations as ground truth, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The ground truth is generated programmatically via numerical simulations, and the paper states these are high-precision solvers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 4, chunk 2
+        quote: D is generated by a ground-truth solver designed to simulate the desired dynamics with high precision.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The excerpts do not explicitly classify every task as solvable or intentionally unsolvable, nor document expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: Reference solutions are provided by a ground-truth numerical solver.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 4, chunk 2
+        quote: D is generated by a ground-truth solver designed to simulate the desired dynamics with high precision.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: There is no list of accepted equivalences or examples of non-identical correct answers passing the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, refusals, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The benchmark evaluates numerical arrays (tensors) from simulations, not free-form text output requiring a parser.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 50, chunk 0
+        quote: Realizations are stored in HDF5 format, allowing typed storage of dense arrays on disk.
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The benchmark evaluates numerical arrays (tensors) from simulations, not free-form text output requiring a parser.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2210.07182v7
+        locator: 2210.07182v7 page 50, chunk 0
+        quote: Realizations are stored in HDF5 format, allowing typed storage of dense arrays on disk.
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: No results for null-agent runs or targeted exploit attempts on the scoring pipeline are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

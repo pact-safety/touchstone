@@ -1,0 +1,421 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: rl-unplugged
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/rl-unplugged/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2006.13888v4
+      ref: v4
+      sha256: 18f7aed76d303a02d46056682fe91b3386140944d30105b395fe8bd533cfab76
+      chars: 77706
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested concept as offline reinforcement learning, specifically the ability to learn policies from logged data without further interaction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 2, chunk 0
+        quote: |-
+          offline methods for reinforcement learning, 1   that can learn
+          new policies from logged data, without any further interactions with the environment
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark describes how the concept translates to tasks by mapping task domains to axes like action space, observation space, and exploration difficulty.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 3, chunk 2
+        quote: |-
+          We chose the task domains
+          to include tasks that vary along the following axes. In Figure 1, we give an overview of how each
+          task domain maps to these axes.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The text describes how offline RL is helpful for real-world applications by bridging the gap between academic interest and practical use."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 15
+    rationale: The benchmark describes how online vs offline policy selection scores should be interpreted, noting that online selection can be overly optimistic.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 4, chunk 2
+        quote: |-
+          it is infeasible in many real-world settings, and
+          as a result it gives an overly optimistic view of how useful offline RL methods are today.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature by using established environments and protocols from previous research (e.g., Bellemare et al., Tassa et al.).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 5, chunk 1
+        quote: |-
+          DeepMind Control Suite [Tassa et al., 2018] is a set of control tasks implemented in MuJoCo [Todorov
+          et al., 2012].
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of performance metrics is informed by existing standards, such as using median scores for Atari following Hessel et al.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 7, chunk 3
+        quote: We use the arithmetic mean with the exception of Atari where we use median following [Hessel et al., 2018].
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 15
+    rationale: The benchmark includes a normalization formula that explicitly uses a random agent score as a floor.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 19, chunk 2
+        quote: |-
+          normalized   = 100   ×   score − random_score
+          best_score − random_score
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: The excerpts do not provide a specific human performance level for the tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: Random performance levels are included and used for normalization in the Atari games.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 19, chunk 2
+        quote: |-
+          "random_score" corresponds to the score of an random agent for the
+          games in a single number.
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: While automatic evaluation is used, there is no evidence of a validation process for the evaluation method itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explains differences to related benchmarks, specifically noting that others use fully observable MDPs while RL Unplugged tests memory.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 9, chunk 2
+        quote: |-
+          Unlike our benchmark which includes tasks that test memory
+          and representation learning, their tasks are all from fully observable MDPs
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 15
+    rationale: Input sensitivity is addressed through ablation studies on hyperparameters like tau samples and BCQ thresholds.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 21, chunk 0
+        quote: |-
+          In Figure 9, we show the sensitivity of the IQN to the number of   τ   samples with online policy
+          evaluation.
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The authors explicitly state they will open-source the code and provide a project page on GitHub.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 1, chunk 1
+        quote: We will release data for all our tasks and open-source all algorithms presented in this paper.
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The authors state they will release the data for all tasks and provide a unified API for data access.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 1, chunk 1
+        quote: We will release data for all our tasks
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: There is no mention of supporting model evaluation via API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 0
+    rationale: The excerpts do not explicitly state support for local model evaluation, only the provision of datasets and code.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The authors provide detailed evaluation protocols and open-source code to address reproducibility.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 3, chunk 0
+        quote: releasing the datasets with a proper evaluation protocols and open-sourced code will also address the reproducibility issue in RL
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts mention average and median scores, but do not report statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no assessment of the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: The excerpts do not mention a requirements file or equivalent.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: No quick-start guide or demo is mentioned in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The excerpts do not provide code snippets to verify the use of in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 10
+    rationale: The text mentions that code will be open-sourced, but does not provide the documentation itself.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 1, chunk 1
+        quote: open-source all algorithms presented in this paper
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 0
+    rationale: While the text is from a paper, there is no evidence in the excerpts that it was accepted at a peer-reviewed venue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The construction process is documented, including the use of specific agents to generate data and sub-sampling methods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 6, chunk 2
+        quote: The dataset is generated by running an online DQN agent and recording transitions from its replay during training
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The tasks are described and the rationale for their selection (axes of variation) is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 3, chunk 2
+        quote: We chose the task domains to include tasks that vary along the following axes.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 10
+    rationale: The text mentions potential drawbacks of offline RL in general, but not specific limitations of the benchmark itself.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 10, chunk 0
+        quote: But offline approaches also have potential drawbacks.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The data collection process is documented, including the agents used and the number of transitions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 6, chunk 2
+        quote: for each game we use data from five runs with   50   million transitions each
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation protocol and the use of arithmetic mean/median scores are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 7, chunk 3
+        quote: We use the arithmetic mean with the exception of Atari where we use median
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: No license is specified in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) is provided for the dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 10
+    rationale: The text mentions storing metadata such as episodic rewards and episode IDs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 3, chunk 2
+        quote: We additionally store metadata such as episodic rewards and episode id.
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: Data sources (e.g., DM Control Suite, Atari 2600) and collection methods are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 2, chunk 3
+        quote: We include widely-used domains such as the DM Control Suite [Tassa et al., 2018] and Atari 2600 games [Bellemare et al., 2013]
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: Preprocessing steps, such as sub-sampling and reducing successful episodes, are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 6, chunk 1
+        quote: Each dataset is then sub-sampled and the number of its successful episodes reduced by   2 / 3
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The data is generated by agents, not annotated by humans; no annotation process is documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The representativeness is explained by covering diverse axes like action and observation spaces.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 3, chunk 2
+        quote: We chose the task domains to include tasks that vary along the following axes.
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Datasheets for Datasets).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not mention any checks of code usability performed within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: While a project page on GitHub is mentioned, there is no evidence of a maintained feedback channel for users.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,217 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: salad-bench
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/salad-bench/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.05044v4
+      ref: v4
+      sha256: 24765d9ad04f6822f7c85de8cdd8775f5dab28fafdcabbb7fa19943d4cc24385
+      chars: 136348
+    - kind: repo
+      url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      ref: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      sha256: 9b9ea84b2f0c812864d0268c8f92b6afb75ac1f820b08573ae31c0094a4a451d
+      chars: 19448
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: While the total number of items in the base set is stated, there is no justification (like power calculations or confidence intervals) for why this size is sufficient for the comparisons.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The benchmark reports F1 scores and AUPRC, but does not provide both a significance test/confidence interval and a statistical power figure/minimum detectable difference.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: The prompt template for MCQ-Judge is provided, but the full prompt template for MD-Judge, sampling settings (temperature, max tokens), and sandbox configurations are missing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 19, chunk 2
+        quote: Here is the full template used in MCQ-Judge.
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: The benchmark uses few-shot exemplars that provide only output formats and not realistic safety questions to avoid introducing bias during answer generation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 19, chunk 2
+        quote: the few-shot exemplars only provide output formats for responses and   do not require introducing realistic safety questions , thus avoiding introducing bias during answer generation
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no mention of canary strings, private test splits, or a contamination analysis to prevent test data from being used in training.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: The excerpts do not report results from repeated runs (different seeds/sessions) or varied conditions for the model evaluations.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The authors report a manual inspection of a sampled subset of the dataset by 4 annotators to verify quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 0
+        quote: we sample a subset of our dataset and asks 4 annotators to verify the dataset.
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark describes a human verification process for labels using cross-checking and reports a consistency rate of 94.3%."
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: There is no evidence that the harness stores or releases full model outputs per item including reasoning traces for evaluators.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: The documentation does not describe checks for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: unmet
+    rationale: While the creation of items is described, there is no information on how the benchmark is versioned, maintained, or how items are retired.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The excerpts do not describe the full evaluation environment, such as tools, sandbox availability, interaction length, or specific access restrictions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: The limitations section discusses taxonomy updates and data quality, but does not state a concrete way the evaluation setting differs from real-world use.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The spread of the evaluation is described by data source with specific counts for various datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 0
+        quote: |-
+          Self-instructed Finetuned GPT-3.5 15433 
+          Open-Sourced 
+          HH-harmless 4184
+          HH-red-team 659
+          Advbench 359
+          Multilingual 230
+          Do-Not-Answer 189
+          ToxicChat 129
+          Do Anything Now 93
+          GPTFuzzer 42
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The provided excerpts do not report run-to-run variation under fixed conditions, nor do the authors state they reproduced their headline numbers from the released code and data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: unmet
+    rationale: The benchmark is cited as an 'arXiv preprint', and there is no evidence of it appearing in a peer-reviewed venue or being reproduced by an independent third party.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 7
+        quote: journal={arXiv preprint arXiv:2402.05044}
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors state that the data is released in a public GitHub repository, although access to some subsets is restricted to authorized researchers."
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: met
+    rationale: The repository contains the evaluator, metrics, and model utilities, and the README provides a runnable code snippet for evaluation.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:FILE LISTING, chunk 0
+        quote: |-
+          saladbench/evaluator.py
+          saladbench/metrics.py
+          saladbench/model_utils.py
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper describes how items are constructed (base questions and attack enhancement), how the model is queried (templates), and how outputs are scored (MD-Judge/MCQ-Judge)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: While some hardware is mentioned (8xA100 GPUs), there is no pinned software environment (lockfile or container image) provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: met
+    rationale: The full template and few-shot examples used for the MCQ-Judge are released/provided in the text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 19, chunk 2
+        quote: Here is the full template used in MCQ-Judge.
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The harness utilizes open weights models (Mistral-7B) and public APIs (GPT-4).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 5, chunk 13
+        quote: fine-tune an LLM-based safety judge model from Mistral-7B
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

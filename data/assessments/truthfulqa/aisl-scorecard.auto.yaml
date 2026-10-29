@@ -1,0 +1,486 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: truthfulqa
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: d71c110897f5d31c5d7f309e7bc316c152f6f031
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/truthfulqa/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2109.07958v2
+      ref: v2
+      sha256: 6441a30b6e0a74c9ef648f07ccc36b64b295f46a97d459bfbaa3205e68a9ec72
+      chars: 95414
+    - kind: repo
+      url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+      ref: d71c110897f5d31c5d7f309e7bc316c152f6f031
+      sha256: e660b6717e228297bbfa4f41b02078b2103190802d10153722a68da2bb702fd0
+      chars: 24341
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The paper provides a precise operational definition of truthfulness based on the avoidance of false statements.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 1
+        quote: We define an answer to a question as truthful iff it avoids asserting a false statement.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation defines what is in scope (imitative falsehoods), it does not explicitly name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper names truthfulness and informativeness as distinct facets, but they are not both reported as independent scores for every model in a single table/figure; informativeness is reported separately in Table 2 for a subset of metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by 38 categories, and the total item count is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 2, chunk 1
+        quote: It comprises 817 questions that span 38 categories.
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation mentions 38 categories but does not report the item counts per category.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The authors used a validator to check reference answers, reporting a 7% disagreement rate.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 39, chunk 0
+        quote: Overall, the validator chose different labels than us on 7% of questions.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: No specific named subset of boundary or adversarial items with a stated size and membership criterion is provided beyond the general adversarial procedure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: met
+    rationale: The benchmark does not reuse a prior dataset; all questions were written by the authors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 1
+        quote: All questions were written by the authors
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: met
+    rationale: The benchmark does not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 1
+        quote: All questions were written by the authors
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: The item count is stated, but no power calculation or confidence-interval half-width is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results tables do not report confidence intervals or standard errors for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: met
+    rationale: The documentation reproduces the instructions given to the human evaluator (Professor Smith).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 38, chunk 0
+        quote: Interpret each question literally, and as a question about the real world; carefully research each answer, without falling prey to any common myths; and reply “I have no comment” unless you are completely certain of the answer.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a check for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: met
+    rationale: The benchmark uses human ratings (subjective) and reports a disagreement distribution/rate for the reference labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 39, chunk 0
+        quote: Overall, the validator chose different labels than us on 7% of questions.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: met
+    rationale: The headline metric for truthfulness is the percentage of responses judged true, and the paper uses a mapping of 13 qualitative labels to scalar scores before thresholding, rather than a simple mean of subjective labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 34, chunk 0
+        quote: Instead of evaluators assigning a truth value or score to answers directly, they assign one of 13 qualitative labels to an answer
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: met
+    rationale: The paper breaks down truthfulness scores by category in Figure 13.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 1
+        quote: Figure 13 shows results broken down by category of question.
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper provides examples of failures but does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The documentation does not contain a single statement linking the specific tasks and metrics to the construct from cv.01 with a stated reason as required.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares TruthfulQA to existing QA benchmarks and states that imitative falsehoods are less likely to be covered by them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 2, chunk 1
+        quote: reason to focus on imitative falsehoods is that they are less likely to be covered by existing question-answering benchmarks (Clark et al., 2018; Kwiatkowski et al., 2019; Joshi et al., 2017; Hendrycks et al., 2020).
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The paper does not provide a specific limitations statement for the design linked to a real-world capability or harm prediction as required.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify specific secondary capabilities nor provide control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation identifies 'non-imitative' weaknesses (related to syntax or style) as a phenomenon that could be measured alongside imitative falsehoods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 3
+        quote: it could also be caused by the syntax or style of the question. These are “non-imitative” falsehoods
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: met
+    rationale: The overlap with non-imitative weaknesses is tested via a paraphrase experiment, and the results are reported in Appendix B.9.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 7, chunk 2
+        quote: We ran an experiment testing models on paraphrases of the TruthfulQA questions.
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There is no report of results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: met
+    rationale: A prompt-perturbation experiment using paraphrased questions is reported, noting that results align closely with original scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 31, chunk 0
+        quote: results align closely with model scores on the original questions
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: The GPT-judge parser's accuracy is compared across different model families (GPT vs UnifiedQA), which generate answers different in form.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 8, chunk 1
+        quote: GPT-judge still achieves 90% validation accuracy on UnifiedQA when finetuned only on answers from the GPT families
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or training-data cutoffs for every evaluated model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (a CSV of questions) and local/API scoring without a mutable external environment.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 0
+        quote: The full set of benchmark questions and reference answers is contained in `TruthfulQA.csv`.
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The benchmark consists of zero-shot model calls for each question, which are stateless.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 4, chunk 1
+        quote: TruthfulQA consists of a test set of 817 questions and is intended only for the zero-shot setting.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark includes a generation task (not MCQ), and for the MCQ task, it reports that models performed below the random guessing baseline."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation states the authors wrote the questions and reference answers, and does not name any domain experts or user groups consulted to define scenarios or criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While external researchers validated the benchmark, the documentation does not specify their field or credentials, nor does it state that all items or a specific sample size of the content was reviewed for accuracy and relevance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for different prompting settings, specifically 'helpful' and 'harmful' prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 5, chunk 2
+        quote: In our main results, we focus on the ‘helpful’ and ‘harmful’ prompt
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The documentation does not report results as a separate slice with item counts for a named stress condition or shift differing from the main splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark does not claim to evaluate a specific deployed application; it is described as a general-knowledge benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 9, chunk 1
+        quote: TruthfulQA tests models on general-knowledge questions
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 9, chunk 1
+        quote: TruthfulQA tests models on general-knowledge questions
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 9, chunk 1
+        quote: TruthfulQA tests models on general-knowledge questions
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation does not list library versions, hardware models, or the OS/container image.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: met
+    rationale: The paper cites external researchers who evaluated new models (Anthropic, InstructGPT, Gopher) on the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 22, chunk 0
+        quote: several new language models have been released and evaluated on the two TruthfulQA tasks by external researchers
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: met
+    rationale: The docs describe validation steps with external researchers and a changelog recording specific fixes to questions.
+    evidence:
+      - source: repo
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 10
+        quote: Fixed various typos and updated some questions to be more specific
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: While the authors mention disagreement with reference answers, they do not provide the required bias direction, impact estimate, and guidance on valid conclusions for every named flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: A human baseline is reported for the truthfulness task.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 2, chunk 2
+        quote: the best-performing model (GPT-3-175B with “helpful” prompt) was truthful on 58% of questions, while human performance was 94%
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: The excerpts do not report the score of a trivial baseline such as random selection or a zero-shot naive model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: met
+    rationale: The documentation reports that the GPT-judge model predicts human evaluations of truthfulness with 90-96% validation accuracy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 8, chunk 1
+        quote: The finetuned GPT-judge model is able to predict human evaluations of truthfulness with 90-96% validation accuracy.
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: unmet
+    rationale: The excerpts do not report adversarial or reward-hacking tests for the model rater, nor do they describe a specific defense mechanism for the rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: unmet
+    rationale: There is no report of agreement across repeated rating runs on the same inputs for the model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: The excerpts do not mention measuring a specific rater bias with a number or stating a mitigation for such bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: unmet
+    rationale: While a validator checked a sample of 100 questions, there is no report that at least two annotators labeled each item independently with an agreement metric like Cohen's kappa.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 39, chunk 0
+        quote: We recruited a “validator” to check our reference answers and raise disagreements.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The documentation does not explicitly classify every task as solvable or intentionally unsolvable, nor does it document expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: Reference answers are provided and were verified by consulting reliable sources like Wikipedia.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 34, chunk 1
+        quote: Answers were verified by consulting a reliable source where appropriate.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: While multiple reference answers are mentioned, the documentation does not list the scorer's accepted equivalences or show a non-identical correct answer passing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 32, chunk 0
+        quote: We then try to provide coverage of common variations on this answer.
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, refusals, and errors/timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The main task uses human evaluation or a model rater (GPT-judge) to classify truthfulness, which does not involve parsing free-form output into a structured format via a parser.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: we use human evaluation to score models on truthfulness and informativeness
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The main task uses human evaluation or a model rater (GPT-judge) to classify truthfulness, which does not involve parsing free-form output into a structured format via a parser.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2109.07958v2
+        locator: 2109.07958v2 page 6, chunk 0
+        quote: we use human evaluation to score models on truthfulness and informativeness
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

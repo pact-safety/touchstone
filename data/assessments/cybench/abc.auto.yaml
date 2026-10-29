@@ -1,0 +1,382 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: cybench
+standard: abc
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/cybench/abc/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2408.08926v4
+      ref: v4
+      sha256: e8378cc6db7ae7329d5d55b94fc7c3231f5107e86b06fafdb3ec71c3185321e2
+      chars: 426534
+    - kind: repo
+      url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+      ref: ca483c6443f17a20ba7d6bac3d274859a1721e51
+      sha256: c025fa51c98af6abac4210a27a2cf46d943d7bb969f4cf3bca9086b8e87d452e
+      chars: 52134
+  excerpt_chars: 40000
+verdicts:
+  O.a.1:
+    value: unmet
+    rationale: The documentation does not list normalized equivalences (like case or whitespace) that are accepted by the matcher.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.2:
+    value: unmet
+    rationale: There is no evidence that extra words around a correct answer are ignored to prevent false failures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.3:
+    value: unmet
+    rationale: The excerpts do not provide evidence or tests showing that negated ground truths are scored as incorrect.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.4:
+    value: unmet
+    rationale: There is no documentation showing that listing all possible answers is prevented from scoring as correct.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.5:
+    value: unmet
+    rationale: While flags are used, there is no specific test or evidence showing that generic guesses (like 'yes') score incorrect for every item.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.b.1:
+    value: n/a
+    rationale: The benchmark uses a program/evaluator to check for secret keys or flags, not an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 2
+        quote: an evaluator (e.g., a program that checks the answer submitted by the agent matches a secret key)
+    by: model
+    quotes_verified: true
+  O.b.2:
+    value: n/a
+    rationale: No LLM judge is used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 2
+        quote: an evaluator (e.g., a program that checks the answer submitted by the agent matches a secret key)
+    by: model
+    quotes_verified: true
+  O.c.1:
+    value: n/a
+    rationale: The benchmark scores based on submitting a correct answer (flag) or observation of a flag, not by running test cases against generated code.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: An agent receives a score of 1 if it successfully submits the correct answer
+    by: model
+    quotes_verified: true
+  O.c.2:
+    value: n/a
+    rationale: Outputs are not scored by test cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: An agent receives a score of 1 if it successfully submits the correct answer
+    by: model
+    quotes_verified: true
+  O.d.1:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.2:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.3:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.1:
+    value: n/a
+    rationale: End-to-end testing of code is not the scoring mechanism; it is based on flag retrieval.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: An agent receives a score of 1 if it successfully submits the correct answer
+    by: model
+    quotes_verified: true
+  O.e.2:
+    value: n/a
+    rationale: End-to-end testing of code is not used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: An agent receives a score of 1 if it successfully submits the correct answer
+    by: model
+    quotes_verified: true
+  O.f.1:
+    value: n/a
+    rationale: Outcomes are scored by submitting a string (answer) or observing a flag, not by matching a final environment state snapshot.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: An agent receives a score of 1 if it successfully submits the correct answer
+    by: model
+    quotes_verified: true
+  O.f.2:
+    value: n/a
+    rationale: Outcomes are not scored by matching environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: An agent receives a score of 1 if it successfully submits the correct answer
+    by: model
+    quotes_verified: true
+  O.f.3:
+    value: n/a
+    rationale: Outcomes are not scored by matching environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: An agent receives a score of 1 if it successfully submits the correct answer
+    by: model
+    quotes_verified: true
+  O.g.1:
+    value: met
+    rationale: "The prompt for the agent includes task-specific information and the agent is instructed to provide an 'Answer: y' string."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 37, chunk 1
+        quote: "Answer: y is a string indicated by a “ Answer: ” prefix"
+    by: model
+    quotes_verified: true
+  O.g.2:
+    value: unmet
+    rationale: The answer-space size and resulting chance success rate are not stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.h.1:
+    value: n/a
+    rationale: The benchmark uses binary scores (0 or 1) for success/failure, not a continuous quality metric.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 5, chunk 0
+        quote: Unguided performance is the performance on a task without subtask guidance, and outputs a binary score (i.e., 0 or 1 )
+    by: model
+    quotes_verified: true
+  T.1:
+    value: unmet
+    rationale: The documentation specifies a Python version range for the setup, but does not provide versions or a lockfile for all tools and packages in the task environment.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 2
+        quote: python3 --version` is between `3.9` and `3.10`
+    by: model
+    quotes_verified: true
+  T.2:
+    value: n/a
+    rationale: The benchmark uses LLM APIs for the agent, but the task environment itself consists of Docker containers and local files, not external API tools that require rate limit handling.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.3:
+    value: n/a
+    rationale: No external API tools are used within the task environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.4:
+    value: met
+    rationale: The documentation states that the Docker cache is cleared upon task instantiation to prevent state leakage.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 2
+        quote: We mitigated this issue by clearing the Docker cache upon task instantiation.
+    by: model
+    quotes_verified: true
+  T.5:
+    value: unmet
+    rationale: There is no evidence that the harness config ensures answers/tests are absent from the agent's filesystem or network.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.6:
+    value: met
+    rationale: The environment is based on Docker containers and images, which are frozen snapshots.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 4, chunk 0
+        quote: All tasks are instantiated in an environment with the same base image.
+    by: model
+    quotes_verified: true
+  T.7:
+    value: met
+    rationale: Ground truth flags are verified by comparing the output of a solution script to the original flag via continuous integration.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 2
+        quote: compares the output to the original flag provided to ensure an exact match.
+    by: model
+    quotes_verified: true
+  T.8:
+    value: met
+    rationale: Every task is verified as solvable by running a solution script through continuous integration.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 2
+        quote: This validation process confirms that every task in our benchmark is solvable
+    by: model
+    quotes_verified: true
+  T.9:
+    value: unmet
+    rationale: While solution scripts exist for verification, there is no mention of an automated Oracle solver that ships with the benchmark to solve all challenges automatically.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.10:
+    value: unmet
+    rationale: The documentation describes patching vulnerabilities found during development, but does not document a formal exploit audit of the implementation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 2
+        quote: To patch the vulnerability, we isolated the task server from the agent environment
+    by: model
+    quotes_verified: true
+  R.1:
+    value: met
+    rationale: The benchmark is explicitly described as open-source and includes a collection of 40 tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 2
+        quote: An open-source benchmark with 40 recent professional-level CTF tasks.
+    by: model
+    quotes_verified: true
+  R.2:
+    value: met
+    rationale: The repository provides a script to run tasks and a script to grade the benchmark results.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 7
+        quote: To grade the benchmark, you can use the `grade_benchmark.py` script.
+    by: model
+    quotes_verified: true
+  R.3:
+    value: unmet
+    rationale: The excerpts mention checking for train-test overlap via knowledge cutoff dates, but do not describe a private held-out split, rotating split, or canary string.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.4:
+    value: unmet
+    rationale: There is no mention of a versioned update process or a dated update schedule to avoid overfitting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.5:
+    value: unmet
+    rationale: While it mentions evaluating 'cybersecurity capabilities', it does not provide a specific statement linking a named capability to a specific outcome measure and explaining why that measure indicates the capability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.6:
+    value: met
+    rationale: The paper states that it evaluates both models and agent scaffolds.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 1, chunk 1
+        quote: To evaluate agent capabilities, we construct a cybersecurity agent and evaluate 8 models
+    by: model
+    quotes_verified: true
+  R.7:
+    value: unmet
+    rationale: The excerpts do not describe a quality-control step combined with a recorded correction channel like a changelog or errata.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.8:
+    value: unmet
+    rationale: The paper discusses limitations of CTF data sources, but does not name specific unavoidable flaws and their likely direction of effect on results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.9:
+    value: unmet
+    rationale: There is no numerical estimation of the impact of a known flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.10:
+    value: unmet
+    rationale: The excerpts do not show a results table where every score has a confidence interval or significance test.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.11:
+    value: unmet
+    rationale: No specific caveats are provided that warn against drawing certain conclusions based on named flaws.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.12:
+    value: met
+    rationale: The benchmark uses the performance of human teams to establish objective task difficulties.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 2
+        quote: Objective task difficulties based on performance of human teams.
+    by: model
+    quotes_verified: true
+  R.13:
+    value: unmet
+    rationale: There is no report of a score for a do-nothing or trivial agent.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

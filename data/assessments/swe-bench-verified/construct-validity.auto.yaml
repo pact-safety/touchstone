@@ -1,0 +1,246 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: swe-bench-verified
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/swe-bench-verified/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2310.06770v3
+      ref: v3
+      sha256: bb04e03876fea31f46a22061ba431ccce08c460a411530b20d66ac670aa8d807
+      chars: 162878
+    - kind: repo
+      url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+      ref: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+      sha256: 13c9768a7e92d37b0405c4bf5faab5c6168e1c40446f565bb6e1f80d693847b4
+      chars: 120623
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark defines evidence of a successful solution as a change in test status from fail to pass.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 2, chunk 4
+        quote: at least one test where its status changes from a   fail   to   pass
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the text describes the general task of repository-scale code editing, it does not explicitly name a specific excluded aspect of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The provided excerpts do not identify sub-components of the phenomenon nor do they explicitly state that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: While the paper discusses how context length and retrieval methods affect performance, it does not identify specific secondary abilities and provide a corresponding control condition or ablation result for each.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: The excerpts mention that changing the number of lines of instructions did not substantially affect performance, but they do not measure the effect of output-format requirements on scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The evaluation process described involves applying a generated patch and running a test suite, rather than parsing free-form output into a structured format for scoring.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 0
+        quote: |-
+          Applies the model's generated patch
+          3. Runs the repository's test suite
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts describe a 3-stage pipeline to find high-quality instances, but they do not document a sampling strategy over a described task space to ensure representativeness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The 'SWE-bench Verified' dataset consists of instances that have been verified by engineers as solvable."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items with separately reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: unmet
+    rationale: The provided excerpts do not contain a statement indicating whether the benchmark adapts a previous dataset or benchmark; it describes the creation of its own dataset from GitHub issue-PR pairs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts describe data collection and filtering processes, but do not describe a specific contamination test applied to the benchmark or report its results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The documentation explicitly mentions a private test split to prevent leaderboard climbing.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/assets/evaluation.md, chunk 2
+        quote: we have intentionally made specifications for evaluating the test split private
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: While the paper mentions ensuring solutions were not in training corpora by using dates, it does not report a search or overlap check against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the sample size for SWE-bench Verified is stated, there is no power calculation or confidence-interval width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not contain a main results table showing confidence intervals or standard errors for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark uses automated unit tests for evaluation rather than human raters for scoring model outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 2, chunk 0
+        quote: generated solutions can be easily verified by running unit tests
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: Labels are deterministic, based on whether a patch passes a specific test suite (FAIL TO PASS and PASS TO PASS tests).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 21, chunk 1
+        quote: we check that all FAIL TO PASS and PASS TO PASS tests are found and have a pass status
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While the paper provides qualitative analysis of specific failures (e.g., in p32#1 and p50#2), it does not provide a quantitative count of common failure modes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not show failures or scores broken down by a named confounder in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 is automatically unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The paper proposes a specific direction to improve scores by designing procedures for the automated discovery of additional modules and third party libraries.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 50, chunk 2
+        quote: This example highlights the importance and potential for training language models and designing inference procedures that allow for the automated discovery of such information.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to the real-world application of LMs in commercial products like coding assistants.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 1, chunk 1
+        quote: Language models (LMs) are rapidly being deployed in commercial products such as chatbots and coding assistants.
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to HumanEval, noting that HumanEval involves self-contained problems while SWE-bench uses a realistic software engineering setting.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 2, chunk 0
+        quote: existing coding benchmarks, such as HumanEval (Chen et al., 2021), mostly involve self-contained problems that can be solved in a few lines of code. In the real world, software engineering is not as simple.
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses a limitation regarding the models' struggle to generate longer output sequences as correctly formatted patches.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 28, chunk 2
+        quote: it becomes clear that models struggle with generating longer output sequences to be correctly formatted patches.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,434 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: ale
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 816fd1591f1b73133c269fe753f10a0490ab4a63
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/ale/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1207.4708v2
+      ref: v2
+      sha256: 48f889aff01198b693ba4d7880eb3337bbe755f9b4b3d264b445f4301dd3b422
+      chars: 71511
+    - kind: repo
+      url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+      ref: 816fd1591f1b73133c269fe753f10a0490ab4a63
+      sha256: 58d5c9da63534780222d29d92323766055ca3c10e0153a4a166f703b5fc1212c
+      chars: 120585
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark is defined as a platform for evaluating general, domain-independent agents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 15, chunk 1
+        quote: This article has introduced the Arcade Learning Environment, a platform for evaluating the development of general, domain-independent agents.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The text describes how the goal of general competency is tested by providing an interface to hundreds of different Atari 2600 games.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 15, chunk 1
+        quote: ALE provides an interface to hundreds of Atari 2600 game environments, each one different, interesting, and designed to be a challenge for human players.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that using consoles as stepping stones leads toward general real-world competency.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 15, chunk 1
+        quote: With the ultra-realism of current generation consoles, each console represents a natural stepping stone toward general real-world competency.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The text suggests that inter-algorithm normalization should be used to complement other metrics because it lacks an objective reference.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 10, chunk 2
+        quote: The lack of objective reference in inter-algorithm normalization suggests that it should be used to complement other scoring metrics.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The paper integrates domain literature on lifelong learning and general AI frameworks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 1, chunk 1
+        quote: To this end, different theoretical frameworks have been proposed to formalize the notion of “big” artificial intelligence (e.g., Russell, 1997; Hutter, 2005; Legg, 2008).
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The authors describe a detailed normalization process to make scores across different games comparable.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 9, chunk 1
+        quote: The most natural way to compare games with different scoring scales is to normalize scores so that the numerical values become comparable.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 15
+    rationale: The normalization method uses a score range [r_g,min, r_g,max] computed for each game.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 9, chunk 1
+        quote: All of our normalization methods are defined using the notion of a   score range   [ r g, min , r g, max ] computed for each game.
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: The benchmark includes performance measures for a non-expert human player.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 6, chunk 0
+        quote: For purposes of comparison, we also provide performance measures for three simple baseline agents –   Random ,   Const   and   Perturb   – as well as the performance of a non-expert human player.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: The benchmark includes a Random agent as a baseline for comparison.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 6, chunk 0
+        quote: The Random agent picks a random action on every frame.
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark provides automatic extraction of game scores and end-of-game signals.
+    evidence:
+      - source: repo
+        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:README.md, chunk 1
+        quote: Automatic extraction of game score and end-of-game signal for more than 100  Atari 2600 games.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains how ALE differs from other frameworks by not assuming access to compact logical descriptions of game semantics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 13, chunk 1
+        quote: Our framework differs in that we do not assume to have access to a compact logical description of the game semantics.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: The excerpts do not address input sensitivity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The source code for the benchmark agents is explicitly stated to be available.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 4, chunk 0
+        quote: The source code for the agents used in the benchmark experiments below is also available
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The ALE provides a mechanism to load ROMs (generation mechanism for game states) and is available as open-source software.
+    evidence:
+      - source: repo
+        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:README.md, chunk 2
+        quote: ale.loadROM(roms.get_rom_path("breakout"))
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: The excerpts do not mention support for evaluating models via an API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The framework allows users to interact with ALE in their choice of language and provides a C++ interface for local execution.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 4, chunk 0
+        quote: a variety of interfaces are available that allow users to interact with ALE in the programming language of their choice
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The repository includes a script specifically for benchmarking the vector environment.
+    evidence:
+      - source: repo
+        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:FILE LISTING, chunk 10
+        quote: scripts/benchmark-vec-env.py
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts mention reporting results but do not mention statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no assessment of warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: The excerpts do not show a build status implementation (e.g., CI badges or status reports).
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: While the software is released under the GNU GPL, specific release requirements are not specified.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A requirements file for the documentation is explicitly mentioned and provided in the build instructions.
+    evidence:
+      - source: repo
+        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:docs/README.md, chunk 0
+        quote: pip install -r docs/requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: A 'Quick Start' section is provided in the README with installation and usage instructions.
+    evidence:
+      - source: repo
+        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:README.md, chunk 1
+        quote: |-
+          Quick Start
+          ===========
+
+          The ALE currently supports three different interfaces: C++, Python, Gymnasium and WASM.
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code with in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: Extensive code documentation is available, including a C++ interface guide and environment specifications.
+    evidence:
+      - source: repo
+        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:docs/cpp-interface.md, chunk 0
+        quote: The shared library interface is the simplest way to implement a C++ agent for the Arcade Learning Environment (ALE).
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: "The excerpts are from a paper titled 'The Arcade Learning Environment: An Evaluation Platform for General Agents', which is a peer-reviewed publication."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 7, chunk 0
+        quote: "The Arcade Learning Environment: An Evaluation Platform for General Agents"
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the construction of the ALE as a software framework for Atari 2600 games.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 2, chunk 2
+        quote: ALE is a software framework designed to make it easy to develop agents that play arbitrary Atari 2600 games.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test set construction (50 games chosen at random from a filtered list) and the rationale for using a disjoint test set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 5, chunk 2
+        quote: Our testing set was constructed by choosing semi-randomly from the 381 games listed on Wikipedia
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 0
+    rationale: The excerpts do not explicitly document the limitations of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The test environment design (Atari 2600 emulation) and the process for constructing the test set are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 2, chunk 2
+        quote: ALE is a software framework designed to make it easy to develop agents that play arbitrary Atari 2600 games.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper documents evaluation metrics, including raw scores and paired t-tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 12, chunk 0
+        quote: An alternate evaluation metric, especially useful when comparing only a few algorithms, is to perform paired tests over the raw scores.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The paper explicitly states the software is released under the GNU General Public License.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 4, chunk 0
+        quote: ALE is released as free, open-source software under the terms of the GNU General Public License.
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: The excerpts do not show the inclusion of standardized metadata.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data sources (Atari 2600 ROMs) and the process for selecting the test set are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 5, chunk 2
+        quote: Our testing set was constructed by choosing semi-randomly from the 381 games listed on Wikipedia
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: Preprocessing steps for feature generation (e.g., background detection) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 17, chunk 1
+        quote: DISCO first performs a series of preprocessing steps to discover classes
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The excerpts do not document a data annotation process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The paper explains the representativeness of the data by selecting a variety of games to evaluate general competency.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 2, chunk 1
+        quote: "ALE proposes an achievable stepping stone: techniques for general competency across the gamut of Atari 2600 games."
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a specific recognized standard (e.g., Docstring, Sphinx standard).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: No maintained feedback channel for users is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

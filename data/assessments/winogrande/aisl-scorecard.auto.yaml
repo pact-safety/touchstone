@@ -1,0 +1,462 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: winogrande
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 727e837f77521ef38bcc56df3b275c8da43f45af
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/winogrande/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1907.10641v2
+      ref: v2
+      sha256: 6abd24d9da10e037a32f047f141ea18ba72e4b2ad8215e6e210adba40790b2a7
+      chars: 48588
+    - kind: repo
+      url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+      ref: 727e837f77521ef38bcc56df3b275c8da43f45af
+      sha256: cb990e1d3811069511826e4a1c64562d45015a6fbd5cd6d387dd09f66d65c369
+      chars: 17441
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines the target phenomenon as pronoun resolution problems that are trivial for humans but hard for machines relying on statistical patterns.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 1, chunk 2
+        quote: WSC are designed to be pronoun resolution problems (see examples in Table 1) that are trivial for humans but hard for machines that merely rely on statistical patterns without true capabilities of commonsense reasoning.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation specifies the scope as social and physical commonsense, and excludes problems that can be answered by simple word association."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: While the paper names social and physical commonsense as domains, it does not report independent scores for these facets in the provided tables.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by social and physical commonsense domains, and the total item count is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: In total, we collected 77k questions (i.e., 38k twins).
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation does not report per-category item counts for the social and physical commonsense domains.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): Every item passed a verification step by three crowd workers based on three specific criteria."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark creates a new dataset via crowdsourcing rather than reusing a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 3
+        quote: We collect W INO G RANDE problems via crowdsourcing on Amazon Mechanical Turk (AMT).
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark creates a new dataset via crowdsourcing rather than reusing a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 3
+        quote: We collect W INO G RANDE problems via crowdsourcing on Amazon Mechanical Turk (AMT).
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are mentioned, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The results table (Table 3/6) reports accuracy percentages but does not provide confidence intervals or standard errors for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: The paper mentions that workers followed 'precise guidelines', but the actual instructions or training materials are not reproduced.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a check for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: The labels are deterministic (majority vote of workers for a binary choice), not subjective rubrics or preferences.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 5, chunk 4
+        quote: we compute human performance as the majority vote of three crowd workers for each question.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: The labels are deterministic (majority vote of workers for a binary choice), not subjective rubrics or preferences.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 5, chunk 4
+        quote: we compute human performance as the majority vote of three crowd workers for each question.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The paper does not break down failures by a named confound in a table or figure showing counts or rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper provides examples of bias detected by AFLITE, but does not report named failure categories with counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The documentation does not contain a single statement linking the tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is compared to the original WSC and addresses the gap of being 'significantly larger' and more robust against bias."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The paper does not provide a limitations statement specific to the design nor a claim linking scores to a real-world capability/harm with support.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: met
+    rationale: The authors use 'local context' baselines to show that word association (a secondary capability) does not drive the scores on the debiased set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 6, chunk 0
+        quote: Regarding the word association (i.e., local context) baselines, both BERT and RoBERTa achieve close to chance-level performance
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation names several related benchmarks that measure similar phenomena, such as WSC, DPR, and COPA.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 1
+        quote: W INO G RANDE provides transfer learning to other existing WSC and related benchmarks, achieving new SOTA performances on five of them, including the original WSC
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: While related benchmarks are named, the overlap is not quantified via a specific measure (like correlation) nor are mitigation steps for that overlap described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There is no report of results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The evaluation uses a multiple-choice format where predictions are simple integers (1 or 2), involving no parsing of free-form output.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 2
+        quote: each line consists of the predictions (1 or 2)
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report contamination checks or training-data cutoffs for the evaluated models (e.g., RoBERTa).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (jsonl files) and local scoring, requiring no external or mutable environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The benchmark consists of independent multiple-choice questions, which are single stateless model calls.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 2
+        quote: each line consists of the predictions (1 or 2)
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark is multiple choice, and the authors report that baselines achieve 'chance-level performance (50%)', establishing the random-guess baseline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 5, chunk 5
+        quote: Two baselines, WKH and Ensemble LMs, only achieve chance-level performance (50%)
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation states that the benchmark was authored by crowdworkers rather than domain experts, and does not name any experts consulted for defining scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While the data was validated by crowd workers, there is no mention of domain experts' credentials or a specific sample size reviewed by experts for accuracy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The results report both fine-tuned and zero-shot settings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 6, chunk 0
+        quote: The star ( ? ) denotes that it is zero-shot setting
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not report results for a separate slice under a named stress condition or shift differing from the train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is a general commonsense reasoning dataset and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is a general commonsense reasoning dataset and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is a general commonsense reasoning dataset and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While a Dockerfile and some hyperparameters are provided, the documentation lacks a lockfile or pinned library versions, hardware model, and OS details beyond the base image.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention an independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The docs describe quality-control steps for data validation, but there is no mentioned correction channel (errata or changelog) that records at least one fix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: We validate each collected question through a distinct set of three crowd workers.
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The documentation discusses the existence of dataset-specific biases and the use of AFLITE to reduce them, but it does not name specific unavoidable flaws with their bias direction and impact estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: A human performance baseline is reported for the WinoGrande task.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 6, chunk 0
+        quote: Human Perf. 94.1   94.0
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: The documentation reports the performance of a 'local context' word association baseline, which is described as achieving close to chance-level performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 6, chunk 0
+        quote: BERT (local context)   52.5   51.9
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The excerpts do not indicate that a model was used as a rater or judge for the ground truth; human crowd workers were used for validation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: We validate each collected question through a distinct set of three crowd workers.
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The excerpts do not indicate that a model was used as a rater or judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: We validate each collected question through a distinct set of three crowd workers.
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The excerpts do not indicate that a model was used as a rater or judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: We validate each collected question through a distinct set of three crowd workers.
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The excerpts do not indicate that a model was used as a rater or judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: We validate each collected question through a distinct set of three crowd workers.
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The documentation states that each question is validated by three crowd workers and is deemed valid if the majority chooses the correct answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: We validate each collected question through a distinct set of three crowd workers. Following a rigorous process, a question is deemed valid if (1) the majority of the three workers chooses the correct answer option
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: There is no documentation classifying every task as solvable or intentionally unsolvable, nor expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: Reference solutions are provided (labels) and were verified by a majority vote of three crowd workers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: a question is deemed valid if (1) the majority of the three workers chooses the correct answer option
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, refusals, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The task is a binary choice (1 or 2), and the evaluation script uses labels, implying no parsing of free-form output is required.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 2
+        quote: each line consists of the predictions (1 or 2) by 5 training sets
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The task is a binary choice, implying no parsing of free-form output is required.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 2
+        quote: each line consists of the predictions (1 or 2) by 5 training sets
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

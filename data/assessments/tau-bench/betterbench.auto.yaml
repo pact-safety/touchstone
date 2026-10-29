@@ -1,0 +1,422 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: tau-bench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 59a200c6d575d595120f1cb70fea53cef0632f6b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/tau-bench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2406.12045v1
+      ref: v1
+      sha256: ed8409419c3062d4589b374d7841181206794ee748084f58cce10af34523b3e2
+      chars: 132419
+    - kind: repo
+      url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+      ref: 59a200c6d575d595120f1cb70fea53cef0632f6b
+      sha256: e17ddb00606e0458f03bb7af5d8ef22e5e1fb71411e776c7dbc04058a8a705c8
+      chars: 14519
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested capability as the interaction between agents, users, and tools, specifically focusing on reliability and rule-following.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 1, chunk 0
+        quote: a benchmark emulating dynamic conversations between a user (simulated by language models) and a language agent provided with domain-specific API tools and policy guidelines
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The paper describes how the capability translates to tasks using a POMDP formulation involving state, action, and observation spaces.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 3, chunk 2
+        quote: Each individual task in τ -bench can be formulated as a partially observable Markov decision process (POMDP)
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that assessing reliability and robustness is critical for agents deployed in systems with millions of real-world human interactions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 3, chunk 2
+        quote: provide an accurate assessment of the reliability and robustness of AI agents for deployment in systems that undertake millions of real-world interactions with humans
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The paper describes how the pass^k metric captures reliability and consistency, though it doesn't provide a comprehensive guide on how scores should or shouldn't be used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 0
+        quote: pass^k can capture the reliability of the agent at handling variations in conversations with the same underlying semantics while adhering to the domain policies and rules
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: The excerpts mention human labeling and checking, but do not explicitly state that domain experts were involved in the design.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 15
+    rationale: The benchmark uses user simulation with specific instructions that set up user identity, intent, and preferences.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 1
+        quote: The instruction sets up user identity, intent, and preferences in a way that guarantees only one possible outcome under the domain policy
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: There is no mention of integrating domain literature; it mentions inspiration from real-world counterparts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of the pass^k metric is informed by the need for reliability and consistency in real-world agent tasks like customer service.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 3
+        quote: For real-world agent tasks requiring reliability and consistency like customer service, we propose a new metric – pass^k
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: No human performance baseline is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: No random performance baseline is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses an automatic evaluation process that compares the final database state with an annotated goal state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 1, chunk 0
+        quote: We employ an efficient and faithful evaluation process that compares the database state at the end of a conversation with the annotated goal state
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The paper explains that unlike past works that focus on showcasing simulation ability, τ-bench uses simulators to benchmark agent reliability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 3, chunk 2
+        quote: all these past works have not used such simulators to benchmark the reliability of agents, instead focusing on showcasing the ability of LMs to enable realistic simulations
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 10
+    rationale: The paper addresses sensitivity to stochasticity through the pass^k metric and mentions how the agent handles variations in conversations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 0
+        quote: pass^k can capture the reliability of the agent at handling variations in conversations with the same underlying semantics
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The paper provides a URL to the codebase which includes the evaluation framework.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 1, chunk 2
+        quote: "Code and data:   https://github.com/sierra-research/tau-bench"
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark provides both the data and the code used to generate it.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 20, chunk 0
+        quote: More data generation code can be seen in   https://github.com/sierra-research/tau-bench
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The authors explicitly state they tested various models through their APIs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 2
+        quote: We test various state-of-the-art proprietary and open language models for agents through their APIs
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 0
+    rationale: The excerpts mention testing models via APIs and note that only two models release weights, but do not explicitly state support for running local models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The authors confirm in the checklist that they included the code, data, and instructions needed to reproduce results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 12, chunk 0
+        quote: Did you include the code, data, and instructions needed to reproduce the main experimental results (either in the supplemental material or as a URL)? [Yes]
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 15
+    rationale: The authors confirm in the checklist that they reported error bars.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 12, chunk 0
+        quote: Did you report error bars (e.g., with respect to the random seed after running experiments multiple times)? [Yes]
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: The excerpts do not mention assessing the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): A setup.py file is present in the file listing, which serves as the equivalent of a requirements file for Python projects."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 10
+    rationale: The README provides a specific command to run the auto error identification feature, which acts as a partial guide/demo for using the benchmark.
+    evidence:
+      - source: repo
+        url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+        locator: sierra-research/tau-bench@59a200c6d575:README.md, chunk 6
+        quote: |-
+          To run the auto error identification, run:
+
+          ```bash
+          python auto_error_identification.py
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain any source code files with in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The paper explicitly mentions that domain-specific data includes documentation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 1
+        quote: domain-specific data in terms of database JSON files, database API Python code and documentation
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 0
+    rationale: While a paper is provided, there is no evidence in the excerpts that it has been accepted at a peer-reviewed venue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes a detailed three-stage approach for constructing the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 1
+        quote: Each domain is created in a three-stage approach with a mix of LM and code runs, and human labeling and checking.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the task annotation process and the rationale for ensuring unique database outcomes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 2
+        quote: the key challenge is to ensure the user instruction leads to a unique database outcome.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper explicitly discusses limitations of the simulated user.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 9, chunk 0
+        quote: The simulated user can have some limitations
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the data generation process using LMs and manual polishing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 1
+        quote: "Stage II: Automatic data generation with LMs. Once the data schema is set up, we create an example entry and use gpt-4 to generate a systematic code snippet"
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper documents the reward function and the pass^k metric used for evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: The reward of a task episode r = r action × r output ∈ { 0 , 1 } is based on
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository contains a LICENSE file specifying the MIT License."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: There is no evidence of standardized metadata (e.g., Dublin Core) being included.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents that data is generated by code and LMs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 23, chunk 0
+        quote: All data is generated by code, and the code is mostly generated by gpt-4
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: While data generation is mentioned, specific preprocessing steps taken on the data are not documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper documents the manual task annotation and validation process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 2
+        quote: "Stage III: Manual task annotation and validation with agent runs."
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 10
+    rationale: The README provides a feedback channel by instructing users to submit issues or pull requests if they find problems.
+    evidence:
+      - source: repo
+        url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+        locator: sierra-research/tau-bench@59a200c6d575:README.md, chunk 6
+        quote: Please submit issues or pull requests if you find problems with the benchmark.
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: While the paper lists authors, no specific contact person (e.g., email or designated maintainer) is listed for the benchmark maintenance.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

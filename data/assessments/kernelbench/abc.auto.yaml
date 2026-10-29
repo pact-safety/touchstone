@@ -1,0 +1,398 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: kernelbench
+standard: abc
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/kernelbench/abc/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2502.10517v1
+      ref: v1
+      sha256: f6072136b7d8f41a6def6400915f3fb3f4bcfba4e9cb93d30095dd2663a45276
+      chars: 106453
+    - kind: repo
+      url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      ref: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      sha256: d76ec364b922087b6756c8586e2de8d26b3fb2adc80fad7e85ea241a650143da
+      chars: 38422
+  excerpt_chars: 40000
+verdicts:
+  O.a.1:
+    value: n/a
+    rationale: The benchmark scores correctness by comparing tensor outputs of the generated kernel against a reference PyTorch model, not by string matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We compare the   Model   output to the LM-generated   ModelNew   output.
+    by: model
+    quotes_verified: true
+  O.a.2:
+    value: n/a
+    rationale: The benchmark scores correctness by comparing tensor outputs, not by string matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We compare the   Model   output to the LM-generated   ModelNew   output.
+    by: model
+    quotes_verified: true
+  O.a.3:
+    value: n/a
+    rationale: The benchmark scores correctness by comparing tensor outputs, not by substring matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We compare the   Model   output to the LM-generated   ModelNew   output.
+    by: model
+    quotes_verified: true
+  O.a.4:
+    value: n/a
+    rationale: The benchmark scores correctness by comparing tensor outputs, not by substring matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We compare the   Model   output to the LM-generated   ModelNew   output.
+    by: model
+    quotes_verified: true
+  O.a.5:
+    value: n/a
+    rationale: The benchmark scores correctness by comparing tensor outputs, not by substring matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We compare the   Model   output to the LM-generated   ModelNew   output.
+    by: model
+    quotes_verified: true
+  O.b.1:
+    value: n/a
+    rationale: The benchmark uses automatic verification via output comparison and timing, not an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: KernelBench is   automatically verifiable .
+    by: model
+    quotes_verified: true
+  O.b.2:
+    value: n/a
+    rationale: No LLM judge is used for scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: KernelBench is   automatically verifiable .
+    by: model
+    quotes_verified: true
+  O.c.1:
+    value: unmet
+    rationale: While the benchmark uses correctness checks on randomized inputs, there is no documentation of a human or expert review step for the test cases themselves.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.c.2:
+    value: unmet
+    rationale: There is no mention of objective metrics like code coverage used to measure the quality of the test cases.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.1:
+    value: n/a
+    rationale: The benchmark uses random input generation for correctness, not fuzz testing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: we randomly generate input tensors of the prescribed shape and precision
+    by: model
+    quotes_verified: true
+  O.d.2:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: we randomly generate input tensors of the prescribed shape and precision
+    by: model
+    quotes_verified: true
+  O.d.3:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: we randomly generate input tensors of the prescribed shape and precision
+    by: model
+    quotes_verified: true
+  O.e.1:
+    value: unmet
+    rationale: The benchmark performs end-to-end execution of the kernel, but does not report a coverage figure or list components shown to be exercised.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.2:
+    value: unmet
+    rationale: The documentation mentions timing variations and using means of trials, but does not show that tests give the same result on repeat runs to prevent flakiness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.1:
+    value: n/a
+    rationale: Outcomes are scored by comparing the output tensor values, not by matching a specific environment state snapshot.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We compare the   Model   output to the LM-generated   ModelNew   output.
+    by: model
+    quotes_verified: true
+  O.f.2:
+    value: n/a
+    rationale: Outcomes are scored by comparing output tensors, not by matching environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We compare the   Model   output to the LM-generated   ModelNew   output.
+    by: model
+    quotes_verified: true
+  O.f.3:
+    value: n/a
+    rationale: Outcomes are scored by comparing output tensors, not by matching environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We compare the   Model   output to the LM-generated   ModelNew   output.
+    by: model
+    quotes_verified: true
+  O.g.1:
+    value: met
+    rationale: The task prompts explicitly specify the required output format (codeblocks, naming the architecture ModelNew, and no other text).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 22, chunk 0
+        quote: Name your new improved output architecture ModelNew . Output the new code in codeblocks . ... Just output the new model code , no other text
+    by: model
+    quotes_verified: true
+  O.g.2:
+    value: unmet
+    rationale: The benchmark does not state the answer-space size or the resulting chance success rate for the generated kernels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.h.1:
+    value: met
+    rationale: The benchmark reports on adversarial kernels designed to reward hack (e.g., reusing cached computations) and ensures the eval script catches them.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:EVAL.md, chunk 3
+        quote: These tests run adversarial kernels ... that contain examples of reward hacking ... and ensures that the eval script catches them
+    by: model
+    quotes_verified: true
+  T.1:
+    value: unmet
+    rationale: While some core versions are specified (Python, PyTorch, CUDA), many dependencies in pyproject.toml and requirements.txt use range operators (e.g., '>=') rather than specific versions or a lockfile.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 17, chunk 0
+        quote: Our environment uses Python 3.10 , PyTorch 2.5.0+cu124 , and CUDA 12.4
+    by: model
+    quotes_verified: true
+  T.2:
+    value: n/a
+    rationale: The benchmark evaluates GPU kernel generation and execution on local or orchestrated hardware; no external API tools are used for the task execution itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.3:
+    value: n/a
+    rationale: No external API tools are used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.4:
+    value: unmet
+    rationale: The provided excerpts do not document whether residual data or state are cleared between runs or if each task starts from a fresh environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.5:
+    value: unmet
+    rationale: There is no documentation showing that answers and tests are absent from the agent's filesystem or network.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.6:
+    value: unmet
+    rationale: The excerpts do not state that the environment is frozen at release; in fact, the README mentions they 'continue to update and improve the repo'.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 0
+        quote: We continue to update and improve the repo.
+    by: model
+    quotes_verified: true
+  T.7:
+    value: unmet
+    rationale: The benchmark explicitly states it does not provide ground truth kernels, and there is no mention of a second person or execution verifying the reference PyTorch modules.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We do not provide ground truth kernels for the tasks
+    by: model
+    quotes_verified: true
+  T.8:
+    value: met
+    rationale: The benchmark uses a PyTorch reference module as a baseline for every task, which serves as a reference solution to verify solvability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 17, chunk 0
+        quote: the KernelBench task entails a PyTorch reference module Model as baseline
+    by: model
+    quotes_verified: true
+  T.9:
+    value: unmet
+    rationale: The benchmark provides a PyTorch reference implementation, but not an automated Oracle solver that generates the optimized CUDA kernels for all challenges.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: We do not provide ground truth kernels for the tasks
+    by: model
+    quotes_verified: true
+  T.10:
+    value: unmet
+    rationale: There is no documentation of an exploit audit of the implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.1:
+    value: met
+    rationale: The benchmark is described as an open-source framework and the repository contains dataset files.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 11
+        quote: KernelBench is designed as an **open-source** evaluation framework
+    by: model
+    quotes_verified: true
+  R.2:
+    value: met
+    rationale: The repository provides logic code and scripts to run and analyze the benchmark.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 4
+        quote: |-
+          ├── src/kernelbench/ # KernelBench logic code
+          │   ├── unit_tests/  
+          │   ├── prompts/
+          │   ├── ....
+    by: model
+    quotes_verified: true
+  R.3:
+    value: unmet
+    rationale: There is no mention of a private held-out split, rotating split, or canary strings to prevent contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.4:
+    value: unmet
+    rationale: No versioned update schedule or process to avoid overfitting is documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.5:
+    value: met
+    rationale: The benchmark names the capability (generating performant kernels) and the outcome measure (fast_p), explaining that success leads to real-world impact.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 3, chunk 2
+        quote: KernelBench is a new framework for evaluating the ability of language models to generate performant kernels for a breadth of AI workloads.
+    by: model
+    quotes_verified: true
+  R.6:
+    value: met
+    rationale: The benchmark evaluates the ability of language models (LMs) to generate kernels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 3, chunk 2
+        quote: evaluating the ability of language models to generate performant kernels
+    by: model
+    quotes_verified: true
+  R.7:
+    value: unmet
+    rationale: While it mentions experimental checkers, it does not describe a correction channel with a recorded fix like a changelog.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.8:
+    value: unmet
+    rationale: The excerpts do not name specific unavoidable flaws and their likely direction of effect on results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.9:
+    value: unmet
+    rationale: There is no numerical estimation of the impact of a known unavoidable flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.10:
+    value: unmet
+    rationale: The results tables provided in the excerpts do not show confidence intervals or significance tests for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.11:
+    value: unmet
+    rationale: No specific caveats are attached to named flaws to guide which conclusions should not be drawn.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.12:
+    value: unmet
+    rationale: No human expert baseline results are reported; only PyTorch baselines are mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.13:
+    value: unmet
+    rationale: No results for a do-nothing or trivial agent are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

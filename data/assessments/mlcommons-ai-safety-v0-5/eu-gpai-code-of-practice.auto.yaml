@@ -1,0 +1,232 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mlcommons-ai-safety-v0-5
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 79accfe1424a7994399154ae34fd960fe93a4259
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mlcommons-ai-safety-v0-5/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.12241v2
+      ref: v2
+      sha256: 948815b355a66f0403dbc0bdba07c085f1ab11bab2bc65a658b165a3add1ddcb
+      chars: 185943
+    - kind: repo
+      url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+      ref: 79accfe1424a7994399154ae34fd960fe93a4259
+      sha256: 784dbe1c8138124c20130b3f9e07d42713cf17bf95330a1ddb43f5db95eca9ed
+      chars: 56881
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: While the benchmark mentions a total of 560,170 responses, it does not provide a power calculation or confidence intervals to justify the sample size as sufficient for the comparisons supported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The excerpts do not report significance tests, confidence intervals for score differences, or statistical power figures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: Sampling settings (temperature, max tokens) are provided, but the full prompt template or a link to it is not included in the excerpts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 0
+        quote: We collected responses from all models with a temperature of 0.01 and set the maximum number of tokens to be generated to 500.
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: No named control against a confound or shortcut (e.g., answer-position balancing or prompt-format perturbation) is described with its result.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: met
+    rationale: The benchmark establishes a requirement that publishers do not train on the benchmark dataset and must retract results if contamination is found.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 8, chunk 0
+        quote: Publishers do not train directly on or against the benchmark dataset and retract any reported results if and when benchmark data is found to have been in training data.
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: The benchmark reports using a low temperature to reduce variability, but does not report results from repeated runs or varied conditions (like different temperatures).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 26, chunk 1
+        quote: SUTs were evaluated at low temperature This reduces the variability of SUTs’ responses on repeated prompting with the same test item
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The paper reports a manual inspection of a human eval set to validate LlamaGuard, stating the sample size and the resulting accuracy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 23, chunk 0
+        quote: Of the 660 items in the human eval set categorised as unsafe (based on the classifications provided by LlamaGuard), 358 are unsafe
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark describes using human annotators and reports an inter-annotator agreement figure (Cohen's Kappa).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 23, chunk 0
+        quote: Inter-annotator agreement, as measured by the average Cohen’s Kappa score, is 0.79
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: met
+    rationale: The run journal captures the raw response as received from the SUT for every item.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 4
+        quote: response - raw response as received from the SUT
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: There is no documentation of checks for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: met
+    rationale: The docs describe that items were hand-crafted using sentence fragments and templates, and that updates are managed with precise version numbers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 17, chunk 1
+        quote: We create the test items by combining (1) sentence fragments with (2) templates.
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 7, chunk 1
+        quote: Updates will be managed and maintained through ModelGauge and ModelBench, with precise version numbers and process management.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The excerpts do not describe the full evaluation environment, such as input/output formats, available tools/sandboxes, or specific access restrictions for the model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The documentation explicitly states that the ecological validity of the prompts could be low because they lack reliable data about real-world AI harms.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 1
+        quote: we are aware that the ecological validity of the prompts (i.e. the extent to which the prompts match the real-world) could be quite low
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The benchmark describes the diversity of the evaluation environment along the axis of personas, specifying three distinct types.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 9, chunk 2
+        quote: "For the v0.5 Benchmark, we are focusing on three personas: (i) a typical adult user; (ii) an adult user intent on malicious activities, behaving in a technically non-sophisticated way; and (iii) an adult user at risk of harm"
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation or a statement that the authors reproduced their own headline numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: unmet
+    rationale: The provided excerpts do not indicate that the benchmark paper appeared in a peer-reviewed venue or cite an independent reproduction.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The authors state that they openly release all prompts for the v0.5 benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 7, chunk 1
+        quote: For v0.5, we openly release all prompts, annotation guidelines, and the underlying taxonomy.
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: met
+    rationale: The benchmark runner and execution engine are released as open-source tools in a GitHub repository.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 7, chunk 0
+        quote: MLCommons has developed an open-source evaluation tool, which consists of the ModelBench benchmark runner (which can be used to implement the benchmark) and the ModelGauge test execution engine
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: met
+    rationale: The authors provide a test specification and documentation on their methodology and taxonomy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 10, chunk 2
+        quote: We have also fully documented our approach so that our methodology, assumptions, and limitations are available for scrutiny.
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: While installation steps are provided, there is no pinned software environment (lockfile/container) or statement of the total compute needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: met
+    rationale: The authors explicitly state that all prompts are openly released for v0.5.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 7, chunk 1
+        quote: For v0.5, we openly release all prompts, annotation guidelines, and the underlying taxonomy.
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The harness supports interfacing with SUT providers like Together.ai or Huggingface and mentions OpenAI API compatibility.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:docs/add-a-new-sut-driver.md, chunk 0
+        quote: A SUT driver is code that interfaces with a SUT provider (like Together.ai or Huggingface).
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

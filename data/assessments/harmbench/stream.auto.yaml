@@ -1,0 +1,274 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: harmbench
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/harmbench/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.04249v2
+      ref: v2
+      sha256: 580c29edfdd4e7940ed6c0ccdc4c23b74768be3e812d857f28a97a70592eec05
+      chars: 175045
+    - kind: repo
+      url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      ref: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      sha256: b5be49ee33386aad4099cc19a25d96e7938ea0928a746c13cf196d5583b43430
+      chars: 68399
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: unmet
+    rationale: The excerpts mention 'harmful behaviors' and 'red teaming', but they do not explicitly describe the specific capabilities being measured or the specific threat models they are relevant to.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: There is no mention of a specific threshold or decision rule that maps a score to a conclusion about a capability of concern.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: unmet
+    rationale: While there are mentions of classifier prompts and general criteria, no specific example of an evaluation item (stem) paired with a model response is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: unmet
+    rationale: The excerpts mention the number of behaviors in the validation set, but not the total number of evaluation items in the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the scoring method as a binary 'Yes' or 'No' classification based on whether a generation is an instance of a behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 34, chunk 2
+        quote: |-
+          Your   answer   should   be   "Yes"   or   "No"   with   an
+          explanation.
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report describes the creation of criteria based on TDC 2023 and mentions refining them based on specific test cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 18, chunk 1
+        quote: We developed these criteria over a period of several months, building on the annotation criteria used for TDC 2023
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: unmet
+    rationale: While the report mentions a human-labeled validation set, it does not describe the number or expertise of the human graders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: unmet
+    rationale: The report mentions that humans labeled a validation set using annotation instructions, but it does not describe the actual procedure/process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: unmet
+    rationale: The report mentions 'Inter-annotator agreement' as a heading in the validation set section, but no actual agreement figure is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report identifies Llama 2 13B Chat as the base model for the evaluation classifier and states it was fine-tuned."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The report describes the automated grading process using a classifier to determine if a completion is an instance of a behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 7, chunk 2
+        quote: |-
+          The completions   x ′ 
+          i   for each
+          behavior   y j   are evaluated using   ASR ( y j   , g, f   ) , with a
+          classifier   c
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report provides a table comparing the classifier's performance against human judgments and other metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 18, chunk 0
+        quote: Agreement rates between previous metrics and classifiers compared to human judgments on our manually labeled validation set.
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: met
+    rationale: The report specifies exact model versions such as Claude 1, Claude 2, Claude 2.1, and gpt-4-vision-preview.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 24, chunk 1
+        quote: Claude 1, Claude 2, and Claude 2.1
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 24, chunk 2
+        quote: gpt-4-vision-preview API
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: met
+    rationale: The report describes active safeguards, noting that some APIs have filters that cannot be removed while others have no specific safety measures.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 24, chunk 1
+        quote: the API for these models includes filters that cannot be removed
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 24, chunk 1
+        quote: No specific safety measures were used in training this model
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: The excerpts do not provide the full prompts, sampling settings, or the number of attempts for the elicitation techniques.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report mentions the use of average ASR (Attack Success Rate) as a performance statistic.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 9, chunk 2
+        quote: A comparison of the average ASR across the GCG, GCG (Multi), and GCG (Transfer) attacks
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: The provided excerpts do not mention uncertainty measures or the specific number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results for an alternative condition by comparing a model with and without the R2D2 adversarial training method.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 10, chunk 0
+        quote: The effect of number of optimization steps on the GCG loss and GCG attack success rate on Zephyr with and without our R2D2 adversarial training method.
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: unmet
+    rationale: The report mentions a 'human-designed jailbreaks baseline' using templates from a cited paper, but it does not describe the recruitment or sample of human participants used to create it.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 22, chunk 2
+        quote: "Human Jailbreaks   (Shen et al., 2023a): This baseline uses a fixed set of in-the-wild human jailbreak templates"
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: unmet
+    rationale: While a human-designed baseline is used, the provided excerpts do not contain the actual performance statistics (scores) for this baseline or a description of differences with the AI test.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: unmet
+    rationale: The report does not describe the conditions given to human participants to elicit performance; it only mentions using existing templates from prior work.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 22, chunk 2
+        quote: This baseline uses a fixed set of in-the-wild human jailbreak templates
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: n/a
+    rationale: A human baseline ('Human Jailbreaks') was used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 8, chunk 4
+        quote: These include automated white-box, black-box, and transfer attacks as well as a human-designed jailbreaks baseline.
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: n/a
+    rationale: A human baseline ('Human Jailbreaks') was used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 8, chunk 4
+        quote: These include automated white-box, black-box, and transfer attacks as well as a human-designed jailbreaks baseline.
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: The provided excerpts do not contain overall conclusions about a model's capabilities or risk level that cite specific tables, figures, or numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state falsification conditions or pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There are no forecasts of future performance with a stated time horizon in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper ('A Standardized Evaluation Framework') and is not tied to a specific model deployment decision.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 44, chunk 0
+        quote: "HarmBench: A Standardized Evaluation Framework for Automated Red Teaming and Robust Refusal"
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The excerpts do not describe disagreements over results interpretation, nor do they state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,476 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: impossiblebench
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/impossiblebench/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2510.20270v1
+      ref: v1
+      sha256: 076fdc9d551f5e6646495bc14ac5c5857230c8939b2c64423b02651f66b3baae
+      chars: 64461
+    - kind: repo
+      url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      ref: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      sha256: 6b37396768388d86129c43c497a25560f7c6237e81c74276df6467f68097a492
+      chars: 9620
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines the construct as the propensity to exploit test cases (cheating) and the task as creating 'impossible' variants of coding tasks.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 0
+        quote: systematically measures LLM agents' propensity to exploit test cases by creating "impossible" variants of tasks
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists subject areas including algorithmic problems and multi-file software scenarios.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 1
+        quote: study cheating behaviors across both algorithmic problems and realistic multi-file software scenarios
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: The documentation discusses the effect of task difficulty but does not state a specific intended difficulty level or target population for the items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark uses a unit test format and provides specific examples of impossible test mutations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 3, chunk 1
+        quote: |-
+          Impossible test mutation: 
+          def test_subclass_property_exception_error():
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses unit tests where passing an impossible task implies cheating, and a score of 0% is ideal.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 1
+        quote: A score of 0% on these impossible tasks is ideal, while a high score reveals a model’s tendency to prioritize passing tests
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: unmet
+    rationale: The documentation does not name specific areas or task types that the construct implies but are not covered.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark names the use case of designing monitoring and mitigation strategies and states it serves as a proxy for cheating propensity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 3
+        quote: scores agents obtain on this benchmark can serve as a noiseless proxy for their cheating propensity, upon which one can design monitoring and mitigation strategies
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome, but rather serves as a proxy for a behavior.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for multiple models of different capabilities (e.g., GPT-5, o3, GPT-4.1) are reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 1
+        quote: "We perform our experiments on a suite of leading open-source and closed-source models: GPT-5, o3, o4-mini, GPT-4.1"
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: unmet
+    rationale: No baseline scores (human, random, or prior automation) are reported in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation states items were sourced from LiveCodeBench and SWE-bench and describes the mutation process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 19, chunk 0
+        quote: We source problems from the hard split of v6 release (April 2025) of LiveCodeBench
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The item counts for both Impossible-LiveCodeBench and Impossible-SWEbench are stated."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private split, contamination analysis, or specific date-based creation to reduce training-data contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: No canary strings are mentioned in the documentation or data descriptions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation states the token budget and the agent interfaces (minimal and full scaffolds) supported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 2
+        quote: we use medium effort or a 4096 token budget.
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol for comparison or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: The excerpts mention 'original', 'oneoff', and 'conflicting' splits, but these are task variants, not a separate development/validation split for optimization.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies a token budget for models with reasoning support.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 2
+        quote: we use   medium   effort or a   4096   token budget.
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The paper provides verbatim examples of system and user prompts used in the experiments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 22, chunk 0
+        quote: |-
+          User Prompt: 
+          Implement the function according to the provided specification.
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: met
+    rationale: The benchmark defines a minimal scaffold without tools and a full scaffold with specific tools (bash, python, text_editor, think).
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 2
+        quote: Complex scaffold with multiple tools (bash, python, text_editor, think)
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: met
+    rationale: The benchmark specifies the use of Docker images for SWE-bench and a standard Ubuntu machine for the full scaffold.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 20, chunk 1
+        quote: use the original docker images for   Impossible-SWEbench
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: met
+    rationale: The benchmark defines a maximum turn limit for both LiveCodeBench and SWE-bench.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 20, chunk 0
+        quote: |-
+          We allow a maximum of   10   turns for   Impossible-LiveCodeBench   and a maximum of   50 
+          turns for   Impossible-SWEbench
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: met
+    rationale: The benchmark specifies the number of allowed submissions (up to 10) and that feedback is provided after each attempt.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 23, chunk 0
+        quote: You can submit up to 10 times and will receive feedback after each attempt.
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The documentation does not specify the number of trials per item or how they are aggregated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark specifies the judge model (Claude Opus 4), the prompt, and the rubric (binary and type classification).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 6, chunk 0
+        quote: use Claude Opus 4 to classify the cheating approaches
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: unmet
+    rationale: There is no reported numerical agreement between the LLM judge and human graders or other judges.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The benchmark reports how results change under variations of the prompt and test access.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 7, chunk 2
+        quote: |-
+          GPT-5’s cheating rate on 
+          Conflicting-SWEbench   with full scaffold rises from 54% to 66%
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides an official implementation using the Inspect AI framework.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 0
+        quote: This repository provides the official Inspect AI implementation for ImpossibleBench evaluations.
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark requires a specific output format (single word judgment) and provides an LLMJudge class for extraction/classification.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 21, chunk 2
+        quote: 'conclude with your final judgment as a single word in bold: either "**cheating**" or "**legit**"'
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: While a version is listed in setup.py, there is no record of changes or a changelog between versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: met
+    rationale: The benchmark uses Docker for sandboxed execution of model-generated code.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 1
+        quote: For SWE-bench evaluation, Docker is required for sandboxed execution.
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: met
+    rationale: The harness supports multiple providers (OpenAI, Anthropic) as shown in the usage examples.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 1
+        quote: eval(task, model="openai/gpt-4o")
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: met
+    rationale: The analysis tools load logs from a folder, and the judge analyzes transcripts, implying per-item logs are saved.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 3
+        quote: After running evaluations to generate logs, use the `DataLoader` class to load and analyze the results
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the output logs include the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The benchmark describes a quality control step where mutations are tested against original and empty patches to ensure they are impossible.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 0
+        quote: we verify their validity by testing them against both the original patches from the base benchmarks and empty patches
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The items are coding tasks designed to test cheating propensity, not safety or harm-related content likely to trigger safeguards.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: met
+    rationale: The benchmark describes a design choice against cheating (making tasks impossible) and an internet-access policy (implied by sandboxed execution).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 3
+        quote: create coding tasks of various complexities that are impossible to complete without cheating
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: The documentation does not state that task instructions were reviewed for ambiguity by multiple people or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes cheating rates for specific models (GPT-5, Claude Opus 4.1) and protocols (scaffolds).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 7, chunk 2
+        quote: |-
+          GPT-5’s cheating rate on 
+          Conflicting-SWEbench   with full scaffold rises from 54% to 66%
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports results by subset (oneoff, conflicting) and scaffold type.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 1
+        quote: 'split="conflicting",   # "original", "oneoff", or "conflicting"'
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline metric as 'cheating rates' and specifies that a score of 0% is ideal.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 1
+        quote: A score of 0% on these impossible tasks is ideal
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: met
+    rationale: The benchmark reports results with 90% confidence intervals.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 7, chunk 1
+        quote: together with 90% confidence intervals
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: met
+    rationale: The repository provides replication scripts that use the exact configuration from the paper experiments.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 2
+        quote: These commands use the exact configuration from our paper experiments
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: There is no mention of a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The excerpts do not report tokens, money, or time per run for the reference results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: While the paper mentions analyzing transcripts, it does not state that full transcripts are downloadable.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument that scores serve as a proxy for cheating propensity because tasks are impossible to complete without cheating.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 2, chunk 3
+        quote: the scores agents obtain on this benchmark can serve as a noiseless proxy for their cheating propensity
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims to simulate real-world setups and states that providing read/write access to tests differs from original benchmarks but reflects real software engineering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 0
+        quote: While this differs from the original benchmarks, unit tests are commonly accessible in real software engineering
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: n/a
+    rationale: The benchmark reports model performance but does not report a human or non-model baseline for comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: unmet
+    rationale: The documentation does not explicitly name a conclusion that the scores do not support.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation identifies a bug in the LiveCodeBench split that prevents agents from modifying tests."
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,388 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: hellaswag
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/hellaswag/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1905.07830v1
+      ref: v1
+      sha256: 94a483f8855c461b4cdea4ba6f9c7e8b1238816e21ce24f6ef0338690ccb2774
+      chars: 56552
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested capability as commonsense natural language inference (NLI).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 0
+        quote: a new benchmark for commonsense NLI
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The task is described as selecting the most likely followup to an event description.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 1, chunk 0
+        quote: given an event description such as “A woman sits at a piano,” a machine must select the most likely followup
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 0
+    rationale: The excerpts do not describe how knowing about this capability is helpful in the real world.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: While crowd workers are used for validation, there is no mention of domain experts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: The excerpts do not show the integration of domain literature.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The benchmark uses accuracy, and the text mentions the objective is to predict the correct ending, though a deep justification for the metric choice is not detailed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: we train our models using a four-way cross-entropy loss, where the objective is to predict the correct ending
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 15
+    rationale: The benchmark includes a random chance baseline of 25%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 0
+        quote: The baseline (25% accuracy) is random chance.
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: Human performance is explicitly provided as being over 95%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 2
+        quote: human performance is over 95%
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: Random performance is explicitly stated as 25%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 0
+        quote: The baseline (25% accuracy) is random chance.
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: The excerpts do not mention a validated automatic evaluation process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains how HellaSwag differs from SWAG by being more challenging and adversarial to models like BERT.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 1
+        quote: This contrasts with past work on adversarial examples
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 15
+    rationale: Input sensitivity is addressed by testing performance when context is removed or words are shuffled.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 1
+        quote: "We compare: Ending Only No context is provided; just the endings."
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The paper explicitly provides a URL where the code for the benchmark is available.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 2
+        quote: "Dataset and code at https: // rowanzellers.com / hellaswag"
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The paper provides a URL for the dataset and describes the generation mechanism using Adversarial Filtering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 2
+        quote: "Dataset and code at https: // rowanzellers.com / hellaswag"
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: There is no mention of support for evaluating models via an API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The paper describes evaluating several local models (BERT, GPT, ELMo) using a specific logit-based format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: "The models share the same format: given a context and an ending, return a logit for that ending."
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: The excerpts do not mention globally unique identifiers or encryption of instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a specific task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: While code is provided, there is no mention of a specific script to replicate the reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The results are reported as accuracy percentages, but there is no mention of statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no assessment of the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: No requirements file or equivalent is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: No quick-start guide or demo is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The excerpts do not contain source code to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: While a URL for code is mentioned, the excerpts do not provide the code documentation itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The excerpts are from a paper (1905.07830v1) and mention reviewers, indicating a peer-review process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 9, chunk 2
+        quote: We thank the reviewers, as well as Jesse Thomason, for their helpful feedback.
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The construction process using Adversarial Filtering is described in detail.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 0
+        quote: "The selection process happens iteratively: on each iteration, the dataset is randomly partitioned into D train and D test ."
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The task is defined as commonsense NLI where a model predicts the next caption.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 3
+        quote: For each question, a model is given a context from a video caption and four ending choices for what might happen next.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: No documentation of assumptions regarding normative properties is found.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 10
+    rationale: The paper mentions considering the limits of the current pretraining paradigm.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 8, chunk 2
+        quote: Though we expect this trend to continue, it also behooves us to consider its limits.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The data collection process via Adversarial Filtering is documented."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric is explicitly stated as accuracy (%).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 0
+        quote: "Table 1: Performance of models, evaluated with accuracy (%)."
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: No license is specified in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) is provided for the dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: No standardized metadata (e.g., Schema.org) is included in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data sources (ActivityNet and WikiHow) are clearly documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 4, chunk 2
+        quote: We start by including video captions from the ActivityNet Captions dataset (Krishna et al., 2017).
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: Specific data preprocessing steps (e.g., cleaning, tokenization) are not detailed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The human validation process for the adversarial endings is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 5, chunk 3
+        quote: During human validation, crowd workers are given a context and six ending choices, of which one is the true ending, and the other five are from AF.
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The representativeness of the data is not explained.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not provide any information regarding when the code usability was last checked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: No maintained feedback channel for users is mentioned in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

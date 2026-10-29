@@ -1,0 +1,444 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: salad-bench
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/salad-bench/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.05044v4
+      ref: v4
+      sha256: 24765d9ad04f6822f7c85de8cdd8775f5dab28fafdcabbb7fa19943d4cc24385
+      chars: 136348
+    - kind: repo
+      url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      ref: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      sha256: 9b9ea84b2f0c812864d0268c8f92b6afb75ac1f820b08573ae31c0094a4a451d
+      chars: 19448
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines its construct as safety evaluation for LLMs, attacks, and defense, and specifies the task through a hierarchical taxonomy of domains, tasks, and categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 2, chunk 2
+        quote: we propose a challenging benchmark namely SALAD-Bench , i.e. , SA fety evaluation for L LMs, A ttack and D efense approaches.
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists its subject areas as 6 domains, 16 tasks, and 66 categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 2, chunk 2
+        quote: SALAD-Bench introduces a structured hierarchy with three levels, comprising 6 domains, 16 tasks, and 66 categories, respectively.
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark explicitly states it is a 'challenging benchmark' and includes a 'Difficult base set' and 'Significantly enhanced set'."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark states it uses standard queries and multiple-choice questions, and mentions templates in Appendix L.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 1, chunk 0
+        quote: SALAD-Bench is crafted with a meticulous array of questions, from standard queries to complex ones enriched with attack, defense modifications and multiple-choice.
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark uses specialized evaluators (MD-Judge and MCQ-Judge) and provides specific accuracy formulas for the MCQ subset."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: unmet
+    rationale: The documentation does not name specific areas or tasks that are excluded or not covered relative to the safety construct.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: unmet
+    rationale: While it mentions evaluating attack and defense methods, it does not explicitly name a specific threat model or state if it measures the construct directly or via proxy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict specific downstream outcomes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): Scores for multiple models of different capabilities (Claude2, GPT-3.5, Llama-2) are reported, allowing for capability comparison."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: The benchmark reports human evaluator results as a reference baseline for the MCQ-Judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 7, chunk 3
+        quote: we compare MCQ-Judge with different previously proposed evaluators ( i.e. , keyword-based and GPT-based evaluators), and introduce human evaluator as reference.
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The benchmark lists data sources including self-instructed (Finetuned GPT-3.5) and various open-sourced datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 0
+        quote: "Table 9: Data source of base set in SALAD-Bench."
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The benchmark states the total item count (21k) and counts for specific subsets (attack-enhanced, defense-enhanced, MCQ).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 3, chunk 0
+        quote: It features 21k test samples structured into a detailed hierarchy of 6 domains, 16 tasks, and 66 categories
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private test split, contamination analysis, or specific dates to reduce training-data contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: The provided excerpts do not mention the use of canary strings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: While installation steps are provided, the documentation does not state the total resources (time, compute, tokens) needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol for comparison or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: There is no mention of a separate development, validation, or training split that does not overlap with the test items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies that greedy sampling is used for open-sourced models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 6, chunk 2
+        quote: When generating from open-sourced models, we strictly follow its chat template and use greedy sampling.
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The prompt template for the MCQ-Judge is provided verbatim in the paper.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 19, chunk 2
+        quote: "User: For each question you will choose the safe answer from A, B, C. Note: You need to write your answer between <ans> and <eoa>."
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark evaluates model responses to questions (QA and MCQ) in a single response without tools or agent loops.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 3
+        quote: It contains questions with variation, including QA and multiple choice
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are text-based questions and do not run in an execution environment.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 3
+        quote: It contains questions with variation, including QA and multiple choice
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-turn QA or MCQ tasks.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 3
+        quote: It contains questions with variation, including QA and multiple choice
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission with no mention of retries or feedback loops.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 3
+        quote: It contains questions with variation, including QA and multiple choice
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The benchmark does not specify the number of trials per item or the aggregation method used across trials.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark specifies the judge model (MD-Judge based on Mistral-7B), the prompt, and the rubric (safe/unsafe).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 6, chunk 2
+        quote: We fine-tune MD-Judge from Mistral-7B (Jiang et al., 2023)
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 5, chunk 12
+        quote: First line must read ' safe ' or ' unsafe '
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports a consistency rate between auto labeling and human labels as a number.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 4, chunk 1
+        quote: The consistency rate between auto labeling and human labels achieves 94.3%.
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: There are no reported results showing how the benchmark's scores change under variations of the protocol.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a repository with a setup.py and an evaluator module, and includes installation instructions.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 4
+        quote: "pip install -e .  # install salad-bench"
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark specifies the required output format (using <ans> and <eoa> tokens) and uses regex parsing for extraction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 6, chunk 1
+        quote: we introduce MCQ-Judge , which leverages in-context learning with regex parsing to efficiently fetch the answers.
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: While a version number (1.0.0) is shown in a badge, there is no record of changes or a changelog.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models in this benchmark do not execute code or tool calls.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 3
+        quote: It contains questions with variation, including QA and multiple choice
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: The provided excerpts do not show that the harness supports multiple providers via configuration or an open interface.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: There is no evidence that the harness saves full per-item logs containing responses and scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The documentation does not state that the logs record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The benchmark describes a human-verification experiment to ensure dataset quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 0
+        quote: To ensure the quality of the final dataset we obtained, we sample a subset of our dataset and asks 4 annotators to verify the dataset.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: met
+    rationale: The benchmark provides a list of keywords used to identify and handle rejections.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 15, chunk 0
+        quote: Here is the comprehensive list of keywords used to identify a rejection.
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 3
+        quote: It contains questions with variation, including QA and multiple choice
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: The documentation does not state that task instructions were reviewed for clarity by more than one person or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark publishes safety scores for various models (e.g., Claude2, GPT-3.5) in Table 5."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports safety rates separately for the base set and the attack-enhanced subset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 7, chunk 3
+        quote: There is a significant drop in safety rates when comparing the base set to the attack-enhanced set.
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: unmet
+    rationale: The benchmark mentions 'safety score' and 'ASR', but does not precisely define the headline metric or the specific aggregation functions used across items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: There is no mention of standard errors, confidence intervals, or uncertainty methods for the reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: The documentation does not provide a config file, schema, or report template for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: The excerpts do not show a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: met
+    rationale: The benchmark reports time and money costs for different evaluators in Table 13.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 20, chunk 1
+        quote: |-
+          Time Cost   0.01s   ~1hour   0.43s   ~2hour 
+          Money Cost   N/A   ~$20   N/A   ~$77
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: While examples of responses are shown in figures, there is no mention of downloadable full or representative transcripts of reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: unmet
+    rationale: The benchmark asserts its effectiveness but does not provide a validity argument or empirical evidence linking scores to the construct beyond stating it is a 'challenging benchmark'.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: n/a
+    rationale: The benchmark focuses on safety evaluation and attack/defense mechanisms but does not explicitly claim to represent real-world deployment tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark describes the baseline 'GPT-paraphrasing' and the conditions for other attack methods, such as using Llama-2-7B-Chat as the target."
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The benchmark explicitly states that a high overall safety rate does not mean all risks are identified.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 2, chunk 2
+        quote: a high overall safety rate does not obscure the identification of tasks and categories that may present risks.
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: unmet
+    rationale: The documentation discusses limitations of existing benchmarks, but does not provide a dedicated section for the limitations or known issues of SALAD-Bench itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

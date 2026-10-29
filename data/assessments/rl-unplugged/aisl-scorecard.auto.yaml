@@ -1,0 +1,408 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: rl-unplugged
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/rl-unplugged/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2006.13888v4
+      ref: v4
+      sha256: 18f7aed76d303a02d46056682fe91b3386140944d30105b395fe8bd533cfab76
+      chars: 77706
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: unmet
+    rationale: The documentation describes the benchmark's purpose and the types of tasks included, but it does not provide a precise operational definition of the target phenomenon stating which observable outputs count as evidence of it.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation specifies the scope (diverse range of domains) and explicitly names games excluded because they are 'very hard exploration games'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 19, chunk 1
+        quote: We didn’t include Elevator Action, Berzerk, JourneyEscape, MontezumaRevenge, PitFall, Private Eye, Skiing, Solaris and Venture since they are very hard exploration games.
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper mentions different axes of difficulty and task domains, but it does not report independent scores for these facets in a table or figure; it often aggregates results (e.g., using the median).
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The docs define the task space via axes (Action space, Observation space, etc.) and report item counts for the Atari games (46 games).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 6, chunk 2
+        quote: In our release, we provide experiments on the 46 of the Atari games that are available in OpenAI gym.
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: While the docs mention choosing games to cover diverse difficulty, they do not report per-category item counts over the documented task space or a stratified sampling plan.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: There is no documented verification step (human review or validator) with a pass rate for every item to ensure it tests the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: The documentation does not identify a specific named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: unmet
+    rationale: The benchmark reuses datasets (e.g., Atari, DM Control), but there is no table or figure comparing the same model on the original dataset versus the adapted benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: unmet
+    rationale: The benchmark reuses datasets, but it does not list every modification made to the reused data along with a reason for each.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are mentioned for some domains, there is no power calculation or confidence-interval half-width reported to justify statistical power.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results (e.g., Figure 6) use error bars for the median, but not every score in a main results table has a confidence interval or standard error with the number of runs stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The benchmark uses automated environments and datasets; no human raters are used to label items or judge outputs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: No human raters are used to label items or judge outputs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: Labels are deterministic (episodic rewards/scores from the environment), not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 19, chunk 2
+        quote: '"score" corresponds to the episodic reward that the offline agent receives in the environment'
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Labels are deterministic (episodic rewards/scores from the environment), not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 19, chunk 2
+        quote: '"score" corresponds to the episodic reward that the offline agent receives in the environment'
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The paper does not provide a table or figure breaking down failures by a named confound like formatting or prompt length.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The docs discuss general trends (e.g., performance on partially-observable environments), but they do not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement that names the tasks, each metric, and the construct from cv.01 they measure with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: "The paper compares itself to prior work (e.g., Fu et al., 2020) and states a concrete difference: the inclusion of tasks that test memory and representation learning versus fully observable MDPs."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 9, chunk 2
+        quote: Unlike our benchmark which includes tasks that test memory and representation learning, their tasks are all from fully observable MDPs
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The docs do not provide a limitations statement specific to the design combined with a claim linking scores to a real-world capability or harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The excerpts do not identify any secondary capabilities or provide control conditions/ablations for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap was identified in iv.02, and no quantification or mitigation is described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There is no report of results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: The benchmark evaluates RL agents where outcomes are based on episodic rewards/scores from the environment, not parsing of free-form text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 19, chunk 2
+        quote: '"score" corresponds to the episodic reward that the offline agent receives in the environment'
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report contamination checks or training-data cutoffs for the evaluated models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark uses fixed datasets generated from snapshots, effectively acting as a static snapshot of the environment state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 7, chunk 1
+        quote: three datasets of different sizes were generated for each environment by combining the three snapshots
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: There is no mention of resetting state or using fresh containers/processes between evaluation runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The evaluation is based on episodic rewards in RL environments, not multiple-choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 19, chunk 2
+        quote: '"score" corresponds to the episodic reward that the offline agent receives in the environment'
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name any specific domain experts or user groups consulted to define scenarios or criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: There is no mention of domain experts reviewing the content for accuracy or the size of the sample reviewed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: "The benchmark reports results under two different policy selection settings: online and offline."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 4, chunk 2
+        quote: Importantly, our benchmark allows for evaluation in both online and offline policy selection settings.
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: While the benchmark includes diverse tasks, it does not report results as a separate slice with item counts for a specific stress condition or shift differing from train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark provides a general suite of environments for offline RL research rather than claiming to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark provides a general suite of environments for offline RL research rather than claiming to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark provides a general suite of environments for offline RL research rather than claiming to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While hardware (Tesla V100 GPU) and some hyperparameters are listed, there is no mention of software versions, a lockfile, pinned requirements, or the OS/container image.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 15, chunk 0
+        quote: Hardware   Tesla V100 GPU
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The documentation does not describe quality-control steps or a correction channel (errata/changelog) that records a fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The documentation does not name specific unavoidable flaws with their bias direction, impact estimates, and valid conclusions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: No human or expert baseline is reported for the tasks, nor is there a statement explaining why none is relevant while providing a named prior system as a reference point.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: The documentation mentions the use of a random agent's score as a baseline for normalization in Atari games.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 19, chunk 2
+        quote: '"random_score" corresponds to the score of an random agent'
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The excerpts describe RL agents and environment interactions, but there is no mention of a model being used as a rater or judge for the benchmark's ground truth.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The excerpts describe RL agents and environment interactions, but there is no mention of a model being used as a rater or judge for the benchmark's ground truth.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The excerpts describe RL agents and environment interactions, but there is no mention of a model being used as a rater or judge for the benchmark's ground truth.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The excerpts describe RL agents and environment interactions, but there is no mention of a model being used as a rater or judge for the benchmark's ground truth.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: unmet
+    rationale: There is no evidence that multiple annotators labeled items independently or that a programmatic verification method's accuracy on a labeled sample was reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: While some tasks are mentioned as not shown to be solvable, the documentation does not classify every task as solvable or intentionally unsolvable with expected behaviors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: unmet
+    rationale: The excerpts do not provide verified ground-truth solutions or evidence that such solutions were checked by an oracle or second person.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences for the scorer or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The excerpts do not state the scoring outcomes for partial answers, off-format answers, refusals, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The benchmark evaluates RL agents based on rewards/scores in environments, which does not involve parsing free-form text output.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The benchmark evaluates RL agents based on rewards/scores in environments, which does not involve parsing free-form text output.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null/trivial-agent runs or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

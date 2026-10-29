@@ -1,0 +1,244 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: safebench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/safebench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2206.09682v4
+      ref: v4
+      sha256: 0f1ee84ff0998412400a2386114317e04c56257dd55b94c35c1dc453071e1916
+      chars: 89356
+    - kind: repo
+      url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      ref: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      sha256: 02e5136e8abf04e38804e42a946027be2a6e7b35dc16ed7a2a5b7e9b88ea4564
+      chars: 65011
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The paper defines the evaluation of safety/robustness through observable outputs such as collision rate and route completion.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 2, chunk 2
+        quote: We report the evaluation results based on 10 metrics, such as collision rate , frequency of running red lights , and average percentage of route completion .
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the paper mentions focusing on AD algorithms and safety-critical scenarios, it does not explicitly name any excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The paper identifies different levels of evaluation metrics (functionality vs safety) and provides separate scores for them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 22, chunk 3
+        quote: We evaluate different combinations of input state spaces and RL algorithms on 3 different levels of evaluation metrics.
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts mention functionality and etiquette levels, but there is no report of control conditions or ablation results for these secondary abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no evidence that the effect of output-format requirements on model performance was measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark evaluates object detection (mAP) and driving metrics (collision rate, etc.) in a simulator; there is no evidence of automated parsing of free-form text output.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: met
+    rationale: The documentation describes a sampling strategy for generating traffic scenarios from a joint distribution of auto-regressive building blocks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 5, chunk 1
+        quote: obtain the generated scenarios by sampling from the joint distribution of these blocks
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: While the paper mentions scenario selection statistics, it does not document a quality or relevance check that every item passed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: The excerpts mention perturbing positions for adversarial generation, but they do not report results for a counted subset of perturbed items separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that existing assets were used and cites the creators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 16, chunk 1
+        quote: If your work uses existing assets, did you cite the creators? [Yes]
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: While the paper mentions using existing assets, it does not provide a specific analysis of the strengths and limitations of a reused dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: There is no comparison of performance between the new benchmark and an original version of a reused dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The documentation does not list specific modifications made to reused datasets or explain how they improve construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts describe robustness tests and adversarial attacks, but they do not describe a test to detect data contamination (leakage) of the benchmark into training sets.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of the benchmark items to prevent contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper does not report any search or overlap check of the benchmark source material against named training corpora or models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the paper mentions 8 scenarios with 10 variations each, it does not provide a power calculation or confidence-interval width relative to the smallest claimed gap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results table for AD algorithms (Table 4) does not report confidence intervals or standard errors for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark uses Carla simulation and does not employ human raters.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 21, chunk 1
+        quote: we don’t use any personal information since our experiments are based on Carla simulation
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are based on deterministic simulation metrics (e.g., collision rate, route completion) rather than subjective human or model ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 9, chunk 0
+        quote: "CR: collision rate, RR: frequency of running red lights, SS: frequency of running stop signs"
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts mention collision rates and overall scores, but they do not describe specific failure modes or provide counts of these modes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder; the provided tables show performance by algorithm and state space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The paper identifies a specific direction for improvement (model architecture and input state space) based on the observation that PPO with 4D+BEV performed best.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 21, chunk 3
+        quote: PPO with 4D+BEV input achieves the best OS on SafeBench testing scenarios, which indicates potential possible directions for researchers to design their own model architecture and input state space.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to the real-world application of autonomous driving (AD).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 1, chunk 0
+        quote: deploying machine learning algorithms for real-world applications, especially in safety-critical domains such as autonomous driving (AD)
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition (def.1) to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: While the text mentions that SafeBench is different from existing benchmarks, it does not name a specific existing benchmark to compare against.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text states a limitation regarding the simulation's inability to exactly reflect real-world conditions, which affects what the benchmark measures.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 10, chunk 3
+        quote: the simulation in SafeBench cannot exactly reflect real-world conditions
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

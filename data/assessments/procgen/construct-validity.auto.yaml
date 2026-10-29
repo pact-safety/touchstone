@@ -1,0 +1,248 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: procgen
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/procgen/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1912.01588v2
+      ref: v2
+      sha256: 723d1ff3392b3bda3a5f5d8d2399ebf50163d81bc5a2da26168f61046f6b56f7
+      chars: 57097
+    - kind: repo
+      url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+      ref: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
+      sha256: c05caebb45027315d9f15fbaf1c83eac4407526940d4444c6ba9a07f0ffdd9a7
+      chars: 52460
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The phenomenon being measured is generalization, and the observable output used as evidence is the normalized return calculated from the raw expected return.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 1
+        quote: we define the normalized return to be   R norm   = ( R   −   R min ) / ( R max   −   R min )
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the benchmark describes its environments and goals, it does not explicitly state the scope of the phenomenon nor name any excluded aspects.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The text mentions capabilities like exploration and memory, but it does not state that the phenomenon is unitary or that these sub-components are scored separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: While the paper mentions an ablation for deterministic levels and discusses memory, it does not report control conditions or ablation results for every named secondary ability required by the tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: The provided excerpts do not contain any measurement of how output-format requirements affect model scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses reinforcement learning agents in environments where performance is measured by episodic return, not by parsing free-form text output.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 2
+        quote: Your score is displayed as "episode_return" in the lower left.
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: met
+    rationale: The documentation describes a sampling strategy where levels are specified by a start seed and the number of levels to be generated.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 15
+        quote: "'start_level' and 'num_levels' fully specify the set of possible levels."
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: The excerpts state that solvability is not strictly guaranteed and only 'believed' to be high, but there is no documentation that every item passed a quality check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items with separately reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation mentions the reuse of the CoinRun environment."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: While the documentation mentions changes to CoinRun, it does not explicitly state a strength and a limitation of the original CoinRun work.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: The provided excerpts do not show a performance comparison between the new benchmark and the original CoinRun environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The documentation mentions 'subtle changes' to CoinRun but does not list the specific modifications or explain how they improve construct validity.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 1
+        quote: there have been subtle changes to the environment
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe a contamination test or report its results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The paper explicitly mentions testing on held out levels to benchmark generalization.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 5, chunk 0
+        quote: testing on held out levels
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the paper mentions training set sizes (e.g., 500 levels), it does not provide a power calculation or report confidence-interval widths against the smallest claimed gap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The excerpts mention that mean and standard deviation are shown in figures, but there is no main results table where every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark uses procedurally generated environments and RL agents; no human raters are used for scoring.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels (scores) are based on raw episodic returns from a deterministic game environment, not subjective human or model ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 0
+        quote: We report the mean raw episodic return, where each episode includes a single level.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts mention overfitting and poor performance in some environments, but they do not describe specific failure modes or provide counts of these failures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors conducted experiments scaling model size and adjusting Rainbow hyperparameters to improve performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 5, chunk 1
+        quote: We now investigate how scaling model size impacts both sample efficiency and generalization in RL.
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 6, chunk 1
+        quote: We therefore reduced gradient variance by running the algorithm on 8 parallel workers, using shared model parameters and averaging gradients between workers. This greatly improved performance.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: unmet
+    rationale: The excerpts do not name a specific real-world application linked to the benchmark tasks; they only mention general RL research and 'more complex settings'.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no quotable statement linking the choice of tasks and metrics to a specific operational definition provided in a 'def.1' section.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to bsuite, noting that bsuite includes a single environment for visual generalization while Procgen has it across all environments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 7, chunk 1
+        quote: bsuite includes a single environment that requires visual generalization in the form of an MNIST contextual bandit, whereas visual generalization is a primary source of difficulty across all Procgen environments.
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses a design trade-off regarding memory, stating environments were designed to require minimal memory to isolate other RL challenges.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 2, chunk 2
+        quote: These environments were designed to require minimal use of memory, in order to isolate the challenges in RL.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

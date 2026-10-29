@@ -1,0 +1,518 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: swe-lancer
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 4afbde31ba075992ffd96209f6533de8e450becd
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/swe-lancer/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2502.12115v4
+      ref: v4
+      sha256: 482452e87e93468c36d0f229da6a5999663a4f6e0656a50a8c5938c60a4eeb11
+      chars: 110399
+    - kind: repo
+      url: https://github.com/openai/SWELancer-Benchmark/tree/4afbde31ba075992ffd96209f6533de8e450becd
+      ref: 4afbde31ba075992ffd96209f6533de8e450becd
+      sha256: c76421ae8898c49b5cf9b23bd108a6ad3580c64d19b49c7c621935412b798e62
+      chars: 213
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines its construct as evaluating model performance on real-world freelance software engineering work through complex full-stack software engineering and management tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 2
+        quote: a benchmark for evaluating model performance on real-world, freelance software engineering work
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists task topics such as Application Logic and UI/UX development.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 0
+        quote: 74% of IC SWE tasks and 76% of SWE Management tasks involve Application Logic, while 17% of IC SWE tasks and 18% of SWE Management tasks involve UI/UX development
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The benchmark states that tasks are priced based on real-world difficulty and that the work remains challenging for frontier models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 0
+        quote: SWE-Lancer issues are dynamically priced based on real-world difficulty
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark specifies the format as code tasks (IC SWE) and proposal selection (SWE Management), and provides a full example prompt for the manager task.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 31, chunk 0
+        quote: Below, we share an example, filled-in SWE Manager task prompt, exactly as it is given to the model.
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses end-to-end tests for IC SWE tasks and ground truth matching for Manager tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 1, chunk 3
+        quote: SWE-Lancer evaluates IC SWE tasks using end-to-end tests created by a team of professional software engineers
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly states that the current evaluation harness does not support multimodal inputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 2
+        quote: Our current evaluation harness does not support multimodal inputs
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark names intended use cases regarding the economic impact of AI on labor markets and productivity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 2
+        quote: enables research into the broader societal impacts of autonomous agents, including impacts on labor markets, productivity
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome, but rather maps performance to monetary value.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: The benchmark reports pass rates for three models of different capabilities (GPT-4o, o1, and Claude 3.5 Sonnet).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 2
+        quote: The best performing model, Claude 3.5 Sonnet, earns $208,050 on the SWE-Lancer Diamond set and resolves 26.2% of IC SWE issues
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: The benchmark provides a baseline by comparing model costs and success rates against the actual costs paid to human freelancers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 0
+        quote: Compared to the freelancer cost of solving all 237 tasks ($236,300 empirically), GPT-4o + freelancer fallback is 8.84% cheaper
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The benchmark states items were sourced from the open-source Expensify repository and filtered by human engineers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 0
+        quote: The open-source Expensify repository posts tasks on Upwork for freelance engineers with concrete payouts. We sourced real tasks that were previously solved by paid contributors.
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The benchmark states the item count for the IC SWE Diamond tasks (237) and the SWE Management tasks (724).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 4, chunk 0
+        quote: This set contains 724 tasks collectively valued at $585,225
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark maintains a private holdout set to mitigate contamination risks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 28, chunk 1
+        quote: We maintain a $499,200 private holdout set to mitigate risks from contamination and model browsing.
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: There is no mention of canary strings in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation states the resources needed (Docker container, OpenAI API) and the model interfaces supported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 2
+        quote: agents run in a Docker container with the repository preconfigured and no Internet access
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: The excerpts mention a public evaluation split (Diamond) and a private holdout, but do not describe a separate labeled development/validation split for optimization.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies the temperature and reasoning effort for the reported results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 0
+        quote: All rollouts are conducted with temperature 1.0.
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 2
+        quote: OpenAI’s o1 (with ”high” reasoning effort (OpenAI, 2025))
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The benchmark provides the exact prompt templates for both IC SWE and SWE Management tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 19, chunk 0
+        quote: You are   an   expert   software engineer maintaining the Expensify repository.
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 31, chunk 0
+        quote: You   are   an   expert   software   engineering   manager   working   on   the   Expensify   repository.
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: met
+    rationale: The benchmark names the agent scaffold (basic scaffold) and the tools available (browse codebase, modify files, execute terminal commands, and a user tool).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 2
+        quote: Models operate with a basic scaffold that lets them browse the local codebase, modify files, and execute terminal commands.
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 1
+        quote: Each IC SWE Task has an accompanying user tool
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: met
+    rationale: The benchmark provides a Docker image and specifies the VM hardware (Azure Standard D2as v4).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 0
+        quote: We execute agents within Docker containers using a pre-built SWE-Lancer image, which we open-source.
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 0
+        quote: Each agent is executed within a Microsoft Azure Standard D2as v4 virtual machine
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: met
+    rationale: The benchmark defines both a tool call limit and a time limit for agent runs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 0
+        quote: the maximum number of tool calls is 100 and the maximum time allowed is 3 hours.
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: unmet
+    rationale: While the benchmark states that the baseline setup uses a single attempt (pass@1), it does not specify the feedback given to the agent after an incorrect attempt.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 2
+        quote: Each agent has a single attempt (pass@1)
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark specifies the use of pass@1 for baseline results and describes the pass@k aggregation for other experiments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 2
+        quote: Each agent has a single attempt (pass@1)
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 6, chunk 0
+        quote: we evaluate GPT-4o and o1 using the pass@k metric
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: n/a
+    rationale: The benchmark uses end-to-end tests (for IC SWE) and original manager choices (for SWE Manager) rather than an LLM judge to score responses.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: n/a
+    rationale: No LLM judge is used to score responses.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The benchmark reports results under variations of the protocol, specifically regarding test-time compute and tool affordances.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 2
+        quote: including running ablations on test-time compute and tool affordances.
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides an open-source evaluation harness and Docker image.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 1, chunk 0
+        quote: we open-source a unified Docker image and a public evaluation split
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 0
+        quote: using the OpenAI API and our open-source eval harness.
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies a required JSON format for SWE Manager tasks and provides the path where it must be written."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: The excerpts do not mention version identifiers for the benchmark or a changelog of changes between versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: met
+    rationale: The benchmark runs model-generated code inside Docker containers and provides the image.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 0
+        quote: We execute agents within Docker containers using a pre-built SWE-Lancer image, which we open-source.
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness supports models from different providers (OpenAI and Anthropic) and open-source models (Deepseek, Llama)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: The excerpts do not explicitly state that the harness saves full per-item logs containing the model's response and score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the output logs include the model identifier and benchmark version/commit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The benchmark describes a validation step where tests were triple-verified by engineers and an automated system ensured they passed in the fixed state and failed in the broken state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 0
+        quote: Tests underwent three rounds of validation by software engineers for quality, coverage, and fairness, supplemented by an automated system ensuring each test passed in the fixed state and failed in the broken state.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The tasks are based on real freelance software engineering issues (bug fixes, features) and do not contain content likely to trigger safety/security safeguards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 4
+        quote: The SWE-Lancer dataset consists of 1,488 real freelance software engineering tasks from the Expensify open-source repository
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: met
+    rationale: The benchmark specifies a no-internet policy and removes GitHub remotes to prevent scraping of solution artifacts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 2
+        quote: agents run in a Docker container with the repository preconfigured and no Internet access
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 2
+        quote: We further remove the GitHub remote and any future commits to avoid the possibility of models scraping code diffs or pull request details.
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: met
+    rationale: The benchmark documents that issues were screened by at least three experienced human software engineers for clarity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 16, chunk 1
+        quote: Each task in our final set was screened by at least three experienced human software engineers.
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark publishes scores for multiple models (GPT-4o, o1, Claude 3.5 Sonnet) with specific versions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports pass rates separately for different task types (Application Logic, UI/UX, etc.) and nature of work (Bug Fixes, New Features, etc.).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 9, chunk 0
+        quote: Table 2. Diamond Task Pass Rates by Task Type
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 13, chunk 0
+        quote: Table 3. Diamond Task Pass Rates by Nature of Work
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines headline metrics including pass@1 accuracies, total payout (earnings), and earn rates, and specifies aggregation across tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 5, chunk 3
+        quote: we present the pass@1 accuracies, corresponding “earnings” (i.e., total payout), and earn rates (i.e., payout received divided by total possible payout)
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: met
+    rationale: The benchmark reports 95% confidence intervals for the earnings of GPT-4o and o1.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 2
+        quote: The 95% confidence interval for GPT-4o was $194.31 ± $17.31, while o1’s was $1,623.76 ± $56.68.
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: The excerpts do not mention a config file, schema, or report template for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: There is no mention of a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: met
+    rationale: The benchmark reports API costs for GPT-4o and o1 relative to freelancer costs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 37, chunk 1
+        quote: GPT-4o costs 0.08% of freelancer cost and o1 costs 0.7%
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: While qualitative summaries of trajectories are provided in an appendix, there is no mention of full or representative transcripts being downloadable.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument that its end-to-end tests simulate real-world user workflows to catch bugs that unit tests might miss.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 3, chunk 0
+        quote: the end-to-end test we created for this task simulates the entire user workflow – including logging in, uploading a profile picture, and interacting with a second account – and catches the bug.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims to represent real-world freelance work and states that freelance tasks tend to be more self-contained than full-time software engineering tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: Freelance tasks tend to be more self-contained than full-time software engineering tasks
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: n/a
+    rationale: The benchmark compares models to each other and to freelancer costs, but does not report a baseline model/subject under specific conditions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The documentation states that high performance does not yet imply the reliability needed for trustworthy deployment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 2
+        quote: the majority of its solutions are incorrect, and higher reliability is needed for trustworthy deployment.
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark includes a limitations section noting that certain engineering tasks (infrastructure) are underrepresented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.12115v4
+        locator: 2502.12115v4 page 8, chunk 4
+        quote: infrastructure engineering tasks (e.g. refining Kubernetes cluster architectures and debugging pod failures, node crashes, or networking problems) are underrepresented
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

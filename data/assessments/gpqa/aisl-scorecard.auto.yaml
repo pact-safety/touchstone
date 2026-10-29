@@ -1,0 +1,468 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gpqa
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 56686c06f5e19865c153de0fdb11be3890014df7
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gpqa/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.12022v1
+      ref: v1
+      sha256: 2d47befe12703b826b02a05088fb387b4ceae866aa0305f972f0f03aba4eebd0
+      chars: 105883
+    - kind: repo
+      url: https://github.com/idavidrein/gpqa/tree/56686c06f5e19865c153de0fdb11be3890014df7
+      ref: 56686c06f5e19865c153de0fdb11be3890014df7
+      sha256: e3448453642c4b519ffee29193007089c3c99d6c08f12b6fbc328427d83172d8
+      chars: 6415
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The target phenomenon is defined as questions that have a ground truth known to experts but cannot be reliably solved by highly skilled non-experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 2, chunk 1
+        quote: datasets of questions which have a ground truth answer known to certain experts, but which even highly skilled, well resourced, and motivated non-experts still cannot reliably solve
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The scope is defined as graduate-level questions in physics, chemistry, and biology, and it explicitly excludes the use of LLM assistants for non-experts."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: n/a
+    rationale: The paper treats the phenomenon as a single construct of 'expertise gap' or 'difficulty' without naming distinct facets that require independent scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 6, chunk 1
+        quote: The delta ( Δ ) column shows the expertise gap, which is the difference between the expert validator accuracy and non-expert validator accuracy
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by high-level domains and subdomains, and item counts are reported for these subdomains.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 5, chunk 3
+        quote: "Biology : Molecular Biology (85), Genetics (20)"
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The documentation reports per-category item counts for the high-level domains in the extended set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 6, chunk 0
+        quote: |-
+          Biology   105   66 . 7   43 . 2   23 . 5 
+          Physics   227   57 . 3   32 . 5   24 . 8 
+          Chemistry   214   72 . 0   31 . 4   40 .
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: Every item passed a multi-step expert validation process to verify objectivity and accuracy, with specific criteria for inclusion in the main/diamond sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 5, chunk 0
+        quote: Each question goes through a three-step expert validation phase
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a specific subset of boundary, perturbed, or adversarial items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark consists of original questions written by experts, not a reused dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark reuses no prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are stated, there is no power calculation or confidence-interval half-width reported for the model gaps.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 10, chunk 0
+        quote: containing 546, 448, and 198 questions respectively
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results table (Table 5) reports accuracy percentages but does not provide confidence intervals or standard errors for each score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 10, chunk 0
+        quote: |-
+          Accuracy by subset (%) 
+          Extended Set   Main Set   Diamond Set 
+          Few-Shot CoT Llama-2-70B-chat   30.4   29.1   28.1
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: met
+    rationale: The documentation reproduces the main instructions given to contractors for each part of the project.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 24, chunk 1
+        quote: |-
+          A.5   Annotator Instructions 
+          Here are the main instructions we gave to contractors for each of the four main parts of the project
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, and no check for demographic skew is described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 12, chunk 3
+        quote: we do not enforce representation of any particular region or demographics
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: The labels are deterministic (multiple-choice questions with a single correct answer).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 24, chunk 2
+        quote: Check that there is an objectively correct answer, which experts in your domain would agree upon.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: The labels are deterministic (multiple-choice questions with a single correct answer).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 24, chunk 2
+        quote: Check that there is an objectively correct answer, which experts in your domain would agree upon.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: There is no table or figure breaking down model failures by a named confound like format or length.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper analyzes expert validator mistakes, but it does not report named failure categories for the AI models with counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking the specific tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to ExpertQA and QuALITY, noting that GPQA uses a more involved validation process and a real-world expertise gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 12, chunk 1
+        quote: By comparison, the ExpertQA dataset (Malaviya et al., 2023) also sources questions from experts, but the answers are determined by having experts revise language model outputs
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The paper provides a limitations section and links the benchmark to the real-world capability of scalable oversight for superhuman models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 12, chunk 2
+        quote: |-
+          Some limitations of   GPQA   are as follows: 
+          •   Small size.
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap was named in iv.02, and no measurement or mitigation of such overlap is described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reported results comparing different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: "The benchmark uses multiple-choice questions where answers are extracted via regex, but the decision rule for n/a applies if scoring involves no parsing of free-form output; however, the provided excerpts show the use of a simple regex to extract answers from model responses, which is a form of parsing. But since the target is MCQs, it is effectively a fixed-choice selection. Actually, the rule says 'n/a when: Scoring involves no parsing of free-form output'. The excerpts show 'We extracted answers from the model response using a simple regex', which is parsing free-form output. Therefore, it is not n/a. It is unmet because no parser bias test is reported."
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or training cutoffs for every evaluated model (e.g., Llama-2, GPT-4).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (a dataset) and local/API scoring without a mutable external environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of stateless model calls for each question.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark uses multiple-choice questions and reports the random-guess baseline of 25%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 7, chunk 3
+        quote: Each multiple-choice question has four possible answer choices, so randomly guessing would yield 25% accuracy.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: While the documentation mentions using domain experts to write and validate questions, it does not name the specific experts or user groups consulted to define the evaluation scenarios and acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The documentation states that experts in biology, physics, and chemistry were used, and that each question was validated by two experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 1, chunk 0
+        quote: multiple-choice questions written by domain experts in biology, physics, and chemistry
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 11, chunk 1
+        quote: We verify that the answers to our questions are objective by having each one validated by two experts
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for multiple prompting settings including zero-shot, few-shot, and chain-of-thought.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 9, chunk 2
+        quote: "we evaluate four prompting methods for each of these models: zero-shot, few-shot, zero-shot chain-of-thought"
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not report results for a separate slice under a named stress condition or shift that differs from the train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is presented as a general graduate-level Q&A dataset for scalable oversight experiments, not for a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is presented as a general graduate-level Q&A dataset for scalable oversight experiments, not for a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is presented as a general graduate-level Q&A dataset for scalable oversight experiments, not for a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation does not list sampling parameters, hardware models, or the OS/container image.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: While the docs describe a revision process for questions, they do not provide a correction channel like a changelog or errata that records at least one fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The documentation does not name any unavoidable flaws, and the decision rule states that naming no flaws is unmet.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark reports non-expert accuracy as a baseline for the graduate-level tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 17, chunk 0
+        quote: Non-Expert Accuracy (%)
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: The excerpts do not report the score of a trivial baseline such as random selection or majority-class prediction.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The excerpts do not indicate that a model was used as a rater or judge for the ground truth; instead, human experts were used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The excerpts do not indicate that a model was used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The excerpts do not indicate that a model was used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The excerpts do not indicate that a model was used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The pipeline uses two expert validators and three non-expert validators, and reports objectivity based on expert assessment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 5, chunk 0
+        quote: "Each question goes through a three-step expert validation phase: 1. First Expert Validation... 3. Second Expert Validation"
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: There is no documentation stating that every task is classified as solvable or intentionally unsolvable.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: Reference solutions are provided and verified by multiple experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 12, chunk 1
+        quote: collecting questions from highly-trained experts, asking them to explain their answers, and giving the questions to other experts who provide detailed feedback.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The excerpts do not list accepted equivalences or show a non-identical correct answer passing the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, refusals, and errors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The benchmark uses multiple-choice questions with regex matching for labels, which does not involve parsing free-form output for the ground truth scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 19, chunk 2
+        quote: We extracted answers from the model response using a simple regex matching phrases like ‘answer is’, ‘answer:’ etc.
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The benchmark uses multiple-choice questions with regex matching for labels, which does not involve parsing free-form output for the ground truth scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: 2311.12022v1 page 19, chunk 2
+        quote: We extracted answers from the model response using a simple regex matching phrases like ‘answer is’, ‘answer:’ etc.
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for a null/trivial-agent run or a targeted exploit attempt on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,268 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bold
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bold/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2101.11718v1
+      ref: v1
+      sha256: be88679e16de72d41bbb3a6018df6edfd9ac84074663d8ecee3beca27cfc4487
+      chars: 90339
+    - kind: repo
+      url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      ref: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      sha256: 2678000f25d85f0362a62c15f354ad6954f52f71c22f55f80999b5ce8f3c9a28
+      chars: 24778
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The paper provides a definition of a biased language generation model based on the observable output of generating text perceived as negative, unfair, prejudiced, or stereotypical.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 1, chunk 3
+        quote: a language generation model is biased if it disproportionately generates text that is often perceived as being negative, unfair, prejudiced, or stereotypical against an idea or a group of people with common attributes.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: met
+    rationale: The scope is defined by the demographic domains considered, and the text explicitly names other groups, languages, and social biases as being beyond that scope.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: There are various other groups, languages, types of social biases and cultural contexts that are beyond the scope of BOLD
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is broken down into demographic domains (sub-components) which are listed and measured separately.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 3, chunk 0
+        quote: "We study fairness across major sub-groups that compose each of the following demographic domains: profession, gender, race, religious belief, and political ideology."
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify any secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no mention of measuring the effect of output-format requirements on the model scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses automated metrics (classifiers) to score generated text rather than parsing free-form output for specific structured answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 1, chunk 1
+        quote: We also propose new automated metrics for toxicity, psycholinguistic norms, and text gender polarity
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: met
+    rationale: The authors document using English Wikipedia as a source for gathering prompts to ensure diversity across domains and demographics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 5
+        quote: we take English Wikipedia as a source for gathering prompts
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: The excerpts do not provide evidence that every item in the dataset passed a documented quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly describes BOLD as a novel dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: We presented a novel dataset BOLD
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark is described as a novel dataset, and the excerpts do not indicate that a prior dataset was reused or adapted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: We presented a novel dataset BOLD
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark is described as a novel dataset, and the excerpts do not indicate that a prior dataset was reused or adapted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: We presented a novel dataset BOLD
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark is described as a novel dataset, and the excerpts do not indicate that a prior dataset was reused or adapted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: We presented a novel dataset BOLD
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any contamination tests or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of the dataset for ongoing evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: While the paper mentions the training corpora of the models used (e.g., Wikipedia, WebText), it does not report a search or overlap check between the benchmark's source material and these corpora.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While some sample sizes for validation are mentioned, the overall benchmark sample size is not stated, nor is there a power calculation or confidence-interval width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not contain the main results table, and there is no mention of confidence intervals or standard errors for the primary scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The paper mentions using crowd workers for labeling, but it does not describe their demographics or state specific bias mitigation steps for recruitment and instructions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 8, chunk 4
+        quote: ask crowd workers to label each text as conveying positive, negative, or neutral sentiment
+    by: model
+    quotes_verified: true
+  st.4:
+    value: met
+    rationale: The benchmark uses human ratings (subjective labels) and reports inter-annotator agreement/correlation statistics (Spearman's rho) to compare them with automatic metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 4
+        quote: "we compute the following between labels computed with automatic metrics and labels from human annotations: (1) Spearman’s ρ correlation coefficient"
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: met
+    rationale: The authors describe specific failure modes (e.g., misclassifying neutral as male) and provide quantitative counts/rates via precision, recall, and f1-scores in Table 8.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 5
+        quote: a larger proportion of mismatch is caused by a text that is annotator’s neutral (blue curve) but automated metrics’ male
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not show failures or scores broken down by a named confounder in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors propose a specific direction to improve the benchmark by expanding the data to include more domains and diverse groups.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: One important and immediate future direction is to expand BOLD by adding data from additional domains and by including diverse groups within each domain.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is linked to real-world applications such as conversation bots and automatic storytelling."
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: The excerpts do not provide a statement linking the choice of tasks and metrics to a specific operational definition (def.1).
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to StereoSet, noting that BOLD uses prompts from Wikipedia and measures bias in generated text rather than ranking probabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 4
+        quote: Both the dataset and evaluation metrics in [ 25 ] and [ 26 ] are fundamentally different from the work presented here.
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The authors state that benchmarking on BOLD is not an indication that a model is completely fair because it only covers a limited set of domains and groups.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: benchmarking on BOLD provides an indication of whether a model is biased in the categories considered in BOLD, however, it is not an indication that a model is completely fair.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

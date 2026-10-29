@@ -1,0 +1,382 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: webarena
+standard: abc
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dce04686a56253aefba7b18a4fa0937cf1dc987b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/webarena/abc/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2307.13854v4
+      ref: v4
+      sha256: 6bfafefb66f717293e727f9604f112ebfa3489ab976fa28bcd8be90af3a55973
+      chars: 80125
+    - kind: repo
+      url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+      ref: dce04686a56253aefba7b18a4fa0937cf1dc987b
+      sha256: dc81380d8c504549f05bbf8023a510ce4bd463bf2004e4e6748d368274aaff44
+      chars: 24189
+  excerpt_chars: 40000
+verdicts:
+  O.a.1:
+    value: met
+    rationale: The benchmark uses a 'fuzzy_match' function via GPT-4 to handle semantic equivalence, and specifically shows that different time formats (e.g., '2h58min' and '2:58') are accepted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 6, chunk 2
+        quote: The fuzzy_match function could also flexibly match the time “2h58min” with different forms such as “2 hour 58 minutes”, “2:58” and others.
+    by: model
+    quotes_verified: true
+  O.a.2:
+    value: met
+    rationale: The 'fuzzy_match' prompt explicitly instructs the judge to ignore different phrasing or wording used by the student.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 17, chunk 1
+        quote: Keep in mind that the student may use different phrasing or wording to answer the question.
+    by: model
+    quotes_verified: true
+  O.a.3:
+    value: unmet
+    rationale: There is no evidence that the benchmark specifically tests or documents the handling of negation modifiers in string matching.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.4:
+    value: unmet
+    rationale: The excerpts do not mention whether listing all possible answers would be scored as correct or incorrect.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.5:
+    value: unmet
+    rationale: There is no evidence or test showing that generic guesses (like 'yes' or single digits) are shown to score incorrect for every item.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.b.1:
+    value: met
+    rationale: The benchmark reports judge accuracy (39/40 identical to human judgment) and human agreement. Self-consistency is implied by the 100% accuracy reported for different GPT-4 versions on date/time formats.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 17, chunk 1
+        quote: we manually checked 40 examples and found that 39 of them are identical to our human judgment.
+    by: model
+    quotes_verified: true
+  O.b.2:
+    value: met
+    rationale: The judge uses a fixed rubric/prompt to evaluate semantic equivalence, which serves as a named defense against reward hacking.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 17, chunk 1
+        quote: The goal is to evaluate whether the answer is semantically equivalent to the reference answer.
+    by: model
+    quotes_verified: true
+  O.c.1:
+    value: met
+    rationale: The reference answers and programs were curated and reviewed by authors and an external annotator, with a third annotator resolving disagreements.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 2
+        quote: The reference answers to the information-seeking tasks were curated by the authors and an external annotator. To ensure consistency and accuracy, each question was annotated twice.
+    by: model
+    quotes_verified: true
+  O.c.2:
+    value: unmet
+    rationale: No objective metrics for test-suite quality, such as code coverage, are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.1:
+    value: n/a
+    rationale: Fuzz testing is not used in this benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.2:
+    value: n/a
+    rationale: Fuzz testing is not used in this benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.3:
+    value: n/a
+    rationale: Fuzz testing is not used in this benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.1:
+    value: met
+    rationale: The benchmark uses programmatic validators (r_prog) that check intermediate states, including underlying databases and page content, to verify success.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 6, chunk 3
+        quote: These intermediate states are often the underlying databases of the websites, the status, and the content of a web page at each step of the execution.
+    by: model
+    quotes_verified: true
+  O.e.2:
+    value: met
+    rationale: The environment provides scripts to reset to a deterministic initial state, ensuring reproducibility.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 4, chunk 1
+        quote: provide scripts to reset the environment to a deterministic initial state
+    by: model
+    quotes_verified: true
+  O.f.1:
+    value: met
+    rationale: The benchmark uses goal predicates (programmatic checks of state properties) rather than matching a single exact state snapshot.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 1
+        quote: programmatically checks whether the intermediate states during the executions possess the anticipated properties specified by the intent.
+    by: model
+    quotes_verified: true
+  O.f.2:
+    value: unmet
+    rationale: There is no evidence that the scoring checks if unrelated states were damaged (side-effect checking).
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.3:
+    value: unmet
+    rationale: No baseline (like a no-op) is shown to fail the state-matching check to prove complexity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.g.1:
+    value: unmet
+    rationale: The excerpts do not show that task prompts specify a required answer format to the agent.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.g.2:
+    value: unmet
+    rationale: The answer-space size and resulting chance success rate are not stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.h.1:
+    value: n/a
+    rationale: The benchmark uses binary success/failure (0 or 1) rather than a continuous quality metric.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 17, chunk 1
+        quote: Predictions that are judged as “correct” will receive a score of one, while all other predictions will receive a score of zero.
+    by: model
+    quotes_verified: true
+  T.1:
+    value: unmet
+    rationale: The provided excerpts do not list versions for the tools or packages used in the environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.2:
+    value: n/a
+    rationale: The environment is described as a 'standalone, self-hostable web environment' using 'packaged Docker images' and 'self-hosted web applications', indicating no external API tools are used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 0
+        quote: WebArena is a standalone, self-hostable web environment
+    by: model
+    quotes_verified: true
+  T.3:
+    value: n/a
+    rationale: No external API tools are used in the self-hosted environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 0
+        quote: WebArena is a standalone, self-hostable web environment
+    by: model
+    quotes_verified: true
+  T.4:
+    value: met
+    rationale: The documentation explains that users can reset the environment to its initial state by restarting Docker containers from the original image.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 15, chunk 3
+        quote: start the container from our original image again to fully reset the environment to the initial state
+    by: model
+    quotes_verified: true
+  T.5:
+    value: unmet
+    rationale: There is no evidence in the excerpts showing that answers and tests are absent from the agent's filesystem or network.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.6:
+    value: met
+    rationale: The environment is provided as packaged Docker images to ensure reproducibility and a frozen state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 15, chunk 3
+        quote: End users can download our packaged Docker images
+    by: model
+    quotes_verified: true
+  T.7:
+    value: met
+    rationale: Reference answers were curated by authors and an external annotator, with each question annotated twice and a third person finalizing disagreements.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 2
+        quote: each question was annotated twice. If the two annotators disagreed, a third annotator finalized the annotation
+    by: model
+    quotes_verified: true
+  T.8:
+    value: unmet
+    rationale: Human performance is reported at 78.24%, meaning not every task was solved by a person or reference solution.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 2
+        quote: Overall, the human annotators complete 78.24% of the tasks
+    by: model
+    quotes_verified: true
+  T.9:
+    value: unmet
+    rationale: No automated reference solver that solves all tasks is mentioned; only programmatic validators are provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 0
+        quote: We provide validators to programmatically validate the functional correctness of each task.
+    by: model
+    quotes_verified: true
+  T.10:
+    value: unmet
+    rationale: There is no documentation of an exploit audit of the implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.1:
+    value: met
+    rationale: The paper explicitly states that the code, data, and environment resources are publicly available.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 1
+        quote: Our code, data, environment reproduction resources, and video demonstrations are publicly available at https://webarena.dev/
+    by: model
+    quotes_verified: true
+  R.2:
+    value: met
+    rationale: The repository file listing shows an 'evaluation_harness' directory containing evaluators and helper functions, and the paper states the code is public.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:FILE LISTING, chunk 1
+        quote: evaluation_harness/evaluators.py
+    by: model
+    quotes_verified: true
+  R.3:
+    value: unmet
+    rationale: There is no mention of a private held-out split, rotating split, or canary strings to prevent contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.4:
+    value: unmet
+    rationale: No versioned update schedule or process to avoid overfitting is documented in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.5:
+    value: met
+    rationale: The paper links the capability of functional correctness to the outcome measure of whether the execution achieves the desired goal.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: We focus on evaluating the functional correctness of these tasks, i.e., does the result of the execution actually achieve the desired goal
+    by: model
+    quotes_verified: true
+  R.6:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper states it evaluates agents implemented using large language models (LLMs)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.7:
+    value: unmet
+    rationale: While it mentions error analysis, it does not describe a specific quality-control step combined with a recorded correction channel like a changelog.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.8:
+    value: unmet
+    rationale: The excerpts do not name specific unavoidable flaws and their likely direction of effect on results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.9:
+    value: unmet
+    rationale: There is no numerical estimation of the impact of a known unavoidable flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.10:
+    value: unmet
+    rationale: The results table (Table 2) provides success rates but does not include confidence intervals or significance tests for every score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 8, chunk 0
+        quote: "Table 2: The end-to-end task success rate (SR %)"
+    by: model
+    quotes_verified: true
+  R.11:
+    value: unmet
+    rationale: No specific caveats are attached to named flaws to guide which conclusions should not be drawn.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.12:
+    value: met
+    rationale: The benchmark reports a human performance baseline of 78.24%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 1
+        quote: our best GPT-4-based agent only achieves an end-to-end task success rate of 14.41%, significantly lower than the human performance of 78.24%
+    by: model
+    quotes_verified: true
+  R.13:
+    value: unmet
+    rationale: No results for a do-nothing or trivial agent are reported in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

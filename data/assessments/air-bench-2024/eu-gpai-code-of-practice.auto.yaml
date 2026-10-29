@@ -1,0 +1,245 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: air-bench-2024
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/air-bench-2024/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2407.17436v2
+      ref: v2
+      sha256: 5bbae6c7732e0ea6c5324379b3b053372f800f427a013cf25133d809f522d760
+      chars: 122492
+    - kind: repo
+      url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      ref: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      sha256: f677af44b2ed98ceab0cba0738c6a9e6e346ab27b2feb66c7c4c9c24ee48ab01
+      chars: 23468
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: The number of test items is stated, but there is no power calculation or confidence interval provided to justify the sample size as sufficient.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 3
+        quote: comprehensive language model (LM) safety benchmark consisting of   5,694   risky instruction prompts
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The benchmark does not report a statistical power figure or minimum detectable difference.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: met
+    rationale: The documentation provides the prompt template, sampling settings (temperature, max tokens), and the harness (HELM).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 24, chunk 0
+        quote: implemented using the open-source HELM framework [38]
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 24, chunk 0
+        quote: temperature set to 0.0 and the maximum new token length set to 512
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 26, chunk 1
+        quote: |-
+          ###prompt_template: "
+
+          You will be given a user request and a model response to that request.
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: The benchmark uses dialect and syntax mutations to control for and test robustness against linguistic shortcuts/confounds.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 25, chunk 1
+        quote: "we apply two mutation techniques: uncommon dialects [   55 ] and authority endorsement [ 73 ]"
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no mention of canary strings, private test splits, or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: The excerpts do not report results from repeated runs with different seeds or sessions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The authors report a manual inspection of model outputs (question-answer pairs) to validate the autograders.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 0
+        quote: We randomly sampled 5 prompts from each level 2 category, resulting in a total of 78 prompts
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 1
+        quote: the Cohen’s Kappa score between human evaluators and the   Autograders   was found to be 0.86
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark describes the production of labels via Autograders and validates them against human judgment using Cohen's Kappa.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 1
+        quote: the Cohen’s Kappa score between human evaluators and the   Autograders   was found to be 0.86
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: met
+    rationale: The evaluation pipeline extracts and stores short reasoning from the judge model for each item.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 24, chunk 0
+        quote: We parsed and extracted the score and short reasoning from the judge model’s generated output.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: There is no documented check for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: met
+    rationale: The paper describes the creation process (base instructions, mutation, manual review) and the use of the AIR 2024 taxonomy for management.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 4, chunk 2
+        quote: Data and evaluation curation pipeline of the AIR-B ENCH   2024. (a) illustrates the regulation/policy-taxonomy-based initial curation
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 25, chunk 2
+        quote: we manually review the outputs to ensure the quality and coherence of the variations.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation describes the input/output format (prompts, token lengths, and score parsing), the tools used (HELM framework, API clients), and the interaction settings (temperature 0.0)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: The excerpts do not state any concrete ways the evaluation setting differs from real-world use; they only claim to mimic real-world scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The spread of the evaluation is described by the number of risk categories (314) and the total number of prompts (5,694).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 10, chunk 2
+        quote: AIR-B ENCH   2024, with   5,694   diverse, context-specific prompts
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation or a statement that the authors reproduced their own headline numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: unmet
+    rationale: The provided excerpts do not indicate that the paper was published in a peer-reviewed venue or cite an independent reproduction.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The test data is available for public download via a Hugging Face repository.
+    evidence:
+      - source: repo
+        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:README.md, chunk 8
+        quote: The dataset in the [Hugging Face repository](https://huggingface.co/datasets/stanford-crfm/air-bench-2024) is licensed under [cc-by-4.0]
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: met
+    rationale: The repository contains scoring code (notebooks and utils.py) and a harness (HELM) that can be run against models.
+    evidence:
+      - source: repo
+        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:FILE LISTING, chunk 1
+        quote: evaluation/pipeline1_step2_QA_eval.ipynb
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: met
+    rationale: The paper describes how items are constructed, how models are queried, and how outputs are scored.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 24, chunk 0
+        quote: "Our evaluation pipeline, implemented using the open-source HELM framework [38], consists of the following steps:"
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: While a lockfile is present in the file listing, the compute needed for a full run is not stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: met
+    rationale: The repository and paper provide the specific prompts and templates used to query the models and the judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 26, chunk 1
+        quote: |-
+          ###prompt_template: "
+          You will be given a user request and a model response to that request.
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The benchmark is built on the public HELM framework and uses public APIs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 6, chunk 1
+        quote: We implement the evaluation pipeline using the open-source HELM framework [ 38   ].
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

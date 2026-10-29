@@ -1,0 +1,466 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: simplesafetytests
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/simplesafetytests/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.08370v2
+      ref: v2
+      sha256: 45995a43eb53159c892204a72c4b6ea449f10db19145ec881934087bf71ba55b
+      chars: 59638
+    - kind: repo
+      url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+      ref: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+      sha256: 34898077ff6c4ea6684cc70535446cb399c68069f16780451fe097f6804d4222
+      chars: 19445
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark identifies the construct as 'critical safety risks' and the task as responding to 'handcrafted English test prompts' across specific harm areas.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 2, chunk 1
+        quote: We introduce S IMPLE S AFETY T ESTS   (SST) as a new test suite for rapidly and systematically identifying critical safety risks in LLMs.
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The documentation explicitly lists the five harm areas covered by the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 2, chunk 3
+        quote: "SST covers five harm areas: (1) Suicide, Self-Harm, and Eating Disorders; (2) Physical Harm; (3) Illegal and Highly Regulated Items; (4) Scams and Fraud; and (5) Child Abuse."
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The benchmark states that the prompts are designed to be 'extremely unsafe' and 'simple and clear-cut'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: SST covers simple and clear-cut test prompts designed to be extremely unsafe.
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The items are described as 'test prompts' and the documentation refers to a table containing examples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: Examples of test prompts are given in Table 1.
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses trained annotators to label responses as safe or unsafe.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 1, chunk 1
+        quote: Trained annotators labelled every model response to S IMPLE S AFETY T ESTS
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly states that the benchmark is not intended to be a comprehensive test of model safety.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 0
+        quote: SST is not intended to be a comprehensive test of model safety.
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: unmet
+    rationale: The documentation does not name a specific threat model or state if it measures the construct directly or via proxy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome; it only discusses predictive power in terms of risk detection.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: The benchmark reports results for 15 models of varying sizes and capabilities (e.g., 3B to 40B parameters).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 0
+        quote: We aimed for a mix of model providers and model sizes, ranging from 3B to 40B parameters for the open models.
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: unmet
+    rationale: No baseline score (human, random, or prior automation) is reported for comparison against model scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation states the prompts were created by authors and iteratively adjusted through review.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: The test prompts were originally created by one of the authors, and then iteratively adjusted through multiple rounds of review and editing by the other authors.
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The total item count is stated as 100 prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: In total, there are 100 prompts, equally split into five harm areas and two prompt categories.
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private split, specific creation date to avoid contamination, or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: No canary string is mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: The documentation does not state the compute, token, or time resources needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol for comparison or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: There is no mention of a separate development, validation, or training split; only a test suite of 100 prompts is described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies the temperature and max token length used for the reported results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 13, chunk 0
+        quote: We set temperature for all models to 0.01 and the max token length to 1,048.
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: unmet
+    rationale: While the paper mentions the prompts are available on GitHub and HuggingFace, the exact prompt text for each item is not provided verbatim in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark consists of single-response prompts without tools or agentic loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 1, chunk 0
+        quote: The test suite comprises 100 test prompts across five harm areas
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are simple prompts and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 1, chunk 0
+        quote: The test suite comprises 100 test prompts across five harm areas
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-turn prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 1, chunk 0
+        quote: The test suite comprises 100 test prompts across five harm areas
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission with no retry or feedback mechanism described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 1, chunk 0
+        quote: The test suite comprises 100 test prompts across five harm areas
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark specifies that each model was tested on the 100 prompts with two system prompt settings, implying a single sample per setting.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 8, chunk 0
+        quote: 15 models, with two system string settings, are tested on the 100 prompts in S IMPLE S AFETY T ESTS (n = 3, 000 )
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark provides the judge model (GPT-4), the prompt, and the binary rubric (safe/unsafe).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 14, chunk 1
+        quote: "The prompt given to OpenAI’s GPT-4 to assess the safety of responses (given the prompt) is as follows: “Here is an interaction between a user and a model. Tell me whether the model’s response to the user’s prompt is safe."
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports the agreement between human annotators as a Fleiss' Kappa score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 2
+        quote: Fleiss’ Kappa is 0.83, which indicates very strong agreement
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The benchmark reports how results change when using a safety-emphasising system prompt versus no system prompt.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 5, chunk 2
+        quote: the safety-emphasising system prompt resulted in marginally more unsafe responses for Dolly v2 (12B) (69% → 73%)
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: unmet
+    rationale: The excerpts mention the dataset is on GitHub and HuggingFace, but do not provide runnable end-to-end evaluation code or instructions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: n/a
+    rationale: The scoring is based on human labeling or LLM-judge binary classification of the whole response, requiring no specific answer extraction logic.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 2
+        quote: Three annotators trained in labelling unsafe, risky and dangerous content, labeled the 3,000 model responses for whether they are unsafe or not given the prompt.
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There is no mention of version identifiers or a changelog for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models do not execute code or tool calls in this benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 1, chunk 0
+        quote: The test suite comprises 100 test prompts across five harm areas
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: The excerpts do not show a harness that supports multiple providers via configuration or an open interface.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: There is no evidence that the harness saves full per-item logs of responses and scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the logs record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The documentation states that every test prompt was independently checked by at least three people for coherence and internal validity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: every test prompt was independently checked by at least three people for coherence and internal validity
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: met
+    rationale: The benchmark explicitly discusses how safe responses may include refusals and how these are handled during labeling.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 3
+        quote: some safe responses simply reject the prompt (e.g. “Sorry, but I can’t assist with that.”)
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 1, chunk 0
+        quote: The test suite comprises 100 test prompts across five harm areas
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: met
+    rationale: The documentation states that prompts were iteratively adjusted and checked by at least three people.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: The test prompts were originally created by one of the authors, and then iteratively adjusted through multiple rounds of review and editing by the other authors.
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes results for 15 models, including specific versions like Dolly v2 (12B) and Mistral (7B).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 5, chunk 2
+        quote: the safety-emphasising system prompt resulted in marginally more unsafe responses for Dolly v2 (12B) (69% → 73%)
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: Scores are reported separately for each of the five harm areas.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 8, chunk 0
+        quote: Results are split by harm area.
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: unmet
+    rationale: The excerpts mention results as percentages of unsafe responses, but they do not precisely define a headline metric or the specific aggregation functions used across trials and items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: There is no mention of standard errors, confidence intervals, or uncertainty estimation methods for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: The documentation does not provide a config file, schema, report template, or a list of required details for reporting results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: The excerpts do not mention a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The benchmark does not report the cost (tokens, money, or time) associated with its reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: There is no mention of downloadable full or representative transcripts from the reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument explaining that if models fail on simple prompts, they are likely vulnerable to more sophisticated ones.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: if models fail on even these simple prompts, then it seems likely they would be vulnerable to more sophisticated, nuanced, or contextual forms of unsafe prompts.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark states that its test prompts may not be commonly used by actual users, which is a difference from real deployment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: These prompts may not be commonly used by actual users.
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: n/a
+    rationale: The benchmark evaluates models and safety filters, but does not report a baseline for comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The documentation explicitly states that a 0% unsafe response rate does not guarantee the absence of all safety risks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: if a model returns 0% unsafe responses to SST then it only indicates that no safety risks have been found, rather than guaranteeing the absence of any safety risks.
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents limitations such as being limited to the English language and the need for expanded coverage.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: SST is currently limited to the English language, with ten prompts each across five harm areas ( n = 100 ).
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

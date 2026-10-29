@@ -1,0 +1,296 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: machiavelli
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/machiavelli/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2304.03279v4
+      ref: v4
+      sha256: ab66d6699e0d0d721e857435d45c43f70115174d074217eb0ec94da8d6963a4a
+      chars: 120586
+    - kind: repo
+      url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+      ref: ebb44e197f663603427882c609dbc9d5fb883d63
+      sha256: 5cbc5f072d51ba92f2bad196db5ae1a6d9579a02ad133424471c9fd7810d3def
+      chars: 10786
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report identifies measured capabilities (ethical violations, disutility, and power-seeking) and links them to threat models such as deceptive AI and existential risk.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 3, chunk 2
+        quote: |-
+          We outline our measurements of   ethical violations ,   disutility ,
+          and   power-seeking   in M ACHIAVELLI .
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 31, chunk 1
+        quote: This work measures important phenomena related to AI safety, such as power-seeking and deceptive AI.
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The excerpts do not provide a specific threshold or decision rule that maps a score to a conclusion about a capability of concern.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report provides an example achievement stem and the corresponding JSON structure of the model response."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: met
+    rationale: The report states that 572,322 scenes were annotated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 17, chunk 1
+        quote: We annotate 572,322 scenes
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the item format as JSON-formatted strings and the scoring method as scalar, binary, or categorical values (e.g., {0, 1, 2}).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: designed to induce the return of a JSON-formatted string
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 17, chunk 1
+        quote: Social   { 0, 1, 2 }   What level of direct social influence
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report describes the creation of grading criteria via handcrafted prompts and quality control through comparison with gold labels and crowdworkers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 2
+        quote: We handcraft prompts for each label type
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: Table 8 shows the agreement (Spearman rank correlation) of gold labels against the model labels
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: n/a
+    rationale: Grading is automated using GPT-4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 2
+        quote: We use GPT-4 (OpenAI, 2023) to annotate our benchmark.
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: n/a
+    rationale: Grading is automated using GPT-4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 2
+        quote: We use GPT-4 (OpenAI, 2023) to annotate our benchmark.
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: Grading is automated using GPT-4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 2
+        quote: We use GPT-4 (OpenAI, 2023) to annotate our benchmark.
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: met
+    rationale: The grader model is identified as GPT-4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 17, chunk 0
+        quote: we use GPT-4 (OpenAI, 2023) to label all our scenes
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The automated grading process involves in-context prompting with 5 different prompts and batching 10 scenes at a time.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: we prompt the model to label a batch of 10 scenes at a time
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report compares GPT-4 labels against gold labels (expert ensemble) and crowdworker labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: GPT-4 is usually as accurate as human annotators from Surge AI
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: met
+    rationale: The report identifies specific models tested, including davinci and LLaMA models with specific parameter counts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 28, chunk 3
+        quote: |-
+          we evaluate   davinci   (base GPT-3 model),   llama-*   (LLaMA models with
+          7B, 13B and 30B parameters)
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The excerpts do not specify the safety mitigations active during testing or any adaptations to elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While some prompts are provided, the report does not provide sampling settings or the number of attempts for the tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report provides mean scores across the test set games for various agents in Table 2.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 0
+        quote: Table 2. Mean scores across the 30 test set games for several agents.
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: While the report mentions sampling 1,000 trajectories for the random agent, it does not provide uncertainty measures (e.g., confidence intervals or standard deviation) for the agent performance results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results for alternative testing conditions, specifically comparing 'base' models against those using '+ shaping' or '+ EthicsPrompt'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 0
+        quote: base   + shaping   base   + EthicsPrompt   base   + EthicsPrompt
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: unmet
+    rationale: While the report mentions human annotators from Surge AI and expert authors, it does not describe the sample size or the recruitment process for these participants.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: met
+    rationale: The report compares GPT-4's labels to those of human annotators and crowdworkers, noting that GPT-4 is 'usually as accurate as human annotators'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: GPT-4 is usually as accurate as human annotators from Surge AI
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: unmet
+    rationale: The excerpts do not describe the specific conditions or instructions given to the human participants to elicit their performance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: n/a
+    rationale: A human baseline was used for label comparison.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: Model labels are competitive with human labels.
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: n/a
+    rationale: A human baseline was used for label comparison.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: Model labels are competitive with human labels.
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: The report provides general conclusions about the trade-off between reward and ethics, but these conclusions do not cite specific tables, figures, or numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state falsification conditions or pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There are no forecasts of future performance with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper and is not tied to a specific model deployment decision.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 2, chunk 1
+        quote: |-
+          we propose the   M easuring   A gents’ 
+          C ompetence &   H armfulness   I N   A V ast   E nvironment
+          of   L ong-horizon   L anguage   I nteractions (M ACHIAVELLI )
+          benchmark.
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe disagreements over results interpretation nor does it state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

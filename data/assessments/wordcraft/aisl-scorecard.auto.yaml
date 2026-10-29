@@ -1,0 +1,470 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: wordcraft
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/wordcraft/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2007.09185v1
+      ref: v1
+      sha256: 8943b572fdc0c456f331a8efbdbb5f7bb72e2274a4bade8b39a329387321b366
+      chars: 40918
+    - kind: repo
+      url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+      ref: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+      sha256: 4d7c293845d32a9040fe6d16609e5881ac95625c16af72d3edc825198453cdcc
+      chars: 4593
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines the target phenomenon as the ability to make use of commonsense knowledge, with observable behavior being the agent's ability to choose entities to combine to create a goal entity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 2
+        quote: In order to benchmark the ability of RL agents to make use of commonsense knowledge, we present WordCraft
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation describes what is in scope (text-based tasks based on Little Alchemy 2), it does not explicitly name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper does not explicitly state the phenomenon is a single unitary construct, nor does it report independent scores for distinct facets of the phenomenon in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by goal entities and recipes, and item counts/difficulty are reported via the number of distractors and task depth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: The task difficulty can be adjusted by increasing the number of distractors or increasing the number of intermediate entities
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation mentions random sampling of tasks but does not report per-category item counts or a stratified sampling plan over the task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: There is no mention of a verification step (human or automated) to ensure each generated item actually tests the target phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: The documentation does not identify a specific named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark is based on Little Alchemy 2 but creates its own tasks from the entities/recipes; it does not reuse a prior benchmark dataset for evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: WordCraft is a simplified version of Little Alchemy 2, sharing the same entities and valid recipes
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset or benchmark for its evaluation tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: WordCraft is a simplified version of Little Alchemy 2, sharing the same entities and valid recipes
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While the number of test episodes is mentioned in the repo, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The results figures (e.g., Figure 7) show mean success rates but do not provide confidence intervals or standard errors for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: The paper mentions a human evaluation protocol but does not publish or reproduce the actual rater instructions or training materials.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 10, chunk 1
+        quote: C.5. Human Evaluation Protocol
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, and there is no description of mitigation for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: The labels are deterministic (success or failure in creating the goal entity), not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: The agent must choose which entities to combine in order to create the goal entity.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: The labels are deterministic (success/failure), not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: The agent must choose which entities to combine in order to create the goal entity.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The paper does not break down failures by a named confound (like prompt length or language complexity) in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper discusses general trends but does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The documentation does not provide a single statement linking specific tasks and metrics to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to TextWorld, noting that WordCraft has a larger number of objects and lacks movement-related actions to isolate commonsense reasoning.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 3, chunk 0
+        quote: the underlying KG of TextWorld (which is perhaps the closest comparison), contains 99 different objects and 10 types of relations
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The documentation lacks a specific limitations statement for the design and a supported claim linking scores to a real-world capability or harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap measurement or mitigation is described as no related phenomena were identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reports of results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The environment is a game based on combining entities (Little Alchemy 2), where outcomes are state transitions rather than parsing free-form text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 1
+        quote: a fast RL environment based on the popular game Little Alchemy 2
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report contamination checks or training-data cutoffs for the evaluated models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (recipes) and local scoring in a simulated environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 1
+        quote: a fast RL environment based on the popular game Little Alchemy 2
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The benchmark consists of RL episodes where the agent interacts with an environment state, and each item is a stateless model call for policy/value prediction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 1
+        quote: We formulate the RL problem as a Markov Decision Process (MDP)
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The task is not multiple choice; it involves selecting entities to combine in a game environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 1
+        quote: the player is tasked with crafting over 700 different entities by combining previously discovered entities
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: There is no mention of domain experts reviewing the content for accuracy or the size of the sample reviewed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported under different elicitation settings, specifically comparing agents with and without different combinations of KG link prediction scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 4, chunk 1
+        quote: compare zero-shot performance under different combinations of link prediction scores used to modulate the self-attention weights
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not report results as a separate slice for a named stress condition or shift that differs from the train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is presented as a general environment for benchmarking commonsense agents rather than evaluating a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 3, chunk 0
+        quote: "WordCraft: An Environment for Benchmarking Commonsense Agents"
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is presented as a general environment for benchmarking commonsense agents rather than evaluating a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 3, chunk 0
+        quote: "WordCraft: An Environment for Benchmarking Commonsense Agents"
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is presented as a general environment for benchmarking commonsense agents rather than evaluating a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 3, chunk 0
+        quote: "WordCraft: An Environment for Benchmarking Commonsense Agents"
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: While training parameters are listed, the documentation lacks library versions (lockfile/pinned requirements), hardware model, and OS or container image.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: There is no description of quality-control steps or a correction channel (errata/changelog) recording a fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The documentation does not explicitly name and analyze unavoidable flaws according to the required criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark reports a human baseline for the commonsense tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 3, chunk 4
+        quote: We also collect a human baseline at the same difficulty settings of WordCraft.
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: The benchmark reports scores for a random baseline agent.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 4, chunk 0
+        quote: Self-attention + random, 1 distractor
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The benchmark uses a deterministic environment based on a recipe graph, not a model as a rater or judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: The environment is deterministic and fully-observable.
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The benchmark uses a deterministic environment based on a recipe graph, not a model as a rater or judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: The environment is deterministic and fully-observable.
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The benchmark uses a deterministic environment based on a recipe graph, not a model as a rater or judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: The environment is deterministic and fully-observable.
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The benchmark uses a deterministic environment based on a recipe graph, not a model as a rater or judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: The environment is deterministic and fully-observable.
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: unmet
+    rationale: There is no report of multiple independent annotators labeling items or programmatic verification accuracy on a labeled sample.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The documentation does not explicitly classify every task as solvable or intentionally unsolvable, nor does it document expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The benchmark uses a ground-truth recipe graph from Little Alchemy 2 as the reference for solutions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: sharing the same entities and valid recipes
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, refusals, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The environment is based on selecting entities from a table, not parsing free-form text output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 4
+        quote: The action a corresponds to choosing one of the available entities
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The environment is based on selecting entities from a table, not parsing free-form text output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 4
+        quote: The action a corresponds to choosing one of the available entities
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null/trivial-agent runs or targeted exploit attempts on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

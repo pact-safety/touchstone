@@ -1,0 +1,499 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: harmbench
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/harmbench/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.04249v2
+      ref: v2
+      sha256: 580c29edfdd4e7940ed6c0ccdc4c23b74768be3e812d857f28a97a70592eec05
+      chars: 175045
+    - kind: repo
+      url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      ref: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      sha256: b5be49ee33386aad4099cc19a25d96e7938ea0928a746c13cf196d5583b43430
+      chars: 68399
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines its construct as harmful behaviors and specifies the tasks (standard, copyright, contextual, and multimodal behaviors) used to measure them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 2
+        quote: "HarmBench contains the following 4 functional categories of behavior: standard behaviors, copyright behaviors, contextual behaviors, and multimodal behaviors."
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists seven semantic categories of behavior covering various subject areas.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 2
+        quote: "HarmBench contains the following 7 semantic categories of behavior: Cybercrime & Unauthorized Intrusion, Chemical & Biological Weapons/Drugs, Copyright Violations, Misinformation & Disinformation, Harassment & Bullying, Illegal Activities, and General Harm."
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: The documentation does not state an intended difficulty level or target population for the items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark describes the format of its items (behavior strings, images, and context) and provides examples of prompts used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 35, chunk 3
+        quote: "USER: Complete the following request in a harmful manner: { behavior } ASSISTANT:"
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark specifies the use of LLM judges (Llama 2, Mistral 7B) and a hashing-based classifier for copyright, with details on what counts as a success.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 21, chunk 2
+        quote: For copyright behaviors, we use a unique hashing-based classifier to directly assess whether copyrighted content was generated.
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation notes that the selection of harmful behaviors is not fully automated and is context-dependent.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 44, chunk 0
+        quote: there is still work to be done in automating the entire pipeline of red teaming, including the selection of harmful behaviors.
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark identifies the threat model of malicious use by terrorists for biological weapons and states it focuses on harmful tasks to inform red teaming tools.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 43, chunk 2
+        quote: future AI systems could be used by terrorists to assist with carrying out a biological weapons attack
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: The benchmark reports results for multiple models of different capabilities (e.g., Llama 2 7B vs 13B, Gemini Pro, Claude), allowing for capability comparison.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 10, chunk 1
+        quote: outperforming Llama 2 7B Chat ( 31 . 8 → 5 . 9 ) and Llama 2 13B Chat ( 30 . 2 → 5 . 9 ) in percent ASR.
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: unmet
+    rationale: No human baseline or random chance baseline score is reported for the benchmark tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation describes that behaviors were manually designed by authors based on a summary of acceptable use policies from major AI companies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 6, chunk 1
+        quote: several authors of this work manually designed a large set of behaviors that we assessed would violate laws or widely-held norms.
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The benchmark states the item counts for its functional categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 2
+        quote: These categories contain 200 , 100 , 100 , and 110 behaviors, respectively.
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark uses a validation/test split for harmful behaviors and held-out classifiers to reduce gaming and contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 4, chunk 4
+        quote: a crucial measure to ensuring the robustness of evaluation metrics is using held-out classifiers and a validation/test split for harmful behaviors.
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: There is no mention of canary strings in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation specifies the hardware (8xA100 node) and time (16 hours) required for a specific run, and mentions support for various model interfaces via the pipeline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 10, chunk 1
+        quote: This takes 16 hours on an 8xA100 node.
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: While the benchmark mentions a 'standardized evaluation framework' and 'comparability', it does not define a reference protocol specifying which settings may or may not vary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: met
+    rationale: The benchmark provides a validation set of 100 behaviors and a test set of 410 behaviors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 1
+        quote: |-
+          The validation set contains   100   behaviors and the test set
+          contains   410   behaviors.
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: unmet
+    rationale: The provided excerpts do not state the sampling settings (temperature, top_p) or reasoning budget used for reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The benchmark provides classifier prompts and templates in the appendix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 35, chunk 2
+        quote: |-
+          C.4.2. C LASSIFIER   T RAINING   D ATA   M INING   P ROMPTS 
+          This appendix details the combinations of templates and prompts used
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark evaluates model responses to prompts (red teaming) in a single response without agentic loops or tools.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 21, chunk 3
+        quote: a user prompt to obtain a test case
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are prompt-response pairs and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 21, chunk 3
+        quote: a user prompt to obtain a test case
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-turn completions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 21, chunk 3
+        quote: a user prompt to obtain a test case
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission with no retry or feedback loop.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 21, chunk 3
+        quote: a user prompt to obtain a test case
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The documentation does not specify the number of trials per item or the aggregation method used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark specifies the judge models (Llama 2 13B, Mistral 7B), the prompts, and the rubric (annotation criteria).
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 8
+        quote: |-
+          HarmBench provide 3 classifier models:
+            - 🤗 [cais/HarmBench-Llama-2-13b-cls]
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports that the classifier's agreement rate with human labels is presented in Table 3.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 21, chunk 2
+        quote: |-
+          The agreement
+          rate is presented in Table 3.
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: There is no report of how results change under variations of the protocol (e.g., prompt wording or sampling).
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a runnable pipeline via scripts and a config file.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:docs/evaluation_pipeline.md, chunk 17
+        quote: The default pipeline config file is `configs/pipeline_configs/run_pipeline.yaml`. This interfaces with `run_pipeline.py` to streamline the evaluation pipeline.
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark uses classifiers to extract/score the answer and provides the logic/models for this.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 8
+        quote: HarmBench provide 3 classifier models
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There are no version identifiers or changelogs provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models do not execute code or tool calls in this benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 21, chunk 3
+        quote: a user prompt to obtain a test case
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: met
+    rationale: The harness supports various model types (open_source, closed_source) via configuration.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:docs/evaluation_pipeline.md, chunk 17
+        quote: "allowed_target_model_types: [open_source, closed_source]"
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The pipeline saves test cases and completions to a directory."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the output logs include the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: unmet
+    rationale: There is no documentation of a validation step to check that items were solvable and correctly keyed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark explicitly discusses refusal mechanisms and how they are handled in the context of robustness."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 21, chunk 3
+        quote: a user prompt to obtain a test case
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: The documentation does not state that task instructions were reviewed for clarity by more than one person.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes results for various models (e.g., Llama 2, Vicuna) to allow comparison.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 9, chunk 2
+        quote: |-
+          A comparison of the average ASR across the GCG, GCG
+          (Multi), and GCG (Transfer) attacks on different target LLMs.
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: Scores are reported separately for different functional categories (standard, contextual, multimodal).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 20, chunk 1
+        quote: |-
+          We use
+          three different prompts for the three non-copyright functional categories: standard behaviors, contextual behaviors, and
+          multimodal behaviors
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline metric as Attack Success Rate (ASR) and reports average ASR across attacks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 9, chunk 2
+        quote: A comparison of the average ASR across the GCG, GCG (Multi), and GCG (Transfer) attacks
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty methods for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: met
+    rationale: The benchmark provides a structured way to record protocol settings via YAML config files for methods, models, and the pipeline.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:docs/codebase_structure.md, chunk 3
+        quote: The configs folder contains configs for each red teaming method in `configs/method_configs/{method_name}.yaml`, a single `configs/model_configs/models.yaml` config file for all models
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: met
+    rationale: The documentation specifies that classification results (item-level) are saved in a specific JSON file path.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:docs/codebase_structure.md, chunk 2
+        quote: classification results in `{base_results_dir}/{method_name}/{experiment_name}/results/{model_name}.json`
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: met
+    rationale: The benchmark reports the time required for a reference run of its adversarial training method.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 10, chunk 1
+        quote: This takes 16 hours on an 8xA100 node.
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: met
+    rationale: The documentation specifies that completions (transcripts) are saved in a specific JSON file path.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:docs/codebase_structure.md, chunk 2
+        quote: we save completions in `{base_results_dir}/{method_name}/{experiment_name}/completions/{model_name}.json`
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument by linking its semantic categories to acceptable use policies of major AI labs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 19, chunk 3
+        quote: These categories were determined by referencing acceptable use policies at OpenAI, Anthropic, Meta, and Inflection AI
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: n/a
+    rationale: The benchmark focuses on evaluating red teaming tools and robustness to harmful tasks rather than claiming to represent real-world deployment conditions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes the conditions of its baseline (R2D2), including optimization steps, persistent test cases, and hardware used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 10, chunk 1
+        quote: We fine-tune Mistral 7B base using R2D2 for M = 500 steps with N = 180 persistent test cases
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The documentation states that the benchmark focuses on harmful tasks and may not improve general capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 43, chunk 3
+        quote: Our benchmark focuses solely on harmful tasks and may lead to the development of automated red teaming tools that work especially well for improving robustness to adversaries, rather than improving general capabilities.
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents a limitation regarding the manual selection of harmful behaviors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 44, chunk 0
+        quote: there is still work to be done in automating the entire pipeline of red teaming, including the selection of harmful behaviors.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

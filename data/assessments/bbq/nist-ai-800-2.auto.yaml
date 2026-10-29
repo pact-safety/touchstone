@@ -1,0 +1,487 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bbq
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bbq/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.08193v2
+      ref: v2
+      sha256: d156a5efdfc189703ff001f36a71d6d7381866276d31713fe272d86f3e1d8b8d
+      chars: 87185
+    - kind: repo
+      url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+      ref: bea11bd97d79217245b5871acd247b9d6eb24598
+      sha256: 9cf0dc0c368f8b490f93531c0e267be45fea328c489ad58b8395b03a4b8dcfb0
+      chars: 31146
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines the construct as social biases against protected classes and the task as question answering (QA) under under-informative and informative contexts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 0
+        quote: highlight attested social biases against people belonging to protected classes along nine social dimensions relevant for U.S. English-speaking contexts. Our task evaluates model responses at two levels
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists nine broad categories of social bias, including age, gender identity, and religion.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 14, chunk 2
+        quote: |-
+          Age 3,680
+          Disability status 1,556
+          Gender identity 5,672
+          Nationality 3,080
+          Physical appearance 1,576
+          Race/ethnicity 6,880
+          Religion 1,200
+          Sexual orientation 864
+          Socio-economic status 6,864
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: The documentation does not state the intended difficulty level or a target human population for the items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark specifies a multiple-choice format and provides an example in Table 1 (excerpt p2#0).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: presented to annotators as a multiple-choice task.
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses exact match between the top output and the answer options.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation states that the categories are limited to US English-speaking cultural contexts and do not include all possible social biases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: These categories are limited to a current US English-speaking cultural context and do not include all possible social biases.
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark identifies the use case as QA systems and the threat models as stereotype reinforcement and attribution.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 2, chunk 5
+        quote: We focus on harms that arise when biased models are deployed as QA systems. The harms we assess reflect (i) stereotype reinforcement, which risks perpetuating biases, and (ii) stereotype attribution
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict specific downstream outcomes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for multiple models of different sizes and capabilities (UnifiedQA 11B, RoBERTa-Base, RoBERTa-Large, DeBERTaV3) are reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we also test RoBERTa (Liu et al., 2019) and DeBERTaV3 (He et al., 2021). We test both the Base and Large models to compare performance on BBQ at different model sizes.
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports raw human accuracy (95.7%) and aggregate human accuracy (99.7%)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation states that templates were handwritten by the authors and describes the generation process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 4, chunk 2
+        quote: Each template is handwritten by the authors and references a specific bias reported as negative towards or having caused harm to members of a given protected category.
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The total item count (58,492) and counts for each category are provided in Table 3.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 14, chunk 2
+        quote: Total 58,492
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark uses zero-shot evaluation on preexisting models to ensure they had no prior exposure to the data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 2
+        quote: our models are preexisting QA systems, evaluated zero-shot with no prior exposure to our data.
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: There is no mention of a canary string in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: The documentation does not state the compute, token, or hardware resources needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol for comparison or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: There is no mention of a separate development, validation, or training split for model optimization; the validation mentioned is for dataset item quality.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: unmet
+    rationale: The documentation does not state sampling settings (temperature, top_p) or reasoning budget for the reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The README provides the exact string formatting templates used for inference for UnifiedQA.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 5
+        quote: "RACE-style-format: `question + \\n + '(a)' + ans_0 + '(b)' + ans_1 + '(c)' + ans2 + \\n + context`"
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark consists of multiple-choice QA where items are answered in a single model response without tools or agent loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are standard QA tasks and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-turn QA tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission with no retry or feedback mechanism.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The documentation does not specify the number of trials per item or how they are aggregated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: n/a
+    rationale: No LLM judge is used; scoring is done via exact match or logits.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: n/a
+    rationale: No LLM judge is used to score responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The benchmark reports results under a varied protocol (question-only baseline).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 16, chunk 1
+        quote: We present the results of UnifiedQA tested on BBQ with a question-only baseline in Figure 6.
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: unmet
+    rationale: While the repo contains data and results, it does not provide runnable end-to-end evaluation code with instructions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The required output format is multiple choice, and the scoring logic (exact match) is provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There are no version identifiers or changelogs provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: Models cannot execute code or tool calls in this benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: The provided excerpts do not show a harness that takes the model as a configuration setting to support multiple providers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: met
+    rationale: The results folder contains jsonl files with predictions for each example line.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 2
+        quote: 11 jsonl files, each containing all templated examples and three sets of results for each example line
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The logs (results files) are not shown to include the benchmark version or code commit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The authors describe a validation step using MTurk annotators and a threshold for inclusion, including editing templates that failed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: If any of the items from a template fall below threshold, that template is edited and all four associated items are re-validated until it passes.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The items are designed to test social bias in QA and do not contain content likely to trigger safety/security safeguards.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 0
+        quote: a dataset of question sets constructed by the authors that highlight attested social biases against people belonging to protected classes
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: met
+    rationale: The benchmark documents that human testers (MTurk annotators) attempted the tasks to validate them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: We validate examples from each template on Amazon Mechanical Turk.
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: Reference results for UnifiedQA, RoBERTa, and DeBERTaV3 are published.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 2
+        quote: This folder contains our results after running BBQ on UnifiedQA
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: Scores are reported separately for different categories and subsets (e.g., intersectional biases).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 4, chunk 1
+        quote: We analyze this subset separately from the other categories
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines accuracy and a bias score, specifying how they are calculated across categories and contexts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 1
+        quote: We compute accuracy in each category and context.
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty methods for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: There is no evidence of a config file, schema, or report template provided to evaluators for recording results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: met
+    rationale: The repository contains a results folder with jsonl and csv files containing predictions and logits for individual examples.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 2
+        quote: 11 jsonl files, each containing all templated examples and three sets of results for each example line
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The excerpts do not report the cost (tokens, money, or time) of the reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: The excerpts do not provide downloadable full transcripts of the model runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument by citing research, news, and Wikipedia as evidence of the harms and stereotypes the items represent.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 4, chunk 2
+        quote: "We take any of the following as evidence or documentation of harm: research articles documenting the effects of stereotypes and biases"
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: n/a
+    rationale: The benchmark focuses on measuring social biases in model outputs rather than claiming to represent real-world deployment tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes a question-only baseline and specifies that the correct answer in this condition was always UNKNOWN.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 16, chunk 2
+        quote: The correct answer in the baseline was always   UNKNOWN .
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The documentation explicitly states that scores should not be taken as proof that a model is unbiased.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 8, chunk 3
+        quote: should not be taken as proof that the model is unbiased or less biased
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents limitations regarding the small sample size of templates and the cultural specificity of the data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 8, chunk 3
+        quote: the data in BBQ is only designed to test biases associated with US English-speaking cultural contexts
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

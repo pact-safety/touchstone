@@ -1,0 +1,232 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: ailuminate
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/ailuminate/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.05731v2
+      ref: v2
+      sha256: 193b98f48e60a55f41c06180ed202982fab6fdd44c546d07a92eeb6357da1433
+      chars: 129165
+    - kind: repo
+      url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      ref: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      sha256: 92e9e4155001884b8cbaa3eb316cf30de8124aacacc96e638d4250619a3fd7d6
+      chars: 23836
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: met
+    rationale: The benchmark states the number of prompts (12,000 per dataset) and documents the adoption of a mitigation to calibrate prompt count to statistical analysis.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 14, chunk 1
+        quote: The two datasets (practice and official) each include 12,000 prompts
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 39, chunk 0
+        quote: "33: Calibrate prompt count to statistical analysis   Y"
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: While the benchmark mentions error bands and statistical analysis, it does not report a specific statistical power figure or minimum detectable difference.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: The excerpts do not provide the full prompt template, sampling settings (like max tokens), or the specific harness version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The excerpts mention prompt perturbation as a concept, but do not describe a specific control against a confound and its result.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: met
+    rationale: The benchmark uses a confidential official dataset to resist overfitting and explicitly documents the use of a private test set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 14, chunk 1
+        quote: The official dataset is for grading SUTs and for reporting (see Section 6); it remains confidential to prevent or at least resist overfitting
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: There is no report of results from repeated runs with different seeds or varied conditions (e.g., prompt variants).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The benchmark reports a manual inspection of outputs through human annotation of sampled prompt-response pairs to determine labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 18, chunk 1
+        quote: MLCommons contracted two companies to conduct human annotations of the prompts and System-Under-Test (SUT) generated responses
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark describes using three raters and a simple majority vote to produce labels, and documents the measurement of interrater reliability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 18, chunk 1
+        quote: Each sampled prompt-response pair received either a nonviolating or violating label from each of three raters. A simple majority vote determined the final result.
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 37, chunk 0
+        quote: "30: Measure and iterate on methods until high interrater reliability is achieved"
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: The excerpts do not state that the benchmark releases full model outputs or reasoning traces for evaluators to read.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: There is no documentation of a check for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: met
+    rationale: The documentation describes the design process, data collection, and a detailed versioning system for maintenance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 45, chunk 0
+        quote: "125: Benchmark design process is documented   Y"
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:AILuminate Naming and Versioning.md, chunk 4
+        quote: A normal version number MUST take the form X.Y.Z where X, Y, and Z are non-negative integers
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The excerpts describe the interaction model (single-turn) and the target SUTs, but they do not provide a full description of the evaluation environment including input/output formats, available tools/sandboxes, or specific access restrictions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The documentation explicitly states that the benchmark does not use prompts from real user interactions and does not test sustained interactions with intricate contexts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: It neither employs prompts recorded from real, unknowing user interactions... nor tests sustained interactions with intricate contexts.
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The spread of the evaluation is described across the axis of hazard categories, specifying there are 12 of them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 7, chunk 1
+        quote: The benchmark assesses SUT responses with respect to 12 text-content hazard categories.
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation or a statement that the authors reproduced their own headline numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: met
+    rationale: The documentation explicitly states that the accompanying paper was accepted at a peer-reviewed venue.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 45, chunk 0
+        quote: Accompanying paper is accepted at peer-reviewed venue
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: Practice prompt datasets are available to MLCommons members via a documented access-controlled request form.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 4
+        quote: If you are a MLCommons member or represent a member organization, and wish access to these data sets, [please complete this form](https://mlcommons.org/ailuminate/submit-a-sut/).
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: met
+    rationale: The benchmark runner (ModelBench) is released in a GitHub repository and includes components to send prompts and receive annotations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 16, chunk 1
+        quote: Called ModelBench ( https://github.com/mlcommons/modelbench ), it includes the following components
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: met
+    rationale: The documentation confirms that the benchmark design, test tasks, prompt design, and evaluation metrics are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 45, chunk 0
+        quote: Benchmark design process is documented
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: There is no evidence of a pinned software environment (lockfile/container) or a statement of the compute needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: unmet
+    rationale: While the paper mentions prompt datasets, the actual prompts and scaffolding used to query models are not released in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The benchmark accesses some SUTs through APIs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 3
+        quote: We accessed some SUTs through APIs
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

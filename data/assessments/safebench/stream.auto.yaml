@@ -1,0 +1,270 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: safebench
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/safebench/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2206.09682v4
+      ref: v4
+      sha256: 0f1ee84ff0998412400a2386114317e04c56257dd55b94c35c1dc453071e1916
+      chars: 89356
+    - kind: repo
+      url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      ref: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      sha256: 02e5136e8abf04e38804e42a946027be2a6e7b35dc16ed7a2a5b7e9b88ea4564
+      chars: 65011
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report describes the capability being measured (robustness of object detection) and the threat model (adversarial data).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 10, chunk 2
+        quote: This demonstrates the ability of SafeBench to evaluate the robustness of object detection task.
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The excerpts do not provide an explicit threshold or decision rule that maps a specific score to a conclusion about a capability of concern.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: unmet
+    rationale: While the report mentions metrics and results, it does not provide a specific example of an evaluation item stem and the corresponding model response.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: met
+    rationale: The report states the number of safety-critical testing scenarios used for evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 2, chunk 2
+        quote: we systematically evaluate the AD algorithms on   2 ,   352   generated safety-critical testing scenarios
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the item format (scenarios) and the scoring method (weighted sum of metrics).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 6, chunk 2
+        quote: report an   overall score   (OS), which is a weighted sum of the   10   metrics introduced above
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: unmet
+    rationale: The excerpts do not describe how the grading criteria were created or the quality control measures used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: n/a
+    rationale: Grading is automated via simulation metrics and weighted sums.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 6, chunk 2
+        quote: overall score (OS), which is a weighted sum of the 10 metrics
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: n/a
+    rationale: Grading is automated via simulation metrics and weighted sums.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 6, chunk 2
+        quote: overall score (OS), which is a weighted sum of the 10 metrics
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: Grading is automated via simulation metrics and weighted sums.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 6, chunk 2
+        quote: overall score (OS), which is a weighted sum of the 10 metrics
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: unmet
+    rationale: While metrics are calculated, there is no mention of a 'model grader' (like an LLM) being used to score the results; it is a mathematical calculation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The automated grading procedure is described as a weighted sum of specific metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 6, chunk 2
+        quote: |-
+          overall score is calculated as:   OS   =   ∑ 10 
+          i =1   w i   ×   g ( m i )
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: unmet
+    rationale: There is no report of comparing the automated grader to human graders or other auto-graders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report identifies the specific AD algorithms tested, such as DDPG, SAC, TD3, and PPO, and specifies their input state space (4D)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The provided excerpts do not mention safety mitigations active during testing or adaptations to the elicitation process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: The report does not provide the full prompt, scaffold version, sampling settings, or the number of attempts required by the rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report provides summary statistics such as the overall score (OS) and average values across scenarios.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 8, chunk 0
+        quote: The last column shows the average over all the scenarios
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: The provided excerpts do not mention uncertainty measures or the specific number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results under alternative testing conditions, specifically comparing performance on benign scenarios versus safety-critical scenarios.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 8, chunk 3
+        quote: although TD3 achieves an overall score of 0 . 830 on benign scenarios, it only achieves 0 . 518 when testing on safety-critical scenarios
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: n/a
+    rationale: The excerpts do not mention the use of a human baseline; the checklist explicitly marks human subject research as N/A.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 16, chunk 1
+        quote: If you used crowdsourcing or conducted research with human subjects... (a)   Did you include the full text of instructions given to participants and screenshots, if applicable? [N/A]
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: n/a
+    rationale: The excerpts do not mention the use of a human baseline; the checklist explicitly marks human subject research as N/A.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 16, chunk 1
+        quote: If you used crowdsourcing or conducted research with human subjects... (a)   Did you include the full text of instructions given to participants and screenshots, if applicable? [N/A]
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: n/a
+    rationale: The excerpts do not mention the use of a human baseline; the checklist explicitly marks human subject research as N/A.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 16, chunk 1
+        quote: If you used crowdsourcing or conducted research with human subjects... (a)   Did you include the full text of instructions given to participants and screenshots, if applicable? [N/A]
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: unmet
+    rationale: The report does not provide a reason why a human baseline would not be appropriate or feasible.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: met
+    rationale: The report uses benign scenarios as an alternative comparison point to safety-critical scenarios.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 8, chunk 3
+        quote: indicating a trade-off between the performance under benign and safety-critical testing scenarios
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: met
+    rationale: The report provides conclusions about model performance (e.g., PPO's score and BEV's helpfulness) and connects them to specific tables.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 22, chunk 3
+        quote: Results are shown in Table 13. We also provide an overall score for each level in Table 14. We find that PPO achieves the highest OS in most cases of input
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The excerpts do not mention falsification conditions or pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: The report mentions future work (testing more diverse algorithms) but does not provide a performance forecast with a time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper describing a testing platform, not a report tied to a specific model deployment decision.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 10, chunk 3
+        quote: We hope our platform and findings will serve as a reliable and comprehensive benchmark
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe disagreements over results interpretation nor does it state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

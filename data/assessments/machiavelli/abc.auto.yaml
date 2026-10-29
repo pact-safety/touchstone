@@ -1,0 +1,344 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: machiavelli
+standard: abc
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/machiavelli/abc/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2304.03279v4
+      ref: v4
+      sha256: ab66d6699e0d0d721e857435d45c43f70115174d074217eb0ec94da8d6963a4a
+      chars: 120586
+    - kind: repo
+      url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+      ref: ebb44e197f663603427882c609dbc9d5fb883d63
+      sha256: 5cbc5f072d51ba92f2bad196db5ae1a6d9579a02ad133424471c9fd7810d3def
+      chars: 10786
+  excerpt_chars: 40000
+verdicts:
+  O.a.1:
+    value: n/a
+    rationale: The benchmark scores agents based on achievements and behavioral metrics (harm counts) rather than string matching of final answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.2:
+    value: n/a
+    rationale: The benchmark does not score by string matching.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.3:
+    value: n/a
+    rationale: The benchmark does not score by substring matching.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.4:
+    value: n/a
+    rationale: The benchmark does not score by substring matching.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.5:
+    value: n/a
+    rationale: The benchmark does not score by substring matching.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.b.1:
+    value: unmet
+    rationale: While agreement with experts is reported, there is no report of the judge's self-consistency.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 1
+        quote: Labels are evaluated for agreement (Spearman rank correlation) against an ensemble of 3 experts
+    by: model
+    quotes_verified: true
+  O.b.2:
+    value: unmet
+    rationale: There is no mention of adversarial inputs against the LLM judge or a named defense like an injection filter.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.c.1:
+    value: n/a
+    rationale: Outputs are not scored by test cases; they are scored by achievements and behavioral labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.c.2:
+    value: n/a
+    rationale: Outputs are not scored by test cases.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.1:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.2:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.3:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.1:
+    value: n/a
+    rationale: End-to-end code testing is not used; the benchmark evaluates agent trajectories in a game.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.2:
+    value: n/a
+    rationale: End-to-end code testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.1:
+    value: met
+    rationale: The benchmark uses a goal predicate (achievements) rather than matching a single state snapshot.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 5, chunk 0
+        quote: We define reward as the sum of the points agent’s achievements.
+    by: model
+    quotes_verified: true
+  O.f.2:
+    value: unmet
+    rationale: There is no evidence that scoring checks if unrelated states were damaged.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.3:
+    value: unmet
+    rationale: No baseline showing that a no-op or single-write fails the check is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.g.1:
+    value: met
+    rationale: The prompts for the LM agents explicitly specify the required JSON answer format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 26, chunk 2
+        quote: Respond with a single JSON object containing "reasoning" (string) and "action" (integer) fields
+    by: model
+    quotes_verified: true
+  O.g.2:
+    value: unmet
+    rationale: The answer-space size and resulting chance success rate are not stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.h.1:
+    value: unmet
+    rationale: No exploit attempts against the quality metrics are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.1:
+    value: unmet
+    rationale: The documentation specifies a Python version limit but does not provide versions for all tools or a lockfile.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
+        quote: Please use Python 3.11 or lower!
+    by: model
+    quotes_verified: true
+  T.2:
+    value: n/a
+    rationale: The benchmark is described as a text-based gym environment based on Choose-Your-Own-Adventure games, with no mention of external API tools being used for the tasks themselves.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.3:
+    value: n/a
+    rationale: No external API tools are used in the task environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.4:
+    value: unmet
+    rationale: There is no mention of how the environment is reset or if residual data is cleared between runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.5:
+    value: unmet
+    rationale: The excerpts do not provide container or harness configurations showing that ground truth is isolated from the agent's filesystem or network.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.6:
+    value: unmet
+    rationale: The excerpts do not state that the environment is frozen via containers or snapshots; it is described as a repo to be cloned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.7:
+    value: met
+    rationale: The benchmark uses 'gold labels' created by an ensemble of three experts to verify the correctness of other labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: We define the gold labels on the test set to be the ensemble of labels from three experts (authors).
+    by: model
+    quotes_verified: true
+  T.8:
+    value: unmet
+    rationale: The excerpts do not explicitly state that every task was solved by a person or reference solution to verify solvability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.9:
+    value: met
+    rationale: The results table includes an 'Oracle' agent, implying an automated reference solver exists.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 8, chunk 2
+        quote: Oracle   23.3   76.7   76.7
+    by: model
+    quotes_verified: true
+  T.10:
+    value: unmet
+    rationale: There is no documentation of an exploit audit of the implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.1:
+    value: met
+    rationale: The benchmark data is publicly available via a Google Drive link.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 1
+        quote: The data is available through [Google Drive](https://drive.google.com/file/d/19PXa2bgjkfFfTTI3EZIT3-IJ_vxrV0Rz/view).
+    by: model
+    quotes_verified: true
+  R.2:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The repository provides a public evaluation script to compute results from trajectories."
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.3:
+    value: unmet
+    rationale: While a test set is identified, there is no mention of a private held-out split, rotating split, or canary strings to prevent contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.4:
+    value: unmet
+    rationale: The excerpts do not document a versioned update process or a dated update schedule to avoid overfitting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.5:
+    value: met
+    rationale: The benchmark names the capability (power-seeking, deception, selfishness) and the outcome measure (benchmark that concretizes and comprehensively measures), explaining that it measures these when carrying out actions in context.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 30, chunk 1
+        quote: This work develops a benchmark that concretizes and comprehensively measures an agent’s power-seeking tendencies, deception, and selfishness when carrying out actions in context.
+    by: model
+    quotes_verified: true
+  R.6:
+    value: met
+    rationale: The benchmark explicitly states it evaluates agents (specifically RL and LM agents).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 5, chunk 2
+        quote: We consider agents that are not heavily tailored to specific text-based environments
+    by: model
+    quotes_verified: true
+  R.7:
+    value: unmet
+    rationale: No recorded fix, changelog, or correction channel is described, although label quality is discussed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.8:
+    value: unmet
+    rationale: The excerpts do not name specific unavoidable flaws and their likely direction of effect on results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.9:
+    value: unmet
+    rationale: There is no numerical estimation of the impact of a known unavoidable flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.10:
+    value: unmet
+    rationale: The provided results table (Table 8) and mentions of results do not include confidence intervals or significance tests for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.11:
+    value: unmet
+    rationale: No stated caveats are attached to named flaws to guide which conclusions should not be drawn.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.12:
+    value: met
+    rationale: The benchmark reports results for human annotators and experts as baselines for label quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 3
+        quote: Label   GPT-4   GPT-4 ens   GPT-4+   human   human ens   expert   expert ens
+    by: model
+    quotes_verified: true
+  R.13:
+    value: met
+    rationale: The benchmark reports and uses a random agent as a baseline for behavioral scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 5, chunk 1
+        quote: |-
+          Score   =   # harms committed by agent
+          # harms committed by random baseline
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

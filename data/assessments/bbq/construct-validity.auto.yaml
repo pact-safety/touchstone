@@ -1,0 +1,276 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bbq
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bbq/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.08193v2
+      ref: v2
+      sha256: d156a5efdfc189703ff001f36a71d6d7381866276d31713fe272d86f3e1d8b8d
+      chars: 87185
+    - kind: repo
+      url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+      ref: bea11bd97d79217245b5871acd247b9d6eb24598
+      sha256: 9cf0dc0c368f8b490f93531c0e267be45fea328c489ad58b8395b03a4b8dcfb0
+      chars: 31146
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The paper defines the bias score as the observable output metric, specifically the percentage of non-UNKNOWN outputs that align with a social bias.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 1
+        quote: The bias score reflects the percent of non- UNKNOWN outputs that align with a social bias.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: met
+    rationale: The scope is limited to a current US English-speaking cultural context, and it explicitly states that it does not include all possible social biases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: These categories are limited to a current US English-speaking cultural context and do not include all possible social biases.
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is broken down into categories (e.g., Age, Gender identity) and the paper states that bias scores are calculated separately for different contexts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 1
+        quote: We calculate bias scores separately for the ambiguous and disambiguated contexts
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: met
+    rationale: The authors tested UnifiedQA using two different input formats (RACE-style and ARC-style) and reported the resulting accuracy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we include results for inputs with RACE-style (Lai et al., 2017) and ARC-style (Clark et al., 2018) formats
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 3
+        quote: Overall accuracy on BBQ is highest for UnifiedQA with a RACE-style input format at 77.8%
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses multiple-choice tasks where the model's top output is scored by exact match against answer options, rather than parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts describe the categories of bias and the template construction, but they do not document a sampling strategy used to ensure the items are representative of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The authors describe a validation process where items from each template are rated by annotators, and templates are edited and re-validated until they pass a 4/5 agreement threshold.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: If any of the items from a template fall below threshold, that template is edited and all four associated items are re-validated until it passes.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the authors test different input formats (RACE-style and ARC-style), there is no mention of a counted subset of permuted or perturbed items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that the dataset was constructed by the authors, while also noting that specific labels were adapted from other sources.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 0
+        quote: We introduce the Bias Benchmark for QA (BBQ), a dataset of question sets constructed by the authors
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: While the text mentions adapting nationality labels from UnQover, it does not report the strengths and limitations of that prior work.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: There is no comparison of performance between the new BBQ benchmark and the original datasets from which labels were adapted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The text mentions adding regional classifications to adapted nationality labels, but it does not explain how this specific modification improves construct validity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 12, chunk 2
+        quote: Nationality labels are adapted from the list used by UnQover; we add regional classifications
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any contamination tests performed on the benchmark or report their results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of the dataset for ongoing evaluation; the README indicates the data folder contains all templated examples.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper does not report a search or overlap check of its source materials against any named training corpora or models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the paper mentions the number of templates (25 per category), it does not provide a total item count for the benchmark, nor does it provide a power calculation or confidence-interval width.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not show a main results table containing confidence intervals or standard errors for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The paper mentions using Amazon Mechanical Turk for validation, but it does not describe the demographics of these raters or state how demographic biases were mitigated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: We validate examples from each template on Amazon Mechanical Turk.
+    by: model
+    quotes_verified: true
+  st.4:
+    value: met
+    rationale: The benchmark uses human raters for validation (subjective labels) and reports an inter-annotator agreement statistic (Krippendorf's alpha).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: Agreement between raters is high, with a Krippendorf’s   α   of 0.883.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: met
+    rationale: The authors describe failure modes (reliance on stereotypes in underspecified contexts) and provide quantitative counts/rates for these failures in Figure 4 and the accompanying text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 7, chunk 4
+        quote: examples targeting criminality, for example, showing higher bias
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: met
+    rationale: The analysis breaks down bias scores by specific stereotypes (confounders) and labels in Figure 4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 0
+        quote: "Figure 4: Bias score from UnifiedQA for different labels within the race/ethnicity category, broken down by the specific negative stereotypes that’s referenced for that example."
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: met
+    rationale: The authors discuss scoring biases revealed in the error analysis, specifically noting differences in bias levels across different stereotypes and labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 7, chunk 4
+        quote: there are differences among the biases tested, with examples targeting associations to anger and violence showing very low bias and examples targeting criminality, for example, showing higher bias.
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: unmet
+    rationale: The excerpts do not report any experiments to improve scores, nor do they propose a specific named direction with a rationale; they only state the benchmark is an 'enabling tool' for future work.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The text identifies the use of LMs in real-world applications as a risk to marginalized groups and links this to the need to understand biases in QA models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 1
+        quote: The use of these models in real-world applications therefore risks harming marginalized individuals and groups.
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: While the text defines bias and describes the tasks, it does not provide a single quotable statement linking the task choice and each metric specifically to the definition in def.1 (which is not explicitly labeled as def.1 in the excerpts).
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to UnQover, noting that UnQover compares model scores (likelihoods) rather than discrete model outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 3, chunk 3
+        quote: Li et al. compare model scores associated with two answer options, rather than the outputs of the model
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The authors state that a low bias score should not be interpreted as the model being less biased in all cases, which concerns what the scores measure.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: We do not intend that a low bias score should be indicative of a less biased model in all cases.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

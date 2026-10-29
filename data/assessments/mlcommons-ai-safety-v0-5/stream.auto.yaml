@@ -1,0 +1,276 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mlcommons-ai-safety-v0-5
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 79accfe1424a7994399154ae34fd960fe93a4259
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mlcommons-ai-safety-v0-5/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.12241v2
+      ref: v2
+      sha256: 948815b355a66f0403dbc0bdba07c085f1ab11bab2bc65a658b165a3add1ddcb
+      chars: 185943
+    - kind: repo
+      url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+      ref: 79accfe1424a7994399154ae34fd960fe93a4259
+      sha256: 784dbe1c8138124c20130b3f9e07d42713cf17bf95330a1ddb43f5db95eca9ed
+      chars: 56881
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report states that the benchmark measures whether responses contain hazards and identifies threat models such as individuals at risk of suicide and self-harm.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 9, chunk 1
+        quote: The Benchmark tests whether the SUTs’ responses contain hazards.
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 10, chunk 0
+        quote: For version v0.5, we are solely considering individuals at risk of suicide and self-harm.
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The excerpts do not provide an explicit threshold or decision rule mapping a score to a conclusion about a capability of concern, nor do they state that none exists.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: unmet
+    rationale: The provided excerpts do not contain an example of a specific test item stem and a corresponding model response.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: met
+    rationale: The report states the total number of instances in the dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 54, chunk 0
+        quote: There are 43,090 instances in total.
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report specifies the item format as chat response and the scoring method as automatically assessing if a response is unsafe.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 2
+        quote: We opted to use chat response testing
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 22, chunk 1
+        quote: SUTs’ performance on each   test item   is scored by automatically assessing whether their response is unsafe or not.
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: unmet
+    rationale: While the report mentions the dataset was vetted by a working group, it does not describe the specific process of creating the grading criteria or the quality control measures for those criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: n/a
+    rationale: Grading is automated using LlamaGuard.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 22, chunk 1
+        quote: SUTs’ performance on each   test item   is scored by automatically assessing whether their response is unsafe or not. We use LlamaGuard [   59 ] for this purpose
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: n/a
+    rationale: Grading is automated using LlamaGuard.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 22, chunk 1
+        quote: SUTs’ performance on each   test item   is scored by automatically assessing whether their response is unsafe or not. We use LlamaGuard [   59 ] for this purpose
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: Grading is automated using LlamaGuard.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 22, chunk 1
+        quote: SUTs’ performance on each   test item   is scored by automatically assessing whether their response is unsafe or not. We use LlamaGuard [   59 ] for this purpose
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: met
+    rationale: The grader model is identified as LlamaGuard, built on Llama 2.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 22, chunk 1
+        quote: We use LlamaGuard [   59 ] for this purpose, which is an input-output safety filter built on top of the Llama 2 model [   23 ].
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The automated grading procedure involves using LlamaGuard to flag violations and then aggregating results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 21, chunk 2
+        quote: Our grading system involves scoring whether each test item is unsafe or not with an automated evaluator model (LlamaGuard [   59 ])
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report compares LlamaGuard's classifications against human annotators' gold standard labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 23, chunk 0
+        quote: Of the 660 items in the human eval set categorised as unsafe (based on the classifications provided by LlamaGuard), 358 are unsafe (based on the annotators’ gold standard labels)
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: unmet
+    rationale: The provided excerpts describe how SUTs are identified via UIDs in the tool, but they do not specify the exact model versions or snapshot dates tested in a report.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The excerpts mention that safety features cannot be changed for advertised results, but they do not state which specific safety mitigations were active during the testing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While the excerpts mention 'low temperature' and that prompts are 'single sentence', they do not provide the full prompts, scaffold versions, or the specific number of attempts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 26, chunk 1
+        quote: SUTs were evaluated at low temperature
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report provides summary statistics, specifically the percentage of responses flagged as unsafe by LlamaGuard.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 22, chunk 2
+        quote: LlamaGuard flagged 27,045 responses (4.8%) as unsafe.
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: While the total number of responses is mentioned, there is no report of uncertainty measures or the number of evaluation runs per model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: unmet
+    rationale: The report mentions that they will address testing at different temperatures in the future, but does not provide results from any alternative conditions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: n/a
+    rationale: The report does not use a human baseline for performance; it uses a reference model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: n/a
+    rationale: The report does not use a human baseline for performance; it uses a reference model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: n/a
+    rationale: The report does not use a human baseline for performance; it uses a reference model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: unmet
+    rationale: The report does not explain why a human baseline would be inappropriate or infeasible.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: met
+    rationale: The report uses a reference model as an alternative comparison point and explains the selection process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 24, chunk 1
+        quote: we use three state-of-the-art open source SUTs as candidate references models.
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: met
+    rationale: The report provides overall risk level conclusions for the SUTs and explicitly references Figure 1 for the grades.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 1
+        quote: We report the test and benchmark grades of SUTs in Figure 1.
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state falsification conditions or pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: While the report mentions future goals and future hazards, it does not provide a specific forecast of performance with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper and is not tied to a specific model deployment decision.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 0
+        quote: the purpose of releasing the v0.5 benchmark is not to draw attention to the strengths or weaknesses of any single model
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: met
+    rationale: The report describes that experts often disagree on whether AI output is hazardous.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 27, chunk 4
+        quote: experts often disagree on whether a given AI output is hazardous
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

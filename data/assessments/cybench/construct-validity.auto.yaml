@@ -1,0 +1,280 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: cybench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/cybench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2408.08926v4
+      ref: v4
+      sha256: e8378cc6db7ae7329d5d55b94fc7c3231f5107e86b06fafdb3ec71c3185321e2
+      chars: 426534
+    - kind: repo
+      url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+      ref: ca483c6443f17a20ba7d6bac3d274859a1721e51
+      sha256: c025fa51c98af6abac4210a27a2cf46d943d7bb969f4cf3bca9086b8e87d452e
+      chars: 52134
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark defines the phenomenon as the agent's ability to submit an answer that matches an answer key, which serves as the observable evidence of success.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 0
+        quote: the agent can submit its answer, which the evaluator will compare against the answer key.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the excerpts mention the use of CTF competitions and the goal of evaluating cybersecurity agents, they do not explicitly state the scope or name any excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The paper identifies subtasks as sub-components and explicitly states that they are scored sequentially.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 0
+        quote: a task can also have subtasks, each with an associated question and answer which are scored sequentially
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: met
+    rationale: The authors measured the effect of output-format requirements by comparing 'Structured bash' against 'action-only' (removing all fields besides the Action).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 7, chunk 2
+        quote: "we experiment with: 1) removing all fields in the response besides the Action ( action-only )"
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses a solution script to compare the final line of output (the flag) to a reference flag, rather than parsing free-form natural language output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 1
+        quote: this script reproduces the automatable steps to solve the task and outputs the retrieved flag as its final line, which is then compared to a reference flag
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The provided excerpts do not document a sampling strategy over a described task space to ensure representativeness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The documentation states that solution scripts are added to each task to ensure they are buildable and solvable, and these are verified via continuous integration.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 1
+        quote: To ensure solvability, we introduce and add a solution script to each task to ensure it is buildable and solvable, which is then verified through continuous integration.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items, nor are such results reported separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that Cybench is a new benchmark and distinguishes it from other existing CTF datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 10, chunk 3
+        quote: We have presented Cybench, a new benchmark for evaluating agents on cybersecurity tasks.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The excerpts indicate that Cybench is a new benchmark rather than an adaptation of a previous dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 10, chunk 3
+        quote: We have presented Cybench, a new benchmark for evaluating agents on cybersecurity tasks.
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The excerpts indicate that Cybench is a new benchmark rather than an adaptation of a previous dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 10, chunk 3
+        quote: We have presented Cybench, a new benchmark for evaluating agents on cybersecurity tasks.
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The excerpts indicate that Cybench is a new benchmark rather than an adaptation of a previous dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 10, chunk 3
+        quote: We have presented Cybench, a new benchmark for evaluating agents on cybersecurity tasks.
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts do not describe a specific contamination test implemented to detect data leakage, nor do they report the results of such a test.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of the benchmark tasks to prevent contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: met
+    rationale: The paper reports an overlap check by comparing task release dates against the knowledge cutoff dates of the evaluated models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 9, chunk 0
+        quote: There is minimal overlap between training and test data on any solved task besides those for Claude 3.5 Sonnet.
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is stated, but there is no power calculation or confidence-interval width reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 2
+        quote: An open-source benchmark with 40 recent professional-level CTF tasks.
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The results table shows fractional scores (e.g., 2/3) but does not provide confidence intervals or standard errors for the scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 44, chunk 1
+        quote: Loot Stash   00:02:00   R   HTB   2/3   2/3   X   2/3   1/3   1/3   1/3   1/3
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark uses Capture the Flag (CTF) tasks with deterministic flags, and no human raters are used for scoring the model outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 5, chunk 2
+        quote: the objective is to identify a vulnerability and execute the exploit in order to retrieve a secret string known as a flag.
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: Every label comes from a deterministic key (the CTF flag), which is not a subjective rating.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 5, chunk 2
+        quote: the objective is to identify a vulnerability and execute the exploit in order to retrieve a secret string known as a flag.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts do not provide a qualitative description of common failure modes nor a count of them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors report experimenting on four different agent scaffolds to improve performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 10, chunk 3
+        quote: Here, we introduce and experiment on 4 agent scaffolds
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark links tasks involving CVEs to real-world cybersecurity skills.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 3, chunk 0
+        quote: We focus on tasks that serve as effective proxies for real-world cybersecurity skills, including those that involve identifying and exploiting actual common vulnerabilities and exposures (CVEs).
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition (def.1) to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to existing CTF benchmarks, noting that Cybench is the first to be open-source and include professional-level CTFs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 2, chunk 1
+        quote: Our work is the first to (1) include professional-level CTFs that are open-source
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text states a limitation regarding the data source, noting that CTF tasks are not real-world and are intended to be solved in a short time span.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 39, chunk 2
+        quote: In particular, distributionally, the tasks are intended to be solved in a short time span, involve small codebases, and are not real-world
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

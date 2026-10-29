@@ -1,0 +1,412 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentharm
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentharm/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.09024v3
+      ref: v3
+      sha256: 069d9f1f129c89ecea4342857223e99992754add9a15fc5aabdf03388d011adc
+      chars: 104704
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested concept as the performance of LLM agents executing multi-step tool calls to fulfill malicious user requests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 0
+        quote: AgentHarm evaluates the performance of LLM agents that have to execute multi-step tool calls to fulfill user requests.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark describes how the concept translates to tasks requiring several function calls with dependencies and specific orders.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 4, chunk 2
+        quote: The tasks are designed to require several function calls, usually with dependencies such that they must be called in a particular order
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explains that the benchmark provides a signal of a model's real misuse potential and helps create better safeguards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: provide a signal of the model’s real misuse potential while limiting its optimization potential for transferring to real-life tasks.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design or execution.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature by designing tasks following the terms of use of major LLM providers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: We have designed our tasks following the terms of use of major LLM providers, such as OpenAI and Anthropic.
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The benchmark uses a harm score based on success in pursuing the task rather than just refusal, but the 'informed' choice process is not detailed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 1
+        quote: AgentHarm scores on the success of the agent in pursuing the malicious task, as opposed to solely whether the output is refused.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: Human performance levels are not provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: Random performance levels are not provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 10
+    rationale: The benchmark uses LLM judges for narrow subtasks and human-written rubrics, but a formal validation of the automatic evaluation is not fully detailed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: reliably scored , with human-written rubrics requiring LLM judges only for narrow well-specified subtasks
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explains differences from AgentDojo (direct vs indirect attacks) and ToolEmu (fixed tools vs LLM emulation).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 1
+        quote: This is different from the setting we consider, where harm comes from a malicious user who directly provides a harmful query
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 10
+    rationale: The benchmark addresses input sensitivity by testing different prompt variants (detailed, open-ended, and hint-included).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 4, chunk 3
+        quote: We transform the 110 base behaviors into tasks in several ways, producing a dataset of 440 tasks
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 10
+    rationale: The benchmark is implemented in a popular evaluation framework (Inspect), and the paper provides examples of grading functions and tools, though a full standalone codebase is not explicitly detailed in the excerpts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: implementing the dataset directly in a popular evaluation framework (UK AI Security Institute, 2024)
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The evaluation data is publicly released on Hugging Face and examples of the data format are provided in the excerpts."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The benchmark evaluates several models via API, including GPT, Claude, and Gemini.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 7, chunk 1
+        quote: "We evaluate a range of leading LLMs. See Appendix B for more details. • OpenAI : GPT-3.5-Turbo, GPT-4o mini, and GPT-4o."
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The benchmark evaluates Llama-3.1 series models, which are typically deployed locally or in private environments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 7, chunk 1
+        quote: In our deployment of Llama-3.1 series models
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers for instances or encryption of evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 10
+    rationale: The authors mention using a canary string to filter the benchmark from training sets, which is a mechanism to identify/prevent contamination, though a specific 'task' to identify if a model was trained on it is not described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: we introduce a canary string in our repository that helps to filter them out from training sets
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: The excerpts do not mention a specific script provided to replicate the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 10
+    rationale: The authors report a standard deviation for one of the models, which is a form of uncertainty quantification.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 8, chunk 2
+        quote: Mistral demonstrates notably higher variability in its responses, with a standard deviation of ±8.5%
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 15
+    rationale: The paper explicitly includes a warning regarding the harmful or offensive nature of the content.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 1, chunk 1
+        quote: "Warning: This work contains content that may be considered harmful or offensive."
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: The excerpts do not mention a requirements file or equivalent.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: No quick-start guide or demo is mentioned in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 15
+    rationale: The provided code snippets for tools and grading functions contain in-line comments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 29, chunk 0
+        quote: "#   note:   no   check   for   a   correct   order   here as   all   search   functions   can   be   called   in   an"
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The paper provides detailed documentation of the benchmark, including tool implementations and grading functions in the appendix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 2
+        quote: Appendix D shows many examples of harmful and benign tasks, detailed and open-ended tasks, grading functions, tool implementations
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The text explicitly states the paper was published as a conference paper at ICLR 2025.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 31, chunk 0
+        quote: Published as a conference paper at ICLR 2025
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The benchmark construction process is documented, including the manual writing and review of tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: All tasks are manually written and reviewed by separate human reviewers.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks and the rationale for their design based on provider terms of use.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: We have designed our tasks following the terms of use of major LLM providers
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: There is no mention of documented assumptions regarding normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper includes a dedicated 'Limitations' section.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 2
+        quote: Limitations. We note several limitations of our work
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The prompt design process (e.g., template attacks and system prompts) and test environment (synthetic tools) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 1
+        quote: We use synthetic tools for all tasks,   implemented using   Inspect
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metrics, including harm scores and refusal rates, are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 3
+        quote: "Table 1: The main metrics of   AgentHarm ."
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: No applicable license is specified in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique, persistent identifier (like a DOI or handle) for the dataset is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: There is no evidence of standardized metadata (e.g., DataCards) being included.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data sources (manually written tasks) and collection process are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: All tasks are manually written and reviewed by separate human reviewers.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not document data preprocessing steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The annotation/review process is documented as being performed by separate human reviewers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: All tasks are manually written and reviewed by separate human reviewers.
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The representativeness of the data is not explicitly explained in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: The excerpts do not mention following a recognized documentation standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not mention whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: No maintained feedback channel for users is mentioned in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No contact person for the benchmark is listed in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

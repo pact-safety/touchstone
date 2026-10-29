@@ -1,0 +1,274 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentharm
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentharm/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.09024v3
+      ref: v3
+      sha256: 069d9f1f129c89ecea4342857223e99992754add9a15fc5aabdf03388d011adc
+      chars: 104704
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark defines the phenomenon as the ability of agents to complete harmful tasks, specifically requiring a sequence of responses containing multiple function calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 1, chunk 3
+        quote: measure the propensity and ability of LLM agents to complete such harmful tasks
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 3
+        quote: requires a whole sequence of generated responses—that contain multiple function calls—to be high-quality and malicious
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the scope is described (11 harm categories and multi-step tool calls), the excerpts do not name any specifically excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The paper identifies 11 harm categories as components, but the provided excerpts do not show that these are scored separately; they only mention a general 'harm score'.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: met
+    rationale: The benchmark identifies tool use as a secondary ability and provides a control condition using a 'chat-only dataset' that does not require tool use to compare results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 15, chunk 0
+        quote: We have collected a new chat-only dataset that is designed to have similar requests to our main dataset but does not require tool use
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no evidence that the effect of output-format requirements on scores was measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses predefined manually written conditions and a semantic LLM judge for narrow tasks, rather than automated parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 2
+        quote: The majority of our grading criteria checks are predefined, manually written conditions
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts provide a summary of the dataset size and splits, but do not document a sampling strategy used to ensure representativeness of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The authors state that all questions were written by hand and each one was reviewed by a separate human reviewer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: we write all questions by hand and review every question with a separate human reviewer who did not write the question.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the paper mentions 'benign behaviors' and 'template attacks', it does not describe a counted subset of permuted or perturbed items with results reported separately from the main score as required by the rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that the authors constructed their own behaviors and datasets rather than adapting a previous one.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 4
+        quote: We construct 10 base behaviors per category across 11 harm categories
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark does not reuse or adapt a prior dataset; it constructs its own behaviors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 4
+        quote: We construct 10 base behaviors per category across 11 harm categories
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark does not reuse or adapt a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 4
+        quote: We construct 10 base behaviors per category across 11 harm categories
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark does not reuse or adapt a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 4
+        quote: We construct 10 base behaviors per category across 11 harm categories
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts mention using a private test set to track contamination, but they do not describe a specific contamination test (e.g., a membership inference test) or report its results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The paper explicitly describes a private test set split used for future evaluations to avoid contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 0
+        quote: "We split all behaviors on three categories: validation behaviors (10%), public test behaviors (60%), and private test behaviors (30%)."
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper mentions using a canary string to prevent future contamination, but it does not report a search or overlap check against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is provided, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 3
+        quote: Total number of behaviors   440
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results table (Table 3) provides point estimates for scores and refusals without confidence intervals or standard errors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 0
+        quote: "Table 3:   Harm score with different prompting."
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: While the paper mentions human reviewers for writing and reviewing questions, it does not describe their demographics or state bias mitigation for recruitment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: we write all questions by hand and review every question with a separate human reviewer
+    by: model
+    quotes_verified: true
+  st.4:
+    value: unmet
+    rationale: The labels are subjective as they rely on rubrics and LLM judges, but no inter-annotator agreement statistic or disagreement distribution is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 2
+        quote: A semantic LLM judge is used whenever it is necessary to check the semantics of a   portion   of an output
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While the paper describes several failure modes (e.g., hallucinating parameters, parallel tool calls), it does not provide counts for these failure modes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not show failures or scores broken down by a named confounder in a table or figure showing counts or rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors report using a special prompt to counter the failure mode where Llama-3.1 struggles with syntactically correct tool calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 7, chunk 0
+        quote: Llama-3.1-series often struggle to generate syntactically correct tool calls in our format, which we attempt to counter using a special prompt
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark links tasks to the real-world application of measuring a model's potential for misuse.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: the complexity and realism of this benchmark are sufficient to provide a signal of the model’s real misuse potential
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts, nor a statement linking task choice and each metric to such a definition.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to other benchmarks (Zhang et al., 2024a; Anurin et al., 2024) with the difference being broader coverage of harm categories versus a single domain.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 0
+        quote: Multiple recent benchmarks have prioritized more complex tasks within a single domain, such as cybersecurity (Zhang et al., 2024a; Anurin et al., 2024), instead of broader coverage of harm categories as in AgentHarm .
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: The only stated limitation concerns the language of the prompts (English), which does not address what the scores do or do not measure regarding construct validity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 2
+        quote: The prompts are only in English, and do not consider other languages which may impact performance and refusal rates
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

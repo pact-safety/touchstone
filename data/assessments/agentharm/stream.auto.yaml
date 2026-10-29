@@ -1,0 +1,262 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentharm
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentharm/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.09024v3
+      ref: v3
+      sha256: 069d9f1f129c89ecea4342857223e99992754add9a15fc5aabdf03388d011adc
+      chars: 104704
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report states that it measures basic agentic capabilities and is relevant to testing attacks on refusal behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 3
+        quote: our benchmark measures basic agentic capabilities
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 1
+        quote: the primary focus of the dataset is on testing attacks on refusal behavior
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The excerpts do not provide an explicit threshold or decision rule mapping a score to a conclusion about a capability of concern, nor do they state that none exists.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report provides an example of a task (ordering a fake passport) and the corresponding model response structure including tool calls."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: met
+    rationale: The report provides the total number of behaviors in Table 1.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 3
+        quote: Total number of behaviors   440
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: unmet
+    rationale: While the report mentions 'grading rubrics' and 'scoring functions', it does not describe the item format (e.g., multiple choice) or the specific scoring method used to calculate the final score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report states that rubrics are human-written and that quality control involved manual inspection and separate human reviewers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: reliably scored , with human-written rubrics
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: We also perform manual inspection of a large number of dataset samples to validate the accuracy of our grading system.
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: n/a
+    rationale: Grading is automated via grading functions and an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 3
+        quote: a short scoring function in Figure 2
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: n/a
+    rationale: Grading is automated via grading functions and an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 3
+        quote: a short scoring function in Figure 2
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: Grading is automated via grading functions and an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 3, chunk 3
+        quote: a short scoring function in Figure 2
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: met
+    rationale: The report identifies GPT-4o as the model used for the semantic judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 3
+        quote: its cost does not exceed   $0 . 5   when using GPT-4o
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The report describes the automated grading process using a semantic judge with a specific prompt to check for refusals.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 3
+        quote: we track an agent’s refusal rate using a standard semantic judge with the prompt given in Table 5
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: unmet
+    rationale: There is no mention of comparing the autograder's performance against human graders or other autograders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: met
+    rationale: The report lists specific model versions such as GPT-4o, Claude 3.5 Sonnet, and Llama-3.1 405B.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 7, chunk 1
+        quote: "OpenAI : GPT-3.5-Turbo, GPT-4o mini, and GPT-4o. • Anthropic : Claude 3 Haiku, Claude 3 Sonnet, Claude-3-Opus, and Claude-3.5-Sonnet. • Google : Gemini-1.0-Pro, Gemini-1.5-Flash, and Gemini-1.5-Pro."
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The report does not specify which safety mitigations were active during testing or if any were disabled.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While sampling settings (temperature 0) and some prompt details are provided, the full prompt for all tests and the specific scaffold version are not fully detailed in the excerpts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: Unless otherwise specified, we use temperature 0 with up to 4096 generated output tokens.
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report provides average harm scores per category and specific harm score percentages for various models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 2
+        quote: Figure 7 shows the breakdown of average harm scores per category for GPT-4o-mini and GPT-4o.
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: While a standard deviation is mentioned for one model, the total number of evaluation runs conducted is not specified.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results for alternative conditions such as best-of-n sampling and different prompting techniques (CoT, ReAct).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 8, chunk 2
+        quote: We explore using a best-of-n approach by sampling with temperature τ = 1 and the jailbreak template
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: n/a
+    rationale: The excerpts do not mention the use of a human baseline for performance comparison; they only mention human reviewers for rubrics and tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: n/a
+    rationale: The excerpts do not mention the use of a human baseline for performance comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: n/a
+    rationale: The excerpts do not mention the use of a human baseline for performance comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: unmet
+    rationale: The report does not provide a reason why a human baseline would be inappropriate or infeasible.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: met
+    rationale: The report provides a benign variant of the dataset to serve as a baseline for model capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: We also include a benign variant of the dataset as a baseline for model capabilities.
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: While the report provides conclusions about the benchmark's quality and the effect of attacks, it does not state overall conclusions about specific models' risk levels that cite a specific table, figure, or number.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state what results would overturn its conclusions, nor does it state a pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: The report mentions that capabilities 'may improve rapidly in the near future', but it does not provide a specific forecast of performance with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper and is not tied to a specific model deployment decision.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe any disagreements over results interpretation, nor does it explicitly state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,118 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: rl-unplugged
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/rl-unplugged/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2006.13888v4
+      ref: v4
+      sha256: 18f7aed76d303a02d46056682fe91b3386140944d30105b395fe8bd533cfab76
+      chars: 77706
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark includes tasks where current offline RL performance is explicitly described as lower, indicating clear headroom for improvement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 9, chunk 2
+        quote: on partially-observable environments such as the locomotion suite the offline RL methods’ performance is lower
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document any contamination defenses such as private held-out sets or contamination analyses.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark consists of RL tasks (Atari games and robotics) which do not have classes or labels that could be skewed in the manner described by the rule.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 3, chunk 1
+        quote: we include a wide range of task domains, including Atari games and simulated robotics tasks
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts do not mention any audit, validation pass, or error analysis regarding the annotation error rate of the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to bridge the gap between academic RL and real-world applications by providing challenging tasks, and it includes tasks that are not yet solved.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 2, chunk 1
+        quote: bridge the gap between academic interest in RL and real-world applications
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 5, chunk 2
+        quote: have not been shown to be solvable in any prior published work to the best of our knowledge
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The benchmark does not explicitly state its simplifying assumptions, making it impossible to verify if they hold or are contradicted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is described as a 'living benchmark suite' intended to evolve, and there is no evidence that its labels or task meanings have shifted or become unrepresentative.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 1, chunk 1
+        quote: we view RL Unplugged as a living benchmark suite that will evolve and grow
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The excerpts do not mention a version identifier (like a DOI or release tag) visible alongside the benchmark name, nor do they describe how changes are recorded per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving artifacts at the end of the benchmark's life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides a project page on GitHub, which serves as an issue tracker/contact point, and the paper describes the project as a 'living benchmark suite' intended to evolve.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2006.13888v4
+        locator: 2006.13888v4 page 1, chunk 1
+        quote: Our project page is available on github.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

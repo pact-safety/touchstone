@@ -1,0 +1,136 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mle-bench
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v6
+  repo_commit: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mle-bench/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.07095v6
+      ref: v6
+      sha256: ecfad6248e2fdcf4920059d7ecb57b46a01959f57302ab2545e80858c09dfa68
+      chars: 93091
+    - kind: repo
+      url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+      ref: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+      sha256: 81a90b069db3f5b38a52517d5d7f0cae4e4db8270c1a45e6053f924d45b56823
+      chars: 43791
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain reported scores or a leaderboard showing the current top score relative to the maximum achievable ceiling.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark documents a contamination analysis showing no systematic inflation of results for GPT-4o and employs mitigations like plagiarism detectors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 8, chunk 1
+        quote: Our experiments find no evidence of results being systematically inflated due to memorization.
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 10, chunk 1
+        quote: We have mitigations in place to prevent plagiarism of the top participants’ code or test labels (log analysis and plagiarism detector)
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark consists of open-ended machine learning engineering tasks (Kaggle competitions) rather than classification tasks with labels that could be skewed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 2, chunk 2
+        quote: MLE-bench consists of 75 machine learning engineering tasks manually sourced from Kaggle
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts do not contain a cited audit, validation pass, or error analysis reporting a low error rate for the benchmark data labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark specifies its purpose is to measure 'ML engineering capabilities of AI agents' and uses 'contemporary challenges with real-world value'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 1
+        quote: facilitate future research in understanding the ML engineering capabilities of AI agents
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 2
+        quote: Many of the competitions are contemporary challenges with real-world value
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The benchmark does not explicitly state its simplifying assumptions, which is required to meet this criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark uses contemporary Kaggle competitions and there is no evidence provided that the meaning of the tasks or labels has shifted since creation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 2
+        quote: Many of the competitions are contemporary challenges with real-world value
+    by: model
+    quotes_verified: true
+  r1:
+    value: met
+    rationale: The benchmark has a version identifier '1.0.0' in its project configuration and mentions a planned 'v2 release' to record changes.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:pyproject.toml, chunk 0
+        quote: version = "1.0.0"
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 16
+        quote: we plan to release batched fixes in the upcoming v2 release of MLE-bench
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no stated plan for archiving artifacts at the end of life, nor is there evidence of a persistent archive like a DOI-backed one.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark is hosted in a public GitHub repository (openai/mle-bench) which serves as an issue tracker and has been active (as evidenced by the v2 release plan and current versioning).
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 16
+        quote: we plan to release batched fixes in the upcoming v2 release of MLE-bench on the [openai/frontier-evals](https://github.com/openai/frontier-evals) repo
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

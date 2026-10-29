@@ -1,0 +1,448 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bird-bench
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bird-bench/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2305.03111v3
+      ref: v3
+      sha256: 314fc933837ad9d379afe82cc3c5f306b5ad360f6b91dc77a63232d71928ed46
+      chars: 110663
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark identifies the construct as text-to-SQL involving large database values and specifies the task of generating SQL queries from natural language questions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists 37 professional domains and specific task categories like Fundamental and Reasoning types.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 3, chunk 3
+        quote: Our databases cover 37 professional domains, including blockchain, sports, health care, politics, etc.
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The benchmark explicitly classifies examples into simple, moderate, and challenging difficulty levels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 0
+        quote: we class all examples as simple (30%), moderate (60%), and challenging (10%)
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark specifies a text-to-SQL task (generating SQL from natural language) and provides example items in Figure 1 and Appendix B.3.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 3
+        quote: How many accounts are eligible for loans in New York City? The condition of loans is that the type of the account should be “OWNER”. SELECT COUNT ( * ) FROM account WHERE account.type = ‘OWNER’ AND disp_id = ‘NY’;
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses Execution Accuracy (EX), defined as identical executed results between predicted and ground-truth SQLs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: unmet
+    rationale: The documentation does not name specific areas or task types that the construct implies but are not covered.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark names the use case of replacing human effort in real-world text-to-SQL tasks and notes the gap between academic and real-world applications.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 17, chunk 0
+        quote: whether state-of-the-art LLMs, such as ChatGPT and Codex, can replace human effort in real-world text-to-SQL tasks involving large database values
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for multiple models of different capabilities (T5-Base, T5-Large, T5-3B, GPT-4, etc.) are reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 8, chunk 0
+        quote: T5-Base 7.78 12.90 (+5.12) 8.97 14.71 (+5.74) T5-Large 9.90 22.74 (+12.84) 12.25 25.00 (+12.75) T5-3B 13.62 25.57 (+11.95) 15.17 27.80 (+12.63)
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: Human performance is reported as a baseline for the testing data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 8, chunk 0
+        quote: Human Performance - - 70.36 90.27 (+19.91)
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark describes sourcing databases from Kaggle, CTU Prague, and synthesized tables."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The total number of questions and the split of databases (training, development, testing) are stated."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark uses a hidden test set and self-designed databases for testing to avoid data leakage.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 18, chunk 0
+        quote: we opt to self-design new databases in testing using actual tabular data, thereby ensuring that LLMs do not preview the databases
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: There is no mention of a canary string in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation states the hardware used (NVIDIA Tesla A100 80GB) and the model interfaces (Azure OpenAI API).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 2
+        quote: All experiments are conducted on one NVIDIA Tesla A100 80GB, which is available for most research centers.
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a development set separate from the test set."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies that temperature is set to 0 for reproduction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 3
+        quote: In order to minimize the randomness of results, we set the temperature as 0 to ensure reproduction.
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The benchmark refers to a detailed prompt design shown in Figure 9.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 3
+        quote: The detailed prompt design is shown in Figure 9.
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: met
+    rationale: The benchmark specifies the use of the Azure OpenAI API and programming-based prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 2
+        quote: We employ programming-based prompts, as described in [ 39 ], to collect results by calling the API. Also, we choose the Azure OpenAI API
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: unmet
+    rationale: The benchmark does not provide a container image, VM, or full OS/package specification for the execution environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-turn text-to-SQL generation tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 7
+        quote: Text-to-SQL refers to the process of converting a natural language question Q into a SQL query Y
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission without a retry loop or feedback mechanism.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 7
+        quote: Text-to-SQL refers to the process of converting a natural language question Q into a SQL query Y
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The benchmark does not specify the number of trials per item or the aggregation method for the main results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: n/a
+    rationale: The benchmark uses execution accuracy (EX) and efficiency (VES) based on database results, not an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 2
+        quote: The Execution Accuracy (EX) and Valid Efficiency Score (VES) are presented
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: n/a
+    rationale: No LLM judge is used to score responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 2
+        quote: The Execution Accuracy (EX) and Valid Efficiency Score (VES) are presented
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports results under a varied protocol setting by comparing the baseline with a Chain-Of-Thought (COT) version."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: unmet
+    rationale: The excerpts do not mention shipping runnable evaluation code or implementation in a standard framework.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark specifies the use of HashSet to compare results to handle ambiguity in row order and duplicates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 24, chunk 4
+        quote: Therefore, we use HashSet rather than List to compare final results since HashSet disregards row order and automatically filters repetitive rows
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There is no record of version identifiers or a changelog for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The model generates SQL queries, but the excerpts do not show the model itself executing arbitrary code in a sandbox.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 7
+        quote: Text-to-SQL refers to the process of converting a natural language question Q into a SQL query Y
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: met
+    rationale: The harness supports multiple providers including Codex, ChatGPT, GPT-4, Claude-2, and Palm-2.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 7, chunk 1
+        quote: we provide zero-shot results of Codex ( code-davinci-002 ), ChatGPT ( gpt-3.5-turbo ), GPT-4 ( gpt-4-32k ), Claude-2 ( claude-2.0 ), Palm-2 ( text-bison-001 ).
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: The documentation does not state that the harness saves full per-item logs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The documentation does not state that the harness records the model identifier and benchmark version in its logs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: Experts evaluate each pair to ensure SQL validness and alignment, fixing items that return NULL.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 4, chunk 2
+        quote: "Experts evaluate each text-to-SQL pair to ensure the highest quality of data. The evaluation process includes two dimensions: SQL validness, and text-knowledge-SQL alignment."
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The items are text-to-SQL tasks and do not contain content likely to trigger safety safeguards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 7
+        quote: Text-to-SQL refers to the process of converting a natural language question Q into a SQL query Y
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: met
+    rationale: The benchmark uses self-designed new databases in the test set to prevent LLMs from having previewed the data during pre-training.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 18, chunk 0
+        quote: we opt to self-design new databases in testing using actual tabular data, thereby ensuring that LLMs do not preview the databases.
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: The documentation does not state that task instructions were reviewed for clarity by more than one person or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): Reference results for multiple models (GPT-4, ChatGPT, etc.) are published in tables."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: Scores are reported separately for subsets based on difficulty (simple, moderate, challenging).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 2
+        quote: simple moderate challenging total simple moderate challenging total
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: unmet
+    rationale: The excerpts do not define a headline metric or the precise method for aggregating item scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: There is no mention of standard errors, confidence intervals, or uncertainty methods for the reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: The documentation does not provide a structured config file, schema, or report template for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: The excerpts do not provide a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The excerpts do not report the cost (tokens, money, or time) specifically for the reference runs next to their scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: There are no downloadable full or representative transcripts of reference runs provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument that existing benchmarks lack focus on values, creating a gap with real-world applications.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 17, chunk 0
+        quote: current cross-domain text-to-SQL benchmarks only focus on the database schema, which lacks full attention to values, resulting in a gap between academic and real-world applications.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims to represent real-world scenarios and notes that self-designed schemas may differ from real-world scenarios.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 3, chunk 2
+        quote: the value distribution and schemas may differ from real-world scenarios in this way.
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes the baseline models (fine-tuning and ICL) and the hardware (NVIDIA Tesla A100 80GB) used for experiments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 2
+        quote: All experiments are conducted on one NVIDIA Tesla A100 80GB
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: unmet
+    rationale: The documentation does not explicitly name conclusions that the scores should not be taken to show.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents limitations regarding the resource-intensive nature of the annotation procedure and the choice of SQLite.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 10, chunk 2
+        quote: Despite the high quality of SQL annotation produced by double-blind annotation, the procedure is resource-intensive.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

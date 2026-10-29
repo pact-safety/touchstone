@@ -1,0 +1,104 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: humaneval
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: b9453e8f1865df0a0057a1383767caa400acfbcf
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/humaneval/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2107.03374v2
+      ref: v2
+      sha256: 3cf5545b26f5b1321a7c7fd42dedd1be64ad3cda5c6891b80d412c0edbc5a290
+      chars: 162609
+    - kind: repo
+      url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+      ref: b9453e8f1865df0a0057a1383767caa400acfbcf
+      sha256: 63d3dc590c8b85889d95120d1576b847c6cbe8efa1ed35bb2fd287fce209927f
+      chars: 7039
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain reported scores for HumanEval or a saturation analysis to determine if there is clear headroom.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: There is no mention of a contamination defence such as a private held-out test set or contamination analysis for the HumanEval benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): HumanEval is a code synthesis benchmark where the goal is functional correctness against unit tests; it has no classes or labels that could be skewed."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts do not contain a cited audit, validation pass, or error analysis reporting a low error rate for the HumanEval dataset labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark serves to measure the capabilities of code synthesis and generation methodologies, a purpose that remains current for the models evaluated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 25, chunk 2
+        quote: measure the capabilities of advancing code synthesis and generation methodologies
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The excerpts do not explicitly state the simplifying assumptions relied upon by the HumanEval benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: There is no evidence in the excerpts that the benchmark's content is maintained or that an analysis has been done to ensure no semantic drift has occurred.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not mention a version identifier (like a release tag or DOI) visible alongside the benchmark name, nor do they describe how changes are recorded per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: While the README states the repository is deprecated, there is no plan for archiving artifacts or a statement that they are in a persistent archive.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: The README explicitly states the repository is 'no longer maintained' and 'without ongoing support', which indicates an abandoned project.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

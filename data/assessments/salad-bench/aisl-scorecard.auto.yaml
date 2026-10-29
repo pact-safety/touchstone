@@ -1,0 +1,434 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: salad-bench
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/salad-bench/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.05044v4
+      ref: v4
+      sha256: 24765d9ad04f6822f7c85de8cdd8775f5dab28fafdcabbb7fa19943d4cc24385
+      chars: 136348
+    - kind: repo
+      url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      ref: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      sha256: 9b9ea84b2f0c812864d0268c8f92b6afb75ac1f820b08573ae31c0094a4a451d
+      chars: 19448
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation provides operational definitions for safety domains, specifying observable behaviors like 'insult, child abuse, violent content' for toxic content.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 14, chunk 2
+        quote: The toxic content domain encompasses the production of content that contravenes established community guidelines and ethical standards such as insult, child abuse, violent content, etc.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation defines what is in scope via the taxonomy, it does not explicitly name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The phenomenon is broken down into domains and tasks, and the documentation refers to safety rates reported for these specific sub-components in figures."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by a hierarchy of 6 domains, 16 tasks, and 66 categories, and item counts are reported by data source.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 2, chunk 2
+        quote: SALAD-Bench introduces a structured hierarchy with three levels, comprising 6 domains, 16 tasks, and 66 categories, respectively.
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The authors describe a verification process where they sampled questions from all 65 categories while keeping the original ratio.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 0
+        quote: we randomly sample 458 questions from all the 65 categories keeping the origin ratio among categories
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The dataset underwent human verification by 4 annotators, and a consistency rate of 94.3% for taxonomy labels is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 1
+        quote: The annotation results indicate that our data taxonomy labels match human taxonomy labels with a consistency rate of 94.3% .
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: met
+    rationale: An 'attack-enhanced subset' exists for probing boundary conditions, and the text describes the use of 20 human-designed jailbreak prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 2
+        quote: We select 20 human-designed jailbreak prompts from jailbreakchat.com
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: unmet
+    rationale: The benchmark reuses several datasets (e.g., Advbench, ToxicChat), but no table or figure compares the same model on the original vs. adapted benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: unmet
+    rationale: The benchmark reuses datasets, but it does not list every modification made to each reused dataset along with a reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are mentioned for subsets, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The results tables (e.g., Table 5, Table 15) report point estimates (percentages) without confidence intervals or standard errors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: The paper mentions that annotators met to clarify labeling requirements, but the actual instructions or training materials are not reproduced.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Human raters were used for verification, but their demographics are not reported, nor is there a check for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: unmet
+    rationale: The labels (safe/unsafe) are determined by a model (MD-Judge) or human consensus, but no per-item disagreement distribution or inter-annotator agreement statistic is reported beside the aggregate scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: unmet
+    rationale: The headline metrics are reported as safety rates (percentages), which are single-point aggregates of the labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: met
+    rationale: The authors break down safety rates by domain and task in figures, which serves as a breakdown by named confounds/dimensions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 20, chunk 3
+        quote: The safety performance across tasks is showcased in Figure 12 and Figure 13.
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper discusses general performance drops on attack-enhanced sets, but does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement that names the tasks, each metric, and the construct from cv.01 they measure with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares SALAD-Bench to existing benchmarks and states that prior benchmarks are often limited in scope (only safety or only attack/defense).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 13, chunk 2
+        quote: these benchmarks often have limited usage scope, either designed solely for safety assessment (Wang et al., 2023b; Shen et al., 2023) or aimed at testing attack and defense strategies (Zou et al., 2023)
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: While limitations are listed, there is no specific claim linking the benchmark scores to a real-world capability or harm with support or caveat.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks to identify construct overlap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap measurement or mitigation steps are described as no overlap was identified in iv.02.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reported results comparing different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: While regex parsing is used, there is no comparison of parser output against reference labels across two formats with reported accuracy per format.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or provide training cutoffs for all evaluated models (e.g., Gemini, Claude2, QWen).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs and local scoring/LLM calls without an external mutable environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of stateless model calls for QA and MCQ tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: The benchmark includes multiple-choice questions but does not report a random-guess baseline or a named guessing mitigation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 14, chunk 1
+        quote: the LLM Safety Dataset also includes multiple choice questions.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name specific domain experts or user groups consulted to define the evaluation scenarios and acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While the authors cross-validated a sample, they do not specify the reviewers' field or credentials as required by the rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported under different elicitation settings, specifically comparing a 'base set' to an 'attack-enhanced subset'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 20, chunk 3
+        quote: there is a notable difference in safety rates when comparing the base set to the attack-enhanced subset
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: met
+    rationale: The benchmark reports results for an 'attack-enhanced subset' as a separate slice, which represents a stress condition (adversarial shift) differing from the base set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 20, chunk 3
+        quote: there is a notable difference in safety rates when comparing the base set to the attack-enhanced subset
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general LLM safety and resilience against attacks rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general LLM safety and resilience against attacks rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general LLM safety and resilience against attacks rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The provided excerpts do not list sampling parameters, library versions, hardware models, or OS/container images.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: While human verification is mentioned, there is no described correction channel (errata, changelog, or versioned release) that records at least one fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs name limitations (e.g., taxonomy becoming outdated), but they do not state the direction of bias or provide an impact estimate for these flaws.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 9, chunk 3
+        quote: This paper has three main limitations.
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark reports a human evaluator as a reference point for the MCQ-Judge experiments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 7, chunk 3
+        quote: we compare MCQ-Judge with different previously proposed evaluators ( i.e. , keyword-based and GPT-based evaluators), and introduce human evaluator as reference.
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: No trivial baseline scores (such as random selection or majority-class prediction) are reported in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: met
+    rationale: The authors report that the MCQ-Judge evaluator achieves results similar to a human evaluator.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 18, chunk 2
+        quote: Compared to results from human evaluator, our MCQ-Judge achieves similar results on Acc-V of GPT-4 and Vicuna
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: met
+    rationale: The evaluator uses a designated output format to ensure strict adherence, which serves as a defense against reward hacking/formatting issues.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 17, chunk 6
+        quote: Output format aims to utilize LLMs’ ability to follow instructions, ensuring that our evaluator adheres strictly to our designated format.
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: unmet
+    rationale: There is no report of agreement across repeated rating runs on the same inputs for the model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: No specific rater biases (like length or position) are measured with numbers and mitigated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The dataset was cross-validated by 4 authors, and a consistency rate of 94.3% was reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 1
+        quote: The annotation results indicate that our data taxonomy labels match human taxonomy labels with a consistency rate of   94.3%
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The documentation does not explicitly classify every task as solvable or intentionally unsolvable with expected behaviors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The MCQ subset includes predefined correct answers, and the QA subset provides ground-truth answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 6, chunk 0
+        quote: In contrast to the Question-Answering subset where ground-truth answers are provided, the multiple-choice subset includes predefined correct answers.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The docs do not list the scorer's accepted equivalences or show a non-identical correct answer passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for all required edge cases (partial answers, off-format, refusals, and timeouts).
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The benchmark uses predefined correct answers for MCQs and a model rater for QA, rather than parsing free-form output into a structured answer for a deterministic parser check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The benchmark uses predefined correct answers for MCQs and a model rater for QA, rather than parsing free-form output into a structured answer for a deterministic parser check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for a null-agent run or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

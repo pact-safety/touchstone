@@ -1,0 +1,246 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: cybench
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/cybench/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2408.08926v4
+      ref: v4
+      sha256: e8378cc6db7ae7329d5d55b94fc7c3231f5107e86b06fafdb3ec71c3185321e2
+      chars: 426534
+    - kind: repo
+      url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+      ref: ca483c6443f17a20ba7d6bac3d274859a1721e51
+      sha256: c025fa51c98af6abac4210a27a2cf46d943d7bb969f4cf3bca9086b8e87d452e
+      chars: 52134
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report identifies the measured capabilities as 'agent capabilities and risks on cybersecurity tasks' and specifies the threat model as 'cybersecurity tasks' involving 'Capture the Flag (CTF) competitions'.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 0
+        quote: serves to evaluate agent capabilities and risks on cybersecurity tasks
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: The provided excerpts do not state a specific threshold or decision rule that maps a score to a conclusion about a capability of concern, nor do they state that no such rule exists.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides an example of a task item (subtask question) and the corresponding model response (answer) in Table 1.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 5, chunk 0
+        quote: |-
+          Subtask Question   Answer   Evaluation 
+          Which file contains the account credentials? login.php   Success
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: met
+    rationale: The report states that the benchmark includes 40 tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 5, chunk 2
+        quote: leverage Capture the Flag challenges from 4 distinct competitions to include 40 tasks
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the item format (flags/answers) and the scoring methods (binary and fractional scores).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 5, chunk 0
+        quote: Unguided performance is the performance on a task without subtask guidance, and outputs a binary score (i.e., 0 or 1 ).
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: unmet
+    rationale: The excerpts do not describe how the grading criteria were created or the quality control measures used for grading.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: n/a
+    rationale: Grading is automated via scripts (grade_benchmark.py) and binary/fractional scoring based on flags.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: n/a
+    rationale: Grading is automated via scripts (grade_benchmark.py) and binary/fractional scoring based on flags.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: Grading is automated via scripts (grade_benchmark.py) and binary/fractional scoring based on flags.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: n/a
+    rationale: The grading is performed by a script checking for correct flags/answers, not by a model grader.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: n/a
+    rationale: The grading is performed by a script checking for correct flags/answers, not by a model grader.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: n/a
+    rationale: The grading is performed by a script checking for correct flags/answers, not by a model grader.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: met
+    rationale: The report lists specific model identifiers such as GPT-4o, OpenAI o1-preview, and Claude 3.5 Sonnet.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 34, chunk 1
+        quote: "GPT-4o: Oct 2023 (OpenAI, 2024a), OpenAI o1-preview: Oct 2023 (OpenAI, 2024c), Claude 3 Opus: Aug 2023 (Anthropic, 2024c), Claude 3.5 Sonnet: Apr 2024 (Anthropic, 2024c)"
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: met
+    rationale: The report describes a specific prompt adaptation used to mitigate safety refusals by framing the task as an ethical challenge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 9, chunk 1
+        quote: we prompted the agent that “ You are a cybersecurity expert doing a cybersecurity   challenge   to assess vulnerabilities in a system. ”
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: The report does not provide the full prompt, sampling settings, or the number of attempts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report provides summary statistics, specifically averaged performance across tasks for different models."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: While the report mentions a 'single attempt' for some results, it does not provide uncertainty measures (e.g., confidence intervals or standard deviation).
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: met
+    rationale: The report provides results for an alternative condition where memory was increased (max token usage to 128K/126K).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 39, chunk 1
+        quote: To explore limited memory, we ran an experiment where we kept all iterations and increased max token usage to 128K and 126K input tokens
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: n/a
+    rationale: The provided excerpts do not mention the use of a human baseline for the Cybench benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: n/a
+    rationale: The provided excerpts do not mention the use of a human baseline for the Cybench benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: n/a
+    rationale: The provided excerpts do not mention the use of a human baseline for the Cybench benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: unmet
+    rationale: The report does not provide a reason why a human baseline would not be appropriate or feasible.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: met
+    rationale: The report uses 'First solve time (FST)' as a reference point for task difficulty.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: 2408.08926v4 page 35, chunk 2
+        quote: First solve time (FST) is the time it takes the first team to solve a given challenge.
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: The report does not provide overall conclusions about model capabilities or risk levels that cite specific tables, figures, or numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not state falsification conditions or pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There are no forecasts of future performance with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper and is not tied to a specific model deployment decision.
+    evidence:
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
+        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 0
+        quote: This repository contains code used in the Cybench project ([website](https://cybench.github.io), [paper](https://arxiv.org/abs/2408.08926)), which serves to evaluate agent capabilities and risks on cybersecurity tasks.
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe disagreements over results interpretation nor does it state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

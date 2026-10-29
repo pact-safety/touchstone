@@ -1,0 +1,398 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: tau-bench
+standard: abc
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 59a200c6d575d595120f1cb70fea53cef0632f6b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/tau-bench/abc/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2406.12045v1
+      ref: v1
+      sha256: ed8409419c3062d4589b374d7841181206794ee748084f58cce10af34523b3e2
+      chars: 132419
+    - kind: repo
+      url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+      ref: 59a200c6d575d595120f1cb70fea53cef0632f6b
+      sha256: e17ddb00606e0458f03bb7af5d8ef22e5e1fb71411e776c7dbc04058a8a705c8
+      chars: 14519
+  excerpt_chars: 40000
+verdicts:
+  O.a.1:
+    value: n/a
+    rationale: The benchmark scores based on database state identity and substring matching for outputs, not by a string matching matcher that normalizes semantic equivalents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: whether the final database is identical to the unique ground truth outcome database
+    by: model
+    quotes_verified: true
+  O.a.2:
+    value: met
+    rationale: The benchmark uses substring matching for user responses, meaning extra words around the correct answer do not cause failure.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: the user responses contain   "54.04" ,   "41.64"   as substrings
+    by: model
+    quotes_verified: true
+  O.a.3:
+    value: met
+    rationale: The benchmark uses substring matching for outputs; an answer negating the ground truth (e.g., not containing the required substring) would not be scored correct.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: the user responses contain   "54.04" ,   "41.64"   as substrings
+    by: model
+    quotes_verified: true
+  O.a.4:
+    value: met
+    rationale: The benchmark uses substring matching for outputs; listing all possible answers would not satisfy the specific unique ground truth database state requirement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: whether the final database is identical to the unique ground truth outcome database
+    by: model
+    quotes_verified: true
+  O.a.5:
+    value: met
+    rationale: The ground truth requires a specific database state and specific substrings, making generic guesses like 'yes' incorrect.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: the agent is successful if the only database write action is   return_delivered_order_items(order_id="#W2890441", item_ids=["2366567022"], payment_method_id="credit_card_1061405")
+    by: model
+    quotes_verified: true
+  O.b.1:
+    value: n/a
+    rationale: The primary evaluation is rule-based (database state comparison), not an LLM-as-a-judge for scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons
+    by: model
+    quotes_verified: true
+  O.b.2:
+    value: n/a
+    rationale: No LLM judge is used for the primary scoring of the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons
+    by: model
+    quotes_verified: true
+  O.c.1:
+    value: n/a
+    rationale: The benchmark does not score outputs by test cases, but by database state matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 2, chunk 2
+        quote: Our evaluation scheme compares the database state at the end of each episode with the ground truth expected state
+    by: model
+    quotes_verified: true
+  O.c.2:
+    value: n/a
+    rationale: The benchmark does not score outputs by test cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 2, chunk 2
+        quote: Our evaluation scheme compares the database state at the end of each episode with the ground truth expected state
+    by: model
+    quotes_verified: true
+  O.d.1:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.2:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.3:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.1:
+    value: n/a
+    rationale: End-to-end testing in the sense of code coverage is not used; it uses state matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 2, chunk 2
+        quote: Our evaluation scheme compares the database state at the end of each episode with the ground truth expected state
+    by: model
+    quotes_verified: true
+  O.e.2:
+    value: n/a
+    rationale: End-to-end code testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.1:
+    value: met
+    rationale: The benchmark ensures a unique ground truth outcome, and the check is a match against that specific state.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 1
+        quote: guarantees only one possible outcome under the domain policy
+    by: model
+    quotes_verified: true
+  O.f.2:
+    value: unmet
+    rationale: There is no evidence that the scoring checks if unrelated states were damaged.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.3:
+    value: met
+    rationale: The ground truth requires specific API write actions, meaning a no-op would fail the identity check with the ground truth database.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: whether the final database is identical to the unique ground truth outcome database
+    by: model
+    quotes_verified: true
+  O.g.1:
+    value: n/a
+    rationale: The benchmark scores by database state and substring matching, not by matching a final formatted answer provided by the agent.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: whether the final database is identical to the unique ground truth outcome database
+    by: model
+    quotes_verified: true
+  O.g.2:
+    value: n/a
+    rationale: The benchmark does not score by matching a final answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: whether the final database is identical to the unique ground truth outcome database
+    by: model
+    quotes_verified: true
+  O.h.1:
+    value: n/a
+    rationale: The benchmark uses a binary reward (0 or 1), not a continuous quality metric.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: The reward of a task episode   r   =   r action   ×   r output   ∈ { 0 ,   1 }
+    by: model
+    quotes_verified: true
+  T.1:
+    value: unmet
+    rationale: The setup.py file lists minimum versions for packages (e.g., 'openai>=1.13.3'), but does not provide exact versions or a lockfile for all tools in the environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.2:
+    value: n/a
+    rationale: The benchmark uses simulated users and programmatic APIs (JSON databases) rather than external API tools that would require rate limit handling.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 1, chunk 2
+        quote: measure an agent’s ability to interact with (simulated) human users and programmatic APIs
+    by: model
+    quotes_verified: true
+  T.3:
+    value: n/a
+    rationale: The benchmark uses simulated users and programmatic APIs rather than external API tools.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 1, chunk 2
+        quote: measure an agent’s ability to interact with (simulated) human users and programmatic APIs
+    by: model
+    quotes_verified: true
+  T.4:
+    value: unmet
+    rationale: There is no mention of how the environment is reset or if residual data is cleared between runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.5:
+    value: met
+    rationale: The documentation explicitly states that task annotations (ground truth) are not visible to the agent.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 1
+        quote: Task annotation is   not visible to the agent
+    by: model
+    quotes_verified: true
+  T.6:
+    value: met
+    rationale: The environment uses JSON databases and Python API tools, which are part of the modular framework and frozen in the repository.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 1
+        quote: "τ -bench is constructed in a modular fashion with several components: (a) JSON databases, (b) Python API tools"
+    by: model
+    quotes_verified: true
+  T.7:
+    value: met
+    rationale: The construction process includes a stage for human labeling and checking of the data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 1
+        quote: Each domain is created in a three-stage approach with a mix of LM and code runs, and human labeling and checking.
+    by: model
+    quotes_verified: true
+  T.8:
+    value: unmet
+    rationale: While the authors use gpt-4-turbo to validate tasks, there is no statement that every task was solved by a person or a reference solution.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.9:
+    value: unmet
+    rationale: The excerpts do not mention an automated Oracle solver that ships with the benchmark to solve all challenges.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.10:
+    value: unmet
+    rationale: There is no documentation of an exploit audit of the implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.1:
+    value: met
+    rationale: The benchmark provides a public GitHub repository containing the code and data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 1, chunk 2
+        quote: "Code and data:   https://github.com/sierra-research/tau-bench"
+    by: model
+    quotes_verified: true
+  R.2:
+    value: met
+    rationale: The codebase, which includes the modular framework for running and evaluating the benchmark, is released publicly.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 2
+        quote: We release our codebase publicly to encourage the community to create new tasks and domains for   τ   -bench.
+    by: model
+    quotes_verified: true
+  R.3:
+    value: unmet
+    rationale: There is no mention of a private held-out split, rotating split, or canary strings to prevent contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.4:
+    value: unmet
+    rationale: No versioned update schedule or documented process for updating challenges to avoid overfitting is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.5:
+    value: met
+    rationale: The text explicitly links the capability (interacting with users/APIs while following policies) to the outcome measure (database state comparison).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 1, chunk 2
+        quote: introduce   τ   -bench (short for Tool-Agent-User Interaction Benchmark) to measure an agent’s ability to interact with (simulated) human users and programmatic APIs while following domain-specific policies in a consistent manner.
+    by: model
+    quotes_verified: true
+  R.6:
+    value: met
+    rationale: The benchmark evaluates language models used as agents, specifically testing their function calling and ReAct capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 2
+        quote: We test various state-of-the-art proprietary and open language models for agents through their APIs
+    by: model
+    quotes_verified: true
+  R.7:
+    value: met
+    rationale: Quality control is described via human labeling/checking, and a correction channel (PRs/Issues) is provided with a recorded fix (rewritten codebase).
+    evidence:
+      - source: repo
+        url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+        locator: sierra-research/tau-bench@59a200c6d575:README.md, chunk 6
+        quote: We have recently [rewritten](https://github.com/sierra-research/tau-bench/commit/043b544371757ebb3762b3d02a6675dfe0c41798) the benchmark to be more type-safe and extensible.
+    by: model
+    quotes_verified: true
+  R.8:
+    value: unmet
+    rationale: While limitations of the user simulator are discussed, they are not framed as unavoidable flaws with a specific direction of effect on results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.9:
+    value: unmet
+    rationale: There is no numerical estimation of the impact of unavoidable flaws on the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.10:
+    value: unmet
+    rationale: The excerpts do not show a main results table where every score has a confidence interval or significance test.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.11:
+    value: unmet
+    rationale: No specific caveats are attached to named flaws that explicitly state which conclusions should not be drawn.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.12:
+    value: unmet
+    rationale: No human expert or non-AI baseline results are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.13:
+    value: unmet
+    rationale: No results for a do-nothing or trivial agent are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

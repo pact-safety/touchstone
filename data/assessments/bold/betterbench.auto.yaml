@@ -1,0 +1,422 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bold
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bold/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2101.11718v1
+      ref: v1
+      sha256: be88679e16de72d41bbb3a6018df6edfd9ac84074663d8ecee3beca27cfc4487
+      chars: 90339
+    - kind: repo
+      url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      ref: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      sha256: 2678000f25d85f0362a62c15f354ad6954f52f71c22f55f80999b5ce8f3c9a28
+      chars: 24778
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines a biased language generation model as one that disproportionately generates text perceived as negative, unfair, prejudiced, or stereotypical.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 1, chunk 3
+        quote: Broadly, one can say a language generation model is biased if it disproportionately generates text that is often perceived as being negative, unfair, prejudiced, or stereotypical against an idea or a group of people with common attributes.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The paper describes how the concept of bias is measured by using prompts to trigger text generation and then applying metrics for sentiment, toxicity, and gender polarity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: We presented a novel dataset BOLD and a set of metrics to evaluate fairness in open-ended language generation.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The paper explains that benchmarking social biases is necessary to prevent the reinforcement of detrimental biases in downstream tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 4
+        quote: This shows a crucial need to study and benchmark social biases in open-ended language generation and prevent the reinforcement of detrimental biases in downstream tasks.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: "The paper describes a limitation: BOLD provides an indication of bias in specific categories but is not an indication that a model is completely fair."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: benchmarking on BOLD provides an indication of whether a model is biased in the categories considered in BOLD, however, it is not an indication that a model is completely fair.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: The benchmark utilizes numeric ratings assigned by expert psychologists for psycholinguistic norms.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 4, chunk 2
+        quote: At the word-level, psycholinguistic norms are numeric ratings assigned by expert psychologists to words
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature regarding gender bias and psycholinguistic norms.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 4, chunk 4
+        quote: Following current literature that studies gender bias in models [ 2 , 35 ], we obtain a list for male and female identifying tokens
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of metrics (sentiment, toxicity, gender polarity) is informed by existing literature and validated against human annotations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 2
+        quote: by collecting crowd workers’ annotations on a subset of data we validate that the presented automated metrics align well with human annotations.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: The benchmark includes human performance levels by using crowd-worker annotations as the ground truth for validation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 4
+        quote: "we compute the following between labels computed with automatic metrics and labels from human annotations: (1) Spearman’s 𝜌 correlation coefficient, and (2) accuracy, precision, recall and f1-score by assuming human annotations as truth."
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: The excerpts do not mention a random performance level.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The automatic metrics are validated using human annotations, showing strong correlation for gender polarity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 4
+        quote: we find a strong correlation between human annotations for male and female gender with both cosine similarly based gender polarity metrics
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The paper explicitly explains how BOLD differs from StereoSet and other benchmarks by measuring biases in generated texts rather than ranking probabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 4
+        quote: Both the dataset and evaluation metrics in [ 25 ] and [ 26 ] are fundamentally different from the work presented here.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: The excerpts do not address input sensitivity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 0
+    rationale: The excerpts do not mention the availability of evaluation code.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The excerpts state that BOLD consists of prompts extracted from Wikipedia and provide a link to the repository.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 4
+        quote: BOLD consists of language generation prompts extracted from Wikipedia sentences.
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: There is no mention of support for evaluating models via API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 10
+    rationale: The paper mentions using the HuggingFace library for experiments with various LMs, which typically supports local models, but does not explicitly state 'local model support'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 2
+        quote: For language generation experiments, we use the HuggingFace library [   42 ].
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: The excerpts do not mention globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: No task to identify if the model was trained on the benchmark data is mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: The excerpts do not mention a script to replicate the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts report proportions and results but do not mention statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: The excerpts do not assess the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no mention of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: No requirements file (e.g., requirements.txt) is mentioned or provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 10
+    rationale: The README provides a 'Getting Started' section that explains how to download and use the prompts.
+    evidence:
+      - source: repo
+        url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+        locator: amazon-science/bold@3ad652c773f5:README.md, chunk 1
+        quote: Download a copy of the language model prompts inside prompts folder.
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: No code excerpts are provided to verify the presence of in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: There is no dedicated code documentation provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The excerpts include a paper that was presented at FAccT '21, a peer-reviewed venue.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 0
+        quote: FAccT ’21, March 3–10, 2021, Virtual Event, Canada
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the process of extracting prompts from Wikipedia, including the specific criteria used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 3, chunk 2
+        quote: For each profession, we only take sentences where the profession is mentioned in the first 8 words of the sentence.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (measuring bias in open-ended generation) and the rationale for using Wikipedia as a source.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 5
+        quote: Because it provides articles from many domains and demographics, represents authors from diverse background, and contains a quality control procedure, we take English Wikipedia as a source for gathering prompts
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not explicitly document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper contains a dedicated 'LIMITATIONS AND DISCUSSIONS' section.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 10, chunk 2
+        quote: 7   LIMITATIONS AND DISCUSSIONS
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The prompt design process (extraction from Wikipedia) is documented in detail.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 3, chunk 2
+        quote: The prompt is taken to be the first five words plus the profession / name / religious belief / political ideology term.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper documents several evaluation metrics, including sentiment, regard, and gender polarity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 1
+        quote: "we augment various existing bias metrics like sentiment and regard with novel bias metrics: psycholinguistic norms, toxicity, and gender polarity."
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The project specifies the Creative Commons Attribution Share Alike 4.0 International license.
+    evidence:
+      - source: repo
+        url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+        locator: amazon-science/bold@3ad652c773f5:README.md, chunk 1
+        quote: This project is licensed under the Creative Commons Attribution Share Alike 4.0 International license.
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: No standardized metadata (e.g., DataCards) is included in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The data source (English Wikipedia) and the collection method (scraping) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 3, chunk 1
+        quote: we scrape the Wikipedia pages for each occupation under that umbrella.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: Preprocessing steps, such as filtering short sentences and anonymizing prompts, are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 3, chunk 4
+        quote: we filter out Wikipedia sentences that are too short ( ≤ 8 words).
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The data annotation process using Amazon Mechanical Turk (AMT) is documented, including worker requirements and payment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 3
+        quote: Each text in our AMT experiments is shown to at least three crowd workers and only those labels are accepted that have a majority agreement
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The representativeness of the data is explained by citing Wikipedia's diversity of authors and domains.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 2, chunk 5
+        quote: Because it provides articles from many domains and demographics, represents authors from diverse background
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Datasheets for Datasets).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts contain no information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 15
+    rationale: The project provides a maintained feedback channel via the GitHub issue tracker for bugs and feature requests.
+    evidence:
+      - source: repo
+        url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+        locator: amazon-science/bold@3ad652c773f5:CONTRIBUTING.md, chunk 0
+        quote: We welcome you to use the GitHub issue tracker to report bugs or suggest features.
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: While a general email for the Amazon Open Source Code of Conduct is listed, no specific contact person for the BOLD benchmark is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

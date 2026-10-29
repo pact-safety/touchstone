@@ -1,0 +1,466 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: tau-bench
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 59a200c6d575d595120f1cb70fea53cef0632f6b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/tau-bench/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2406.12045v1
+      ref: v1
+      sha256: ed8409419c3062d4589b374d7841181206794ee748084f58cce10af34523b3e2
+      chars: 132419
+    - kind: repo
+      url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+      ref: 59a200c6d575d595120f1cb70fea53cef0632f6b
+      sha256: e17ddb00606e0458f03bb7af5d8ef22e5e1fb71411e776c7dbc04058a8a705c8
+      chars: 14519
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The benchmark defines the target phenomenon as the ability to interact with users and APIs while following domain rules, with evidence being the final database state compared to a ground truth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 2, chunk 2
+        quote: Our evaluation scheme compares the database state at the end of each episode with the ground truth expected state.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation describes what is in scope (retail and airline domains), it does not explicitly name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper does not explicitly state the phenomenon is a single unitary construct, nor does it report independent scores for distinct facets like accuracy vs. tone.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The task space is defined by domains (retail, airline) and item counts are reported for these categories."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation provides total task counts per domain but does not report per-category item counts or a stratified sampling plan over the task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: Tasks undergo a manual validation step involving agent runs to ensure a unique outcome, and the process of polishing instructions is described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 2
+        quote: "Stage III: Manual task annotation and validation with agent runs. Here, the key challenge is to ensure the user instruction leads to a unique database outcome."
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark constructs its own domains and data rather than reusing a prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark constructs its own domains and data rather than reusing a prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are stated, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results table (Table 2) provides point estimates (pass^1) without confidence intervals or standard errors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 7, chunk 0
+        quote: "Table 2: Pass^1 across models via function calling"
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The benchmark uses simulated users (LMs) and rule-based database checks, not human raters for labeling or judging outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: The benchmark uses simulated users (LMs) and rule-based database checks, not human raters for labeling or judging outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons.
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: Every label comes from a deterministic key (database state comparison), which is not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Every label comes from a deterministic key (database state comparison), which is not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The paper provides a failure breakdown by type, but not by a named confound like formatting, language complexity, or prompt length.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation reports named failure categories (e.g., 'Wrong argument', 'Wrong decision') with associated percentages."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement that names the tasks, each metric, and the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares itself to ToolBench and MetaTool, stating that those only contain single-step interactions while τ-bench focuses on realistic multi-turn interaction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 3, chunk 0
+        quote: However, all these works only contain a single-step user interaction... In contrast, our benchmark focuses on a more realistic setting where the agent has to interact with human users
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: While it mentions limitations of the user simulator, it does not provide a specific design limitation statement linked to a claim about real-world capability or harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper identifies that the benchmark unifies conversational and tool-use capabilities, which are related phenomena."
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: There is no quantification of the overlap between conversational and tool-use capabilities, nor described mitigation steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The excerpts do not report results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: Scoring is based on database state comparisons rather than parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report contamination checks or training-data cutoffs for the evaluated models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (database JSON files) and local scoring (database state comparison), involving no external mutable environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 1
+        quote: domain-specific data in terms of database JSON files, database API Python code and documentation
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: The excerpts do not provide evidence that the harness resets state (e.g., fresh container or process) per task.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The evaluation is not multiple choice; it compares final database states to ground truth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 2, chunk 2
+        quote: Our evaluation scheme compares the database state at the end of each episode with the ground truth expected state.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation mentions that manual annotation requires deep understanding of the domain, but it does not name specific experts or user groups consulted or what they defined.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: The documentation mentions manual annotation and verification, but does not name the reviewers' credentials or specify the sample size reviewed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for multiple prompting/elicitation settings, specifically function calling (FC), ReAct, and Act-only.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 3
+        quote: We also test text-formatted ReAct [ 26 ] and its Act-only ablation
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There is no report of results as a separate slice for a named stress condition or shift that differs from the train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general agent capabilities in simulated customer service domains rather than a specific deployed product or application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 2, chunk 1
+        quote: we focus on the realm of customer service and create two different domains
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general agent capabilities in simulated customer service domains rather than a specific deployed product or application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 2, chunk 1
+        quote: we focus on the realm of customer service and create two different domains
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general agent capabilities in simulated customer service domains rather than a specific deployed product or application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 2, chunk 1
+        quote: we focus on the realm of customer service and create two different domains
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation does not list library versions (lockfile/pinned requirements), hardware models, or the OS/container image.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no evidence of a published reproduction by an independent third party on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: met
+    rationale: The docs describe a correction channel (GitHub PRs/issues) and record a specific fix where the benchmark was rewritten to be more type-safe.
+    evidence:
+      - source: repo
+        url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+        locator: sierra-research/tau-bench@59a200c6d575:README.md, chunk 6
+        quote: We have recently [rewritten](https://github.com/sierra-research/tau-bench/commit/043b544371757ebb3762b3d02a6675dfe0c41798) the benchmark to be more type-safe and extensible.
+      - source: repo
+        url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+        locator: sierra-research/tau-bench@59a200c6d575:README.md, chunk 6
+        quote: Please submit issues or pull requests if you find problems with the benchmark.
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: While the docs name limitations (e.g., user simulation typos), they do not state the direction of bias or provide an impact estimate for each.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: No human or expert baseline is reported, nor is there a statement explaining why one is not relevant.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: The provided excerpts do not report the score of any trivial or minimal baseline (e.g., random or zero-shot naive).
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The benchmark uses a rule-based reward based on database state comparisons rather than a model rater for scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The benchmark uses a rule-based reward based on database state comparisons rather than a model rater for scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The benchmark uses a rule-based reward based on database state comparisons rather than a model rater for scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The benchmark uses a rule-based reward based on database state comparisons rather than a model rater for scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: unmet
+    rationale: While the text mentions manual annotation and verification, it does not report inter-annotator agreement or the accuracy of a programmatic checker on a labeled sample.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The documentation does not explicitly classify every task as solvable or intentionally unsolvable, nor does it document expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The benchmark provides ground truth database write actions and outputs, which are verified through an iterative process of agent runs and manual polishing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 1
+        quote: an annotation of the ground truth database write actions (and optionally, ground truth outputs for user questions)
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the specific scoring outcomes for partial answers, off-format answers, refusals, and errors/timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: Scoring is based on database state comparisons and substring matching, which does not involve parsing free-form output into structured data for the reward calculation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: whether the final database is identical to the unique ground truth outcome database
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: Scoring is based on database state comparisons and substring matching, which does not involve parsing free-form output into structured data for the reward calculation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: whether the final database is identical to the unique ground truth outcome database
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null-agent runs or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

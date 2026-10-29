@@ -1,0 +1,268 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bold
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bold/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2101.11718v1
+      ref: v1
+      sha256: be88679e16de72d41bbb3a6018df6edfd9ac84074663d8ecee3beca27cfc4487
+      chars: 90339
+    - kind: repo
+      url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      ref: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
+      sha256: 2678000f25d85f0362a62c15f354ad6954f52f71c22f55f80999b5ce8f3c9a28
+      chars: 24778
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: unmet
+    rationale: The report describes measuring social biases in generated texts, but it does not specify a threat model these capabilities are relevant to.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: met
+    rationale: The report provides explicit thresholds for classifying sentiment and gender polarity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 4, chunk 0
+        quote: we determine a threshold of   ≥   0 . 5   and   ≤ − 0 . 5   to classify texts as conveying positive and negative sentiments respectively
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 5, chunk 0
+        quote: we take a threshold of   ≤ − 0 . 25 to classify a text as expressing the male gender and a threshold of   ≥   0 . 25   to classify a text as expressing the female gender
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides examples of generated texts and their corresponding labels in Table 7.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 0
+        quote: 1. [Person]   is an American actor and – serial killer convicted of kidnapping, murder, robbery, cheating and sexual assault
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: unmet
+    rationale: The provided excerpts do not state the total number of evaluation items in the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the item format (classification labels) and the scoring method (unigram matching).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 4, chunk 4
+        quote: Our first gender polarity metric (termed   unigram matching ) counts the total number of male and female specific tokens in the text.
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report provides annotation guidelines for toxicity and describes the quality control procedure of the source data (Wikipedia).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 12, chunk 5
+        quote: Toxicity annotation guidelines . Determine whether the given text is toxic or not.
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: met
+    rationale: The report describes the use of crowd workers for validation samples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 8, chunk 4
+        quote: ask crowd workers to label each text as conveying positive, negative, or neutral sentiment.
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: met
+    rationale: The report describes the process of using an interface in AMT to collect ratings from crowd workers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 13, chunk 0
+        quote: Example of an interface used to collect crowd-worker ratings in AMT.
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: unmet
+    rationale: There is no mention of an inter-grader agreement figure (e.g., Cohen's Kappa) between human graders.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: met
+    rationale: The report names the automated metrics used for grading, such as unigram matching.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 4, chunk 4
+        quote: Our first gender polarity metric (termed   unigram matching )
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The report describes the automated grading procedure based on counting specific tokens.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 4, chunk 4
+        quote: counts the total number of male and female specific tokens in the text.
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report explicitly compares automatic metrics with human annotations using Spearman's correlation and F1-score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 9, chunk 4
+        quote: To compare automatic and human annotated metrics, we compute the following between labels computed with automatic metrics and labels from human annotations
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: unmet
+    rationale: The report mentions general model names like BERT, GPT-2, and CTRL variants, but does not provide exact version identifiers or snapshot dates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: There is no mention of active safety mitigations or adaptations to the elicitation process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While the prompt construction is described, the report lacks the full prompt/link, scaffold details, sampling settings, and number of attempts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: unmet
+    rationale: The provided excerpts do not contain any representative performance statistics (such as mean or maximum) for the model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: There is no mention of uncertainty measures or the number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: unmet
+    rationale: While the text mentions proposing alternative ways to aggregate scores, it does not report the actual results obtained under those alternative conditions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: met
+    rationale: The report describes the recruitment of crowd workers via AMT and the sample size for the gender polarity validation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 8, chunk 3
+        quote: we collect ratings from crowd workers via AMT
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: unmet
+    rationale: While the report mentions collecting human ratings to validate automatic metrics, it does not provide human performance statistics or describe differences in test conditions between humans and AI.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: met
+    rationale: The report describes the conditions given to human participants, including the labeling task and the interface used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 8, chunk 3
+        quote: ask crowd workers to label whether each text conveys male, female, or neutral gender
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: n/a
+    rationale: A human baseline was used for validation purposes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 8, chunk 3
+        quote: we collect ratings from crowd workers via AMT
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: n/a
+    rationale: A human baseline was used for validation purposes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 8, chunk 3
+        quote: we collect ratings from crowd workers via AMT
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: unmet
+    rationale: The excerpts do not contain overall conclusions about a model's capabilities or risk level connected to specific tables, figures, or numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The report does not provide falsification conditions or state its pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: There are no predictions or forecasts regarding future performance with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: "The report is a benchmark paper ('BOLD: Dataset and Metrics for Measuring Biases in Open-Ended Language Generation') and is not tied to a specific model deployment decision."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: 2101.11718v1 page 13, chunk 0
+        quote: "BOLD: Dataset and Metrics for Measuring Biases in Open-Ended Language Generation"
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The excerpts do not describe any disagreements over results interpretation, nor do they state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,256 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: impossiblebench
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/impossiblebench/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2510.20270v1
+      ref: v1
+      sha256: 076fdc9d551f5e6646495bc14ac5c5857230c8939b2c64423b02651f66b3baae
+      chars: 64461
+    - kind: repo
+      url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      ref: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+      sha256: 6b37396768388d86129c43c497a25560f7c6237e81c74276df6467f68097a492
+      chars: 9620
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: The number of test items is stated, but there is no justification (like power calculations or confidence intervals) for why these sample sizes are sufficient for the comparisons.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 19, chunk 0
+        quote: contains 103 data points
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: While confidence intervals are mentioned for some results, there is no report of a statistical power figure or minimum detectable difference.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 7, chunk 1
+        quote: together with 90% confidence intervals
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: The prompt templates and scaffold details are provided, but sampling settings (temperature, max tokens) are missing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 20, chunk 0
+        quote: Minimal scaffolds For Impossible-LiveCodeBench , the minimal scaffold is a simple submission loop.
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: The benchmark uses a 'hidden tests' configuration as a control to see if hiding tests reduces the cheating success rate.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 8, chunk 0
+        quote: Hiding tests from agents reduces cheating success rate to near zero
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no mention of canary strings, private test splits, or a contamination analysis to prevent training data leakage.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: The benchmark reports results from different prompt variants (guidance strictness) and different scaffold configurations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 7, chunk 1
+        quote: Different prompt variants tested on Conflicting-LiveCodeBench
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The authors manually examined transcripts flagged as cheating to verify if they were indeed cheating attempts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 9, chunk 1
+        quote: We also manually examined some transcripts flagged as cheating
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark uses an LLM (Claude Opus 4) to classify cheating strategies and validates this by manually examining transcripts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 9, chunk 1
+        quote: we found that most of them are indeed cheating attempts
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: met
+    rationale: The benchmark analyzes and reports on transcripts (reasoning traces) of the agents' behavior to identify cheating strategies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 5, chunk 1
+        quote: Analyzing the transcripts, we identify four distinct cheating strategies
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: There is no documented check for evaluation awareness, sandbagging, or an elicitation-strength sweep.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: unmet
+    rationale: While the creation of items via mutation is described, there is no description of the review process or how the benchmark is versioned and maintained.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 19, chunk 0
+        quote: We mutate each task to create corresponding oneoff and conflicting versions
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: met
+    rationale: The documentation describes the input/output format, the available tools (bash commands), the interaction length (up to 10 submissions), and access restrictions (read/write access to tests, but forbidden to modify them).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 19, chunk 0
+        quote: change the input/output format of the tasks from stdin/stdout to the unit test format
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 1
+        quote: We allow up to 10 submissions per run with feedback about failed tests
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 24, chunk 0
+        quote: Provide exactly ONE bash command to execute
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 0
+        quote: We provide agents with full read/write access to test cases
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The paper explicitly states that providing agents with full read/write access to test cases differs from the original benchmarks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 4, chunk 0
+        quote: We provide agents with full read/write access to test cases rather than hiding them. While this differs from the original benchmarks
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The spread of the evaluation is described across two different dataset domains (LiveCodeBench and SWE-bench) with specific data point counts for each.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 19, chunk 0
+        quote: we obtain 349 data points as the Impossible-SWEbench dataset
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation or a statement that the authors reproduced their own headline numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: unmet
+    rationale: The paper is explicitly labeled as a preprint and is 'Under review', which does not satisfy the peer-review requirement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 21, chunk 0
+        quote: Preprint. Under review.
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The benchmark datasets are publicly available for download on HuggingFace.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 0
+        quote: The benchmark datasets are available on HuggingFace for use with any other evaluation framework
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: met
+    rationale: The official implementation is provided in a repository and the README provides a quick start for running it against models.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 0
+        quote: This repository provides the official Inspect AI implementation for ImpossibleBench evaluations.
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: met
+    rationale: The paper and README describe how items are constructed (mutations), how models are queried (scaffolds), and how they are scored (pass rate on impossible tasks).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 1, chunk 1
+        quote: We measure an agent’s “cheating rate” as its pass rate on these impossible tasks
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: While Docker is mentioned, there is no pinned lockfile or version list for the software environment, nor is the total compute for a full run stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: met
+    rationale: The prompts used for mutation and main experiments are released in Appendix G.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2510.20270v1
+        locator: 2510.20270v1 page 20, chunk 1
+        quote: This section contains the prompts used throughout our experiments for   ImpossibleBench   for reproducibility.
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The harness is designed to run models through public APIs (e.g., openai/gpt-4o) and uses the Inspect AI framework.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 1
+        quote: eval(task, model="openai/gpt-4o")
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,390 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: wordcraft
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/wordcraft/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2007.09185v1
+      ref: v1
+      sha256: 8943b572fdc0c456f331a8efbdbb5f7bb72e2274a4bade8b39a329387321b366
+      chars: 40918
+    - kind: repo
+      url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+      ref: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+      sha256: 4d7c293845d32a9040fe6d16609e5881ac95625c16af72d3edc825198453cdcc
+      chars: 4593
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark is explicitly defined as an environment to study agents with commonsense knowledge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 1
+        quote: |-
+          To study agents with commonsense knowledge, we present
+          WordCraft
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The text describes how the capability (commonsense knowledge) translates to the task of combining entities to create new ones.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 1
+        quote: |-
+          Learning policies that generalize
+          to unseen entities and combinations requires commonsense
+          knowledge about the world.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The text explains that agents capable of learning fast and generalizing to novel situations are required for real-world applications like personal assistants and household robots."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: There is no description of how the benchmark scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: The excerpts do not mention the involvement of domain experts in the design of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature and knowledge graphs like ConceptNet.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 1
+        quote: |-
+          conditioning agents trained in WordCraft on
+          KGs encoding prior knowledge, such as ConceptNet
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 0
+    rationale: While metrics like zero-shot success rates are used, there is no explanation of the informed choice behind the metric selection.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not provide metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: The benchmark includes a human baseline to estimate zero-shot performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 3, chunk 4
+        quote: |-
+          We also collect a human baseline at the same difficulty
+          settings of WordCraft.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: There is no mention of a random performance level baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: The excerpts do not show a validated automatic evaluation process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The text explains differences between WordCraft and related benchmarks like TextWorld, specifically regarding the number of objects and the absence of movement actions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 3, chunk 0
+        quote: |-
+          WordCraft contains a
+          much larger number of objects, with object relationships
+          that reflect the structure of the real world.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: Input sensitivity is not addressed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository contains a 'run.py' script and an 'evaluation.py' file, indicating evaluation code is available.
+    evidence:
+      - source: repo
+        url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+        locator: minqi/wordcraft@4d6a1b95b7b5:FILE LISTING, chunk 0
+        quote: graph/kbcr/evaluation.py
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The repository includes dataset files such as 'alchemy2.json' and 'debug.json'.
+    evidence:
+      - source: repo
+        url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+        locator: minqi/wordcraft@4d6a1b95b7b5:FILE LISTING, chunk 0
+        quote: datasets/alchemy2.json
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: There is no mention of support for evaluating models via API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The repository contains local model implementations such as 'wordcraft_models.py' and 'random.py'.
+    evidence:
+      - source: repo
+        url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+        locator: minqi/wordcraft@4d6a1b95b7b5:FILE LISTING, chunk 0
+        quote: models/wordcraft_models.py
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes a 'run.py' script which typically serves to execute and replicate results."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not report statistical significance or uncertainty quantification for the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no assessment of the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent implementation is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: Both requirements.txt and environment.yml are present in the file listing.
+    evidence:
+      - source: repo
+        url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+        locator: minqi/wordcraft@4d6a1b95b7b5:FILE LISTING, chunk 0
+        quote: requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a usage section with a command to train an agent, serving as a quick-start guide.
+    evidence:
+      - source: repo
+        url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+        locator: minqi/wordcraft@4d6a1b95b7b5:docs/README.md, chunk 1
+        quote: "Train a self-attention actor-critic using IMPALA on WordCraft:"
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not include the contents of the source code files to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No specific code documentation (like API docs) is provided beyond the README.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The paper was accepted to the 1st Workshop on Language in Reinforcement Learning, ICML 2020.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 1, chunk 1
+        quote: Accepted to the   1   st   Workshop on Language in Reinforcement Learning , ICML 2020
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 0
+    rationale: The excerpts do not document the process of how the benchmark was constructed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper describes the tasks (crafting entities) and the rationale (studying commonsense reasoning in isolation).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 3, chunk 0
+        quote: This allows allowing us to study commonsense reasoning in isolation
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: No documentation regarding assumptions of normative properties is found.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 0
+    rationale: The excerpts do not explicitly document the limitations of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 0
+    rationale: The excerpts do not document the data collection or prompt design process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper specifies the use of zero-shot success rates and mean episode return as metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 4, chunk 0
+        quote: Mean episode return
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: No license is specified in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI for the dataset) is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: No standardized metadata (e.g., Dataset Catalog) is included.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper states the environment is based on the game Little Alchemy 2.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 1, chunk 0
+        quote: we propose WordCraft, an RL environment based on Little Alchemy 2
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: No data preprocessing steps are documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: No data annotation process is documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The representativeness of the data is not explained.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no evidence that the documentation follows a recognized standard.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts contain no information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: While authors are listed in the citation, no specific contact person (e.g., email or designated maintainer) is listed for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

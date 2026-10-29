@@ -1,0 +1,468 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentharm
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentharm/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.09024v3
+      ref: v3
+      sha256: 069d9f1f129c89ecea4342857223e99992754add9a15fc5aabdf03388d011adc
+      chars: 104704
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The benchmark defines its target as the 'propensity and ability of LLM agents to complete such harmful tasks', where evidence is the successful execution of multi-step tool calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 1, chunk 3
+        quote: aims to measure the propensity and ability of LLM agents to complete such harmful tasks
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation describes what is in scope (11 harm categories), it does not explicitly name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: met
+    rationale: The phenomenon is broken down into harm categories, and the docs state that average harm scores per category are reported in Figure 7.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 2
+        quote: Figure 7 shows the breakdown of average harm scores per category for GPT-4o-mini and GPT-4o.
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by 11 harm categories, and item counts are reported across difficulty variations (detailed, open-ended, and hint-included).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 0
+        quote: We collect 110 unique and 330 augmented agentic behaviors across 11 harm categories
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The docs mention the number of behaviors across categories but do not report the specific per-category item counts or a stratified sampling plan.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: Every question was written by hand and reviewed by a separate human reviewer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: we write all questions by hand and review every question with a separate human reviewer
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a specific named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset; it states it is the first to measure direct prompting for multi-step agent misuse.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 0
+        quote: In addition to being the first dataset to specifically measure direct prompting scenarios for multi-step agent misuse
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 0
+        quote: In addition to being the first dataset to specifically measure direct prompting scenarios for multi-step agent misuse
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are provided, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results table (Table 2) provides some standard deviations for one model, but not for every score in the main results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The benchmark uses human reviewers for dataset creation, but the scoring is automated via rubrics and LLM judges, not human raters judging outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: reliably scored , with human-written rubrics requiring LLM judges only for narrow well-specified subtasks
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: No human raters label the outputs for the final scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: reliably scored , with human-written rubrics requiring LLM judges only for narrow well-specified subtasks
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: The labels are deterministic based on manually written conditions (rubrics) and narrow LLM checks for specific sub-parts, not subjective overall ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 2
+        quote: The majority of our grading criteria checks are predefined, manually written conditions
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: The labels are based on deterministic rubric checks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 2
+        quote: The majority of our grading criteria checks are predefined, manually written conditions
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The error analysis mentioned in the text does not provide a table or figure breaking down failures by a named confound like length or complexity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The docs mention identifying examples through manual inspection, but do not report named failure categories with counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement that names the tasks, each metric, and the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark compares itself to domain-specific agentic benchmarks, noting that those have smaller sample sizes (10-30 tasks) compared to AgentHarm's 110 base tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 1
+        quote: existing domain-specific agentic benchmarks have a small sample size on the order of 10-30 tasks compared to our 110 base and 440 augmented tasks
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The docs provide a limitation regarding English-only prompts and claim that the benchmark's complexity provides a signal of real misuse potential.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 2
+        quote: The prompts are only in English, and do not consider other languages
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 0
+        quote: We believe the complexity and realism of this benchmark are sufficient to provide a signal of the model’s real misuse potential
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify specific secondary capabilities nor provide control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation identifies that the benchmark tracks basic agentic competencies as a related phenomenon to the primary focus of testing refusal behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 1
+        quote: AgentHarm tracks basic agentic competencies like multi-turn tool calls with cross-call dependencies, the primary focus of the dataset is on testing attacks on refusal behavior.
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: There is no quantification of the overlap with agentic competencies or description of mitigation steps for this overlap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The excerpts do not report results under different output-format conditions or separate format-failure rates from task failures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: Scoring is based on a grading rubric of manually written conditions and environment state (target functions called), not parsing free-form output for correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 14, chunk 2
+        quote: the harm score is computed according to a grading rubric that consists of multiple manually written conditions
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination check results or training cutoffs for every evaluated model (e.g., GPT-4o, Sonnet 3.5, Mistral Large 2).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses isolated tools and a predefined tool set rather than a mutable external environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: using simple and isolated tools
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: There is no mention of resetting state, containers, or processes between evaluation runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark uses open-ended tasks and grading rubrics rather than multiple-choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 4, chunk 3
+        quote: We additionally present an open-ended variant, which omits certain details to make the task more challenging
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name specific domain experts or user groups consulted to define scenarios and criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The docs state that all questions were reviewed by separate human reviewers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: we write all questions by hand and review every question with a separate human reviewer who did not write the question.
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for multiple prompting settings including chain-of-thought, ReAct, and refusal prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 8, chunk 2
+        quote: "We explore the effect of different prompting techniques: chain-of-thought, ReAct, and a refusal-inducing prompt."
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There is no report of results as a separate slice for a named stress condition or shift with an item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general agentic robustness against misuse scenarios rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark evaluates general agentic robustness against misuse scenarios rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark evaluates general agentic robustness against misuse scenarios rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation mentions temperature and output tokens, but lacks library versions, hardware models, and OS/container details.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: we use temperature 0 with up to 4096 generated output tokens
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: While quality control steps (human review) are described, there is no mentioned correction channel like a changelog or errata recording a fix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: we write all questions by hand and review every question with a separate human reviewer
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs name flaws (e.g., grading functions missing traces), but do not state the direction of bias, impact estimate, or which conclusions remain valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 10, chunk 3
+        quote: the grading functions can sometimes miss an alternative execution trace that can be considered correct
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: No human or expert baseline is reported for the tasks, nor is a named prior system reported as the reference point for the main tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: No trivial baseline score (e.g., random or zero-shot naive) is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: unmet
+    rationale: While the benchmark uses LLM judges for narrow subtasks, there is no reported correlation or agreement score between these model ratings and human judgments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: met
+    rationale: The documentation describes a defense against reward hacking/adversarial inputs by using LLMs only for narrow, isolated grading tasks rather than the whole output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 2
+        quote: This tendency is reduced in our case by using LLMs only for narrow and isolated grading tasks.
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: unmet
+    rationale: There is no report of agreement across repeated rating runs on the same inputs for the model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: unmet
+    rationale: The docs mention that grading the whole output by an LLM can be problematic due to bias, but they do not measure a specific named bias with a number.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The documentation states that all tasks are manually written and then reviewed by separate human reviewers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: All tasks are manually written and reviewed by separate human reviewers.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The excerpts do not show that every task is explicitly classified as solvable or intentionally unsolvable with documented expected behaviors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: unmet
+    rationale: While grading functions are mentioned, there is no evidence that reference solutions were verified by an oracle or second person.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: The documentation does not list accepted equivalences or provide an example of a non-identical correct answer passing the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: "The docs do not specify the scoring outcome for all required edge cases: partial answers, off-format answers, refusals, and errors/timeouts."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The scoring is based on predefined conditions (e.g., function calls) and narrow semantic judges, not on parsing free-form output into a structured format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 2
+        quote: The majority of our grading criteria checks are predefined, manually written conditions
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: Scoring involves predefined condition checks and narrow semantic judges rather than a free-form output parser.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 2
+        quote: The majority of our grading criteria checks are predefined, manually written conditions
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for a null/trivial-agent run or a targeted exploit attempt on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

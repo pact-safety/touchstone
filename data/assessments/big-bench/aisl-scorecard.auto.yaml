@@ -1,0 +1,469 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: big-bench
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 092b196c1f8f14a54bbc62f24759d43bde46dd3b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/big-bench/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2206.04615v3
+      ref: v3
+      sha256: b2076d6c32a9c1fe4c2bb403242df1414e3f431dab4a99a2159b8899522cb330
+      chars: 407367
+    - kind: repo
+      url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+      ref: 092b196c1f8f14a54bbc62f24759d43bde46dd3b
+      sha256: 1860567c11288cd61b63234b36bd16a473f3da95617c1c4676646004684d71d5
+      chars: 116073
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: unmet
+    rationale: The documentation describes the goal of the benchmark and criteria for tasks, but does not provide a precise operational definition of the target phenomenon stating which observable outputs count as evidence.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The documentation states that tasks measuring almost any aspect of LLM capabilities are in-scope, and the paper explicitly names multi-modal capabilities as a limit/exclusion.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:docs/doc.md, chunk 2
+        quote: Tasks which measure almost any aspect of large language model capabilities are in-scope for this benchmark
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 8, chunk 2
+        quote: BIG-bench is designed for evaluating pure language models and has limits to cover multi-modal capabilities
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The benchmark consists of many tasks with different facets (e.g., social bias, calibration), but the excerpts do not show that every named sub-component has its own reported score in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: unmet
+    rationale: While the docs mention that tasks with varying difficulty are encouraged, they do not define the overall task space categories and report item counts along a difficulty dimension.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation does not report per-category item counts over the task space or describe a stratified sampling plan.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: unmet
+    rationale: The docs list acceptance criteria for tasks (Correctness, Formatting, etc.), but they do not describe a verification step for every item with a reported pass rate or specific criteria for testing the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The excerpts do not indicate that the benchmark reuses a prior dataset; it is described as a collection of contributed tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The excerpts do not indicate that the benchmark reuses a prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: The excerpts do not provide a power calculation or confidence-interval half-width for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results mentioned (e.g., Figure 1, Figure 14) do not show confidence intervals or standard errors for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: The paper mentions using human raters and 'expert' scores, but does not reproduce the rater instructions or training materials.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a description of mitigation for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: The provided metrics (exact_string_match, multiple_choice_grade) rely on deterministic keys (exact match or highest probability for a target), making labels non-subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 8, chunk 1
+        quote: "exact_string_match: Accuracy on exact."
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: The labels are based on deterministic keys (exact match or target scores), not subjective ratings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 8, chunk 1
+        quote: "exact_string_match: Accuracy on exact."
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: met
+    rationale: The paper breaks down performance by the named confound of 'keyword' (which represents different capabilities/categories) in Figure App.3 and other analysis.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 46, chunk 2
+        quote: performance of BIG-G, BIG-G sparse, and GPT models broken down by keyword.
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper discusses 'brittleness' and 'breakthroughs', but does not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement naming the tasks, each metric, and the construct from cv.01 they measure with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The paper compares BIG-bench to SuperGLUE and notes that existing benchmarks have a 'narrow scope' which BIG-bench addresses by being 'extremely difficult and diverse'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 7, chunk 0
+        quote: Existing benchmarks have narrow scope and show rapidly saturating performance. (a) SuperGLUE (Wang et al., 2019a) is a leading recent benchmark
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 6, chunk 0
+        quote: we introduce a large-scale, extremely difficult and diverse benchmark.
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The paper provides a limitations statement (e.g., inability to process long contexts) and links performance to real-world capabilities/harms (e.g., automation of social bias).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 26, chunk 0
+        quote: Limitations that we believe will require new approaches, rather than increased scale alone, include an inability to process information across very long contexts
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 4, chunk 3
+        quote: allow us to identify and mitigate potential harmful social effects, ranging from job loss to automation of social bias
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The excerpts do not report control conditions or ablation results for secondary capabilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation provides a list of keywords that name related phenomena (e.g., morphology, translation, grammar) measured by the tasks.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:keywords.md, chunk 2
+        quote: "`morphology` | tests model's ability to solve challenges related to segmentation and construction of words"
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: There is no evidence that the overlap between the phenomena named in iv.02 was quantified or mitigated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The excerpts do not report results under at least two output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: While the paper mentions models are 'sensitive to the precise phrasing', it does not report a prompt-perturbation experiment with a variance or spread measure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The benchmark uses JSON and programmatic tasks where outcomes are based on exact string matches or predicted probabilities of targets, not parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 8, chunk 1
+        quote: "exact_string_match: Accuracy on exact."
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or training cutoffs for every evaluated model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs and local scoring (JSON/programmatic tasks) without an external mutable environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 7, chunk 2
+        quote: "BIG-bench supports two types of tasks: JSON and programmatic."
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The tasks are described as single input/target-output pairs or probability checks, which are stateless model calls.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 10
+        quote: As a single input/target-output pair, where the target output will be compared against the model output.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports random-guess baselines for multiple-choice tasks."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: While the paper mentions that domain experts can contribute tasks, it does not name specific experts or user groups consulted or what they defined.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: The documentation mentions review criteria for tasks, but does not name the reviewers' credentials or specify the sample size reviewed for accuracy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for multiple prompting settings, specifically zero-shot, one-shot, and two-shot.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 13, chunk 0
+        quote: |-
+          BIG-G (0-shot)
+          BIG-G (1-shot)
+          BIG-G (2-shot)
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not show results reported as a separate slice for a named stress condition or shift with an item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is described as a general evaluation of pre-trained models and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 7, chunk 1
+        quote: Benchmark tasks are primarily intended to evaluate pre-trained models
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is a general capability evaluation and does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 7, chunk 1
+        quote: Benchmark tasks are primarily intended to evaluate pre-trained models
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark does not claim to evaluate a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 7, chunk 1
+        quote: Benchmark tasks are primarily intended to evaluate pre-trained models
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation mentions a Docker container and sampling parameters, but fails to list specific library versions (lockfile/pinned requirements), hardware models, or the OS.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: The provided excerpts do not mention any independent third-party reproduction of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: While the docs mention a 'living benchmark' and a submission pipeline, they do not describe a correction channel (errata/changelog) that records at least one specific fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The paper identifies flaws (e.g., social bias, context length), but does not provide the required direction of bias, impact estimate, and guidance on valid conclusions for every named flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark reports human performance and expert human evaluations as baselines for the tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 6, chunk 0
+        quote: We provide a human-evaluator baseline and expert human evaluations on this diverse set of tasks
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: The benchmark reports random performance as a trivial baseline for multiple choice tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 9, chunk 1
+        quote: Random performance for multiple choice tasks is indicated by hatch marks.
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The provided excerpts do not indicate that a model is used as a rater or judge to create ground truth; they describe human raters and programmatic metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The provided excerpts do not indicate that a model is used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The provided excerpts do not indicate that a model is used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The provided excerpts do not indicate that a model is used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: unmet
+    rationale: There is no report of multiple annotators labeling items independently with inter-annotator agreement, nor is there a reported accuracy for a programmatic checker on a labeled sample.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The excerpts do not show that every task is documented as solvable or intentionally unsolvable with expected behaviors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The benchmark provides target strings for JSON tasks, and the checkmate_in_one task specifically notes that a unique checkmating move exists for all positions.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 10
+        quote: As a single input/target-output pair, where the target output will be compared against the model output.
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 22, chunk 1
+        quote: In all presented positions, a unique checkmating move exists.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: met
+    rationale: The documentation specifies that multiple valid targets are allowed for metrics, providing an example of non-identical correct answers ('two' and '2').
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 10
+        quote: 'Multiple valid targets (specified as a list) are allowed for all metrics, for example `{"input": "1 + 1 = ", "target": ["two","2"]}`.'
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, refusals, and errors/timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The described metrics (exact_string_match, multiple_choice_grade) rely on exact matches or log probabilities of provided targets, not the parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 8, chunk 1
+        quote: "exact_string_match: Accuracy on exact."
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The described metrics rely on exact matches or log probabilities of provided targets, not the parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 8, chunk 1
+        quote: "exact_string_match: Accuracy on exact."
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null-agent runs or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

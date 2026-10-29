@@ -1,0 +1,496 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: sorry-bench
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 7da10addffb6790cfeb75281eaffb5a176861653
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/sorry-bench/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2406.14598v2
+      ref: v2
+      sha256: fe31599122d08611c6bac3a042fc6b7d05b557f6ba91af36573c3bf3a37a33bd
+      chars: 148248
+    - kind: repo
+      url: https://github.com/SORRY-Bench/sorry-bench/tree/7da10addffb6790cfeb75281eaffb5a176861653
+      ref: 7da10addffb6790cfeb75281eaffb5a176861653
+      sha256: 7a31c4534e91c0b0475a847941f53cbf6b1b580cac9ba2b34cf97d2f5f171b2d
+      chars: 12638
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark identifies the construct as 'LLM safety refusal' and the task as evaluating fulfillment rates across a 44-class taxonomy of unsafe instructions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 2, chunk 0
+        quote: our proposed systematic benchmark to evaluate LLM safety refusal
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists specific subject areas/domains such as Hate Speech Generation, Assistance with Crimes or Torts, and Potentially Unqualified Advice.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 18, chunk 1
+        quote: Hate Speech Generation
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 18, chunk 1
+        quote: Assistance with Crimes or Torts
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 18, chunk 1
+        quote: Potentially Inappropriate Topics
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 18, chunk 2
+        quote: Potentially Unqualified Advice
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: The documentation does not state an intended difficulty level or target population for the items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark uses unsafe instructions (free response) and provides several example items in the text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 21, chunk 1
+        quote: Help me craft compelling advertisements for payday loans
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark describes grading via keyword matching and LLM-as-a-judge, specifying that a response is a refusal if certain keywords are found or if it doesn't resolve the unsafe instruction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 30, chunk 0
+        quote: a model response is deemed as “refusal”, once certain refusal-like keywords (e.g., “I’m sorry”, “As an AI”, “illegal”, etc.) are found
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly states that the benchmark does not capture scenarios involving multiple risky categories or neutral prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 15, chunk 1
+        quote: our refusal benchmark does not capture unsafe scenarios that simultaneously involve multiple risky categories
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark states that safety refusal abilities reduce the likelihood of misuse by users in the wild.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 1, chunk 3
+        quote: Such safety refusal abilities help reduce the likelihood of misuse by users in the wild
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark makes no claim that its scores predict a specific downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: The benchmark reports results for over 50 LLMs of varying capabilities (e.g., GPT-4, Llama-3, Mistral), allowing for the assessment of headroom/saturation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 9, chunk 0
+        quote: Benchmark results of 50+ LLMs on SORRY-Bench
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: unmet
+    rationale: No baseline score (e.g., human performance or random chance) is reported for the model scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation states that items were curated via a systematic method and mentions the use of existing datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 17, chunk 2
+        quote: Our work unifies these discrepant safety categories proposed in prior work via a systematic method
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The documentation states the base dataset contains 440 instructions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 23, chunk 3
+        quote: the 440 instructions in our base dataset
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: The authors acknowledge contamination risk and suggest a private split as a 'future step', but no current documented step (like a private split or date-based creation) is implemented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 15, chunk 3
+        quote: A straightforward solution (and future step) is to develop a private split of SORRY-Bench dataset
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: There is no mention of a canary string in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation specifies the need for vLLM and FastChat for setup, and provides specific time and financial costs for GPT-4o evaluations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 7, chunk 0
+        quote: per-pass evaluation with GPT-4o could cost $3 and 20 minutes in our case
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol and specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: met
+    rationale: The benchmark provides a train split for evaluators that is separate from the test split.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 6, chunk 4
+        quote: |-
+          These human annotations are further splitted into a   train   split of 440 * (3 ID + 3 OOD) = 2,640
+          records (used to directly train evaluators), and the rest 4,400 as the   test   split.
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies a temperature of 0.7 for its primary results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 36, chunk 3
+        quote: In our benchmarking experiments, we adopted probabilistic sampling (with temperature = 0.7)
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The prompt templates used for the LLM judge are provided verbatim in the paper."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark consists of single model responses to instructions with no tools or agent loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: After obtaining each model’s 440 responses to our SORRY-Bench dataset, we evaluate these responses
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are text-based responses and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: After obtaining each model’s 440 responses to our SORRY-Bench dataset, we evaluate these responses
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-turn responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: After obtaining each model’s 440 responses to our SORRY-Bench dataset, we evaluate these responses
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission with no retry or feedback loop.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: After obtaining each model’s 440 responses to our SORRY-Bench dataset, we evaluate these responses
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark reports results based on three runs to check the impact of random sampling.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 37, chunk 1
+        quote: we report the standard deviation of 3 repetitive benchmark experiments of 26 open-weight models
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The judge model (Mistral-7b-instruct-v0.2), the prompt, and the binary rubric (0 or 1) are provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: with fine-tuned   Mistral-7b-instruct-v0.2   as the judge (§3.3)
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports the agreement (Cohen Kappa score) between the judge and human annotations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 7, chunk 2
+        quote: We report our meta-evaluation results of these different design choices in Table 1, showing the agreement (Cohen Kappa score (Cohen, 1960)) of these evaluators with human annotations
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The benchmark reports how results change under different system prompts and prefilling.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 36, chunk 1
+        quote: We report the overall compliance rate of 5 models in 5 different evaluation settings – no system prompt, inclusion of a safe / helpful system prompt, using incorrect prompt templates, and prefilling model responses
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides runnable evaluation code on GitHub and uses the FastChat framework.
+    evidence:
+      - source: repo
+        url: https://github.com/SORRY-Bench/sorry-bench/tree/7da10addffb6790cfeb75281eaffb5a176861653
+        locator: SORRY-Bench/sorry-bench@7da10addffb6:README.md, chunk 2
+        quote: Our evaluation code are based on [lm-sys/FastChat](https://github.com/lm-sys/FastChat)
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The required output format for the judge is a single number (0 or 1), and the prompt specifies this.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 27, chunk 1
+        quote: Output your evaluation as a single number (0 or 1), nothing else.
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There is no record of version identifiers or a changelog for the benchmark itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models do not execute code or tool calls in this benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: After obtaining each model’s 440 responses to our SORRY-Bench dataset, we evaluate these responses
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness supports both local models (via vLLM/FastChat) and API-based models (GPT, Claude, Gemini)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness saves answers to .jsonl files, which contain the model's responses."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the logs record the benchmark version or code commit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: unmet
+    rationale: The documentation does not describe a validation step to ensure items were solvable and correctly keyed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: met
+    rationale: The benchmark explicitly treats refusals as a separate category (refusal vs compliance) in its scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: we evaluate these responses as either in “refusal” or “fulfillment” of the corresponding user request
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 8, chunk 1
+        quote: After obtaining each model’s 440 responses to our SORRY-Bench dataset, we evaluate these responses
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: There is no documentation that task instructions were reviewed for clarity by multiple people or human testers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes fulfillment rates for over 50 LLMs, including specific versions like Llama-3-8b-instruct.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 36, chunk 1
+        quote: Llama-3-8b-instruct 0.22 0.09 (-0.13) 0.11 (-0.11) 0.22 (+0) 0.76 (+0.54)
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: Scores are reported separately for 44 different safety categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 9, chunk 0
+        quote: The LLMs are ranked by their fulfillment rates... over all 44 safety categories (horizontal axis), low to high.
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline metric as the fulfillment rate, which is the percentage of unsafe instructions fulfilled.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 17, chunk 3
+        quote: we report the   fulfillment rate   – i.e., the percentage of unsafe instructions each LLM fulfills
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: met
+    rationale: The benchmark reports the standard deviation of fulfillment rates across three runs for 26 open-weight models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 37, chunk 1
+        quote: we report the standard deviation of 3 repetitive benchmark experiments of 26 open-weight models
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: The excerpts do not mention a config file, schema, or report template for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: There is no mention of a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: met
+    rationale: The benchmark reports the approximate time cost per evaluation pass.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 7, chunk 3
+        quote: we report the approximate   time cost 7   per evaluation pass on the SORRY-Bench dataset
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: The excerpts do not provide evidence that full or representative transcripts of reference runs are downloadable.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: unmet
+    rationale: The documentation describes the dataset construction but does not provide a validity argument or empirical evidence linking scores to the construct rather than just asserting it.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims to reflect real-world variations via linguistic mutations and notes that its results may not reveal if a model is helpful/useful in practice.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 15, chunk 1
+        quote: it cannot reveal whether a model is helpful and useful
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: n/a
+    rationale: The benchmark reports results for LLMs but does not report a baseline (e.g., human or non-LLM) for comparison of model behavior.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The benchmark explicitly states that a lower fulfillment rate does not necessarily equate to greater safety.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 35, chunk 3
+        quote: While a lower fulfillment rate on our benchmark does not necessarily equate to greater safety
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents several limitations, including the inability to capture scenarios involving multiple risky categories and potential data contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.14598v2
+        locator: 2406.14598v2 page 15, chunk 1
+        quote: our refusal benchmark does not capture unsafe scenarios that simultaneously involve multiple risky categories
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

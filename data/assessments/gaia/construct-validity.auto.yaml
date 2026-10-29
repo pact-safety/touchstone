@@ -1,0 +1,274 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gaia
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gaia/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.12983v1
+      ref: v1
+      sha256: ed50199799b28126a193080d35d4b629d544261f29ca71a97f4cdf49eca81c1b
+      chars: 83727
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark defines the phenomenon as the ability to solve tasks where the output is easy to validate and the answer is unambiguous.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 2, chunk 1
+        quote: The output could only be obtained upon successful completion of the task and be easy to validate
+    by: model
+    quotes_verified: true
+  def.2:
+    value: met
+    rationale: The scope is defined as estimating the potential of AI assistants, and it explicitly excludes non-English speakers and non-English web content.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 11, chunk 0
+        quote: This benchmark will therefore not validate the usefulness of assistants for non-English speakers
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: While the paper identifies required capabilities (sub-components) like coding and web browsing, it does not state that they are scored separately; rather, it aims at evaluating the system as a whole.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 10, chunk 0
+        quote: it considers the system as a whole and does not attribute errors to sub-parts
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The paper identifies secondary abilities like reasoning and tool use, but does not report control conditions or ablation results for these specific abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the paper mentions specifying a format in the prompt to ease extraction, it does not measure the effect of these format requirements on the resulting scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses quasi-exact match for answers that are strings, numbers, or lists, rather than automated parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts mention that questions were 'carefully crafted' and follow a 'design methodology', but no specific sampling strategy over a described task space is documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The text states that human annotators validated the questions, and the 'Human score' refers to the results of this validation process.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 2
+        quote: Human score refers to the score obtained by our annotators when validating the questions.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items, nor are such results reported separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation states that the benchmark does not repurpose existing datasets, contrasting itself with other evaluations that do.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 3, chunk 3
+        quote: Most evaluations rely on the use of closed systems, specific API calls, and a given “correct way” to attain the answer, or simply repurpose existing evaluation datasets.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset; it uses a custom question design framework with seed questions devised by the authors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 19, chunk 0
+        quote: We provided the annotators with a seed set of   GAIA   questions we devised ourselves
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: No prior dataset or benchmark was reused.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 19, chunk 0
+        quote: We provided the annotators with a seed set of   GAIA   questions we devised ourselves
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: No prior dataset or benchmark was reused.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 19, chunk 0
+        quote: We provided the annotators with a seed set of   GAIA   questions we devised ourselves
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts mention that contamination is mitigated by the design of the tasks, but no specific contamination test is described or reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The authors release a developer set and a separate set of questions without annotations for a leaderboard, which constitutes a held-out split.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 3, chunk 1
+        quote: We release a developer set of 166 annotated questions and release the remaining 300 questions without annotations
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper discusses the risk of contamination and claims answers are absent from pre-training data, but it does not report a search or overlap check against a named corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is stated, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 6, chunk 0
+        quote: composition of the 466 questions we devised for GAIA
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: Not every score in the main results table (Table 4) has a confidence interval or standard error; several entries lack them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 1
+        quote: Table 4   Score and average time to answer for various baselines on GAIA in %
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: While human annotators are mentioned, their demographics are not described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 3
+        quote: validation by two supplementary annotators
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: Every label comes from a deterministic key; the paper states there is only one correct answer and evaluation is via quasi exact match.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: There is only one correct answer. Hence, evaluation is done via quasi exact match
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts do not provide a qualitative description of common failure modes nor a count of them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The paper identifies that augmenting LLMs via tool APIs or web access improves accuracy, confirming this as a research direction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 9, chunk 1
+        quote: augmenting LLMs via tool APIs or access to the web improves answer accuracy, and unlock many new use cases, confirming the huge potential of this research direction.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to real-world assistant use cases and specifically mentions helping physically impaired people.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 0
+        quote: While GAIA targets real-world assistant questions, we also include tasks that could potentially benefits physically impaired people
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts to which the tasks and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to OpenAGI, noting a difference in whether tasks focus on current capabilities or upcoming advancements.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: The core difference with GAIA is that their tasks focus on current model capabilities rather than upcoming advancements.
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text states a limitation regarding the lack of evaluation of the trace leading to the answer, which affects what is measured.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 10, chunk 2
+        quote: In its current form, GAIA does not evaluate the trace leading to the answer.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

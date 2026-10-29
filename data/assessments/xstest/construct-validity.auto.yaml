@@ -1,0 +1,256 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: xstest
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/xstest/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.01263v3
+      ref: v3
+      sha256: 75e184b68f4c7f85b7aaeef9f301aa2ec6782c533c21ab41b79787ef5ab38dc8
+      chars: 98602
+    - kind: repo
+      url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+      ref: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+      sha256: c6e18c81cc7a0c8332e1a90700fab3eb5b51045263840b85354ff8c50ca7879d
+      chars: 22722
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The phenomenon 'exaggerated safety' is defined as the false refusal of safe prompts, and the text specifies that 'Full Refusal' (where the model states it cannot answer) is the undesired observable output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 1, chunk 3
+        quote: The false refusal of safe prompts is an understudied problem, which we call exaggerated safety .
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 4, chunk 3
+        quote: Full Refusal is the undesired behaviour on our safe prompts, where the model states that it cannot – in the sense of will not – answer the prompted question.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the scope is implied through the ten prompt types, the text does not explicitly name any excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is broken down into ten prompt types (T1-T10) which are measured and reported separately (e.g., refusal rates vary across prompt types).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 5, chunk 0
+        quote: "Generally, refusal rates vary strongly across prompt types. T4: Safe Contexts elicits the most refusals"
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify any secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the paper mentions using a 'dialogue format' and 'system prompts', it does not measure or report the specific effect of output-format requirements on the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: unmet
+    rationale: The paper mentions comparing automated methods to manual annotation, but it does not report parser accuracy against hand-checked outputs, repeat-run consistency, and a comparison across two output formats for bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The provided excerpts do not document a sampling strategy used to ensure the items are representative of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: There is no documentation stating that every item in the dataset passed a quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the text mentions that minimal changes to prompts can flip model behavior, it does not provide a counted subset of permuted items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation explicitly states that the test prompts were hand-crafted, indicating they are not adapted from a previous dataset."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark uses hand-crafted prompts rather than reusing a prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark uses hand-crafted prompts rather than reusing a prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark uses hand-crafted prompts rather than reusing a prior dataset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any contamination tests or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of the benchmark items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The authors explicitly state they cannot validate hypotheses regarding training data because no public details on the training data for the models exist.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 7, chunk 4
+        quote: there are no public details on Llama’s and Mistral’s training data, so we cannot easily validate this hypothesis.
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is stated, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 1, chunk 1
+        quote: XST EST comprises 250 safe prompts across ten prompt types
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The results table provided in the excerpts does not include confidence intervals or standard errors for the scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 4, chunk 1
+        quote: TOTAL (n=250 safe) 38 + 21.6 14 + 15.6 0.8 + 0.8 9.6 + 9.2 6.4 + 2
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: Human raters (authors) are used, but their demographics are not described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 9, chunk 2
+        quote: three authors annotated model responses on XST EST as part of the manual model evaluation
+    by: model
+    quotes_verified: true
+  st.4:
+    value: unmet
+    rationale: Labels are subjective (human/model ratings), but no per-item disagreement distribution or inter-annotator agreement statistic is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 6, chunk 2
+        quote: We evaluate model performance on XST EST using manual annotation
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors describe failure modes (e.g., exaggerated safety, lexical overfitting) and provide counts of refusals for specific prompt types."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not provide a table or figure breaking down failures by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: "The authors propose a specific direction for future research: investigating internal mechanisms of white-box models to understand false refusal."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 7, chunk 4
+        quote: Investigating the internal mechanisms of white-box models related to false refusal / exaggerated safety constitutes an interesting direction for future research.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to real-world applications such as web search and coding tools.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 1, chunk 1
+        quote: Major tech companies like Google and Microsoft have integrated LLMs into core products such as web search and coding tools.
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition (def.1) to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark compares its use of contrast sets to HateCheck.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 3, chunk 1
+        quote: This is motivated by the effectiveness of contrast sets for evaluating model decision boundaries (Gardner et al., 2020) and their application in HateCheck (Röttger et al., 2021).
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses the trade-off between adequate and exaggerated safety in model calibration.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 6, chunk 2
+        quote: Overall, our results clearly illustrate trade-offs between adequate and exaggerated safety in model calibration
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

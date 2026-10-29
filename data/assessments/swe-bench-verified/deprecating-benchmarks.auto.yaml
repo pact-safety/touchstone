@@ -1,0 +1,120 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: swe-bench-verified
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/swe-bench-verified/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2310.06770v3
+      ref: v3
+      sha256: bb04e03876fea31f46a22061ba431ccce08c460a411530b20d66ac670aa8d807
+      chars: 162878
+    - kind: repo
+      url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+      ref: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+      sha256: 13c9768a7e92d37b0405c4bf5faab5c6168e1c40446f565bb6e1f80d693847b4
+      chars: 120623
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The temporal analysis table shows that the top model scores (e.g., 5.72% for Claude 2 in 2019) are very low, leaving significant headroom below the maximum achievable score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 28, chunk 0
+        quote: 2019   437   112   5.72   1.49   1.79   4.55   2.21
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The excerpts state that the benchmark is collected from public repositories and the authors plan to open source the task instances, but no specific contamination defense (like a private held-out set or contamination analysis) is documented.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark is described as having task instances associated with a diverse set of code changes, and the provided scores for various models are very low, indicating that a trivial baseline would not score highly.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 21, chunk 3
+        quote: SWE-bench’s task instances are associated with a diverse set of code changes with purposes beyond debugging and error correction.
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts describe the data collection and filtering process, but they do not contain a cited audit, validation pass, or error analysis reporting a low error rate for the labels/annotations.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to evaluate skills possessed by experienced software engineers in real-world settings, a capability that remains current for model development.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 3, chunk 1
+        quote: solving SWE-bench requires demonstrating sophisticated skills and knowledge possessed by experienced software engineers
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The excerpts do not explicitly state the simplifying assumptions relied upon by the benchmark, which is required to determine if they are contradicted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is designed for temporal robustness, allowing it to be updated with new task instances to prevent it from becoming outdated as models are trained on newer code.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: 2310.06770v3 page 16, chunk 3
+        quote: This design also provides SWE-bench with temporal robustness
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: While the benchmark mentions 'version' as a field for task instances, there is no explicit version identifier for the benchmark itself visible alongside its name in main references.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: The excerpts do not mention a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides a contact email address for custom dataset queries and an issue tracker for contributions, and the repository excerpt indicates active maintenance.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 4
+        quote: Email us at `support@swebench.com`
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,306 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: salad-bench
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/salad-bench/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.05044v4
+      ref: v4
+      sha256: 24765d9ad04f6822f7c85de8cdd8775f5dab28fafdcabbb7fa19943d4cc24385
+      chars: 136348
+    - kind: repo
+      url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      ref: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      sha256: 9b9ea84b2f0c812864d0268c8f92b6afb75ac1f820b08573ae31c0094a4a451d
+      chars: 19448
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: unmet
+    rationale: While the benchmark mentions a taxonomy of 6 domains, 16 tasks, and 66 categories, it does not explicitly name each risk type evaluated nor state the specific metric/method used to measure each individual risk type.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: unmet
+    rationale: The excerpts do not document specific risks that are excluded or state deployment assumptions such as language, turns, or tool use.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: unmet
+    rationale: There is no statement acknowledging that a good score does not guarantee safety against untested or emergent risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark compares itself to prior benchmarks (e.g., Wang et al., 2023b) and notes that they focus on a 'narrow perspective of safety threats'."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: met
+    rationale: The benchmark describes the use of red-teaming and adversarial jailbreaks to discover more challenging questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 13, chunk 2
+        quote: More challenging questions such as those from red-team or adversarial jailbreak (Chao et al., 2023; Liu et al., 2023b) are desired
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: The LICENSE mentions contributions, but there is no documented process for how they are integrated or credited, nor a submission portal.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The paper suggests that one 'could regularly update the taxonomy', but it does not state a concrete process or cadence for how and when new risks will be incorporated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 9, chunk 3
+        quote: To address this issue, one could regularly update the taxonomy and evaluation data.
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The excerpts do not show the inclusion of multi-agent or interactive evaluation settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: The benchmark mentions 'out-of-distribution' datasets to test the evaluator's robustness, but it does not frame distribution shift as a safety-critical issue for the LLMs being benchmarked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: met
+    rationale: The benchmark documents that annotators met to clarify requirements and that they held discussions to resolve disagreements.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 16, chunk 1
+        quote: we will organize a new round of meeting discussion for the data samples that the annotators did not agree on
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: While the benchmark restricts access to authorized researchers, it does not describe a contamination check or state the temporal validity/refresh date of the evaluation set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 9, chunk 4
+        quote: we restrict access to authorized researchers who adhere to strict ethical guidelines
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results as 'safety rate' and 'success rate', which are proportions/rates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 5, chunk 9
+        quote: keep only questions with the lowest   success rate   r succ
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 7, chunk 3
+        quote: There is a significant drop in safety rates
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark identifies that the precision of results depends on the performance of the evaluator (MD-Judge), which is a factor limiting generalization."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: The benchmark defines a taxonomy but does not cite a source to justify the severity levels or harm weighting of its scales.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not state whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: met
+    rationale: The benchmark explicitly states that its taxonomy was inspired by previous taxonomy rules and policies from Weidinger et al., OpenAI, and Meta.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 3, chunk 0
+        quote: Inspired by previous taxonomy rules and policies (Weidinger et al., 2023; OpenAI, 2023; Meta, 2023)
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: No confidence intervals, standard errors, or worst-case bounds are reported for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: unmet
+    rationale: While a 'consistency rate' is mentioned for human labels, no formal inter-rater agreement statistic like Cohen's kappa is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 4, chunk 1
+        quote: The consistency rate between auto labeling and human labels achieves 94.3%
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across random seeds, prompt rephrasings, and evaluator versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin for deployment risk nor discuss the specific dependencies on user behavior and system safeguards.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides operational definitions for several harm constructs, such as toxic content, unfair representation, and adult content."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies that toxic content is defined by established community guidelines and ethical standards."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The provided excerpts do not mention any contested normative choices or value conflicts in the harm definitions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: unmet
+    rationale: The benchmark does not explicitly articulate the relationship between its measured proxies (like safety rates) and real-world safety concerns.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: The excerpts do not record the access date, inference parameters (temperature, top-p), or system prompts for the reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: While greedy sampling is mentioned for open-sourced models, there is no report of fixed random seeds for data sampling or evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 6, chunk 2
+        quote: When generating from open-sourced models, we strictly follow its chat template and use greedy sampling.
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: met
+    rationale: The judge model (MD-Judge) is provided with version numbers in the repository documentation.
+    evidence:
+      - source: repo
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 6
+        quote: model_ckpt = "OpenSafetyLab/MD-Judge-v0.1"
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): A public code repository is provided with a README and example scripts to enable replication."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark states prompts come from public datasets and self-instructed generation, and reports validation via human verification."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: unmet
+    rationale: The benchmark does not provide a justification for why its scenarios represent real-world use or state the limitations of its synthetic data in that context.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: unmet
+    rationale: The excerpts describe QA and multiple-choice questions, but do not mention multi-turn evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark uses public datasets and synthetic generation; it does not use in-the-wild data constrained by privacy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: While the paper mentions that the taxonomy may become outdated and could be updated, it does not define a stated update cycle tied to risk changes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.05044v4
+        locator: 2402.05044v4 page 9, chunk 3
+        quote: To address this issue, one could regularly update the taxonomy and evaluation data.
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: The benchmark uses human annotators for validation, but does not describe consulting members of affected communities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: unmet
+    rationale: The excerpts do not explicitly state whether the model is evaluated alone or within a specific system context (interface/safeguards).
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not acknowledge that model-level scores differ from system-level safety or identify further deployment evaluations.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

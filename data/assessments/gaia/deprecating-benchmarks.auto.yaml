@@ -1,0 +1,118 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gaia
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gaia/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.12983v1
+      ref: v1
+      sha256: ed50199799b28126a193080d35d4b629d544261f29ca71a97f4cdf49eca81c1b
+      chars: 83727
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark reports that current best LLMs perform poorly compared to humans, leaving significant room for improvement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 2
+        quote: While humans excel at all levels, current best LLMs do poorly. Overall,   GAIA   allows to clearly rank capable assistants, while leaving a lot of room for improvement
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark documents several contamination defenses, including the design of answers to be absent from pre-training data and the ability to check reasoning traces.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 3
+        quote: the accuracy required in the answers, their absence from pre-training data, and the possibility to check the reasoning trace mitigate this risk.
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark uses open-ended questions with a single correct answer rather than classes or labels that could be skewed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: each question calls for an answer that is either a string (one or a few words), a number, or a comma separated list of strings or floats
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark describes a validation process where two new annotators independently answered questions to ensure they were not ambiguous, and reports an estimated annotator success rate of 92%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 2
+        quote: we estimate the annotator’s success rate to be 92% when aggregated on all levels of difficulty
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to provide general assistant questions and believes its resolution would be an important milestone for next-generation AI systems.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 3, chunk 1
+        quote: believe the successful resolution of   GAIA   would be an important milestone towards the next generation of AI systems.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is designed to be robust to changes in web evidence by relying on information likely to pass the test of time, and no source is cited showing semantic drift.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 3
+        quote: we find our benchmark to be robust to these changes since we try to rely as much as possible on evidence that will likely pass the test of time.
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not mention a version identifier, release tag, or a system for recording changes per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving the benchmark's data and code at end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: The excerpts do not provide a named maintainer, contact address, or issue tracker for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

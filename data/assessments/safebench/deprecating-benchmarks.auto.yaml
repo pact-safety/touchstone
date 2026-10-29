@@ -1,0 +1,116 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: safebench
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/safebench/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2206.09682v4
+      ref: v4
+      sha256: 0f1ee84ff0998412400a2386114317e04c56257dd55b94c35c1dc453071e1916
+      chars: 89356
+    - kind: repo
+      url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      ref: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+      sha256: 02e5136e8abf04e38804e42a946027be2a6e7b35dc16ed7a2a5b7e9b88ea4564
+      chars: 65011
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The reported overall scores for AD algorithms (e.g., 0.606, 0.679) are well below the maximum possible score of 1.0, leaving clear headroom.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 24, chunk 0
+        quote: PPO   0.568   0.783   0.671   0.606
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document a contamination defense such as a private held-out set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: There is no report of the label/answer distribution or a trivial baseline to demonstrate the benchmark is free of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts contain no mention of a quality review, audit, or error analysis regarding the annotation error rate of the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to evaluate the safety and robustness of autonomous driving (AD) algorithms, a task that remains current and critical for deployment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.09682v4
+        locator: 2206.09682v4 page 2, chunk 0
+        quote: it is vitally important to quantitatively and efficiently evaluate the robustness or safety of safety-critical applications before their massive production and deployment
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: While the benchmark acknowledges a limitation regarding simulation, it does not explicitly state the simplifying assumptions it relies on for its design as required by the rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: There is no evidence in the excerpts that the benchmark's content is maintained or that an analysis has been done to ensure labels and tasks have not suffered from semantic drift.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: While a version '1.0.0' is mentioned in setup.py, it is not immediately visible alongside the benchmark name in main references, nor is there evidence that changes are recorded per version.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:setup.py, chunk 0
+        quote: version='1.0.0'
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: The provided excerpts contain no mention of a deprecation plan or a policy for archiving artifacts at end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: A contact email address is provided for infrastructure setup, and the repository shows activity (LastEditTime) within the last 12 months relative to the provided dates.
+    evidence:
+      - source: repo
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/submission.md, chunk 1
+        quote: This info needs to emailed to team@cloudcv.org
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

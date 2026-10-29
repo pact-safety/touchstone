@@ -1,0 +1,442 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: humaneval
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: b9453e8f1865df0a0057a1383767caa400acfbcf
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/humaneval/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2107.03374v2
+      ref: v2
+      sha256: 3cf5545b26f5b1321a7c7fd42dedd1be64ad3cda5c6891b80d412c0edbc5a290
+      chars: 162609
+    - kind: repo
+      url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+      ref: b9453e8f1865df0a0057a1383767caa400acfbcf
+      sha256: 63d3dc590c8b85889d95120d1576b847c6cbe8efa1ed35bb2fd287fce209927f
+      chars: 7039
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines the target phenomenon (generating standalone Python functions from docstrings) and states that correctness is evidenced by passing unit tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 0
+        quote: we focus on the task of generating standalone Python functions from docstrings, and evaluate the correctness of code samples automatically through unit tests.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the task is defined, the documentation does not explicitly name aspects of the phenomenon that are excluded from the scope.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: n/a
+    rationale: The paper treats the phenomenon as a single unitary construct of functional correctness (pass@k).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 0
+        quote: evaluate the correctness of code samples automatically through unit tests.
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: unmet
+    rationale: The docs mention the dataset contains 164 problems and varies in difficulty, but they do not report item counts along a stated difficulty dimension.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: unmet
+    rationale: The documentation does not report per-category item counts or a stratified sampling plan over the task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The authors describe a verification step where Codex-12B was used to generate samples to filter out ambiguous or too difficult tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 8, chunk 2
+        quote: we use Codex-12B to generate 100 samples per curated problem. If no samples pass the unit tests, we consider the task to be either ambiguous or too difficult, and filter it out.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark uses a hand-written dataset of original problems and does not reuse a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 3, chunk 0
+        quote: all problems were hand-written and not programmatically copied from existing sources.
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark reuses no prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 3, chunk 0
+        quote: all problems were hand-written and not programmatically copied from existing sources.
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While the item count (164) is stated, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results table (Table 1) reports point estimates for pass@k without confidence intervals or standard errors.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: n/a
+    rationale: The benchmark uses automated unit tests for evaluation, not human raters.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 0
+        quote: evaluate the correctness of code samples automatically through unit tests.
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: No human raters are used to label items or judge outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 0
+        quote: evaluate the correctness of code samples automatically through unit tests.
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: Every label comes from a deterministic key (passing or failing a unit test suite).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 0
+        quote: evaluate the correctness of code samples automatically through unit tests.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Every label comes from a deterministic key (unit tests), so labels are not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 0
+        quote: evaluate the correctness of code samples automatically through unit tests.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: The paper discusses performance degradation with docstring length, but does not provide a table or figure breaking down failures by a named confound.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The paper mentions common failure modes for a docstring model (Codex-D), but does not provide counts or shares for these categories.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking the tasks and metrics to the construct from cv.01 with a stated reason in the required format.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper compares its approach to match-based metrics (like BLEU) and the APPS dataset, stating that functional correctness is a better measure of semantic features."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: unmet
+    rationale: The paper discusses general limitations of Codex, but does not provide a limitations statement specific to the HumanEval design linked to a real-world capability claim.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The documentation does not name related phenomena that could be measured by the same tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: No overlap was identified in iv.02, and no quantification or mitigation of such overlap is described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: There are no reports of results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: Scoring is based on whether the generated code passes unit tests, which is an execution outcome rather than parsing of free-form output.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:README.md, chunk 2
+        quote: Each row now contains whether the completion `passed` along with the execution `result` which is one of "passed", "timed out", or "failed".
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination checks or provide training cutoffs for every evaluated model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (HumanEval dataset) and local scoring via unit tests in a sandbox.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 4, chunk 1
+        quote: Therefore, we developed a sandbox environment to safely run untrusted programs against unit tests.
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: Each item is a single stateless model call generating a code completion.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 4, chunk 4
+        quote: We sample tokens from Codex until we encounter one of the following stop sequences
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The evaluation format is not multiple choice; it requires generating code that passes unit tests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 2, chunk 1
+        quote: To solve a problem in our test set, we generate multiple samples from the models, and check if any of them pass the unit tests.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While the text mentions consensus among cryptography experts for specific tests, it does not state that experts reviewed the HumanEval content or specify the sample size reviewed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The results are reported under different prompting settings, specifically comparing 'no solutions prepended' against 'correct solutions prepended' and 'subtly buggy solutions prepended'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 28, chunk 2
+        quote: comparing the models’ performance on the prompts with correct solutions prepended, no solutions prepended, and prompts with subtly buggy solutions prepended
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There is no report of results as a separate slice for a named stress condition or shift with an associated item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is presented as a general evaluation of LLMs trained on code rather than a claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is presented as a general evaluation of LLMs trained on code rather than a claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is presented as a general evaluation of LLMs trained on code rather than a claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation does not list library versions, hardware models, or a container image for the evaluation environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: The excerpts do not describe quality-control steps or a correction channel (like a changelog) that records a fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: While limitations are mentioned, the docs do not provide the required bias direction, impact estimate, and guidance on valid conclusions for each flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: No human baseline score is reported for the HumanEval tasks, nor is a named prior system reported as a reference point.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: The documentation mentions comparing performance against random ranking.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 10, chunk 0
+        quote: though it outperforms random ranking
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The benchmark uses unit tests for scoring, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The benchmark uses unit tests for scoring, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The benchmark uses unit tests for scoring, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The benchmark uses unit tests for scoring, not a model rater.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The problems were hand-written, and the evaluation uses a programmatic verification method (unit tests).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 3, chunk 0
+        quote: all problems were hand-written and not programmatically copied from existing sources
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: The excerpts do not document whether every task is solvable or intentionally unsolvable, nor the expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The dataset includes reference solutions and unit tests to verify correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2107.03374v2
+        locator: 2107.03374v2 page 4, chunk 0
+        quote: Each problem includes a function signature, docstring, body, and several unit tests
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: There is no list of accepted equivalences or evidence of non-identical correct answers passing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: met
+    rationale: The documentation specifies outcomes for passed, failed, and timed out executions.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: openai/human-eval@b9453e8f1865:README.md, chunk 2
+        quote: execution `result` which is one of "passed", "timed out", or "failed"
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: Scoring is based on executing the code against unit tests, not parsing free-form output.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: Scoring is based on executing the code against unit tests, not parsing free-form output.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: No results are reported for null-agent runs or targeted exploit attempts on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

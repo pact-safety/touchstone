@@ -1,0 +1,476 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: hellaswag
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/hellaswag/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1905.07830v1
+      ref: v1
+      sha256: 94a483f8855c461b4cdea4ba6f9c7e8b1238816e21ce24f6ef0338690ccb2774
+      chars: 56552
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark identifies the construct as 'commonsense natural language inference' and the task as selecting the most likely followup to an event description.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 1, chunk 0
+        quote: "introduced a new task of commonsense natural language inference : given an event description such as “A woman sits at a piano,” a machine must select the most likely followup"
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists its subject areas as video captions from ActivityNet and WikiHow articles.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 4, chunk 2
+        quote: We start by including video captions from the ActivityNet Captions dataset
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 1
+        quote: We expand on the SWAG’s original video-captioning domain by using WikiHow articles
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The benchmark states that the items are trivial for humans but difficult for state-of-the-art models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 1, chunk 0
+        quote: Though its questions are trivial for humans ( ą 95% accuracy), state-of-the-art models struggle ( ă 48%)
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark describes a four-way setting (multiple choice) and provides example items in the text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 11, chunk 1
+        quote: we train in a 4-way setting
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 1, chunk 1
+        quote: Imagine a woman chasing a dog around outside, trying to give it a bath. What might happen next?
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses accuracy based on predicting the correct ending among four choices using cross-entropy loss.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: we train our models using a four-way cross-entropy loss, where the objective is to predict the correct ending
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: unmet
+    rationale: The documentation does not explicitly name areas the construct implies but the items do not cover, nor does it claim complete coverage.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: unmet
+    rationale: The documentation does not specify intended use cases or threat models, nor does it discuss direct vs proxy measurement.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark makes no claim that its scores predict a specific downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): Scores for multiple models of different capabilities (GPT, BERT-Base, BERT-Large, etc.) are reported, allowing for a comparison of headroom."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: The benchmark reports human performance as a baseline.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 0
+        quote: Human 95.7 95.6 95.6 95.6 95.8 95.7 94.0 94.0 96.5 96.5
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation states items were sourced from ActivityNet and WikiHow and created via Adversarial Filtering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 1, chunk 1
+        quote: We achieve this via Adversarial Filtering (AF), a data collection paradigm wherein a series of discriminators iteratively select an adversarial set of machine-generated wrong answers
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The item counts for the ActivityNet and WikiHow subsets are provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 12, chunk 1
+        quote: we end up taking the best 25k examples from ActivityNet and the best 45k from WikiHow
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private test split, specific creation dates to avoid contamination, or a contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: No canary strings are mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: While it mentions GPU hours for pretraining, it does not state the resources needed to run the benchmark evaluation itself or the supported interfaces.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol for comparison or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: met
+    rationale: The benchmark uses a random partition into D train and D test, and reports results on separate validation and test sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 0
+        quote: the dataset is randomly partitioned into D train and D test
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: unmet
+    rationale: While some training hyperparameters are mentioned, the specific inference settings (like temperature or top_p) for the reported results are not stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The paper provides the exact input format used for the BERT model, including special tokens.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 11, chunk 2
+        quote: "[CLS] A woman is outside with a bucket and a dog. The dog is running around trying to avoid a bath. [SEP] She gets the dog wet, then it runs away again [SEP]"
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark consists of multiple-choice questions answered in a single response without tools or agentic loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: given a context and an ending, return a logit for that ending
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are static text classification tasks and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: given a context and an ending, return a logit for that ending
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The benchmark is not agentic; it is a standard multiple-choice evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: given a context and an ending, return a logit for that ending
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item is a single submission (predicting a logit) with no retry mechanism or feedback.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: given a context and an ending, return a logit for that ending
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The documentation does not explicitly state the number of trials per item or the aggregation method across trials.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: n/a
+    rationale: The benchmark uses accuracy based on ground truth labels, not an LLM judge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 0
+        quote: Performance of models, evaluated with accuracy (%)
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: n/a
+    rationale: No LLM judge is used to score the responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 0
+        quote: Performance of models, evaluated with accuracy (%)
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The paper reports results under a varied protocol setting by comparing different adversarial filters.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 8, chunk 1
+        quote: perform an ablation study on the Adversarial Filtering model used, comparing weaker filters with stronger discriminators
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The paper provides a link to the dataset and code.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 2
+        quote: "Dataset and code at https: // rowanzellers.com / hellaswag"
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: n/a
+    rationale: The model returns a logit for each ending, so no answer extraction from free-text is required.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: given a context and an ending, return a logit for that ending
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There is no mention of version identifiers or a changelog for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models do not execute code or tool calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: given a context and an ending, return a logit for that ending
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: The provided excerpts do not show a harness that supports multiple providers via configuration without code changes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: The excerpts do not mention whether the harness saves full per-item logs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not mention whether the logs record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The benchmark describes a human validation step to remove unrealistic adversarial endings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 0
+        quote: Last, humans validate the data to remove adversarial endings that seem realistic.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The items are commonsense NLI tasks (e.g., video captions, WikiHow) and do not contain content likely to trigger safety safeguards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 13, chunk 1
+        quote: A man is seen spinning a blade with his foot on a machine
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response (logit prediction) with no tools or environment, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 1
+        quote: given a context and an ending, return a logit for that ending
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: met
+    rationale: The benchmark uses human workers to validate the data and ensure agreement on the correct endings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 5, chunk 2
+        quote: we ensure high human agreement through several rounds of annotation
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The paper publishes accuracy scores for multiple models (BERT-Large, GPT, etc.) and the protocol used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 0
+        quote: "Table 1: Performance of models, evaluated with accuracy (%)"
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports results separately for in-domain and zero-shot subsets, as well as by data source.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 0
+        quote: We report results on the full validation and test sets (Overall), as well as results on informative subsets of the data
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines accuracy (%) as the headline metric and reports it across various splits and subsets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 6, chunk 0
+        quote: Performance of models, evaluated with accuracy (%)
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not report standard errors or confidence intervals for the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: There is no mention of a config file, schema, or report template for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: While qualitative examples are shown, there is no mention of a downloadable file containing per-item scores for a reference run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: met
+    rationale: The benchmark reports estimated pretraining hours (time) required to reach specific accuracy levels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 8, chunk 2
+        quote: Estimated pretraining hours required to reach a desired accuracy on HellaSwag
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: The excerpts do not provide downloadable full transcripts of reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The documentation argues that the task requires modeling world states rather than just language patterns to be valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 9, chunk 0
+        quote: for humans to answer HellaSwag questions requires abstracting away from language and modeling world states instead
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: n/a
+    rationale: The benchmark does not claim to represent real-world tasks; it is presented as a challenge dataset for commonsense NLI.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark reports a baseline of random chance and specifies its value.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 3, chunk 0
+        quote: The baseline (25% accuracy) is random chance.
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The documentation states that success on the dataset does not imply the underlying task of commonsense NLI is solved.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 4, chunk 2
+        quote: it does not imply that the underlying task of commonsense NLI – as opposed to a single dataset – is solved
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The documentation notes that models can be fooled by lexical false friends, which is a limitation of the current deep methods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 9, chunk 0
+        quote: we find that existing deep methods often get fooled by lexical false friends
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

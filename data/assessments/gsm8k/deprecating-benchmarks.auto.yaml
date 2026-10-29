@@ -1,0 +1,116 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gsm8k
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 3101c7d5072418e28b9008a6636bde82a006892c
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gsm8k/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.14168v2
+      ref: v2
+      sha256: d5f50406113e835544f59130d94bbea960dc894a4c89b2cd554a04f0a100c1bd
+      chars: 46512
+    - kind: repo
+      url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+      ref: 3101c7d5072418e28b9008a6636bde82a006892c
+      sha256: 20bd770b749ea24df5479cc6e9770f6581e3679d195ba77037c2c1effa4f61e2
+      chars: 7821
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The paper states that even the largest transformer models fail to achieve high test performance, indicating clear headroom.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 1, chunk 0
+        quote: We find that even the largest transformer models fail to achieve high test performance
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document a contamination defence such as a private held-out set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: There is no report of the label/answer distribution or a trivial baseline score to determine if the benchmark is free of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark performed quality control via answer agreement and reports an estimated error rate of less than 2%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 3, chunk 0
+        quote: After performing extensive quality control based on workers’ answer agreement, we estimate that less than 2 percent of problems contain breaking errors.
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark's purpose is to diagnose failures in multi-step mathematical reasoning, a capability that remains current as models still struggle with it.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14168v2
+        locator: 2110.14168v2 page 1, chunk 0
+        quote: To diagnose the failures of current models and support research, we introduce GSM8K, a dataset of 8.5K high quality linguistically diverse grade school math word problems.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: There is no evidence of a maintenance process or a cited source confirming that the content remains representative over time; the repository is marked as an archive.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: While a version '0.0.1' is mentioned in setup.py, it is not visible alongside the benchmark name in main references, nor is there evidence that changes are recorded per version.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: openai/grade-school-math@3101c7d50724:setup.py, chunk 0
+        quote: version='0.0.1'
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: The benchmark is marked as 'Archive', but there is no stated plan or policy for the long-term archiving of artifacts at end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: No named maintainer, contact address, or issue tracker is provided in the excerpts to handle queries.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

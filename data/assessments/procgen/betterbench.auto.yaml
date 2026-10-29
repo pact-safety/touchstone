@@ -1,0 +1,399 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: procgen
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/procgen/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1912.01588v2
+      ref: v2
+      sha256: 723d1ff3392b3bda3a5f5d8d2399ebf50163d81bc5a2da26168f61046f6b56f7
+      chars: 57097
+    - kind: repo
+      url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+      ref: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
+      sha256: c05caebb45027315d9f15fbaf1c83eac4407526940d4444c6ba9a07f0ffdd9a7
+      chars: 52460
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines its purpose as measuring how quickly agents learn generalizable skills.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 0
+        quote: provide a direct measure of how quickly a reinforcement learning agent learns generalizable skills
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The text explains that procedural generation is used to create diverse level distributions to test generalization.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 2, chunk 0
+        quote: The diversity in the resulting level distributions presents agents with meaningful generalization challenges
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 10
+    rationale: The authors mention that insights from the benchmark are expected to apply to more complex settings, though specific real-world applications are not detailed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 7, chunk 2
+        quote: We expect many insights gleaned from this benchmark to apply in more complex settings
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: While other benchmarks are cited, there is no evidence of integrating domain-specific literature into the design.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 0
+    rationale: The excerpts do not provide a rationale for the choice of the performance metric used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: Metric floors and ceilings are not mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 5
+    rationale: The text mentions the expected step rate for a human player, but does not provide a human performance score/level for the tasks.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 3
+        quote: The expected step rate for a human player is 15 Hz
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: No random performance level is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: There is no mention of a validated automatic evaluation process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explicitly compares itself to ALE, bsuite, Safety Gym, and Animal-AI, explaining differences in focus on generalization.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 7, chunk 1
+        quote: bsuite includes a single environment that requires visual generalization in the form of an MNIST contextual bandit, whereas visual generalization is a primary source of difficulty across all Procgen environments
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: Input sensitivity is not addressed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The repository provides the environment code and an interactive script, and refers to a separate repository for the experimental code."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark uses a procedural generation mechanism to create levels, which is accessible via the open-source code.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 1, chunk 3
+        quote: These environments greatly benefit from the use of procedural content generation, the algorithmic creation of a near-infinite supply of highly randomized content.
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: There is no mention of supporting model evaluation via API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The benchmark is designed to be installed locally and run on the user's CPU/GPU.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 19
+        quote: python -m procgen.interactive
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a specific task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: While installation and interactive scripts are provided, a specific script to replicate the paper's results is not included in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts show results (scores) but do not report statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no mention of assessing the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status (like a CI badge) is mentioned or shown in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: No specific release requirements are specified in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A conda environment.yml file is provided listing all dependencies.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:environment.yml, chunk 0
+        quote: |-
+          dependencies:
+            - python=3.7.3
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a quick-start guide with installation and execution commands.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 19
+        quote: |-
+          git clone git@github.com:openai/procgen.git
+          cd procgen
+          conda env update --name procgen --file environment.yml
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code with in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 10
+    rationale: The README provides some documentation on how to use the environment and how to create new ones, but full API documentation is not evident.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 17
+        quote: To render the environment, pass `render_mode="human"` to the constructor
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 10
+    rationale: A paper is cited and linked, but the excerpts do not explicitly state it was accepted at a peer-reviewed venue (it is listed as an arXiv preprint).
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 22
+        quote: journal={arXiv preprint arXiv:1912.01588}
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 10
+    rationale: The paper mentions the environments were designed to satisfy certain criteria, but a detailed step-by-step construction process is not fully detailed in the excerpts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 2, chunk 0
+        quote: We designed all environments to satisfy the following criteria.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper and README describe the tasks (e.g., CoinRun) and the rationale (measuring generalization).
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 7
+        quote: "`coinrun` | A simple platformer. The goal is to collect the coin at the far right of the level"
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The README explicitly lists limitations/bugs for several environments.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 14
+        quote: "`bigfish` - It is possible for the player to occasionally become trapped along the borders of the environment."
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 10
+    rationale: The paper discusses the design of the environments to isolate RL challenges, though a formal 'process' document is not provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 2, chunk 2
+        quote: These environments were designed to be tractable for baseline RL agents
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper defines the evaluation metric as the mean normalized return.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1912.01588v2
+        locator: 1912.01588v2 page 3, chunk 1
+        quote: we calculate the mean normalized return. For each environment, we define the normalized return to be
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): An MIT License is provided in the repository."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: No standardized metadata (e.g., Schema.org or DataCite) is included in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 0
+    rationale: The environments are procedurally generated, but the specific data sources for the generation logic are not documented in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: No data preprocessing steps are documented as the environments generate data on the fly.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: "This item has no n/a condition, so n/a is not allowed. Model's reasoning: The benchmark uses procedurally generated environments, so manual data annotation is not applicable."
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 0
+        quote: 16 simple-to-use procedurally-generated [gym](https://github.com/openai/gym) environments
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: "This item has no n/a condition, so n/a is not allowed. Model's reasoning: The benchmark uses procedurally generated environments rather than a static dataset, making representativeness of a fixed dataset not applicable."
+    evidence:
+      - source: repo
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        locator: openai/procgen@37b521dbb530:README.md, chunk 0
+        quote: 16 simple-to-use procedurally-generated [gym](https://github.com/openai/gym) environments
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Sphinx, ReadTheDocs).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding when the code usability was last checked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: While the README mentions contributing, it does not specify a maintained feedback channel for users.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

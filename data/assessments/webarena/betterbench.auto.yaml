@@ -1,0 +1,432 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: webarena
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: dce04686a56253aefba7b18a4fa0937cf1dc987b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/webarena/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2307.13854v4
+      ref: v4
+      sha256: 6bfafefb66f717293e727f9604f112ebfa3489ab976fa28bcd8be90af3a55973
+      chars: 80125
+    - kind: repo
+      url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+      ref: dce04686a56253aefba7b18a4fa0937cf1dc987b
+      sha256: dc81380d8c504549f05bbf8023a510ce4bd463bf2004e4e6748d368274aaff44
+      chars: 24189
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested capability as the functional correctness of task completions based on high-level natural language intents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: We focus on evaluating the   functional correctness   of these tasks,   i.e.,   does the result of the execution actually achieve the desired goal
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: "The paper describes how the capability translates to tasks: agents must map high-level natural language intents into concrete web interactions within a realistic environment."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 9, chunk 3
+        quote: curate a comprehensive benchmark consisting of 812 examples that focus on mapping high-level natural language intents into concrete web interactions
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The paper explains that autonomous agents managing daily tasks via natural language commands can augment human capabilities, improve efficiency, and increase accessibility.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 1
+        quote: Autonomous agents that perform everyday tasks via human natural language commands could significantly augment human capabilities, improve efficiency, and increase accessibility.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how the benchmark scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design or creation of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 15
+    rationale: The benchmark describes specific user personas, such as a shop owner with full read-and-write access or a user who maintains open-source projects on GitLab.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 16, chunk 1
+        quote: we set up a user profile for a shop owner who has full read-and-write access to all system contents
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature and references, such as manuals for integrated development tools and citations of previous agent research.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: complemented by an extensive collection of documentation and knowledge bases that vary from general resources like English Wikipedia to more domain-specific references
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of outcome-based evaluation is justified as being more reliable than comparing textual surface-form action sequences.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 3
+        quote: This evaluation is not only more reliable (Zhong et al., 2017; Chen et al., 2021; Wang et al., 2022) than comparing the textual surface-form action sequences
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: The benchmark explicitly provides the human performance level (78.24%).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 1
+        quote: our best GPT-4-based agent only achieves an end-to-end task success rate of 14.41%, significantly lower than the human performance of 78.24%
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: The excerpts do not provide a random performance level.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses programmatic, outcome-based evaluation to validate task success.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 9, chunk 3
+        quote: We also offer outcome-based evaluation that programmatically validate the tasks success.
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The paper explains differences from related benchmarks, noting that others often over-simplify real-world situations or rely on static resources.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 2
+        quote: Current environments for evaluate agents tend to   over-simplify   real-world situations.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 15
+    rationale: The paper addresses input sensitivity by noting that subtle differences in instruction design can significantly influence model behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 8, chunk 2
+        quote: This result suggests that even subtle differences in instruction design can significantly influence the behavior of a model
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository provides a run script and a dedicated evaluation harness.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 7
+        quote: python run.py \
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The paper and README state that code, data, and Docker images for the environment are publicly available.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 1
+        quote: Our code, data, environment reproduction resources, and video demonstrations are publicly available at https://webarena.dev/
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The README provides instructions for using an OpenAI API key to run the evaluation.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 7
+        quote: export `OPENAI_API_KEY=your_key`, a valid OpenAI API key starts with `sk-`
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 10
+    rationale: The requirements include 'transformers', suggesting local model support, but the README only explicitly demonstrates API-based models.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:requirements.txt, chunk 0
+        quote: transformers==4.33.2
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers for instances or encryption of evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a specific task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The README provides a specific command to launch the evaluation to reproduce results.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 7
+        quote: python run.py \
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The results are reported as success rates, but there is no mention of statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no mention of assessing the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 10
+    rationale: The README mentions a github workflow for unit tests, which is an equivalent to build status.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 7
+        quote: update the environment variables in [github workflow](.github/workflows/tests.yml#L7) to ensure the correctness of unit tests
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A requirements.txt file is listed in the file listing.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:FILE LISTING, chunk 1
+        quote: requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a 'Quick Walkthrough' with a script and code snippet for setup and interaction.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:README.md, chunk 5
+        quote: |-
+          ## Quick Walkthrough
+          Check out [this script](minimal_example.py) for a quick walkthrough on how to set up the browser environment
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code with in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: While the README provides a walkthrough, there is no evidence of comprehensive code documentation (e.g., API docs).
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The paper was published as a conference paper at ICLR 2024.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 1, chunk 0
+        quote: Published as a conference paper at ICLR 2024
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the construction of the environment using open-source frameworks and Docker images.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 15, chunk 0
+        quote: we utilized open-source frameworks for the development of the websites across various categories and imported data from their real-world counterparts
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (intents) and the rationale for their design (emulating human behavior).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 2, chunk 2
+        quote: Each task is described as a high-level natural language intent, emulating the abstract language usage patterns typically employed by humans
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 0
+    rationale: The excerpts do not explicitly document the limitations of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the test environment design using Docker images and the prompt design for the reasoning agent.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 15, chunk 2
+        quote: we deploy our websites in separate Docker images   11 , one per website
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper documents evaluation metrics such as exact_match and must_include for information-seeking tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 6, chunk 1
+        quote: First, we define   exact_match   where only   ˆ a   that is identical with   a ∗   receives a score of one.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The LICENSE file specifies the Apache License, Version 2.0.
+    evidence:
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        locator: web-arena-x/webarena@dce04686a562:LICENSE, chunk 11
+        quote: Licensed under the Apache License, Version 2.0 (the "License")
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI or Zenodo ID) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: There is no evidence of standardized metadata (e.g., Schema.org or DataCite) being included.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents data sources, such as Adobe Magento, Postmill, and OpenStreetMap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 15, chunk 0
+        quote: Data resources were obtained from data from actual online sites, such as that included in the Webshop data dump
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not detail specific data preprocessing steps taken.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper describes the annotation process for intents and the use of authors as annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 7, chunk 1
+        quote: The intents were contributed by the authors following the annotation guideline in §3.1
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The paper explains how they sampled repositories to ensure fair representation of all kinds.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: 2307.13854v4 page 15, chunk 1
+        quote: This is done to ensure fair representation of repos of all kinds, from popular projects with many issues and pull requests to small personal projects
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Sphinx, ReadTheDocs).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not provide any information regarding whether the code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: No maintained feedback channel for users is mentioned in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: While authors are listed in the citation, no specific contact person for the benchmark is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

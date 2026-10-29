@@ -1,0 +1,126 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentharm
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentharm/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.09024v3
+      ref: v3
+      sha256: 069d9f1f129c89ecea4342857223e99992754add9a15fc5aabdf03388d011adc
+      chars: 104704
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The reported harm scores for top models (e.g., GPT-4o at 70.7% and Claude 3.5 Sonnet at 65.1%) leave significant headroom below the maximum possible score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 8, chunk 2
+        quote: GPT-4o’s harm score increases from 70.7% to 83.7% (best-of-5), while Claude 3.5 Sonnet improves from 65.1% to 79.7% (best-of-5).
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark employs a private test set and a canary string to defend against contamination.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 0
+        quote: We use the private test set to perform future evaluations without worry of contamination
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 3
+        quote: we introduce a canary string in our repository that helps to filter them out from training sets
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark includes a benign variant of the dataset to serve as a baseline for model capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 2, chunk 1
+        quote: We also include a benign variant of the dataset as a baseline for model capabilities.
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The creators implemented a quality review process where every hand-written question was reviewed by a separate human reviewer and the grading system was validated via manual inspection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 6, chunk 2
+        quote: we write all questions by hand and review every question with a separate human reviewer who did not write the question
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark serves to evaluate the robustness of LLM-based agents against malicious requests, a purpose that remains current as the authors note the increasing prevalence of AI agents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 1, chunk 1
+        quote: To enable simple and reliable evaluation of attacks and defenses for LLM-based agents, we publicly release AgentHarm
+    by: model
+    quotes_verified: true
+  c6:
+    value: met
+    rationale: The benchmark explicitly states simplifying assumptions, such as focusing on digitally realizable behaviors and using a predefined tool set, and no cited source contradicts these.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 4, chunk 2
+        quote: We focus on digitally realizable behaviors, i.e., those that do not require real-world actions.
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is a recent release (ICLR 2025) and there is no evidence that its labels or task meanings have shifted since creation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: 2410.09024v3 page 5, chunk 0
+        quote: Published as a conference paper at ICLR 2025
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not mention a version identifier or a system for recording changes per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a persistent archive for the benchmark's data and code.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: The excerpts do not provide a named maintainer, contact address, or issue tracker for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

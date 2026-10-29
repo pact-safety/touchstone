@@ -1,0 +1,345 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mle-bench
+standard: abc
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v6
+  repo_commit: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mle-bench/abc/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.07095v6
+      ref: v6
+      sha256: ecfad6248e2fdcf4920059d7ecb57b46a01959f57302ab2545e80858c09dfa68
+      chars: 93091
+    - kind: repo
+      url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+      ref: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+      sha256: 81a90b069db3f5b38a52517d5d7f0cae4e4db8270c1a45e6053f924d45b56823
+      chars: 43791
+  excerpt_chars: 40000
+verdicts:
+  O.a.1:
+    value: n/a
+    rationale: The benchmark scores based on competition metrics (e.g., AUROC, MAE) via a grader, not by string matching final answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.2:
+    value: n/a
+    rationale: The benchmark scores based on competition metrics via a grader, not by string matching final answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.3:
+    value: n/a
+    rationale: The benchmark scores based on competition metrics via a grader, not by substring matching final answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.4:
+    value: n/a
+    rationale: The benchmark scores based on competition metrics via a grader, not by substring matching final answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.a.5:
+    value: n/a
+    rationale: The benchmark scores based on competition metrics via a grader, not by substring matching final answers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.b.1:
+    value: unmet
+    rationale: While an LLM judge is used for rule-breaking detection, there is no report of its accuracy, self-consistency, and human agreement.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.b.2:
+    value: unmet
+    rationale: No adversarial input results or named defenses (like injection filters) for the LLM judge are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.c.1:
+    value: n/a
+    rationale: The benchmark uses competition-specific metrics on a test set, not unit or end-to-end test cases.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.c.2:
+    value: n/a
+    rationale: The benchmark uses competition-specific metrics on a test set, not unit or end-to-end test cases.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.1:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.2:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.d.3:
+    value: n/a
+    rationale: Fuzz testing is not used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.1:
+    value: n/a
+    rationale: End-to-end testing (in the sense of code coverage) is not used; it uses competition metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.e.2:
+    value: n/a
+    rationale: End-to-end testing (in the sense of code coverage) is not used; it uses competition metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.1:
+    value: n/a
+    rationale: Outcomes are scored by competition metrics on a CSV submission, not by matching environment state.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.2:
+    value: n/a
+    rationale: Outcomes are scored by competition metrics on a CSV submission, not by matching environment state.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.f.3:
+    value: n/a
+    rationale: Outcomes are scored by competition metrics on a CSV submission, not by matching environment state.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.g.1:
+    value: met
+    rationale: The benchmark requires CSV submissions and states that the required format is described in each competition's description.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 13
+        quote: Answers for competitions must be submitted in CSV format; the required format is described in each competition's description
+    by: model
+    quotes_verified: true
+  O.g.2:
+    value: unmet
+    rationale: The answer space size and resulting chance success rate are not stated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  O.h.1:
+    value: n/a
+    rationale: The benchmark uses discrete medal thresholds and competition metrics, not a continuous quality metric that could be exploited in the manner described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.1:
+    value: unmet
+    rationale: The pyproject.toml specifies minimum versions for dependencies (e.g., '>=3.11'), but the rule requires every tool to have a stated version or lockfile entry, and no lockfile is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.2:
+    value: met
+    rationale: The harness documents the use of exponential backoff to handle API rate limits for the AIDE scaffold.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 16, chunk 1
+        quote: Implement exponential backoff on API call rate limits to handle high traffic scenarios.
+    by: model
+    quotes_verified: true
+  T.3:
+    value: met
+    rationale: The harness implements automatic retries for OpenAI API errors and returns the error message to the agent after a maximum of 10 retries, preventing silent failure.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 18, chunk 1
+        quote: |-
+          Add automatic retries with the   tenacity   library to the   complete_text_openai 
+          function for any OpenAI API Errors; return the error message to the agent after a maximum
+          of 10 retries.
+    by: model
+    quotes_verified: true
+  T.4:
+    value: unmet
+    rationale: The excerpts describe the use of Docker containers and virtual machines, but do not explicitly state that each task starts from a fresh environment or that state is cleared between runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.5:
+    value: unmet
+    rationale: There is no evidence in the container or harness configuration showing that answers and tests are absent from the agent's filesystem or network.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.6:
+    value: met
+    rationale: The benchmark is described as an offline environment using Kaggle competitions, and the setup uses Docker containers for execution.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 1
+        quote: We introduce MLE-bench, an offline Kaggle competition environment
+    by: model
+    quotes_verified: true
+  T.7:
+    value: unmet
+    rationale: The excerpts do not document that ground-truth labels were verified by a second person or by execution.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.8:
+    value: unmet
+    rationale: While the paper mentions the competitions are solvable, it does not state that every task was solved by a person or a reference solution.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.9:
+    value: unmet
+    rationale: The excerpts do not mention an automated Oracle solver that ships with the benchmark and solves all tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  T.10:
+    value: unmet
+    rationale: There is no documentation of an exploit audit of the implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.1:
+    value: met
+    rationale: The benchmark is open-sourced, including the code to construct the dataset.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 0
+        quote: We have released the code used to construct the dataset, the evaluation logic
+    by: model
+    quotes_verified: true
+  R.2:
+    value: met
+    rationale: The codebase, including evaluation logic and grading scripts, is publicly available.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 0
+        quote: We have released the code used to construct the dataset, the evaluation logic
+    by: model
+    quotes_verified: true
+  R.3:
+    value: met
+    rationale: The benchmark uses a private leaderboard to avoid overfitting and provides scripts to create new test splits.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 4, chunk 0
+        quote: we opt to use the Private leaderboard
+    by: model
+    quotes_verified: true
+  R.4:
+    value: met
+    rationale: The authors document a plan for a versioned update (v2) to address issues and contamination.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 16
+        quote: we plan to release batched fixes in the upcoming v2 release of MLE-bench
+    by: model
+    quotes_verified: true
+  R.5:
+    value: unmet
+    rationale: While it mentions measuring ML engineering capabilities, it does not provide a specific statement explaining why the chosen outcome measures (like medals) indicate those capabilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.6:
+    value: met
+    rationale: The benchmark evaluates the combination of language models and agent scaffolds.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 0
+        quote: We use open-source agent scaffolds to evaluate several frontier language models
+    by: model
+    quotes_verified: true
+  R.7:
+    value: met
+    rationale: Quality control is performed via log analysis and plagiarism detectors, and a correction channel (v2 release) is described.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 10, chunk 1
+        quote: We have mitigations in place to prevent plagiarism of the top participants’ code or test labels (log analysis and plagiarism detector)
+    by: model
+    quotes_verified: true
+  R.8:
+    value: unmet
+    rationale: The text mentions the risk of contamination but does not name each unavoidable flaw with its likely direction of effect on results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.9:
+    value: unmet
+    rationale: There is no numerical estimation of the impact of a known flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.10:
+    value: unmet
+    rationale: The main results table is not provided in the excerpts, and there is no evidence that every score has a confidence interval.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.11:
+    value: unmet
+    rationale: No specific caveat is provided stating which conclusions should not be drawn from the results due to named flaws.
+    evidence: []
+    by: model
+    quotes_verified: true
+  R.12:
+    value: met
+    rationale: Human baselines are established using Kaggle's public leaderboards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 1, chunk 0
+        quote: We establish human baselines for each competition using Kaggle’s publicly available leaderboards.
+    by: model
+    quotes_verified: true
+  R.13:
+    value: unmet
+    rationale: No results for a do-nothing or trivial agent are reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

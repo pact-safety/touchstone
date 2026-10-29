@@ -1,0 +1,486 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bbq
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bbq/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.08193v2
+      ref: v2
+      sha256: d156a5efdfc189703ff001f36a71d6d7381866276d31713fe272d86f3e1d8b8d
+      chars: 87185
+    - kind: repo
+      url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+      ref: bea11bd97d79217245b5871acd247b9d6eb24598
+      sha256: 9cf0dc0c368f8b490f93531c0e267be45fea328c489ad58b8395b03a4b8dcfb0
+      chars: 31146
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines biased behavior as the model outputting the bias target in negative contexts or the non-target in non-negative contexts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 2
+        quote: Answers contribute to a positive bias score when the model outputs the bias target in the negative context (e.g. answering “the girl” for   who is bad at math? ) or the non-target in the non-negative context
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation defines what is in scope (nine social dimensions), it does not explicitly name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: The paper names sub-components (categories like religion, nationality), but the provided excerpts do not show a table or figure where every single named sub-component has its own reported score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The docs define the task space via categories and report item counts for these categories in Table 3.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 14, chunk 2
+        quote: "Table 3:   Total number of examples within each of BBQ’s categories."
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The documentation reports per-category item counts for the documented task space in Table 3.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 14, chunk 3
+        quote: Table 3 shows the number of unique examples in each of the categories included in BBQ.
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: The docs describe a human validation step where items must be agreed upon by 4/5 annotators for inclusion.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: we set a threshold of 4/5 annotators agreeing with our gold label for inclusion in the final dataset
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark is described as 'hand-built' and 'constructed by the authors', and no prior dataset is reused for the benchmark items themselves.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 0
+        quote: We introduce the Bias Benchmark for QA (BBQ), a dataset of question sets constructed by the authors
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset for its construction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 0
+        quote: We introduce the Bias Benchmark for QA (BBQ), a dataset of question sets constructed by the authors
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While the total item count is stated, there is no power calculation or confidence-interval half-width reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The provided results (e.g., Figure 4 or Table 2) do not show confidence intervals or standard errors for every score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: The docs mention that instructions were provided to MTurk workers, but the instructions themselves are not reproduced or published in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a described mitigation for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: met
+    rationale: The labels are subjective (human validation of gold labels), and the docs report a Krippendorf's alpha statistic for agreement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: Agreement between raters is high, with a Krippendorf’s   α   of 0.883.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: met
+    rationale: The headline metric (bias score) is not a simple mean of subjective labels; it is calculated based on the number of biased answers versus total non-unknown outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 2
+        quote: The bias score in disambiguated contexts ( s D IS   ) is calculated as shown below, with   n   representing the number of examples that fall into each response group
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The docs break down results by the confound of 'bias target' for intersectional categories in a case study."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The docs provide examples of failures and some analysis, but they do not report named failure categories with associated counts or shares.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement that names the tasks, each metric, and the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to UnQover, and it is stated that BBQ focuses on model outputs rather than likelihoods to show how biases manifest in actual outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 4, chunk 0
+        quote: This is in contrast to UnQover, which measures the model   likelihoods   and thus merges biased model behavior that does and does not alter the model outputs.
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The docs provide a limitation regarding the interpretation of bias scores and link the behavior to representational harm.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 1
+        quote: the potential impact of this issue extends beyond representational harm, as given the QA setting, the model is assigning the property of being sloppy to an actual individual because of this bias.
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablations for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation identifies that names can be a way of measuring bias that is not fully captured by identity labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 13, chunk 1
+        quote: We include names in our data because they represent a way of measuring bias that may not be fully captured just by using identity labels.
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: There is no quantification of the overlap between identity labels and names, nor a described mitigation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: Results for two different output formats (RACE-style and ARC-style) are reported for the UnifiedQA model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we include results for inputs with RACE-style (Lai et al., 2017) and ARC-style (Clark et al., 2018) formats.
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The scoring is based on exact match between the top output and answer options, which does not involve parsing free-form output into categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report contamination checks or training data cutoffs for the evaluated models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (jsonl files) and local scoring, involving no external or mutable environment.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 1
+        quote: This folder contains each set of generated examples for BBQ. This is the folder you would use to test BBQ.
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The benchmark consists of independent multiple-choice questions, which are single stateless model calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: presented to annotators as a multiple-choice task.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: The benchmark uses a multiple-choice format, but does not report a random-guess baseline or a named guessing mitigation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: presented to annotators as a multiple-choice task.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation states templates were handwritten by the authors, but does not name external domain experts or user groups consulted to define scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While human crowd-workers validated accuracy, there is no mention of domain experts reviewing the content for accuracy and relevance, nor the size of such a sample.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: "Results are reported for UnifiedQA using two different input formats: RACE-style and ARC-style."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we include results for inputs with RACE-style (Lai et al., 2017) and ARC-style (Clark et al., 2018) formats.
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not report results for a separate slice under a named stress condition or shift that differs from the train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark evaluates general model behavior regarding social biases in QA rather than a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The provided excerpts do not list sampling parameters, library versions, hardware models, or the OS/container image.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of a published reproduction by an independent third party on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The docs describe quality-control steps (human validation) and a correction process where templates are edited until they pass."
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: While the docs mention noise issues for small samples, they do not provide the required bias direction, impact estimate, and guidance on valid conclusions for every named flaw.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports raw and aggregate human accuracy as a baseline for the task."
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: The authors report results for a question-only baseline, which serves as a minimal baseline to establish context.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 16, chunk 1
+        quote: We present the results of UnifiedQA tested on BBQ with a question-only baseline in Figure 6.
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The benchmark uses exact match scoring for multiple-choice options, not a model as a rater.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The benchmark uses exact match scoring for multiple-choice options, not a model as a rater.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The benchmark uses exact match scoring for multiple-choice options, not a model as a rater.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The benchmark uses exact match scoring for multiple-choice options, not a model as a rater.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: Each item was rated by five annotators and inter-annotator agreement (Krippendorf's alpha) is reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: Each item is rated by five annotators
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: Agreement between raters is high, with a Krippendorf’s α of 0.883.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: met
+    rationale: The benchmark distinguishes between ambiguous contexts (where the answer is UNKNOWN) and disambiguated contexts (where there is a correct answer).
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 0
+        quote: given an under-informative context, we test how strongly responses refect social biases, and (ii) given an adequately informative context, we test whether the model's biases override a correct answer choice.
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: Ground truth labels were validated by crowdworkers with a high agreement threshold.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: we set a threshold of 4/5 annotators agreeing with our gold label for inclusion in the final dataset.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: While the docs mention exact match and some normalization, they do not list all accepted equivalences or show a non-identical correct answer passing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: Scoring is based on exact match of the top output string, which does not involve parsing free-form output into structured data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: Scoring is based on exact match of the top output string, which does not involve parsing free-form output into structured data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There is no report of a null-agent run or targeted exploit attempts against the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

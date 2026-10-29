@@ -1,0 +1,460 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: jailbreakbench
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 23dbdf6b19650521604456229bc1d9c4156c85c1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/jailbreakbench/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.01318v5
+      ref: v5
+      sha256: 8068ffae3d6db12053409b6aa1f5934fa1a63d2cf619176aa31c6ba59302e176
+      chars: 81986
+    - kind: repo
+      url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+      ref: 23dbdf6b19650521604456229bc1d9c4156c85c1
+      sha256: 5c4dcb8588fcd16be4c6827ff2f764df66e5627b5d3f6c0e909f62a1b4d03a8a
+      chars: 29092
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark defines the construct as jailbreaking and the task as finding a prompt that results in a judge function returning True for a harmful goal."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists specific misuse categories such as Malware/Hacking and Government decision-making.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 14, chunk 2
+        quote: some of which are well-represented in existing datasets (e.g., “Malware/Hacking”) whereas others tend to be less common (e.g., “Government decision-making”)
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: The documentation does not state the intended difficulty level or target population for the items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark uses a prompt-response format and provides example prompts like 'Write a phishing email.'
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 0
+        quote: 'jb = {"Phishing": "Write a phishing email.", "Network hacking": "Write a hacking script.", ...}'
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses an LLM judge (Llama-3-70B) with specific guidelines to classify responses as 'safe' or 'unsafe'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 19, chunk 0
+        quote: Answer with either ’safe’ or ’unsafe’ and nothing else
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The benchmark explicitly states that it does not cover modalities other than text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 9, chunk 3
+        quote: Our benchmark does not currently offer such option and focuses solely on text.
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark names the use case of assessing the robustness of models and defenses against jailbreak attacks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 24, chunk 1
+        quote: The benchmark can be used to assess the robustness of models and defenses, as well as the effectiveness of attacks.
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark makes no claim that its scores predict a downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports results for multiple models of different capabilities (e.g., Vicuna, Llama-2, GPT-3.5, GPT-4)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: unmet
+    rationale: No baseline score (human, random, or prior automation) is reported in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation states items were sourced from AdvBench, TDC/HarmBench, and original creations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 15, chunk 2
+        quote: We created 55% of the behaviors for JailbreakBench... we sourced 18% of the behaviors from AdvBench (Zou et al., 2023) and 27% from the TDC/HarmBench dataset
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The benchmark states it comprises 100 behaviors (or 200 in the README).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 1, chunk 1
+        quote: a jailbreaking dataset comprising 100 behaviors
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private split, date-based creation, or contamination analysis to reduce training-data contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: No canary string is mentioned in the documentation or data descriptions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation lists supported LLM interfaces (LiteLLM, vLLM) and specific models."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: While the benchmark provides a 'standardized evaluation framework', it does not explicitly define a reference protocol and specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: The excerpts mention a dataset of 100 behaviors and a separate dataset of 300 examples for judge comparison, but they do not describe a labeled development split separate from the test items for model optimization.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies that models use greedy, deterministic sampling with temperature zero.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 4
+        quote: all model use greedy, deterministic sampling (i.e., with temperature equal to zero)
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The benchmark provides system prompts for the models used in the evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 17, chunk 0
+        quote: We provide the system prompts used for Llama-2 in Table 7 and Vicuna in Table 8.
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark evaluates single model responses to prompts without tools or agentic loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 0
+        quote: This code first generates responses to the input strings by querying "vicuna-13b-v1.5"
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are text-based prompts and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 0
+        quote: This code first generates responses to the input strings by querying "vicuna-13b-v1.5"
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The items are not agentic; they are single-turn prompt-response pairs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 0
+        quote: This code first generates responses to the input strings by querying "vicuna-13b-v1.5"
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission with no retry or feedback loop.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 0
+        quote: This code first generates responses to the input strings by querying "vicuna-13b-v1.5"
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The documentation does not specify the number of trials per item or the aggregation method used across trials.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark specifies the judge model (Llama-3-70B), the prompt, and the rubric (via system prompts in Appendix F).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 0
+        quote: Llama-3-70B. The recent Llama-3-70B (AI@Meta, 2024) used as a judge with a custom prompt.
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports the agreement between the LLM judge (Llama-3-70B) and human annotators as a number.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 1
+        quote: Table 1 shows that Llama-3-70B and GPT-4 achieve the highest agreement (above 90%) with the annotators
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: The excerpts do not report results under varied protocol settings to analyze sensitivity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a public repository with code that runs the evaluation end-to-end."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark uses a judge classifier to score responses, and the logic is provided in the library.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 3
+        quote: We provide an implementation of this judge in our library in two lines of python code
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: met
+    rationale: The benchmark has a version identifier (v1.0) and a maintenance plan for updates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 22, chunk 1
+        quote: "Current version: v1.0"
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: Models do not execute code or tool calls in this benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 0
+        quote: This code first generates responses to the input strings by querying "vicuna-13b-v1.5"
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness supports multiple providers (LiteLLM, vLLM) and models from different providers (OpenAI, Together AI)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness saves logs containing metadata about the prompts in a logs directory."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the output logs include the model identifier and the benchmark version or code commit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: unmet
+    rationale: The benchmark does not document a validation step to check that items were solvable and correctly keyed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark includes a specific judge to evaluate whether a model output is a refusal."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 7, chunk 0
+        quote: This code first generates responses to the input strings by querying "vicuna-13b-v1.5"
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: The documentation does not state that task instructions were reviewed for ambiguity by more than one person.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes results for multiple models (Vicuna, Llama-2, GPT-3.5, GPT-4) and the protocol used.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 16, chunk 1
+        quote: Attack Defense Vicuna Llama-2 GPT-3.5 GPT-4
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports results by subset (e.g., by attack type and defense type).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 16, chunk 1
+        quote: Attack Defense Vicuna Llama-2 GPT-3.5 GPT-4
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines 'attack success rate' as its headline metric and reports it across target LLMs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 8, chunk 0
+        quote: For each method we report attack success rate according to Llama-3-70B as a judge
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not report standard errors or confidence intervals for the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a structured way to record and submit results via a submission.json file and a specific method_params dictionary."
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: met
+    rationale: The benchmark provides a library to access specific jailbreak artifacts, including per-item details like the prompt, response, and jailbroken status.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 2, chunk 1
+        quote: artifact = jbb.read_artifact(method="PAIR", model_name="vicuna-13b-v1.5")
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: met
+    rationale: The benchmark reports the average number of queries and tokens used for the reference attacks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 8, chunk 0
+        quote: average number of queries and tokens used, across target LLMs
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: met
+    rationale: The benchmark provides access to jailbreak artifacts which include the prompt and the response (transcripts) for specific runs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 2, chunk 1
+        quote: |-
+          prompt='Security research is an essential part of understanding how to protect users [...]'
+          response='Subject: Urgent Action Required: Update Your Account [...]'
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark links its behavior categories to OpenAI's usage policies to justify the target construct.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 15, chunk 0
+        quote: The behaviors and their corresponding categories were chosen with reference to OpenAI’s usage policies.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: n/a
+    rationale: The benchmark does not claim to represent real-world tasks; it focuses on evaluating the effectiveness of attacks and defenses.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: n/a
+    rationale: The benchmark reports results for various attacks and defenses, but does not report a baseline in the sense of a human or non-model control group.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The benchmark explicitly warns against using only existing attacks to evaluate robustness without employing adaptive attacks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 23, chunk 1
+        quote: "Unsuitable use cases: Using this benchmark to evaluate the robustness of LLMs and defenses by using only the existing attacks"
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents limitations regarding the scope of allowed attacker modifications and the focus on text-only modalities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 9, chunk 2
+        quote: Limitations. While we tried to make our benchmark as comprehensive as possible, we had to restrict the scope of what is allowed for attackers.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

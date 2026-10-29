@@ -1,0 +1,523 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mlcommons-ai-safety-v0-5
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 79accfe1424a7994399154ae34fd960fe93a4259
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mlcommons-ai-safety-v0-5/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.12241v2
+      ref: v2
+      sha256: 948815b355a66f0403dbc0bdba07c085f1ab11bab2bc65a658b165a3add1ddcb
+      chars: 185943
+    - kind: repo
+      url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+      ref: 79accfe1424a7994399154ae34fd960fe93a4259
+      sha256: 784dbe1c8138124c20130b3f9e07d42713cf17bf95330a1ddb43f5db95eca9ed
+      chars: 56881
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark specifies it measures whether SUT responses contain hazards through chat response testing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 9, chunk 1
+        quote: The Benchmark tests whether the SUTs’ responses contain hazards.
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 2
+        quote: We opted to use chat response testing as this is best suited to our Scope and SUTs
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark lists specific hazard categories such as Child Sexual Exploitation and Hate."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark defines personas, including a 'vulnerable' user with limited domain knowledge."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark states it uses chat response (free text) and provides examples of prompts and responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 2
+        quote: We opted to use chat response testing as this is best suited to our Scope and SUTs
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 20, chunk 1
+        quote: |-
+          “ I think it’s a good idea   to run an online scam” 
+          Harmful guidance 
+          “Yeah, I think so too.”
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses LlamaGuard as an automated evaluator to score responses as unsafe or not unsafe.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 21, chunk 2
+        quote: Our grading system involves scoring whether each test item is unsafe or not with an automated evaluator model (LlamaGuard [   59 ])
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly mentions that it does not test for 'false refusal'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 10, chunk 0
+        quote: The v0.5 Benchmark only tests for whether models give unsafe responses. An additional concern is whether models refuse to engage with safe prompts, which is also known as “false refusal”
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark identifies its use case as a 'minimum standard' for SUTs to identify safety weaknesses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 9, chunk 1
+        quote: the v0.5 benchmark can be viewed as a minimum standard for all of the SUTs. The Benchmark tests whether the SUTs’ responses contain hazards.
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict specific downstream outcomes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: The benchmark reports performance for 13 SUTs with varying risk grades (High, Moderate, Moderate-Low).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 1
+        quote: 5 out of the 13 SUTs are graded as high risk (H), 4 SUTs as moderate risk (M) and 4 SUTs as moderate-low risk (M-L).
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: The benchmark reports the percentage of unsafe responses for a selected reference model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 1
+        quote: "Table 6:   Percentage of unsafe responses of the reference model for each hazard category."
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The benchmark states it created new datasets of prompts and mentions the use of templates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 0
+        quote: To create the AI Safety Benchmark we chose to create new datasets of prompts
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 18, chunk 1
+        quote: The templates take each sentence fragment and turn it into a grammatically complete prompt.
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: unmet
+    rationale: The excerpts do not provide the total item count for the full test set.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark requires publishers to commit to not training directly on the benchmark dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 8, chunk 0
+        quote: Publishers do not train directly on or against the benchmark dataset
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: There is no mention of canary strings in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation states that running a full benchmark takes several days.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:README.md, chunk 2
+        quote: Note that running a full benchmark to match our public set takes several days.
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation mentions a 'test specification' to guide practitioners, but the provided excerpts do not define a reference protocol or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: The excerpts describe the total dataset and how items were generated, but do not mention a separate development, validation, or training split.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark specifies the temperature, maximum tokens, and top_p used for its reported results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 0
+        quote: We collected responses from all models with a temperature of 0.01 and set the maximum number of tokens to be generated to 500. All remaining parameters were kept at the default (e.g. top_p = 0.7).
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: unmet
+    rationale: While the paper describes how prompts were generated using templates and fragments, the exact prompt text or templates are not provided verbatim in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark evaluates chat responses to prompts in a single response; there is no mention of tools, code execution, or multi-step agent loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 17, chunk 0
+        quote: Chat response   In this setup, models are given prompts and they respond with a free text chat response.
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are chat-based prompts and responses, which do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 17, chunk 0
+        quote: Chat response   In this setup, models are given prompts and they respond with a free text chat response.
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The benchmark is not agentic; it uses single-turn chat responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 17, chunk 0
+        quote: Chat response   In this setup, models are given prompts and they respond with a free text chat response.
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item takes a single submission with no mention of retries or feedback loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 17, chunk 0
+        quote: Chat response   In this setup, models are given prompts and they respond with a free text chat response.
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark specifies that it uses a single sample (implied by the low temperature to reduce variability) and describes the aggregation of scores from test items to tests to the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 22, chunk 1
+        quote: SUTs’ performance on each   test item   is scored by automatically assessing whether their response is unsafe or not.
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark specifies the judge model (LlamaGuard), the scoring method (unsafe vs not unsafe), and the rubric (hazard categories).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 22, chunk 1
+        quote: We use LlamaGuard [   59 ] for this purpose, which is an input-output safety filter built on top of the Llama 2 model [   23 ].
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports the accuracy of the LlamaGuard judge compared to human gold standard labels as a number."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: The excerpts do not report results under varied protocol settings, only the results of the standard run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a public repository with runnable code (modelbench and modelgauge) and installation instructions.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:README.md, chunk 2
+        quote: |-
+          Clone this repository.
+
+          ```shell
+          git clone https://github.com/mlcommons/modelbench.git
+          ```
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark uses LlamaGuard to assess if responses are unsafe and the run journal describes the translation of raw responses into a common format.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 2
+        quote: translated sut response - the result of translating a raw response into a common format
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: met
+    rationale: The benchmark uses version identifiers (v0.5) and the documentation discusses the handling of deprecated versions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 8, chunk 1
+        quote: Publishers include the version number of the test used and prominently declare that results from deprecated versions of the test are “obsolete and should not be used for safety assessment or decision making.”
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models in this benchmark generate text responses and do not execute code or tool calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 17, chunk 0
+        quote: Chat response   In this setup, models are given prompts and they respond with a free text chat response.
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: met
+    rationale: The harness supports multiple providers through a modular driver system and SUT UIDs.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:docs/suts-how-to.md, chunk 1
+        quote: We provide drivers for many major providers.
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: met
+    rationale: The run journal logs each item's flow, including the SUT's raw response and the resulting annotation/measurement.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 2
+        quote: fetched sut response - a SUT's live raw response to a single prompt
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: met
+    rationale: The run journal records the UID of the SUT and the UID of the Benchmark scored.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 7
+        quote: |-
+          benchmark - the uid of the Benchmark scored
+              - sut - the uid of the SUT scored
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The dataset was created and vetted by the MLCommons AI Safety working group, and human annotators verified the labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 54, chunk 0
+        quote: The dataset was created and vetted by MLCommons AI Safety working Group, which comprises a large number of researchers, engineers and practitioners.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: unmet
+    rationale: The documentation mentions that they have items to test false refusal but explicitly states this is not included in v0.5.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 10, chunk 1
+        quote: However, this is not included in v0.5, as we do not have the resources to actually assess whether models’ responses constitute a false refusal.
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 17, chunk 0
+        quote: Chat response   In this setup, models are given prompts and they respond with a free text chat response.
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: met
+    rationale: The dataset was vetted by a working group of researchers, engineers, and practitioners.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 54, chunk 0
+        quote: The dataset was created and vetted by MLCommons AI Safety working Group, which comprises a large number of researchers, engineers and practitioners.
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes scores for several anonymized SUTs across hazard categories in Figure 1.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 0
+        quote: "Figure 1:   Scores of systems under test (SUTs) across the different hazard categories)within the AI Safety Benchmark v0.5."
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: Scores are reported separately for each of the seven hazard categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 0
+        quote: |-
+          Child Sexual Exploitation 
+          Hate 
+          Indiscriminate Weapons 
+          Non-Violent Crimes 
+          Sex-Related Crimes 
+          Suicide & Self-Harm 
+          Violent Crimes
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines a multi-level aggregation process (test items, tests, and benchmark) and specifies the headline metric as an overall grade based on the lowest grade across hazard categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 0
+        quote: The bottom row reports the overall benchmark performance (i.e., lowest grade across hazard categories).
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty methods for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: met
+    rationale: The benchmark provides a 'run journal' in JSONL format to record the protocol and results of the evaluation pipeline.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 0
+        quote: The goal of the ModelBench run journal is to provide a clear record of what happened during the scoring of SUTs against benchmarks. It is a JSONL file consisting of one line per event during the run.
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: While the tool can generate item-level results, the excerpts do not show that per-item scores for a reference run are published in a downloadable file.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: The excerpts do not report the cost (tokens, money, or time) for the reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: The excerpts do not provide downloadable full or representative transcripts from reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The documentation provides a validity argument stating that test items are designed to reflect plausible interactions for specific personas.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 1
+        quote: The test items have been designed to reflect plausible interactions that each persona would have with a model, in our use case.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark acknowledges that the ecological validity of the prompts (matching the real-world) could be quite low due to a lack of reliable data on AI harms.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 1
+        quote: we are aware that the ecological validity of the prompts (i.e. the extent to which the prompts match the real-world) could be quite low given we do not have reliable data about AI harms and hazards
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark uses reference models as baselines and specifies the conditions under which they were measured (temperature 0.01, max tokens 500).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 0
+        quote: We collected responses from all models with a temperature of 0.01 and set the maximum number of tokens to be generated to 500.
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The documentation explicitly states that the scores should not be interpreted as giving meaningful signals about the safety of SUTs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 21, chunk 2
+        quote: The v0.5 grades should not be interpreted as giving meaningful signals about the safety of SUTs .
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents several limitations, including the fact that it can only identify a lack of safety rather than safety itself.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 26, chunk 1
+        quote: The benchmark can only identify   lack   of safety rather than safety
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,270 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: osworld
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 044bc33901cb893808e3f91ebc9a17ed8e54b44c
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/osworld/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.07972v2
+      ref: v2
+      sha256: e101f46bd83ffcc2c8a40ddbf41b5d1f8e42c5de594ddb7eb9dbc17eb190d291
+      chars: 161795
+    - kind: repo
+      url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
+      ref: 044bc33901cb893808e3f91ebc9a17ed8e54b44c
+      sha256: 71716cfce837c2e4a71032f904cde16d088c61e547f2901257d1e086bce68109
+      chars: 74717
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The phenomenon is defined as a POMDP, and the observable outputs for evidence are the 'extracted key components' from the environment's final state, which are then assessed by an evaluator function.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 3, chunk 1
+        quote: An autonomous digital agent task can be formalized as a partially observable Markov decision process (POMDP)
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 7, chunk 3
+        quote: the evaluator function assesses success based on the extracted key components
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the scope is described in terms of representative applications and interfaces, the excerpts do not name any specifically excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The paper mentions various skills/abilities needed for tasks, but it does not state that these sub-components are scored separately, nor does it explicitly state the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the paper mentions different action spaces (pyautogui) and input types, it does not measure the specific effect of output-format requirements on scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The excerpts indicate that the VLM specifies action objects by number index which is mapped via post-processing, and the results are based on success rates, but there is no evidence of automated parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 11, chunk 1
+        quote: |-
+          the VLM is supposed to specify the action object by its
+          number index, which will be mapped into our action space by post-processing
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts mention the number of tasks and the operating systems used, but they do not document a sampling strategy over a described task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The documentation states that 9 authors with computer science backgrounds carefully annotated each example to ensure reliability and reproducibility.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 2, chunk 3
+        quote: 9 authors with computer science backgrounds carefully annotate each example
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the benchmark tests different resolutions, there is no mention of a counted subset of permuted or perturbed items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that a portion of the tasks were integrated from related datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 8, chunk 2
+        quote: Additionally, a total of 84 tasks (22.8%) are integrated from related datasets
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: met
+    rationale: The text identifies a limitation of previous benchmarks (non-execution-based evaluation penalizing alternative solutions) and a strength of the current approach (universal action space enabling general tasks).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 1, chunk 3
+        quote: Their non-execution-based evaluation assumes a single solution for each task and wrongfully penalizes alternative correct solutions.
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 8, chunk 2
+        quote: This universal action space enables the constructed agents to handle general tasks in the digital world.
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: While the benchmark is compared to others in terms of features and instruction distribution, there is no report comparing agent performance results on the new benchmark against the original source datasets.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The text mentions integrating tasks from other datasets but does not list specific modifications made to those reused datasets or explain how those modifications improve construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any contamination tests or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of task items for evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper does not report any search or overlap check of the benchmark source material against named training corpora or models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the item count is stated, there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 6, chunk 2
+        quote: we introduce the OSW ORLD benchmark, which encompasses 369 real computing tasks defined and executed on Ubuntu
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not contain the main results table or any evidence that every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The paper mentions human performance, but the excerpts do not describe rater demographics or bias mitigation strategies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 11, chunk 3
+        quote: human performance is consistent across these tasks
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are based on deterministic keys such as internal signals from APIs, JSON values, and reference golden files.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 30, chunk 2
+        quote: checking whether the settings JSON has the correct value for a specific key
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: met
+    rationale: The paper describes common error types (qualitative) and provides success rates for different task subsets (quantitative).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 12, chunk 2
+        quote: VLM agents have common error types like mouse-clicking inaccuracies, limited domain knowledge
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 12, chunk 2
+        quote: We analyze the success rate across several additional subsets of tasks, as summarized in Tab. 6
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: met
+    rationale: The paper breaks down performance (success rate) by window perturbations (position, size, clutter) in Figure 8.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 14, chunk 0
+        quote: "Figure 8: Decline in performance due to window perturbations. VLM agents struggle with perturbation of position and size of application windows and irrelevant information"
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: While confounders (perturbations) were identified in ea.2, there is no discussion of scoring biases revealed by this analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors propose a specific direction to improve scores by boosting model efficiency to handle longer contexts, citing the robotics community as a rationale.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 17, chunk 3
+        quote: we need to boost the efficiency of our models, enabling them to process much longer contexts and perform inference computations efficiently, akin to the robotics community
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark links its tasks to real-world computer use cases and the goal of creating computer assistants.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.07972v2
+        locator: 2404.07972v2 page 1, chunk 1
+        quote: Each task example is derived from real-world computer use cases
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no statement linking the choice of tasks and metrics to a specific operational definition labeled 'def.1'.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: The excerpts do not name and compare a specific existing benchmark with a stated difference.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: While the text mentions challenges in agent abilities, it does not state a limitation or trade-off regarding what the benchmark scores specifically do or do not measure.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

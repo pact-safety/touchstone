@@ -1,0 +1,278 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bird-bench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bird-bench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2305.03111v3
+      ref: v3
+      sha256: 314fc933837ad9d379afe82cc3c5f306b5ad360f6b91dc77a63232d71928ed46
+      chars: 110663
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark is defined as a text-to-SQL benchmark focusing on large database values, with observable evidence of performance measured by Execution Accuracy (EX) and Valid Efficiency Score (VES).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 10, chunk 3
+        quote: we introduce B IRD , a large-scale cross-domain, text-to-SQL benchmark with a particular focus on large database values
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 2
+        quote: The Execution Accuracy (EX) and Valid Efficiency Score (VES) are presented
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the scope is described as a text-to-SQL benchmark focusing on large database values, the excerpts do not name any specific excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is broken down into three additional challenges (sub-components) which are analyzed separately in the results (e.g., efficiency analysis in Appendix B.5 and knowledge evidence analysis).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 10, chunk 3
+        quote: "exploring three additional challenges: 1) handling large and dirty database values, 2) external knowledge evidence, and 3) optimizing SQL execution efficiency"
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks nor provide control conditions or ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the text mentions providing a '1-shot pseudo example' for 'output format', it does not measure or report the effect of these format constraints on the resulting scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The excerpts describe the generation of SQL queries but do not mention the use of automated parsing of free-form output to extract the SQL; the models are described as fetching SQL in an 'end-to-end fashion'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 1
+        quote: SQL can be fetched in an end-to-end fashion by easily fine-tuning.
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The documentation explicitly states that no sampling strategy was used when asked if the dataset is a sample from a larger set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 18, chunk 2
+        quote: If the dataset is a sample from a larger set, what was the sampling strategy (e.g., deterministic, probabilistic with specific sampling probabilities)? No.
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The text describes a rigorous examination process where experts evaluate every text-to-SQL pair for validness and alignment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 4, chunk 2
+        quote: Experts evaluate each text-to-SQL pair to ensure the highest quality of data.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items being tested and reported separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that BIRD is a new benchmark and describes its relationship to previous benchmarks like SPIDER, noting it is the first to incorporate specific real-world features.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 10, chunk 2
+        quote: B IRD   is the first large-scale benchmark to incorporate these real-world features, emphasizing database values.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The excerpts indicate that BIRD is a newly introduced benchmark rather than an adaptation of a previous dataset; it is compared to others but not derived from them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 17, chunk 0
+        quote: To address this issue, we introduce B IRD , the largest cross-domain text-to-SQL benchmark highlighting extensive and realistic databases for community development.
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark is not an adaptation of a prior dataset, so comparing performance against an 'original' version is not applicable.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 17, chunk 0
+        quote: To address this issue, we introduce B IRD , the largest cross-domain text-to-SQL benchmark highlighting extensive and realistic databases for community development.
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark is not an adaptation of a prior dataset, so there are no modifications to a reused dataset to explain.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 17, chunk 0
+        quote: To address this issue, we introduce B IRD , the largest cross-domain text-to-SQL benchmark highlighting extensive and realistic databases for community development.
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts do not describe a specific contamination test or report its results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The benchmark includes a hidden test set to ensure fair evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 6
+        quote: we curated 15 additional relational databases for a hidden test set
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: While the authors mention concerns about pre-training exposure, they do not report a search or overlap check against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is stated, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 5
+        quote: B IRD   contains complex   12,751   examples
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results table (Table 4) provides point estimates for accuracy and efficiency but does not include confidence intervals or standard errors for every score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 2
+        quote: "Table 4: The Execution Accuracy (EX) and Valid Efficiency Score (VES) are presented"
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: While the paper mentions a 'specialized team' and 'experts' for annotation and human performance collection, it does not describe their demographics or state bias mitigation strategies for recruitment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 18, chunk 0
+        quote: the test set databases are curated and designed by our specialized team
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are deterministic keys (SQL execution results), as the benchmark measures if predicted SQL result sets align with ground-truth SQL result sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 1
+        quote: the term "valid SQLs" refers to predicted SQL queries whose result sets align with those of the ground-truth SQLs
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: While the paper mentions observing 500 error cases and describes some failure modes (e.g., incorrect keywords), it does not provide counts for these specific failure modes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not show failures or scores broken down by a named confounder in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The paper reports an experiment where providing external knowledge evidence led to clear improvement across difficulty levels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 9, chunk 1
+        quote: After being easily fed with the external knowledge evidence about the database values, all models have a clear improvement
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to real-world text-to-SQL tasks involving large database values.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 17, chunk 0
+        quote: whether state-of-the-art LLMs, such as ChatGPT and Codex, can replace human effort in real-world text-to-SQL tasks involving large database values
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: While metrics are mentioned, there is no quotable statement linking the task choice and each metric to a specific operational definition in 'def.1' (which is not provided in the excerpts).
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to SPIDER, noting that previous benchmarks like it focus only on database schema and lack attention to values.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 17, chunk 0
+        quote: their exceptional performance on previous academic tasks like S PIDER impresses researchers. However, we observe that current cross-domain text-to-SQL benchmarks only focus on the database schema, which lacks full attention to values
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The authors discuss a limitation regarding 'ORDER BY' usage that may lead to false positives in the scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 24, chunk 5
+        quote: this may result in false positives for questions utilizing "ORDER BY."
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

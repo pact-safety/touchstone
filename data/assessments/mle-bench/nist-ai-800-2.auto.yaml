@@ -1,0 +1,503 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mle-bench
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v6
+  repo_commit: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mle-bench/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2410.07095v6
+      ref: v6
+      sha256: ecfad6248e2fdcf4920059d7ecb57b46a01959f57302ab2545e80858c09dfa68
+      chars: 93091
+    - kind: repo
+      url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+      ref: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+      sha256: 81a90b069db3f5b38a52517d5d7f0cae4e4db8270c1a45e6053f924d45b56823
+      chars: 43791
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark specifies it measures 'ML engineering capabilities' through the task of solving Kaggle competitions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 9, chunk 2
+        quote: MLE-bench is not the first benchmark to use Kaggle competitions to measure autonomous ML engineering capabilities.
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists 15 diverse problem categories, including Image Classification and Tabular.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 14, chunk 0
+        quote: MLE-bench contains a total of 75 competitions spanning 15 diverse problem categories.
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The benchmark defines difficulty tiers (Low, Medium, High) based on the time an experienced ML engineer would take to solve them.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 14, chunk 0
+        quote: Low if we estimate that an experienced ML engineer can produce a sensible solution in under 2 hours
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark states that submissions must be in CSV format and provides an example of the prompt/instructions given to agents.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 13
+        quote: Answers for competitions must be submitted in CSV format
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: Grading is based on competition-specific metrics and compared against human leaderboards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 17, chunk 2
+        quote: Your submission will be graded based on the metric in the competition-specific instructions.
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly states that the benchmark does not cover the full spectrum of AI R&D, such as figuring out datasets and metrics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 10, chunk 1
+        quote: the tasks included in MLE-bench don’t cover the full spectrum of capabilities required for AI R&D.
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark is intended to inform the risk of AI R&D acceleration and measures ML engineering capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 10, chunk 1
+        quote: We built MLE-bench to better understand the risk of AI R&D acceleration via automated ML engineers
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome, but rather evaluates current capabilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Results are reported by complexity level (Low, Medium, High) and for multiple models (o1-preview, GPT-4o).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 6, chunk 3
+        quote: See Table 9 and Table 10 for our headline results broken down by complexity level and task category respectively.
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: The benchmark compares model performance against real-world human attempts via Kaggle leaderboards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 2, chunk 1
+        quote: Submissions are graded locally and compared against real-world human attempts via the competition’s leaderboard.
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The items are manually sourced from Kaggle competitions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 2, chunk 2
+        quote: MLE-bench consists of 75 machine learning engineering tasks manually sourced from Kaggle
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The total item count (75) and subset counts (e.g., 22 for Low complexity) are stated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 14, chunk 0
+        quote: MLE-bench contains a total of 75 competitions spanning 15 diverse problem categories.
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark uses new train-test splits to reduce contamination.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 11
+        quote: we provide preparation scripts that split the publicly available training set into a new training and test set.
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: There is no mention of canary strings in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The documentation specifies the compute resources (vCPUs, RAM, GPU) and the runtime (24 hours) required.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 7
+        quote: "Compute: 36 vCPUs with 440GB RAM and one 24GB A10 GPU"
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: met
+    rationale: The benchmark provides a 'canonical setup for comparing scores' and specifies recommended settings for runtime and compute, while noting they are not strict requirements.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 7
+        quote: This section describes a canonical setup for comparing scores on MLE-bench.
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: met
+    rationale: The benchmark explicitly includes a development split of 7 competitions separate from the test set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 3, chunk 1
+        quote: We include an additional 7 competitions as a development split, for developing agents without over-fitting to the test set.
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: met
+    rationale: The benchmark states that it is agnostic to methods and encourages developers to report their own settings, effectively leaving them to the evaluator.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 4, chunk 2
+        quote: MLE-bench is designed to be agnostic to the methods used to solve it
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The overall instructions used to initiate all scaffolds are provided verbatim in the paper.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 17, chunk 0
+        quote: You are participating in *MLE-bench*, an offline version of Kaggle competitions adapted to test the coding ability of agents like yourself.
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark names the open-source scaffolds used (AIDE, MLAB, OpenHands) and the tools provided (e.g., Validate Submission)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: met
+    rationale: The benchmark provides a base Docker image and specifies the VM hardware (vCPUs, RAM, GPU).
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 14
+        quote: We provide a base Docker image `mlebench-env` which is the base environment for our agents.
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: met
+    rationale: A time limit of 24 hours per competition is explicitly stated for the main experiments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 5, chunk 2
+        quote: For each of the 75 competitions, agents have a maximum of 24 hours to produce a submission.
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: unmet
+    rationale: While a validation tool is mentioned, the benchmark does not specify a limit on the number of submission attempts allowed for the final score, nor the specific feedback for incorrect final submissions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark specifies repeating experiments with 3 seeds and uses the pass@k metric for aggregation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 5, chunk 2
+        quote: We repeat all experiments with 3 seeds (that is, 3 runs per competition) to compute the mean and standard error
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark uses GPT-4o mini as a judge for log analysis and provides the rubric of questions in Table 5."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports that violations detected by the LLM judge were reviewed by humans and found to be false positives.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 15, chunk 0
+        quote: each violation was determined to be a false positive after human review.
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: met
+    rationale: The benchmark reports results under varied time limits (24 vs 100 hours) and varied GPU resources.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 2, chunk 1
+        quote: GPT-4o scores 8.7% given 24 hours to attempt each competition, but 11.8% when given 100 hours.
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a pip-installable package and grading scripts to run evaluations.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 11
+        quote: |-
+          You can install `mlebench` with pip:
+
+          ```console
+          pip install -e .
+          ```
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The required CSV format is stated to be in the competition description or sample file, and grading scripts are provided.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 13
+        quote: Answers for competitions must be submitted in CSV format; the required format is described in each competition's description
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: While a v2 release is mentioned, there is no record of changes (changelog) between versions provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: met
+    rationale: The benchmark runs agents in Docker containers and provides the Dockerfile.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 5, chunk 1
+        quote: we run agents in an Ubuntu 20.04 Docker container containing the dataset, validation server, and Python packages
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: met
+    rationale: The harness is designed to be agnostic to the agent and supports multiple open-source agents (AIDE, MLAB, OpenHands).
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 14
+        quote: We purposefully designed our benchmark to not make any assumptions about the agent that produces submissions
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: met
+    rationale: The benchmark provides a tool to process logs and code outputs from agent runs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 15, chunk 0
+        quote: We provide a code and log analysis tool that processes logs and code outputs from agent runs
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the output logs automatically record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: Each competition was screened by at least two ML engineers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 13, chunk 3
+        quote: Each competition in our final set was screened by at least two ML engineers working at leading AI companies.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The tasks are ML engineering competitions based on Kaggle datasets, which do not typically trigger safety/harm safeguards.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: met
+    rationale: The benchmark uses a plagiarism detection tool (Dolos) and a log analysis tool to prevent cheating.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 5, chunk 1
+        quote: To prevent plagiarism, we use the source code plagiarism detection tool Dolos
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: There is no documentation that task instructions were reviewed for clarity by multiple people or tested by humans.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes results for models like o1-preview and GPT-4o using specific scaffolds and protocols.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 2, chunk 1
+        quote: The best-performing agent we evaluated, o1-preview with AIDE, uses scaffolding purpose-built for Kaggle competitions and achieves a medal in 16.9% of competitions on average.
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: Results are reported separately for Low, Medium, and High complexity splits.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 6, chunk 3
+        quote: See Table 9 and Table 10 for our headline results broken down by complexity level and task category respectively.
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines its headline metric as the percentage of attempts awarded any medal and specifies that raw scores are reported per competition.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 4, chunk 1
+        quote: To provide a singular metric for MLE-bench, we calculate the percentage of attempts that are awarded any medal (bronze and above).
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: met
+    rationale: The benchmark reports results with standard error of the mean and specifies that this is computed by repeating experiments with 3 seeds.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 5, chunk 2
+        quote: We repeat all experiments with 3 seeds (that is, 3 runs per competition) to compute the mean and standard error unless otherwise specified.
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: met
+    rationale: The documentation lists specific details that developers should report when evaluating their agents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 4, chunk 2
+        quote: Specifically, developers should mention the models and scaffolding used, whether the agent had internet access, available hardware, runtime
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: The provided excerpts do not mention a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: While the benchmark recommends reporting runtime and compute, it does not report the actual cost (tokens, money, or time) for its own reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: There is no mention of downloadable full or representative transcripts from reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument by comparing its tasks to other benchmarks and noting that its problems are more open-ended and difficult.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 9, chunk 1
+        quote: In contrast, the problems in MLE-bench are often more open-ended and difficult (for example, some are open research problems).
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims to use real-world human attempts via Kaggle leaderboards and notes that its environment is an 'offline version' of these competitions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 2, chunk 1
+        quote: MLE-bench is an offline Kaggle competition environment for AI agents.
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: n/a
+    rationale: The benchmark compares models against a leaderboard of human participants rather than reporting a specific baseline model/subject measured under controlled conditions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.07095v6
+        locator: 2410.07095v6 page 2, chunk 1
+        quote: Submissions are graded locally and compared against real-world human attempts via the competition’s leaderboard.
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: unmet
+    rationale: The documentation does not explicitly name a conclusion that the scores should not be taken to show.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark explicitly mentions that there are known issues with certain competitions.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
+        locator: openai/mle-bench@507f92e1138b:README.md, chunk 16
+        quote: There are some known issues with certain MLE-bench competitions.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

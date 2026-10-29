@@ -1,0 +1,120 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: air-bench-2024
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/air-bench-2024/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2407.17436v2
+      ref: v2
+      sha256: 5bbae6c7732e0ea6c5324379b3b053372f800f427a013cf25133d809f522d760
+      chars: 122492
+    - kind: repo
+      url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      ref: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      sha256: f677af44b2ed98ceab0cba0738c6a9e6e346ab27b2feb66c7c4c9c24ee48ab01
+      chars: 23468
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark shows clear headroom as even the most well-aligned models have critical gaps in high-risk areas, with some refusal rates below 20%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 10, chunk 2
+        quote: even the most well-aligned models, such as the Anthropic Claude series, demonstrate critical gaps in high-risk areas
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document a contamination defense such as a private held-out set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: There is no report of the label/answer distribution being balanced, nor is a trivial baseline provided to compare against capable performance.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark reports a Kappa score of 0.86, indicating strong agreement between the automated evaluation and human annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 4
+        quote: achieves a Kappa score of 0.86, indicating strong evaluation agreement to human annotators.
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark explicitly states its purpose is to bridge the gap in capturing the evolving landscape of risks reflected in current regulations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 3
+        quote: To bridge this critical gap, we introduce AIR-B ENCH 2024, a comprehensive language model (LM) safety benchmark consisting of 5,694 risky instruction prompts directly grounded in the current regulatory landscape.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is grounded in the current regulatory landscape and uses a process to ensure prompts mimic real-world scenarios and maintain semantic meaning during expansion.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 3
+        quote: directly grounded in the current regulatory landscape.
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The benchmark name includes '2024', but there is no explicit version identifier (like a release tag or DOI) that points to updated versions or records changes per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no stated deprecation plan or policy regarding the archiving of artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark is hosted in a GitHub repository (stanford-crfm/air-bench-2024), which provides an issue tracker for queries, and the project is active as indicated by the 2024 date in the name and recent paper version.
+    evidence:
+      - source: repo
+        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:LICENSE, chunk 2
+        quote: communication on electronic mailing lists, source code control systems, and issue tracking systems
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

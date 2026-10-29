@@ -1,0 +1,516 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gaia
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gaia/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.12983v1
+      ref: v1
+      sha256: ed50199799b28126a193080d35d4b629d544261f29ca71a97f4cdf49eca81c1b
+      chars: 83727
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The documentation defines the target phenomenon as AI systems proposing general assistant questions and specifies that evidence of success is a 'short, single correct answer'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: GAIA   is a benchmark for AI systems proposing general assistant questions.
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 1
+        quote: The questions are designed to admit a short, single correct answer, therefore easy to verify.
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: met
+    rationale: The scope includes real-world assistant questions, and it explicitly excludes non-English speakers and dialectal variation of English.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 0
+        quote: While   GAIA   targets real-world assistant questions
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 11, chunk 0
+        quote: This benchmark will therefore not validate the usefulness of assistants for non-English speakers
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The phenomenon is broken down into three levels of difficulty, and each level has its own reported score in Table 4."
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by capabilities (e.g., coding, web browsing) and difficulty levels, with item counts reported per level.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 0
+        quote: Number of questions   146   245   75
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The documentation reports per-category item counts for the difficulty levels (Level 1, 2, 3).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 0
+        quote: Number of questions   146   245   75
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: Questions passed a verification step where two new annotators had to independently arrive at the same answer, with a reported pass rate of 68%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 2
+        quote: If the original annotator and the two new annotators arrived at the same answer, the question was validated.
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 2
+        quote: 68% of the questions were good as is
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: n/a
+    rationale: The benchmark consists of 466 questions 'we devised for GAIA', indicating no prior dataset was reused.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 6, chunk 0
+        quote: composition of the 466 questions we devised for   GAIA
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark consists of 466 questions 'we devised for GAIA', indicating no prior dataset was reused.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 6, chunk 0
+        quote: composition of the 466 questions we devised for   GAIA
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While item counts are stated, there is no power calculation or confidence-interval half-width reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 0
+        quote: Number of questions   146   245   75
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results table (Table 4) does not provide confidence intervals or standard errors for every score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 1
+        quote: Table 4   Score and average time to answer for various baselines on GAIA in %.
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: met
+    rationale: The documentation states that instructions for annotators are reported in Appendix D.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 0
+        quote: gave them as examples to annotators along with instructions (reported in Appendix D)
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: unmet
+    rationale: Rater demographics are not reported, nor is there a description of mitigation for demographic skew.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: Every label comes from a deterministic key (a unique, factual ground truth answer).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 2, chunk 2
+        quote: yet admit a unique, factual answer, allowing a simple and robust automatic evaluation.
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: Every label comes from a deterministic key (a unique, factual ground truth answer).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 2, chunk 2
+        quote: yet admit a unique, factual answer, allowing a simple and robust automatic evaluation.
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: There is no table or figure breaking down failures by a named confound like format or length.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: unmet
+    rationale: The documentation provides examples of failures (e.g., puzzles), but does not report named failure categories with counts or shares.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 24, chunk 2
+        quote: GPT4 and other assistants struggle on puzzles, which often are Level 1 questions.
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement naming the tasks, each metric, and the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to OpenAGI, and it is stated that OpenAGI focuses on current capabilities while GAIA focuses on upcoming advancements.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: The core difference with   GAIA   is that their tasks focus on current model capabilities rather than upcoming advancements.
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The docs provide a limitation regarding language diversity and link the benchmark's goal to estimating the potential of AI assistants.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 11, chunk 0
+        quote: A big limitation of   GAIA   is its lack of language diversity
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 11, chunk 0
+        quote: GAIA   is only a first step to estimate the potential of AI assistants
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not report control conditions or ablation results for secondary capabilities to show they do not drive scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation identifies related phenomena (capabilities) that could be measured by the same tasks, such as web browsing and multi-modality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 6, chunk 0
+        quote: Scoring perfectly on   GAIA   requires advanced reasoning, multi-modality understanding, coding capabilities and generally tool use,   e.g   web browsing
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: There is no quantification of the overlap with related phenomena or description of mitigation steps taken for such overlap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The paper mentions specifying a format in the prompt but does not report results under different format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: Scoring is based on quasi exact match of a factoid answer, and the documentation suggests the answers are concise strings or numbers, implying no complex parsing of free-form output is required.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: unmet
+    rationale: The paper does not report overlap/contamination check results or training-data cutoffs for every evaluated model (e.g., GPT4, AutoGPT).
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: unmet
+    rationale: The environment relies on the live web, and the paper explicitly states that evidence might change over time and that the benchmark is likely to decay, without providing a static snapshot or a changelog with re-validation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 3
+        quote: the evidence might change over time. For example, a Wikipedia article could be updated
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of zero-shot prompts to an API, which are single stateless model calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 3, chunk 0
+        quote: Our questions are meant to be answered in zero shot
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark uses open-ended questions that require a single correct factoid answer rather than multiple choice.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 9, chunk 3
+        quote: MMLU consists of multiple choice questions hence is seemingly easier than our open questions
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: The documentation mentions that questions were designed and annotated by humans, but it does not name specific experts or user groups consulted or what they defined.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: While the text mentions validation by supplementary annotators, it does not state their credentials or the size of the sample reviewed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: unmet
+    rationale: The documentation mentions using a zero-shot prompt, but it does not report results under more than one prompting or elicitation setting.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: There are no results reported as a separate slice for a named stress condition or shift with an associated item count.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is described as a general benchmark for AI assistants rather than evaluating a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: GAIA is a benchmark for AI systems proposing general assistant questions.
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is described as a general benchmark for AI assistants rather than evaluating a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: GAIA is a benchmark for AI systems proposing general assistant questions.
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is described as a general benchmark for AI assistants rather than evaluating a specific deployed application.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: GAIA is a benchmark for AI systems proposing general assistant questions.
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation does not list library versions, hardware models, or OS/container images.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: While the docs mention a validation phase with annotators, they do not describe a correction channel like a changelog or errata that records at least one fix.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The documentation does not name specific unavoidable flaws with their bias direction and impact estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: A human baseline is reported for the tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 0
+        quote: Human score (aggregated)**   92%
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: met
+    rationale: A search engine is used as a baseline to establish a lower bound/context for the answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 0
+        quote: Our non-LLM baselines are human annotators, and web search.
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The documentation explicitly states that model-based evaluation is left for future work.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 10, chunk 3
+        quote: We leave the addition of human and model-based evaluation for future work.
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The documentation explicitly states that model-based evaluation is left for future work.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 10, chunk 3
+        quote: We leave the addition of human and model-based evaluation for future work.
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The documentation explicitly states that model-based evaluation is left for future work.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 10, chunk 3
+        quote: We leave the addition of human and model-based evaluation for future work.
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The documentation explicitly states that model-based evaluation is left for future work.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 10, chunk 3
+        quote: We leave the addition of human and model-based evaluation for future work.
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The benchmark uses two supplementary annotators to validate questions and reports agreement statistics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 0
+        quote: 623 newly crafted questions were validated by two new annotators each.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: There is no documentation classifying every task as solvable or intentionally unsolvable, nor expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: The benchmark provides ground truth answers and validates them using supplementary annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 3
+        quote: We estimate the creation of a question, including its validation by two supplementary annotators
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: unmet
+    rationale: While normalization is mentioned, the docs do not list the specific equivalences or show a non-identical correct answer passing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth (up to some normalization
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify the scoring outcome for partial answers, off-format answers, refusals, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: The scoring is based on quasi-exact match of factoid answers (strings/numbers), which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: The scoring is based on quasi-exact match of factoid answers (strings/numbers), which does not involve parsing free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null-agent runs or targeted exploit attempts on the scorer.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

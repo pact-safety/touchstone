@@ -1,0 +1,473 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: big-bench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 092b196c1f8f14a54bbc62f24759d43bde46dd3b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/big-bench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2206.04615v3
+      ref: v3
+      sha256: b2076d6c32a9c1fe4c2bb403242df1414e3f431dab4a99a2159b8899522cb330
+      chars: 407367
+    - kind: repo
+      url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+      ref: 092b196c1f8f14a54bbc62f24759d43bde46dd3b
+      sha256: 1860567c11288cd61b63234b36bd16a473f3da95617c1c4676646004684d71d5
+      chars: 116073
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 10
+    rationale: The benchmark uses keywords to identify what skills or behaviors are being measured, though a single overarching definition of the 'tested capability' for the whole benchmark is not provided.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:keywords.md, chunk 0
+        quote: |-
+          Every task should include keywords that identify
+          - what skills or behaviors their task is attempting to measure
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 10
+    rationale: The benchmark requires tasks to specify how they stress model capabilities via keywords, but a general description of the translation process is not explicitly detailed.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:keywords.md, chunk 0
+        quote: |-
+          Every task should include keywords that identify
+          - what skills or behaviors their task is attempting to measure, and
+          - in what way the task is expected to stress the capabilities of the language model.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 0
+    rationale: The excerpts do not describe how knowing about the tested capabilities is helpful in the real world.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 15
+    rationale: The text explicitly warns that task design and presentation details must be considered when interpreting model successes and failures.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 17, chunk 2
+        quote: |-
+          care should be taken to consider the details of task presentation when
+          interpreting successes and failures of large language models.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: The benchmark explicitly enables and utilizes contributions from domain experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 7, chunk 1
+        quote: |-
+          enables domain experts to contribute tasks without the
+          difficulties of distributed human labeling.
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No use cases or user personas are described in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature, as evidenced by the extensive 'Task cites' for individual tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 38, chunk 2
+        quote: |-
+          Task cites: (Zhang
+          et al., 2019a; Irving et al., 2018)
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The benchmark provides common metrics and allows authors to specify preferred metrics, and discusses the impact of metric choice on results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 46, chunk 1
+        quote: Performance on tasks is often driven by the precise formulation of the task metric.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 15
+    rationale: Task authors are required to specify high and low scores for their tasks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 8, chunk 1
+        quote: |-
+          Task authors may report multiple metrics for both JSON and programmatic tasks, but must specify a unique 
+          preferred metric   and high and low scores for this task.
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: The benchmark includes baseline results established by human evaluators and expert raters.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 6, chunk 3
+        quote: baseline results established by human evaluators.
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: The benchmark includes random performance levels (chance) in its evaluations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 21, chunk 1
+        quote: none of the evaluated models significantly exceeds random chance performance.
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: While automatic evaluation is used, there is no evidence of a validation process for the automatic evaluation itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The benchmark explains differences between itself and other benchmarks like the LM Evaluation Harness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 24, chunk 3
+        quote: unlike BIG-bench it does not introduce new tasks; it instead organizes existing tasks
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 15
+    rationale: The benchmark explicitly addresses model brittleness and sensitivity to the phrasing of natural language questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 15, chunk 2
+        quote: |-
+          they are sensitive to the precise phrasing of natural language questions, sometimes in unintu- 
+          itive ways.
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The benchmark provides code that implements the API and supports task evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 6, chunk 3
+        quote: Code that implements the benchmark API (described below in Section 2.1), supports task evaluation
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: Evaluation data is accessible, as shown by the file listing of numerous .json evaluation files.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:FILE LISTING, chunk 11
+        quote: bigbench/benchmark_tasks/abstraction_and_reasoning_corpus/data/evaluation/16b78196.json
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 10
+    rationale: The benchmark supports evaluation on 'publicly available models', which typically implies API access, though it doesn't explicitly name an API mechanism.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 6, chunk 3
+        quote: supports task evaluation on publicly available models
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The documentation explicitly states that tasks can be evaluated locally.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:docs/doc.md, chunk 20
+        quote: Tasks can be evaluated locally on publicly-available models
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers for instances or encryption of evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark includes a canary string specifically to identify if data has appeared in training corpora."
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: A script to evaluate tasks and replicate results is provided.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 11
+        quote: |-
+          run the following evaluation script. Depending on your hardware and the size of your task, this may take a long time!
+          ```bash
+          scripts/evaluate_task.sh --task my_awesome_json_task --output_dir results
+          ```
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not mention statistical significance or uncertainty quantification for the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no assessment of the need for warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 15
+    rationale: The benchmark implements a build process via a Docker image script.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:docs/doc.md, chunk 20
+        quote: scripts/build_docker_image.sh
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 15
+    rationale: Release requirements for tasks are specified, including passing unit tests and following style guides.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:docs/doc.md, chunk 20
+        quote: Tasks must pass the supplied unit tests before being submitted.
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: The setup.py file explicitly references a requirements.txt file for installation.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:setup.py, chunk 2
+        quote: install_requires=process_requirements("requirements.txt")
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a 'Quick start' section with links to Colab notebooks for inspection and evaluation.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 3
+        quote: load BIG-bench json tasks and inspect examples
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 15
+    rationale: The setup.py file contains in-line comments explaining the purpose of functions.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:setup.py, chunk 0
+        quote: "# Copyright 2021 Google LLC"
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The README points to external API documentation for the benchmark.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 14
+        quote: See the [API documentation](https://google.github.io/BIG-bench/docs/html/bigbench/index.html) for more details.
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The README provides a bibtex entry for a paper published in Transactions on Machine Learning Research.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 2
+        quote: journal={Transactions on Machine Learning Research}
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the open development process on GitHub via pull requests and peer review.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 6, chunk 1
+        quote: The benchmark was developed openly on GitHub, with contributors adding tasks by way of GitHub pull requests.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The README and docs/doc.md provide detailed instructions and criteria for creating and submitting tasks.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 6
+        quote: we strongly recommend reading the [review criteria for accepting task submissions](docs/doc.md#review-criteria-for-submissions)
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper explicitly discusses the limitations of the benchmark, including gaps in coverage.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 27, chunk 0
+        quote: the limitations of BIG-bench could lead to development focusing on particular areas and neglecting others.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the data collection process for the models used, mentioning a mixture of web documents, code, dialog, and Wikipedia.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 10, chunk 0
+        quote: These models were trained on a dataset consisting of a mixture of web documents, code, dialog, and Wikipedia data
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper and README document specific evaluation metrics like exact_string_match and multiple_choice_grade.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 8, chunk 1
+        quote: "exact_string_match: Accuracy on exact."
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The LICENSE file and setup.py specify the Apache License, Version 2.0.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:setup.py, chunk 0
+        quote: Licensed under the Apache License, Version 2.0 (the "License")
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 15
+    rationale: The benchmark uses a standardized JSON schema for task metadata including name, description, and keywords.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 9
+        quote: "| `name`            | A short, human-readable task name."
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper describes how tasks were sourced from the community via GitHub pull requests.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: 2206.04615v3 page 6, chunk 1
+        quote: The benchmark was developed openly on GitHub, with contributors adding tasks by way of GitHub pull requests.
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not document specific data preprocessing steps taken for the benchmark tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The excerpts do not document a data annotation process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Datasheets for Datasets).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts mention expert evaluation of tasks over the past year, but do not mention checking the usability of the code.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 15
+    rationale: The benchmark provides a Google Group email address for users to request support for additional packages.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 17
+        quote: If you have a package not listed above that you would like us to support, [shoot us an email](mailto:bigbench@googlegroups.com).
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: A specific contact email is provided for copyright and licensing inquiries.
+    evidence:
+      - source: repo
+        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
+        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 17
+        quote: For questions related to copyright and licensing, please contact [big-bench-copyright@google.com](mailto:big-bench-copyright@google.com).
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

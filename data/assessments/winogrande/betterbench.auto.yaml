@@ -1,0 +1,440 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: winogrande
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 727e837f77521ef38bcc56df3b275c8da43f45af
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/winogrande/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1907.10641v2
+      ref: v2
+      sha256: 6abd24d9da10e037a32f047f141ea18ba72e4b2ad8215e6e210adba40790b2a7
+      chars: 48588
+    - kind: repo
+      url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+      ref: 727e837f77521ef38bcc56df3b275c8da43f45af
+      sha256: cb990e1d3811069511826e4a1c64562d45015a6fbd5cd6d387dd09f66d65c369
+      chars: 17441
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark is defined as evaluating commonsense reasoning through pronoun resolution problems.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 1, chunk 2
+        quote: The Winograd Schema Challenge (WSC) (Levesque, Davis, and Morgenstern 2011), proposed as an alternative to the Turing Test (Turing 1950), has been used as a benchmark for evaluating commonsense reasoning.
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark translates the capability into a fill-in-the-blank problem where the blank corresponds to one of two names in the context.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 5, chunk 1
+        quote: W INO G RANDE   is formatted as a fill-in-the-blank problem where the blank corresponds to the mention of one of the two names in the context
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 0
+    rationale: The excerpts do not describe how knowing about the tested capability is helpful in the real world.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The authors warn that high scores on existing benchmarks might be due to spurious correlations rather than true intelligence.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 1
+        quote: The result might also indicate the extent to which spurious effects are prevalent in existing datasets, which runs the risk of overestimating the true capabilities of machine intelligence on commonsense reasoning.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: The text explicitly states that WinoGrande is authored by crowdworkers, unlike the original WSC which used experts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: No specific use cases or user personas are described.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The paper integrates and cites extensive domain literature on NLI, coreference resolution, and commonsense reasoning.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 3, chunk 0
+        quote: Several recent studies (Gururangan et al   . 2018; Poliak et al . 2018; Tsuchiya 2018; Niven and Kao 2019; Geva, Goldberg, and Berant 2019) have reported the presence of   annotation artifacts
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of accuracy is used and compared against chance-level performance and human baselines to validate the metric's utility.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 5, chunk 5
+        quote: Two baselines, WKH and Ensemble LMs, only achieve chance-level performance (50%).
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark includes a chance-level (floor) of 50% and a human-level (ceiling) of 94%."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 15
+    rationale: Human performance is explicitly provided as 94%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 5, chunk 5
+        quote: human performance achieve   94 . 0%
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: Random/chance-level performance is explicitly provided as 50%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 5, chunk 5
+        quote: Two baselines, WKH and Ensemble LMs, only achieve chance-level performance (50%).
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark provides an evaluation script (eval.py) and a public leaderboard for automatic evaluation.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 0
+        quote: To evaluate your models on `test` set, make a submission to our [leaderboard](https://leaderboard.allenai.org/winogrande/submissions/public).
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The paper explains differences from the original WSC, such as the use of blanks instead of pronouns and the use of crowdworkers instead of experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 5, chunk 1
+        quote: In contrast, the original WSC explicitly places a pronoun (instead of a blank).
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 5, chunk 1
+        quote: unlike the original WSC problems that were composed by just a few linguistics experts, W INO G RANDE   is authored by crowdworkers.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: The excerpts do not address input sensitivity (e.g., prompt variations).
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository includes an evaluation script named eval.py.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 0
+        quote: "eval.py                            # evaluation script"
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The dataset is accessible via a download script and a provided URL.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 0
+        quote: Download dataset by `download_winogrande.sh`
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: The excerpts do not mention support for evaluating models via API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The repository provides scripts and a Dockerfile to run experiments and predictions on local models.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 0
+        quote: You can train your model by `./scripts/run_experiment.py`
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a specific task to identify if a model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The repository includes sample scripts to run experiments and predictions to replicate results.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:FILE LISTING, chunk 0
+        quote: sample_prediction.sh
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts do not report statistical significance or uncertainty quantification for the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no assessment of the need for warnings regarding sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent implementation is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: The README explicitly mentions a requirements.txt file for installation.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 0
+        quote: "`pip install -r requirements.txt`"
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a setup and run guide with example commands.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 0
+        quote: |-
+          ## Run experiments
+
+          ### Setup
+
+          1. Download dataset by `download_winogrande.sh` 
+          1. `pip install -r requirements.txt`
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No specific code documentation (like API docs) is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 10
+    rationale: A paper is cited, but the excerpts only show it as an arXiv preprint, not a peer-reviewed venue.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 3
+        quote: journal={arXiv preprint arXiv:1907.10641}
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the construction process involving crowdsourcing and the AFLITE algorithm.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 1, chunk 1
+        quote: The key steps of the dataset construction consist of (1) a carefully designed crowdsourcing procedure, followed by (2) systematic bias reduction using a novel A F L ITE algorithm
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (WSC-style problems) and the rationale for using adversarial filtering to ensure hardness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 2
+        quote: Our approach consists of a carefully designed crowdsourcing task followed by a novel adversarial filtering algorithm ( § 3) that systematically removes biases in the data.
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper explicitly states that no assumptions are made about the sources of bias, relying instead on statistical methods."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 10
+    rationale: The paper mentions the risk of overestimating machine intelligence due to dataset biases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 8, chunk 1
+        quote: which runs the risk of overestimating the true capabilities of machine intelligence on commonsense reasoning.
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The data collection process via crowdsourcing is documented in detail.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: "we aimed to collect twins in two different domains – (i) social commonsense: a situation involving two same gender people with contrasting attributes, emotions, social roles, etc., and (ii) physical commonsense"
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper and README refer to accuracy as the evaluation metric.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 7, chunk 3
+        quote: "Table 6: Accuracy ( % ) on existing WSC-related tasks (test set)."
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The README specifies Apache License 2.0 for code and CC-BY for the dataset.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 3
+        quote: Winogrande (codebase) is licensed under the Apache License 2.0. The dataset is licensed under CC-BY.
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: No standardized metadata (like DataCards) is included in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents that data was collected via crowdsourcing on AMT.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 5
+        quote: "The workers met minimum qualification in AMT: 99% approval rate, 5 k approvals."
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper documents the preprocessing/filtering steps using the AFLITE algorithm.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 5, chunk 0
+        quote: After applying the A F L ITE algorithm, we obtain a debiased dataset of 12,282 instances
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The data validation/annotation process by crowd workers is documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1907.10641v2
+        locator: 1907.10641v2 page 2, chunk 4
+        quote: We validate each collected question through a distinct set of three crowd workers.
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data relative to a broader population.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., ISO).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts contain no information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 15
+    rationale: The documentation provides both GitHub issues and a Google Group as channels for questions and suggestions.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 4
+        quote: Please file GitHub issues with your questions/suggestions. You may also ask us questions at our [google group](https://groups.google.com/a/allenai.org/forum/#!forum/winogrande).
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: A specific contact email address is listed in the README.
+    evidence:
+      - source: repo
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 4
+        quote: "Email: keisukes[at]allenai.org"
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

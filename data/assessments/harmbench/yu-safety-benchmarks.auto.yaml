@@ -1,0 +1,330 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: harmbench
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/harmbench/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2402.04249v2
+      ref: v2
+      sha256: 580c29edfdd4e7940ed6c0ccdc4c23b74768be3e812d857f28a97a70592eec05
+      chars: 175045
+    - kind: repo
+      url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      ref: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      sha256: b5be49ee33386aad4099cc19a25d96e7938ea0928a746c13cf196d5583b43430
+      chars: 68399
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark names risk types (cybercrime, copyright violations, misinformation) and specifies the use of classifiers (Llama 2 13B and hashing-based) to measure success.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 1
+        quote: The semantic category describes the type of harmful behavior, including cybercrime, copyright violations, and generating misinformation.
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 7, chunk 3
+        quote: we develop a classifier to obtain high accuracy on a manually-labeled validation set of completions
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark documents a deployment assumption (instruction-tuned LLMs) and an excluded risk (models that cannot follow individual instructions).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 19, chunk 3
+        quote: We design HarmBench primarily to evaluate instruction-tuned LLMs. In particular, we do not support LLMs that cannot follow individual instructions
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: unmet
+    rationale: The excerpts do not contain a statement that a good score does not guarantee safety against untested or emergent risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark compares itself to prior evaluations, noting that most prior work uses fewer than 100 unique behaviors and lacks multimodal behaviors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 4, chunk 1
+        quote: finding that most use short, unimodal behaviors with less than 100 unique behaviors. By contrast, our proposed benchmark contains novel functional categories and modalities of behaviors
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: met
+    rationale: The benchmark describes the use of automated red teaming methods (like GCG, PAIR, TAP) to discover vulnerabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 8, chunk 4
+        quote: We include 18 red teaming methods from 12 papers. These include automated white-box, black-box, and transfer attacks
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: While the code is open sourced, there is no documented process for how outside contributions are integrated and credited.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The excerpts mention the framework can be extended, but do not state a specific process or cadence for when new risks are incorporated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The benchmark supports multimodal LLMs but does not describe multi-agent or interactive evaluation settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: There is no discussion of distribution shift as a safety-critical issue in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: The benchmark mentions a human-labeled validation set and inter-annotator agreement, but does not document annotator selection or demographics.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 20, chunk 1
+        quote: Inter-annotator agreement
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: The benchmark provides a test split to prevent tuning, but does not implement a contamination check or state the temporal validity of the set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 1
+        quote: We require that attacks and defenses do not tune on the test set
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results using 'attack success rate (ASR)', which it explicitly defines as a 'percentage'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 3, chunk 3
+        quote: The primary measure of a red teaming method’s success is its attack success rate (ASR) on a given target model, which is the percentage of test cases
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: The provided excerpts do not show benchmark rates being compared to or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: unmet
+    rationale: The excerpts do not name specific factors that limit the generalization of the results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: There is no evidence of a severity scale or harm weighting that cites a source for its levels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not state whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: The excerpts do not report confidence intervals, standard errors, or worst-case bounds for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: unmet
+    rationale: While the paper mentions 'Inter-annotator agreement' and 'agreement rate', it does not report a specific statistic like Cohen's κ.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 20, chunk 1
+        quote: Inter-annotator agreement
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across random seeds, prompt rephrasings, and evaluator versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin for deployment risk or state the required dependencies of real-world risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: met
+    rationale: The benchmark specifies semantic categories of harm and provides operational criteria for what counts as a successful instance of a behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 2
+        quote: "HarmBench contains the following 7 semantic categories of behavior: Cybercrime & Unauthorized Intrusion, Chemical & Biological Weapons/Drugs, Copyright Violations, Misinformation & Disinformation, Harassment & Bullying, Illegal Activities, and General Harm."
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 7, chunk 2
+        quote: we deem a test case successful if the completion demonstrates that the model either exhibited the behavior or clearly tried to exhibit the behavior.
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: met
+    rationale: The benchmark states that its categories reflect areas of concern from regulatory discussions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 2
+        quote: These categories roughly reflect the areas of most concern for malicious use of LLMs, with recent regulatory discussion of LLMs
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The excerpts do not mention any contested normative choices or value conflicts in the definitions of harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: unmet
+    rationale: The benchmark does not explicitly articulate the relationship between its measured proxy (ASR) and real-world safety concerns.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: While greedy decoding is mentioned, the excerpts do not record the interface, access date, or system prompts for the reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: met
+    rationale: The benchmark uses greedy decoding for inference, which satisfies the rule for inference seeds.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 3, chunk 4
+        quote: we follow prior work in assuming that target models generate completions deterministically using greedy decoding
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The judge models are named, but there are no versions, dates, or commit hashes provided for the judge model, scoring rubric, or guidelines.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: A public code repository is provided with documentation on the codebase structure and evaluation pipeline.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 1
+        quote: "🚀 [HarmBench 1.0: adversarial training code+model, precomputed test cases, and various improvements](https://github.com/centerforaisafety/HarmBench/pull/19)"
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: unmet
+    rationale: The source of prompts is mentioned (e.g., modeled after existing datasets), but there is no reported validation of the synthetic prompts themselves.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 2
+        quote: Standard behaviors are modeled after existing datasets of harmful behaviors, including AdvBench and the TDC 2023 Red Teaming Track dataset
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: unmet
+    rationale: The benchmark does not provide a justification for why its scenarios represent real-world use or state the limitations of its synthetic scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: unmet
+    rationale: The excerpts do not mention any multi-turn evaluation; the focus is on single completions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark does not use in-the-wild data collection; it uses researcher-designed or existing dataset behaviors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 5, chunk 2
+        quote: Standard behaviors are modeled after existing datasets of harmful behaviors
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: While a version (1.0) is mentioned in the README, there is no stated update cycle tied to changes in risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that affected communities were consulted to assess the scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark explicitly distinguishes between model-level and system-level defenses and states it focuses on model-level defenses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: 2402.04249v2 page 19, chunk 2
+        quote: For simplicity of evaluation with a fixed set of attacks, we focus our large-scale comparison on model-level defenses
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

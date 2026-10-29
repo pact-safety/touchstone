@@ -1,0 +1,358 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mlcommons-ai-safety-v0-5
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 79accfe1424a7994399154ae34fd960fe93a4259
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mlcommons-ai-safety-v0-5/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.12241v2
+      ref: v2
+      sha256: 948815b355a66f0403dbc0bdba07c085f1ab11bab2bc65a658b165a3add1ddcb
+      chars: 185943
+    - kind: repo
+      url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+      ref: 79accfe1424a7994399154ae34fd960fe93a4259
+      sha256: 784dbe1c8138124c20130b3f9e07d42713cf17bf95330a1ddb43f5db95eca9ed
+      chars: 56881
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: unmet
+    rationale: While the benchmark mentions hazard categories and the use of LlamaGuard for scoring, it does not explicitly name every risk type evaluated in v0.5 alongside its specific measurement method in a way that satisfies the rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark identifies excluded risks (e.g., Sexual content, Profanity) and deployment assumptions (English language, chat-tuned LMs).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 5, chunk 3
+        quote: The benchmark is designed to assess the safety risks of AI systems that use chat-tuned Language Models (LMs).
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 45, chunk 0
+        quote: Nearly all of the taxonomies have additional categories (e.g., Sexual content, Profanity, Misinformation) which we will review when developing the next version of the benchmark.
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: met
+    rationale: The text explicitly states that a good score does not guarantee safety against unidentified weaknesses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 26, chunk 1
+        quote: if an SUT performs well on the benchmark it does not mean that it is safe, only that we have not identified safety weaknesses.
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark compares its taxonomy against seventeen others and notes that some have additional categories not yet included in v0.5.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 45, chunk 0
+        quote: We have compared the AI Safety Taxonomy against seventeen widely-used safety taxonomies to identify similarities and differences.
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 45, chunk 0
+        quote: Nearly all of the taxonomies have additional categories (e.g., Sexual content, Profanity, Misinformation)
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: met
+    rationale: The benchmark describes red teaming as a mechanism for exploratory evaluation to identify novel risks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 29, chunk 1
+        quote: Red teaming, which has become one of the most popular ways of assessing safety risks, is a form of exploratory evaluation.
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: met
+    rationale: The benchmark provides a documented pull-request process via GitHub and a CLA sign-up form for contributions.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
+        locator: mlcommons/modelbench@79accfe1424a:CONTRIBUTING.md, chunk 0
+        quote: Modify the project in your own fork and issue a pull request once you want other developers to take a look at what you have done
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: met
+    rationale: The benchmark states that it plans to frequently update the benchmark with new categories and modalities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 7, chunk 0
+        quote: The WG plans to frequently update the AI Safety Benchmark.
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The benchmark discusses the importance of multi-turn and agent-based evaluation for frontier models, but does not state that v0.5 actually includes these interactive settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: There is no mention of testing or discussing distribution shift as a safety-critical issue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: unmet
+    rationale: The benchmark mentions that three trained annotators were used, but does not document annotator selection, demographics, or disagreement patterns.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: The benchmark does not describe a contamination check or a specific temporal validity period for the evaluation sets.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results as percentages of unsafe responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 1
+        quote: Percentage of unsafe responses
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: The benchmark mentions that real-world data exists but does not compare its own rates against specific in-the-wild prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark identifies limited prompt diversity (only three personas) and geographical/cultural context as limiting factors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 2
+        quote: The benchmark only tests a single use case and three personas.
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: The benchmark uses a five-point grading scale but does not cite a source for the levels of that scale.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not specify if the five-point scale is equally spaced, power-law, or based on catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name a specific established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: The provided excerpts do not show confidence intervals, standard errors, or worst-case bounds for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: met
+    rationale: The benchmark reports the average Cohen's Kappa score for inter-annotator agreement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 23, chunk 0
+        quote: Inter-annotator agreement, as measured by the average Cohen’s Kappa score, is 0.79
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across random seeds, prompt rephrasings, and evaluator versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin when extrapolating to deployment risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: met
+    rationale: The benchmark provides operational definitions for key terms used in the taxonomy to standardize interpretation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 51, chunk 0
+        quote: We provide the following definitions for key terms to help standardize interpretation of the AI Safety Taxonomy.
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: met
+    rationale: The benchmark states that the taxonomy was informed by civil society experts and various research/policy papers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 11, chunk 0
+        quote: We also interviewed 12 civil society experts who are not part of the WG, and reviewed 25+ existing taxonomies, 50+ AI safety evaluation datasets, 50+ research and policy papers
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: met
+    rationale: The benchmark explicitly names 'typical', 'vulnerable' and 'malicious' as contested concepts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 9, chunk 2
+        quote: Note that “typical”, “vulnerable” and “malicious” are contested concepts
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: unmet
+    rationale: While the benchmark discusses ecological validity and real-world harms, it does not explicitly articulate the relationship between its specific measured proxy and the real-world safety concern.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: The benchmark reports temperature and max tokens, but does not record the interface, access date, or system prompt for the runs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 25, chunk 0
+        quote: We collected responses from all models with a temperature of 0.01 and set the maximum number of tokens to be generated to 500.
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing or reporting random seeds for data sampling, inference, or evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The benchmark mentions releasing annotation guidelines, but does not provide version, date, or commit hashes for the judge model, rubric, or guidelines.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 7, chunk 1
+        quote: For v0.5, we openly release all prompts, annotation guidelines, and the underlying taxonomy.
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: The benchmark provides a public GitHub repository with documentation on how to use the platform.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 7, chunk 0
+        quote: Details on how to access and use the platform can be found in the ModelBench Git repository on GitHub.
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: unmet
+    rationale: The benchmark states prompts were manually created (synthetic), but it does not report a validation of these synthetic prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 54, chunk 1
+        quote: We manually created prompts by combining sentence fragments with templates.
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark acknowledges that the ecological validity of the prompts could be low because they lack reliable real-world data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 16, chunk 1
+        quote: we are aware that the ecological validity of the prompts (i.e. the extent to which the prompts match the real-world) could be quite low
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: unmet
+    rationale: The benchmark discusses multi-turn interactions as more realistic but does not include them in the v0.5 evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 17, chunk 1
+        quote: multi-turn interactions are far more difficult to assess than single turn interactions
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark used manually created prompts rather than in-the-wild data collection.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 54, chunk 1
+        quote: We manually created prompts by combining sentence fragments with templates.
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: met
+    rationale: The benchmark has versions (v0.5) and ties updates to the emergence of new safety challenges.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 7, chunk 1
+        quote: Given the continuous release of new AI models, changing deployment and usage methods, and the emergence of new safety challenges... these updates are crucial
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: While civil society experts were interviewed for the taxonomy, there is no description of how affected communities were consulted to assess if scenarios reflect their lived experience.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 54, chunk 2
+        quote: Apart from the AI-safety working group members, 12 civil society experts were interviewed for creating the taxonomy
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark explicitly states it does not test the GUI or other user-facing aspects, focusing on the LMs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.12241v2
+        locator: 2404.12241v2 page 8, chunk 3
+        quote: We also do not test the Graphical User Interface or any other user-facing aspects that each system might have.
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

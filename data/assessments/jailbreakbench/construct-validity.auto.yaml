@@ -1,0 +1,264 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: jailbreakbench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 23dbdf6b19650521604456229bc1d9c4156c85c1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/jailbreakbench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2404.01318v5
+      ref: v5
+      sha256: 8068ffae3d6db12053409b6aa1f5934fa1a63d2cf619176aa31c6ba59302e176
+      chars: 81986
+    - kind: repo
+      url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+      ref: 23dbdf6b19650521604456229bc1d9c4156c85c1
+      sha256: 5c4dcb8588fcd16be4c6827ff2f764df66e5627b5d3f6c0e909f62a1b4d03a8a
+      chars: 29092
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark uses a judge classifier to determine if a response is a valid jailbreak, and the provided output example shows a boolean 'jailbroken' field as the observable evidence.
+    evidence:
+      - source: repo
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 4
+        quote: jailbroken=True
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the benchmark mentions focusing on state-of-the-art adaptive attacks and defenses, it does not explicitly name any excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The provided excerpts do not name sub-components of the phenomenon nor do they explicitly state that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify any secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no evidence that the effect of output-format requirements on model performance scores was measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses LLM-based classifiers (Llama-3-70B) to determine if an output is a jailbreak, which is a classification task rather than automated parsing of free-form output into structured data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 2
+        quote: we choose Llama-3-70B as the classifier in our benchmark
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: met
+    rationale: The authors describe a curation process to ensure the dataset covers a diverse and balanced span of categories to be representative of misuse.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 14, chunk 2
+        quote: JBB-Behaviors was curated to cover a diverse and balanced span of categories
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The authors document a data processing step to ensure behaviors are unique and uniformly distributed across misuse categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 24, chunk 1
+        quote: We ensure that the behaviors are unique and uniformly distributes across the categories of misuse
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the paper mentions using perturbations for a specific defense (SmoothLLM), it does not document a counted subset of permuted task items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that the dataset contains behaviors sourced from prior work.
+    evidence:
+      - source: repo
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 1
+        quote: comprises a list of 200 distinct benign and misuse behaviors---both original and sourced from prior work
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: The provided excerpts do not list specific strengths and limitations of the adapted prior datasets.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: There is no comparison of performance between the new benchmark and the original datasets from which behaviors were sourced.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: While the text mentions the dataset is not a superset and focuses on representative behaviors, it does not explain how these specific modifications improve construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe a contamination test or report its results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of the benchmark items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper does not report a search or overlap check of its source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the item count is stated as 100 behaviors, there is no power calculation or confidence-interval width reported against a claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 14, chunk 2
+        quote: we focus only on 100 representative behaviors
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The main results table (Table 5) reports attack success rates as single percentages without confidence intervals or standard errors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 16, chunk 0
+        quote: "Table 5:   Attack success rates by source."
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The paper mentions using 'three expert annotators' but does not describe their demographics or state how demographic bias was mitigated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 0
+        quote: We use the majority vote of three expert annotators as the ground truth label.
+    by: model
+    quotes_verified: true
+  st.4:
+    value: met
+    rationale: The labels are subjective (model ratings/human ratings), and the paper reports an inter-annotator agreement statistic for the human experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 6, chunk 1
+        quote: Three experts labeled each prompt-response pair, and the agreement between them was approximately 95%.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts do not provide a qualitative description of common failure modes nor a count of them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: met
+    rationale: The paper breaks down attack success rates (scores) by the source of the behaviors (a confounder) in Table 5.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 14, chunk 2
+        quote: In Table 5, we record the attack success rates of PAIR, GCG, and JBC with respect to the three sources which were used to curate JBB-Behaviors
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: While ea.2 was met, the excerpts do not show a discussion of scoring biases revealed by this analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors propose a specific direction for improving model resilience by fine-tuning on jailbreak strings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 9, chunk 2
+        quote: a promising approach to making LLMs more resilient to jailbreaking attacks is to fine-tune them on jailbreak strings
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to the real-world application of testing the robustness of LLMs and their defenses against jailbreak attacks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 23, chunk 0
+        quote: "Suitable use cases: Testing robustness of LLMs and their defenses against jailbreak attacks"
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: The excerpts do not provide a statement linking the choice of tasks and metrics to a specific operational definition (def.1).
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to RobustBench, noting that while RobustBench provides a unified platform for image classification, LLMs present new challenges like the lack of a standardized definition of a valid jailbreak.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 3, chunk 3
+        quote: benchmarks such as RobustBench (Croce et al., 2021) provide a unified platform... However, designing a similar platform to track the adversarial vulnerabilities of LLMs presents new challenges
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The text discusses a design trade-off regarding the use of Together AI versus local execution, noting it causes small differences in the attack success rate.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2404.01318v5
+        locator: 2404.01318v5 page 16, chunk 2
+        quote: "we observe some discrepancy compared to running them locally. This only causes small differences: at most 1%-3% in terms of the attack success rate."
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

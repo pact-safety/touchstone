@@ -1,0 +1,334 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: simplesafetytests
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/simplesafetytests/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.08370v2
+      ref: v2
+      sha256: 45995a43eb53159c892204a72c4b6ea449f10db19145ec881934087bf71ba55b
+      chars: 59638
+    - kind: repo
+      url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+      ref: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+      sha256: 34898077ff6c4ea6684cc70535446cb399c68069f16780451fe097f6804d4222
+      chars: 19445
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark names five specific harm areas and describes the measurement method as human labeling by three annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 2, chunk 3
+        quote: "SST covers five harm areas: (1) Suicide, Self-Harm, and Eating Disorders; (2) Physical Harm; (3) Illegal and Highly Regulated Items; (4) Scams and Fraud; and (5) Child Abuse."
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 2
+        quote: Three annotators trained in labelling unsafe, risky and dangerous content, labeled the 3,000 model responses for whether they are unsafe or not given the prompt.
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark states it is limited to the English language and mentions it does not cover more sophisticated or contextual prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: SST is currently limited to the English language
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: These prompts may not be commonly used by actual users.
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: met
+    rationale: The text explicitly states that a 0% unsafe response rate indicates no risks were found rather than guaranteeing the absence of any safety risks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: if a model returns 0% unsafe responses to SST then it only indicates that no safety risks have been found, rather than guaranteeing the absence of any safety risks.
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: unmet
+    rationale: While the paper mentions other safety work, it does not compare its specific risk categories or evaluation methods against a named prior benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: met
+    rationale: The benchmark describes the potential use of LLMs to create perturbations and variations of prompts to test robustness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: creating perturbations and variations of each prompt using LLMs or other AI-based tools so as to better test model robustness.
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: The benchmark is available on GitHub, but there is no documented process for how outside contributions are integrated and credited.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The paper mentions that coverage 'could be expanded' in the future, but does not state a specific process or cadence for adding new risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The benchmark uses static test prompts and does not include multi-agent or interactive evaluation settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: There is no mention of distribution shift as a safety-critical issue in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: met
+    rationale: The benchmark documents that annotators were trained and that they reached agreement in 92% of cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 2
+        quote: Three annotators trained in labelling unsafe, risky and dangerous content
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 2
+        quote: In 2,750 cases (92%) all three annotators agree on the same label.
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: The excerpts do not mention contamination detection or the temporal validity/retirement date of the evaluation set.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results as proportions of unsafe responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 5, chunk 2
+        quote: the proportion of LLMs’ responses that are unsafe varies by the harm area
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark explicitly names that the prompts may not be commonly used by actual users, limiting generalization.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: These prompts may not be commonly used by actual users.
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The selection of harm areas is justified by citing academic research, trust and safety policies, and organizational typologies."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not specify the semantics of its severity scale (e.g., equal intervals or power-law).
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name a specific established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: Confidence intervals, standard errors, or worst-case bounds are not reported for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: met
+    rationale: The benchmark reports Fleiss’ Kappa to indicate inter-rater agreement among human annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 2
+        quote: Fleiss’ Kappa is 0.83, which indicates very strong agreement
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across random seeds, prompt rephrasings, and evaluator versions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin when extrapolating to deployment risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: unmet
+    rationale: The benchmark mentions five harm areas but does not provide operational definitions for each.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: met
+    rationale: The benchmark states that its constructs are informed by academic research, AI lab policies, and trust and safety organizations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 0
+        quote: academic research on AI safety (Weidinger et al., 2021; Glaese et al., 2022; Hao et al., 2023); the trust and safety policies and commentaries of large AI labs
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The excerpts do not name any specific value choice in the harm definitions as being contested.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark explains that simple prompts are used as a proxy, and failing them suggests vulnerability to more sophisticated unsafe prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: if models fail on even these simple prompts, then it seems likely they would be vulnerable to more sophisticated, nuanced, or contextual forms of unsafe prompts
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark records the API interface, access dates, temperature, and the specific system prompt used."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing or reporting random seeds for sampling or evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: While a zero-shot prompt for GPT-4 is provided, there are no version numbers, dates, or commit hashes for the judge model or rubric.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: A public code repository is provided containing the test cases.
+    evidence:
+      - source: repo
+        url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+        locator: bertiev/SimpleSafetyTests@d7aee9a9422a:FILE LISTING, chunk 0
+        quote: SimpleSafetyTests - test cases.csv
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The prompts are stated to be synthetic (created by authors), and the benchmark reports they were independently checked by three people for validity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 2
+        quote: The test prompts were originally created by one of the authors... every test prompt was independently checked by at least three people for coherence and internal validity
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark acknowledges that the simple prompts may not be commonly used by actual users.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 6, chunk 1
+        quote: These prompts may not be commonly used by actual users.
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: unmet
+    rationale: The benchmark uses single-turn test prompts and does not include multi-turn evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: met
+    rationale: The benchmark states that because prompts are synthetic, there are no privacy or copyright risks associated with sharing the data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 3, chunk 1
+        quote: The test prompts are all synthetic, and none have been taken from existing datasets or real-world user interactions with LLMs. Therefore, the dataset can be shared without any privacy or copyright risks.
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: The benchmark does not state a versioning system or a risk-sensitive update cycle.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that affected communities were consulted to assess the scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark explicitly states it tests models both with and without a system prompt.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.08370v2
+        locator: 2311.08370v2 page 4, chunk 0
+        quote: We test all LLMs with and without a system prompt.
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

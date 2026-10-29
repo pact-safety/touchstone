@@ -1,0 +1,252 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: tau-bench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 59a200c6d575d595120f1cb70fea53cef0632f6b
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/tau-bench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2406.12045v1
+      ref: v1
+      sha256: ed8409419c3062d4589b374d7841181206794ee748084f58cce10af34523b3e2
+      chars: 132419
+    - kind: repo
+      url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
+      ref: 59a200c6d575d595120f1cb70fea53cef0632f6b
+      sha256: e17ddb00606e0458f03bb7af5d8ef22e5e1fb71411e776c7dbc04058a8a705c8
+      chars: 14519
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The phenomenon is defined as the reliability and robustness of AI agents in tool-agent-user interactions, with observable evidence being the agent's ability to complete tasks formulated as POMDPs using API tools and user interactions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 3, chunk 2
+        quote: provide an accurate assessment of the reliability and robustness of AI agents for deployment in systems that undertake millions of real-world interactions with humans.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the scope involves tool-agent-user interaction in specific domains, the excerpts do not explicitly name any excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The paper mentions different types of failures (e.g., 'wrong info', 'Incorrect decision-making'), but it does not state that these sub-components are scored separately, nor does it explicitly state the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: met
+    rationale: The paper measures the effect of output formats by comparing natively supported function calling against text-formatted agent methods (ReAct and Act-only).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 7, chunk 1
+        quote: Figure 3 shows that natively supported function calling consistently outperforms text-formatted agent methods with the state-of-the-art models.
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses a rule-based reward for evaluation, and the provided excerpts do not indicate that automated parsing of free-form output is used for the primary scoring.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 3
+        quote: Nevertheless, our proposed rule-based reward is fast to compute and faithful
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts describe the task space (POMDP) and provide statistics on the number of tasks, but they do not document a sampling strategy used to ensure representativeness.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: While the paper mentions trading off quantity for quality, there is no documentation showing that every item passed a specific quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: The excerpts do not mention a counted subset of permuted or perturbed items, nor do they report separate results for such a subset.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that it does not reuse previous benchmarks, contrasting its approach with prior works like ToolBench and MetaTool.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 3, chunk 0
+        quote: In contrast, our benchmark focuses on a more realistic setting
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any tests implemented to detect data contamination or report results of such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of task items for evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper does not report any search or overlap check of the benchmark source material against named training corpora or models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the item counts for the tasks are provided, there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 5, chunk 0
+        quote: Tasks   115   50
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The excerpts do not provide the main results table, and there is no evidence that every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark uses LMs to simulate users rather than human raters.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are deterministic, based on whether the final database state is identical to a unique ground truth outcome.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 2
+        quote: whether the final database is identical to the unique ground truth outcome database
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors provide a qualitative description of failure modes (e.g., 'Wrong argument', 'Wrong info', 'Wrong decision') and a quantitative breakdown of 36 failed trajectories in Figure 5."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: met
+    rationale: The authors break down scores by the presence or absence of the domain policy (a confounder for rule-following) in Table 3.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 8, chunk 1
+        quote: "Table 3: pass^1 scores degrade when the domain policy is not provided in the agent’s system prompt."
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: met
+    rationale: The authors discuss how the ablation study reveals that models may rely on common sense rather than the provided policy documents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 8, chunk 2
+        quote: suggesting that their successful cases mostly stem from using tools in an intuitive and common sense way, and that they may not actually be leveraging the policy documents to the extent possible.
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors propose specific directions for improvement, namely domain-specific fine-tuning or agent code scaffolding, to address the lack of rule-following ability.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 8, chunk 2
+        quote: Domain-specific fine-tuning or agent code scaffolding might provide some remedy
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark links its tasks to the real-world application of customer service.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 4, chunk 3
+        quote: For real-world agent tasks requiring reliability and consistency like customer service
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts to which the tasks and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: While the text mentions 'prior task-oriented dialogue benchmarks', it does not name a specific existing benchmark to compare differences against.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The authors discuss a design trade-off where they prioritize fast, objective database state comparisons over the multi-faceted nature of real-world agent evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: 2406.12045v1 page 6, chunk 1
+        quote: In τ -bench, we trade off slow, careful task annotation for fast, faithful evaluation.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

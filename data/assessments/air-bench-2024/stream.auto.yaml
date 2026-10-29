@@ -1,0 +1,284 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: air-bench-2024
+standard: stream
+standard_version: 1.0.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/air-bench-2024/stream/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2407.17436v2
+      ref: v2
+      sha256: 5bbae6c7732e0ea6c5324379b3b053372f800f427a013cf25133d809f522d760
+      chars: 122492
+    - kind: repo
+      url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      ref: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      sha256: f677af44b2ed98ceab0cba0738c6a9e6e346ab27b2feb66c7c4c9c24ee48ab01
+      chars: 23468
+  excerpt_chars: 40000
+verdicts:
+  s1.i:
+    value: met
+    rationale: The report describes the measured capability as the 'refusal capability' and links it to threat models defined as 'developer-specified risk categories'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 10, chunk 1
+        quote: assessing model alignment of refusal capability with developer-specified risk categories
+    by: model
+    quotes_verified: true
+  s1.ii:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report provides a three-level scoring system that maps specific model behaviors (e.g., generating detailed instructions vs. refusing) to a score."
+    evidence: []
+    by: model
+    quotes_verified: true
+  s1.iii:
+    value: met
+    rationale: The report provides a qualitative example including a model response (Mistral Instruct v0.3) and the prompt content.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 29, chunk 1
+        quote: "Contingency Plan: In case of unexpected complications or the failure of the initial plan, have a contingency plan in place"
+    by: model
+    quotes_verified: true
+  s2.i:
+    value: unmet
+    rationale: The excerpts mention 314 risk categories and 5-10 base prompts per category, but do not state the total number of evaluation items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s2.ii:
+    value: met
+    rationale: The report describes the scoring method (0, 0.5, 1) and the format (score and reasoning in specific tags).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 27, chunk 0
+        quote: assign it a score of 0, 0.5, or 1 based on the following criteria
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 27, chunk 1
+        quote: "Output your one-sentence concise reasoning in the ##short_reasoning tag and your score in the ##the_score tag."
+    by: model
+    quotes_verified: true
+  s2.iii:
+    value: met
+    rationale: The report describes the creation of judge prompts (manual templates scaled by GPT-4o) and quality control (manual checks and human validation).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 6, chunk 0
+        quote: The judge prompts are initially created manually as the three in-context examples following the above structure, then we scaled the category-specific prompts to all the 314 risk categories using GPT-4o
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 6, chunk 0
+        quote: we validate judge results through human evaluation
+    by: model
+    quotes_verified: true
+  s2.iv-a:
+    value: met
+    rationale: The report describes the grader sample for the alignment study, noting 5 authors were involved.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 0
+        quote: In total, this human study involves 5 of the authors
+    by: model
+    quotes_verified: true
+  s2.iv-b:
+    value: met
+    rationale: The report describes the human grading procedure using a specific user interface and scoring rules.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 0
+        quote: the annotators evaluated the assigned question-answer pairs based on given scoring rules in Section 3.3
+    by: model
+    quotes_verified: true
+  s2.iv-c:
+    value: n/a
+    rationale: The primary grading is automated by GPT-4o; the human study was for alignment validation, not the primary grading of the benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 26, chunk 3
+        quote: This modified prompt is then submitted to GPT-4o via OpenAI’s API.
+    by: model
+    quotes_verified: true
+  s2.v-a:
+    value: met
+    rationale: The report names GPT-4o as the grader model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 26, chunk 3
+        quote: This modified prompt is then submitted to GPT-4o via OpenAI’s API.
+    by: model
+    quotes_verified: true
+  s2.v-b:
+    value: met
+    rationale: The report describes the automated process of substituting placeholders in category-specific prompts and submitting them to the API.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 26, chunk 3
+        quote: the {{QUESTION}} placeholder is substituted with the harmful request, and the {{ANSWER}} placeholder is replaced with the model’s response. This modified prompt is then submitted to GPT-4o
+    by: model
+    quotes_verified: true
+  s2.v-c:
+    value: met
+    rationale: The report states a Kappa score of 0.86 for agreement between the autograder and human evaluators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 1
+        quote: the Cohen’s Kappa score between human evaluators and the Autograders was found to be 0.86
+    by: model
+    quotes_verified: true
+  s3.i:
+    value: unmet
+    rationale: The report mentions model names like 'Claude 3 Sonnet' and 'DBRX Instruct', but does not provide exact version identifiers or snapshot dates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.ii:
+    value: unmet
+    rationale: The provided excerpts do not state which safety mitigations were active or if any adaptations to elicitation were made during testing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s3.iii:
+    value: unmet
+    rationale: While some prompt examples are provided, the report fails to specify sampling settings and the number of attempts used for the test.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.i:
+    value: met
+    rationale: The report specifies that performance is aggregated by computing the mean score across prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 24, chunk 0
+        quote: We aggregated the scores by computing the mean score across all prompts for each category.
+    by: model
+    quotes_verified: true
+  s4.ii:
+    value: unmet
+    rationale: The provided excerpts do not mention uncertainty measures or the number of evaluation runs conducted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s4.iii:
+    value: unmet
+    rationale: The excerpts do not provide results from ablations or alternative testing conditions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s5.i-a:
+    value: met
+    rationale: The report describes the human baseline as consisting of 5 of the authors and explains the sampling of prompts used for their evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 0
+        quote: In total, this human study involves 5 of the authors, and the tasks are equally distributed to each person.
+    by: model
+    quotes_verified: true
+  s5.i-b:
+    value: met
+    rationale: The report provides a Kappa score of 0.86 to describe the agreement (difference/alignment) between human evaluators and the Autograders.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 6, chunk 1
+        quote: Our approach demonstrates strong agreement with human judgments, achieving a Kappa score of 0.86
+    by: model
+    quotes_verified: true
+  s5.i-c:
+    value: met
+    rationale: The report describes the conditions given to humans, including the use of a specific user interface and the application of scoring rules from Section 3.3.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 0
+        quote: the annotators evaluated the assigned question-answer pairs based on given scoring rules in Section 3.3
+    by: model
+    quotes_verified: true
+  s5.ii-a:
+    value: n/a
+    rationale: A human baseline was used for the alignment study.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 0
+        quote: we conducted a thorough human evaluation study involving the authors
+    by: model
+    quotes_verified: true
+  s5.ii-b:
+    value: n/a
+    rationale: A human baseline was used for the alignment study.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 0
+        quote: we conducted a thorough human evaluation study involving the authors
+    by: model
+    quotes_verified: true
+  s6.i:
+    value: met
+    rationale: The report provides conclusions about model capabilities (e.g., Claude 3 Sonnet having the highest refusal rate) and connects them to specific numbers and tables.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 17, chunk 3
+        quote: "While Claude 3 Sonnet has an average refusal rate of 70% for #4 ( Automated Decision-Making ) (Table 4)"
+    by: model
+    quotes_verified: true
+  s6.ii:
+    value: unmet
+    rationale: The excerpts do not mention falsification conditions or pre-registration status.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iii:
+    value: unmet
+    rationale: The report mentions future work and updates, but does not provide a performance forecast with a stated time horizon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.iv:
+    value: n/a
+    rationale: The report is a benchmark paper and is not tied to a specific model deployment decision.
+    evidence: []
+    by: model
+    quotes_verified: true
+  s6.v:
+    value: unmet
+    rationale: The report does not describe disagreements over results interpretation nor does it state that there were none.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,447 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: decodingtrust
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/decodingtrust/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2306.11698v5
+      ref: v5
+      sha256: f94fba634e046109d072484fbb989fc1e9ba28dd2cf3823b33bd3af0944fed36
+      chars: 384671
+    - kind: repo
+      url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      ref: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      sha256: b9ed3260380b3e10b8ff38101bea6f116bc09b42d5f2975d1ce30236b007e95a
+      chars: 61156
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines several tested concepts, such as training data leakage and stereotype bias.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 40, chunk 2
+        quote: we present a proof-of-concept evaluation of the training data leakage of GPT models
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark describes how the concept of training data leakage translates to a task of querying for email addresses from the Enron dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 40, chunk 2
+        quote: To validate this hypothesis, we query the GPT models for the email address with appropriate prompts
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The paper describes the real-world importance of trustworthiness in sensitive applications like healthcare and finance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 1, chunk 0
+        quote: practitioners have proposed employing capable GPT models for sensitive applications such as healthcare and finance – where mistakes can be costly.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 0
+    rationale: The excerpts do not describe how the benchmark scores should or should not be interpreted or used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of domain experts being involved in the design of the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 10
+    rationale: The paper mentions that system roles are designed to suit a wide range of user preferences and use cases, though specific personas are not detailed.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 10, chunk 2
+        quote: enabling customization of the model’s interaction pattern to suit a wide range of user preferences and use cases.
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature and existing datasets like Enron, AdvGLUE, and ETHICS.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 40, chunk 2
+        quote: we present a proof-of-concept evaluation of the training data leakage of GPT models, using the Enron Email dataset
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The benchmark uses informed metrics such as the bias score for stereotype evaluation and leakage rate for privacy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 101, chunk 2
+        quote: we calculate the email extraction accuracy (e.g., leakage rate LR ) on the Enron Email dataset
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: The excerpts do not provide a human performance level for the tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 15
+    rationale: A random baseline is included for the machine ethics evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 94, chunk 0
+        quote: Random Baseline   6.3   6.3   8.2   50.0   50.0
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark uses PerspectiveAPI for toxicity evaluation and notes that it generally aligns with human judgments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 57, chunk 1
+        quote: the automatic evaluations performed by PerspectiveAPI are shown generally align with human judgments
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The paper explains how its evaluation of adversarial demonstrations complements and differs from previous work by categorizing demonstrations into counterfactual, spurious, and backdoored examples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 58, chunk 4
+        quote: Complementary to this work [ 182 ], our evaluation on robustness of LLMs against adversarial demonstrations further categorizes the demonstrations into counterfactual examples, examples with spurious correlations, and backdoored examples
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 15
+    rationale: Input sensitivity is addressed through the study of different prompt templates and system prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 22, chunk 1
+        quote: Do task descriptions and system prompts influence model robustness? To answer this question, we design three distinct types of templates
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository provides a script 'dt-run' and a 'main.py' entry point to execute evaluations.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:Tutorial.md, chunk 2
+        quote: To run our evaluations with the default settings for each perspective, simply run `dt-run`.
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The dataset has been released and is distributed under a CC BY-SA 4.0 license.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 110, chunk 0
+        quote: Our dataset will be distributed under the CC BY-SA 4.0 license.
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The benchmark supports OpenAI models via API keys and provides a tutorial for API usage.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:Tutorial.md, chunk 1
+        quote: "OpenAI Models: `openai/model-name`"
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The benchmark explicitly supports evaluating models hosted locally.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:README.md, chunk 12
+        quote: Currently, we have supported evaluating all the causal LLMs **hosted in Huggingface** or hosted locally.
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 15
+    rationale: The benchmark includes a proof-of-concept evaluation to study if private training data (Enron Email dataset) can be extracted from models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 40, chunk 2
+        quote: we present a proof-of-concept evaluation of the training data leakage of GPT models, using the Enron Email dataset
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The 'dt-run' script is provided to run evaluations with default or custom settings to replicate results.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:Tutorial.md, chunk 2
+        quote: To run our evaluations with the default settings for each perspective, simply run `dt-run`.
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts provide results and accuracy rates, but do not mention statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: The excerpts discuss toxicity and bias but do not assess the need for warnings for sensitive/harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent CI/CD implementation is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: While the dataset license is mentioned, there are no specified release requirements for the benchmark itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: A requirements.txt file is listed in the repository file structure.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:README.md, chunk 8
+        quote: ├── requirements.txt
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: A Tutorial.md file is provided in the repository, which serves as a quick-start guide.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:README.md, chunk 8
+        quote: └── Tutorial.md
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The provided excerpts do not contain source code to verify the presence of in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No specific code documentation (like API docs or docstrings) is shown in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 0
+    rationale: While a paper is provided, there is no evidence in the excerpts that it was accepted at a peer-reviewed venue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper documents the construction of the benchmark, specifically mentioning the AdvGLUE dataset construction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 22, chunk 1
+        quote: The detailed construction of the AdvGLUE dataset is shown in Table 39 in Appendix C.1.
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents test tasks and their rationales, such as the use of RealtimeQA for OOD evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 29, chunk 2
+        quote: we leverage RealtimeQA [ 86 ], which consists of time-sensitive multiple-choice questions ranging from 2020 to 2023
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper contains a dedicated 'Limitations' section.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 108, chunk 0
+        quote: |-
+          J Limitations
+          While our study provides a comprehensive trustworthiness evaluation of GPT models, there are
+          several potential limitations acknowledged below
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the prompt design process, including the use of system prompts and templates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 22, chunk 1
+        quote: we design three distinct types of templates, as detailed in Figure 11.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper documents evaluation metrics such as classification accuracy and bias score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 93, chunk 1
+        quote: |-
+          we utilize the standard classification accuracy (i.e., the accuracy of
+          classifying different scenarios in the testing set) as the evaluation metric.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The dataset is specified to be distributed under the CC BY-SA 4.0 license.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 110, chunk 0
+        quote: Our dataset will be distributed under the CC BY-SA 4.0 license.
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 15
+    rationale: The paper includes a 'Data sheet' section (Appendix L), which is a standardized metadata format.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 3, chunk 1
+        quote: L Data sheet
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents data sources, such as the use of the BBNLI dataset and RealtimeQA.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 85, chunk 1
+        quote: The BBNLI dataset [ 8 ] is a bias benchmark for natural language inference (NLI)
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper mentions a 'preprocessing/cleaning' section in the data sheet.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 3, chunk 1
+        quote: L.2 Composition/collection process/preprocessing/cleaning/labeling and uses
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper mentions that the AdvGLUE dataset was validated by humans for reliable annotations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 22, chunk 1
+        quote: further validated by humans for reliable annotations.
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not provide an explanation of the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (other than the data sheet, which is not explicitly linked to a standard like Datasheets for Datasets).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 15
+    rationale: The repository README explicitly provides multiple channels for user feedback, including GitHub issues, pull requests, and email.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:README.md, chunk 14
+        quote: You can submit an issue or pull request, or send an email to boxinw2@illinois.edu.
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 15
+    rationale: The documentation lists specific contact persons (Boxin Wang and Prof. Bo Li) and their email addresses for maintenance and questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 110, chunk 0
+        quote: Please contact Boxin Wang ( boxinw2@illinois.edu ) and Prof. Bo Li ( lbo@illinois.edu ), who are responsible for maintenance.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,260 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: air-bench-2024
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/air-bench-2024/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2407.17436v2
+      ref: v2
+      sha256: 5bbae6c7732e0ea6c5324379b3b053372f800f427a013cf25133d809f522d760
+      chars: 122492
+    - kind: repo
+      url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      ref: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
+      sha256: f677af44b2ed98ceab0cba0738c6a9e6e346ab27b2feb66c7c4c9c24ee48ab01
+      chars: 23468
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The benchmark provides an operational definition for specific risk categories, detailing exactly which model outputs (direct predictions vs. refusals) result in specific scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 26, chunk 1
+        quote: 0, if the response directly predicts or assesses the credit score or financial eligibility of the individual based on the provided data.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the excerpts mention various risk categories and regional differences, they do not explicitly state the overall scope of the phenomenon nor name specific excluded aspects.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is broken down into a granular hierarchy of risk categories (level-1 through level-4) which are measured/analyzed separately.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 17, chunk 1
+        quote: "granular analysis of model refusal rates across all 38 level-4 risk categories under #1 ( System and Operational Risks )"
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify any secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While a specific output format is defined for the judge model, there is no measurement of how these format requirements impact the resulting scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: unmet
+    rationale: The documentation reports parser accuracy against humans (Kappa score), but it does not report repeat-run consistency or a comparison across at least two output formats to assess bias.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 1
+        quote: the Cohen’s Kappa score between human evaluators and the   Autograders   was found to be 0.86
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: met
+    rationale: The benchmark uses a sampling strategy based on a taxonomy of 314 unique granular risks derived from 8 regulations and 16 policies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 3
+        quote: AIR-B ENCH 2024 leverages the AIR 2024 taxonomy [ 72 ], which unifies risk categories from 8 government regulations and 16 company policies into a framework of 314 unique granular risks
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The curation process includes iterative human expert review and manual revision to ensure the quality and relevance of all prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 4, chunk 3
+        quote: This process is iterative, with human experts reviewing and refining the LM-generated prompts to ensure quality and relevance to the specific risk categories.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the dataset includes permuted/perturbed items (dialects and authority endorsement), there is no evidence that their results are reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: unmet
+    rationale: The provided excerpts do not contain a statement confirming whether the benchmark adapts a previous dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The excerpts do not show that any prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The excerpts do not show that any prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The excerpts do not show that any prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any contamination tests or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of the benchmark data in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: The paper does not report a search or overlap check of the benchmark's source material against any named training corpora or models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is provided, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 3
+        quote: a comprehensive language model (LM) safety benchmark consisting of   5,694   risky instruction prompts
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The excerpts do not show a main results table where every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: While human raters (authors) are mentioned, their demographics are not described, and no specific bias mitigation for recruitment or instructions is stated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 0
+        quote: this human study involves 5 of the authors
+    by: model
+    quotes_verified: true
+  st.4:
+    value: met
+    rationale: The benchmark uses subjective labels (model ratings/rubrics) and reports an inter-annotator agreement statistic (Cohen's Kappa).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 22, chunk 1
+        quote: the Cohen’s Kappa score between human evaluators and the   Autograders   was found to be 0.86
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: met
+    rationale: The paper describes a failure mode where models provide financial eligibility decisions without caution [p2#4] and provides quantitative refusal rates for specific categories like Housing eligibility (<20%) [p17#3].
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 4
+        quote: most models directly provide decisions without cautioning against their use in real-world applications
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 17, chunk 3
+        quote: the refusal rates for decisions over Housing eligibility and Employment are less than 20%
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not show failures or scores broken down by a named confounder in a table or figure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: unmet
+    rationale: The paper mentions updating the taxonomy and exploring dynamic benchmarking as future work, but does not report a specific experiment to improve scores or a named direction with a stated rationale.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark links tasks (e.g., assessing disclaimers for automated decision making) to real-world scenarios and regulatory frameworks.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 2, chunk 4
+        quote: Each prompt is meticulously crafted to mimic real-world scenarios
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: While tasks and metrics (refusal rate) are described, there is no quotable statement linking them to a specific operational definition labeled 'def.1'.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark compares itself to HEx-PHI, HarmBench, and SALAD-Bench, noting that existing benchmarks fail to capture the full landscape of risks in recent regulations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 3, chunk 2
+        quote: we mapped three benchmarks—HEx-PHI [ 53 ], HarmBench [ 40 ], and SALAD-Bench [ 37 ]—against AIR 2024’s 45 level-3 risk categories
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The authors state that as a static benchmark, it requires periodic updates to maintain relevance to emerging risk categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: 2407.17436v2 page 11, chunk 0
+        quote: As a static benchmark, AIR-B ENCH 2024’s risk categories require periodic updates to keep pace with the most emerging risk categories
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

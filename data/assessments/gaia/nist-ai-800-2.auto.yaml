@@ -1,0 +1,486 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: gaia
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/gaia/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2311.12983v1
+      ref: v1
+      sha256: ed50199799b28126a193080d35d4b629d544261f29ca71a97f4cdf49eca81c1b
+      chars: 83727
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines its construct as evaluating General AI Assistants through real-world questions requiring reasoning, multi-modality, web browsing, and tool-use.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 1, chunk 0
+        quote: GAIA proposes real-world questions that require a set of fundamental abilities such as reasoning, multi-modality handling, web browsing, and generally tool-use proficiency.
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists subject areas such as daily personal tasks, science, and general knowledge.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 1
+        quote: They cover various assistant use cases such as daily personal tasks, science, or general knowledge.
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: met
+    rationale: The benchmark states that questions are conceptually simple for humans but challenging for advanced AIs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 1, chunk 0
+        quote: GAIA questions are conceptually simple for humans yet challenging for most advanced AIs
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The benchmark describes items as simple prompts that may include files and provides several example questions in Figure 1.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 1
+        quote: Our tasks are simple prompts that may come with an additional file.
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark specifies that evaluation is done via quasi exact match between the model's answer and the ground truth.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly states that it does not evaluate the trace leading to the answer.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 10, chunk 2
+        quote: In its current form, GAIA does not evaluate the trace leading to the answer.
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark names realistic use cases of AI assistants as the intended application."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Results are reported across three difficulty levels (Level 1, 2, 3) for multiple models of different capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 2
+        quote: Our proposed levels of difficulty, loosely defined in terms of number of steps and number of different capabilities used, are correlated with the performance of current models
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: A human baseline score of 92% is reported, and the participants are identified as annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 1, chunk 0
+        quote: we show that human respondents obtain 92% vs. 15% for GPT-4 equipped with plugins.
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation states that questions were designed by authors and created by human annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 0
+        quote: The authors designed initial questions, and gave them as examples to annotators along with instructions
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The total item count (466) and the counts for each level (146, 245, 75) are provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 1
+        quote: It is composed of 466 questions designed and annotated by humans.
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark reduces contamination by designing answers that are absent from plain text in pre-training data.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 3
+        quote: the resulting answer is absent by design in plain text from current pre-training data.
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: There is no mention of canary strings in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: met
+    rationale: The benchmark states that it only requires API access to prompt the model.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 0
+        quote: Evaluating LLMs with GAIA only requires the ability to prompt the model, i.e an API access.
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The benchmark does not define a reference protocol with specific settings that may or may not vary to maintain comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: met
+    rationale: The benchmark provides a separate developer set of 166 questions distinct from the remaining 300 questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 3, chunk 1
+        quote: We release a developer set of 166 annotated questions and release the remaining 300 questions without annotations
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: unmet
+    rationale: The documentation does not specify sampling settings (temperature, top_p) or reasoning budgets for the reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The exact system prompt used to inform the model about the required format is provided in the paper.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 22, chunk 1
+        quote: |-
+          System prompt:   You are a general AI assistant. I will ask you a question. Report your thoughts, and finish
+          your answer with the following template: FINAL ANSWER: [YOUR FINAL ANSWER].
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: met
+    rationale: The benchmark specifies that it relies on interactions with the real world and does not specify fixed APIs, while listing required capabilities like web browsing and coding.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: GAIA does not specify possible APIs, and relies on interactions with the real world.
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: unmet
+    rationale: The benchmark does not provide a specific execution environment (like a VM or container) or a full specification of one.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: unmet
+    rationale: There is no mention of a step, token, cost, or time limit acting as a stopping condition for agentic runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: unmet
+    rationale: The benchmark does not specify the number of allowed submission attempts or the feedback provided for incorrect attempts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark states that models are run three times and the average results are reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 0
+        quote: Whenever an API is available, we run the model three times and report the average results.
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: n/a
+    rationale: The benchmark uses quasi-exact match against ground truth rather than an LLM judge to score responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: n/a
+    rationale: No LLM judge is used to score responses.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: The benchmark does not report how results change under variations of the protocol settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a link to its code on Hugging Face.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 1, chunk 1
+        quote: "Code:   https://huggingface.co/gaia-benchmark"
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The required output format is specified in the system prompt, and a scoring function is provided.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 5, chunk 2
+        quote: A system (or prefix) prompt is used to inform the model about the required format, see Figure 2. In practice, GPT4 level models easily follow our format. We provide our scoring function
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There are no identifiable version numbers or a changelog provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The excerpts do not describe a provided harness that executes model-generated code; it describes the requirements for the model to use tools.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: GAIA does not specify possible APIs, and relies on interactions with the real world.
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: The documentation does not show that the harness supports multiple providers via configuration or an open interface.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: The excerpts do not state that the harness saves full per-item logs of transcripts and scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the logs record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: met
+    rationale: The benchmark describes a validation phase where two independent annotators answer questions to check for ambiguity and correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 19, chunk 1
+        quote: Validation phase. After question creation, we ask two new independent annotators to answer the questions to check it is not ambiguous.
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: n/a
+    rationale: The items are general assistant tasks (e.g., clinical trial counts, NASA astronauts) and do not contain content likely to trigger safety safeguards.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 2, chunk 0
+        quote: What was the actual enrollment count of the clinical trial on H. pylori in acne vulgaris patients
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: met
+    rationale: The benchmark describes design choices against contamination, such as ensuring answers are not in plain text on the internet.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 2, chunk 2
+        quote: The possibility to check the reasoning trace, the accuracy required in the answers, their absence in plain text from the internet prevent a possible data contamination.
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: met
+    rationale: The documentation states that two new independent annotators were used to validate the questions for ambiguity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 7, chunk 2
+        quote: We therefore asked two new annotators to independently answer each question. If the original annotator and the two new annotators arrived at the same answer, the question was validated.
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: Reference results for several models (GPT-4, AutoGPT, etc.) are published in Table 4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 1
+        quote: Table 4   Score and average time to answer for various baselines on GAIA in %.
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: Scores are reported separately for different capabilities (e.g., Web browsing, Coding) and difficulty levels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 9, chunk 1
+        quote: Figure 5 shows the scores obtained by the models splitted per capability.
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline metric as a success rate (Score in %) and specifies that for API-based models, results are averaged over three runs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 0
+        quote: Score in % ( ↑ )
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 0
+        quote: Whenever an API is available, we run the model three times and report the average results.
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: met
+    rationale: The benchmark reports scores with uncertainty (standard errors) for several models in Table 4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 1
+        quote: 1 ± 2 . 5 2 . 6 ± 0 . 6
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: The excerpts do not mention a config file, schema, or report template for evaluators to record results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: There is no mention of a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: met
+    rationale: The benchmark reports the average time to answer for various baselines in Table 4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 21, chunk 0
+        quote: Avg. time to answer in mins ( ↓ )
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: While a sample question/answer is shown, there is no mention of downloadable full or representative transcripts of reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument by stating that its difficulty levels are correlated with model performance.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 2
+        quote: Our proposed levels of difficulty... are correlated with the performance of current models, strengthening their validity.
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims to rely on 'real world interactions' and notes that it differs from other benchmarks by not specifying possible APIs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 4, chunk 0
+        quote: GAIA does not specify possible APIs, and relies on interactions with the real world.
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes the human baseline as being obtained by annotators during the validation phase.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 8, chunk 2
+        quote: Human score refers to the score obtained by our annotators when validating the questions.
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The documentation explicitly states that the benchmark should not be seen as an absolute general proof of success.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 11, chunk 0
+        quote: GAIA is only a first step to estimate the potential of AI assistants, but should not be seen as an absolute general proof of their success.
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark includes a limitations section that identifies a lack of linguistic and cultural diversity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: 2311.12983v1 page 11, chunk 0
+        quote: A big limitation of GAIA is its lack of language diversity
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

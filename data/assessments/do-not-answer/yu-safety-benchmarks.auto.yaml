@@ -1,0 +1,326 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: do-not-answer
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 460703484df354958a5e1cd7378a38fcb94a2f3e
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/do-not-answer/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.13387v2
+      ref: v2
+      sha256: da590ed3a2ff235d293e79d8140123d5bbb46a04421f9f7e7b245a8610aa258d
+      chars: 72696
+    - kind: repo
+      url: https://github.com/Libr-AI/do-not-answer/tree/460703484df354958a5e1cd7378a38fcb94a2f3e
+      ref: 460703484df354958a5e1cd7378a38fcb94a2f3e
+      sha256: f80987b66960beae4489b7e7514e2965ed7bfebe5baaa15cbaf5d146171b4814
+      chars: 25595
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark names five risk areas (Information Hazards, Malicious Uses, etc.) and states that responses are measured via binary annotation (safe or harmful) and six action categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 6, chunk 3
+        quote: First, we consider whether a response is harmful based on binary annotation (safe or harmful). Next, we categorize the responses into six distinct groups
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark excludes the sixth risk area from its taxonomy and assumes text-only, English, single-turn, and zero-shot settings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 3, chunk 3
+        quote: we keep the first five risk areas while excluding the sixth risk area from our taxonomy
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: met
+    rationale: The benchmark explicitly acknowledges that its third-tier classification may not cover every possible scenario.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 3, chunk 3
+        quote: It is important to acknowledge that our third-tier classification may not cover every possible scenario.
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: met
+    rationale: The benchmark compares its coverage to prior work (e.g., Gehman et al., 2020) and notes that previous work focused on specific risk areas while it aims for a comprehensive taxonomy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 2, chunk 1
+        quote: Gehman et al. (2020) proposed the RealToxicityPrompts dataset to benchmark whether language models tend to generate toxic language
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 3, chunk 2
+        quote: In this work, we aim to build up a comprehensive risk taxonomy
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: unmet
+    rationale: The excerpts do not describe a concrete mechanism for discovering novel risks outside existing categories, such as fuzzing or red-teaming for new risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: While the LICENSE mentions contributions, there is no documented pull-request process or submission portal explaining how contributions are integrated and credited.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The benchmark mentions plans to extend the dataset in future work, but does not state a specific process or cadence for incorporating new risks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The benchmark explicitly assumes models lack the capability to interact with APIs and focuses on single-turn evaluation, thus excluding interactive settings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 3, chunk 3
+        quote: based on the assumption that these models lack the automated capability to interact with APIs
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: There is no discussion of distribution shift as a safety-critical issue in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: met
+    rationale: The benchmark documents that three annotators were used and that they discussed and resolved disagreements through consensus.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 7, chunk 3
+        quote: three annotators evaluated the harmfulness of the six models and identified refined action categories independently. They discussed instances of disagreement, and mutually agreed on the final label through consensus.
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: The excerpts do not mention contamination detection or the temporal validity/retirement date of the evaluation set.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: unmet
+    rationale: The excerpts do not show results labeled as rates, frequencies, or proportions, nor do they show calibrated probability estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: unmet
+    rationale: The excerpts do not name specific factors limiting the generalization of the results, such as prompt diversity or synthetic scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: unmet
+    rationale: The severity scale or harm weighting does not cite a source for its levels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The benchmark does not state whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: Confidence intervals, standard errors, or worst-case bounds are not reported for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: unmet
+    rationale: No inter-rater agreement statistic (like Cohen's kappa) is reported for the human or LLM judges.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: "Score variance is not reported across all three required dimensions: random seeds, prompt rephrasings, and evaluator versions."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin for deployment risk or state the required dependencies of real-world risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: met
+    rationale: The benchmark provides a three-level taxonomy and operational definitions for harm types, such as those involving sensitive information or illegal activities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 4, chunk 2
+        quote: queries seeking personal private information (harm type 1)
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 4, chunk 2
+        quote: solicit assistance in engaging in illegal activities (harm type 3)
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: unmet
+    rationale: The excerpts do not state whose specific values (experts, policy frameworks, etc.) inform the judgments of harm.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: unmet
+    rationale: The benchmark does not name any specific value choice in its harm definitions as being contested.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark explains that the proxy (whether a model follows an instruction it should not) relates to the real-world concern of identifying dangerous capabilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 1, chunk 1
+        quote: identify dangerous capabilities through “dangerous capability evaluations”
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: The excerpts do not record the access date, inference parameters, or system prompts for the reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing or reporting random seeds for sampling, inference, or evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: While a judge model (GPT-4) is mentioned, there are no version numbers, dates, or commit hashes provided for the judge, rubric, or guidelines.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: The benchmark provides a public code repository and notebooks for replication.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 1, chunk 1
+        quote: Our data and code are available at https://github. com/Libr-AI/do-not-answer .
+      - source: repo
+        url: https://github.com/Libr-AI/do-not-answer/tree/460703484df354958a5e1cd7378a38fcb94a2f3e
+        locator: Libr-AI/do-not-answer@460703484df3:README.md, chunk 3
+        quote: Refer to [notebooks](./notebooks) for details and paper replication.
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The prompts are stated to be LLM-generated (via GPT-4), and the authors describe a validation process to ensure consistency by addressing borderline cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 5, chunk 2
+        quote: we use GPT-4 to generate 10–20 questions or question templates for each harm type
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 6, chunk 1
+        quote: To ensure the consistency of our data, we address these borderline cases by either incorporating a specific risky scenario, or excluding them
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark states that using a dataset where all instructions should not be followed may result in a biased risky question distribution.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 5, chunk 2
+        quote: Collecting this dataset facilitates accurate and high-quality response evaluation, at the cost of potentially biased risky question distribution.
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: unmet
+    rationale: The benchmark explicitly states it focused on single-turn evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The benchmark uses synthetic data generated by GPT-4, not in-the-wild data constrained by privacy.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: 2308.13387v2 page 5, chunk 2
+        quote: we use GPT-4 to generate 10–20 questions or question templates for each harm type
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: There is no stated update cycle tied to changes in risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: There is no evidence that affected communities were consulted to assess the scenarios.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies it evaluates the model in a zero-shot, single-turn setting."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not state that model-level scores are not system-level safety, nor does it identify further deployment evaluations.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

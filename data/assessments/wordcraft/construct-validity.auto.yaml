@@ -1,0 +1,244 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: wordcraft
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/wordcraft/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2007.09185v1
+      ref: v1
+      sha256: 8943b572fdc0c456f331a8efbdbb5f7bb72e2274a4bade8b39a329387321b366
+      chars: 40918
+    - kind: repo
+      url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+      ref: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+      sha256: 4d7c293845d32a9040fe6d16609e5881ac95625c16af72d3edc825198453cdcc
+      chars: 4593
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The phenomenon (benchmarking the ability of RL agents to use commonsense knowledge) is operationally defined as tasks where the agent must choose entities to combine to create a goal entity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: The agent must choose which entities to combine in order to create the goal entity.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the scope is described as a simplified version of Little Alchemy 2, the text does not name any specific excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The paper does not identify sub-components of the phenomenon nor does it explicitly state that the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: There is no evidence that the effect of output-format requirements on model performance was measured.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The environment uses a limited action space of table positions and entity words, and there is no mention of automated parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 3, chunk 0
+        quote: The state space is limited to combinations of entity words, and the action space, to table positions
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: met
+    rationale: The documentation describes a sampling strategy where tasks are created by randomly sampling goal, constituent, and distractor entities from the task space.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: Each task is created by randomly sampling a goal entity, valid constituent entities, and distractor entities.
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: There is no documentation stating that every item passed a quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: The excerpts do not mention a counted subset of permuted or perturbed items with separately reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that WordCraft is based on the game Little Alchemy 2.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 1, chunk 0
+        quote: we propose WordCraft, an RL environment based on Little Alchemy 2
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: unmet
+    rationale: The text does not analyze or report specific strengths and limitations of Little Alchemy 2 as a prior work.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: There is no comparison of performance results between WordCraft and the original Little Alchemy 2.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The documentation does not list specific modifications made to the original dataset/game or explain how they improve construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any tests implemented to detect data contamination or report results of such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The paper describes a process for creating a testing split consisting of entities or recipes not used during training.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 3
+        quote: The training and testing split is created by selecting a set of either goal entities or valid recipes that are not used during training.
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check between the benchmark's source material and a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The excerpts mention the number of items and recipes, but do not state the sample size of the benchmark tasks or provide a power calculation/confidence interval width.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not include the main results tables, and the descriptions of figures do not mention confidence intervals or standard errors for the scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The paper mentions collecting a human baseline, but the excerpts do not describe the demographics of these raters or any bias mitigation strategies.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 3, chunk 4
+        quote: We also collect a human baseline at the same difficulty settings of WordCraft.
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are based on a deterministic recipe graph (valid recipes), which constitutes a deterministic key.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 2, chunk 2
+        quote: 3,417 permissible item combinations (referred to as valid recipes throughout this paper)
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The provided excerpts do not contain a qualitative or quantitative analysis of common failure modes, nor do they count them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors report experiments using different embeddings and Knowledge Graph (KG) models to improve zero-shot success rates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 4, chunk 1
+        quote: We benchmark variants of our full agent with the link prediction module and compare zero-shot performance under different combinations of link prediction scores
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The text identifies personal assistants and household robots as real-world applications that require the capabilities (fast learning and generalization) the benchmark aims to enable.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: 2007.09185v1 page 1, chunk 1
+        quote: Many real-world applications ( e.g. personal assistants and household robots) require agents that can learn fast and generalise well to novel situations
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts, nor a statement linking task choice and metrics to such a definition.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is compared to TextWorld, noting that TextWorld enables the creation of novel textual RL environments and interfacing with existing games."
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: The excerpts do not discuss limitations or design trade-offs specifically concerning what the scores do or do not measure regarding construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

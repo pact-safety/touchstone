@@ -1,0 +1,224 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: xstest
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/xstest/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.01263v3
+      ref: v3
+      sha256: 75e184b68f4c7f85b7aaeef9f301aa2ec6782c533c21ab41b79787ef5ab38dc8
+      chars: 98602
+    - kind: repo
+      url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+      ref: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+      sha256: c6e18c81cc7a0c8332e1a90700fab3eb5b51045263840b85354ff8c50ca7879d
+      chars: 22722
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: The number of test items is stated (250 safe, 200 unsafe), but there is no justification such as a power calculation or confidence intervals to prove this size is sufficient.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 7, chunk 0
+        quote: Refusal Rate (%)   for n=250 safe prompts
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The benchmark reports refusal rates but does not provide significance tests, confidence intervals for differences, or statistical power figures.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: met
+    rationale: The prompt template is provided via the CSV file, sampling settings (temperature zero, max tokens 256) are stated, and the harness is available in the repo.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 13, chunk 1
+        quote: set the temperature to zero to make responses deterministic. We also set the maximum response length to 256 tokens
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: The benchmark uses contrasting unsafe prompts to control for the confound of lexical overfitting/safety-related words.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 6, chunk 1
+        quote: to better test model calibration, we also evaluate models on the 200 contrasting unsafe prompts
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no mention of canary strings, private test splits, or a contamination analysis to prevent training data leakage.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: While the paper mentions instability and different system prompts, it does not report results from repeated runs with different seeds or sessions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The authors performed a manual inspection of model outputs to classify them into a taxonomy and reported the findings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 4, chunk 3
+        quote: All annotations were completed by three authors of this paper, with two annotations per prompt.
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark describes how labels were produced by authors and reports inter-annotator agreement using Fleiss' kappa.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 5, chunk 0
+        quote: Annotators agreed on 96.4% of cases for Llama2.0 (Fleiss’   κ = 0.93)
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: met
+    rationale: The benchmark releases the full model outputs per item on GitHub.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 6, chunk 1
+        quote: All model responses can be found at github.com/paul-rottger/exaggerated-safety
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: There is no documented check for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: unmet
+    rationale: While the paper describes the types of prompts created, it does not describe the review process or how the benchmark is versioned and maintained.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: While the excerpts mention hyperparameters like temperature and response length, they do not describe the input/output format, tools/sandbox, or what the model can and cannot access.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: The excerpts do not state any concrete ways the evaluation setting differs from real-world use; they focus on the test design and results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The evaluation spread is described across different prompt types (scenarios) with specific counts provided for safe prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 5, chunk 0
+        quote: we evaluate models on the 200 safe prompts in XST EST
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation under fixed conditions, nor do the authors explicitly state they reproduced their headline numbers from the released code.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: met
+    rationale: The benchmark was published in NAACL 2024, which is a peer-reviewed venue.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 0
+        quote: This repo contains data and code for our NAACL 2024 paper
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The test prompts are available for download in the repository as a CSV file.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 0
+        quote: "`xstest_prompts.csv` contains all test prompts."
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: met
+    rationale: The repository contains scoring scripts (string-match and GPT-based) and an analysis notebook runnable by users.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 1
+        quote: use our automated evaluation scripts (`classify_completions.py`) in the `evaluation` folder.
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: met
+    rationale: The paper and README describe how prompts were hand-crafted, how models are queried, and how responses are scored via manual and automated methods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 3, chunk 2
+        quote: For each of the ten safe prompt types in XST EST , we hand-craft 25 test prompts
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: While hyperparameters are listed, there is no pinned software environment (lockfile/container) or statement of total compute needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: met
+    rationale: The prompts used to query the models are released in the `xstest_prompts.csv` file.
+    evidence:
+      - source: repo
+        url: https://github.com/paul-rottger/xstest/tree/d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
+        locator: paul-rottger/xstest@d7bb5bd738c1:readme.md, chunk 0
+        quote: "`xstest_prompts.csv` contains all test prompts."
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: met
+    rationale: The benchmark evaluates models using public APIs (GPT-4) and open weights (Llama2, Mistral).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: 2308.01263v3 page 3, chunk 3
+        quote: GPT-4 is a proprietary LLM released in March 2023 by OpenAI, which we access through their API.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

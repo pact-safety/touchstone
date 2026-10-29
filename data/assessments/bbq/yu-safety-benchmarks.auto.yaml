@@ -1,0 +1,330 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bbq
+standard: yu-safety-benchmarks
+standard_version: "2026.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bbq/yu-safety-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.08193v2
+      ref: v2
+      sha256: d156a5efdfc189703ff001f36a71d6d7381866276d31713fe272d86f3e1d8b8d
+      chars: 87185
+    - kind: repo
+      url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+      ref: bea11bd97d79217245b5871acd247b9d6eb24598
+      sha256: 9cf0dc0c368f8b490f93531c0e267be45fea328c489ad58b8395b03a4b8dcfb0
+      chars: 31146
+  excerpt_chars: 40000
+verdicts:
+  r1.a:
+    value: met
+    rationale: The benchmark identifies social biases as the risk type and specifies accuracy and a 'bias score' as the measurement methods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 0
+        quote: highlight attested social biases against people belonging to protected classes
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 1
+        quote: we introduce a bias score to quantify the degree to which a model systematically answers questions in a biased way
+    by: model
+    quotes_verified: true
+  r1.b:
+    value: met
+    rationale: The benchmark states it does not cover all social biases and assumes a US English-speaking cultural context.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: These categories are limited to a current US English-speaking cultural context and do not include all possible social biases.
+    by: model
+    quotes_verified: true
+  r1.c:
+    value: met
+    rationale: The text explicitly warns that a low bias score should not be interpreted as the model being unbiased in all cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: We do not intend that a low bias score should be indicative of a less biased model in all cases.
+    by: model
+    quotes_verified: true
+  r1.d:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark compares itself to UnQover, noting a difference in evaluation method (model outputs vs. likelihoods)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.a:
+    value: unmet
+    rationale: The excerpts do not describe a mechanism for discovering novel risks outside the existing categories.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.b:
+    value: unmet
+    rationale: While a repository exists, there is no documented process for how outside contributions are integrated and credited.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.c:
+    value: unmet
+    rationale: The excerpts do not state a process or cadence for how and when new risks will be incorporated.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2.d:
+    value: unmet
+    rationale: The benchmark evaluates static QA responses and does not include multi-agent or interactive settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.a:
+    value: unmet
+    rationale: The benchmark does not discuss distribution shift as a safety-critical issue.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3.b:
+    value: met
+    rationale: The benchmark documents annotator selection (MTurk workers in US with specific approval rates) and disagreement patterns (editing templates where fewer than 4/5 agree).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 1
+        quote: The qualification is open to all MTurk workers located in the US with a HIT approval rate above 98% and more than 5000 tasks completed.
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 2
+        quote: we edit any templates that fail human validation (i.e., ones on which fewer than 4/5 annotators agree with our assigned gold label)
+    by: model
+    quotes_verified: true
+  r3.c:
+    value: unmet
+    rationale: There is no mention of contamination detection or a stated temporal validity period for the evaluation set.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.a:
+    value: met
+    rationale: The benchmark reports results as a 'Rate of choosing (%)'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 0
+        quote: Rate of choosing (%)
+    by: model
+    quotes_verified: true
+  r4.b:
+    value: unmet
+    rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r4.c:
+    value: met
+    rationale: The benchmark specifies that the categories are limited to a current US English-speaking cultural context, which limits generalization.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: These categories are limited to a current US English-speaking cultural context
+    by: model
+    quotes_verified: true
+  r5.a:
+    value: met
+    rationale: The benchmark cites the US Equal Employment Opportunities Commission (EEOC, 2021) as a source for its demographic categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 4, chunk 1
+        quote: mostly taken from the protected demographic categories defined by the US Equal Employment Opportunities Commission (EEOC, 2021)
+    by: model
+    quotes_verified: true
+  r5.b:
+    value: unmet
+    rationale: The excerpts do not state whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r5.c:
+    value: unmet
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.a:
+    value: unmet
+    rationale: Confidence intervals, standard errors, or worst-case bounds are not reported for the main metrics.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.b:
+    value: met
+    rationale: The benchmark reports Krippendorf's alpha for agreement between raters.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: Agreement between raters is high, with a Krippendorf’s α of 0.883
+    by: model
+    quotes_verified: true
+  r6.c:
+    value: unmet
+    rationale: The benchmark does not report score variance across all three required dimensions (random seeds, prompt rephrasings, and evaluator versions).
+    evidence: []
+    by: model
+    quotes_verified: true
+  r6.d:
+    value: unmet
+    rationale: The benchmark does not apply an explicit safety margin when extrapolating to deployment risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.a:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark targets representational harms and provides an operational definition based on Crawford (2017)."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies that it uses research articles, news, Wikipedia, and personal blogs to document harm."
+    evidence: []
+    by: model
+    quotes_verified: true
+  r7.c:
+    value: met
+    rationale: The authors explicitly acknowledge that there are many conflicting ways bias is defined in NLP.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 3
+        quote: There are many, often conflicting, ways bias is defined in NLP (Blodgett et al., 2020)
+    by: model
+    quotes_verified: true
+  r7.d:
+    value: met
+    rationale: The benchmark explains that its measured behavior (stereotype reinforcement/attribution) relates to the real-world risk of harming marginalized groups.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 2, chunk 5
+        quote: The harms we assess reflect (i) stereotype reinforcement, which risks perpetuating biases, and (ii) stereotype attribution, which risks attributing bias-based characteristics to individuals based on attributes of their (real or perceived) identities.
+    by: model
+    quotes_verified: true
+  r8.a:
+    value: unmet
+    rationale: The excerpts do not record the access date, inference parameters (temperature, top-p), or system prompts for the reported runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.b:
+    value: unmet
+    rationale: There is no mention of fixing or reporting random seeds for data sampling, inference, or evaluation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.c:
+    value: unmet
+    rationale: The benchmark does not use an LLM judge or scoring rubric with versioning; it uses exact match scoring.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r8.d:
+    value: met
+    rationale: A public code repository is provided and the README describes the model testing and formatting.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 0
+        quote: Repository for the Bias Benchmark for QA dataset.
+    by: model
+    quotes_verified: true
+  r9.a:
+    value: met
+    rationale: The prompts are stated to be handwritten by the authors and were validated by human annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 2
+        quote: we edit any templates that fail human validation (i.e., ones on which fewer than 4/5 annotators agree with our assigned gold label)
+    by: model
+    quotes_verified: true
+  r9.b:
+    value: met
+    rationale: The benchmark states that its categories are limited to a current US English-speaking cultural context, which is a limitation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: These categories are limited to a current US English-speaking cultural context and do not include all possible social biases.
+    by: model
+    quotes_verified: true
+  r9.c:
+    value: n/a
+    rationale: The benchmark targets social biases in QA outputs based on short contexts, which does not emerge over extended multi-turn interaction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: BBQ allows us to make conclusions about model behavior given very short contexts
+    by: model
+    quotes_verified: true
+  r9.d:
+    value: n/a
+    rationale: The dataset was hand-built by authors using templates, not collected from in-the-wild user logs constrained by privacy.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.a:
+    value: unmet
+    rationale: There is no mention of a stated update cycle or tying updates to changes in risk.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.b:
+    value: unmet
+    rationale: The benchmark uses crowd-worker annotators for validation, but does not describe consulting affected communities to assess if scenarios reflect their experience.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r10.c:
+    value: met
+    rationale: The benchmark specifies it evaluates the model outputs (bare model) in a zero-shot setting.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 2
+        quote: Unlike humans, our models are preexisting QA systems, evaluated zero-shot with no prior exposure to our data.
+    by: model
+    quotes_verified: true
+  r10.d:
+    value: unmet
+    rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

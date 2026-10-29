@@ -1,0 +1,208 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bbq
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bbq/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.08193v2
+      ref: v2
+      sha256: d156a5efdfc189703ff001f36a71d6d7381866276d31713fe272d86f3e1d8b8d
+      chars: 87185
+    - kind: repo
+      url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+      ref: bea11bd97d79217245b5871acd247b9d6eb24598
+      sha256: 9cf0dc0c368f8b490f93531c0e267be45fea328c489ad58b8395b03a4b8dcfb0
+      chars: 31146
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: The number of test items is not explicitly stated as a total count, and there is no power calculation or confidence interval provided to justify the sample size.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The benchmark does not report a statistical power figure or minimum detectable difference.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: While some sampling settings (fine-tuning epochs, learning rate) are mentioned, the full prompt template and sampling settings like temperature or max tokens are not provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: The benchmark uses a question-only baseline to control for the model's bias when target entities are not introduced.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 16, chunk 1
+        quote: We create the question-only baseline by removing the context and only providing the model with the question and the three answer options.
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no mention of canary strings, private test splits, or a contamination analysis to prevent test data from being used in training.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: unmet
+    rationale: The excerpts do not report results from repeated runs with different seeds or sessions.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The authors performed a manual inspection of templates during validation and edited those that failed human judgment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 3
+        quote: we edited the template to state that each person had only recently started their diet, and this change caused the template to then pass human validation.
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark describes using human annotators and reports inter-annotator agreement using Krippendorf's alpha.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: Agreement between raters is high, with a Krippendorf’s α of 0.883.
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: The excerpts do not state that the benchmark releases full model outputs or reasoning traces for evaluators to read.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: There is no documented check for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: met
+    rationale: The paper describes the process for creating templates and the validation process for including them in the dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 4
+        quote: We validate examples from each template on Amazon Mechanical Turk.
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: While the excerpts mention input formats and output scoring, they do not describe the tools/sandbox available, interaction length, or specific access restrictions of the evaluation environment.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The authors explicitly state that their technique may fail to measure biases that could manifest in other domains, which is a concrete limitation of the evaluation setting.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 10, chunk 0
+        quote: we have selected a technique that will in some cases fail to measure a bias that could still manifest in other domains
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The spread of the evaluation is described by the total count of unique examples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 3, chunk 3
+        quote: BBQ contains 58,492 unique examples.
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation or a statement that the authors reproduced their own headline numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: met
+    rationale: The benchmark paper was published in the Findings of ACL 2022, which is a peer-reviewed venue.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 1
+        quote: The paper has been published in the Findings of ACL 2022
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The test items are available for public download via the provided GitHub repository.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 1
+        quote: This folder contains each set of generated examples for BBQ. This is the folder you would use to test BBQ.
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: unmet
+    rationale: While a repository exists, the excerpts do not show that a runnable harness or scoring code is released for new models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: met
+    rationale: The paper describes how items are constructed (templates), how models are queried (formats), and how they are scored (exact match).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: unmet
+    rationale: There is no mention of a pinned software environment (lockfile/container) or the specific compute resources needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: unmet
+    rationale: The excerpts describe the prompts and formats (RACE-style, ARC-style) but do not show the actual prompts released in the repository.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: unmet
+    rationale: The excerpts do not show the harness running models through public APIs or being built on a named public evaluation framework.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,120 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: agentbench
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: d1e4a10db08c87075c78972e48ecc182be03e2d5
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/agentbench/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2308.03688v3
+      ref: v3
+      sha256: 7cd79af6c52326b66ffb8a091846a2500987cb0fb0b82ef9eee095868080c8e6
+      chars: 195183
+    - kind: repo
+      url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+      ref: d1e4a10db08c87075c78972e48ecc182be03e2d5
+      sha256: 38676ac447342263b64538034b78c1a541f2759db9637e751b24ae760546faa0
+      chars: 73189
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark shows a clear performance gap between top models and OSS competitors, and the best model (GPT-4) has a success rate of 78% on one dataset, leaving headroom below the ceiling.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 7, chunk 0
+        quote: A clear performance gap exists between top commercial LLMs (e.g.,   gpt-4 ) and OSS LLM competitors.
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 7, chunk 4
+        quote: on House Holding, it achieves a success rate of 78%
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: While the benchmark mentions using data augmentation to 'avoid leakage' for the Database dataset, it does not document a comprehensive contamination defense for the entire benchmark, such as a private held-out test set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 24, chunk 0
+        quote: To further enrich (and avoid leakage from) the dataset, we employed   gpt-3.5-turbo   to perform data augmentation.
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: The provided excerpts do not report the label or answer distributions, nor do they provide a majority-class or trivial baseline score to demonstrate the absence of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark describes a cross-verification process and unit tests (initialization and example code correction) to ensure the correctness of evaluation samples.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 22, chunk 1
+        quote: Finally, we conduct a cross verification for each evaluation sample to make sure it’s correct.
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states that assessing LLM agents in complex web environments is critical and valuable for future development, and it uses these tasks to evaluate reasoning and decision-making abilities.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.03688v3
+        locator: 2308.03688v3 page 5, chunk 2
+        quote: assessing the behavior of LLM agents in complex web environments is critical and valuable for future development.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not state the simplifying assumptions the benchmark relies on to reflect real-world complexity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: There is no evidence of a maintenance process or a cited source confirming that the content and labels have not shifted in meaning over time.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not show an explicit version identifier (like a release tag or DOI) associated with the benchmark name in its main references.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving the benchmark's data and code at the end of its life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: No specific named maintainer, contact address, or active issue tracker is provided in the excerpts to handle queries.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

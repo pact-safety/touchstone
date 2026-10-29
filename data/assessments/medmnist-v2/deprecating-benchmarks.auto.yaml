@@ -1,0 +1,142 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: medmnist-v2
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 805b74237fb5bd2db376fd94e50646b6a8905d9d
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/medmnist-v2/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.14795v2
+      ref: v2
+      sha256: 8666d420d15d31e8f9f43b19b14117d7baa3bcbf1c22b64969bfc73fe8d5de1d
+      chars: 46793
+    - kind: repo
+      url: https://github.com/MedMNIST/MedMNIST/tree/805b74237fb5bd2db376fd94e50646b6a8905d9d
+      ref: 805b74237fb5bd2db376fd94e50646b6a8905d9d
+      sha256: 0fa48268202788747791d38c99f983f7da91e0d1ee9016ef60e1d475a6f8e93c
+      chars: 34185
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: unmet
+    rationale: The provided excerpts do not contain a leaderboard or saturation analysis showing current best scores and their headroom relative to a ceiling.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c2:
+    value: met
+    rationale: The benchmark documents a defense against data leakage by using official data splits from source datasets or patient-level random splitting.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14795v2
+        locator: 2110.14795v2 page 3, chunk 1
+        quote: We use the official data split from source dataset (if provided) to avoid data leakage.
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The authors explicitly state that there is no severe class imbalance on their datasets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14795v2
+        locator: 2110.14795v2 page 7, chunk 2
+        quote: Since there is no severe class imbalance on our datasets, ACC could also serve as a good metric.
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts do not contain a cited audit, validation pass, or error analysis reporting the annotation error rate of the labels.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to evaluate the generalizability of models across diverse biomedical image classification tasks, which remains current for research in AutoML and trustworthy ML.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14795v2
+        locator: 2110.14795v2 page 2, chunk 2
+        quote: As a large-scale benchmark in biomedical image analysis, MedMNIST has been particularly useful for machine learning and computer vision research 13–15 ,   e.g. , AutoML, trustworthy machine learning, domain adaptive learning.
+    by: model
+    quotes_verified: true
+  c6:
+    value: met
+    rationale: The benchmark explicitly states its simplifying assumptions regarding image resizing and label simplification.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14795v2
+        locator: 2110.14795v2 page 3, chunk 1
+        quote: All images are pre-processed into a MNIST-like format,   i.e. ,   28   ×   28   (2D) or   28   ×   28   ×   28   (3D)
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark uses labels from source datasets and there is no evidence provided that these labels or the task meanings have shifted over time.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.14795v2
+        locator: 2110.14795v2 page 3, chunk 1
+        quote: The MedMNIST uses the classification labels from the source datasets directly in most cases
+    by: model
+    quotes_verified: true
+  r1:
+    value: met
+    rationale: The benchmark uses an explicit version identifier 'v2' in its main references and maintains detailed release notes recording changes per version.
+    evidence:
+      - source: repo
+        url: https://github.com/MedMNIST/MedMNIST/tree/805b74237fb5bd2db376fd94e50646b6a8905d9d
+        locator: MedMNIST/MedMNIST@805b74237fb5:README.md, chunk 2
+        quote: "MedMNIST v2: A Large-Scale Lightweight Benchmark for 2D and 3D Biomedical Image Classification"
+      - source: repo
+        url: https://github.com/MedMNIST/MedMNIST/tree/805b74237fb5bd2db376fd94e50646b6a8905d9d
+        locator: MedMNIST/MedMNIST@805b74237fb5:README.md, chunk 15
+        quote: |-
+          # Release Notes
+          * `v3.0.2`: Bug fixed in Evaluator (`size_flag`) and PyPI updated.
+    by: model
+    quotes_verified: true
+  r2:
+    value: met
+    rationale: The benchmark data is hosted in a persistent archive (Zenodo) with a DOI.
+    evidence:
+      - source: repo
+        url: https://github.com/MedMNIST/MedMNIST/tree/805b74237fb5bd2db376fd94e50646b6a8905d9d
+        locator: MedMNIST/MedMNIST@805b74237fb5:README.md, chunk 0
+        quote: Data ([Zenodo](https://doi.org/10.5281/zenodo.10519652))
+      - source: repo
+        url: https://github.com/MedMNIST/MedMNIST/tree/805b74237fb5bd2db376fd94e50646b6a8905d9d
+        locator: MedMNIST/MedMNIST@805b74237fb5:README.md, chunk 10
+        quote: The only official distribution link for the MedMNIST dataset is [Zenodo](https://doi.org/10.5281/zenodo.10519652).
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides named maintainers and has been updated as recently as January 2024.
+    evidence:
+      - source: repo
+        url: https://github.com/MedMNIST/MedMNIST/tree/805b74237fb5bd2db376fd94e50646b6a8905d9d
+        locator: MedMNIST/MedMNIST@805b74237fb5:README.md, chunk 0
+        quote: "***Update 2024-01-17***: We are thrilled to release [MedMNIST+](on_medmnist_plus.md)"
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

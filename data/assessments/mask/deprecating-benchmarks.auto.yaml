@@ -1,0 +1,124 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mask
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mask/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.03750v3
+      ref: v3
+      sha256: 9bcec5f619dcb60b733cce61f4e2ed46d54e87fd7912498c395b8b59e617d42d
+      chars: 72271
+    - kind: repo
+      url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      ref: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
+      sha256: 06e7088a378d52ba4ae9eabd3f465b5ecb18e46a92b427dbf8ccfb4e8ed618c2
+      chars: 3382
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark shows clear headroom as top scores (e.g., 90.7% for Llama 2 13B with LoRRA) are not at the maximum, and the paper notes that techniques 'do not completely prevent lying'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 9, chunk 0
+        quote: Both techniques do not completely prevent lying
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The benchmark is described as a 'large-scale public benchmark' and the dataset is available on Hugging Face, but there is no documentation of a contamination defense such as a private held-out set or regular refreshes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 0
+        quote: a large-scale public benchmark for measuring the propensity of AIs to engage in lies of commission
+    by: model
+    quotes_verified: true
+  c3:
+    value: unmet
+    rationale: The provided excerpts do not report the label or answer distribution, nor do they provide a majority-class or trivial baseline score to demonstrate the benchmark is free of statistical bias.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark implemented a final auditing process where an independent group sampled 10% of tasks to ensure an error rate below 5%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 17, chunk 2
+        quote: an independent group of auditors randomly sampled 10% of completed tasks to ensure an error rate below 5%
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark serves the current purpose of measuring and improving model honesty to ensure LLMs remain trustworthy as they become more agentic.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 2, chunk 2
+        quote: We hope our benchmark facilitates further progress towards honest AI systems by providing researchers with a rigorous, standardized way to measure and improve model lying.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on, which is required to meet the criteria.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark is presented as a new introduction of a dataset and evaluation pipeline, and there is no evidence of semantic drift or outdated content.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 14, chunk 0
+        quote: This work introduces the MASK benchmark and evaluation pipeline for measuring when large language models (LLMs) knowingly produce false statements under pressure.
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not show an explicit version identifier (like a release tag or DOI) displayed alongside the benchmark name in its main references, nor is there evidence of recorded changes per version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a policy for archiving artifacts at the end of the benchmark's life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: met
+    rationale: The benchmark provides a GitHub repository which serves as an issue tracker/contact point, and the project is current (paper dated Jan 2026).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.03750v3
+        locator: 2503.03750v3 page 1, chunk 2
+        quote: The code can be found at github.com/centerforaisafety/mask
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,266 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: wmdp
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v7
+  repo_commit: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/wmdp/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2403.03218v7
+      ref: v7
+      sha256: 0f9e262077b9de1ede69f1e049d9d397340173a18847aa5ad06aa65a3a2c4137
+      chars: 106883
+    - kind: repo
+      url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+      ref: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+      sha256: 5b9f7623b08bde37498bc7f876403cf49c0c5bdbe45717ffd26a864afcd3b1db
+      chars: 7077
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The phenomenon is operationalized as the model's QA accuracy on the WMDP dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 8, chunk 3
+        quote: We operationalize this as reducing a model’s QA accuracy on WMDP
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the scope includes bio, cyber, and chem, the excerpts do not explicitly name an excluded aspect of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is broken down into sub-components (Bio, Cyber, Chem) and further categories, which are listed with separate counts, indicating separate measurement.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 21, chunk 1
+        quote: |-
+          Category   Count
+          Bio
+          Dual-use Virology   228
+          Bioweapons & Bioterrorism   197
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts identify secondary abilities required for tasks (e.g., reasoning about assembly and source code), but do not report control conditions or ablation results for these specific abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the paper mentions using a zero-shot QA format and notes that models are sensitive to prompting, it does not measure or report the effect of different output-format requirements on scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses a multiple-choice format where the answer is determined by the top logit between A, B, C, and D, meaning no automated parsing of free-form output is used for the primary evaluation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 11, chunk 1
+        quote: |-
+          taking the top logit between   A ,   B ,   C ,
+          and   D   as the answer choice.
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts describe the general process of generating threat models and collecting questions, but they do not document a specific sampling strategy over a described task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: met
+    rationale: The text explicitly states that all questions were checked by at least two experts to ensure quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 5, chunk 2
+        quote: To ensure quality, all of our questions were checked by at least two experts from different organizations.
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items, nor are such results reported separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: unmet
+    rationale: The provided excerpts do not state whether the WMDP benchmark itself adapts a previous dataset or benchmark; it only mentions reusing MMLU and MT-Bench for evaluation purposes.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: There is no evidence that the WMDP benchmark reuses or adapts a prior dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: There is no evidence that the WMDP benchmark reuses or adapts a prior dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: There is no evidence that the WMDP benchmark reuses or adapts a prior dataset or benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts do not describe a test specifically designed to detect data contamination or report its results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The authors identified sensitive questions and removed them from the main set to create a held-out private set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 13, chunk 1
+        quote: We treat these as a held-out set of private questions with especially hazardous knowledge.
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: While the paper mentions that source materials were likely included in training data, it does not report a formal search or overlap check against a named corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is stated, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+        locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 0
+        quote: a dataset of 3,668 multiple-choice questions
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The results table provided in the excerpts contains only point estimates (percents) without confidence intervals or standard errors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 10, chunk 3
+        quote: "Table 1: RMU outperforms baselines, decreasing accuracy on WMDP while maintaining general capabilities"
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark uses multiple-choice questions and model-based filtering; no human raters are used for scoring or labeling in the provided excerpts.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+        locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 0
+        quote: The Weapons of Mass Destruction Proxy (WMDP) benchmark is a dataset of 3,668 multiple-choice questions
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: The labels are based on multiple-choice questions, which use deterministic keys (exact answers), making them non-subjective.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+        locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 0
+        quote: a dataset of 3,668 multiple-choice questions
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts do not provide a qualitative and quantitative analysis of common failure modes where failures are both described and counted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder to check for correlation with non-targeted phenomena.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors propose a specific direction to improve unlearning precision by using subject-specific retain sets.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 12, chunk 1
+        quote: we encourage future work to employ our subject-specific biology and cyber retain sets (Section 4.2) to improve unlearning precision.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to the real-world application of preventing the use of LLMs as knowledge engines for developing weapons.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 11, chunk 1
+        quote: In the future, LLMs may be used by adversaries as knowledge engines for developing weapons.
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: While tasks and metrics are described, there is no quotable statement linking them to a specific operational definition provided in a 'def.1' section.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The text compares WMDP to existing unlearning benchmarks, noting that while others use specific samples or artificial sets, WMDP uses real-world information.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 4, chunk 2
+        quote: most benchmarks for unlearning involve removing specific data samples (Google, 2023) or artificially chosen deletion sets (Choi and Na, 2023; Goel et al., 2023; Maini et al., 2024; Goel et al., 2024). In contrast, WMDP benchmarks on real-world information
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: met
+    rationale: The authors state a design trade-off where the benchmark itself could serve as a roadmap for malicious use, affecting what it enables/measures in terms of risk.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2403.03218v7
+        locator: 2403.03218v7 page 30, chunk 2
+        quote: it may inadvertently serve as a roadmap for malicious use, hastening the onset of x-risks by lowering the barrier for causing catastrophe.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

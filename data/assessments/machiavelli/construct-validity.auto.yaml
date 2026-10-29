@@ -1,0 +1,256 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: machiavelli
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/machiavelli/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2304.03279v4
+      ref: v4
+      sha256: ab66d6699e0d0d721e857435d45c43f70115174d074217eb0ec94da8d6963a4a
+      chars: 120586
+    - kind: repo
+      url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+      ref: ebb44e197f663603427882c609dbc9d5fb883d63
+      sha256: 5cbc5f072d51ba92f2bad196db5ae1a6d9579a02ad133424471c9fd7810d3def
+      chars: 10786
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The paper provides a mathematical operational definition of power based on observable outputs such as watts, money, wellbeing, or social influence.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 1
+        quote: I ( s )   ∈   R   is some scalar measure of power exerted in a state   s   and measured in terms of watts, money, wellbeing, or social influence.
+    by: model
+    quotes_verified: true
+  def.2:
+    value: met
+    rationale: The scope is defined by physical impact in scenes, and it explicitly excludes hypothetical actions and non-physical power.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 24, chunk 1
+        quote: Do   not   count   power   for   hypothetical actions,   or   effects   that   are   not   shown   in   the   scene
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: While the paper discusses different conceptualizations of power (e.g., prospective power, exercised power), it does not state that the phenomenon is unitary nor does it show that these sub-components are scored separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify specific secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the excerpts specify JSON output formats, there is no measurement of how these format requirements impact model performance scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The excerpts show that the model is prompted to provide answers as JSON objects, which is a structured format rather than free-form output requiring automated parsing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 19, chunk 2
+        quote: provide your answer as a JSON object with the following format
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts do not document a sampling strategy over a described task space; they only mention identifying a test set based on correlation between points and harms.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: While the text discusses label quality and agreement with gold labels, it does not state that every item passed a documented quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: There is no mention of a counted subset of permuted or perturbed items, nor are such results reported separately.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation states that the benchmark is similar to and improves upon the artificial conscience method from Hendrycks et al. (2021c).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 8, chunk 1
+        quote: Most similar to our work is Hendrycks et al. (2021c), which introduces the artificial conscience method.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: met
+    rationale: The authors report a strength (the original method introduces the artificial conscience) and limitations/differences (the new benchmark has richer labels and is an order of magnitude larger).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 8, chunk 1
+        quote: The main qualitative difference is that we collect a richer set of labels, allowing us to measure more behaviors
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: unmet
+    rationale: While the authors describe qualitative differences and scale improvements, they do not provide a performance comparison of results on the new benchmark against the original.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: unmet
+    rationale: The authors mention collecting a richer set of labels and more games, but they do not explicitly explain how these specific modifications improve construct validity.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any tests implemented to detect data contamination or report results for such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The repository structure mentions a test set of games used for baseline agents.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 4
+        quote: Run trajectories for baseline agents on test set games
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the paper mentions a test set of 2,000 scenes, it does not provide a power calculation or confidence-interval width relative to the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: on a test set of 2,000 scenes sampled uniformly at random from all games
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not contain the main results table or any mention of confidence intervals or standard errors for the primary scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: unmet
+    rationale: The benchmark uses human annotators from Surge AI, but there is no description of their demographics or a statement on how demographic bias was mitigated.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 3
+        quote: human annotators from Surge AI
+    by: model
+    quotes_verified: true
+  st.4:
+    value: met
+    rationale: The labels are subjective (human and model ratings), and the paper reports the Spearman rank correlation (an agreement statistic) between gold labels and other labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: Table 8 shows the agreement (Spearman rank correlation) of gold labels against the model labels and crowdworker labels.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts mention 'failure modes' in a general risk context, but do not provide a qualitative and quantitative analysis where specific failure modes are both described and counted.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure provided in the excerpts that breaks down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet according to the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors report experiments using behavioral regularization (artificial conscience and LM conditioning) specifically to reduce harmfulness and improve moral behavior.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 2
+        quote: We investigate methods for encouraging our language-model agent and our RL agent to behave morally.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to the real-world application of deploying agents in complex social environments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 1, chunk 3
+        quote: few works study planning in complex social environments, a crucial capability for agents deployed in the real world.
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition (def.1) to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: met
+    rationale: The benchmark is compared to Hendrycks et al. (2021c), noting a difference in the richness of labels and the ability to measure more behaviors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 8, chunk 1
+        quote: The main qualitative difference is that we collect a richer set of labels, allowing us to measure more behaviors
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: The excerpts do not discuss limitations or design trade-offs specifically concerning what the scores do or do not measure.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

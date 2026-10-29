@@ -1,0 +1,418 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bbq
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bbq/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2110.08193v2
+      ref: v2
+      sha256: d156a5efdfc189703ff001f36a71d6d7381866276d31713fe272d86f3e1d8b8d
+      chars: 87185
+    - kind: repo
+      url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+      ref: bea11bd97d79217245b5871acd247b9d6eb24598
+      sha256: 9cf0dc0c368f8b490f93531c0e267be45fea328c489ad58b8395b03a4b8dcfb0
+      chars: 31146
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines its focus as stereotyping behavior and the manifestation of social biases in QA outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 3
+        quote: we focus on stereotyping behavior and build on the definition and treatment of bias in QA from Li et al. (2020)
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The benchmark translates the concept of bias into a task using under-informative and adequately informative contexts to test if biases override correct answers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 0
+        quote: "Our task evaluates model responses at two levels: (i) given an under-informative context, we test how strongly responses reflect social biases, and (ii) given an adequately informative context, we test whether the model’s biases override a correct answer choice."
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The authors describe how these biases in real-world applications risk harming marginalized individuals and groups.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 1
+        quote: The use of these models in real-world applications therefore risks harming marginalized individuals and groups.
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 15
+    rationale: The authors explicitly warn that a low bias score should not be interpreted as the model being unbiased in all cases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 9, chunk 3
+        quote: We do not intend that a low bias score should be indicative of a less biased model in all cases.
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 15
+    rationale: The benchmark is explicitly stated to have been validated by experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 2, chunk 3
+        quote: a dataset of hand-written contexts that target attested social biases against nine different socially-relevant categories and that has been validated by both experts and crowdworkers.
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 0
+    rationale: The excerpts do not describe specific use cases or user personas.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 15
+    rationale: The benchmark integrates domain literature, citing Blodgett et al. (2020) and Li et al. (2020) for bias definitions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 3
+        quote: There are many, often conflicting, ways bias is defined in NLP (Blodgett et al., 2020); we focus on stereotyping behavior and build on the definition and treatment of bias in QA from Li et al. (2020)
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 10
+    rationale: The authors mention using exact match for scoring and a bias score, though the full derivation of the metric is not detailed in the excerpts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark provides estimated raw and aggregate human accuracy levels."
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: The excerpts do not provide a random performance level baseline.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 0
+    rationale: While human validation is mentioned, there is no mention of a validated automatic evaluation method for the benchmark itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The authors explain the difference between BBQ and UnQover, noting BBQ uses a stricter definition by measuring outputs rather than likelihoods.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 10, chunk 0
+        quote: By shifting from measuring likelihoods (as UnQover does) to measuring model outputs, BBQ uses a stricter definition of what counts as biased model behavior.
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 15
+    rationale: Input sensitivity is addressed by permuting the order of target and non-target words and using multiple strings for the UNKNOWN option.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 1
+        quote: Therefore, we permute the order of the target and non-target words for each example
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 10
+    rationale: The repository contains analysis scripts and generation scripts, and links to model-specific code, but a comprehensive evaluation suite is not explicitly provided.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:FILE LISTING, chunk 0
+        quote: analysis_scripts/BBQ_calculate_bias_score.R
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: Evaluation data is provided as .jsonl files in the data directory, and generation scripts are included.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:FILE LISTING, chunk 0
+        quote: data/Age.jsonl
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 0
+    rationale: The excerpts do not mention support for evaluating models via API.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 10
+    rationale: The authors test local models like RoBERTa and DeBERTaV3, and provide code for them.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 5
+        quote: The relevant code for the RoBERTa and DeBERTaV3 models that were finetuned on RACE can be found the [here]
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 0
+    rationale: While analysis scripts are present, there is no specific script provided to replicate the full results of the paper.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: The excerpts describe accuracy and bias scores but do not report statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 5
+    rationale: The authors warn human annotators about sensitive content, but they do not assess the need for warnings for the model evaluation itself.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 15, chunk 1
+        quote: Annotators are warned before beginning the main task that many examples reference potentially upsetting social stereotypes
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: There is no evidence of a build status or equivalent implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 0
+    rationale: No requirements file (e.g., requirements.txt) is mentioned or listed in the file listing.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 0
+    rationale: No quick-start guide or demo is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 0
+    rationale: The excerpts do not provide the content of the code files to verify in-line comments.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 0
+    rationale: No specific code documentation (like API docs) is provided beyond the README.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The paper was published in the Findings of ACL 2022, which is a peer-reviewed venue.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 1
+        quote: The paper has been published in the Findings of ACL 2022
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 0
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper describes the template construction and the process of creating the dataset."
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper documents the test tasks (evaluating model responses to social biases) and the rationale (highlighting attested social biases).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 1, chunk 0
+        quote: "Our task evaluates model responses at two levels: (i) given an under-informative context, we test how strongly responses reflect social biases"
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not explicitly document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper documents limitations regarding the sample size and the cultural context (US English-speaking).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 8, chunk 3
+        quote: the data in BBQ is only designed to test biases associated with US English-speaking cultural contexts
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The prompt design process (template construction) and data collection (name selection) are documented.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 13, chunk 1
+        quote: we describe here the full process and criteria that went into our creation of the name database for BBQ.
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The evaluation metric is documented as exact match between the top output and answer options.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 6, chunk 0
+        quote: we score by exact match between the top output and each answer option.
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The dataset is released under the CC-BY 4.0 license.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 3, chunk 2
+        quote: released under the CC-BY 4.0 license.
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 10
+    rationale: The repository includes an additional_metadata.csv file with structured fields, though it's not specified if it follows a global standard.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 3
+        quote: "`additional_metadata.csv`, with the following structure:"
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper documents data sources such as the NYC baby name database and US Census Bureau.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 13, chunk 2
+        quote: we use both the NYC baby name database (OpenData, 2021) and a brief report of Anglophone names
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 15
+    rationale: The paper documents preprocessing steps such as randomly perturbing words to diminish idiosyncratic effects.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 12, chunk 1
+        quote: words that do not directly affect the overall interpretation of the context and do not affect the bias being probed are randomly perturbed
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 15
+    rationale: The paper documents the validation of templates using crowdworker judgments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 2, chunk 6
+        quote: unique templates written by the authors and validated using crowdworker judgments
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 15
+    rationale: The paper explains the representativeness of the names used to reflect extreme distributional differences in name-ethnicity relations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: 2110.08193v2 page 5, chunk 3
+        quote: our proper name vocabulary reflects the most extreme distributional differences in name-ethnicity and name-gender relations
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of the documentation following a recognized standard (e.g., Datasheets for Datasets).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The provided excerpts do not contain any information regarding whether the code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users in the provided text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

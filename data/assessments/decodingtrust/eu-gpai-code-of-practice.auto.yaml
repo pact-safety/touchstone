@@ -1,0 +1,241 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: decodingtrust
+standard: eu-gpai-code-of-practice
+standard_version: 2025-07
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v5
+  repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/decodingtrust/eu-gpai-code-of-practice/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2306.11698v5
+      ref: v5
+      sha256: f94fba634e046109d072484fbb989fc1e9ba28dd2cf3823b33bd3af0944fed36
+      chars: 384671
+    - kind: repo
+      url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      ref: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
+      sha256: b9ed3260380b3e10b8ff38101bea6f116bc09b42d5f2975d1ce30236b007e95a
+      chars: 61156
+  excerpt_chars: 40000
+verdicts:
+  iv.01:
+    value: unmet
+    rationale: While some test set sizes are mentioned (e.g., 200 samples), there is no power calculation or confidence interval provided to justify these as sufficient for the comparisons.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: unmet
+    rationale: The excerpts do not report both a significance test/confidence interval and a statistical power figure or minimum detectable difference.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: met
+    rationale: The documentation provides sampling settings (temperature, max tokens), model versions, and system prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 10, chunk 3
+        quote: we can set specific parameters, such as temperature and maximum tokens
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 10, chunk 3
+        quote: we utilized the March 14th version of GPT-4 ( gpt-4-0314 ), and the March 1st version of GPT-3.5 ( gpt-3.5-turbo-0301 )
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 11, chunk 2
+        quote: we generate up to 150 tokens, set the temperature parameter to 1, and use a top- p value of 1
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: met
+    rationale: The benchmark uses a zero-shot baseline to control for the effect of spurious correlations in demonstrations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 36, chunk 1
+        quote: the prediction gap between the two balanced classes would be large compared to the zero-shot setting
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: There is no mention of canary strings, private test splits, or a contamination analysis to prevent test data from being in the training set.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: met
+    rationale: Results are reported from repeated runs (3 times for sampling) and varied conditions (zero-shot vs CF(x) vs Demo).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 34, chunk 1
+        quote: We repeat three times for randomly sampling the demonstrations in Demo and Demo + CF ( x )
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 34, chunk 1
+        quote: By comparing the performance between Zero – shot and CF ( x )
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The paper reports manual inspection of model outputs, specifically noting sarcastic responses from GPT-4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 84, chunk 1
+        quote: upon manual evaluation of the model outputs, we observe that sometimes GPT-4 would agree with a statement sarcastically
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: met
+    rationale: The benchmark uses PerspectiveAPI for toxicity, and the text notes that these automatic evaluations generally align with human judgments.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 57, chunk 1
+        quote: the automatic evaluations performed by PerspectiveAPI are shown generally align with human judgments
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: unmet
+    rationale: The excerpts do not state that the harness stores or releases the full model outputs per item for evaluator review.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: unmet
+    rationale: There is no documented check for evaluation awareness, sandbagging, or under-elicitation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.11:
+    value: unmet
+    rationale: While the dataset composition is mentioned, there is no description of the review process for items or a versioning/maintenance plan for fixes and retirement.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: met
+    rationale: The documentation describes the input prompting format (role-based system), the output format (JSON with requests and responses), and the access method (OpenAI API).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 10, chunk 2
+        quote: the format is a novel role-based system that differentiates between system roles and user roles
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:Tutorial.md, chunk 3
+        quote: The output files will be written to `./data/adv-glue-plus-plus/results/model-organization/model-name` in the following format to record the raw model queries, raw responses, parsed results, labels, and scores for each task
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 10, chunk 2
+        quote: Access to these models is achieved via OpenAI’s API querying system
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper explicitly identifies that the evaluation focuses on general vulnerabilities using standard tasks, whereas real-world use involves domain-specific applications like law and education."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: The evaluation spread is described across eight primary areas of trustworthiness (scenario types/domains).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 109, chunk 1
+        quote: |-
+          This project is organized around the following eight primary areas of trustworthiness, including:
+          –   Toxicity 
+          –   Stereotype and bias 
+          –   Adversarial robustness 
+          –   Out-of-Distribution Robustness 
+          –   Privacy 
+          –   Robustness to Adversarial Demonstrations 
+          –   Machine Ethics 
+          –   Fairness
+    by: model
+    quotes_verified: true
+  rp.01:
+    value: unmet
+    rationale: The excerpts do not report run-to-run variation or a statement that the authors reproduced their own headline numbers.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.02:
+    value: unmet
+    rationale: The provided excerpts do not mention a peer-reviewed venue or a third-party reproduction; the paper format suggests a preprint (arXiv).
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.03:
+    value: met
+    rationale: The authors explicitly state that the evaluation dataset is released to the public on GitHub.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 109, chunk 2
+        quote: The evaluation dataset is released to the public and hosted on GitHub.
+    by: model
+    quotes_verified: true
+  rp.04:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The repository contains the harness, scoring code, and a tutorial for running evaluations against models using a command-line tool."
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.05:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper and README provide details on how items are constructed, how models are queried, and how outputs are scored."
+    evidence: []
+    by: model
+    quotes_verified: true
+  rp.06:
+    value: met
+    rationale: The software environment is provided as a Docker image, and a Conda environment with specific versions is listed.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
+        locator: AI-secure/DecodingTrust@161ae8321ced:README.md, chunk 11
+        quote: To use DecodingTrust with docker, simply pull the following docker image.
+    by: model
+    quotes_verified: true
+  rp.07:
+    value: met
+    rationale: The prompts and system prompts used to query the models are released in the repository and described in the paper.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: 2306.11698v5 page 77, chunk 0
+        quote: We present the detailed 33 system prompts we consider in Figure 27, 28,29,30,31.
+    by: model
+    quotes_verified: true
+  rp.08:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness is designed to run models through public APIs (OpenAI) and supports models hosted on Huggingface."
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

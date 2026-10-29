@@ -1,0 +1,120 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: ale
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 816fd1591f1b73133c269fe753f10a0490ab4a63
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/ale/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1207.4708v2
+      ref: v2
+      sha256: 48f889aff01198b693ba4d7880eb3337bbe755f9b4b3d264b445f4301dd3b422
+      chars: 71511
+    - kind: repo
+      url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+      ref: 816fd1591f1b73133c269fe753f10a0490ab4a63
+      sha256: 58d5c9da63534780222d29d92323766055ca3c10e0153a4a166f703b5fc1212c
+      chars: 120585
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark provides baseline results and human scores, and the provided table shows that top models (like LSH) significantly exceed human beginner scores in several games, while the authors state the platform offers 'conceivable near-term advancements'.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 3, chunk 0
+        quote: a challenging platform offering conceivable near-term advancements in learning, modelling, and planning.
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document a contamination defense such as a private held-out test set or a contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark uses game scores rather than class labels, and it reports trivial baseline agents (Random, Const, Perturb) that score well below the learning agents in most games.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 6, chunk 1
+        quote: In 40 games out of 55, learning agents perform better than the baseline agents.
+    by: model
+    quotes_verified: true
+  c4:
+    value: unmet
+    rationale: The provided excerpts contain no mention of a quality review, audit, or error analysis regarding the annotation or label error rate of the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark states its purpose is to evaluate the development of general, domain-independent agents, a goal that remains current for the models it is used on.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 15, chunk 1
+        quote: This article has introduced the Arcade Learning Environment, a platform for evaluating the development of general, domain-independent agents.
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark explicitly states that while Atari 2600 games are simpler than modern consoles, they provide challenges associated with real-world applications."
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: met
+    rationale: The benchmark's content is based on emulated Atari 2600 games, which are frozen historical artifacts, and there is no evidence that the meaning of the tasks has shifted.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1207.4708v2
+        locator: 1207.4708v2 page 2, chunk 0
+        quote: ALE is a software framework for interfacing with emulated Atari 2600 game environments.
+    by: model
+    quotes_verified: true
+  r1:
+    value: met
+    rationale: The benchmark uses explicit version identifiers (v0, v4, v5) for its environments, and the documentation describes the history and recommendation of these versions.
+    evidence:
+      - source: repo
+        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
+        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:docs/environments.md, chunk 10
+        quote: ALE registers the legacy `v0` and `v4` environments, with and without frame skipping, alongside `ALE/{rom_name}-v5`.
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: The provided excerpts do not mention a deprecation plan or a policy for archiving artifacts at the end of life.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: No named maintainer, contact address, or issue tracker is provided in the excerpts to handle queries.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

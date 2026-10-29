@@ -1,0 +1,110 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: hellaswag
+standard: deprecating-benchmarks
+standard_version: "2025.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/hellaswag/deprecating-benchmarks/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/1905.07830v1
+      ref: v1
+      sha256: 94a483f8855c461b4cdea4ba6f9c7e8b1238816e21ce24f6ef0338690ccb2774
+      chars: 56552
+  excerpt_chars: 40000
+verdicts:
+  c1:
+    value: met
+    rationale: The benchmark shows significant headroom, as state-of-the-art models score below 48% while humans score above 95%.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 1, chunk 0
+        quote: Though its questions are trivial for humans ( ą 95% accuracy), state-of-the-art models struggle ( ă 48%)
+    by: model
+    quotes_verified: true
+  c2:
+    value: unmet
+    rationale: The provided excerpts do not document a contamination defense such as a private held-out set or contamination analysis.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c3:
+    value: met
+    rationale: The benchmark uses a 4-way setting where a random baseline (25%) is reported and is well below the performance of models and humans.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 11, chunk 1
+        quote: Sometimes, BERT never converges (accuracy around 25%)
+    by: model
+    quotes_verified: true
+  c4:
+    value: met
+    rationale: The benchmark describes a quality review process involving several rounds of human filtering to ensure high agreement and remove false negatives.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 5, chunk 2
+        quote: we ensure high human agreement through several rounds of annotation
+    by: model
+    quotes_verified: true
+  c5:
+    value: met
+    rationale: The benchmark defines its task as physically situated commonsense reasoning and explicitly states that the underlying task remains unsolved.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: 1905.07830v1 page 2, chunk 0
+        quote: the underlying   task   remains unsolved
+    by: model
+    quotes_verified: true
+  c6:
+    value: unmet
+    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on.
+    evidence: []
+    by: model
+    quotes_verified: true
+  c7:
+    value: unmet
+    rationale: There is no evidence of a maintenance process or a cited audit confirming that the content has not drifted or become unrepresentative over time.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r1:
+    value: unmet
+    rationale: The provided excerpts do not mention a version identifier, release tag, or DOI associated with the benchmark name, nor do they describe a version control system.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r2:
+    value: unmet
+    rationale: There is no mention of a deprecation plan or a persistent archive for the data and generating code.
+    evidence: []
+    by: model
+    quotes_verified: true
+  r3:
+    value: unmet
+    rationale: The excerpts do not provide a named maintainer, contact address, or issue tracker for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

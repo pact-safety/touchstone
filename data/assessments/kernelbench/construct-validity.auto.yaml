@@ -1,0 +1,252 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: kernelbench
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/kernelbench/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2502.10517v1
+      ref: v1
+      sha256: f6072136b7d8f41a6def6400915f3fb3f4bcfba4e9cb93d30095dd2663a45276
+      chars: 106453
+    - kind: repo
+      url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      ref: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      sha256: d76ec364b922087b6756c8586e2de8d26b3fb2adc80fad7e85ea241a650143da
+      chars: 38422
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: "The benchmark defines correctness and performance based on observable outputs: comparing model outputs for correctness and measuring wall-clock execution time for performance."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 17, chunk 0
+        quote: For correctness , we set num correctness to 5, where we check equivalence of output between reference architecture Model and generated architecture with custom kernel ModelNew
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 17, chunk 0
+        quote: For performance , we measure the wall-clock execution time of nn.module.forward for both Model and ModelNew
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the scope is described (AI workloads/kernels), the excerpts do not name any specific excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: met
+    rationale: The phenomenon is split into sub-components (correctness and performance) which are measured and scored separately.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: "We can evaluate whether LM generations are correct and fast as follows: 1. Correctness We compare the Model output to the LM-generated ModelNew output."
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 17, chunk 0
+        quote: For performance , we measure the wall-clock execution time of nn.module.forward for both Model and ModelNew
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts do not identify any secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the paper mentions providing an 'output format' in the prompt, there is no measurement of how these format constraints impact the model's performance scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses automated verification of code execution (comparing tensor outputs) rather than parsing free-form text output.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts mention 'repeated sampling' as a method for LLMs to discover solutions, but they do not document a sampling strategy used to construct the dataset from a task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: There is no documentation stating that every item in the dataset passed a quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the file list mentions 'test_eval_adversarial.py', there is no evidence of a counted subset of permuted/perturbed items with results reported separately from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: unmet
+    rationale: The provided excerpts do not state whether the benchmark adapts a previous dataset or benchmark; it is presented as a new framework.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: There is no evidence that a prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: There is no evidence that a prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: There is no evidence that a prior dataset or benchmark was reused.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The excerpts describe unit tests to detect 'reward hacking' (adversarial kernels), but they do not describe a test to detect data contamination or report results for such a test.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: unmet
+    rationale: There is no mention of a private or held-out split of task items in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: met
+    rationale: The paper reports an overlap check of CUDA code in 'The Stack v1.2' corpus to hypothesize why models struggle with correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 2, chunk 2
+        quote: We hypothesize this is due to CUDA being a low-resource language in open-source training data, only 0 . 073% of popular code corpus The Stack v1.2 [16, 18].
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: The item count is stated as 250, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 3, chunk 2
+        quote: KernelBench instead curates a set of 250 diverse kernels
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not show a main results table where every score has a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark evaluates model-generated CUDA kernels against reference torch operators and timing, using no human raters.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 2
+        quote: check against reference torch operators `n_correctness` times on randomized inputs.
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: Labels are deterministic, based on correctness checks against reference operators and wall-clock timing (speedup), not subjective ratings.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 2
+        quote: check against reference torch operators `n_correctness` times on randomized inputs.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: met
+    rationale: The authors describe failure modes (execution failures and correctness errors) and provide quantitative counts/percentages for these modes across different models.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 6, chunk 0
+        quote: we break down their correctness issues into execution failures (CUDA/ nvcc / Python compile-time errors, CUDA memory violations, and runtime errors) and correctness errors (output tensor shape and value mismatches).
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: The excerpts do not show a table or figure breaking down failures by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors conduct an experiment investigating whether leveraging execution and profiling feedback during iterative refinement improves results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 7, chunk 2
+        quote: We investigate whether leveraging this feedback can help LMs to iteratively refine their generations.
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: met
+    rationale: The benchmark is linked to the real-world application of building performant machine learning architectures.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 1, chunk 0
+        quote: Efficient GPU kernels are crucial for building performant machine learning architectures
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: While tasks and metrics are described, there is no provided operational definition (def.1) to which they are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is compared to existing HPC code generation works that focus on C++ to CUDA translation or GEMMs, noting that KernelBench uses diverse real-world deep learning workloads."
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: The excerpts do not discuss limitations or design trade-offs specifically concerning what the scores do or do not measure.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

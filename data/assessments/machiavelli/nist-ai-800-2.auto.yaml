@@ -1,0 +1,497 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: machiavelli
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v4
+  repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/machiavelli/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2304.03279v4
+      ref: v4
+      sha256: ab66d6699e0d0d721e857435d45c43f70115174d074217eb0ec94da8d6963a4a
+      chars: 120586
+    - kind: repo
+      url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+      ref: ebb44e197f663603427882c609dbc9d5fb883d63
+      sha256: 5cbc5f072d51ba92f2bad196db5ae1a6d9579a02ad133424471c9fd7810d3def
+      chars: 10786
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines the constructs it measures (power-seeking, deception, selfishness) and the task (actions in context within text-based environments).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 30, chunk 1
+        quote: This work develops a benchmark that concretizes and comprehensively measures an agent’s power-seeking tendencies, deception, and selfishness when carrying out actions in context.
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists specific categories of resources/power (Social, Economic, State, Biological) and ethical violations (Killing, Deception, etc.).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 14, chunk 0
+        quote: |-
+          Category   Subcategory   Examples 
+          Social Power   Relationships   friendship, romance
+          Influence   popularity, image, rank
+          Economic Power   Items   inventory, equipment, capital
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: The documentation does not state the intended difficulty level or target population for the items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: met
+    rationale: The format is described as a text-based environment where the agent selects an action from a list, and an example is provided in Table 3.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 2, chunk 0
+        quote: At each step, the agent observes the scene and a list of possible actions; it selects an action from the list.
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses an LLM judge (GPT-4) and human experts to grade behaviors and power levels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 1
+        quote: Labels are evaluated for agreement (Spearman rank correlation) against an ensemble of 3 experts ( expert ens ).
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly states that it does not cover extreme forms of deception like treacherous turns or deceptive alignment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 31, chunk 3
+        quote: Additionally, these environments study deception but not extreme forms like treacherous turns nor deceptive alignment.
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark names the threat model of power-seeking AIs and existential risk reduction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 31, chunk 0
+        quote: This directly reduces the existential risks posed by power-seeking AIs (Carlsmith, 2022)
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The benchmark does not claim that its scores predict a specific downstream outcome, but rather measures current tendencies.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: Scores for multiple models of different capabilities (GPT-3.5, GPT-4) and human baselines are reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 3
+        quote: Label   GPT-4   GPT-4 ens   GPT-4+   human   human ens   expert   expert ens
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: met
+    rationale: The benchmark reports scores for human and expert baselines.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 3
+        quote: Label   GPT-4   GPT-4 ens   GPT-4+   human   human ens   expert   expert ens
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The items are sourced from Choose-Your-Own-Adventure games.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 3, chunk 0
+        quote: we detail the structure of the Choose-Your-Own-Adventure games in M ACHI - AVELLI
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: met
+    rationale: The documentation states there are 134 games total and a test set of 30 games.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 5, chunk 1
+        quote: Out of the 134 games of M ACHIAVELLI , we identify 30 games where agents trained to maximize reward perform poorly
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: unmet
+    rationale: There is no mention of a private split, contamination analysis, or specific date-based creation to prevent training data contamination.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: No canary strings are mentioned in the provided documentation or repository excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: While the repo provides scripts, the documentation does not state the specific compute, token, or hardware resources needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol for comparison or specify which settings may vary without breaking comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: unmet
+    rationale: The excerpts mention a 'test set' of 30 games, but there is no mention of a separate development, validation, or training split for the benchmark items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: unmet
+    rationale: The documentation does not state the sampling settings (temperature, top_p) or reasoning budget used for the reported results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: met
+    rationale: The paper provides verbatim prompt instructions for various agents in Appendix H.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 25, chunk 4
+        quote: "Here, we show the prompt instructions used for the following agents: LM, LM + CoT, LM + CoT + EthicsPrompt, and LM + EthicsPrompt (No Goals)."
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: met
+    rationale: The benchmark describes the agent loop as a text-based adventure game where the model selects actions from a list, and it does not mention any external tools or internet access.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 5, chunk 2
+        quote: We prompt the LMs with a list of achievements to optimize for, the current scene text, and a list of available actions.
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: The items are answered in a single model response (selecting an action index) within a game environment, not an execution environment for code or tool calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 26, chunk 0
+        quote: To take an action, respond with a single integer corresponding to the action number you want to take.
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: The benchmark is not agentic in the sense of an unbounded run; it is a sequential decision-making task where the model responds to scenes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 26, chunk 0
+        quote: During each turn, you will be given a description of the current game scene and a list of possible actions.
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item (scene) takes a single submission (action selection) with no mention of retries or feedback for incorrect submissions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 26, chunk 0
+        quote: To take an action, respond with a single integer corresponding to the action number you want to take.
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: met
+    rationale: The benchmark specifies that results are estimated using the mean of 1,000 sampled trajectories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 5, chunk 1
+        quote: We estimate the number of harms committed by the random agent by as the mean of 1,000 sampled trajectories.
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark uses GPT-4 as a judge to label scenes, and provides the prompts and rubrics (e.g., social power levels) in Appendix F.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 17, chunk 0
+        quote: we use GPT-4 (OpenAI, 2023) to label all our scenes using the following prompts.
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports the Spearman rank correlation between model labels and gold/expert labels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: Table 8 shows the agreement (Spearman rank correlation) of gold labels against the model labels and crowdworker labels.
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: The excerpts do not report how results change under variations of the protocol (e.g., different prompt wordings or sampling settings).
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: met
+    rationale: The benchmark provides a public repository with runnable scripts to recreate the results.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 3
+        quote: We include the scripts used to recreate the results in our paper, including our various agent baselines, in `experiments/`.
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: met
+    rationale: The benchmark requires a JSON-formatted string for labels and provides the specific JSON schema for extraction.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 18, chunk 0
+        quote: designed to induce the return of a JSON-formatted string, allowing us to easily parse and extract label values.
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: unmet
+    rationale: There is no evidence of version identifiers (tags/semantic versions) or a changelog for the benchmark.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: The models in this benchmark select actions from a list; they do not execute arbitrary code or tool calls.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 26, chunk 0
+        quote: To take an action, respond with a single integer corresponding to the action number you want to take.
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness supports multiple providers, including OpenAI's Chat Completion API (gpt-3.5-turbo, gpt-4) and other models like LLaMA."
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: met
+    rationale: The repository includes a script to compute results from a directory of trajectories, implying the saving of per-item records.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 3
+        quote: Given a directory of trajectories, compute the results for your trajectories using the following script
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the output logs include the model identifier and the benchmark version or code commit.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: unmet
+    rationale: The documentation does not describe a validation step to ensure items were checked for solvability and correctly keyed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: met
+    rationale: The prompts explicitly state that the model cannot decline to take an action, effectively treating refusals as prohibited or failures.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 26, chunk 0
+        quote: Do NOT respond with any other text, and you cannot decline to take an action.
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response (action selection) with no tools or environment access for the model, so no solution path exists beyond answering.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 26, chunk 0
+        quote: To take an action, respond with a single integer corresponding to the action number you want to take.
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: unmet
+    rationale: The documentation does not state that task instructions were reviewed for ambiguity by more than one person or tested by humans.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: met
+    rationale: The benchmark publishes mean scores for several agents (Random, DRRN, GPT-3.5, GPT-4) in Table 2.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 0
+        quote: Table 2. Mean scores across the 30 test set games for several agents.
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports scores separately for different categories of harm (e.g., Killing).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 0
+        quote: Except for the goals category, scores represent the amount of harm reduced for that category
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline metric for power as an average across sampled trajectories and reports mean scores across test set games.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 4, chunk 2
+        quote: |-
+          we report the power of an agent π as Power ( π ) =  1 
+          k 
+          k X 
+          i =1 
+          ( E watts   +   E money   +   E wellbeing   +   E influence )
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 0
+        quote: Table 2. Mean scores across the 30 test set games for several agents.
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty methods for the reported scores.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a script to compute results into a CSV file, which serves as a structured way to record results."
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: met
+    rationale: The file listing shows CSV files containing main results and expanded results, which typically store item-level or detailed run data.
+    evidence:
+      - source: repo
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+        locator: aypan17/machiavelli@ebb44e197f66:FILE LISTING, chunk 0
+        quote: |-
+          experiments/results/main_results.csv
+          experiments/results/main_results_expanded.csv
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: There is no report of tokens, money, or time spent per run for the reference results in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: The excerpts do not mention the publication of full or representative transcripts from reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument by linking its metrics to established definitions of power from philosophy, physics, economics, and sociology.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 13, chunk 0
+        quote: One popular notion of power is an agent’s ability to carry out its own goals or influence the world (Weber, 1978; Russell, 2004).
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: met
+    rationale: The benchmark claims to measure agents in 'realistic social environments' and notes a limitation where the prompting scheme does not provide memory of previous events, differing from real deployment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 2, chunk 1
+        quote: M ACHIAVELLI   is a step towards measuring an agent’s ability to plan in realistic social environments.
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 25, chunk 4
+        quote: our current prompting scheme only shows the LM the current scene text and does not provide a way for models to retain a memory of previous events
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: met
+    rationale: The benchmark describes the baseline agents (random, LM, RL) and the specific prompting used (CoT) for the LM agents.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 6, chunk 0
+        quote: GPT-3.5 indicates GPT-3.5-turbo and the base LM agents use CoT prompting.
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The documentation explicitly states that solving the benchmark does not imply a solution to classic safety problems.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 31, chunk 3
+        quote: “solving” this benchmark would not necessarily imply a solution to many classic safety problems.
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark documents limitations regarding hyperparameter sensitivity and the scope of deception studied.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2304.03279v4
+        locator: 2304.03279v4 page 31, chunk 3
+        quote: the RL algorithm used in this work can be sensitive to hyperparameters
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

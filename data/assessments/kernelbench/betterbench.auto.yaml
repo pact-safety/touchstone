@@ -1,0 +1,424 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: kernelbench
+standard: betterbench
+standard_version: "2024.1"
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v1
+  repo_commit: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/kernelbench/betterbench/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2502.10517v1
+      ref: v1
+      sha256: f6072136b7d8f41a6def6400915f3fb3f4bcfba4e9cb93d30095dd2663a45276
+      chars: 106453
+    - kind: repo
+      url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      ref: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      sha256: d76ec364b922087b6756c8586e2de8d26b3fb2adc80fad7e85ea241a650143da
+      chars: 38422
+  excerpt_chars: 40000
+verdicts:
+  des.01:
+    value: 15
+    rationale: The benchmark defines the tested capability as the ability of LMs to write fast and correct GPU kernels for AI workloads.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 1, chunk 0
+        quote: evaluating LMs’ ability to write fast and correct kernels on a suite of 250 carefully selected PyTorch ML workloads
+    by: model
+    quotes_verified: true
+  des.02:
+    value: 15
+    rationale: The translation to tasks is described as transpiling PyTorch operators to CUDA kernels across four levels of granularity.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 1
+        quote: We structure the problem for LLMs to transpile operators described in PyTorch to CUDA kernels, at whatever level of granularity they desire.
+    by: model
+    quotes_verified: true
+  des.03:
+    value: 15
+    rationale: The text explicitly states that success on the benchmark translates to faster practical kernels and real-world production value.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 1, chunk 0
+        quote: making progress on the introduced benchmark directly translates to faster practical kernels
+    by: model
+    quotes_verified: true
+  des.04:
+    value: 10
+    rationale: The documentation warns users to be paranoid about results and suggests that speedups >2x are highly unlikely, which guides interpretation.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:EVAL.md, chunk 0
+        quote: be always paranoid about suspiciously good results — kernel engineers and existing compilers are already pretty good, so a >2x speedup for anything is highly unlikely
+    by: model
+    quotes_verified: true
+  des.05:
+    value: 0
+    rationale: There is no mention of specific domain experts being involved in the design process.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.06:
+    value: 10
+    rationale: The benchmark describes mimicking an AI researcher's workflow as the basis for the task design.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 3, chunk 3
+        quote: Mimicking an AI researcher’s workflow, the PyTorch code contains a class named Model derived from torch.nn.Module()
+    by: model
+    quotes_verified: true
+  des.07:
+    value: 0
+    rationale: While the paper cites other works, it does not describe the integration of domain literature into the benchmark design itself.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.08:
+    value: 15
+    rationale: The choice of the 'fast_p' metric is explained as a way to capture both correctness and performance axes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 5, chunk 0
+        quote: To capture both axes of correctness and performance, we introduce a new metric called fast p
+    by: model
+    quotes_verified: true
+  des.09:
+    value: 0
+    rationale: The excerpts do not mention metric floors or ceilings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.10:
+    value: 0
+    rationale: No human performance baseline is provided for comparison.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.11:
+    value: 0
+    rationale: No random performance baseline is provided.
+    evidence: []
+    by: model
+    quotes_verified: true
+  des.12:
+    value: 15
+    rationale: The benchmark is described as automatically verifiable through correctness checks and wall-clock timing.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: by design, KernelBench is automatically verifiable
+    by: model
+    quotes_verified: true
+  des.13:
+    value: 15
+    rationale: The paper explains how KernelBench differs from existing HPC code generation benchmarks by focusing on diverse real-world DL workloads and wall-clock efficiency.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 3, chunk 2
+        quote: KernelBench instead curates a set of 250 diverse kernels from real-world, modern deep learning workloads
+    by: model
+    quotes_verified: true
+  des.14:
+    value: 0
+    rationale: Input sensitivity (e.g., how different input sizes or types affect the result) is not addressed as a design consideration.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.01:
+    value: 15
+    rationale: The repository provides evaluation code in 'src/eval.py' and scripts like 'scripts/run_and_check.py'.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 2
+        quote: Check out `src/eval.py` for details on how we implement correctness check and timing
+    by: model
+    quotes_verified: true
+  imp.02:
+    value: 15
+    rationale: The benchmark provides a dataset of evaluation problems and a mechanism for generating random input tensors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 3, chunk 0
+        quote: we contribute (1)   an open-source framework   to study LM kernel generation with a comprehensive suite of evaluation problems
+    by: model
+    quotes_verified: true
+  imp.03:
+    value: 15
+    rationale: The framework supports querying LMs via API, specifically mentioning Google Gemini and using litellm/openai for cloud providers.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 6
+        quote: use google gemini 2.5 flash for generation
+    by: model
+    quotes_verified: true
+  imp.04:
+    value: 15
+    rationale: The README explicitly states that kernels can be evaluated locally.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 2
+        quote: You can use this to evaluate a kernel either locally or remotely by setting `eval_mode=local` or `eval_mode=modal`.
+    by: model
+    quotes_verified: true
+  imp.05:
+    value: 0
+    rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.06:
+    value: 0
+    rationale: The excerpts do not mention a specific task to identify if the model was trained on the benchmark data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.07:
+    value: 15
+    rationale: The repository provides scripts to run and analyze the benchmark, facilitating replication.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 8
+        quote: We provide `scripts/benchmark_eval_analysis.py` to analyze the eval results to compute success rate, timing metric, and overall benchmark performance `fast_p`.
+    by: model
+    quotes_verified: true
+  imp.08:
+    value: 0
+    rationale: While performance metrics are reported, there is no mention of statistical significance or uncertainty quantification.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.09:
+    value: 0
+    rationale: There is no assessment of warnings for sensitive or harmful content.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.10:
+    value: 0
+    rationale: No build status or equivalent CI/CD implementation is mentioned in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  imp.11:
+    value: 0
+    rationale: The excerpts do not specify release requirements.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.01:
+    value: 15
+    rationale: The README explicitly mentions that dependencies can be installed using a requirements.txt file.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 5
+        quote: install dependencies with `requirements.txt`
+    by: model
+    quotes_verified: true
+  doc.02:
+    value: 15
+    rationale: The README provides a link to a tutorial notebook on Google Colab and mentions a local version.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 5
+        quote: You can also try out our [tutorial notebook](https://bit.ly/kernelbench-neurips-colab)
+    by: model
+    quotes_verified: true
+  doc.03:
+    value: 15
+    rationale: The provided code excerpts in the paper show the use of in-line comments to explain logic.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 16, chunk 1
+        quote: "#   Compile the inline CUDA code for matrix multiplication"
+    by: model
+    quotes_verified: true
+  doc.04:
+    value: 15
+    rationale: The README and EVAL.md provide documentation on how to use the framework and evaluate kernels.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 11
+        quote: Please check out `EVAL.md` for more guidance on benchmarking and evaluating kernels.
+    by: model
+    quotes_verified: true
+  doc.05:
+    value: 15
+    rationale: The README indicates the work is associated with ICML '25.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 0
+        quote: "KernelBench: Can LLMs Write Efficient GPU Kernels? [ICML '25]"
+    by: model
+    quotes_verified: true
+  doc.06:
+    value: 15
+    rationale: The paper describes the design of the environment and the high-throughput evaluation system.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 1, chunk 2
+        quote: We first design an environment that reflects the typical AI engineer’s workflow
+    by: model
+    quotes_verified: true
+  doc.07:
+    value: 15
+    rationale: The paper provides examples of tasks and explains the rationale that success maps to production value.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 10, chunk 2
+        quote: success on KernelBench directly maps to production value and real-world impacts
+    by: model
+    quotes_verified: true
+  doc.08:
+    value: 0
+    rationale: The excerpts do not document assumptions of normative properties.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.09:
+    value: 15
+    rationale: The paper explicitly mentions limitations regarding sampling temperature and hardware scope.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 21, chunk 1
+        quote: A limitation of our experiments is that we sample with temperature= 0
+    by: model
+    quotes_verified: true
+  doc.10:
+    value: 15
+    rationale: The paper documents the prompt design process, including one-shot baselines and iterative refinement templates.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 21, chunk 1
+        quote: we prompt the model with the following template depending on the feedback it expects
+    by: model
+    quotes_verified: true
+  doc.11:
+    value: 15
+    rationale: The paper and README define the 'fast_p' metric for ranking LM quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 5, chunk 0
+        quote: we introduce a new metric called   fast p
+    by: model
+    quotes_verified: true
+  doc.12:
+    value: 15
+    rationale: The README and LICENSE file specify the MIT license.
+    evidence:
+      - source: repo
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 11
+        quote: |-
+          License
+          MIT. Check `LICENSE.md` for more details.
+    by: model
+    quotes_verified: true
+  doc.13:
+    value: 0
+    rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.14:
+    value: 0
+    rationale: The excerpts do not show the inclusion of standardized metadata (e.g., Schema.org or DataCite).
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.15:
+    value: 15
+    rationale: The paper describes the tasks as PyTorch programs and the use of randomly generated tensors for inputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2502.10517v1
+        locator: 2502.10517v1 page 4, chunk 2
+        quote: we randomly generate input tensors of the prescribed shape and precision
+    by: model
+    quotes_verified: true
+  doc.16:
+    value: 0
+    rationale: The excerpts do not document data preprocessing steps, as the benchmark uses generated inputs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.17:
+    value: 0
+    rationale: The benchmark uses automatically verifiable PyTorch references rather than human annotation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.18:
+    value: 0
+    rationale: The excerpts do not explain the representativeness of the data.
+    evidence: []
+    by: model
+    quotes_verified: true
+  doc.19:
+    value: 0
+    rationale: There is no mention of following a recognized documentation standard (e.g., Sphinx, ReadTheDocs).
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.01:
+    value: 0
+    rationale: The excerpts do not provide any information regarding whether the benchmark's code usability was checked within the last year.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.02:
+    value: 0
+    rationale: There is no mention of a maintained feedback channel for users; the 'feedback' mentioned in the text refers to compiler and execution feedback for the AI models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mai.03:
+    value: 0
+    rationale: No specific contact person is listed in the provided excerpts.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

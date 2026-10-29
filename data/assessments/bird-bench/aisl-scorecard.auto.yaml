@@ -1,0 +1,500 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: bird-bench
+standard: aisl-scorecard
+standard_version: 2026.07.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/bird-bench/aisl-scorecard/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2305.03111v3
+      ref: v3
+      sha256: 314fc933837ad9d379afe82cc3c5f306b5ad360f6b91dc77a63232d71928ed46
+      chars: 110663
+  excerpt_chars: 40000
+verdicts:
+  cv.01:
+    value: met
+    rationale: The benchmark defines the target phenomenon as converting natural language questions into SQL queries.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 1, chunk 2
+        quote: Text-to-SQL parsing [ 55 , 50 , 51 , 3 , 52 , 37 ], which focuses on converting natural language questions into SQL queries
+    by: model
+    quotes_verified: true
+  cv.02:
+    value: unmet
+    rationale: While the documentation describes what is included, it does not explicitly name an aspect of the phenomenon that is excluded.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.03:
+    value: met
+    rationale: The phenomenon is broken down into difficulty levels (simple, moderate, challenging), and each has its own reported score in Table 4.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 2
+        quote: we present simple, moderate, and challenging difficulties at proportions of 30%, 60%, and 10%, respectively.
+    by: model
+    quotes_verified: true
+  cv.04:
+    value: met
+    rationale: The task space is defined by categories (Fundamental and Reasoning) and difficulty levels, with item counts/proportions reported for the latter.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 0
+        quote: we class all examples as simple (30%), moderate (60%), and challenging (10%)
+    by: model
+    quotes_verified: true
+  cv.05:
+    value: met
+    rationale: The documentation reports the proportions of items across the documented difficulty levels.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 0
+        quote: we class all examples as simple (30%), moderate (60%), and challenging (10%)
+    by: model
+    quotes_verified: true
+  cv.06:
+    value: met
+    rationale: Questions passed a verification step where experts voted on validity, and only those with at least two votes were marked valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 0
+        quote: these questions are then assessed by 3 text-to-SQL experts applying predefined rules. Those questions earning at least two votes are marked as valid.
+    by: model
+    quotes_verified: true
+  cv.07:
+    value: unmet
+    rationale: No named subset of boundary, perturbed, or adversarial items with a stated size and criterion is mentioned.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.08:
+    value: met
+    rationale: The paper compares the execution accuracy of the same baseline models on both BIRD and the original SPIDER dataset in Figure 6.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 8, chunk 1
+        quote: we visualize the execution accuracy of the same baseline models on both the B IRD and S PIDER datasets.
+    by: model
+    quotes_verified: true
+  cv.09:
+    value: n/a
+    rationale: The benchmark does not reuse a prior dataset; it collects its own databases and annotations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 18, chunk 0
+        quote: the test set databases are curated and designed by our specialized team
+    by: model
+    quotes_verified: true
+  cv.10:
+    value: unmet
+    rationale: While the item count is stated, there is no power calculation or confidence-interval half-width reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 17, chunk 2
+        quote: B IRD contains 12,751 natural language questions
+    by: model
+    quotes_verified: true
+  cv.11:
+    value: unmet
+    rationale: The main results table (Table 4) does not provide confidence intervals or standard errors for every score.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 2
+        quote: "Table 4: The Execution Accuracy (EX) and Valid Efficiency Score (VES) are presented"
+    by: model
+    quotes_verified: true
+  cv.12:
+    value: unmet
+    rationale: The documentation mentions 'predefined rules' and 'crowdsourcing rule', but the actual instructions or materials are not reproduced.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 21, chunk 0
+        quote: A detailed crowdsourcing rule is employed to rate the difficulty
+    by: model
+    quotes_verified: true
+  cv.13:
+    value: n/a
+    rationale: Human raters are used for annotation/ground truth, but not for judging model outputs in a way that requires demographic bias mitigation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 4, chunk 1
+        quote: we employ a double-blind approach [ 42 ] for SQL annotation
+    by: model
+    quotes_verified: true
+  cv.14:
+    value: n/a
+    rationale: The labels (SQL queries) are deterministic keys based on execution results (exact answer/state check).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 1
+        quote: the term "valid SQLs" refers to predicted SQL queries whose result sets align with those of the ground-truth SQLs
+    by: model
+    quotes_verified: true
+  cv.15:
+    value: n/a
+    rationale: The labels are deterministic based on execution results, not subjective.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 1
+        quote: the term "valid SQLs" refers to predicted SQL queries whose result sets align with those of the ground-truth SQLs
+    by: model
+    quotes_verified: true
+  cv.16:
+    value: unmet
+    rationale: While errors are categorized, they are not broken down by a confound like prompt length or language complexity in a table/figure showing rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.17:
+    value: met
+    rationale: The documentation reports named failure categories with their respective shares.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 10, chunk 0
+        quote: Wrong Schema Linking (41.6%) pertains to the scenario where ChatGPT can accurately comprehend the structure
+    by: model
+    quotes_verified: true
+  cv.18:
+    value: unmet
+    rationale: The docs do not contain a single statement linking the tasks and each metric to the construct from cv.01 with a stated reason.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cv.19:
+    value: met
+    rationale: The benchmark is compared to SPIDER, and it is stated that BIRD addresses the gap of focusing on database values rather than just schema.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 17, chunk 0
+        quote: current cross-domain text-to-SQL benchmarks only focus on the database schema, which lacks full attention to values
+    by: model
+    quotes_verified: true
+  cv.20:
+    value: met
+    rationale: The docs provide a limitation regarding QEP fetching and link the benchmark's focus to the real-world need for handling large databases.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 10, chunk 3
+        quote: it presents difficulties in fetching Query Execution Plans (QEP) for precise efficiency computation
+    by: model
+    quotes_verified: true
+  iv.01:
+    value: unmet
+    rationale: The documentation does not identify secondary capabilities or provide control conditions/ablation results for them.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.02:
+    value: met
+    rationale: The documentation names related tasks such as DB-based code generation and data science analysis that could use the dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 19, chunk 1
+        quote: they could be beneficial to DB-based code generation, data science analysis, etc.
+    by: model
+    quotes_verified: true
+  iv.03:
+    value: unmet
+    rationale: There is no quantification of the overlap with related phenomena or description of mitigation steps.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.04:
+    value: unmet
+    rationale: The documentation does not report results under different output-format conditions or separate format-failure rates.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.05:
+    value: unmet
+    rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
+    evidence: []
+    by: model
+    quotes_verified: true
+  iv.06:
+    value: n/a
+    rationale: The benchmark evaluates SQL execution accuracy by comparing result sets (HashSet), which is not parsing of free-form output into a structured format for correctness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 24, chunk 4
+        quote: we use HashSet rather than List to compare final results since HashSet disregards row order and automatically filters repetitive rows
+    by: model
+    quotes_verified: true
+  iv.07:
+    value: met
+    rationale: The authors state they self-designed new databases for the test set to ensure LLMs did not preview them during pre-training.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 18, chunk 0
+        quote: we opt to self-design new databases in testing using actual tabular data, thereby ensuring that LLMs do not preview the databases.
+    by: model
+    quotes_verified: true
+  iv.08:
+    value: n/a
+    rationale: The evaluation uses fixed inputs (databases and questions) and local scoring of SQL execution results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 17, chunk 2
+        quote: B IRD contains 12,751 natural language questions, 12,751 external knowledge evidence sentences, 95 processed large databases
+    by: model
+    quotes_verified: true
+  iv.09:
+    value: n/a
+    rationale: The evaluation consists of stateless model calls to generate SQL queries from a prompt.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 3
+        quote: a zero-shot generation strategy is the most appropriate.
+    by: model
+    quotes_verified: true
+  iv.10:
+    value: met
+    rationale: The benchmark requires generating SQL queries, not selecting from multiple choice options.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 7
+        quote: Text-to-SQL refers to the process of converting a natural language question Q into a SQL query Y
+    by: model
+    quotes_verified: true
+  ev.01:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation identifies three text-to-SQL experts (a research scientist, a PhD student, and a DBA engineer) who defined the validity of questions by assessing them against predefined rules."
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.02:
+    value: met
+    rationale: The documentation states that three text-to-SQL experts (with credentials listed) assessed the questions generated by annotators.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 0
+        quote: these questions are then assessed by 3 text-to-SQL experts applying predefined rules.
+    by: model
+    quotes_verified: true
+  ev.03:
+    value: met
+    rationale: Results are reported for zero-shot settings and a Chain-Of-Thought (COT) technique.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 3
+        quote: we implement the Chain-Of-Thought (COT) technique [ 48   ] by easily adding the prompt sentence   "Let’s think step by step."
+    by: model
+    quotes_verified: true
+  ev.04:
+    value: unmet
+    rationale: The excerpts do not report results as a separate slice for a named stress condition or shift differing from the train/dev splits.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.05:
+    value: n/a
+    rationale: The benchmark is a general cross-domain text-to-SQL dataset and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.06:
+    value: n/a
+    rationale: The benchmark is a general cross-domain text-to-SQL dataset and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ev.07:
+    value: n/a
+    rationale: The benchmark is a general cross-domain text-to-SQL dataset and does not claim to evaluate a specific deployed application.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.01:
+    value: unmet
+    rationale: The documentation mentions setting temperature to 0, but fails to list library versions, hardware models, or the OS/container image.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 22, chunk 3
+        quote: we set the temperature as 0 to ensure reproduction
+    by: model
+    quotes_verified: true
+  rel.02:
+    value: unmet
+    rationale: There is no mention of an independent third party reproducing the results on different infrastructure.
+    evidence: []
+    by: model
+    quotes_verified: true
+  rel.03:
+    value: unmet
+    rationale: While the docs mention polishing data periodically, they explicitly state there is no erratum and do not describe a correction channel recording a specific fix.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 20, chunk 0
+        quote: Is there an erratum? No.
+    by: model
+    quotes_verified: true
+  rel.04:
+    value: unmet
+    rationale: The docs identify a flaw regarding 'ORDER BY' and false positives, but they do not provide a direction of bias or explicit guidance on which conclusions remain valid.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 24, chunk 5
+        quote: this may result in false positives for questions utilizing "ORDER BY."
+    by: model
+    quotes_verified: true
+  rel.05:
+    value: met
+    rationale: The benchmark reports human performance as a baseline for the text-to-SQL task.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 2, chunk 7
+        quote: the performance still lags far behind the human performance of 92.96%
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 8, chunk 0
+        quote: Human Performance   -   -   70.36   90.27   (+19.91)
+    by: model
+    quotes_verified: true
+  rel.06:
+    value: unmet
+    rationale: The provided excerpts list advanced models (T5, GPT-4, etc.) but do not report scores for trivial baselines like random selection or majority-class prediction.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.01:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater or judge for the ground truth; instead, human experts and double-blind annotation are used.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.02:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.03:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.04:
+    value: n/a
+    rationale: The excerpts do not indicate that a model is used as a rater or judge.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.05:
+    value: met
+    rationale: The benchmark uses a double-blind approach with two independent annotators, and those yielding identical results are gathered.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 4, chunk 1
+        quote: This approach involves two independent SQL annotators who generate SQLs for the same question without discussion. The annotated SQLs are executed in databases, and those yielding identical results are gathered.
+    by: model
+    quotes_verified: true
+  cor.06:
+    value: unmet
+    rationale: There is no documentation classifying every task as solvable or intentionally unsolvable, nor expected behavior for unsolvable ones.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.07:
+    value: met
+    rationale: Ground truth SQL queries are provided and verified by experts to ensure they are executable and return valid results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 4, chunk 2
+        quote: Firstly, the SQL validness will be confirmed that each SQL is executable and can return a valid result from the database.
+    by: model
+    quotes_verified: true
+  cor.08:
+    value: met
+    rationale: The benchmark uses Execution Accuracy (EX), which accepts any predicted SQL as correct if its executed result set is identical to the ground-truth result set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  cor.09:
+    value: unmet
+    rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, refusals, or timeouts.
+    evidence: []
+    by: model
+    quotes_verified: true
+  cor.10:
+    value: n/a
+    rationale: Scoring is based on the execution results of the SQL in a database, not on parsing free-form output text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  cor.11:
+    value: n/a
+    rationale: Scoring is based on the execution results of the SQL in a database, not on parsing free-form output text.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: 2305.03111v3 page 6, chunk 0
+        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    by: model
+    quotes_verified: true
+  cor.12:
+    value: unmet
+    rationale: There are no reported results for null-agent runs or targeted exploit attempts on the scoring pipeline.
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

@@ -1,0 +1,470 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: ailuminate
+standard: nist-ai-800-2
+standard_version: ipd-2026-01
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v2
+  repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/ailuminate/nist-ai-800-2/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2503.05731v2
+      ref: v2
+      sha256: 193b98f48e60a55f41c06180ed202982fab6fdd44c546d07a92eeb6357da1433
+      chars: 129165
+    - kind: repo
+      url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      ref: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+      sha256: 92e9e4155001884b8cbaa3eb316cf30de8124aacacc96e638d4250619a3fd7d6
+      chars: 23836
+  excerpt_chars: 40000
+verdicts:
+  1.2.1:
+    value: met
+    rationale: The benchmark defines its construct as system-level risk and reliability measurements across 12 hazard categories.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 3, chunk 1
+        quote: The benchmark results should be interpreted strictly as system-level risk and reliability measurements in specific hazard categories and use cases.
+    by: model
+    quotes_verified: true
+  1.2.1a:
+    value: met
+    rationale: The benchmark lists hazard categories and specific locales/languages covered.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 3
+        quote: Hazard | String | The class of content hazard categories (abbreviated above)
+    by: model
+    quotes_verified: true
+  1.2.1b:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the sophistication of the represented audience via personas."
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1c:
+    value: unmet
+    rationale: While the documentation mentions prompts and responses, it does not explicitly state the item format (e.g., multiple choice) nor provide an example item.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.1d:
+    value: met
+    rationale: The benchmark uses an automatic evaluation mechanism based on specialized models (LLM judge) to categorize responses as safe or unsafe.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 17, chunk 1
+        quote: A candidate evaluator acts as a classifier that categorizes a SUT responses as safe or unsafe
+    by: model
+    quotes_verified: true
+  1.2.2a:
+    value: met
+    rationale: The documentation explicitly lists hazards and personas that are not covered.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 21, chunk 1
+        quote: It ignores “untestable” hazards such as environmental impact, other hazards such as inaccurate medical advice, unlisted hazards such as bias
+    by: model
+    quotes_verified: true
+  1.2.2b:
+    value: met
+    rationale: The benchmark identifies its intended use cases for model providers, integrators, and policymakers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 3, chunk 1
+        quote: "The benchmark serves three primary groups: • Model providers developing and releasing AI systems. • Model integrators implementing practical AI systems."
+    by: model
+    quotes_verified: true
+  1.2.2c:
+    value: n/a
+    rationale: The provided excerpts do not contain any claim that benchmark scores predict a specific downstream outcome.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.3a:
+    value: met
+    rationale: The benchmark reports results for OLMo v1.0 as a control to demonstrate the benchmark's difficulty.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 26, chunk 2
+        quote: MLCommons used OLMo v1.0 as a control because it comes from a high-trust nonprofit organization... This model demonstrates the benchmark’s difficulty.
+    by: model
+    quotes_verified: true
+  1.2.3b:
+    value: unmet
+    rationale: The documentation explicitly states that human performance levels are not included.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 43, chunk 1
+        quote: "108: Human performance level is included   N"
+    by: model
+    quotes_verified: true
+  1.2.4a:
+    value: met
+    rationale: The documentation describes sourcing prompts from multiple populations and vendors.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 31, chunk 0
+        quote: "69: Source prompts from multiple populations with distinct prompt writer demographic attributes"
+    by: model
+    quotes_verified: true
+  1.2.4b:
+    value: unmet
+    rationale: The excerpts do not state the total number of test items in the full set or subsets.
+    evidence: []
+    by: model
+    quotes_verified: true
+  1.2.4c:
+    value: met
+    rationale: The benchmark reduces contamination by not providing the evaluation set to developers.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 43, chunk 1
+        quote: "112: Do not provide the evaluation set   Y"
+    by: model
+    quotes_verified: true
+  1.2.4d:
+    value: unmet
+    rationale: The documentation explicitly marks the inclusion of canary data as 'N' (not adopted).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 44, chunk 0
+        quote: "119: Include canary data in the prompt set whose inclusion in training would make the model testable for training against the benchmark   N"
+    by: model
+    quotes_verified: true
+  1.2.5a:
+    value: unmet
+    rationale: The documentation does not state the specific compute, token, or time resources needed for a full run.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1a:
+    value: unmet
+    rationale: The documentation does not define a reference protocol with specific settings that may or may not vary to maintain comparability.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.1b:
+    value: met
+    rationale: The benchmark provides a practice-prompt dataset separate from the hidden (test) prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 3, chunk 1
+        quote: Hidden- and practice-prompt datasets.
+    by: model
+    quotes_verified: true
+  2.1.2a:
+    value: unmet
+    rationale: While the paper mentions temperature as a source of variance, it does not specify the exact settings used for reported results or state they are left to the evaluator.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2b:
+    value: unmet
+    rationale: The excerpts do not provide the verbatim prompt text or templates used for the items.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2c:
+    value: n/a
+    rationale: The benchmark uses single-prompt interactions without tools or multi-step loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: The benchmark uses human-created   single-prompt interactions
+    by: model
+    quotes_verified: true
+  2.1.2d:
+    value: n/a
+    rationale: Items are single-prompt interactions and do not run in an execution environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: The benchmark uses human-created   single-prompt interactions
+    by: model
+    quotes_verified: true
+  2.1.2e:
+    value: n/a
+    rationale: Items are not agentic; they are single-prompt interactions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: The benchmark uses human-created   single-prompt interactions
+    by: model
+    quotes_verified: true
+  2.1.2f:
+    value: n/a
+    rationale: Each item is a single-prompt interaction with no mention of retries or feedback loops.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: The benchmark uses human-created   single-prompt interactions
+    by: model
+    quotes_verified: true
+  2.1.2g:
+    value: unmet
+    rationale: The documentation does not specify the number of trials per item or the aggregation method.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.1.2h:
+    value: met
+    rationale: The benchmark uses a response evaluator based on specialized fine-tuned models, and the assessment standard defines the guidelines (rubric).
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 3, chunk 1
+        quote: A response evaluator based on specialized models fine-tuned for assessing AI responses to prompts.
+    by: model
+    quotes_verified: true
+  2.1.2i:
+    value: met
+    rationale: The benchmark reports that it measures and iterates on methods until high interrater reliability is achieved.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 37, chunk 0
+        quote: Measure and iterate on methods until high interrater reliability is achieved
+    by: model
+    quotes_verified: true
+  2.1.2j:
+    value: unmet
+    rationale: There are no reported results showing how scores change under varied protocol settings.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.1:
+    value: unmet
+    rationale: The excerpts mention a 'complete evaluation framework' but do not provide runnable code or a named public framework implementation.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.2:
+    value: unmet
+    rationale: The documentation does not specify a required answer format or provide extraction logic.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.2.3:
+    value: met
+    rationale: The benchmark uses semantic versioning (X.Y.Z) and defines when major, minor, and patch versions are incremented.
+    evidence:
+      - source: repo
+        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
+        locator: mlcommons/ailuminate@769cc2be9d20:AILuminate Naming and Versioning.md, chunk 4
+        quote: A normal version number MUST take the form X.Y.Z where X, Y, and Z are non-negative integers
+    by: model
+    quotes_verified: true
+  2.2.4:
+    value: n/a
+    rationale: Models do not execute code or tool calls in this benchmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: The benchmark uses human-created   single-prompt interactions
+    by: model
+    quotes_verified: true
+  2.2.5:
+    value: unmet
+    rationale: There is no evidence that the harness supports multiple providers via configuration or an open interface.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.1:
+    value: unmet
+    rationale: The excerpts do not mention the harness saving full per-item logs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.3.2:
+    value: unmet
+    rationale: The excerpts do not show that the logs record the model identifier and benchmark version.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.3:
+    value: unmet
+    rationale: There is no description of a validation step to check that items are solvable and correctly keyed.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.1.4:
+    value: met
+    rationale: The benchmark explicitly mentions refusal mechanisms as part of the system under test conditions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 27, chunk 1
+        quote: The system prompts, weights, and safety features (including refusal mechanisms) of AI systems
+    by: model
+    quotes_verified: true
+  2.4.1.5:
+    value: n/a
+    rationale: Items are answered in a single response with no tools or environment.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 22, chunk 0
+        quote: The benchmark uses human-created   single-prompt interactions
+    by: model
+    quotes_verified: true
+  2.4.2C:
+    value: met
+    rationale: The benchmark describes that fifteen volunteers performed realism spot checks on prompts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 15, chunk 1
+        quote: Fifteen volunteers each performed realism spot checks on 30–50 prompts covering the four languages.
+    by: model
+    quotes_verified: true
+  2.4.2D:
+    value: unmet
+    rationale: The excerpts do not provide reference results for a specific model version and protocol for evaluators to replicate.
+    evidence: []
+    by: model
+    quotes_verified: true
+  2.4.2E:
+    value: met
+    rationale: The benchmark reports results per hazard category.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 1
+        quote: The reference-system score, both overall and per hazard, is the higher (more violations) score
+    by: model
+    quotes_verified: true
+  3.1.2:
+    value: met
+    rationale: The benchmark defines the headline metric (S SUT) as the percentage of violating responses and provides the aggregation formula.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 0
+        quote: Score   S   Percentage of violating responses
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 0
+        quote: S SUT   =   N   UNSAFE /N   TOTAL   ×   100%
+    by: model
+    quotes_verified: true
+  3.1.3:
+    value: unmet
+    rationale: While the documentation mentions displaying uncertainty estimates as a mitigation in a table, there is no evidence that actual reported scores for reference runs carry standard errors or confidence intervals.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.1:
+    value: met
+    rationale: The benchmark uses a software system called ModelBench that includes a report generator and a benchmark-run-journal data store to capture results.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 16, chunk 1
+        quote: A   report generator , which uses the benchmark-run journal to generate a safety violation (i..e policy-violation) report.
+    by: model
+    quotes_verified: true
+  3.2.2:
+    value: unmet
+    rationale: The excerpts do not provide a downloadable file containing per-item scores for reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.3:
+    value: unmet
+    rationale: There is no report of tokens, money, or time per run for the reference results.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.2.4:
+    value: unmet
+    rationale: The excerpts do not mention the publication of downloadable transcripts from reference runs.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.2:
+    value: met
+    rationale: The benchmark provides a validity argument by describing how tested capabilities translate to benchmarked tasks and involving domain experts.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 43, chunk 1
+        quote: How tested capability or concept translates to benchmarked task is described
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 43, chunk 1
+        quote: Domain experts are involved in the production of the benchmark
+    by: model
+    quotes_verified: true
+  3.3.2a:
+    value: n/a
+    rationale: The benchmark does not claim to represent real-world tasks; it focuses on safety hazards and policy violations.
+    evidence: []
+    by: model
+    quotes_verified: true
+  3.3.3:
+    value: n/a
+    rationale: The benchmark uses a 'Reference' system for comparison rather than a baseline measured under specific human or external conditions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 20, chunk 0
+        quote: Reference   Ref   AI system for scoring comparison
+    by: model
+    quotes_verified: true
+  3.3.4:
+    value: met
+    rationale: The benchmark includes disclaimers to prevent users from misinterpreting results, as noted in the mitigation table.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 40, chunk 0
+        quote: Prominently display disclaimers everywhere benchmarks are presented
+    by: model
+    quotes_verified: true
+  3.3.5:
+    value: met
+    rationale: The benchmark explicitly identifies limitations such as evaluator uncertainty and the constraints of single-turn interactions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2503.05731v2
+        locator: 2503.05731v2 page 2, chunk 1
+        quote: this report also identifies limitations of our method and of building safety benchmarks generally, including evaluator uncertainty and the constraints of single-turn interactions.
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.

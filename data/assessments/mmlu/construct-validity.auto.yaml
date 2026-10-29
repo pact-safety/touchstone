@@ -1,0 +1,252 @@
+# Proposed by the automated assessor. Review before publishing: see docs/automation.md.
+benchmark: mmlu
+standard: construct-validity
+standard_version: 2025.1.1
+status: draft
+mode: itemized
+provenance:
+  kind: automated
+  assessors:
+    - touchstone-assessor (google/gemma-4-31b-it)
+  assessed_on: 2026-10-29
+benchmark_ref:
+  paper_version: v3
+  repo_commit: 4450500f923c49f1fb1dd3d99108a0bd9717b660
+model_run:
+  model: google/gemma-4-31b-it
+  provider: openai-compatible (OpenRouter, pinned to DeepInfra)
+  license: Apache-2.0
+  temperature: 0
+  seed: 20261026
+  prompt_version: "1"
+  run_on: 2026-10-29
+  transcript: data/runs/mmlu/construct-validity/2026-10-29.jsonl
+  sources:
+    - kind: paper
+      url: https://arxiv.org/abs/2009.03300v3
+      ref: v3
+      sha256: 7172c1ed9e93c939e3919d339a15a3ca9cbfda291b77fe8dbe23d58106d61e3f
+      chars: 85242
+    - kind: repo
+      url: https://github.com/hendrycks/test/tree/4450500f923c49f1fb1dd3d99108a0bd9717b660
+      ref: 4450500f923c49f1fb1dd3d99108a0bd9717b660
+      sha256: eed8d915241a233d93ad42a15c1ac43e910fcf74495c82ec0ba568dffae66c8f
+      chars: 4473
+  excerpt_chars: 40000
+verdicts:
+  def.1:
+    value: met
+    rationale: The paper defines the measurement as classification accuracy on multiple choice questions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 1
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions
+    by: model
+    quotes_verified: true
+  def.2:
+    value: unmet
+    rationale: While the paper mentions including harder specialized subjects, it does not explicitly name any excluded aspects of the phenomenon.
+    evidence: []
+    by: model
+    quotes_verified: true
+  def.3:
+    value: unmet
+    rationale: The provided excerpts do not name sub-components that are scored separately, nor do they state the phenomenon is unitary.
+    evidence: []
+    by: model
+    quotes_verified: true
+  mo.1:
+    value: unmet
+    rationale: The excerpts mention secondary abilities like 'empirical methods, fluid intelligence, and procedural knowledge', but no control conditions or ablation results for these are reported.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 5, chunk 1
+        quote: STEM subjects require knowledge of empirical methods, fluid intelligence, and procedural knowledge.
+    by: model
+    quotes_verified: true
+  mo.2:
+    value: unmet
+    rationale: While the text mentions a section on 'format sensitivity' in the appendix, the provided excerpts do not contain the actual measurements of how output-format requirements affect scores.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 11, chunk 0
+        quote: It also includes sections on fine-tuning, error analysis, and format sensitivity.
+    by: model
+    quotes_verified: true
+  mo.3:
+    value: n/a
+    rationale: The benchmark uses classification accuracy for multiple-choice questions (as seen in the examples), and there is no evidence of automated parsing of free-form output.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 5, chunk 1
+        quote: To measure performance on our multitask test, we compute the classification accuracy across all examples and tasks.
+    by: model
+    quotes_verified: true
+  ds.1:
+    value: unmet
+    rationale: The excerpts mention the benchmark covers 57 subjects, but they do not document a specific sampling strategy used to ensure these items are representative of the overall task space.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.2:
+    value: unmet
+    rationale: There is no documentation provided in the excerpts stating that every item passed a quality or relevance check.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ds.3:
+    value: unmet
+    rationale: While the excerpts mention that removing a specific token (</s>) affects accuracy, there is no reported results for a counted subset of permuted or perturbed items separate from the main score.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ru.1:
+    value: met
+    rationale: The documentation explicitly states that the questions were manually collected from online sources, including specific practice tests, rather than adapting a previous benchmark dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 2
+        quote: The questions in the dataset were manually collected by graduate and undergraduate students from freely available sources online.
+    by: model
+    quotes_verified: true
+  ru.2:
+    value: n/a
+    rationale: The benchmark does not reuse or adapt a prior dataset; it was manually collected from online sources.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 2
+        quote: The questions in the dataset were manually collected by graduate and undergraduate students from freely available sources online.
+    by: model
+    quotes_verified: true
+  ru.3:
+    value: n/a
+    rationale: The benchmark does not reuse or adapt a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 2
+        quote: The questions in the dataset were manually collected by graduate and undergraduate students from freely available sources online.
+    by: model
+    quotes_verified: true
+  ru.4:
+    value: n/a
+    rationale: The benchmark does not reuse or adapt a prior dataset.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 2
+        quote: The questions in the dataset were manually collected by graduate and undergraduate students from freely available sources online.
+    by: model
+    quotes_verified: true
+  ct.1:
+    value: unmet
+    rationale: The provided excerpts do not describe any specific contamination tests or report results from such tests.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ct.2:
+    value: met
+    rationale: The paper explicitly mentions splitting the collected questions into a few-shot development set, a validation set, and a test set.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 3
+        quote: we split into a few-shot development set, a validation set, and a test set
+    by: model
+    quotes_verified: true
+  ct.3:
+    value: unmet
+    rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.1:
+    value: unmet
+    rationale: While the number of tasks (57) is mentioned, there is no report of the total item count (sample size), nor is there a power calculation or confidence-interval width reported against a claimed gap.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.2:
+    value: unmet
+    rationale: The provided excerpts do not show a main results table where every score is accompanied by a confidence interval or standard error.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.3:
+    value: n/a
+    rationale: The benchmark consists of multiple-choice questions with deterministic ground truths; no human raters are used for scoring the models.
+    evidence: []
+    by: model
+    quotes_verified: true
+  st.4:
+    value: n/a
+    rationale: Every label comes from a deterministic key, as evidenced by the multiple-choice format and the mention of a 'ground truth' checkmark.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 3, chunk 0
+        quote: The green checkmark is the ground truth.
+    by: model
+    quotes_verified: true
+  ea.1:
+    value: unmet
+    rationale: The excerpts mention that the appendix includes 'error analysis', but no qualitative or quantitative description or count of failure modes is provided in the text.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.2:
+    value: unmet
+    rationale: There is no table or figure breaking down failures or scores by a named confounder.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.3:
+    value: unmet
+    rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
+    evidence: []
+    by: model
+    quotes_verified: true
+  ea.4:
+    value: met
+    rationale: The authors identify a specific direction for improvement (increasing accuracy on Professional Law and Moral Scenarios tasks) with the rationale that these are crucial for alignment with human values.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2009.03300v3
+        locator: 2009.03300v3 page 8, chunk 1
+        quote: future research should especially aim to increase accuracy on these tasks
+    by: model
+    quotes_verified: true
+  jv.1:
+    value: unmet
+    rationale: The excerpts mention 'real-world domains' and 'real-world language use', but they do not name a specific real-world application and link it to the benchmark tasks.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.2:
+    value: unmet
+    rationale: There is no provided operational definition 'def.1' in the excerpts to which the task choice and metrics are linked.
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.3:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is compared to commonsense benchmarks like HellaSwag, noting that while those assess abilities every child has, MMLU includes harder specialized subjects."
+    evidence: []
+    by: model
+    quotes_verified: true
+  jv.4:
+    value: unmet
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors state a limitation regarding the text-only format, noting that it cannot capture concepts conveyed through other modalities."
+    evidence: []
+    by: model
+    quotes_verified: true
+revisions:
+  - date: 2026-10-29
+    by: touchstone-assessor
+    summary: Automated assessment with google/gemma-4-31b-it.
