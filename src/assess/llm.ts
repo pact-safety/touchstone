@@ -68,12 +68,12 @@ const describe = (e: unknown) => {
 type Messages = { role: 'system' | 'user'; content: string }[];
 
 /** A failed call still reports how many requests it made, on `error.attempts`. */
-export async function chat(cfg: LlmConfig, messages: Messages, f?: typeof fetch): Promise<ChatResult> {
+export async function chat(cfg: LlmConfig, messages: Messages, f?: typeof fetch, schema?: object): Promise<ChatResult> {
   const count = { n: 1 };
-  try { return { ...(await chatOnce(cfg, messages, f, count)), attempts: count.n }; } catch (e) { throw Object.assign(e as Error, { attempts: count.n }); }
+  try { return { ...(await chatOnce(cfg, messages, f, count, schema)), attempts: count.n }; } catch (e) { throw Object.assign(e as Error, { attempts: count.n }); }
 }
 
-async function chatOnce(cfg: LlmConfig, messages: Messages, f: typeof fetch | undefined, count: { n: number }): Promise<Omit<ChatResult, 'attempts'>> {
+async function chatOnce(cfg: LlmConfig, messages: Messages, f: typeof fetch | undefined, count: { n: number }, schema?: object): Promise<Omit<ChatResult, 'attempts'>> {
   // Streamed, so response headers arrive at once: a CPU-only model can take longer than fetch's
   // 300-second header timeout to finish an answer.
   const body: Record<string, unknown> = {
@@ -82,6 +82,8 @@ async function chatOnce(cfg: LlmConfig, messages: Messages, f: typeof fetch | un
   };
   if (cfg.reasoningEffort) body.reasoning_effort = cfg.reasoningEffort;
   for (const [k, v] of Object.entries(cfg.extra ?? {})) if (k !== 'model' && k !== 'messages') body[k] = v;
+  // Schema-constrained decoding is the whole point of that request, so it wins over `extra`.
+  if (schema) body.response_format = { type: 'json_schema', json_schema: { name: 'verdicts', strict: true, schema } };
   if (cfg.think === false) {
     body.think = false;
     const last = messages.length - 1;
@@ -99,7 +101,8 @@ async function chatOnce(cfg: LlmConfig, messages: Messages, f: typeof fetch | un
     }
   };
   let res = await send(JSON.stringify(body));
-  if (res.status === 400) {
+  if (res.status === 400 && !schema) {
+    // Never for the schema request: a rejected schema is an error, not a silent unconstrained retry.
     // Some servers reject response_format; the prompt already asks for JSON only.
     delete body.response_format;
     count.n = 2;

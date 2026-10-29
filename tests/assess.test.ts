@@ -160,6 +160,60 @@ describe('automated assessor', () => {
     expect(Object.values(r.assessment.verdicts!).every((v) => v.value === 0)).toBe(true);
   });
 
+  describe('schema-constrained retry', () => {
+    const reply = (content: string) => new Response(JSON.stringify({ choices: [{ message: { content } }] }), { status: 200 });
+    const good = (items: string[]) => JSON.stringify({ verdicts: items.map((id) => ({ item: id, value: 'unmet', rationale: 'x', evidence: [] })) });
+    /** Runs the first group of construct-validity only. */
+    const go = (handler: (body: any, n: number) => Response, constrainedRetry?: boolean) => {
+      const bodies: any[] = [];
+      const f: typeof fetch = async (_u, init) => { const b = JSON.parse(String(init!.body)); bodies.push(b); return handler(b, bodies.length); };
+      const g = std('construct-validity').groups[0]!;
+      return assess({
+        benchmark: bench('truthfulqa'), standard: { ...std('construct-validity'), groups: [g] }, sources: [source()],
+        llm: { baseUrl: 'http://fake', model: 'm', temperature: 0, seed: 1, maxTokens: 100 },
+        provider: 'p', license: 'l', runOn: '2026-10-29', transcriptPath: 'x.jsonl', pins: {}, fetchImpl: f, constrainedRetry,
+      }).then((r) => ({ ...r, bodies, ids: g.items.map((i) => i.id) }));
+    };
+    const ids = (b: any): string[] => [...b.messages[0].content.matchAll(/^- id: (\S+)/gm)].map((m: RegExpMatchArray) => m[1]!);
+
+    it('retries a malformed reply once with json_schema and uses the better reply', async () => {
+      const r = await go((b, n) => reply(n === 1
+        ? JSON.stringify({ verdicts: [{ item: ids(b)[0], value: 'unmet', rationale: 'x', evidence: [] }], [ids(b)[1]!]: { value: 'unmet' } })
+        : good(ids(b))));
+      expect(r.ids.length).toBeGreaterThan(1);
+      expect(r.bodies).toHaveLength(2);
+      expect(r.bodies[0].response_format.type).toBe('json_object');
+      const rf = r.bodies[1].response_format;
+      expect(rf.type).toBe('json_schema');
+      expect(rf.json_schema.strict).toBe(true);
+      expect(rf.json_schema.schema.properties.verdicts.items.properties.item.enum).toEqual(r.ids);
+      expect(r.bodies[1].messages).toEqual(r.bodies[0].messages);
+      expect(r.calls).toBe(2);
+      expect(r.complete).toBe(true);
+      expect(r.transcript.map((t) => t.constrained)).toEqual([undefined, 'json_schema']);
+      expect(r.transcript.map((t) => t.checks.length)).toEqual([0, r.ids.length]);
+      expect(Object.keys(r.assessment.verdicts!).sort()).toEqual([...r.ids].sort());
+    });
+    it('records a 400 on the schema request as an error, without an unconstrained third request', async () => {
+      const r = await go((_b, n) => n === 1 ? reply('not json at all') : new Response('bad schema', { status: 400 }));
+      expect(r.bodies).toHaveLength(2);
+      expect(r.transcript[1]!.error).toMatch(/400/);
+      expect(r.complete).toBe(false);
+      expect(r.calls).toBe(2);
+    });
+    it('makes no schema retry when constrainedRetry is false', async () => {
+      const r = await go(() => reply('not json at all'), false);
+      expect(r.bodies).toHaveLength(1);
+      expect(r.calls).toBe(1);
+    });
+    it('does not retry a well-formed reply', async () => {
+      const r = await go((b) => reply(good(ids(b))));
+      expect(r.bodies).toHaveLength(1);
+      expect(r.bodies[0].response_format.type).toBe('json_object');
+      expect(r.transcript[0]!.constrained).toBeUndefined();
+    });
+  });
+
   it('stops at the call budget and marks the run partial', async () => {
     const r = await run('aisl-scorecard', (items) => ({ verdicts: items.map((id) => ({ item: id, value: 'unmet', rationale: 'x' })) }), 2);
     expect(r.calls).toBe(2);

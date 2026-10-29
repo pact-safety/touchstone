@@ -38,6 +38,8 @@ export interface TranscriptEntry {
   /** Wall-clock time of the model call, in milliseconds. */
   ms?: number;
   error?: string;
+  /** Set on the one retry of a group whose first reply was malformed: it was sent with schema-constrained decoding. */
+  constrained?: 'json_schema';
   checks: { item: string; proposed: unknown; final: unknown; quotes_kept: number; quotes_dropped: number; note?: string }[];
 }
 
@@ -64,9 +66,26 @@ function vocabulary(std: Standard) {
   const s = std.scoring!;
   if (s.scheme === 'points') {
     const top = Math.max(...s.levels);
-    return { allowed: [...s.levels.map(String), '"n/a"'].join(', '), positive: `any level above 0`, negative: '0', levels: s.levels, top, meanings: s.level_meanings };
+    return { values: [...s.levels, 'n/a'] as (number | string)[], allowed: [...s.levels.map(String), '"n/a"'].join(', '), positive: `any level above 0`, negative: '0', levels: s.levels, top, meanings: s.level_meanings };
   }
-  return { allowed: '"met", "unmet", "n/a"', positive: 'met', negative: 'unmet', levels: undefined, top: undefined, meanings: undefined };
+  return { values: ['met', 'unmet', 'n/a'] as (number | string)[], allowed: '"met", "unmet", "n/a"', positive: 'met', negative: 'unmet', levels: undefined, top: undefined, meanings: undefined };
+}
+
+/** JSON schema for one group's reply, used to retry a malformed answer with constrained decoding. */
+export function verdictsSchema(std: Standard, g: Group) {
+  const str = { type: 'string' };
+  const obj = (properties: Record<string, unknown>) => ({ type: 'object', properties, required: Object.keys(properties), additionalProperties: false });
+  return obj({
+    verdicts: {
+      type: 'array',
+      items: obj({
+        item: { enum: g.items.map((i) => i.id) },
+        value: { enum: vocabulary(std).values },
+        rationale: str,
+        evidence: { type: 'array', items: obj({ excerpt: str, quote: str }) },
+      }),
+    },
+  });
 }
 
 export function renderPrompt(tpl: string, b: Benchmark, std: Standard, g: Group, excerpts: Chunk[]): string {
@@ -164,6 +183,8 @@ export interface RunInput {
   maxCalls?: number;
   /** Per-group excerpt budget in characters; default 10,000. */
   excerptChars?: number;
+  /** Retry a malformed group once with schema-constrained decoding; default true. The bake-off turns it off. */
+  constrainedRetry?: boolean;
 }
 
 export async function assess(input: RunInput): Promise<{ assessment: Assessment; transcript: TranscriptEntry[]; calls: number; complete: boolean }> {
@@ -181,36 +202,53 @@ export async function assess(input: RunInput): Promise<{ assessment: Assessment;
     if (input.maxCalls !== undefined && calls >= input.maxCalls) { complete = false; break; }
     const excerpts = selectExcerpts(g, chunks, input.excerptChars);
     const prompt = renderPrompt(tpl, b, std, g, excerpts);
-    const entry: TranscriptEntry = {
+    const base: TranscriptEntry = {
       group: g.id, model: llm.model, temperature: llm.temperature, seed: llm.seed, prompt_version: version,
       ...(llm.think !== undefined ? { think: llm.think } : {}),
       prompt_sha256: sha256(prompt), excerpts: excerpts.map((c) => c.id), response: null, checks: [],
     };
-    transcript.push(entry);
-    calls++;
-    let parsed: { verdicts?: unknown[] } | undefined;
-    try {
-      const started = Date.now();
-      const res = await chat(llm, [{ role: 'user', content: prompt }], input.fetchImpl);
-      entry.ms = Date.now() - started;
-      calls += res.attempts - 1;
-      entry.response = res.content;
-      if (res.reasoning) entry.reasoning = res.reasoning;
-      if (res.provider) entry.provider = res.provider;
-      if (res.served_model) entry.served_model = res.served_model;
-      if (res.usage) entry.usage = res.usage;
-      parsed = parseJson(res.content) as { verdicts?: unknown[] };
-    } catch (e) {
-      calls += ((e as { attempts?: number }).attempts ?? 1) - 1;
-      entry.error = (e as Error).message;
-      complete = false;
-      if ((e as Error).name === 'RateLimited' || /rate limited/.test(entry.error)) break;
-      continue;
+    /** One model call (plain, or schema-constrained) with its own transcript entry. */
+    const attempt = async (schema?: object) => {
+      const entry: TranscriptEntry = { ...base, checks: [], ...(schema ? { constrained: 'json_schema' as const } : {}) };
+      transcript.push(entry);
+      calls++;
+      const byItem = new Map<string, unknown>();
+      try {
+        const started = Date.now();
+        const res = await chat(llm, [{ role: 'user', content: prompt }], input.fetchImpl, schema);
+        entry.ms = Date.now() - started;
+        calls += res.attempts - 1;
+        entry.response = res.content;
+        if (res.reasoning) entry.reasoning = res.reasoning;
+        if (res.provider) entry.provider = res.provider;
+        if (res.served_model) entry.served_model = res.served_model;
+        if (res.usage) entry.usage = res.usage;
+        const parsed = parseJson(res.content) as { verdicts?: unknown[] };
+        for (const v of Array.isArray(parsed?.verdicts) ? parsed!.verdicts : []) {
+          const id = (v as { item?: unknown })?.item;
+          if (typeof id === 'string' && !byItem.has(id)) byItem.set(id, v);
+        }
+      } catch (e) {
+        calls += ((e as { attempts?: number }).attempts ?? 1) - 1;
+        entry.error = (e as Error).message;
+      }
+      return { entry, byItem, got: g.items.filter((it) => byItem.has(it.id)).length };
+    };
+
+    let used = await attempt();
+    const stopOn = (e: TranscriptEntry) => /rate limited/.test(e.error ?? '');
+    // A reply that parsed badly or left items out gets one retry under schema-constrained decoding (a plain retry
+    // returns the identical reply at temperature 0). Network/HTTP failures (response null) are not retried.
+    if (input.constrainedRetry !== false && used.got < g.items.length && used.entry.response !== null && !stopOn(used.entry) && (input.maxCalls === undefined || calls < input.maxCalls)) {
+      const retry = await attempt(verdictsSchema(std, g));
+      if (stopOn(retry.entry)) { complete = false; break; }
+      if (retry.got > used.got) used = retry;
     }
-    const byItem = new Map<string, unknown>();
-    for (const v of Array.isArray(parsed?.verdicts) ? parsed!.verdicts : []) {
-      const id = (v as { item?: unknown })?.item;
-      if (typeof id === 'string' && !byItem.has(id)) byItem.set(id, v);
+    const { entry, byItem } = used;
+    if (entry.error) {
+      complete = false;
+      if (stopOn(entry)) break;
+      if (used.got === 0) continue;
     }
     const shown = new Map(excerpts.map((c) => [c.id, c]));
     for (const it of g.items) {

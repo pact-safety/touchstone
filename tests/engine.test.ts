@@ -6,7 +6,7 @@ import type { Assessment, Standard } from '../src/schema.ts';
 
 const corpus = load(new URL('..', import.meta.url).pathname);
 const std = (id: string) => corpus.standards.find((s) => s.value.id === id)!.value;
-const assessment = (b: string, s: string) => corpus.assessments.find((a) => a.value.benchmark === b && a.value.standard === s)!.value;
+const assessment = (b: string, s: string) => corpus.assessments.find((a) => a.value.benchmark === b && a.value.standard === s && a.value.provenance.kind !== 'automated')!.value;
 
 const base = (standard: Standard, verdicts: Record<string, Assessment['verdicts'] extends infer V ? V extends Record<string, infer X> ? X : never : never>): Assessment => ({
   benchmark: 'example', standard: standard.id, standard_version: standard.version, status: 'draft', mode: 'itemized',

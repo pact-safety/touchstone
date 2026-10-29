@@ -375,6 +375,7 @@ export async function runBakeoff(o: BakeoffOptions) {
           const run = await assess({
             benchmark: b, standard: std, sources: src.sources, llm, provider: entry.provider, license: entry.license, runOn: o.date,
             transcriptPath: path, pins: { paper_version: src.pins.paper_version, repo_commit: src.pins.repo_commit }, fetchImpl, excerptChars,
+            constrainedRetry: false, // the bake-off measures raw first replies
           });
           if (!o.replay) { file.calls += run.calls; used += run.calls; } // a replay makes no model calls
           file.verdicts = Object.fromEntries(Object.entries(run.assessment.verdicts ?? {}).map(([id, v]) => [id, v.value]));
