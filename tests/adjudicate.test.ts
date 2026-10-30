@@ -9,6 +9,8 @@ const span = (n: number) => QUOTES[n - 1]?.quote ?? 'x';
 /** One requirement per entry; each entry lists its alternatives as [condition, quote ids]. Spans are the whole quote. */
 const reqs = (...rs: [string, number[]][][]): Reply['requirements'] =>
   rs.map((alts) => ({ alternatives: alts.map(([condition, q]) => ({ condition, quotes: q.map((n) => ({ id: String(n), span: span(n) })), reason: 'r' })) }));
+/** Mentions as {id, span} with the whole quote as span. */
+const ments = (...ns: number[]) => ns.map((n) => ({ id: `Q${n}`, span: span(n) }));
 const reply = (conds: [string, number[]][], extra: Partial<Reply> = {}): Reply => ({ item: 'i', requirements: reqs(...conds.map((c) => [c])), ...extra });
 const both = reply([['the paper states the dataset size', [1]], ['the paper states the split', [2]]]);
 const base: SettleIn = { standard: 's', item: 'i', met: MET, hasNa: false, points: false, quotes: QUOTES, a: 'met', b: 'unmet', reply: both, reply2: both };
@@ -82,8 +84,8 @@ describe('settle: verbatim span and two judges', () => {
   it('points: mentions is the intersection of the judges', () => {
     const none: [string, number[]][] = [['the paper states the dataset size', []], ['the paper states the split', []]];
     const p = { ...base, points: true, a: 5, b: 0 as number | null };
-    expect(settle({ ...p, reply: reply(none, { mentions: ['Q1'] }), reply2: reply(none, { mentions: ['Q1', 'Q2'] }) })).toMatchObject({ value: 5, choice: 'a' });
-    expect(settle({ ...p, reply: reply(none, { mentions: ['Q1'] }), reply2: reply(none, { mentions: ['Q2'] }) })).toMatchObject({ value: 0, choice: 'b' });
+    expect(settle({ ...p, reply: reply(none, { mentions: ments(1) }), reply2: reply(none, { mentions: ments(1, 2) }) })).toMatchObject({ value: 5, choice: 'a' });
+    expect(settle({ ...p, reply: reply(none, { mentions: ments(1) }), reply2: reply(none, { mentions: ments(2) }) })).toMatchObject({ value: 0, choice: 'b' });
   });
 });
 
@@ -93,10 +95,16 @@ describe('settle: points', () => {
     expect(settle(p)).toMatchObject({ value: 15, level: 15, choice: 'a' });
     expect(settle({ ...p, a: 0, b: 10, ...same(reply([['the paper states the dataset size', [1]], ['the paper states the split', []]])) })).toMatchObject({ value: 10, choice: 'b' });
     const none: [string, number[]][] = [['the paper states the dataset size', []], ['the paper states the split', []]];
-    expect(settle({ ...p, a: 5, b: 0, ...same(reply(none, { mentions: ['Q1'] })) })).toMatchObject({ value: 5, choice: 'a' });
+    expect(settle({ ...p, a: 5, b: 0, ...same(reply(none, { mentions: ments(1) })) })).toMatchObject({ value: 5, choice: 'a' });
     const z = settle({ ...p, a: 0, ...same(reply(none, { mentions: [] })) });
     expect(z).toMatchObject({ value: 0, choice: 'a' });
     expect(z.cite).toContain('absence');
+  });
+  it('an unverified mention span gives no level 5', () => {
+    const none: [string, number[]][] = [['the paper states the dataset size', []], ['the paper states the split', []]];
+    const bad = { mentions: [{ id: 'Q1', span: 'words that are not in the quote' }] };
+    expect(settle({ ...p, a: 5, b: 0, ...same(reply(none, bad)) })).toMatchObject({ value: 0, choice: 'b' });
+    expect(settle({ ...p, a: 5, b: 0, reply: reply(none, bad), reply2: reply(none, { mentions: ments(1) }) })).toMatchObject({ value: 0 });
   });
 });
 

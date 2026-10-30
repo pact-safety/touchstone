@@ -5,7 +5,7 @@
  *   node --env-file=.env --import tsx scripts/adjudicate.ts --rows <rows.json> --out-dir <dir> [--max-pairs N] [--only-pair <b~s>]
  * Writes adjudication.json (per-row choice, value, rule, citations, evidence), decisions.json (apply-review
  * format, by "adjudicator-v1") and transcripts.jsonl (one line per chunk, both judges). A chunk already in
- * transcripts.jsonl with prompt version 3 and both replies parsed is not called again.
+ * transcripts.jsonl with prompt version 4 and both replies parsed is not called again.
  */
 import { appendFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -17,7 +17,7 @@ import { llmConfig } from '../src/llm-config.ts';
 import { load } from '../src/load.ts';
 import type { Reading, Row, Rows } from './crosscheck.ts';
 
-export const PROMPT_VERSION = '3';
+export const PROMPT_VERSION = '4';
 export const VERSION = 'adjudicator-v1';
 export const MODELS = ['openai/gpt-oss-120b', 'deepseek/deepseek-v4.1-flash-1017'] as const;
 const CHUNK = 6; // judge 1 reasons at high effort, and its reasoning tokens count against max_tokens
@@ -33,7 +33,7 @@ const CREDIT =
   'The span must state the condition about this benchmark itself. Do not credit: a statement about another benchmark, model or prior study; a result or observation offered in place of the documented property; a plan or intention; a name or link in place of the property it would need to have. If the condition says every, all, both or fully, a quote covering only part does not establish it. ';
 const TAIL =
   '3. If an N/A condition is given, answer na (required): state = holds (a quote states it is true of this benchmark), contradicted (a quote states it is false), or silent, with quote ids. ' +
-  '4. If the scale is points: mentions = ids of quotes that discuss the item\'s subject at all.';
+  '4. If the scale is points: mentions = the quotes that mention the item\'s subject, each as {id, span} with the same verbatim span rule. A mention must name the criterion\'s own subject; a related result, a name or link, or a neighbouring topic is not a mention.';
 export const INSTRUCTIONS =
   '1. Split the rule into requirements; every requirement must hold. Every condition is a consecutive piece of the rule text, character for character: never insert, re-order or complete words. Within a requirement give alternatives, each a condition copied word for word from the rule as one consecutive span. Only the rule\'s own word "or" (for example "X or no labels") creates alternatives: any one of them satisfies that requirement. "and", commas and lists join separate requirements, never alternatives. When alternatives share words ("in the repo or docs"), copy only the differing words as each alternative ("the repo", "docs") and read each with the shared words. A clause that only says what does not count ("... alone is not enough") is not a requirement; leave it out. A rule with one requirement and no "or" is one requirement with one alternative. ' +
   `2. ${CREDIT}${TAIL}`;
@@ -48,7 +48,7 @@ export interface Reply {
   item: string;
   requirements: { alternatives: { condition: string; quotes: { id: Id; span: string }[]; reason: string }[] }[];
   na?: { state: 'holds' | 'contradicted' | 'silent'; quotes: Id[] };
-  mentions?: Id[];
+  mentions?: { id: Id; span: string }[];
 }
 export type Cite = 'met' | 'na' | 'abc' | 'absence' | 'level';
 export interface Span { id: number; span: string }
@@ -87,7 +87,7 @@ export function buildMessages(blocks: Block[], given?: Reply[]): { role: 'system
       (b.na ? `N/A condition: ${b.na}\n` : '') + (b.points ? 'Scale: points\n' : '') +
       `Quotes:\n${b.quotes.length ? b.quotes.map((q) => `[Q${q.id}] "${q.quote}" (${q.locator})`).join('\n') : '(none)'}`;
   });
-  return [{ role: 'system', content: SYSTEM }, { role: 'user', content: `${per.join('\n\n')}\n\nInstructions: ${given ? INSTRUCTIONS_B : INSTRUCTIONS}\nReply as {"rows":[{"item","requirements":[{"alternatives":[{"condition","quotes":[{"id","span"}],"reason"}]}],"na":{"state","quotes"},"mentions"}]}, one entry per item above.` }];
+  return [{ role: 'system', content: SYSTEM }, { role: 'user', content: `${per.join('\n\n')}\n\nInstructions: ${given ? INSTRUCTIONS_B : INSTRUCTIONS}\nReply as {"rows":[{"item","requirements":[{"alternatives":[{"condition","quotes":[{"id","span"}],"reason"}]}],"na":{"state","quotes"},"mentions":[{"id","span"}]}]}, one entry per item above.` }];
 }
 
 /** `na` is required when any item in the call has an N/A condition. */
@@ -104,7 +104,7 @@ export const schema = (needNa: boolean) => ({
           reason: { type: 'string', minLength: 1 } } } } } } },
       na: { type: 'object', additionalProperties: false, required: ['state', 'quotes'],
         properties: { state: { type: 'string', enum: ['holds', 'contradicted', 'silent'] }, quotes: { type: 'array', items: { type: 'string' } } } },
-      mentions: { type: 'array', items: { type: 'string' } },
+      mentions: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['id', 'span'], properties: { id: { type: 'string' }, span: { type: 'string' } } } },
     } } } },
 });
 
@@ -117,14 +117,14 @@ export function check(r: Reply | undefined, met: string, nQuotes: number): strin
   if (r.requirements.some((q) => q.alternatives.length > 1) && !/\bor\b/i.test(met)) return 'alternatives, but the rule has no "or"';
   const bad = alts.find((a) => !a.condition.trim() || !rule.includes(flat(a.condition)));
   if (bad) return `condition is not a span of the rule: "${bad.condition}"`;
-  const ids = [...alts.flatMap((a) => a.quotes.map((q) => q.id)), ...(r.na?.quotes ?? []), ...(r.mentions ?? [])].map(qid);
+  const ids = [...alts.flatMap((a) => a.quotes.map((q) => q.id)), ...(r.na?.quotes ?? []), ...(r.mentions ?? []).map((m) => m.id)].map(qid);
   if (!ids.every((n) => Number.isInteger(n) && n >= 1 && n <= nQuotes)) return 'cited a quote id that does not exist';
 }
 
-/** Quotes a judge credits for one alternative: the span must be at most 30 words and a substring of the quote. A failed span is not credited. */
-const credit = (a: Reply['requirements'][0]['alternatives'][0], quotes: Quote[]): Span[] => {
+/** Quotes a judge credits (for one alternative, or as mentions): the span must be at most 30 words and a substring of the quote. A failed span is not credited. */
+const credit = (qs: { id: Id; span: string }[], quotes: Quote[]): Span[] => {
   const out = new Map<number, Span>();
-  for (const q of a.quotes) {
+  for (const q of qs) {
     const s = flat(q.span);
     if (s && q.span.trim().split(/\s+/).length <= MAX_SPAN_WORDS && flat(quotes[qid(q.id) - 1]!.quote).includes(s)) out.set(qid(q.id), { id: qid(q.id), span: q.span });
   }
@@ -146,7 +146,7 @@ export function settle(i: SettleIn): Settled {
   // Each alternative is stated only when both judges credit a span-verified quote (not necessarily the same one).
   const alts: Alt[] = r1.requirements.flatMap((q, k) => q.alternatives.map((a) => {
     const b = by2.get(flat(a.condition));
-    const [sa, sb] = [credit(a, i.quotes), b ? credit(b, i.quotes) : []];
+    const [sa, sb] = [credit(a.quotes, i.quotes), b ? credit(b.quotes, i.quotes) : []];
     return { requirement: k, condition: a.condition, reason: a.reason, reason_b: b?.reason ?? 'judge 2 dropped this condition', stated: !!sa.length && !!sb.length, judges: { a: sa.map((x) => x.id), b: sb.map((x) => x.id) }, spans: { a: sa, b: sb } };
   }));
   const total = r1.requirements.length;
@@ -164,8 +164,8 @@ export function settle(i: SettleIn): Settled {
     if (state === 'holds') text = 'n/a: a quote states the item\'s N/A condition (both judges)';
     else { text = 'n/a: no quote on the N/A condition, and ABC treats outcome-validity items as n/a unless the benchmark uses that method'; cite.push('abc'); }
   } else if (i.points) {
-    const m2 = new Set((r2.mentions ?? []).map(qid));
-    const m = new Set((r1.mentions ?? []).map(qid).filter((n) => m2.has(n))).size; // mentions: intersection
+    const m2 = new Set(credit(r2.mentions ?? [], i.quotes).map((x) => x.id));
+    const m = credit(r1.mentions ?? [], i.quotes).filter((x) => m2.has(x.id)).length; // mentions: intersection of span-verified ids
     level = stated === total ? 15 : stated ? 10 : m ? 5 : 0;
     value = level; cite.push('level');
     text = `${level}: ${level >= 10 ? frac : level === 5 ? `no requirement stated, ${m} quote(s) discuss the subject` : 'no requirement stated and no quote discusses the subject'}`;
