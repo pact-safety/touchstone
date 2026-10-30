@@ -28,6 +28,8 @@ A change that alters what a rule means bumps the standard's `version`. Assessmen
 5. Published assessments by Touchstone need two independent assessors. Automated assessments need at least one human reviewer before they are published.
 6. A missing verdict is scored as `unmet`.
 
+Disputed cross-check rows are settled by a fixed rule cascade, not by opinion: see [`adjudication.md`](adjudication.md).
+
 ## Scoring schemes
 
 All arithmetic is in [`src/engine.ts`](../src/engine.ts). Values are rounded half up to one decimal only for display and comparison.
