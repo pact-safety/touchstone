@@ -131,14 +131,15 @@ export function settle(i: SettleIn): Settled {
 export function itemLines(yaml: string, item: string): { met?: number; na?: number; text?: number } {
   const lines = yaml.split('\n');
   const esc = item.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const start = lines.findIndex((l) => new RegExp(`^\\s*-\\s*id:\\s*["']?${esc}["']?\\s*$`).test(l));
+  // block style `- id: X` or flow style `- { id: X, ...`; the id must end there so 1.2.1 does not match 1.2.1a
+  const start = lines.findIndex((l) => new RegExp(`^\\s*-\\s*(?:\\{\\s*)?id:\\s*["']?${esc}["']?\\s*(?:$|[,}])`).test(l));
   if (start < 0) return {};
   const out: { met?: number; na?: number; text?: number } = {};
-  for (let n = start + 1; n < lines.length && !/^\s*-\s*id:/.test(lines[n]!); n++) {
+  for (let n = start; n < lines.length && (n === start || !/^\s*-\s*(?:\{\s*)?id:/.test(lines[n]!)); n++) { // flow style: met: sits on the start line
     const l = lines[n]!;
     if (out.met === undefined && /(?:^|[\s{,])met:/.test(l)) out.met = n + 1;
     if (out.na === undefined && /(?:^|[\s{,])not_applicable:/.test(l)) out.na = n + 1;
-    if (out.text === undefined && /^\s*text:/.test(l)) out.text = n + 1;
+    if (out.text === undefined && /(?:^|[\s{,])text:/.test(l)) out.text = n + 1;
   }
   return out;
 }

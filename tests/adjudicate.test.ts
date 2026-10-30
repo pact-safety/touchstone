@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { citations, itemLines, levelLine, poolQuotes, settle, type Reply, type SettleIn } from '../scripts/adjudicate.ts';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
+import { parse } from 'yaml';
 
 const MET = 'The paper states the dataset size and the paper states the split.';
 const reply = (conds: [string, number[]][], extra: Partial<Reply> = {}): Reply => ({
@@ -134,5 +135,37 @@ describe('citations against the real standards', () => {
       expect(lineOf(c!)).toContain(words);
     }
     expect(levelLine(readFileSync(`${root}standards/betterbench.yaml`, 'utf8'), 15)).toBe(26);
+  });
+});
+
+describe('itemLines: flow-style items', () => {
+  const yaml = [
+    '    items:',
+    '      - { id: 1.2.1, text: "T1", guidance: { met: "M1", not_applicable: "N1" } }',
+    '      - { id: "1.2.1a", text: "T2", guidance: { met: "M2" } }',
+    '      - id: B.1',
+    '        text: T3',
+    '        guidance:',
+    '          met: M3',
+  ].join('\n');
+  it('returns the start line for met, na and text', () => expect(itemLines(yaml, '1.2.1')).toEqual({ met: 2, na: 2, text: 2 }));
+  it('1.2.1 vs 1.2.1a resolves to its own line', () => {
+    expect(itemLines(yaml, '1.2.1a')).toEqual({ met: 3, text: 3 });
+    expect(itemLines(yaml, '1.2')).toEqual({});
+  });
+  it('block style still works after flow items', () => expect(itemLines(yaml, 'B.1')).toEqual({ met: 7, text: 5 }));
+  it('every item in standards/*.yaml resolves to a met: or text: line', () => {
+    const root = new URL('..', import.meta.url).pathname;
+    let n = 0;
+    for (const f of readdirSync(`${root}standards`).filter((x) => x.endsWith('.yaml'))) {
+      const src = readFileSync(`${root}standards/${f}`, 'utf8');
+      const doc = parse(src) as { groups?: { items?: { id: string | number }[] }[] };
+      for (const it of (doc.groups ?? []).flatMap((g) => g.items ?? [])) {
+        const l = itemLines(src, String(it.id));
+        expect(l.met ?? l.text, `${f} ${it.id}`).toBeDefined();
+        n++;
+      }
+    }
+    expect(n).toBeGreaterThan(100);
   });
 });
