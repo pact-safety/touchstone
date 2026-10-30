@@ -1,6 +1,6 @@
 # Touchstone
 
-Rigor ratings for AI benchmarks, across the published standards for what makes a benchmark good.
+Rigor ratings for AI benchmarks, across the published standards for what makes a benchmark good. Live at **[touchstone.pact-safety.org](https://touchstone.pact-safety.org)**.
 
 People cite benchmark results to back claims about AI models, and benchmarks differ a great deal in how carefully they were built. Several groups have published standards for what makes a benchmark good: the AI Standards Lab Scorecard, BetterBench, the Agentic Benchmark Checklist, the construct-validity checklist from *Measuring What Matters*, STREAM and others. Each covers different things and uses its own scale. Touchstone encodes those standards as data, applies them to each benchmark with cited evidence, and shows the verdicts side by side, so a reader can see how rigorous a benchmark is and where the standards disagree.
 
