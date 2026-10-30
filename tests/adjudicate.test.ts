@@ -27,16 +27,26 @@ describe('settle: checklist', () => {
 });
 
 describe('settle: points', () => {
-  const p = { ...base, points: true, a: 15, b: 10 as number | null };
+  const p = { ...base, points: true, a: 15, b: 0 as number | null };
   it('15 all, 10 some, 5 mentions only, 0 nothing', () => {
     expect(settle(p)).toMatchObject({ value: 15, level: 15, choice: 'a' });
-    expect(settle({ ...p, reply: reply([['the paper states the dataset size', [1]], ['the paper states the split', []]]) })).toMatchObject({ value: 10, choice: 'b' });
+    expect(settle({ ...p, a: 0, b: 10, reply: reply([['the paper states the dataset size', [1]], ['the paper states the split', []]]) })).toMatchObject({ value: 10, choice: 'b' });
     const none: [string, number[]][] = [['the paper states the dataset size', []], ['the paper states the split', []]];
-    expect(settle({ ...p, a: 5, reply: reply(none, { mentions: ['Q1'] }) })).toMatchObject({ value: 5, choice: 'a' });
+    expect(settle({ ...p, a: 5, b: 0, reply: reply(none, { mentions: ['Q1'] }) })).toMatchObject({ value: 5, choice: 'a' });
     const z = settle({ ...p, a: 0, reply: reply(none, { mentions: [] }) });
     expect(z).toMatchObject({ value: 0, choice: 'a' });
     expect(z.cite).toContain('absence');
   });
+});
+
+describe('settle: two positive BetterBench levels', () => {
+  const p = { ...base, points: true, a: 15, b: 10 as number | null };
+  it('skips with the fixed note but still records V and the level cite', () => {
+    const s = settle(p);
+    expect(s).toMatchObject({ choice: 'skip', value: 15, level: 15, note: expect.stringContaining('cannot choose between two positive levels') });
+    expect(s.cite).toContain('level');
+  });
+  it('a positive level against 0 is still decided', () => expect(settle({ ...p, b: 0 }).choice).toBe('a'));
 });
 
 describe('settle: n/a', () => {
@@ -59,11 +69,29 @@ describe('settle: code checks', () => {
     expect(settle({ ...base, reply: reply([['something else entirely', [1]]]) })).toMatchObject({ choice: 'skip', note: expect.stringContaining('not a span') }));
   it('whitespace and case are ignored in the span check', () =>
     expect(settle({ ...base, reply: reply([['THE paper  states\nthe dataset size', [1]]]) }).value).toBe('met'));
+  it('trailing punctuation and typographic quotes do not break the span check', () => {
+    const met = 'The “paper” states the dataset’s size.';
+    expect(settle({ ...base, met, reply: reply([['the "paper" states the dataset\'s size', [1]]]) }).value).toBe('met');
+    expect(settle({ ...base, met: 'One thing; and another.', reply: reply([['One thing', [1]], ['and another', [2]]]) }).value).toBe('met');
+  });
+  it('accepts Q2, q2, 2 and 2 as the same quote id', () => {
+    for (const id of ['Q2', 'q2', '2', 2]) expect(settle({ ...base, reply: { ...both, conditions: [{ condition: 'the paper states the split', quotes: [id], reason: 'r' }] } }).value).toBe('met');
+    expect(settle({ ...base, reply: { ...both, conditions: [{ condition: 'the paper states the split', quotes: ['Q3'], reason: 'r' }] } }).choice).toBe('skip');
+  });
   it('unknown quote id, missing reply or no conditions skip', () => {
     expect(settle({ ...base, reply: reply([['the paper states the split', [3]]]) }).choice).toBe('skip');
     expect(settle({ ...base, reply: undefined }).choice).toBe('skip');
     expect(settle({ ...base, reply: reply([]) }).choice).toBe('skip');
   });
+});
+
+describe('settle: no judge call (no verified quote)', () => {
+  const whole = reply([[MET, []]], { mentions: [] });
+  it('checklist: unmet, says so', () =>
+    expect(settle({ ...base, nQuotes: 0, noCall: true, a: 'unmet', b: null, reply: whole })).toMatchObject({ value: 'unmet', choice: 'a', rule: expect.stringContaining('without a judge call') }));
+  it('points: 0', () => expect(settle({ ...base, points: true, nQuotes: 0, noCall: true, a: 0, b: 15, reply: whole })).toMatchObject({ value: 0, choice: 'a' }));
+  it('abc O.* with an N/A condition: n/a', () =>
+    expect(settle({ ...base, standard: 'abc', item: 'O.b.1', hasNa: true, nQuotes: 0, noCall: true, a: 'unmet', b: 'n/a', reply: { ...whole, na: { state: 'silent', quotes: [] } } })).toMatchObject({ value: 'n/a', choice: 'b' }));
 });
 
 describe('poolQuotes', () => {

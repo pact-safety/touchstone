@@ -17,7 +17,7 @@ import { llmConfig } from '../src/llm-config.ts';
 import { load } from '../src/load.ts';
 import type { Reading, Row, Rows } from './crosscheck.ts';
 
-export const PROMPT_VERSION = '1';
+export const PROMPT_VERSION = '2';
 export const VERSION = 'adjudicator-v1';
 export const MODEL = 'openai/gpt-oss-120b';
 const CHUNK = 12;
@@ -28,7 +28,7 @@ export const SYSTEM =
   'You check whether quoted evidence satisfies a written rule from a benchmark-quality standard. The quotes were copied verbatim from a benchmark\'s paper or repository. Use only the quotes. Do not use outside knowledge about the benchmark and do not infer what a quote does not say. Reply with JSON only.';
 export const INSTRUCTIONS =
   '1. Split the rule into the separate conditions it requires, copying each condition\'s words exactly from the rule as one consecutive span. A rule with one requirement is one condition. ' +
-  '2. For each condition, list the ids of quotes that state it is true of this benchmark, with a reason of at most 25 words; list none if no quote states it. A quote that only names the topic, states an intention, or states a related fact does not establish it. ' +
+  '2. For each condition, list the ids of quotes that state it is true of this benchmark; list none if no quote states it. Every condition needs a reason of at most 25 words, also when no quote states it (say what the quotes lack). A quote that only names the topic, states an intention, or states a related fact does not establish it. ' +
   '3. If an N/A condition is given: na = holds (a quote states it is true of this benchmark), contradicted (a quote states it is false), or silent, with quote ids. ' +
   '4. If the scale is points: mentions = ids of quotes that discuss the item\'s subject at all.';
 
@@ -77,23 +77,24 @@ export const SCHEMA = {
     properties: {
       item: { type: 'string' },
       conditions: { type: 'array', items: { type: 'object', additionalProperties: false, required: ['condition', 'quotes', 'reason'],
-        properties: { condition: { type: 'string' }, quotes: { type: 'array', items: { type: 'string' } }, reason: { type: 'string' } } } },
+        properties: { condition: { type: 'string' }, quotes: { type: 'array', items: { type: 'string' } }, reason: { type: 'string', minLength: 1 } } } },
       na: { type: 'object', additionalProperties: false, required: ['state', 'quotes'],
         properties: { state: { type: 'string', enum: ['holds', 'contradicted', 'silent'] }, quotes: { type: 'array', items: { type: 'string' } } } },
       mentions: { type: 'array', items: { type: 'string' } },
     } } } },
 };
 
-export interface SettleIn { standard: string; item: string; met: string; hasNa: boolean; points: boolean; nQuotes: number; a: Value; b: Value | null; reply: Reply | undefined }
+export interface SettleIn { standard: string; item: string; met: string; hasNa: boolean; points: boolean; nQuotes: number; a: Value; b: Value | null; reply: Reply | undefined; noCall?: boolean }
 
 /** Code checks on the judge's reply, then the evidence-determined value V and the choice. Pure. */
 export function settle(i: SettleIn): Settled {
   const skip = (note: string): Settled => ({ choice: 'skip', rule: 'not settled', cite: [], note });
   const r = i.reply;
   if (!r) return skip('judge reply has no entry for this item');
-  const rule = normalize(i.met);
+  const flat = (x: string) => normalize(x).replace(/[\s.,;:!?]+$/, ''); // trailing punctuation does not count
+  const rule = flat(i.met);
   if (!r.conditions.length) return skip('judge returned no conditions');
-  const bad = r.conditions.find((c) => !c.condition.trim() || !rule.includes(normalize(c.condition)));
+  const bad = r.conditions.find((c) => !c.condition.trim() || !rule.includes(flat(c.condition)));
   if (bad) return skip(`condition is not a span of the rule: "${bad.condition}"`);
   const ok = (ids: (string | number)[]) => ids.map(qid).every((n) => Number.isInteger(n) && n >= 1 && n <= i.nQuotes);
   const all = [...r.conditions.flatMap((c) => c.quotes), ...(r.na?.quotes ?? []), ...(r.mentions ?? [])];
@@ -118,6 +119,10 @@ export function settle(i: SettleIn): Settled {
     if (level === 0) cite.push('absence');
   } else if (stated === total) { value = 'met'; text = `met: ${frac}`; }
   else { value = 'unmet'; text = `unmet: ${frac}`; cite.push('absence'); }
+  if (i.noCall) text += ' (decided without a judge call: no verified quote in either reading)';
+  const positive = (v: Value | null) => typeof v === 'number' && v > 0;
+  if (i.points && positive(i.a) && positive(i.b))
+    return { choice: 'skip', value, rule: text, cite, level, note: 'BetterBench separates 5, 10 and 15 only by its generic level meanings; the quotes cannot choose between two positive levels.' };
   const choice = i.a === value ? 'a' : i.b !== null && i.b === value ? 'b' : 'skip';
   return { choice, value, rule: text, cite, level, ...(choice === 'skip' ? { note: `neither reading matches evidence value ${value}` } : {}) };
 }
@@ -177,23 +182,46 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
   const done = new Map<string, Reply[]>();
   if (existsSync(tPath))
     for (const l of readFileSync(tPath, 'utf8').split('\n').filter(Boolean)) {
-      const t = JSON.parse(l) as { pair: string; chunk: number; keys: string[]; reply: { rows: Reply[] } | null };
-      if (t.reply) done.set(`${t.pair}#${t.chunk}#${t.keys.join(',')}`, t.reply.rows);
+      const t = JSON.parse(l) as { pair: string; chunk: number; prompt_version?: string; keys: string[]; reply: { rows: Reply[] } | null };
+      if (t.reply) done.set(`${t.prompt_version}#${t.pair}#${t.chunk}#${t.keys.join(',')}`, t.reply.rows);
     }
   const std = (id: string) => corpus.standards.find((s) => s.value.id === id)!.value;
   const result: Record<string, unknown> = {};
   const choices: Record<string, Record<string, string>> = {};
-  const tally = { a: 0, b: 0, skip: 0, failedCheck: 0, failedCall: 0, noMatch: 0 };
+  const tally = { a: 0, b: 0, skip: 0, failedCheck: 0, failedCall: 0, noMatch: 0, twoLevels: 0 };
   for (const pair of pairs) {
     const prows = rows.filter((r) => r.pair === pair);
-    for (let c = 0; c * CHUNK < prows.length; c++) {
-      const chunk = prows.slice(c * CHUNK, (c + 1) * CHUNK);
-      const items = chunk.map((r) => std(r.standard).groups.flatMap((g) => g.items).find((it) => it.id === r.item)!);
-      const points = std(chunk[0]!.standard).scoring?.scheme === 'points';
-      const quotes = chunk.map(poolQuotes);
-      const blocks: Block[] = chunk.map((r, k) => ({ item: r.item, text: r.text, met: r.met || r.text, na: items[k]!.guidance?.not_applicable, points, quotes: quotes[k]! }));
+    const meta = (r: Row) => {
+      const it = std(r.standard).groups.flatMap((g) => g.items).find((x) => x.id === r.item)!;
+      return { it, na: it.guidance?.not_applicable, points: std(r.standard).scoring?.scheme === 'points', quotes: poolQuotes(r), met: r.met || r.text };
+    };
+    const emit = (r: Row, replies: Reply[] | undefined, error: string | undefined, noCall: boolean) => {
+      const m = meta(r);
+      const reply = replies?.find((x) => x.item === r.item);
+      const s: Settled = replies ? settle({ standard: r.standard, item: r.item, met: m.met, hasNa: !!m.na, points: m.points, nQuotes: m.quotes.length, a: r.a.value, b: r.b ? r.b.value : null, reply, noCall })
+        : { choice: 'skip', rule: 'not settled', cite: [], note: `judge call failed: ${error}` };
+      const q = (ids: (string | number)[]) => ids.map((i) => m.quotes[qid(i) - 1]).filter((x): x is Quote => !!x);
+      tally[s.choice]++;
+      if (s.choice === 'skip') tally[!replies ? 'failedCall' : s.value === undefined ? 'failedCheck' : s.note?.startsWith('BetterBench') ? 'twoLevels' : 'noMatch']++;
+      (choices[pair] ??= {})[r.item] = s.choice;
+      result[r.key] = {
+        choice: s.choice, value: s.value ?? null, rule: s.rule, cites: citations(root, r.standard, r.item, s),
+        conditions: (reply?.conditions ?? []).map((cd) => ({ condition: cd.condition, reason: cd.reason, quotes: q(cd.quotes) })),
+        ...(reply?.na && m.na ? { na: { state: reply.na.state, quotes: q(reply.na.quotes) } } : {}),
+        ...(s.note ? { note: s.note } : {}),
+      };
+    };
+    // No verified quote in either reading: nothing for a judge to read, so the cascade runs on an empty reply.
+    const [empty, judged] = [prows.filter((r) => !meta(r).quotes.length), prows.filter((r) => meta(r).quotes.length)];
+    for (const r of empty) {
+      const m = meta(r);
+      emit(r, [{ item: r.item, conditions: [{ condition: m.met, quotes: [], reason: 'No verified quote in either reading.' }], ...(m.na ? { na: { state: 'silent' as const, quotes: [] } } : {}), mentions: [] }], undefined, true);
+    }
+    for (let c = 0; c * CHUNK < judged.length; c++) {
+      const chunk = judged.slice(c * CHUNK, (c + 1) * CHUNK);
+      const blocks: Block[] = chunk.map((r) => { const m = meta(r); return { item: r.item, text: r.text, met: m.met, na: m.na, points: m.points, quotes: m.quotes }; });
       const messages = buildMessages(blocks);
-      const key = `${pair}#${c}#${chunk.map((r) => r.key).join(',')}`;
+      const key = `${PROMPT_VERSION}#${pair}#${c}#${chunk.map((r) => r.key).join(',')}`;
       let replies = done.get(key);
       let error: string | undefined;
       if (!replies) {
@@ -209,28 +237,15 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
             if (n < 4) await sleep(e instanceof RateLimited ? 5000 * 2 ** n : 2000 * 2 ** n);
           }
         }
-        appendFileSync(tPath, JSON.stringify({ pair, chunk: c, keys: chunk.map((r) => r.key), model: cfg.model, messages, raw, reply: replies ? { rows: replies } : null, error }) + '\n');
+        appendFileSync(tPath, JSON.stringify({ pair, chunk: c, prompt_version: PROMPT_VERSION, keys: chunk.map((r) => r.key), model: cfg.model, messages, raw, reply: replies ? { rows: replies } : null, error }) + '\n');
       }
-      chunk.forEach((r, k) => {
-        const reply = replies?.find((x) => x.item === r.item);
-        const s: Settled = replies ? settle({ standard: r.standard, item: r.item, met: r.met || r.text, hasNa: !!items[k]!.guidance?.not_applicable, points, nQuotes: quotes[k]!.length, a: r.a.value, b: r.b ? r.b.value : null, reply })
-          : { choice: 'skip', rule: 'not settled', cite: [], note: `judge call failed: ${error}` };
-        const q = (ids: (string | number)[]) => ids.map((i) => quotes[k]![qid(i) - 1]).filter((x): x is Quote => !!x);
-        tally[s.choice]++;
-        if (s.choice === 'skip') tally[!replies ? 'failedCall' : s.value === undefined ? 'failedCheck' : 'noMatch']++;
-        (choices[pair] ??= {})[r.item] = s.choice;
-        result[r.key] = {
-          choice: s.choice, value: s.value ?? null, rule: s.rule, cites: citations(root, r.standard, r.item, s),
-          conditions: (reply?.conditions ?? []).map((cd) => ({ condition: cd.condition, reason: cd.reason, quotes: q(cd.quotes) })),
-          ...(reply?.na && items[k]!.guidance?.not_applicable ? { na: { state: reply.na.state, quotes: q(reply.na.quotes) } } : {}),
-          ...(s.note ? { note: s.note } : {}),
-        };
-      });
+      for (const r of chunk) emit(r, replies, error, false);
       console.log(`${pair} chunk ${c}: ${chunk.length} rows${error ? ` (error: ${error})` : ''}`);
     }
+    if (empty.length) console.log(`${pair}: ${empty.length} rows decided without a judge call`);
   }
   const now = new Date().toISOString();
   writeFileSync(join(out, 'adjudication.json'), JSON.stringify({ version: VERSION, model: cfg.model, prompt_version: PROMPT_VERSION, generated_on: now.slice(0, 10), rows: result }, null, 1) + '\n');
   writeFileSync(join(out, 'decisions.json'), JSON.stringify(pairs.map((id) => ({ id, data: { choices: choices[id] ?? {}, updated_at: now, by: VERSION } })), null, 1) + '\n');
-  console.log(`${pairs.length} pairs, ${Object.keys(result).length} rows: a=${tally.a} b=${tally.b} skip=${tally.skip} (failed code check ${tally.failedCheck}, failed call ${tally.failedCall}, neither reading matches ${tally.noMatch}) -> ${out}`);
+  console.log(`${pairs.length} pairs, ${Object.keys(result).length} rows: a=${tally.a} b=${tally.b} skip=${tally.skip} (failed code check ${tally.failedCheck}, failed call ${tally.failedCall}, neither reading matches ${tally.noMatch}, two positive BetterBench levels ${tally.twoLevels}) -> ${out}`);
 }

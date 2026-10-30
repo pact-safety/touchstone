@@ -4,12 +4,12 @@ When two model readings of the same benchmark and standard disagree, [`scripts/a
 
 ## What the judge sees and answers
 
-It sees the item, its `guidance.met` rule (for BetterBench, which has none, the item's `text:` line), the `not_applicable` condition if any, and the pooled quotes of both readings (only readings whose quotes were verified, de-duplicated, numbered Q1..Qn). It never sees either reading's value or rationale. It splits the rule into conditions, copied word for word from the rule, and lists which quotes state each one. It also says whether the n/a condition holds, is contradicted or is silent and, on a points scale, which quotes mention the subject at all.
+It sees the item, its `guidance.met` rule (for BetterBench, which has none, the item's `text:` line), the `not_applicable` condition if any, and the pooled quotes of both readings (only readings whose quotes were verified, de-duplicated, numbered Q1..Qn). It never sees either reading's value or rationale. It splits the rule into conditions, copied word for word from the rule, and lists which quotes state each one. Every condition gets a reason of at most 25 words, also when no quote states it (the reason says what the quotes lack). The prompt is version 2. It also says whether the n/a condition holds, is contradicted or is silent and, on a points scale, which quotes mention the subject at all.
 
 ## Code checks (failure means the row is skipped, with the reason)
 
-- Every condition must be a span of the rule (case and whitespace ignored).
-- Every quote id must exist, and the judge must return an entry for the item with at least one condition.
+- Every condition must be a span of the rule (compared after Unicode, quote, dash, whitespace and case normalisation, with trailing punctuation dropped from both sides).
+- Every quote id must exist (`Q3`, `q3`, `3` all name quote 3), and the judge must return an entry for the item with at least one condition.
 
 ## The cascade (first match wins)
 
@@ -19,9 +19,13 @@ It sees the item, its `guidance.met` rule (for BetterBench, which has none, the 
 
 Every row also cites the line holding the item's `met:` rule in `standards/<standard>.yaml`.
 
+## Rows with no verified quote
+
+If neither reading has a verified quote, no judge is called. The whole rule is recorded as one condition with no quote (reason "No verified quote in either reading."), the n/a state is `silent` when the item has an N/A condition, and the cascade runs as usual: `unmet`, `0`, or `n/a` for ABC `O.*` items. The rule sentence says the row was decided without a judge call.
+
 ## Choice
 
-`a` if the evidence value equals reading A's value; otherwise `b` if reading B exists and matches; otherwise `skip` ("neither reading matches evidence value"). A skip is left for a person.
+`a` if the evidence value equals reading A's value; otherwise `b` if reading B exists and matches; otherwise `skip` ("neither reading matches evidence value"). On a points scale, when both readings are positive levels (5, 10 or 15) the choice is always `skip` ("BetterBench separates 5, 10 and 15 only by its generic level meanings; the quotes cannot choose between two positive levels."); the evidence value and its `level_meanings` citation are still recorded. A skip is left for a person.
 
 ## Outputs
 
