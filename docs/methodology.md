@@ -17,7 +17,7 @@ Each item keeps the standard's wording verbatim in `text` and adds `guidance`:
 - `evidence`: which kinds of source can satisfy it.
 - `probe` (planned): an automated repository check that can supply evidence.
 
-A change that alters what a rule means bumps the standard's `version`. Assessments pin `standard_version`, and the nightly job re-assesses pairs whose standard was revised.
+A change that alters what a rule means bumps the standard's `version`. Assessments pin `standard_version`, and the re-assessment job re-assesses pairs whose standard was revised.
 
 ## Verdict rules
 
@@ -25,7 +25,7 @@ A change that alters what a rule means bumps the standard's `version`. Assessmen
 2. A positive verdict cites at least one piece of evidence at an immutable reference (arXiv `vN`, commit SHA, dataset revision), with a locator (section, page, or file and lines) and, where possible, a quote of at most ~40 words.
 3. A negative verdict cannot quote an absence, so it needs a rationale naming what was looked for.
 4. `n/a` needs a rationale naming the item's n/a condition.
-5. Published assessments by Touchstone need two independent assessors. Automated assessments need at least one human reviewer before they are published.
+5. Published assessments by Touchstone need two independent assessors. Automated assessments need at least one human reviewer before they are published. So far, all published assessments are imports from the standards' authors; Touchstone's own automated assessments are drafts awaiting review.
 6. A missing verdict is scored as `unmet`.
 
 Disputed cross-check rows are settled by a fixed rule cascade, not by opinion: see [`adjudication.md`](adjudication.md).
@@ -54,4 +54,4 @@ Standards measure different things on different scales. Touchstone never merges 
 
 ## Rule revisions
 
-**2026-10-26.** The `guidance.met` (and, for a few items, `guidance.not_applicable`) decision rules of 81 items were rewritten so that two assessors reach the same verdict: each now names the observable evidence required. Standards changed: `aisl-scorecard` (34 rules, now 2026.07.1), `abc` (25, now 1.0.1), `construct-validity` (15, now 2025.1.1) and `stream` (7, now 1.0.1). Item wording and severities are unchanged.
+The `guidance.met` (and, for a few items, `guidance.not_applicable`) decision rules of 81 items were rewritten so that two assessors reach the same verdict: each now names the observable evidence required. Standards changed: `aisl-scorecard` (34 rules, now 2026.07.1), `abc` (25, now 1.0.1), `construct-validity` (15, now 2025.1.1) and `stream` (7, now 1.0.1). Item wording and severities are unchanged.

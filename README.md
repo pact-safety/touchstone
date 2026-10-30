@@ -2,14 +2,16 @@
 
 Rigor ratings for AI benchmarks, across the published standards for what makes a benchmark good.
 
+People cite benchmark results to back claims about AI models, and benchmarks differ a great deal in how carefully they were built. Several groups have published standards for what makes a benchmark good, but each standard covers different things and uses its own scale. Touchstone encodes those standards as data, applies them to each benchmark with cited evidence, and shows the verdicts side by side, so a reader can see how rigorous a benchmark is and where the standards disagree.
+
 A touchstone was the stone used to test the purity of gold. This one tests the tests: it rates the methodology and code of widely used AI benchmarks against benchmark-quality standards such as the AI Standards Lab Scorecard, BetterBench, the Agentic Benchmark Checklist, the construct-validity checklist from *Measuring What Matters*, and STREAM, and shows each standard's verdict side by side.
 
 ## Principles
 
-- **Judgement and arithmetic are separate.** People, or an open-weights model whose work people review, decide one verdict per item. Scores are then a pure function of those verdicts ([`src/engine.ts`](src/engine.ts)): the same verdicts always give the same score, and every score carries a plain-language explanation of how it was calculated.
+- **Judgement and arithmetic are separate.** People, or an open-weights model whose work people review, decide one verdict per item. Scores are a deterministic function of the verdicts ([`src/engine.ts`](src/engine.ts)). Positive verdicts cite pinned evidence; the verdicts themselves are judgements. The same verdicts always give the same score, and every score carries a plain-language explanation of how it was calculated.
 - **Every positive verdict cites evidence** at a pinned version (an arXiv version or a git commit), with an exact location and a short quote. Missing documentation counts as not met.
 - **Standards are encoded as written.** Item wording is the standard's own; each item adds a decision rule. Where a standard publishes no scoring rule, Touchstone's rule is marked as such.
-- **Ratings stay current.** A nightly job checks every benchmark's paper and repository, re-assesses what changed with an open-source model, verifies every quote it gives against the source, and opens a pull request for human review.
+- **Ratings are kept current.** A job checks every benchmark's paper and repository, re-assesses what changed with an open-weights model, verifies every quote it gives against the source, and opens a pull request for human review. It is run manually for now; scheduling is paused.
 - **Anyone can challenge a rating.** Each verdict has a "Request a correction" link. Accepted changes are pull requests with a revision entry linking the request.
 
 ## What's here
@@ -22,7 +24,7 @@ A touchstone was the stone used to test the purity of gold. This one tests the t
 | `data/assessments/<benchmark>/<standard>.auto.yaml` | Model-proposed assessments (drafts until reviewed) |
 | `data/runs/` | Transcripts of every automated run |
 | `data/sources/` | Snapshots of external assessments that were imported |
-| `src/` | Schema, scoring engine, validator, assessor, nightly watcher, triage |
+| `src/` | Schema, scoring engine, validator, assessor, source watcher, triage |
 | `site/` | The website (TypeScript, Tailwind) |
 | `prompts/` | The versioned prompt the assessor uses |
 | `config/models.yaml` | The allowlist of open-weights models |
@@ -38,12 +40,18 @@ npx tsx src/cli.ts assess --benchmark truthfulqa --standard aisl-scorecard
 npx tsx src/cli.ts replay --benchmark truthfulqa --standard aisl-scorecard
 ```
 
-See [docs/methodology.md](docs/methodology.md) for the scoring rules, [docs/touchstone-score.md](docs/touchstone-score.md) for the Touchstone score (rigor consensus and run cost), [docs/automation.md](docs/automation.md) for the nightly job and auditing, and [CONTRIBUTING.md](CONTRIBUTING.md) for corrections and new assessments.
+See [docs/methodology.md](docs/methodology.md) for the scoring rules, [docs/touchstone-score.md](docs/touchstone-score.md) for the Touchstone score (rigor consensus and run cost), [docs/automation.md](docs/automation.md) for the re-assessment job and auditing, and [CONTRIBUTING.md](CONTRIBUTING.md) for corrections and new assessments.
 
 ## Current data
 
-35 benchmarks, 5 encoded standards, 6 catalogued. The first ratings are the assessments the standards' own authors published: BetterBench (23 benchmarks, item level), the Agentic Benchmark Checklist (10, section scores) and the AI Standards Lab Scorecard (2 worked examples). Recomputing them from their own verdicts flags where published figures disagree: 10 BetterBench entries, and ImpossibleBench, which the Scorecard paper rates Category B under an earlier version of its table but which scores Category C under the final one.
+48 benchmarks, 9 encoded standards and 2 catalogued. There are 35 published assessments, all imported from the standards' authors: BetterBench (23 benchmarks, item level), the Agentic Benchmark Checklist (10, section scores) and the AI Standards Lab Scorecard (2 worked examples). Recomputing them from their own verdicts flags where published figures disagree: 10 BetterBench entries, and ImpossibleBench, which the Scorecard paper rates Category B under an earlier version of its table but which scores Category C under the final one.
+
+The 307 automated assessments are unreviewed drafts produced by google/gemma-4-31b-it. They are shown labelled as drafts and never count toward a score.
 
 ## Licence
 
 Code and Touchstone's own data: MIT. Imported assessments remain their authors' work and are cited to their sources.
+
+## How to cite
+
+See [`CITATION.cff`](CITATION.cff). GitHub shows a "Cite this repository" button from it.

@@ -26,7 +26,7 @@ Each chosen assessment is scored by the engine (`score()` in `src/engine.ts`) an
 | `points` or `checklist` | the overall percent of the result |
 | any result that is Incomplete, or has no percent | not counted |
 
-**Score.** The median of the counted values, rounded to one decimal. For an even count it is the mean of the two middle values.
+**Score.** The median of the counted values, rounded to one decimal. For an even count it is the mean of the two middle values. Putting different standards on one 0–100 scale is a display convention, not a validated measure.
 
 **Grade.** A if the score is 85 or more, B at 70, C at 55, D at 40, E at 25, otherwise F. With no counted values there is no grade.
 

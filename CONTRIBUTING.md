@@ -2,7 +2,7 @@
 
 ## Request a correction
 
-If a verdict or score is wrong or missing information, use **Request a correction** next to the item on the site, or open a [score correction issue](../../issues/new?template=score-correction.yml). Name the items and link evidence at a specific version (an arXiv version, or a file at a commit). A bot replies with the current verdicts for those items.
+If a verdict or score is wrong or missing information, use **Request a correction** next to the item on the site, or open a [score correction issue](../../issues/new?template=score-correction.yml). Name the items and link evidence at a specific version (an arXiv version, or a file at a commit). An automated comment lists the current verdicts for those items.
 
 A maintainer then checks the evidence against each item's decision rule (`guidance.met` in the standard's file). If it holds, the change is made in a pull request that:
 
@@ -17,7 +17,7 @@ Imported assessments (`provenance.kind: external`) record what another group pub
 
 1. Add `data/benchmarks/<id>.yaml` with paper and repo links.
 2. Run `npx tsx src/cli.ts assess --benchmark <id>` to get model-proposed drafts, or write `data/assessments/<id>/<standard>.yaml` by hand.
-3. A Touchstone assessment needs two independent assessors before `status: published`.
+3. A Touchstone assessment needs two independent assessors before `status: published`. So far, all published assessments are imports from the standards' authors; Touchstone's own automated assessments are drafts awaiting review.
 
 ## Encode a standard
 

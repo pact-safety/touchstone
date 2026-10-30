@@ -1,6 +1,6 @@
 # Adjudication
 
-When two model readings of the same benchmark and standard disagree, [`scripts/adjudicate.ts`](../scripts/adjudicate.ts) settles each disputed item with a fixed cascade over the standard's own written rule and the verified quotes. No one's opinion enters. Two judge models answer only blind questions; code checks their words, then derives the value and the choice. This is prompt version 4. Version 2 (one judge at low reasoning effort) over-credited in an audit: a related fact taken as the condition, partial evidence passed for "every", an OR-rule treated as needing both branches. Version 3 fixed that but still gave BetterBench level 5 too freely: an observed score range counted as mentioning a floor or ceiling, and a repo name as mentioning a persistent identifier. Version 4 makes `mentions` carry verbatim spans like conditions.
+When two model readings of the same benchmark and standard disagree, [`scripts/adjudicate.ts`](../scripts/adjudicate.ts) settles each disputed item with a fixed cascade over the standard's own written rule and the verified quotes. Verdicts are derived by fixed rules from LLM judges' answers about quoted evidence, not by a person's opinion; a person reviews the rows the rules leave open. Two judge models answer only blind questions; code checks their words, then derives the value and the choice. This is prompt version 4.
 
 ## What the judges see and answer
 
@@ -36,4 +36,4 @@ If neither reading has a verified quote, no judge is called. The whole rule is r
 
 ## Outputs
 
-`adjudication.json` (per row: choice, value, one-sentence rule, citations, and per condition the quotes, each judge's credited ids `judges: {a, b}` and their `spans`; the header lists both models), `decisions.json` (the format `apply-review.ts` reads, by `adjudicator-v1`) and `transcripts.jsonl` (both judges' raw replies per chunk, with model ids). A chunk already in the transcripts with prompt version 4 and both replies parsed is not called again; version 2 and 3 transcripts are never reused.
+`adjudication.json` (per row: choice, value, one-sentence rule, citations, and per condition the quotes, each judge's credited ids `judges: {a, b}` and their `spans`; the header lists both models), `decisions.json` (the format `apply-review.ts` reads, by `adjudicator-v1`) and `transcripts.jsonl` (both judges' raw replies per chunk, with model ids). A chunk already in the transcripts with prompt version 4 and both replies parsed is not called again; transcripts from earlier prompt versions are never reused.

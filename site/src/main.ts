@@ -145,9 +145,10 @@ function renderRatings() {
     <h1 class="t-page" tabindex="-1">Benchmark rigor ratings</h1>
     <p class="mt-4 max-w-3xl text-base text-muted sm:text-lg">How rigorous are the benchmarks AI developers and policymakers rely on? Each standard is scored in its own units, so compare down one standard, not across.</p>
     <p class="t-caption mt-3">${rated} of ${benchmarks.size} benchmarks rated under ${encoded.length} encoded standards.
-      ${watch ? `Sources are checked nightly; last checked ${watch.checked_on}.` : 'Nightly source checks have not run yet.'}</p>
+      ${watch ? `Sources are checked manually for now; last checked ${watch.checked_on}.` : 'Source checks have not run yet.'}</p>
     <div class="rt-legend legend mt-4">
       <p>Grade A to F is the median of a benchmark's published ratings (A 85+, B 70+, C 55+, D 40+, E 25+, F below). “1 of 4 standards” is how many of the standards that apply to a benchmark its grade rests on: one standard means low confidence, and more standards that agree mean more. <a class="link tap" href="#/method">How it works</a></p>
+      <p class="t-caption mt-2">Putting different standards on one 0–100 scale is a display convention, not a validated measure.</p>
       <details class="mt-2"><summary>Full key</summary>
         <dl class="rt-key">
           ${stds.map((s) => html`<dt>${s.short}</dt><dd>${stdTip(s)}</dd>`)}
@@ -166,7 +167,7 @@ function renderRatings() {
       <label class="grid gap-1 text-sm"><span>Type</span>
         <select id="modality" class="field"><option value="">All</option>${modalities.map((m) => html`<option value="${m}">${modalityName(m)}</option>`)}</select></label>
       <label class="grid gap-1 text-sm"><span>Ratings from</span>
-        <select id="source" class="field"><option value="all">Best available</option><option value="published">Reviewed only</option><option value="automated">Automated only</option></select></label>
+        <select id="source" class="field"><option value="all">Reviewed, else draft</option><option value="published">Reviewed only</option><option value="automated">Automated only</option></select></label>
       <label class="grid gap-1 text-sm"><span>Show</span>
         <select id="value" class="field"><option value="">All benchmarks</option><option value="best">Best value only</option></select></label>
       <label class="rt-sortsel grid gap-1 text-sm"><span>Sort by</span>
@@ -559,6 +560,7 @@ function rigorPanel(b: B, weak: Weak[]): Raw {
     <p class="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1"><span class="ts-grade ts-grade-lg ts-grade-${r.grade.toLowerCase()}">${r.grade}</span>
       <span class="text-2xl font-semibold tabular-nums">${r.score}</span><span class="text-muted">out of 100 · ${r.n} of ${stdTotal(b, r.n)} standards · ${r.confidence} confidence</span></p>
     <p class="mt-3 text-sm">${r.explanation}</p>
+    <p class="t-caption mt-2">Putting different standards on one 0–100 scale is a display convention, not a validated measure.</p>
     ${weak.length ? html`<h3 class="mt-5 font-medium">Weakest points</h3>
       <ol class="mt-2 grid gap-2 text-sm" role="list">${weak.map((w) => html`<li><a class="link tap" href="#/benchmark/${b.id}/${w.s.id}" data-item="it-${w.aid}-${w.m.item}">${plainName(w.text)}</a>
         <span class="t-caption">${w.s.short} · ${w.m.group} ${w.m.groupFrom} → ${w.m.groupTo}</span></li>`)}</ol>` : ''}
@@ -658,7 +660,7 @@ function renderBenchmark(b: B, file: BenchmarkFile, full: Map<string, Standard>,
         ${assessed.map(({ s }) => html`<li><a href="${link(s)}">${s.short}</a></li>`)}
       </ul></nav>` : ''}
       <div class="min-w-0">${raw_(sections)}
-        ${pending.length ? html`<p class="${assessed.length ? 'mt-12 ' : ''}text-sm">Not yet assessed: ${pending.map((p, i) => html`${i ? ', ' : ''}<a class="link" href="#/standard/${p.s.id}">${p.s.short}</a>`)}. The nightly job will propose automated assessments.</p>` : ''}
+        ${pending.length ? html`<p class="${assessed.length ? 'mt-12 ' : ''}text-sm">Not yet assessed: ${pending.map((p, i) => html`${i ? ', ' : ''}<a class="link" href="#/standard/${p.s.id}">${p.s.short}</a>`)}. Automated assessments are proposed when the re-assessment job is run.</p>` : ''}
       </div>
     </div>
     ${runPanel(b)}
@@ -726,17 +728,17 @@ function renderMethod() {
   main.innerHTML = html`
     <h1 class="t-page" tabindex="-1">How it works</h1>
     <div class="mt-6 grid max-w-3xl gap-4">
-      <p>Touchstone separates judgement from arithmetic. People, or an open-weights model whose work people review, decide one verdict per item of a standard. Everything after that is a published, deterministic calculation: the same verdicts always give the same score, and every score on this site shows the calculation behind it.</p>
+      <p>Touchstone separates judgement from arithmetic. People, or an open-weights model whose work people review, decide one verdict per item of a standard. Scores are a deterministic function of the verdicts. Positive verdicts cite pinned evidence; the verdicts themselves are judgements. The same verdicts always give the same score, and every score on this site shows the calculation behind it.</p>
       <h2 class="t-section mt-6">The Touchstone score</h2>
       <p>Each benchmark gets two separate things, never blended into one number. The <strong>rigor score</strong> is the median of its published ratings, each put on a 0–100 scale, graded A (85 and up) to F, with a note on how closely the standards agree. The <strong>run cost</strong> is an estimate of the tokens, API price band and local setup a full run needs. A cheap benchmark should not look more rigorous, so the two stay apart; the "Best value" filter shows benchmarks no other benchmark beats on both. <a class="link" href="${data.repo}/blob/main/docs/touchstone-score.md">The exact rules, with a worked example and limitations</a>.</p>
       <h2 class="t-section mt-6">Verdicts</h2>
       <p>Each item of each standard is written as a decision rule: what must be true for it to be met, and when it can be not applicable. A positive verdict must cite evidence at a pinned version: an arXiv version or a git commit, with an exact location and a short quote. Missing documentation counts as not met.</p>
-      <h2 class="t-section mt-6">Live ratings</h2>
-      <p>Every night a job checks each benchmark's latest paper version and repository commit. Where something changed, or a pair was never assessed, an open-weights model under an open-source licence proposes verdicts. It sees only excerpts selected deterministically from the pinned sources. Every quote it gives is checked word for word against the excerpt it cites; a positive verdict without a verified quote is changed to not met. The job opens a pull request, and nothing is published until a person reviews it.</p>
+      <h2 class="t-section mt-6">Keeping ratings current</h2>
+      <p>A job checks each benchmark's latest paper version and repository commit. It is run manually for now; scheduling is paused. Where something changed, or a pair was never assessed, an open-weights model under an open-source licence proposes verdicts. It sees only excerpts selected deterministically from the pinned sources. Every quote it gives is checked word for word against the excerpt it cites; a positive verdict without a verified quote is changed to not met. The job opens a pull request, and nothing is published until a person reviews it.</p>
       <h2 class="t-section mt-6">Auditing a rating</h2>
       <p>Each automated assessment records the model, licence, settings, prompt version, and hashes of the exact text it read. Its transcript holds every response, including the model's reasoning when the model provides it. Running <code>touchstone replay</code> re-fetches the pinned sources and confirms they and every prompt match the record.</p>
       <h2 class="t-section mt-6">Corrections</h2>
-      <p>If a verdict is wrong or missing information, use the "Request a correction" link on the assessment, or "Report" on a single item. A bot replies with the current record. Accepted changes land as pull requests, and every change is logged in the assessment's revision history with a link to the request.</p>
+      <p>If a verdict is wrong or missing information, use the "Request a correction" link on the assessment, or "Report" on a single item. An automated comment lists the current verdicts. Accepted changes land as pull requests, and every change is logged in the assessment's revision history with a link to the request.</p>
       <p><a class="link" href="${data.repo}/blob/main/docs/methodology.md">Full methodology</a> · <a class="link" href="${data.repo}/blob/main/docs/automation.md">Automation and auditing</a> · <a class="link" href="${data.repo}/blob/main/CONTRIBUTING.md">Contributing</a></p>
     </div>`.s;
 }
@@ -840,7 +842,7 @@ document.addEventListener('keydown', (e) => {
 
 // ---------- Theme ----------
 const themeBtn = document.getElementById('theme-toggle')!;
-// data-theme is honoured because the claude.ai preview host sets it on <html> to match its own theme.
+// data-theme is honoured so a host page can set the theme on <html>.
 const hostTheme = () => { const t = document.documentElement.dataset.theme; return t === 'light' || t === 'dark' ? t : undefined; };
 const currentTheme = () => document.documentElement.dataset.pactTheme ?? hostTheme() ?? (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 // The button names the theme a click switches to; the sr-only prefix and title say so.
