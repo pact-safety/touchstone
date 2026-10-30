@@ -6,7 +6,7 @@
  * excerpt ids, hashes, usage). Excerpt text itself is never written.
  */
 import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, relative } from 'node:path';
 import type { Corpus } from './load.ts';
 import type { Assessment, Benchmark, Standard, Verdict } from './schema.ts';
 import { score } from './engine.ts';
@@ -17,6 +17,9 @@ import type { Pins, FetchedSource } from './assess/sources.ts';
 
 export const STANDARD = 'betterbench';
 export const LEVELS = [0, 5, 10, 15];
+// Recorded `replayed_from` paths are relative to the repository root; a directory outside it stays as given.
+const repoRoot = join(dirname(new URL(import.meta.url).pathname), '..');
+const recordedPath = (p: string) => { const r = relative(repoRoot, p); return r.startsWith('..') ? p : r; };
 const DEFAULT_EXCERPT_CHARS = 10_000; // matches selectExcerpts' default, so the nightly is unchanged
 
 type Value = Verdict['value'];
@@ -360,7 +363,7 @@ export async function runBakeoff(o: BakeoffOptions) {
       if (prev?.complete && (prev.excerpt_chars ?? DEFAULT_EXCERPT_CHARS) === excerptChars) continue;
       // A pair needs one call per group; never start one the budget can't finish.
       if (used + std.groups.length > o.maxCalls) { budgetHit = true; log(`call budget reached; rerun the same command to continue`); break; }
-      const file: PairFile = { model: llm.model, benchmark: b.id, standard: STANDARD, date: o.date, complete: false, calls: 0, excerpt_chars: excerptChars, ...(o.replay ? { replayed_from: o.replay } : {}), verdicts: {}, transcript: [] };
+      const file: PairFile = { model: llm.model, benchmark: b.id, standard: STANDARD, date: o.date, complete: false, calls: 0, excerpt_chars: excerptChars, ...(o.replay ? { replayed_from: recordedPath(o.replay) } : {}), verdicts: {}, transcript: [] };
       try {
         src ??= await o.sourcesFor(b);
         if (!src.sources.length) throw new Error('no paper or repo to read');
@@ -411,7 +414,7 @@ export async function runBakeoff(o: BakeoffOptions) {
   const metrics = Object.fromEntries(Object.entries(byModel).map(([id, ps]) => [id, modelMetrics(std, goldBy, ps)]));
   for (const [id, v] of Object.entries(kappaVsTop(goldBy, byModel, metrics))) metrics[id]!.kappa_vs_top = v;
   const dis = topDisagreements(goldBy, byModel);
-  write(join(o.out, 'metrics.json'), JSON.stringify({ date: o.date, standard: STANDARD, excerpt_chars: excerptChars, ...(o.replay ? { replayed_from: o.replay } : {}), benchmarks: golds.map((g) => g.benchmark), models: metrics, top_disagreements: dis }, null, 1) + '\n');
+  write(join(o.out, 'metrics.json'), JSON.stringify({ date: o.date, standard: STANDARD, excerpt_chars: excerptChars, ...(o.replay ? { replayed_from: recordedPath(o.replay) } : {}), benchmarks: golds.map((g) => g.benchmark), models: metrics, top_disagreements: dis }, null, 1) + '\n');
   write(join(o.out, 'report.md'), renderReport(o.date, metrics, dis, excerptChars));
   log(`${used} call(s) used; wrote ${join(o.out, 'report.md')}`);
   return { metrics, dis, used };
