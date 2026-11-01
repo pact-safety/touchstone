@@ -94,6 +94,14 @@ const MODALITY: Record<string, string> = { 'lm-agent': 'Language-model agent', '
 const modalityName = (m: string) => MODALITY[m] ?? m.replace(/-/g, ' ');
 /** Only standards with at least one rating get a column, so the table has no empty ones. */
 const ratedStds = () => encoded.filter((s) => data.summaries.some((a) => a.standard === s.id));
+/** The columns the wide table shows: the reader's pick, or by default the two standards with the most ratings. */
+function shownStds(): IStd[] {
+  const all = ratedStds();
+  const count = (s: IStd) => data.summaries.filter((a) => a.standard === s.id).length;
+  if (state.stds[0] === 'all') return all;
+  const ids = state.stds.length ? state.stds : [...all].sort((a, b) => count(b) - count(a)).slice(0, 2).map((s) => s.id); // stable sort keeps ratedStds order on ties
+  return all.filter((s) => ids.includes(s.id) || s.id === state.sort);
+}
 const unitOf = (s: IStd) => s.scoring?.scheme === 'aisl-severity' ? 'Category A (best) to E' : s.scoring?.scheme === 'points' ? `points out of ${s.scoring.max}` : 'share of applicable items met';
 const stdTip = (s: IStd) => `${s.name}. ${s.description.split(/(?<=\.)\s/)[0]} Scored as: ${unitOf(s)}.`;
 const BEST_VALUE = 'Best value: no other benchmark is both cheaper to run and rated more rigorous.';
@@ -174,6 +182,7 @@ function renderRatings() {
         <select id="sort" class="field">${columns().map((c) => html`<option value="${c.key}">${c.label}</option>`)}<option value="domain">Domain</option></select></label>
     </div>
     <p id="count" class="t-caption mt-4" aria-live="polite"></p>
+    <div id="stdbar" class="rt-stdbar mt-2" role="group" aria-label="Standards shown as columns" tabindex="-1"></div>
     <div id="results" class="mt-2"></div>
     <div id="tray" class="rt-tray" role="region" aria-label="Compare benchmarks" hidden></div>
   `.s;
@@ -203,8 +212,21 @@ function syncControls() {
 function draw() {
   const rows = filteredBenchmarks();
   document.getElementById('count')!.textContent = `${rows.length} of ${benchmarks.size} benchmarks shown`;
+  stdBar(wide.matches);
   document.getElementById('results')!.innerHTML = (!rows.length ? emptyView() : wide.matches ? tableView(rows) : html`<ul class="cards" role="list">${rows.map(cardView)}</ul>`).s;
   syncUi();
+}
+
+function stdBar(on: boolean) {
+  const bar = document.getElementById('stdbar')!;
+  const shown = shownStds(), rest = ratedStds().filter((s) => !shown.includes(s));
+  bar.hidden = !on;
+  bar.innerHTML = !on ? '' : html`<span class="t-caption">Standards</span>
+    ${shown.map((s) => html`<span class="chip">${s.short}${shown.length > 1 ? html` <button type="button" class="rt-x" data-std-remove="${s.id}" aria-label="Remove ${s.name}"><span aria-hidden="true">×</span></button>` : ''}</span>`)}
+    ${rest.length ? html`<details class="rt-add"><summary class="btn-quiet">+ Standard</summary>
+      <div class="rt-pop">${rest.map((s) => html`<button type="button" class="btn-quiet" data-std-add="${s.id}" title="${stdTip(s)}">${s.short}</button>`)}</div></details>` : ''}
+    ${rest.length ? html`<button type="button" class="btn-quiet" data-std-all>Show all</button>` : ''}
+    ${state.stds.length ? html`<button type="button" class="btn-quiet" data-std-reset>Reset</button>` : ''}`.s;
 }
 
 /** Everything that mirrors state outside the results: filter count, compare boxes and tray, and the URL. */
@@ -235,8 +257,8 @@ function emptyView(): Raw {
 }
 
 function tableView(rows: B[]): Raw {
-  const cols = columns();
-  const stds = ratedStds();
+  const stds = shownStds();
+  const cols = columns().filter((c) => ['name', 'touchstone', 'run'].includes(c.key) || stds.some((s) => s.id === c.key));
   const label = cols.find((c) => c.key === state.sort)?.label ?? state.sort;
   return html`<table class="rt"><caption class="sr-only">Benchmarks, sorted by ${label}. Tick two to ${MAX_COMPARE} to compare them.</caption>
     <thead><tr><th scope="col" class="rt-sel"><span class="sr-only">Compare</span></th>${cols.map((c) => html`
@@ -354,6 +376,20 @@ main.addEventListener('click', (e) => {
   if (sortBtn) return sortBy(sortBtn.dataset.sort!);
   if (t.closest('[data-clear-filters]')) { Object.assign(state, defaultView()); syncControls(); draw(); document.getElementById('q')!.focus(); return; }
   if (t.closest('[data-clear-compare]')) { state.compare = []; syncUi(); announce('Comparison selection cleared'); return; }
+  const stdBtn = t.closest<HTMLElement>('[data-std-add],[data-std-remove],[data-std-all],[data-std-reset]');
+  if (stdBtn) {
+    const d = stdBtn.dataset, ids = shownStds().map((s) => s.id);
+    const nameOf = (id: string) => ratedStds().find((s) => s.id === id)?.short ?? id;
+    let msg: string;
+    if ('stdAll' in d) { state.stds = ['all']; msg = 'Showing all standards'; }
+    else if ('stdReset' in d) { state.stds = []; msg = 'Standards reset to the default'; }
+    else if (d.stdAdd) { state.stds = ratedStds().map((s) => s.id).filter((id) => ids.includes(id) || id === d.stdAdd); msg = `Added ${nameOf(d.stdAdd)} column`; }
+    else { state.stds = ids.filter((id) => id !== d.stdRemove); msg = `Removed ${nameOf(d.stdRemove!)} column`; }
+    draw();
+    // a removed or reset control is gone, so land on the added column's header, else the bar itself
+    (d.stdAdd && document.querySelector<HTMLElement>(`[data-sort="${CSS.escape(d.stdAdd)}"]`)) || document.getElementById('stdbar')!.focus();
+    return announce(msg);
+  }
   const link = t.closest<HTMLElement>('[data-bench] a[href^="#/benchmark/"]');
   if (link) state.lastBench = link.closest<HTMLElement>('[data-bench]')!.dataset.bench!;
 });
@@ -770,7 +806,7 @@ async function route() {
   try {
     if (!view || view === 'ratings') {
       // A hash with a query is the whole state (shared link or back button); a bare #/ keeps what the reader had set.
-      if (qs) Object.assign(state, decodeView(qs, { sorts: [...columns().map((c) => c.key), 'domain'], modalities: [...new Set([...benchmarks.values()].map((b) => b.modality))], benchmarks: new Set(benchmarks.keys()) }));
+      if (qs) Object.assign(state, decodeView(qs, { sorts: [...columns().map((c) => c.key), 'domain'], modalities: [...new Set([...benchmarks.values()].map((b) => b.modality))], benchmarks: new Set(benchmarks.keys()), standards: ratedStds().map((s) => s.id) }));
       renderRatings(); shown = 'ratings';
     }
     else if (view === 'compare') { renderCompare((id ?? '').split(',')); shown = 'compare'; }
