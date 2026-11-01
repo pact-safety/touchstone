@@ -895,8 +895,8 @@ new MutationObserver(labelTheme).observe(document.documentElement, { attributes:
 labelTheme();
 
 // Work in progress is shown on every page so a reader knows which numbers may still move.
-// Set to false once the current adjudication run's results are merged.
-const ADJUDICATING = true;
+// Set to true while an adjudication run is in progress; the v4 run finished 2026-10-31.
+const ADJUDICATING = false;
 /** "A, B and C" with each item kept as markup. */
 const listOf = (items: Raw[]) => { let i = 0; return new Intl.ListFormat('en').formatToParts(items.map(() => 'x')).map((p) => (p.type === 'element' ? items[i++]! : p.value)); };
 function renderNotices() {
