@@ -80,8 +80,8 @@ export const Standard = z
     publisher: z.string(),
     year: z.number().int(),
     kind: z.enum(['rubric', 'checklist', 'reporting-standard', 'government-guidance', 'regulatory-code', 'formal-standard', 'lifecycle-criteria']),
-    /** encoded: items and scoring are machine-readable. catalogued: tracked, not yet encoded. */
-    status: z.enum(['encoded', 'catalogued']),
+    /** encoded: items and scoring are machine-readable. catalogued: tracked, not yet encoded. paywalled: tracked, but the text is sold, so it cannot be encoded openly. */
+    status: z.enum(['encoded', 'catalogued', 'paywalled']),
     /** Set when the standard publishes no scoring rule and Touchstone supplies one. */
     scoring_defined_by: z.literal('touchstone').optional(),
     applies_to: z.string().optional(),

@@ -710,7 +710,7 @@ function renderBenchmark(b: B, file: BenchmarkFile, full: Map<string, Standard>,
 function renderStandards() {
   main.innerHTML = html`
     <h1 class="t-page" tabindex="-1">Standards</h1>
-    <p class="mt-4 max-w-3xl text-lg text-muted">Published standards for judging benchmark quality. Encoded standards have every item written as a decision rule that Touchstone can score; catalogued ones are tracked but not encoded yet.</p>
+    <p class="mt-4 max-w-3xl text-lg text-muted">Published standards for judging benchmark quality. Encoded standards have every item written as a decision rule that Touchstone can score; catalogued ones are tracked but not encoded yet; paywalled ones are sold under licences that keep Touchstone from encoding them openly.</p>
     <ul class="mt-8 grid gap-5" role="list">${data.standards.map((s) => html`<li class="card" data-prefetch="standards/${s.id}.json">
       <div class="flex items-baseline gap-3">
         <h2 class="t-section min-w-0 flex-1"><a class="hover:text-brand" href="#/standard/${s.id}">${s.name}</a></h2>
@@ -900,9 +900,12 @@ const ADJUDICATING = false;
 /** "A, B and C" with each item kept as markup. */
 const listOf = (items: Raw[]) => { let i = 0; return new Intl.ListFormat('en').formatToParts(items.map(() => 'x')).map((p) => (p.type === 'element' ? items[i++]! : p.value)); };
 function renderNotices() {
-  const pending = data.standards.filter((s) => s.status !== 'encoded');
+  const links = (list: SiteIndex['standards']) => listOf(list.map((s) => html`<a class="link" href="#/standard/${s.id}">${s.short}</a>`));
+  const pending = data.standards.filter((s) => s.status === 'catalogued');
+  const paywalled = data.standards.filter((s) => s.status === 'paywalled');
   const notes = [
-    pending.length ? html`<strong>Standard encoding in progress.</strong> ${listOf(pending.map((s) => html`<a class="link" href="#/standard/${s.id}">${s.short}</a>`))} ${pending.length === 1 ? 'is' : 'are'} catalogued but not encoded yet, so ${pending.length === 1 ? 'it scores' : 'they score'} no benchmarks.` : '',
+    pending.length ? html`<strong>Standard encoding in progress.</strong> ${links(pending)} ${pending.length === 1 ? 'is' : 'are'} catalogued but not encoded yet, so ${pending.length === 1 ? 'it scores' : 'they score'} no benchmarks.` : '',
+    paywalled.length ? html`<strong>Paywalled standards.</strong> ${links(paywalled)} ${paywalled.length === 1 ? 'is' : 'are'} sold under per-user licences, so Touchstone can't encode ${paywalled.length === 1 ? 'it' : 'them'} openly and ${paywalled.length === 1 ? 'it scores' : 'they score'} no benchmarks.` : '',
     ADJUDICATING ? html`<strong>Adjudication in progress.</strong> Where the two drafting models disagreed on a verdict, two open-weights judges are re-checking it against the source. Draft ratings may change when the run finishes; drafts never count toward a grade.` : '',
   ].filter(Boolean);
   document.getElementById('notices')!.innerHTML = notes.map((n) => html`<p class="notice">${n}</p>`.s).join('');

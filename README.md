@@ -44,7 +44,7 @@ See [docs/methodology.md](docs/methodology.md) for the scoring rules, [docs/touc
 
 ## Current data
 
-48 benchmarks, 9 encoded standards and 2 catalogued. There are 35 published assessments, all imported from the standards' authors: BetterBench (23 benchmarks, item level), the Agentic Benchmark Checklist (10, section scores) and the AI Standards Lab Scorecard (2 worked examples). Recomputing them from their own verdicts flags where published figures disagree: 10 BetterBench entries, and ImpossibleBench, which the Scorecard paper rates Category B under an earlier version of its table but which scores Category C under the final one.
+48 benchmarks, 9 encoded standards and 2 paywalled (ISO texts sold under per-user licences). There are 35 published assessments, all imported from the standards' authors: BetterBench (23 benchmarks, item level), the Agentic Benchmark Checklist (10, section scores) and the AI Standards Lab Scorecard (2 worked examples). Recomputing them from their own verdicts flags where published figures disagree: 10 BetterBench entries, and ImpossibleBench, which the Scorecard paper rates Category B under an earlier version of its table but which scores Category C under the final one.
 
 There are also 307 automated drafts, not yet reviewed (see Status above).
 
