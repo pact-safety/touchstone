@@ -23,6 +23,12 @@ Imported assessments (`provenance.kind: external`) record what another group pub
 
 Add `standards/<id>.yaml` with `status: encoded`. Copy item wording verbatim; write a `guidance.met` rule for every item that a second person could apply and reach the same verdict; give `not_applicable` only where the standard allows it. If the standard publishes no scoring rule, use `checklist` and set `scoring_defined_by: touchstone`.
 
+## How changes land
+
+Every pull request to `main` needs two passing checks: the CI `check` job and `Greptile Review`.
+
+Some pull requests are opened by an automated agent under the `pact-factory` GitHub App. Agent pull requests never change rating verdicts, assessments, or published state (rule 5 in [`docs/methodology.md`](docs/methodology.md)). The rules agents follow are in [`CLAUDE.md`](CLAUDE.md).
+
 ## Checks
 
 ```bash
