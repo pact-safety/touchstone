@@ -1,0 +1,75 @@
+{
+  "statusCheck": true,
+  "rules": [
+    {
+      "rule": "No secrets in code, tests, fixtures, or commit contents: API keys, tokens, passwords, connection strings, private keys. Reference them by environment variable name only.",
+      "scope": [
+        "**/*"
+      ],
+      "severity": "high"
+    },
+    {
+      "rule": "Any migration that creates a table reachable by more than one principal must enable row level security and add owner-scoped policies in the same migration. If ownership is unclear, RLS on with no policies.",
+      "scope": [
+        "**/migrations/**",
+        "**/*.sql"
+      ],
+      "severity": "high"
+    },
+    {
+      "rule": "Do not hand-roll authentication, session management, password handling, or cryptography. Use the platform auth service or a vetted library.",
+      "scope": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js",
+        "**/*.py"
+      ],
+      "severity": "high"
+    },
+    {
+      "rule": "Database schema changes must be named migration files. Flag ad-hoc DDL in application code, scripts, or runbooks aimed at production.",
+      "scope": [
+        "**/*.ts",
+        "**/*.js",
+        "**/*.py",
+        "**/*.sh",
+        "**/*.sql"
+      ],
+      "severity": "high"
+    },
+    {
+      "rule": "Tests must not be weakened to pass: no removed or skipped tests, loosened tolerances or assertions, or hardcoded expected values replacing a recomputation.",
+      "scope": [
+        "**/test/**",
+        "**/tests/**",
+        "**/*.test.*",
+        "**/*_test.*",
+        "**/test_*.py"
+      ],
+      "severity": "high"
+    },
+    {
+      "rule": "Pull requests from agents must not modify CI workflows, CLAUDE.md, AGENT_RULES.md, SECURITY.md, or review-tool configuration (.greptile, greptile.json, .macroscope).",
+      "scope": [
+        ".github/workflows/**",
+        "CLAUDE.md",
+        "AGENT_RULES.md",
+        "SECURITY.md",
+        ".greptile/**",
+        "greptile.json",
+        ".macroscope/**"
+      ],
+      "severity": "high"
+    },
+    {
+      "rule": "Methodology rule 5: automated assessments stay draft. Agent PRs must not set any assessment to published, add or change provenance.reviewers or review approvals, or edit rating verdicts; only Li publishes.",
+      "scope": [
+        "data/assessments/**",
+        "data/runs/**",
+        "scripts/apply-review.ts",
+        "scripts/adjudicate.ts"
+      ],
+      "severity": "high"
+    }
+  ]
+}
