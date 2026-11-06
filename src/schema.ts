@@ -197,6 +197,8 @@ export const Verdict = z.strictObject({
   evidence: z.array(Evidence).default([]),
   /** Who decided: a model proposal, or a human (an original call or an override of the model). */
   by: z.enum(['model', 'human']).optional(),
+  /** The adjudicator that settled a disagreement between two model readings (docs/adjudication.md); no person chose this verdict. */
+  adjudicated_by: z.string().optional(),
   /** Set by the assessor: every quote was found verbatim in the fetched source at its pinned version. */
   quotes_verified: z.boolean().optional(),
 });

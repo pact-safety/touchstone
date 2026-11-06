@@ -2,6 +2,7 @@
 
 Dated history of the project, newest first. The docs describe the current state only.
 
+- 2026-11-07: `apply-review.ts` records adjudicated choices as `by: model` with `adjudicated_by` instead of `by: human`, adds the revision entry `check-revisions` requires for draft changes, and rebuilds reading B from `rows.json` when its files are absent.
 - 2026-10-30: Adjudication prompt v4. `mentions` carry verbatim spans like conditions, and code checks them. Version 3 still gave BetterBench level 5 too freely: an observed score range counted as mentioning a floor or ceiling, and a repo name as mentioning a persistent identifier.
 - 2026-10-30: Adjudication prompt v3. Two judges, requirements and alternatives, verbatim spans. Version 2 (one judge at low reasoning effort) over-credited in an audit: a related fact taken as the condition, partial evidence passed for "every", an OR-rule treated as needing both branches.
 - 2026-10-30: Adjudication prompt v2 added. No judge call without quotes, a looser span check, and a two-level BetterBench skip.

@@ -435,7 +435,7 @@ const correctionUrl = (b: Benchmark, s: IStd, item?: string) => {
 
 function itemRow(b: Benchmark, s: Standard, it: Item, a: A) {
   const v = a.verdicts?.[it.id];
-  const by = v?.by === 'model' ? `model${a.model_run ? ` (${a.model_run.model})` : ''}` : a.provenance.assessors.join(', ');
+  const by = v?.adjudicated_by ?? (v?.by === 'model' ? `model${a.model_run ? ` (${a.model_run.model})` : ''}` : a.provenance.assessors.join(', '));
   const from = a.provenance.assessors.join(', ');
   return html`<li id="it-${assessmentId(a)}-${it.id}" tabindex="-1" class="border-t border-line py-4" data-v="${vclass(v, s)}">
     <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
