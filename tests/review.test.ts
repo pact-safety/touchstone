@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { applyPair, readDocs } from '../scripts/apply-review.ts';
+import { applyPair, evidenceSources, readDocs, readingsFromRows } from '../scripts/apply-review.ts';
 import { MODEL_A, MODEL_B, crosscheck, disagreement } from '../scripts/crosscheck.ts';
 import type { Corpus } from '../src/load.ts';
 import { Revision } from '../src/schema.ts';
@@ -80,7 +80,47 @@ describe('apply rules', () => {
     expect(r.doc.status).toBe('draft');
     expect(r.note).toMatch(/skipped or undecided/);
   });
+  describe('adjudicated choices', () => {
+    const adjudicator = (item: string) => (item === 'i2' ? 'adjudicator-v4' : undefined);
+    const apply = (choices: any, approved = false) => applyPair(doc(), pair, rows, choices, bDoc, approved, '2026-10-30', adjudicator);
+
+    it('stay by model and name the adjudicator; a person\'s choice is by human', () => {
+      const r = apply({ i2: 'b', i3: 'a' });
+      expect(r.doc.verdicts.i2).toMatchObject({ value: 'unmet', by: 'model', adjudicated_by: 'adjudicator-v4' });
+      expect(r.doc.verdicts.i3).toMatchObject({ by: 'human' });
+      expect(r.doc.verdicts.i3.adjudicated_by).toBeUndefined();
+    });
+    it('say so in the revision when published, listing every changed item', () => {
+      const rev = apply({ i2: 'b', i3: 'a' }, true).doc.revisions.at(-1);
+      expect(rev.summary).toBe(`Reviewed against a ${MODEL_B} cross-check: 1 verdicts agreed, 1 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one.`);
+      expect(rev.items).toEqual(['status', 'i2']);
+    });
+    it('add a revision for a changed draft, by the adjudicator when no person chose', () => {
+      const r = applyPair(doc(), pair, [{ item: 'i2' }] as any, { i2: 'b' }, bDoc, false, '2026-10-30', adjudicator);
+      expect(r.doc.status).toBe('draft');
+      expect(r.doc.revisions.at(-1)).toMatchObject({ by: 'adjudicator-v4', items: ['i2'] });
+    });
+    it('add no revision when no verdict changed', () => expect(apply({ i2: 'a' }).doc.revisions).toHaveLength(1));
+  });
   it('does not publish when choice b has no B verdict', () => expect(applyPair(doc(), pair, rows, { i2: 'a', i3: 'b' }, undefined, true, '2026-10-30').published).toBe(false));
+});
+
+describe('rebuilding B from review rows', () => {
+  const url = 'https://arxiv.org/abs/1.0v1';
+  const assessment = (benchmark: string, source: string) => ({ value: { benchmark, verdicts: { i1: { evidence: [{ source, url }] } } } });
+  const reading = (u: string) => ({ value: 'met', rationale: 'r', evidence: [{ quote: 'q', locator: 'p1', url: u }], quotes_verified: true }) as any;
+
+  it('looks up a source from the same benchmark only', () => {
+    expect(evidenceSources([assessment('b', 'paper'), assessment('other', 'repo')], 'b').get(url)).toBe('paper');
+    expect(evidenceSources([assessment('other', 'repo')], 'b').has(url)).toBe(false);
+  });
+  it('leaves out a URL recorded under two source kinds', () =>
+    expect(evidenceSources([assessment('b', 'paper'), assessment('b', 'repo')], 'b').has(url)).toBe(false));
+  it('adds the source to each quote', () =>
+    expect(readingsFromRows([{ item: 'i1', b: reading(url) }], new Map([[url, 'paper']])).verdicts.i1.evidence[0]).toEqual({ source: 'paper', quote: 'q', locator: 'p1', url }));
+  it('fails closed: a row with an unknown URL or no reading is left out', () => {
+    expect(readingsFromRows([{ item: 'i1', b: reading('https://example.org/x') }, { item: 'i2', b: null }], new Map([[url, 'paper']])).verdicts).toEqual({});
+  });
 });
 
 describe('readDocs', () => {
