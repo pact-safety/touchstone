@@ -34,6 +34,12 @@ If neither reading has a verified quote, no judge is called. The whole rule is r
 
 `a` if the evidence value equals reading A's value; otherwise `b` if reading B exists and matches; otherwise `skip` ("neither reading matches evidence value"). On a points scale, when both readings are positive levels (5, 10 or 15) the choice is always `skip` ("BetterBench separates 5, 10 and 15 only by its generic level meanings; the quotes cannot choose between two positive levels."); the evidence value and its `level_meanings` citation are still recorded. A skip is left for a person.
 
+## Applying the choices
+
+`scripts/apply-review.ts` records who made each choice, per row. A choice matching `adjudication.json` stays `by: model` with `adjudicated_by: adjudicator-v<prompt version>`, and the site shows that name. Any other choice is a person's, `by: human`. Publishing still needs a person: when a standard is approved, each of its pairs with every row decided becomes `published` with that person as reviewer, and its revision entry counts the rows the adjudicator settled and the rows the reviewer decided, and says the settled rows were not checked one by one.
+
+Reading B's files are optional. Where one is absent, B's verdict comes from `rows.json`, and each quote's `source` is looked up from the same benchmark's other assessments by URL. A row with a URL that doesn't resolve to one source stays undecided.
+
 ## Outputs
 
 `adjudication.json` (per row: choice, value, one-sentence rule, citations, and per condition the quotes, each judge's credited ids `judges: {a, b}` and their `spans`; the header lists both models), `decisions.json` (the format `apply-review.ts` reads, by `adjudicator-v1`) and `transcripts.jsonl` (both judges' raw replies per chunk, with model ids). A chunk already in the transcripts with prompt version 4 and both replies parsed is not called again; transcripts from earlier prompt versions are never reused.
