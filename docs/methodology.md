@@ -30,6 +30,10 @@ A change that alters what a rule means bumps the standard's `version`. Assessmen
 
 Disputed cross-check rows are settled by a fixed rule cascade, not by opinion: see [`adjudication.md`](adjudication.md).
 
+## Epoch Capabilities Index
+
+Each benchmark page shows whether the benchmark is in Epoch AI's [Capabilities Index](https://epoch.ai/benchmarks/eci), with Epoch's fitted difficulty and slope. The values are copied unchanged into [`data/external/epoch-eci.yaml`](../data/external/epoch-eci.yaml) and credited under CC BY. A subset (GPQA Diamond for GPQA, BIG-Bench Hard for BIG-bench) is labelled as one. They describe how hard a benchmark is for models, not how rigorous it is, so they are not an assessment and never feed a rating or grade.
+
 ## Scoring schemes
 
 All arithmetic is in [`src/engine.ts`](../src/engine.ts). Values are rounded half up to one decimal only for display and comparison.

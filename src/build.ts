@@ -27,7 +27,19 @@ export interface Summary {
 }
 export type IndexStandard = Omit<Standard, 'groups'>;
 const PricingSchema = z.strictObject({ as_of: z.string(), low_usd_per_mtok: z.number().positive(), high_usd_per_mtok: z.number().positive() });
-export type BenchmarkFile = { id: string; touchstone: TouchstoneData; assessments: (Assessment & { file: string })[]; results: (Result & { file: string; improvements: Improvement[] })[] };
+const EciEntry = z.strictObject({ name: z.string().min(1), match: z.enum(['same', 'subset']), difficulty: z.number(), slope: z.number() });
+const EciFile = z.strictObject({ source: z.string().url(), data: z.string().url(), license: z.string().min(1), retrieved_on: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), entries: z.record(z.string(), EciEntry) });
+export type Eci = Omit<z.infer<typeof EciFile>, 'entries' | 'data'> & { entry: z.infer<typeof EciEntry> | null };
+
+/** Parses data/external/epoch-eci.yaml; an entry for a benchmark Touchstone doesn't list is a data error. */
+export function parseEci(text: string, benchmarkIds: Set<string>) {
+  const eci = EciFile.parse(parse(text));
+  const unknown = Object.keys(eci.entries).filter((id) => !benchmarkIds.has(id));
+  if (unknown.length) throw new Error(`data/external/epoch-eci.yaml: unknown benchmark ${unknown.join(', ')}`);
+  return { eciFor: (id: string): Eci => ({ source: eci.source, license: eci.license, retrieved_on: eci.retrieved_on, entry: eci.entries[id] ?? null }) };
+}
+
+export type BenchmarkFile = { id: string; touchstone: TouchstoneData; eci: Eci; assessments: (Assessment & { file: string })[]; results: (Result & { file: string; improvements: Improvement[] })[] };
 
 export function buildSiteData(c: Corpus) {
   const standards = new Map(c.standards.map((s) => [s.value.id, s.value]));
@@ -54,6 +66,7 @@ export function buildSiteData(c: Corpus) {
   });
   const allStandards = byId(c.standards.map((s) => s.value));
   const pricing: Pricing = PricingSchema.parse(parse(readFileSync(join(c.root, 'config/pricing.yaml'), 'utf8')));
+  const { eciFor } = parseEci(readFileSync(join(c.root, 'data/external/epoch-eci.yaml'), 'utf8'), new Set(c.benchmarks.map((b) => b.value.id)));
   const plain = byId(c.benchmarks.map((b) => b.value)) as Benchmark[];
   const encodedStds = c.standards.map((s) => s.value).filter((s) => s.status === 'encoded' && s.scoring);
   const parts = plain.map((b) => {
@@ -75,6 +88,7 @@ export function buildSiteData(c: Corpus) {
     benchmarks: benchmarks.map((b): BenchmarkFile => ({
       id: b.id,
       touchstone: b.touchstone,
+      eci: eciFor(b.id),
       assessments: assessments.filter((a) => a.benchmark === b.id),
       results: results.filter((r) => r.benchmark === b.id),
     })),

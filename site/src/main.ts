@@ -657,6 +657,14 @@ function runPanel(b: B): Raw {
 /** Ranked order of the ratings page's default sort: Touchstone score, best first; unscored last. */
 const rankedIds = () => [...benchmarks.values()].sort((x, y) => (y.touchstone.rigor.score ?? -1) - (x.touchstone.rigor.score ?? -1) || x.name.localeCompare(y.name)).map((x) => x.id);
 
+/** Epoch's fitted difficulty and slope, from outside Touchstone; it measures how hard a benchmark is for models, so it never feeds a grade. */
+function eciNote(eci: BenchmarkFile['eci']) {
+  const name = html`<a class="link" href="${safeUrl(eci.source)}">Epoch Capabilities Index</a>`;
+  const e = eci.entry;
+  if (!e) return html`<p class="t-caption mt-3">Not in the ${name} as of ${eci.retrieved_on}.</p>`;
+  return html`<p class="t-caption mt-3">${name}: difficulty ${e.difficulty.toFixed(1)}, slope ${e.slope.toFixed(3)}${e.match === 'subset' ? `, measured on ${e.name}, a subset of this benchmark` : ''}. Models at that ECI level are expected to score 50%. This describes how hard the benchmark is for models, not its rigor, and doesn't affect the grade. Epoch AI, ${eci.license}, retrieved ${eci.retrieved_on}.</p>`;
+}
+
 function renderBenchmark(b: B, file: BenchmarkFile, full: Map<string, Standard>, focusStd?: string): HTMLElement | null {
   const watched = data.watch?.benchmarks[b.id];
   const results = new Map(file.results.map((r) => [r.file, r]));
@@ -690,6 +698,7 @@ function renderBenchmark(b: B, file: BenchmarkFile, full: Map<string, Standard>,
       ${b.links.repo ? html`<li><a class="link tap" href="${safeUrl(b.links.repo)}">Code</a>${watched?.repo_commit ? ` (at ${watched.repo_commit.slice(0, 7)}${watched.archived ? ', archived' : ''})` : ''}</li>` : ''}
       ${b.links.website ? html`<li><a class="link tap" href="${safeUrl(b.links.website)}">Website</a></li>` : ''}
     </ul>
+    ${eciNote(file.eci)}
     ${rigorPanel(b, weak)}
     <div class="std-layout mt-10">
       ${assessed.length > 1 ? html`<nav aria-label="Standards on this page" class="std-nav"><ul role="list">
