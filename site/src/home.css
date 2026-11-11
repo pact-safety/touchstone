@@ -1,0 +1,102 @@
+/* Overview page. Consumes the shared tokens; defines only home-/cov-/hist/strip classes.
+   Hidden "before" states exist only under .anim, which JS adds when motion is allowed; otherwise the final state shows. */
+.home { display: grid; gap: 4rem; min-width: 0; }
+.home-sec { display: grid; gap: 1.25rem; min-width: 0; scroll-margin-top: 1rem; }
+.home-sec > h2:focus { outline: none; }
+.home-hero { display: grid; gap: 1.25rem; }
+.home-lede { max-width: 42rem; font-size: 1.0625rem; color: var(--muted); }
+.home-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+@media (min-width: 48rem) { .home-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.home-tile { display: grid; gap: 0.15rem; border: 1px solid var(--line); background: var(--surface); padding: 0.9rem 1rem; }
+.home-num { font-family: var(--font-heading); font-size: clamp(1.75rem, 1.3rem + 2vw, 2.5rem); font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--heading); }
+.home-tl { font-weight: 600; color: var(--heading); }
+.home-cta { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.home-btn2 { background: transparent; color: var(--text); border: 1.5px solid var(--text); cursor: pointer; }
+.home-jumps { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.5rem; }
+.home-headline { font-size: 1.0625rem; font-weight: 600; color: var(--heading); max-width: 44rem; }
+.home-h3 { margin-top: 0.5rem; }
+
+/* How a rating is made */
+.home-steps3 { display: grid; gap: 1rem; counter-reset: none; }
+@media (min-width: 48rem) { .home-steps3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.home-steps3 li { border: 1px solid var(--line); border-top: 3px solid var(--brand); background: var(--surface); padding: 1rem 1.1rem; display: grid; gap: 0.4rem; align-content: start; }
+.step-n { font-family: var(--font-heading); font-weight: 800; color: var(--brand); }
+
+/* Grade histogram */
+.hist { display: grid; gap: 0.4rem; max-width: 40rem; }
+.hrow { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) 2rem; align-items: center; gap: 0.75rem; }
+.hlab { display: flex; }
+.hlab .chip { text-transform: none; }
+.htrack { height: 1.25rem; background: var(--hover); }
+.hfill { display: block; height: 100%; width: var(--w); background: var(--muted); transition: width 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.hfill-a { background: var(--grade-a); } .hfill-b { background: var(--grade-b); outline: 1px solid var(--faint); outline-offset: -1px; }
+.hfill-c { background: var(--grade-c); outline: 1px solid var(--faint); outline-offset: -1px; } .hfill-d { background: var(--grade-d); }
+.hfill-e { background: var(--grade-e); outline: 1px solid var(--faint); outline-offset: -1px; } .hfill-f { background: var(--grade-f); }
+.hfill-none { background: repeating-linear-gradient(135deg, var(--muted) 0 2px, transparent 2px 5px); }
+.hn { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+
+/* Strip plot */
+.strip-wrap { max-width: 44rem; }
+.strip-svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--font-mono); }
+.band-0 { fill: var(--surface); } .band-1 { fill: var(--hover); }
+.band-g { font-size: 14px; font-weight: 600; fill: var(--muted); }
+.bound { stroke: var(--faint); stroke-width: 1; stroke-dasharray: 3 3; }
+.axis-t { font-size: 14px; fill: var(--ink-2); }
+.row-t { font-size: 15px; font-weight: 600; fill: var(--heading); }
+.dot { stroke: var(--text); stroke-width: 1; transition: opacity 0.4s ease var(--d, 0s), transform 0.4s ease var(--d, 0s); transform-box: fill-box; transform-origin: center; }
+.dot-a { fill: var(--grade-a); } .dot-b { fill: var(--grade-b); } .dot-c { fill: var(--grade-c); }
+.dot-d { fill: var(--grade-d); } .dot-e { fill: var(--grade-e); } .dot-f { fill: var(--grade-f); }
+.strip-svg a { cursor: pointer; outline: none; }
+.strip-svg a:hover .dot { stroke-width: 2.5; }
+.strip-svg a:focus-visible .dot { stroke: var(--brand); stroke-width: 3.5; }
+.tip { opacity: 0; pointer-events: none; font-size: 15px; font-weight: 600; fill: var(--heading); paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }
+.tip.on { opacity: 1; }
+
+/* Coverage grid */
+.cov-wrap { display: grid; gap: 1.5rem; min-width: 0; }
+@media (min-width: 64rem) { .cov-wrap { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 2.5rem; } .cov-fig { position: sticky; top: 1rem; align-self: start; } }
+.cov-fig { margin: 0; display: grid; gap: 0.75rem; min-width: 0; }
+.cov { display: grid; gap: 3px; min-width: 0; }
+.cov-row { display: grid; gap: 1px; min-width: 0; }
+@media (min-width: 40rem) { .cov-row { grid-template-columns: 8.5rem minmax(0, 1fr); align-items: center; gap: 0.5rem; } }
+.cov-lab { font-family: var(--font-mono); font-size: 0.6875rem; line-height: 1.15; color: var(--ink-2); }
+.cov-head .cov-lab { display: none; }
+@media (min-width: 40rem) { .cov-head .cov-lab { display: block; } }
+.cov-cells { display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 1px; min-width: 0; }
+.cov-grp { font-family: var(--font-mono); font-size: 0.625rem; line-height: 1.3; color: var(--muted); border-top: 2px solid var(--faint); padding-top: 1px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.cov-grp-domain { font-weight: 600; color: var(--ink-2); border-top-color: var(--text); }
+.cell { display: block; aspect-ratio: 1; min-width: 0; box-sizing: border-box; transition: opacity 0.3s ease, transform 0.35s ease; }
+/* Colour is never the only cue: solid, solid, outline, faint dot, hatch. */
+.cell[data-c="reviewed"] { background: var(--ok); }
+.cell[data-c="draft"] { background: var(--warn); }
+.cell[data-c="pending"] { background: transparent; border: 1px solid var(--text); }
+.cell[data-c="na"] { background: var(--line); }
+.cell[data-c="blocked"] { background: repeating-linear-gradient(135deg, var(--muted) 0 1px, transparent 1px 3px); border: 1px solid var(--faint); }
+.cov[data-active="reviewed"] .cell:not([data-c="reviewed"]), .cov[data-active="draft"] .cell:not([data-c="draft"]),
+.cov[data-active="pending"] .cell:not([data-c="pending"]), .cov[data-active="na"] .cell:not([data-c="na"]),
+.cov[data-active="blocked"] .cell:not([data-c="blocked"]) { opacity: 0.15; }
+.cov-legend { display: flex; flex-wrap: wrap; gap: 0.25rem 0.75rem; }
+.leg { display: inline-flex; align-items: center; gap: 0.45rem; min-height: 44px; padding: 0 0.5rem; background: none; border: 1px solid transparent; color: var(--text); font-size: 0.875rem; cursor: pointer; }
+.leg:hover { background: var(--hover); }
+.leg[aria-pressed="true"] { border-color: var(--text); background: var(--surface); }
+.leg-sw { width: 0.9rem; flex: none; }
+.cov-steps { display: grid; gap: 1rem; }
+.cov-step { border-left: 3px solid var(--line); padding: 0.25rem 0 0.25rem 1rem; transition: border-color 0.3s ease; }
+.cov-step.is-active { border-left-color: var(--brand); }
+@media (min-width: 64rem) { .cov-step { min-height: 40vh; display: flex; align-items: center; } .cov-step:last-child { min-height: 30vh; } }
+
+.home-cards { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); }
+
+/* Motion: states before first view. JS adds .in once. */
+.anim .reveal { transition: opacity 0.5s ease, transform 0.5s ease; }
+.anim .reveal:not(.in) { opacity: 0; transform: translateY(14px); }
+.anim .reveal:nth-child(2) { transition-delay: 0.12s; } .anim .reveal:nth-child(3) { transition-delay: 0.24s; }
+.anim .hrow:not(.in) .hfill { width: 0; }
+.anim .strip-wrap:not(.in) .dot { opacity: 0; transform: scale(0.2); }
+.anim .cov:not(.in) .cell { opacity: 0; transform: scale(0.4); }
+.anim .cov.in .cell { transition-delay: var(--d, 0s); }
+.anim .cov.in[data-active]:not([data-active=""]) .cell { transition-delay: 0s; }
+@media (prefers-reduced-motion: reduce) {
+  .anim .reveal:not(.in), .anim .strip-wrap:not(.in) .dot, .anim .cov:not(.in) .cell { opacity: 1; transform: none; }
+  .anim .hrow:not(.in) .hfill { width: var(--w); }
+}

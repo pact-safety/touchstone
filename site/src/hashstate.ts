@@ -6,7 +6,7 @@ export const DEFAULT_VIEW: View = { q: '', domain: '', modality: '', source: 'pu
 /** Columns whose first click sorts ascending (A to Z, cheapest first). */
 export const ascFirst = (k: string) => k === 'name' || k === 'domain' || k === 'run';
 
-/** `#/` plus only the parts that differ from the defaults, e.g. `#/?domain=safety&sort=run&compare=a,b`. */
+/** `#/ratings` plus only the parts that differ from the defaults, e.g. `#/ratings?domain=safety&sort=run&compare=a,b`. */
 export function encodeView(v: View): string {
   const p = new URLSearchParams();
   if (v.q) p.set('q', v.q);
@@ -19,7 +19,7 @@ export function encodeView(v: View): string {
   if (v.compare.length) p.set('compare', v.compare.join(','));
   if (v.stds.length) p.set('stds', v.stds.join(','));
   const qs = p.toString().replace(/%2C/g, ',');
-  return qs ? `#/?${qs}` : '#/';
+  return qs ? `#/ratings?${qs}` : '#/ratings';
 }
 
 /** Parse a hash query; unknown or invalid values fall back to the defaults (the URL is untrusted input). */

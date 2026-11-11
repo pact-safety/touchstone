@@ -3,6 +3,8 @@ import './touchstone.css';
 import './ratings.css';
 import { ascFirst, decodeView, DEFAULT_VIEW, encodeView, MAX_COMPARE } from './hashstate.ts';
 import './detail.css';
+import './home.css';
+import { renderHome } from './home.ts';
 import type { BenchmarkFile, SiteIndex, Summary } from '../../src/build.ts';
 import type { Assessment, Benchmark, Item, Standard, Verdict } from '../../src/schema.ts';
 import type { Improvement, Result } from '../../src/engine.ts';
@@ -332,7 +334,7 @@ function renderCompare(ids: string[]) {
   const unknown = [...new Set(ids.filter((id) => id && !benchmarks.has(id)))];
   state.compare = [...new Set(ids)].filter((id) => benchmarks.has(id)).slice(0, MAX_COMPARE);
   const back = encodeView(state);
-  const unknownNote = unknown.length ? html`<p class="mt-4" role="alert">No benchmark has the id ${unknown.map((u, i) => html`${i ? ', ' : ''}“${u}”`)}, so ${unknown.length === 1 ? 'it was' : 'they were'} left out. <a class="link" href="#/">Back to ratings</a></p>` : '';
+  const unknownNote = unknown.length ? html`<p class="mt-4" role="alert">No benchmark has the id ${unknown.map((u, i) => html`${i ? ', ' : ''}“${u}”`)}, so ${unknown.length === 1 ? 'it was' : 'they were'} left out. <a class="link" href="#/ratings">Back to ratings</a></p>` : '';
   if (state.compare.length < 2) {
     main.innerHTML = html`<h1 class="t-page" tabindex="-1">Compare benchmarks</h1>${unknownNote}
       <p class="mt-4">Pick at least two benchmarks to compare.</p><p class="mt-4"><a class="btn btn-primary" href="${back}">Choose benchmarks</a></p>`.s;
@@ -689,7 +691,7 @@ function renderBenchmark(b: B, file: BenchmarkFile, full: Map<string, Standard>,
   const order = rankedIds(), at = order.indexOf(b.id);
   const near = (id: string | undefined, dir: 'prev' | 'next') => (id ? html`<a class="link tap" rel="${dir}" href="#/benchmark/${id}">${dir === 'prev' ? '← Previous: ' : 'Next: '}${benchmarks.get(id)!.name}${dir === 'next' ? ' →' : ''}</a>` : '');
   main.innerHTML = html`
-    <p class="text-sm"><a class="link tap" href="#/">Ratings</a> <span aria-hidden="true">/</span> <span class="sr-only">current page:</span> ${b.name}</p>
+    <p class="text-sm"><a class="link tap" href="#/ratings">Ratings</a> <span aria-hidden="true">/</span> <span class="sr-only">current page:</span> ${b.name}</p>
     <nav aria-label="Neighbouring benchmarks" class="pager mt-2 text-sm"><span>${near(order[at - 1], 'prev')}</span><span class="t-caption">${at + 1} of ${order.length} by Touchstone score</span><span>${near(order[at + 1], 'next')}</span></nav>
     <h1 class="t-page mt-3" tabindex="-1">${b.name}</h1>
     <p class="mt-3 text-lg text-muted">${b.concept}</p>
@@ -790,7 +792,7 @@ function renderMethod() {
 }
 
 function renderNotFound(what = `There is no page at “${location.hash}”.`) {
-  main.innerHTML = html`<h1 class="t-page" tabindex="-1">Not found</h1><p class="mt-4">${what}</p><p class="mt-4"><a class="link tap" href="#/">Back to ratings</a></p>`.s;
+  main.innerHTML = html`<h1 class="t-page" tabindex="-1">Not found</h1><p class="mt-4">${what}</p><p class="mt-4"><a class="link tap" href="#/ratings">Back to ratings</a></p>`.s;
 }
 function renderError() {
   main.innerHTML = html`<h1 class="t-page" tabindex="-1">Could not load this page</h1><p class="mt-4">The data file did not load. Check your connection and try again.</p><p class="mt-4"><button type="button" class="btn" data-retry>Try again</button></p>`.s;
@@ -805,6 +807,7 @@ async function route() {
   const [view, id, sub] = path.split('/').filter(Boolean);
   let target: HTMLElement | null = null;
   let nav = 'ratings';
+  if (!view && qs) { history.replaceState(null, '', `#/ratings?${qs}`); } // old shared links: #/?query was the table
   if (view === 'benchmark' && id && shown === `benchmark/${id}`) {
     target = (sub && document.getElementById(`std-${sub}`)) || null;
     (target ?? main.querySelector<HTMLElement>('h1')!).focus();
@@ -814,7 +817,8 @@ async function route() {
   const dataView = (view === 'benchmark' && id && benchmarks.has(id)) || (view === 'standard' && id && standards.has(id));
   if (dataView) { main.setAttribute('aria-busy', 'true'); main.innerHTML = skeleton(); }
   try {
-    if (!view || view === 'ratings') {
+    if (!view && !qs) { renderHome(main, data); nav = 'home'; shown = 'home'; }
+    else if (!view || view === 'ratings') {
       // A hash with a query is the whole state (shared link or back button); a bare #/ keeps what the reader had set.
       if (qs) Object.assign(state, decodeView(qs, { sorts: [...columns().map((c) => c.key), 'domain'], modalities: [...new Set([...benchmarks.values()].map((b) => b.modality))], benchmarks: new Set(benchmarks.keys()), standards: ratedStds().map((s) => s.id) }));
       renderRatings(); shown = 'ratings';
@@ -874,13 +878,13 @@ document.addEventListener('keydown', (e) => {
   const t = e.target as HTMLElement;
   const typing = t.closest('input, select, textarea, [contenteditable]');
   if (e.metaKey || e.altKey || (e.ctrlKey && !['Home', 'End'].includes(e.key))) return;
-  if (e.key === 'Escape' && !dialog.open && /^#\/(benchmark|compare)\//.test(location.hash)) { e.preventDefault(); location.hash = '#/'; return; }
+  if (e.key === 'Escape' && !dialog.open && /^#\/(benchmark|compare)\//.test(location.hash)) { e.preventDefault(); location.hash = '#/ratings'; return; }
   if (typing || dialog.open) return;
-  if (e.key === '/') { e.preventDefault(); const q = document.getElementById('q'); if (q) q.focus(); else if (data) { wantSearch = true; if (location.hash === '#/' || location.hash === '') route(); else location.hash = '#/'; } return; }
+  if (e.key === '/') { e.preventDefault(); const q = document.getElementById('q'); if (q) q.focus(); else if (data) { wantSearch = true; if (/^#\/ratings(\?|$)/.test(location.hash)) route(); else location.hash = '#/ratings'; } return; }
   if (e.key === '?') { e.preventDefault(); dialog.showModal(); return; }
   if (e.key === 'g') { pendingG = Date.now(); return; }
   if (Date.now() - pendingG < 1200) {
-    const to = { r: '#/', s: '#/standards', m: '#/method' }[e.key];
+    const to = { o: '#/', r: '#/ratings', s: '#/standards', m: '#/method' }[e.key];
     pendingG = 0;
     if (to) { e.preventDefault(); location.hash = to; }
   }
