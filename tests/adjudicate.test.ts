@@ -215,7 +215,7 @@ describe('citations against the real standards', () => {
       const [c] = citations(root, 'betterbench', 'des.01', { cite: ['level'], level: lv });
       expect(lineOf(c!)).toContain(words);
     }
-    expect(levelLine(readFileSync(`${root}standards/betterbench.yaml`, 'utf8'), 15)).toBe(26);
+    expect(levelLine(readFileSync(`${root}standards/betterbench.yaml`, 'utf8'), 15)).toBe(27);
   });
 });
 

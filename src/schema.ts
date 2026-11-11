@@ -93,6 +93,8 @@ export const Standard = z
       })
       .optional(),
     url: z.string().url(),
+    /** A web archive snapshot of `url`, for when the original no longer loads. */
+    archived_url: z.string().url().optional(),
     citation: z.string().optional(),
     description: z.string(),
     notes: z.string().optional(),

@@ -133,7 +133,7 @@ const columns = () => [
   { key: 'run', label: 'Run cost', tip: 'Estimated cost of a full run as a $ band (tokens), plus the local setup needed. Cheapest first.' },
   ...ratedStds().map((s) => ({ key: s.id, label: s.short, tip: stdTip(s) })),
 ];
-const defaultView = () => ({ q: '', domain: '', modality: '', source: 'all', value: '' });
+const defaultView = () => ({ q: '', domain: '', modality: '', source: DEFAULT_VIEW.source, value: '' });
 const activeCount = () => Object.entries(defaultView()).filter(([k, d]) => state[k as keyof ReturnType<typeof defaultView>] !== d).length + (state.sort !== DEFAULT_VIEW.sort || state.dir !== DEFAULT_VIEW.dir ? 1 : 0);
 
 /** Category A-E share the A-F grade ramp (.ts-grade-*); other standards print their own figure. */
@@ -249,9 +249,9 @@ function syncUi() {
 }
 
 function emptyView(): Raw {
-  const names: Record<string, string> = { safety: 'Safety', capability: 'Capability', published: 'Reviewed only', automated: 'Automated only' };
+  const names: Record<string, string> = { safety: 'Safety', capability: 'Capability', all: 'Reviewed, else draft', published: 'Reviewed only', automated: 'Automated only' };
   const active = [state.q && `Search “${state.q}”`, state.domain && `Domain: ${names[state.domain]}`, state.modality && `Type: ${modalityName(state.modality)}`,
-    state.source !== 'all' && `Ratings from: ${names[state.source]}`, state.value && 'Best value only'].filter(Boolean);
+    state.source !== DEFAULT_VIEW.source && `Ratings from: ${names[state.source]}`, state.value && 'Best value only'].filter(Boolean);
   return html`<div class="rt-empty" role="status"><p class="t-sub">No benchmarks match.</p>
     <ul class="mt-2 text-sm" role="list">${active.map((a) => html`<li>${a}</li>`)}</ul>
     <p class="mt-4"><button type="button" class="btn btn-primary" data-clear-filters>Clear filters</button></p></div>`;
@@ -752,7 +752,7 @@ function renderStandard(s: Standard) {
   main.innerHTML = html`
     <p class="text-sm"><a class="link" href="#/standards">Standards</a> <span aria-hidden="true">/</span> ${s.short}</p>
     <h1 class="t-page mt-3" tabindex="-1">${s.name}</h1>
-    <p class="t-caption mt-3">${s.publisher}, ${s.year} · version ${s.version} · <a class="link" href="${safeUrl(s.url)}">Source</a></p>
+    <p class="t-caption mt-3">${s.publisher}, ${s.year} · version ${s.version} · <a class="link" href="${safeUrl(s.url)}">Source</a>${s.archived_url ? html` (<a class="link" href="${safeUrl(s.archived_url)}">archived copy</a>)` : ''}</p>
     <p class="mt-5 max-w-3xl">${s.description}</p>
     ${s.applies_to ? html`<p class="t-caption mt-2">Applies to: ${s.applies_to}</p>` : ''}
     <h2 class="t-section mt-12">How it is scored</h2>
