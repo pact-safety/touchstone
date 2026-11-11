@@ -19,12 +19,6 @@ export type NoteVerdict = { value: string | number; rationale?: string; evidence
 /** Resolves "owner/repo" to a 40-character commit SHA, or undefined when it can't. */
 export type Pin = (repo: string) => string | undefined;
 
-// Same references src/validate.ts accepts as fixed-version evidence.
-const IMMUTABLE = [
-  /arxiv\.org\/(abs|pdf)\/[0-9]{4}\.[0-9]{4,5}v[0-9]+/,
-  /github\.com\/[^/]+\/[^/]+\/(blob|tree)\/[0-9a-f]{40}(?![0-9a-f])/i,
-  /web\.archive\.org\/web\/[0-9]+\//,
-];
 const VALUE = /^\s*(?:(Unmet|Met|N\/A|NA)(?![A-Za-z/])|(?:Score\s+)?(\d+)(?![\d.]*\d|[A-Za-z]))[\s:—–-]*/i;
 const LOCATOR = /§+\s*[\w.]+(?:\/[\w.]+)?|Appendix\s+[A-Z0-9][\w.]*|(?:Sections?|Tables?|Figures?|[Pp]ages?)\s+\d[\w.]*/;
 const GITHUB = /^https:\/\/github\.com\/([^/\s]+)\/([^/\s#?]+?)(?:\.git)?(?:\/(blob|tree)\/([^/\s]+)(\/\S*)?)?\/?$/;
@@ -39,7 +33,7 @@ function toEvidence(url: string, pin: Pin): Evidence | undefined {
     const sha = pin(`${owner}/${repo}`);
     return !sha ? undefined : { source: 'repo', url: `https://github.com/${owner}/${repo}/${kind ?? 'tree'}/${sha}${path}`, locator: '' };
   }
-  return IMMUTABLE.some((re) => re.test(url)) ? { source: url.includes('web.archive.org') ? 'website' : 'paper', url, locator: '' } : undefined;
+  return /^https?:\/\/web\.archive\.org\/web\/\d+\//.test(url) ? { source: 'website', url, locator: '' } : undefined;
 }
 
 /** GitHub repos named in a note, for pre-resolving their HEADs. */

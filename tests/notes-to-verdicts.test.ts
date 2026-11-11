@@ -38,6 +38,11 @@ describe('noteToVerdict evidence', () => {
     const r = conv(`Met — see Table 2 and §4. ${arxiv}.`);
     expect(r.verdict.evidence).toEqual([{ source: 'paper', url: 'https://arxiv.org/abs/2311.12983v1', locator: 'Table 2' }]);
   });
+  it('accepts Wayback snapshots as website evidence, but not lookalike hosts', () => {
+    const wb = 'https://web.archive.org/web/20240101000000/https://example.org/x';
+    expect(conv(`Met ${wb}`).verdict.evidence).toEqual([{ source: 'website', url: wb, locator: 'reviewer note' }]);
+    expect(conv('Met https://evil.example/web.archive.org/web/2024/x')).toEqual({ reason: 'positive verdict without fixed-version evidence' });
+  });
   it('defaults the locator', () => expect(conv(`Met ${arxiv}`).verdict.evidence[0].locator).toBe('reviewer note'));
   it('pins GitHub repo roots and branch blobs/trees, keeps SHA urls', () => {
     const r = conv('Met — code. https://github.com/o/r, https://github.com/o/r/blob/master/a/b.py; https://github.com/o/r/tree/main/docs) https://github.com/o/r/blob/' + SHA + '/x.py');
