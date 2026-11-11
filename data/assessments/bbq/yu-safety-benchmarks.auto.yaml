@@ -2,13 +2,15 @@
 benchmark: bbq
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
@@ -179,15 +181,10 @@ verdicts:
     by: model
     quotes_verified: true
   r6.b:
-    value: met
-    rationale: The benchmark reports Krippendorf's alpha for agreement between raters.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 0
-        quote: Agreement between raters is high, with a Krippendorf’s α of 0.883
-    by: model
-    quotes_verified: true
+    value: n/a
+    rationale: "For model-output judging: model answers are scored programmatically against gold options, with no human or LLM judge. The reported alpha of 0.883 concerns human dataset validation/answering, so it should be retained as a data-quality statistic, not presented as inter-judge reliability for model outputs. Reading 1 identifies the scope distinction but an unmet label implies an applicable judging process."
+    evidence: []
+    by: human
   r6.c:
     value: unmet
     rationale: The benchmark does not report score variance across all three required dimensions (random seeds, prompt rephrasings, and evaluator versions).
@@ -344,3 +341,9 @@ revisions:
       - r7.a
       - r7.c
       - r9.c
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 29 verdicts agreed, 6 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r6.b

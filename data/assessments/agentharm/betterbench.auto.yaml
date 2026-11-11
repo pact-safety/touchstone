@@ -59,11 +59,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: "With additional evidence required beyond Reading 1’s quotation. Section 3.2 explains the intended signal: refusal robustness while preserving basic agent competence. Section 3.1.2 and Section 5 limit interpretation: synthetic-task scores are proxies, not direct measures of real-world harmful ability or advanced autonomy. Thus both intended and excluded interpretations are described, meeting BetterBench’s 15-point rule."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: Section 3.2
+    by: human
   des.05:
     value: 0
     rationale: There is no mention of domain experts being involved in the design or execution.
@@ -116,15 +118,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.12:
-    value: 10
-    rationale: The benchmark uses LLM judges for narrow subtasks and human-written rubrics, but a formal validation of the automatic evaluation is not fully detailed.
+    value: 15
+    rationale: "Is supported by more than the quoted reliability claim: Appendix A, “Discussion of our usage of LLM judges,” reports manual examination of all samples across models and a qualitative finding of robustness to different answers. This supplies a validation procedure and qualitative result. No numerical agreement estimate is established by that passage."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 2, chunk 1
-        quote: reliably scored , with human-written rubrics requiring LLM judges only for narrow well-specified subtasks
-    by: model
-    quotes_verified: true
+        locator: Appendix A
+    by: human
   des.13:
     value: 15
     rationale: The benchmark explains differences from AgentDojo (direct vs indirect attacks) and ToolEmu (fixed tools vs LLM emulation).
@@ -298,11 +298,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.08:
-    value: 0
-    rationale: There is no mention of documented assumptions regarding normative properties.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: "Provider terms of use are an explicit normative basis for the harm categories, so 0 is too low. BetterBench’s full-credit rule also asks for clear cultural context/values and their operationalization. The cited provider-policy statement does not establish that complete account. Appendix A also distinguishes testing intended refusal behavior from prescribing what should be refused. Sources: (Appendix A) and (Appendix J.3, normative assumptions)."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2410.09024v3
+        locator: Appendix A
+    by: human
   doc.09:
     value: 15
     rationale: The paper includes a dedicated 'Limitations' section.
@@ -416,3 +418,10 @@ revisions:
     summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 3 decided by the reviewer."
     items:
       - des.08
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - des.04
+      - des.12
+      - doc.08

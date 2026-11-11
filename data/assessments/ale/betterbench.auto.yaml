@@ -159,10 +159,9 @@ verdicts:
     quotes_verified: true
   des.14:
     value: 0
-    rationale: The excerpts do not address input sensitivity.
+    rationale: "On the cited evidence under the published BetterBench definition: sticky actions introduce transition stochasticity by changing the action actually executed. They are not a test of performance sensitivity to semantically equivalent input representations. Frame skipping and RGB-versus-RAM also alter temporal/information conditions and do not by themselves supply such a sensitivity study. Reading 2 has the supported score, but should explain this distinction."
     evidence: []
-    by: model
-    quotes_verified: true
+    by: human
   imp.01:
     value: 15
     rationale: The source code for the benchmark agents is explicitly stated to be available.
@@ -248,14 +247,12 @@ verdicts:
     quotes_verified: true
   doc.01:
     value: 15
-    rationale: A requirements file for the documentation is explicitly mentioned and provided in the build instructions.
+    rationale: "For the currently published repository, with corrected evidence: pyproject.toml declares Python requirements, build-system requirements, runtime dependencies and optional test/vector dependencies. This is an equivalent requirements specification for ALE itself. The documentation-only requirements.txt quoted by Reading 2 is insufficient evidence on its own. The pinned commit could not be fetched, so this verifies current availability rather than that historical snapshot."
     evidence:
       - source: repo
-        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
-        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:docs/README.md, chunk 0
-        quote: pip install -r docs/requirements.txt
-    by: model
-    quotes_verified: true
+        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/blob/85a66ab2061082add4d7d212867d692df7353bf0/pyproject.toml
+        locator: reviewer note
+    by: human
   doc.02:
     value: 15
     rationale: A 'Quick Start' section is provided in the README with installation and usage instructions.
@@ -298,14 +295,12 @@ verdicts:
     quotes_verified: true
   doc.06:
     value: 15
-    rationale: The paper describes the construction of the ALE as a software framework for Atari 2600 games.
+    rationale: "With substantive construction evidence: Sections 2.1–2.2 explain the Atari/Stella platform, observation/action interface and reward/termination layer; Section 3.1.2 documents the dated candidate-game list, eligibility filters, random test-game selection and separate tuning set. The introduction gives the rationale for independent, varied tasks and held-out game evaluation. Reading 1’s purpose statement alone is incomplete evidence."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 2, chunk 2
-        quote: ALE is a software framework designed to make it easy to develop agents that play arbitrary Atari 2600 games.
-    by: model
-    quotes_verified: true
+        locator: Sections 2.1
+    by: human
   doc.07:
     value: 15
     rationale: The paper documents the test set construction (50 games chosen at random from a filtered list) and the rationale for using a disjoint test set.
@@ -330,14 +325,12 @@ verdicts:
     quotes_verified: true
   doc.10:
     value: 15
-    rationale: The test environment design (Atari 2600 emulation) and the process for constructing the test set are documented.
+    rationale: "With corrected evidence: Section 2.2 specifies Stella emulation, observation dimensions, discrete action space, game-specific reward/termination, frame rates and state save/restore. Section 3.1.2 specifies game eligibility, sampling and episode/trial protocol. These document the environment design; the isolated purpose sentence in Reading 2 does not."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 2, chunk 2
-        quote: ALE is a software framework designed to make it easy to develop agents that play arbitrary Atari 2600 games.
-    by: model
-    quotes_verified: true
+        locator: Section 2.2
+    by: human
   doc.11:
     value: 15
     rationale: The paper documents evaluation metrics, including raw scores and paired t-tests.
@@ -397,15 +390,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.18:
-    value: 15
-    rationale: The paper explains the representativeness of the data by selecting a variety of games to evaluate general competency.
+    value: 10
+    rationale: Section 3.1.2 explains the sampling frame (381 listed games), eligibility filtering to 123 and random selection of 50 test games. The introduction explains task diversity and the Atari-domain scope. This supports representativeness reasoning beyond 0, but not a comprehensive quantitative coverage/bias analysis of the intended broader domain required for 15. The aspiration quoted by Reading 2 is insufficient alone.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 2, chunk 1
-        quote: "ALE proposes an achievable stepping stone: techniques for general competency across the gamut of Atari 2600 games."
-    by: model
-    quotes_verified: true
+        locator: Section 3.1.2
+    by: human
   doc.19:
     value: 0
     rationale: There is no mention of the documentation following a specific recognized standard (e.g., Docstring, Sphinx standard).
@@ -439,3 +430,12 @@ revisions:
     summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 3 decided by the reviewer."
     items:
       - des.04
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 8 decided by the reviewer."
+    items:
+      - des.14
+      - doc.01
+      - doc.06
+      - doc.10
+      - doc.18

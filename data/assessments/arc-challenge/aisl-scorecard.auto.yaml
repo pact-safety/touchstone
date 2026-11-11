@@ -2,13 +2,15 @@
 benchmark: arc-challenge
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
 model_run:
@@ -96,11 +98,13 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset/benchmark in a way that requires modification analysis.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: met
+    rationale: "For the documented adaptations: the introduction explicitly identifies reuse of the publicly releasable Kaggle subset (about 60% of Kaggle, 43% of ARC) and explains the new Challenge partition—filtering out questions solved by IR/PMI to keep easy questions from dominating progress. The dataset section details that filtering. Thus reuse is real (not N/A), and modifications plus reasons are documented beyond Reading 2’s isolated dataset-size quote. No additional undocumented edits are established by the supplied evidence."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: reviewer note
+    by: human
   cv.10:
     value: unmet
     rationale: While the item count is stated, there is no power calculation or confidence-interval half-width reported that is compared to the smallest model gap.
@@ -432,3 +436,9 @@ revisions:
       - cor.07
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 37 verdicts agreed, 17 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.09

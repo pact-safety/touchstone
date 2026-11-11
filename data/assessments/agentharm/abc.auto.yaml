@@ -2,13 +2,15 @@
 benchmark: agentharm
 standard: abc
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
 model_run:
@@ -79,15 +81,13 @@ verdicts:
     by: model
     quotes_verified: true
   O.c.1:
-    value: met
-    rationale: The documentation states that all tasks are manually written and reviewed by separate human reviewers.
+    value: n/a
+    rationale: "For this method-specific test-case criterion. Reading 1’s explanation supports N/A, not its displayed “unmet” label: AgentHarm grades tool-call traces and narrow semantic conditions rather than executing generated programs against unit/end-to-end test suites. Reading 2 establishes review of benchmark tasks, which is distinct from validation of executable scoring test cases., Section 3.1.3 and Appendix B (usage of LLM judges)."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 2, chunk 1
-        quote: All tasks are manually written and reviewed by separate human reviewers.
-    by: model
-    quotes_verified: true
+        locator: Section 3.1.3
+    by: human
   O.c.2:
     value: n/a
     by: model
@@ -337,3 +337,9 @@ revisions:
       - T.3
       - R.2
       - R.6
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 32 verdicts agreed, 10 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - O.c.1

@@ -145,11 +145,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.14:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): Input sensitivity is addressed by analyzing how the number of generated tokens (an evaluation parameter) impacts the ASR."
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 5
+    rationale: Table 5 discussion explicitly identifies rephrasing as worth investigating but delegates it to attack methods, rather than reporting a benchmark sensitivity study. Output-token limits do not establish equivalent-input sensitivity.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: Table 5
+    by: human
   imp.01:
     value: 15
     rationale: The repository provides a script to run the evaluation pipeline.
@@ -242,15 +244,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.01:
-    value: 15
-    rationale: The README provides a command to install dependencies from a requirements.txt file.
+    value: 10
+    rationale: Requirements.txt exists, but many dependencies have no version constraint (e.g. transformers, ray, anthropic). This falls short of a complete version-specified environment.
     evidence:
       - source: repo
-        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
-        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 3
-        quote: pip install -r requirements.txt
-    by: model
-    quotes_verified: true
+        url: https://github.com/centerforaisafety/HarmBench/blob/8e1604d1171fe8a48d8febecd22f600e462bdcdd/requirements.txt
+        locator: reviewer note
+    by: human
   doc.02:
     value: 15
     rationale: The README contains a 'Quick Start' section with installation and pipeline execution instructions.
@@ -364,15 +364,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.15:
-    value: 15
-    rationale: The paper documents that context strings were sourced from public websites and journal articles.
+    value: 10
+    rationale: §4.2 and Appendix D describe policy-derived behaviors and public-web/journal context sources, but do not establish comprehensive per-source provenance/licensing.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 39, chunk 3
-        quote: context strings were sourced from public websites and journal articles that can be easily found online
-    by: model
-    quotes_verified: true
+        locator: §4.2
+    by: human
   doc.16:
     value: 0
     rationale: The excerpts do not document specific data preprocessing steps.
@@ -380,15 +378,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.17:
-    value: 15
-    rationale: The paper documents the annotation process, including the use of human labels and specific annotation criteria.
+    value: 10
+    rationale: Annotation criteria and validation-set selection are documented; v2 Appendix B.5.1 leaves annotation-instruction/inter-annotator-agreement placeholders rather than comprehensive annotation quality details.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 18, chunk 1
-        quote: We developed these criteria over a period of several months, building on the annotation criteria used for TDC 2023
-    by: model
-    quotes_verified: true
+        locator: Appendix B.5.1
+    by: human
   doc.18:
     value: 0
     rationale: The excerpts do not explain the representativeness of the data.
@@ -431,3 +427,11 @@ revisions:
       - des.04
       - des.08
       - imp.02
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 13 decided by the reviewer."
+    items:
+      - des.14
+      - doc.01
+      - doc.15
+      - doc.17

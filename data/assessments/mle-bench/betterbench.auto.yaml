@@ -261,14 +261,12 @@ verdicts:
     quotes_verified: true
   doc.01:
     value: 15
-    rationale: Multiple requirements.txt files are listed in the repository file listing.
+    rationale: Pyproject.toml specifies Python and version constraints for the runtime dependencies; agent-specific requirements pin their code versions. Merely listing requirement files would not establish completeness.
     evidence:
       - source: repo
-        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
-        locator: openai/mle-bench@507f92e1138b:FILE LISTING, chunk 0
-        quote: agents/aide/requirements.txt
-    by: model
-    quotes_verified: true
+        url: https://github.com/openai/mle-bench/blob/507f92e1138bb6e40dac5c6ee7a6758e6424bf97/pyproject.toml
+        locator: reviewer note
+    by: human
   doc.02:
     value: 15
     rationale: The README provides a 'Benchmarking' section with recommended setup and a 'Lite Evaluation' section, serving as a guide.
@@ -280,11 +278,13 @@ verdicts:
     by: human
     quotes_verified: true
   doc.03:
-    value: 0
-    rationale: The provided excerpts do not contain code snippets to verify the use of in-line comments.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 5
+    rationale: Some function docstrings are present, but registry.py has many undocumented methods and little inline explanation.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/blob/507f92e1138bb6e40dac5c6ee7a6758e6424bf97/mlebench/registry.py
+        locator: reviewer note
+    by: human
   doc.04:
     value: 15
     rationale: The repository contains a README and the paper provides extensive details on the benchmark setup.
@@ -364,11 +364,13 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   doc.12:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes a LICENSE file specifying the MIT License."
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: Repository LICENSE explicitly specifies MIT for code and excludes external datasets, whose competition-specific terms apply.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/mle-bench/blob/507f92e1138bb6e40dac5c6ee7a6758e6424bf97/LICENSE
+        locator: reviewer note
+    by: human
   doc.13:
     value: 0
     rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
@@ -433,10 +435,9 @@ verdicts:
     adjudicated_by: adjudicator-v4
   mai.02:
     value: 0
-    rationale: There is no mention of a maintained feedback channel for users of the benchmark.
+    rationale: "Under the published responsiveness rubric, but the channel does exist: GitHub issues. Issue #150 (July 9, 2026) remains open without a response shown after more than three months, so the score is not based on absence of a channel."
     evidence: []
-    by: model
-    quotes_verified: true
+    by: human
   mai.03:
     value: 0
     rationale: No specific contact person is listed in the provided excerpts.
@@ -447,3 +448,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 15 settled by adjudicator-v4, 13 decided by the reviewer."
+    items:
+      - doc.01
+      - doc.03
+      - doc.12
+      - mai.02

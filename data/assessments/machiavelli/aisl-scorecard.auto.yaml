@@ -2,13 +2,15 @@
 benchmark: machiavelli
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
@@ -127,15 +129,10 @@ verdicts:
     by: model
     quotes_verified: true
   cv.12:
-    value: met
-    rationale: The documentation provides the specific prompts used for the model-based raters (GPT-4) in the appendices.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 17, chunk 0
-        quote: we use GPT-4 (OpenAI, 2023) to label all our scenes using the following prompts.
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Humans supply validation labels (§2.4), so this is applicable. Appendix F reproduces GPT-4 prompts, but does not establish that human-rater instructions or training materials were published.
+    evidence: []
+    by: human
   cv.13:
     value: n/a
     rationale: The benchmark uses GPT-4 and a small number of expert authors for labeling, not a demographic group of human raters requiring bias mitigation.
@@ -467,3 +464,9 @@ revisions:
       - cor.05
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 34 verdicts agreed, 20 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.12

@@ -2,13 +2,15 @@
 benchmark: decodingtrust
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v5
   repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
@@ -116,16 +118,12 @@ verdicts:
     adjudicated_by: adjudicator-v4
   cv.09:
     value: met
-    rationale: The benchmark describes the creation of AdvGLUE++ as an extension to AdvGLUE to include attacks for autoregressive LLMs.
+    rationale: With fuller evidence than Reading 1. The paper explains AdvGLUE++ adaptations for autoregressive models (§5.2/C), Enron filtering to exclude trivially predictable addresses (F.1), and Jiminy Cricket filtering of unrecognized/nonsensical actions (G.1.1), including their purposes.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 21, chunk 4
-        quote: |-
-          We then introduce   AdvGLUE++ , an extension to the existing
-          benchmark, which presents additional attacks catered to recent autoregressive LLMs
-    by: model
-    quotes_verified: true
+        locator: §5.2/C
+    by: human
   cv.10:
     value: unmet
     rationale: While item counts are provided for some tasks, there is no power calculation or confidence-interval half-width reported to justify statistical power.
@@ -483,3 +481,9 @@ revisions:
       - cor.07
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 32 verdicts agreed, 21 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.09

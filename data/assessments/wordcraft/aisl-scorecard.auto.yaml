@@ -2,13 +2,15 @@
 benchmark: wordcraft
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
@@ -93,15 +95,13 @@ verdicts:
     evidence: []
     quotes_verified: true
   cv.09:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset or benchmark for its evaluation tasks.
+    value: met
+    rationale: §3 lists the text interface, sampled goal-based tasks, distractors/depth and held-out splits, explaining isolation of commonsense generalization.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 3
-        quote: WordCraft is a simplified version of Little Alchemy 2, sharing the same entities and valid recipes
-    by: model
-    quotes_verified: true
+        locator: §3
+    by: human
   cv.10:
     value: unmet
     rationale: While the number of test episodes is mentioned in the repo, there is no power calculation or confidence-interval half-width reported.
@@ -441,3 +441,9 @@ revisions:
       - cor.07
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 36 verdicts agreed, 17 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.09

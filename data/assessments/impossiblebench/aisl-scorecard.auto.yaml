@@ -78,17 +78,10 @@ verdicts:
     by: model
     quotes_verified: true
   cv.06:
-    value: met
-    rationale: The docs describe a verification step where mutations are tested against original and empty patches, and report the pass/removal rates for SWE-bench.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 4, chunk 0
-        quote: |-
-          Valid impossible mutations
-          should fail both tests, and we remove any mutations that pass either test. For SWE-bench, we removed 8.8% of one-off and 3.4% of conflicting mutations
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: §2.3 explicitly excludes LiveCodeBench from mutation quality control. SWE-bench checks do not establish verification of every item.
+    evidence: []
+    by: human
   cv.07:
     value: unmet
     rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
@@ -218,15 +211,10 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The benchmark measures pass rates based on unit test execution (bash commands), which does not involve parsing free-form output for correctness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 1, chunk 1
-        quote: We measure an agent’s “cheating rate” as its pass rate on these impossible tasks
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Minimal scaffolds extract code/bash blocks (§G.3); execution-based scoring does not eliminate format parsing. No per-format parser validation is reported.
+    evidence: []
+    by: human
   iv.07:
     value: unmet
     rationale: The paper lists evaluated models but does not provide contamination checks, training cutoffs, or release date comparisons for all of them.
@@ -309,11 +297,10 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark measures a general propensity to cheat across coding tasks rather than evaluating a specific deployed application.
+    value: unmet
+    rationale: The paper connects results to deployed coding assistants, so applicability cannot be dismissed. It does not clearly qualify deployment generalization against the artificial impossible-task setting.
     evidence: []
-    by: model
-    quotes_verified: true
+    by: human
   rel.01:
     value: unmet
     rationale: The documentation does not list library versions, hardware models, or the OS/container image.
@@ -452,3 +439,10 @@ revisions:
       - cor.07
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 9 settled by adjudicator-v4, 5 decided by the reviewer."
+    items:
+      - cv.06
+      - iv.06
+      - ev.07

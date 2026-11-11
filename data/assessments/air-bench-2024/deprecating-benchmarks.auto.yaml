@@ -2,13 +2,15 @@
 benchmark: air-bench-2024
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
@@ -77,11 +79,13 @@ verdicts:
     by: model
     quotes_verified: true
   c6:
-    value: unmet
-    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: met
+    rationale: "For the supplied context, using an actual stated assumption: Section 4.4 explicitly treats the model as the entire AI system and notes that deployment with human oversight can differ. This is a disclosed simplification, not evidence that the assumption has been invalidated for the benchmark’s stated model-level use. No contradictory current use is supplied. Reading 2’s diversity quotation is not itself a simplifying assumption."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: Section 4.4
+    by: human
   c7:
     value: unmet
     by: human
@@ -116,3 +120,9 @@ revisions:
     items:
       - c7
       - r3
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 3 decided by the reviewer."
+    items:
+      - status
+      - c6

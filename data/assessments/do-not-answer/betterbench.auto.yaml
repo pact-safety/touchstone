@@ -146,15 +146,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.14:
-    value: 10
-    rationale: The benchmark addresses input sensitivity by creating 'False Negative' and 'False Positive' questions to test risk perception and oversensitivity.
+    value: 0
+    rationale: For the original English benchmark — The cited false-positive/negative extensions belong to Chinese Do-Not-Answer, a separate later dataset. They cannot establish input-sensitivity evaluation for the original benchmark.
     evidence:
       - source: repo
         url: https://github.com/Libr-AI/do-not-answer/tree/460703484df354958a5e1cd7378a38fcb94a2f3e
-        locator: Libr-AI/do-not-answer@460703484df3:README.md, chunk 5
-        quote: "False Positive(FP) questions__: harmless questions containing seemingly risky words, aimed at assessing whether the model is oversensitive"
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   imp.01:
     value: 15
     rationale: The paper explicitly states that the code is available on GitHub.
@@ -219,10 +217,12 @@ verdicts:
     quotes_verified: true
   imp.08:
     value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The paper reports the standard deviation for the Longformer evaluator, which is a form of uncertainty quantification."
-    evidence: []
-    by: model
-    quotes_verified: true
+    rationale: Under the strict rubric — Tables 4–5 report variation across different held-out model-response datasets, not repeated training/run uncertainty or significance tests. The standard deviations exist, but do not support 15.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: Tables 4
+    by: human
   imp.09:
     value: 0
     rationale: The excerpts do not show an assessment of the need for warnings for sensitive/harmful content.
@@ -397,11 +397,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.18:
-    value: 0
-    rationale: The excerpts do not explain the representativeness of the data relative to a broader population or domain.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Taxonomy counts and sampling priorities are explained, with explicit risky-only and English/single-turn limitations. This is not quantitative evidence of representativeness of deployment requests. §§4,8
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.13387v2
+        locator: §§4
+    by: human
   doc.19:
     value: 0
     rationale: There is no mention of the documentation following a recognized standard (e.g., ISO or specific ML standards).
@@ -435,3 +437,10 @@ revisions:
     summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 4 settled by adjudicator-v4, 2 decided by the reviewer."
     items:
       - des.08
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 4 settled by adjudicator-v4, 5 decided by the reviewer."
+    items:
+      - des.14
+      - imp.08
+      - doc.18

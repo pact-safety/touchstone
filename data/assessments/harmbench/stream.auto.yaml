@@ -2,13 +2,15 @@
 benchmark: harmbench
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
@@ -82,11 +84,13 @@ verdicts:
     by: human
     quotes_verified: true
   s2.iv-b:
-    value: unmet
-    rationale: The report mentions that humans labeled a validation set using annotation instructions, but it does not describe the actual procedure/process.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: met
+    rationale: Appendix B.1 supplies the criteria applied when humans label validation completions; B.5.1 describes selection of 600 completions and use of majority human labels. These are human grades of model outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: Appendix B.1
+    by: human
   s2.iv-c:
     value: unmet
     rationale: The report mentions 'Inter-annotator agreement' as a heading in the validation set section, but no actual agreement figure is provided in the excerpts.
@@ -279,3 +283,9 @@ revisions:
       - s2.v-a
       - s3.ii
       - s5.ii-b
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 18 verdicts agreed, 5 settled by adjudicator-v4, 5 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s2.iv-b

@@ -65,11 +65,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: The excerpts do not describe how the benchmark scores should or should not be interpreted or used.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: Metric sections explain score meanings; Appendix J restricts interpretation through unknown training data, subjective constructs, and model-version limitations.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: Appendix J
+    by: human
   des.05:
     value: 0
     rationale: There is no mention of domain experts being involved in the design of the benchmark.
@@ -78,14 +80,12 @@ verdicts:
     quotes_verified: true
   des.06:
     value: 10
-    rationale: The paper mentions that system roles are designed to suit a wide range of user preferences and use cases, though specific personas are not detailed.
+    rationale: Appendix J identifies researchers/practitioners training LLMs and evaluating vulnerabilities before deployment. These are actual benchmark users; generic customizable chatbot roles are not personas.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 10, chunk 2
-        quote: enabling customization of the model’s interaction pattern to suit a wide range of user preferences and use cases.
-    by: model
-    quotes_verified: true
+        locator: Appendix J
+    by: human
   des.07:
     value: 15
     rationale: The benchmark integrates domain literature and existing datasets like Enron, AdvGLUE, and ETHICS.
@@ -205,15 +205,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.06:
-    value: 15
-    rationale: The benchmark includes a proof-of-concept evaluation to study if private training data (Enron Email dataset) can be extracted from models.
+    value: 5
+    rationale: Appendix J acknowledges benchmark-specific fine-tuning risk and proposes private refreshed prompts. Enron extraction tests privacy leakage, not benchmark contamination; no direct benchmark-exposure diagnostic is established.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 40, chunk 2
-        quote: we present a proof-of-concept evaluation of the training data leakage of GPT models, using the Enron Email dataset
-    by: model
-    quotes_verified: true
+        locator: Appendix J
+    by: human
   imp.07:
     value: 15
     rationale: The 'dt-run' script is provided to run evaluations with default or custom settings to replicate results.
@@ -231,11 +229,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.09:
-    value: 0
-    rationale: The excerpts discuss toxicity and bias but do not assess the need for warnings for sensitive/harmful content.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: An explicit opening warning covers potentially offensive model outputs. This supports output warnings; the cited safety-requirements discussion does not establish warnings for both inputs and outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: reviewer note
+    by: human
   imp.10:
     value: 0
     rationale: No build status or equivalent CI/CD implementation is mentioned in the excerpts.
@@ -275,11 +275,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.04:
-    value: 0
-    rationale: No specific code documentation (like API docs or docstrings) is shown in the excerpts.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Tutorial.md documents configuration, model integration and running evaluations; this is useful partial documentation, without comprehensive function/API documentation.
+    evidence:
+      - source: repo
+        url: https://github.com/AI-secure/DecodingTrust/blob/161ae8321ced62f45fcd9ceb412e05b47c603cd4/Tutorial.md
+        locator: reviewer note
+    by: human
   doc.05:
     value: 0
     rationale: While a paper is provided, there is no evidence in the excerpts that it was accepted at a peer-reviewed venue.
@@ -410,11 +412,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.18:
-    value: 0
-    rationale: The excerpts do not provide an explanation of the representativeness of the data.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Sampling, selected domains and constructed scenarios are described, but diversity alone does not establish quantitative representativeness of deployment populations. Appendix J acknowledges scope and distribution assumptions.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2306.11698v5
+        locator: Appendix J
+    by: human
   doc.19:
     value: 0
     rationale: There is no mention of the documentation following a recognized standard (other than the data sheet, which is not explicitly linked to a standard like Datasheets for Datasets).
@@ -456,3 +460,13 @@ revisions:
     summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 2 decided by the reviewer."
     items:
       - doc.08
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 8 decided by the reviewer."
+    items:
+      - des.04
+      - des.06
+      - imp.06
+      - imp.09
+      - doc.04
+      - doc.18

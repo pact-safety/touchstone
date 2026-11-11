@@ -2,13 +2,15 @@
 benchmark: cybench
 standard: abc
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
@@ -201,15 +203,13 @@ verdicts:
     by: model
     quotes_verified: true
   O.h.1:
-    value: n/a
-    rationale: The benchmark uses binary scores (0 or 1) for success/failure, not a continuous quality metric.
+    value: met
+    rationale: Appendix E.3 reports agents bypassing intended tasks through direct Docker server access and cached flag retrieval, plus isolation/cache-clearing fixes. These are observed reward-hacking attempts with outcomes, even though scoring is binary.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 5, chunk 0
-        quote: Unguided performance is the performance on a task without subtask guidance, and outputs a binary score (i.e., 0 or 1 )
-    by: model
-    quotes_verified: true
+        locator: Appendix E.3
+    by: human
   T.1:
     value: unmet
     rationale: The documentation specifies a Python version range for the setup, but does not provide versions or a lockfile for all tools and packages in the task environment.
@@ -410,3 +410,9 @@ revisions:
       - T.2
       - T.3
       - R.5
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 19 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - O.h.1

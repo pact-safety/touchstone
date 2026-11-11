@@ -2,13 +2,15 @@
 benchmark: agentbench
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: d1e4a10db08c87075c78972e48ecc182be03e2d5
@@ -234,15 +236,13 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses task workers and simulated environments (e.g., OS, DB, KG) which are treated as fixed testbeds/containers.
+    value: met
+    rationale: Released task data and Docker images provide reproducible testbed snapshots; WebShop and Mind2Web are packaged environments, not necessarily live websites.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 6, chunk 3
-        quote: we have subdivided each task into separate workers, ensuring that the environments of these tasks remain isolated and free from conflicts.
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
+        locator: reviewer note
+    by: human
   iv.09:
     value: met
     rationale: The framework uses separate task workers to ensure non-interference between environments.
@@ -476,3 +476,9 @@ revisions:
       - cor.08
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 33 verdicts agreed, 19 settled by adjudicator-v4, 3 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.08

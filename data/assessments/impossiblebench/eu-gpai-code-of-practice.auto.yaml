@@ -2,13 +2,15 @@
 benchmark: impossiblebench
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
@@ -124,15 +126,13 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   iv.11:
-    value: unmet
-    rationale: While the creation of items via mutation is described, there is no description of the review process or how the benchmark is versioned and maintained.
+    value: met
+    rationale: With partial review coverage — §2 describes creation and SWE-bench checks; README records a dated LiveCodeBench implementation bug and directs users to the fix. Source-dataset versions alone would not establish maintenance.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 19, chunk 0
-        quote: We mutate each task to create corresponding oneoff and conflicting versions
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: §2
+    by: human
   ev.01:
     value: met
     rationale: The documentation describes the input/output format, the available tools (bash commands), the interaction length (up to 10 submissions), and access restrictions (read/write access to tests, but forbidden to modify them).
@@ -255,3 +255,9 @@ revisions:
       - iv.08
       - iv.09
       - rp.08
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 15 verdicts agreed, 6 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.11

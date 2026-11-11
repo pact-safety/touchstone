@@ -102,14 +102,12 @@ verdicts:
     quotes_verified: true
   des.08:
     value: 15
-    rationale: The choice of First Solve Time (FST) is used as an objective metric to ground task difficulty.
+    rationale: "§§2.3–2.4 justify all three performance metrics: autonomous task completion, granular partial progress, and comparison with subtask guidance. FST is a difficulty measure, not the sole performance metric."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 3, chunk 0
-        quote: We leverage first solve time (FST), the time it takes the first human team to solve a given challenge in a competition, to provide real-world grounding to the difficulty rating.
-    by: model
-    quotes_verified: true
+        locator: §§2.3
+    by: human
   des.09:
     value: 0
     rationale: The excerpts do not mention metric floors or ceilings.
@@ -190,15 +188,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.04:
-    value: 10
-    rationale: The documentation describes how to add a new model and rebuild the docker image locally, implying local model support, though not explicitly stating it as a feature.
+    value: 0
+    rationale: The documented implementation calls HELM/provider APIs. Local Docker task execution/rebuilding does not demonstrate local model inference; adding a provider requires writing an adapter.
     evidence:
       - source: repo
-        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
-        locator: andyzorigin/cybench@ca483c6443f1:docs/add_model.md, chunk 1
-        quote: "Here are the steps for a local rebuild: 1. Run `docker build -t cybench/cybench:latest . --load` from the repo root"
-    by: model
-    quotes_verified: true
+        url: https://github.com/andyzorigin/cybench/blob/ca483c6443f17a20ba7d6bac3d274859a1721e51/docs/add_model.md
+        locator: reviewer note
+    by: human
   imp.05:
     value: 0
     rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
@@ -373,17 +369,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.14:
-    value: 15
-    rationale: The benchmark uses a structured metadata.json file containing categories, difficulty, and subtasks.
+    value: 10
+    rationale: Task metadata uses a comprehensive custom JSON schema (category, difficulty, task details, subtask questions/answers). JSON alone is not a recognized metadata standard.
     evidence:
       - source: repo
-        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
-        locator: andyzorigin/cybench@ca483c6443f1:docs/add_task.md, chunk 4
-        quote: |-
-          "categories": ["web"],
-            "difficulty": "2"
-    by: model
-    quotes_verified: true
+        url: https://github.com/andyzorigin/cybench/blob/ca483c6443f17a20ba7d6bac3d274859a1721e51/docs/add_task.md
+        locator: reviewer note
+    by: human
   doc.15:
     value: 15
     rationale: The paper documents that data is collected from professional CTF competitions.
@@ -395,21 +387,21 @@ verdicts:
     by: model
     quotes_verified: true
   doc.16:
-    value: 0
-    rationale: The excerpts do not document specific data preprocessing steps.
-    evidence: []
-    by: model
-    quotes_verified: true
-  doc.17:
-    value: 15
-    rationale: The paper mentions that tasks are 'carefully annotated' with metadata and subtasks.
+    value: 10
+    rationale: Task adaptation and preparation are described, including separating agent/server files and adding metadata/subtasks. Cache clearing and CI are environment hygiene/validation, not evidence of exhaustive data preprocessing. §§2–3, E.3
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 6, chunk 1
-        quote: comprising carefully annotated tasks with meaningful metadata and subtasks
-    by: model
-    quotes_verified: true
+        locator: §§2
+    by: human
+  doc.17:
+    value: 10
+    rationale: Subtask/metadata annotation and task validation are described; the record does not comprehensively report annotation quality control and agreement. A claim of careful annotation alone does not earn 15.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: reviewer note
+    by: human
   doc.18:
     value: 15
     rationale: The paper explains the representativeness of the data by discussing how CTF tasks mimic real-world skills and CVEs.
@@ -459,3 +451,12 @@ revisions:
     summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 5 decided by the reviewer."
     items:
       - des.04
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 10 decided by the reviewer."
+    items:
+      - des.08
+      - imp.04
+      - doc.14
+      - doc.16
+      - doc.17

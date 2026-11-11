@@ -186,15 +186,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.04:
-    value: 10
-    rationale: The paper describes evaluating UnifiedQA and RoBERTa, which are typically local models, though it doesn't explicitly state 'local model support' as a feature.
+    value: 15
+    rationale: Evaluate_flan.py directly loads and evaluates local Hugging Face models with configurable model/data/GPU arguments.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2009.03300v3
-        locator: 2009.03300v3 page 5, chunk 1
-        quote: We evaluate GPT-3 (Brown et al., 2020) and UnifiedQA (Khashabi et al., 2020).
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/hendrycks/test/blob/4450500f923c49f1fb1dd3d99108a0bd9717b660/evaluate_flan.py
+        locator: reviewer note
+    by: human
   imp.05:
     value: 0
     rationale: There is no mention of globally unique identifiers or encryption of evaluation instances.
@@ -208,11 +206,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.07:
-    value: 0
-    rationale: While code is available, there is no mention of a specific script designed to replicate the results.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Evaluate.py implements the reported GPT-3 evaluation and defaults, but complete replication of all paper experiments is not supplied.
+    evidence:
+      - source: repo
+        url: https://github.com/hendrycks/test/blob/4450500f923c49f1fb1dd3d99108a0bd9717b660/evaluate.py
+        locator: reviewer note
+    by: human
   imp.08:
     value: 0
     rationale: The excerpts report accuracy percentages but do not mention statistical significance or uncertainty quantification.
@@ -386,15 +386,10 @@ verdicts:
     by: model
     quotes_verified: true
   mai.02:
-    value: 10
-    rationale: The repository README provides a way for users to provide feedback or updates via pull requests or by reaching out to the authors.
-    evidence:
-      - source: repo
-        url: https://github.com/hendrycks/test/tree/4450500f923c49f1fb1dd3d99108a0bd9717b660
-        locator: hendrycks/test@4450500f923c:README.md, chunk 0
-        quote: If you want to have your model added to the leaderboard, please reach out to us or submit a pull request.
-    by: model
-    quotes_verified: true
+    value: 0
+    rationale: "Under the published responsiveness rubric. An issue/PR channel exists, but feedback such as #26 (September 23, 2024) remains open without a response shown well beyond three months."
+    evidence: []
+    by: human
   mai.03:
     value: 15
     rationale: The README lists several individuals associated with the project, including Dan Hendrycks, with links to their personal/professional pages.
@@ -409,3 +404,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 5 decided by the reviewer."
+    items:
+      - imp.04
+      - imp.07
+      - mai.02

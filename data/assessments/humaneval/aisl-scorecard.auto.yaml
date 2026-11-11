@@ -2,13 +2,15 @@
 benchmark: humaneval
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: b9453e8f1865df0a0057a1383767caa400acfbcf
@@ -247,15 +249,13 @@ verdicts:
         url: https://arxiv.org/abs/2107.03374v2
     quotes_verified: true
   iv.09:
-    value: n/a
-    rationale: Each item is a single stateless model call generating a code completion.
+    value: met
+    rationale: Check_correctness starts a fresh multiprocessing.Process per completion; unsafe_execute creates a temporary directory and fresh globals. Isolation is verified in code, not inferred merely from gVisor.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 4, chunk 4
-        quote: We sample tokens from Codex until we encounter one of the following stop sequences
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/openai/human-eval/blob/b9453e8f1865df0a0057a1383767caa400acfbcf/human_eval/execution.py
+        locator: reviewer note
+    by: human
   iv.10:
     value: met
     rationale: The evaluation format is not multiple choice; it requires generating code that passes unit tests.
@@ -462,3 +462,9 @@ revisions:
       - cor.09
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 37 verdicts agreed, 15 settled by adjudicator-v4, 3 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.09

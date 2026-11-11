@@ -2,13 +2,15 @@
 benchmark: swe-lancer
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: 4afbde31ba075992ffd96209f6533de8e450becd
@@ -340,11 +342,10 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark evaluates general software engineering tasks from a repository rather than claiming to evaluate a specific deployed application product configuration.
+    value: unmet
+    rationale: Expensify supplies task code, but that does not demonstrate a deployed AI product using the same model, tools, prompt and environment.
     evidence: []
-    by: model
-    quotes_verified: true
+    by: human
   ev.06:
     value: unmet
     by: model
@@ -527,3 +528,9 @@ revisions:
       - cor.04
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 34 verdicts agreed, 17 settled by adjudicator-v4, 4 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - ev.05

@@ -2,13 +2,15 @@
 benchmark: webarena
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: dce04686a56253aefba7b18a4fa0937cf1dc987b
@@ -441,15 +443,13 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The scoring is based on exact match, must_include, or a model-based semantic check (fuzzy_match), rather than parsing free-form output into a structured format.
+    value: met
+    rationale: Browser_env/actions.py deterministically parses action/stop-answer syntax using string operations and regular expressions.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 6, chunk 1
-        quote: we define exact_match where only ˆ a that is identical with a ∗ receives a score of one.
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/web-arena-x/webarena/blob/dce04686a56253aefba7b18a4fa0937cf1dc987b/browser_env/actions.py
+        locator: reviewer note
+    by: human
   cor.11:
     value: unmet
     by: human
@@ -478,3 +478,9 @@ revisions:
       - ev.06
       - ev.07
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 36 verdicts agreed, 14 settled by adjudicator-v4, 5 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cor.10

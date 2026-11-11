@@ -2,13 +2,15 @@
 benchmark: do-not-answer
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 460703484df354958a5e1cd7378a38fcb94a2f3e
@@ -86,14 +88,12 @@ verdicts:
     quotes_verified: true
   iv.08:
     value: met
-    rationale: The benchmark describes how human labels were produced and used a consensus method to resolve disagreements.
+    rationale: For automatic grading — §6 validates GPT-4 and Longformer grades against human judgments. Human consensus alone does not satisfy the specified blinding/agreement control; that part is not established.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2308.13387v2
-        locator: 2308.13387v2 page 7, chunk 3
-        quote: They discussed instances of disagreement, and mutually agreed on the final label through consensus.
-    by: model
-    quotes_verified: true
+        locator: §6
+    by: human
   iv.09:
     value: unmet
     by: model
@@ -210,3 +210,9 @@ revisions:
       - iv.09
       - ev.03
       - rp.08
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 15 verdicts agreed, 5 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.08

@@ -2,13 +2,15 @@
 benchmark: tau-bench
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 59a200c6d575d595120f1cb70fea53cef0632f6b
@@ -216,15 +218,10 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: met
-    rationale: Scoring is based on database state comparisons rather than parsing free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 6, chunk 1
-        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Some tasks also use substring checks on free-form responses; no cross-format parser accuracy study is reported. Database checks alone do not justify N/A.
+    evidence: []
+    by: human
   iv.07:
     value: unmet
     rationale: The paper does not report contamination checks or training-data cutoffs for the evaluated models.
@@ -294,15 +291,13 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark evaluates general agent capabilities in simulated customer service domains rather than a specific deployed product or application.
+    value: met
+    rationale: §6 discusses simulated-user errors and simplified domain policies, qualifying realism and motivating improvements.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 2, chunk 1
-        quote: we focus on the realm of customer service and create two different domains
-    by: model
-    quotes_verified: true
+        locator: §6
+    by: human
   rel.01:
     value: unmet
     rationale: The documentation does not list library versions (lockfile/pinned requirements), hardware models, or the OS/container image.
@@ -465,3 +460,10 @@ revisions:
       - cor.02
       - cor.03
       - cor.04
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 37 verdicts agreed, 16 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.06
+      - ev.07

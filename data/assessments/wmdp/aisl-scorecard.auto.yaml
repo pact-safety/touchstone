@@ -2,13 +2,15 @@
 benchmark: wmdp
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v7
   repo_commit: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
@@ -294,14 +296,9 @@ verdicts:
     adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
-    rationale: The benchmark uses a four-choice multiple-choice format but does not report a random-guess baseline or a named guessing mitigation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 5, chunk 0
-        quote: we design WMDP as a dataset of four-choice multiple-choice questions
-    by: model
-    quotes_verified: true
+    rationale: A 25% random baseline is reported, but no listed mitigation against guessing is demonstrated. A baseline alone is insufficient.
+    evidence: []
+    by: human
   ev.01:
     value: met
     rationale: The documentation states that external biosecurity experts were consulted to formulate the areas of biological information covered in the benchmark.
@@ -524,3 +521,9 @@ revisions:
       - cor.02
       - cor.03
       - cor.04
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 36 verdicts agreed, 18 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.10

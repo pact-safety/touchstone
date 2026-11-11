@@ -2,13 +2,15 @@
 benchmark: agentharm
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
 model_run:
@@ -253,15 +255,13 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   iv.08:
-    value: n/a
-    rationale: The evaluation uses isolated tools and a predefined tool set rather than a mutable external environment.
+    value: met
+    rationale: For the task environment, with a stronger source than Reading 2 cites. Section 3.1.2 describes all tools as standalone, side-effect-free synthetic functions with prepared return content; these simulate services rather than depending on changing live web data. This supports the fixed-environment branch of the rule, not N/A. The realism/optimization quote in Reading 2 does not establish this., Section 3.1.2.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 6, chunk 2
-        quote: using simple and isolated tools
-    by: model
-    quotes_verified: true
+        locator: Section 3.1.2
+    by: human
   iv.09:
     value: unmet
     rationale: There is no mention of resetting state, containers, or processes between evaluation runs.
@@ -472,3 +472,9 @@ revisions:
       - cor.05
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 35 verdicts agreed, 18 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.08

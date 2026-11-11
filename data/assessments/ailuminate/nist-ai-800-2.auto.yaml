@@ -2,13 +2,15 @@
 benchmark: ailuminate
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
@@ -410,15 +412,13 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: n/a
-    rationale: The benchmark uses a 'Reference' system for comparison rather than a baseline measured under specific human or external conditions.
+    value: unmet
+    rationale: On the cited evidence. A model-based reference is still a baseline, so N/A is not justified. Section 6.2 defines how the reference is selected and combined, but selection criteria alone do not document the baseline run conditions relative to evaluated systems. The quote supports what the reference is, not the full condition required here., Section 6.2.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 20, chunk 0
-        quote: Reference   Ref   AI system for scoring comparison
-    by: model
-    quotes_verified: true
+        locator: Section 6.2
+    by: human
   3.3.4:
     value: met
     rationale: The benchmark includes disclaimers to prevent users from misinterpreting results, as noted in the mitigation table.
@@ -456,3 +456,9 @@ revisions:
       - 2.4.1.4
       - 2.4.2C
       - 2.4.2E
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 39 verdicts agreed, 11 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 3.3.3

@@ -1,10 +1,12 @@
 /**
  * Apply a person's cross-check decisions to data/assessments/<b>/<s>.auto.yaml.
- *   npx tsx scripts/apply-review.ts --rows <rows.json> --decisions <file> --approvals <file> --adjudication <adjudication.json> [--b-root <dir>] [--dry-run]
+ *   npx tsx scripts/apply-review.ts --rows <rows.json> --decisions <file> --approvals <file> --adjudication <adjudication.json> [--b-root <dir>] [--note-verdicts <file>] [--dry-run]
  * decisions: one doc per pair { id: "<b>~<s>", data: { choices: { <item>: "a" | "b" | "skip" | "other" }, notes?: { <item>: string } } }.
  * approvals: one doc per standard { id: "<s>", data: { approved: true } }.
  * a: keep A's verdict. b: copy B's verdict from --b-root, or from rows.json where B's file is absent. skip/none: untouched.
  * other: neither reading is right or something is missing; untouched like skip, and listed with the reviewer's note to fix by hand.
+ *   With --note-verdicts <file> ({ "<pair>": { "<item>": Verdict } }, from notes-to-verdicts.ts) an other row with an entry
+ *   takes that verdict (by: human) and counts as decided; other rows without one behave as above.
  * A choice the adjudicator made stays by: model with adjudicated_by; any other choice is a person's, by: human.
  * An approved standard's pairs with every review row decided become published, reviewed by REVIEWER;
  * the revision says how many rows the adjudicator settled and how many the reviewer decided.
@@ -60,7 +62,7 @@ export interface PairResult { pair: string; doc: Doc; changed: string[]; publish
 /** Applies one pair's choices (and the publish step when its standard is approved) to a parsed A file. */
 export function applyPair(
   doc: Doc, pair: Rows['pairs'][number], reviewRows: Rows['rows'], choices: Record<string, Choice>, bDoc: Doc | undefined,
-  approved: boolean, date: string, settledBy: SettledBy = () => undefined,
+  approved: boolean, date: string, settledBy: SettledBy = () => undefined, noteVerdicts: Doc = {},
 ): PairResult {
   const out = structuredClone(doc);
   const changed: string[] = [];
@@ -71,6 +73,12 @@ export function applyPair(
   for (const r of reviewRows) {
     const c = choices[r.item];
     const bv = bDoc?.verdicts?.[r.item];
+    if (c === 'other' && noteVerdicts[r.item]) {
+      out.verdicts[r.item] = structuredClone(noteVerdicts[r.item]);
+      replaced.push(r.item);
+      changed.push(`${r.item}:other`);
+      continue;
+    }
     if (c !== 'a' && !(c === 'b' && bv)) { undecided++; continue; }
     const name = settledBy(r.item, c);
     const label = name ? { by: 'model', adjudicated_by: name } : { by: 'human' };
@@ -80,8 +88,12 @@ export function applyPair(
       const { value, rationale, evidence, quotes_verified } = bv;
       const mine = out.verdicts[r.item];
       const same = isDeepStrictEqual([mine.value, mine.rationale, mine.evidence ?? []], [value, rationale, evidence ?? []]);
-      for (const k of ['rationale', 'evidence', 'quotes_verified']) delete mine[k];
-      Object.assign(mine, { value, rationale, evidence, quotes_verified }, label);
+      // An identical reading keeps its key order, so the file diff shows only the changed keys.
+      if (same) { if (quotes_verified === undefined) delete mine.quotes_verified; else mine.quotes_verified = quotes_verified; Object.assign(mine, label); }
+      else {
+        for (const k of ['rationale', 'evidence', 'quotes_verified']) delete mine[k];
+        Object.assign(mine, { value, rationale, evidence, quotes_verified }, label);
+      }
       if (!same) replaced.push(r.item);
     }
     changed.push(`${r.item}:${c}`);
@@ -125,10 +137,10 @@ const errorsFor = (c: Corpus, doc: Doc): string[] => {
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
   const { values } = parseArgs({
-    options: { rows: { type: 'string' }, 'b-root': { type: 'string' }, decisions: { type: 'string' }, approvals: { type: 'string' }, adjudication: { type: 'string' }, 'dry-run': { type: 'boolean' } },
+    options: { rows: { type: 'string' }, 'b-root': { type: 'string' }, decisions: { type: 'string' }, approvals: { type: 'string' }, adjudication: { type: 'string' }, 'note-verdicts': { type: 'string' }, 'dry-run': { type: 'boolean' } },
   });
   if (!values.rows || !values.decisions || !values.approvals || !values.adjudication) {
-    console.error('usage: apply-review.ts --rows <rows.json> --decisions <file> --approvals <file> --adjudication <adjudication.json> [--b-root <dir>] [--dry-run]');
+    console.error('usage: apply-review.ts --rows <rows.json> --decisions <file> --approvals <file> --adjudication <adjudication.json> [--b-root <dir>] [--note-verdicts <file>] [--dry-run]');
     process.exit(1);
   }
   const root = new URL('..', import.meta.url).pathname;
@@ -140,6 +152,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
   const adjudication = JSON.parse(readFileSync(values.adjudication, 'utf8')) as { prompt_version: string; rows: Record<string, { choice: Choice }> };
   const adjudicator = `adjudicator-v${adjudication.prompt_version}`;
   const approved = new Set(readDocs(readFileSync(values.approvals, 'utf8')).filter((d) => d.data.approved === true).map((d) => d.id));
+  const noteVerdicts: Doc = values['note-verdicts'] ? JSON.parse(readFileSync(values['note-verdicts'], 'utf8')) : {};
   const c = load(root);
   const date = new Date().toISOString().slice(0, 10);
   let touched = 0;
@@ -156,12 +169,12 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
     if (values['b-root']) try { bDoc = split(readFileSync(join(resolve(values['b-root']), rel), 'utf8')).doc; } catch { /* B file absent */ }
     bDoc ??= readingsFromRows(reviewRows, evidenceSources(c.assessments, pair.benchmark));
     const settledBy: SettledBy = (item, choice) => (adjudication.rows[`${pair.id}~${item}`]?.choice === choice ? adjudicator : undefined);
-    const r = applyPair(doc, pair, reviewRows, choices, bDoc, isApproved, date, settledBy);
+    const r = applyPair(doc, pair, reviewRows, choices, bDoc, isApproved, date, settledBy, noteVerdicts[pair.id]);
     if (!r.changed.length && !r.published) { if (r.note) log(`${pair.id}: stays draft (${r.note})`); continue; }
     let errs = errorsFor(c, r.doc);
     if (errs.length && r.published) {
       // Publishing is what failed validation: keep the decisions, leave the pair as a draft.
-      const draft = applyPair(doc, pair, reviewRows, choices, bDoc, false, date, settledBy);
+      const draft = applyPair(doc, pair, reviewRows, choices, bDoc, false, date, settledBy, noteVerdicts[pair.id]);
       const draftErrs = errorsFor(c, draft.doc);
       if (!draftErrs.length) { Object.assign(r, draft, { note: `would not validate when published: ${errs[0]}` }); errs = []; }
     }
@@ -172,6 +185,6 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
   }
   log(touched ? `${values['dry-run'] ? 'would change' : 'changed'} ${touched} file(s)` : 'nothing to do');
   for (const d of decisionDocs) for (const [item, ch] of Object.entries(d.data.choices ?? {})) {
-    if (ch === 'other') log(`FIX BY HAND ${d.id}~${item}: ${d.data.notes?.[item] || '(no note)'}`);
+    if (ch === 'other' && !noteVerdicts[d.id]?.[item]) log(`FIX BY HAND ${d.id}~${item}: ${d.data.notes?.[item] || '(no note)'}`);
   }
 }

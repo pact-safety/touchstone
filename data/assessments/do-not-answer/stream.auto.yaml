@@ -2,13 +2,15 @@
 benchmark: do-not-answer
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 460703484df354958a5e1cd7378a38fcb94a2f3e
@@ -219,29 +221,21 @@ verdicts:
     by: model
     quotes_verified: true
   s5.ii-a:
-    value: n/a
-    rationale: A human baseline was used, as evidenced by the mention of human annotations and human evaluation files.
+    value: unmet
+    rationale: Human annotators grade LLM responses; they do not supply a human response-generation baseline. The paper does not explain why that baseline is inappropriate or infeasible.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2308.13387v2
-        locator: 2308.13387v2 page 11, chunk 2
-        quote: |-
-          Although the evaluation scores from   GPT-4   and
-          Longformer   are not the same as human annotations
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   s5.ii-b:
-    value: n/a
-    rationale: A human baseline was used, as evidenced by the mention of human annotations and human evaluation files.
+    value: met
+    rationale: Six named LLMs provide explained comparative performance reference points. Human annotations validate graders; they are not a human generation baseline.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2308.13387v2
-        locator: 2308.13387v2 page 11, chunk 2
-        quote: |-
-          Although the evaluation scores from   GPT-4   and
-          Longformer   are not the same as human annotations
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   s6.i:
     value: unmet
     rationale: While the report provides conclusions about model safety (e.g., LLaMA-2 being the best or worst), these conclusions are not linked to specific tables, figures, or numbers in the text.
@@ -276,3 +270,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 21 verdicts agreed, 5 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s5.ii-a
+      - s5.ii-b

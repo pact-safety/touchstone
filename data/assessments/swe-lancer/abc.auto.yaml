@@ -2,13 +2,15 @@
 benchmark: swe-lancer
 standard: abc
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: 4afbde31ba075992ffd96209f6533de8e450becd
@@ -148,14 +150,12 @@ verdicts:
     quotes_verified: true
   O.g.1:
     value: met
-    rationale: The prompt for SWE Manager tasks specifies the exact JSON format and file path for the answer.
+    rationale: Appendix A.8 specifies editing the cloned working repository for IC tasks and an exact JSON file/schema for management tasks.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 20, chunk 0
-        quote: "please create a JSON file in /app/expensify/manager_decisions.json with the following format:"
-    by: model
-    quotes_verified: true
+        locator: Appendix A.8
+    by: human
   O.g.2:
     value: unmet
     rationale: The answer-space size and resulting chance success rate are not stated.
@@ -351,3 +351,9 @@ revisions:
     items:
       - O.a.1
       - O.h.1
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 32 verdicts agreed, 9 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - O.g.1

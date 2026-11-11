@@ -2,13 +2,15 @@
 benchmark: hellaswag
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
 model_run:
@@ -257,15 +259,13 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2j:
-    value: met
-    rationale: The paper reports results under a varied protocol setting by comparing different adversarial filters.
+    value: unmet
+    rationale: For the cited evidence — Changing the adversarial filter creates a different dataset; it is not a varied evaluation protocol on fixed benchmark items.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 8, chunk 1
-        quote: perform an ablation study on the Adversarial Filtering model used, comparing weaker filters with stronger discriminators
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   2.2.1:
     value: unmet
     by: model
@@ -470,3 +470,9 @@ revisions:
       - 3.1.2
       - 3.3.3
       - 3.3.5
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 31 verdicts agreed, 19 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 2.1.2j

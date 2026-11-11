@@ -390,17 +390,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.16:
-    value: 15
-    rationale: The paper documents preprocessing steps, such as ranking and filtering HTML elements using DeBERTa for Mind2Web.
+    value: 10
+    rationale: "AgentBench documents concrete data preparation: Appendix B.1 describes filtering generated OS samples through initialization/reference-solution tests; Appendix C.1–C.2 describes DB augmentation, validation, filtering and sampling. This rules out 0. The cited HTML-element filtering sentence alone does not establish exhaustive preprocessing documentation across all component datasets, as required for 15. BetterBench Appendix J.3 distinguishes a general description (10) from exhaustive step-by-step documentation (15)."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 43, chunk 1
-        quote: |-
-          Mind2Web proposes to rank and filter the
-          HTML elements with a small language model, e.g., DeBERTa, to enhance inference efficiency.
-    by: model
-    quotes_verified: true
+        locator: Appendix B.1
+    by: human
   doc.17:
     value: 15
     rationale: The paper mentions the use of annotators for Mind2Web and re-annotation using Claude-2 for bias validation.
@@ -434,15 +430,10 @@ verdicts:
     by: model
     quotes_verified: true
   mai.02:
-    value: 15
-    rationale: The README provides a specific email address for users to contact with questions or contributions, serving as a maintained feedback channel.
-    evidence:
-      - source: repo
-        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
-        locator: THUDM/AgentBench@d1e4a10db08c:README.md, chunk 4
-        quote: Please contact [agentbench_fc&#64;googlegroups.com](mailto:agentbench_fc@googlegroups.com) if you have any questions
-    by: model
-    quotes_verified: true
+    value: 0
+    rationale: "A feedback channel exists, but issue #220 (10 April 2026) remains open without a response for over three months, failing the published maintenance rubric."
+    evidence: []
+    by: human
   mai.03:
     value: 15
     by: human
@@ -466,3 +457,9 @@ revisions:
       - des.10
       - doc.04
       - mai.03
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - doc.16
+      - mai.02

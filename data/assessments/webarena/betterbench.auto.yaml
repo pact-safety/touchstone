@@ -199,14 +199,12 @@ verdicts:
     quotes_verified: true
   imp.04:
     value: 10
-    rationale: The requirements include 'transformers', suggesting local model support, but the README only explicitly demonstrates API-based models.
+    rationale: A configurable Hugging Face model endpoint is implemented, but local serving needs additional setup. Self-hosted websites alone do not demonstrate local-model support.
     evidence:
       - source: repo
-        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
-        locator: web-arena-x/webarena@dce04686a562:requirements.txt, chunk 0
-        quote: transformers==4.33.2
-    by: model
-    quotes_verified: true
+        url: https://github.com/web-arena-x/webarena/blob/dce04686a56253aefba7b18a4fa0937cf1dc987b/llms/utils.py
+        locator: reviewer note
+    by: human
   imp.05:
     value: 0
     rationale: There is no mention of globally unique identifiers for instances or encryption of evaluation instances.
@@ -388,11 +386,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.16:
-    value: 0
-    rationale: The excerpts do not detail specific data preprocessing steps taken.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Appendix A.1 describes sampling/importing website data; this is general processing documentation, not a complete transformation specification.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2307.13854v4
+        locator: Appendix A.1
+    by: human
   doc.17:
     value: 15
     rationale: The paper describes the annotation process for intents and the use of authors as annotators.
@@ -447,3 +447,9 @@ revisions:
     items:
       - des.05
       - imp.10
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 5 decided by the reviewer."
+    items:
+      - imp.04
+      - doc.16

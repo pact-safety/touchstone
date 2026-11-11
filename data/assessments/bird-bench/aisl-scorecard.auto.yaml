@@ -2,13 +2,15 @@
 benchmark: bird-bench
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
 model_run:
@@ -39,11 +41,13 @@ verdicts:
     by: model
     quotes_verified: true
   cv.02:
-    value: unmet
-    rationale: While the documentation describes what is included, it does not explicitly name an aspect of the phenomenon that is excluded.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: met
+    rationale: "With explicit exclusion evidence: Section 8 states that BIRD uses SQLite and leaves PostgreSQL/MySQL versions to future work, explaining limitations for other SQL syntaxes and query execution plans. Together with the stated text-to-SQL/database-value/efficiency scope, this satisfies both inclusion and exclusion. Reading 1 should not rely on an implied exclusion."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: Section 8
+    by: human
   cv.03:
     value: unmet
     by: model
@@ -509,3 +513,9 @@ revisions:
       - cor.08
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 32 verdicts agreed, 21 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.02

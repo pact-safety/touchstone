@@ -2,13 +2,15 @@
 benchmark: truthfulqa
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: d71c110897f5d31c5d7f309e7bc316c152f6f031
@@ -90,25 +92,21 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: met
-    rationale: The benchmark does not reuse a prior dataset; all questions were written by the authors.
+    value: n/a
+    rationale: TruthfulQA’s questions were newly authored, rather than adapted from a prior dataset (§2.2).
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 4, chunk 1
-        quote: All questions were written by the authors
-    by: model
-    quotes_verified: true
+        locator: §2.2
+    by: human
   cv.09:
-    value: met
-    rationale: The benchmark does not reuse a prior dataset.
+    value: n/a
+    rationale: There is no reused question dataset requiring a modification log (§2.2).
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 4, chunk 1
-        quote: All questions were written by the authors
-    by: model
-    quotes_verified: true
+        locator: §2.2
+    by: human
   cv.10:
     value: unmet
     rationale: The item count is stated, but no power calculation or confidence-interval half-width is reported.
@@ -472,3 +470,10 @@ revisions:
       - rel.02
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 34 verdicts agreed, 19 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.08
+      - cv.09

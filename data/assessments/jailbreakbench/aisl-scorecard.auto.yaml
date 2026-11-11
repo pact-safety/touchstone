@@ -130,15 +130,10 @@ verdicts:
     by: human
     quotes_verified: true
   cv.15:
-    value: met
-    rationale: The headline metric for the judge selection is not a simple mean; it includes agreement, FPR, and FNR.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 6, chunk 0
-        quote: We compute the agreement, false positive rate (FPR), and false negative rate (FNR) for six classifiers.
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Human reference labels use majority vote, and the headline attack success rate uses one binary model judgment per response. Reporting FPR/FNR does not preserve item-level label variability; model ratings remain subjective.
+    evidence: []
+    by: human
   cv.16:
     value: unmet
     rationale: There is no table or figure breaking down failures by a named confound like prompt length or language complexity.
@@ -226,15 +221,10 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs (jailbreak strings) and local/API scoring without a mutable external environment.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 20, chunk 1
-        quote: we rely only a fixed set of jailbreaking strings
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Appendix E does report a post-release drop in GCG success on proprietary models, but not a complete environment changelog with revalidation of all affected results. Fixed prompts do not freeze API behavior.
+    evidence: []
+    by: human
   iv.09:
     value: unmet
     by: model
@@ -435,3 +425,9 @@ revisions:
       - ev.04
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 10 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - cv.15
+      - iv.08

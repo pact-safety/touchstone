@@ -2,13 +2,15 @@
 benchmark: agentbench
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: d1e4a10db08c87075c78972e48ecc182be03e2d5
@@ -312,16 +314,12 @@ verdicts:
     quotes_verified: true
   2.4.1.3:
     value: met
-    rationale: The benchmark describes a cross-verification step and unit tests to ensure samples are correct and solvable.
+    rationale: "But Reading 1’s evidence is incomplete: it cites the checking step without its outcome. AgentBench Appendix B.1 states that samples with failed initialization or incorrect reference answers were removed, leaving 144 OS samples. This supplies the validation outcome required by the rule. Source: (Appendix B.1, Construction Details)."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 22, chunk 1
-        quote: |-
-          Finally, we conduct a cross verification for each evaluation sample
-          to make sure it’s correct.
-    by: model
-    quotes_verified: true
+        locator: Appendix B.1
+    by: human
   2.4.1.4:
     value: unmet
     rationale: The documentation does not specify how refusals are scored or reported separately.
@@ -462,3 +460,9 @@ revisions:
       - 2.4.2E
       - 3.3.3
       - 3.3.5
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 36 verdicts agreed, 13 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 2.4.1.3
