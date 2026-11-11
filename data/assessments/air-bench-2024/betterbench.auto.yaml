@@ -119,10 +119,10 @@ verdicts:
   des.10:
     value: 0
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts discuss human evaluation for validation (Kappa score) but do not include a human performance level (e.g., average human refusal rate) as a benchmark reference point.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   des.11:
     value: 0
     rationale: There is no mention of a random performance level.
@@ -132,6 +132,7 @@ verdicts:
   des.12:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark has validated automatic evaluation (Autograders) by showing strong agreement (Kappa 0.86) with human evaluators.
     evidence:
       - source: paper
@@ -139,7 +140,6 @@ verdicts:
         locator: 2407.17436v2 page 2, chunk 4
         url: https://arxiv.org/abs/2407.17436v2
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   des.13:
     value: 15
     rationale: The paper maps and compares AIR-Bench 2024 against other benchmarks like HEx-PHI, HarmBench, and SALAD-Bench.
@@ -184,10 +184,9 @@ verdicts:
     quotes_verified: true
   imp.04:
     value: 0
-    rationale: The excerpts mention API clients and the HELM framework but do not explicitly state support for local models.
+    rationale: "on the documented implementation. The Llama-3-8b filename does not establish local execution: the official README explicitly says pipeline1 uses Together.ai to obtain those responses; pipeline2 uses OpenAI and the documented HELM example also uses OpenAI. No local execution procedure is established by these sources. Reading 2 has the supported score but should cite this positive explanation, not just absence in excerpts."
     evidence: []
-    by: model
-    quotes_verified: true
+    by: human
   imp.05:
     value: 0
     rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
@@ -221,11 +220,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.09:
-    value: 0
-    rationale: While the benchmark assesses harmful content, it does not explicitly assess the need for warnings for that content.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: the paper explicitly warns about offensive model outputs, both under the title and in Appendix G. Thus 0 is incorrect, but the supplied warning covers outputs; it does not establish assessment/warnings for both benchmark input data and outputs needed for the full BetterBench level. Remove the unrelated chatbot-logo editing instruction from the evidence quotation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: Appendix G
+    by: human
   imp.10:
     value: 0
     rationale: No build status or equivalent implementation is mentioned in the excerpts.
@@ -342,6 +343,7 @@ verdicts:
   doc.12:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The README and LICENSE file specify the licenses for the code (Apache 2.0) and the dataset (CC-BY-4.0).
     evidence:
       - source: repo
@@ -351,7 +353,6 @@ verdicts:
         locator: stanford-crfm/air-bench-2024@6d1d4a24d835:README.md, chunk 8
         url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.13:
     value: 0
     rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
@@ -366,14 +367,12 @@ verdicts:
     quotes_verified: true
   doc.15:
     value: 15
-    rationale: The data sources (8 government frameworks and 16 corporate policies) are documented.
+    rationale: ", with corrected evidence: Section 2.1 identifies and cites the governance documents used for the taxonomy; Sections 3.1–3.2 and Appendix F describe the actual benchmark prompt collection through named LLM generators, iterative human expert refinement and semantic-preserving expansion. The taxonomy’s source documents alone are incomplete evidence for the benchmark data provenance. These are synthetic prompts rather than collected personal records."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2407.17436v2
-        locator: 2407.17436v2 page 3, chunk 0
-        quote: extracting and organizing risk categories from a diverse set of AI governance documents, including 8 government regulatory frameworks
-    by: model
-    quotes_verified: true
+        locator: Section 2.1
+    by: human
   doc.16:
     value: 15
     rationale: The preprocessing/expansion steps (mutation and manual refinement) are documented.
@@ -395,11 +394,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.18:
-    value: 0
-    rationale: The excerpts do not explain the representativeness of the data.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: "the paper explains category coverage and the prompt-generation/expansion design (context, dialect and authority variations). This exceeds an unsupported diversity assertion and rules out 0. However, diversity and coverage of a selected policy taxonomy do not establish comprehensive quantitative representativeness of real-world user prompts or linguistic populations; the evidence does not justify 15. Sections 2–3 and Appendix F:"
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2407.17436v2
+        locator: Sections 2
+    by: human
   doc.19:
     value: 0
     rationale: There is no mention of the documentation following a recognized standard (e.g., ISO).
@@ -436,3 +437,11 @@ revisions:
       - des.12
       - doc.07
       - doc.12
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - imp.04
+      - imp.09
+      - doc.15
+      - doc.18

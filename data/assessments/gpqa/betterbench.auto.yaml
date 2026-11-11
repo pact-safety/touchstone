@@ -101,17 +101,21 @@ verdicts:
     by: model
     quotes_verified: true
   des.08:
-    value: 0
-    rationale: The use of accuracy is mentioned, but there is no description of the informed choice process for this metric.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Objective, expert-validated multiple-choice answers support accuracy measurement, but the cited passage does not fully justify every reported performance/calibration metric.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: reviewer note
+    by: human
   des.09:
-    value: 0
-    rationale: No metric floors or ceilings are explicitly defined.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: Accuracy is bounded 0–100%; 25% is explicitly stated chance performance. Observed non-expert and GPT-4 accuracies are neither mathematical floors nor ceilings.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: reviewer note
+    by: human
   des.10:
     value: 15
     rationale: Human performance levels for both experts and non-experts are provided.
@@ -123,21 +127,21 @@ verdicts:
     by: model
     quotes_verified: true
   des.11:
-    value: 10
-    rationale: The text mentions 'chance accuracy' in the context of baseline classifiers, implying a random performance level.
+    value: 15
+    rationale: §1 and §3 explicitly give random guessing accuracy as 25% for four options; it is not merely implied by answer-only classifiers.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 19, chunk 2
-        quote: neither of these classifiers is capable of achieving better than chance accuracy
-    by: model
-    quotes_verified: true
+        locator: §1
+    by: human
   des.12:
-    value: 0
-    rationale: There is no mention of a validated automatic evaluation system; evaluation is based on human experts and model accuracy.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Automatic regex extraction and answer-key scoring are documented, but expert validation of question keys is not validation of the output parser. Appendix A.3.1
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: Appendix A.3.1
+    by: human
   des.13:
     value: 15
     rationale: The benchmark is compared to ExpertQA and QuALITY, explaining differences in ground truth determination and the nature of the expertise gap.
@@ -149,11 +153,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.14:
-    value: 0
-    rationale: Input sensitivity (e.g., prompt variations) is not addressed in the provided excerpts.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 5
+    rationale: Answer-option shuffling is supported and prompt variants are documented, but neither stand-alone question design nor CoT/few-shot comparisons establish a controlled equivalent-input sensitivity study.
+    evidence:
+      - source: repo
+        url: https://github.com/idavidrein/gpqa/tree/56686c06f5e19865c153de0fdb11be3890014df7
+        locator: reviewer note
+    by: human
   imp.01:
     value: 15
     rationale: The repository provides a script to run evaluations.
@@ -221,11 +227,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.08:
-    value: 0
-    rationale: The paper mentions that the small size limits statistical power, but does not report significance or uncertainty quantification for the results.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: §3 reports 95% confidence intervals for expert/non-expert accuracy. Thus uncertainty is actually quantified, although the cited power warning alone is insufficient and comprehensive model significance testing is not established.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12022v1
+        locator: §3
+    by: human
   imp.09:
     value: 0
     rationale: There is no assessment of the need for warnings regarding sensitive or harmful content.
@@ -424,15 +432,10 @@ verdicts:
     by: model
     quotes_verified: true
   mai.02:
-    value: 15
-    rationale: The README provides a specific Google Form for users to submit corrections to examples in the benchmark.
-    evidence:
-      - source: repo
-        url: https://github.com/idavidrein/gpqa/tree/56686c06f5e19865c153de0fdb11be3890014df7
-        locator: idavidrein/gpqa@56686c06f5e1:README.md, chunk 3
-        quote: "Submit corrections to examples in GPQA via this form: https://forms.gle/iTY4zMETNsPhJq8R9"
-    by: model
-    quotes_verified: true
+    value: 0
+    rationale: "under the published responsiveness rubric. A correction form exists, but public feedback #35 (June 21, 2026) remains unacknowledged more than three months later. A channel alone does not earn 10 or 15."
+    evidence: []
+    by: human
   mai.03:
     value: 15
     rationale: The paper lists correspondence email addresses for the authors.
@@ -457,3 +460,14 @@ revisions:
       - doc.07
       - doc.11
       - doc.12
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 16 decided by the reviewer."
+    items:
+      - des.08
+      - des.09
+      - des.11
+      - des.12
+      - des.14
+      - imp.08
+      - mai.02

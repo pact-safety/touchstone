@@ -155,15 +155,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.01:
-    value: 15
-    rationale: The benchmark is available on GitHub and HuggingFace, which typically include the implementation code.
+    value: 0
+    rationale: The public GitHub repository contains only LICENSE, README and test-case CSV, not evaluation implementation.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 2, chunk 3
-        quote: S IMPLE S AFETY T ESTS   is available on GitHub and HuggingFace
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+        locator: reviewer note
+    by: human
   imp.02:
     value: 15
     rationale: The evaluation data is accessible via GitHub and HuggingFace.
@@ -187,10 +185,10 @@ verdicts:
   imp.04:
     value: 0
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The excerpts mention testing 15 LLMs, including open models like Llama2, Mistral, and Falcon, and note that open models were prompted via Replicate API, implying support for local/open model evaluation."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   imp.05:
     value: 0
     rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
@@ -402,14 +400,12 @@ verdicts:
     quotes_verified: true
   mai.03:
     value: 15
-    rationale: The paper lists several authors who are the creators of the benchmark, serving as contact persons.
+    rationale: README explicitly invites questions to Bertie Vidgen at bertievidgen@gmail.com.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 1, chunk 0
-        quote: Bertie Vidgen 1,2 , Nino Scherrer 1 , Hannah Rose Kirk 2 , Rebecca Qian 1 , Anand Kannappan 1 , Scott A. Hale 2 and Paul Röttger 3
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
+        locator: reviewer note
+    by: human
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
@@ -419,3 +415,9 @@ revisions:
     summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 8 decided by the reviewer."
     items:
       - imp.04
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 10 decided by the reviewer."
+    items:
+      - imp.01
+      - mai.03

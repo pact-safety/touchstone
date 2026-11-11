@@ -2,13 +2,15 @@
 benchmark: machiavelli
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
@@ -54,10 +56,10 @@ verdicts:
   cv.03:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The decision rule requires every named sub-component to have its own reported score in a table or figure. While the paper defines multiple power types (watts, money, etc.), the results tables (e.g., Table 2) report aggregate metrics like 'Goals' and 'Norm.' rather than independent scores for each power facet.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.04:
     value: unmet
     rationale: While the task space is described as text-based adventure games, there is no report of item counts along a difficulty or variation dimension.
@@ -94,17 +96,17 @@ verdicts:
   cv.08:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The decision rule requires a table or figure comparing the same model on the original dataset and the adapted benchmark. The paper compares models on MACHIAVELLI but does not provide a direct comparison table against an 'original' prior benchmark dataset in the provided excerpts.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.09:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The decision rule requires each modification to reused data to be listed with its reason. The excerpts do not describe modifications to a reused dataset, but rather the creation of a new benchmark from games.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: The item count for the test set is stated, but no power calculation or confidence-interval half-width is reported.
@@ -127,15 +129,10 @@ verdicts:
     by: model
     quotes_verified: true
   cv.12:
-    value: met
-    rationale: The documentation provides the specific prompts used for the model-based raters (GPT-4) in the appendices.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 17, chunk 0
-        quote: we use GPT-4 (OpenAI, 2023) to label all our scenes using the following prompts.
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Humans supply validation labels (§2.4), so this is applicable. Appendix F reproduces GPT-4 prompts, but does not establish that human-rater instructions or training materials were published.
+    evidence: []
+    by: human
   cv.13:
     value: n/a
     rationale: The benchmark uses GPT-4 and a small number of expert authors for labeling, not a demographic group of human raters requiring bias mitigation.
@@ -155,6 +152,7 @@ verdicts:
   cv.15:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The labels are derived from deterministic keys (GPT-4 or ensemble majority), so the rule about not reducing subjective labels to single-point aggregates does not apply in the same way, but the verdict is unmet because the condition for subjective labels is not met (they are treated as objective ground truth proxies).
     evidence:
       - source: paper
@@ -162,7 +160,6 @@ verdicts:
         locator: 2304.03279v4 page 18, chunk 1
         url: https://arxiv.org/abs/2304.03279v4
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.16:
     value: unmet
     rationale: There is no table or figure breaking down model failures by a named confound like prompt length or language complexity.
@@ -254,17 +251,17 @@ verdicts:
   iv.09:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not explicitly state that state is cleared between runs, only that scripts are provided to run experiments.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark uses binary classification and integer ratings, not multiple-choice questions, but the excerpts do not explicitly state the format is not MCQ or provide a guessing baseline.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios and acceptance criteria.
@@ -274,10 +271,10 @@ verdicts:
   ev.02:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While the paper mentions an ensemble of 3 experts (authors) for gold labels, it does not state that domain experts reviewed the evaluation content for accuracy and relevance in the context of the benchmark's design or criteria definition, nor does it specify a review process for the scenarios themselves.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.03:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports results using both direct prompting and chain-of-thought (CoT) prompting."
@@ -293,13 +290,14 @@ verdicts:
   ev.05:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark is described as a gym environment for text agents based on Choose-Your-Own-Adventure games, not as an evaluation of a specific deployed product or configuration.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.06:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "The benchmark does not claim to evaluate a specific deployed application, making this item n/a, but the n/a condition is not met because the benchmark is a general evaluation tool, not a specific application. However, the rule for ev.06 says 'n/a when: The benchmark does not claim to evaluate a specific deployed application.' The benchmark evaluates agents in a game environment, not a specific deployed application. Thus, it is n/a."
     evidence:
       - source: repo
@@ -307,10 +305,10 @@ verdicts:
         locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
         url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.07:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark does not claim to evaluate a specific deployed application, so this item is n/a. However, the n/a condition is 'The benchmark does not claim to evaluate a specific deployed application.' This condition holds. So it should be n/a.
     evidence:
       - source: repo
@@ -318,7 +316,6 @@ verdicts:
         locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
         url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation provides some hyperparameters and a requirements file, but lacks the hardware model, OS, or container image required by the decision rule.
@@ -352,6 +349,7 @@ verdicts:
   rel.06:
     value: met
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "The excerpts report the performance of a trivial baseline. [paper:p5#1] states: 'We estimate the number of harms committed by the random agent by as the mean of 1,000 sampled trajectories.' [paper:p5#2] describes this 'Random agent' as selecting actions uniformly at random."
     evidence:
       - source: paper
@@ -359,7 +357,6 @@ verdicts:
         locator: 2304.03279v4 page 5, chunk 1
         url: https://arxiv.org/abs/2304.03279v4
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.01:
     value: met
     rationale: The benchmark uses GPT-4 as a rater and reports that its labels correlate with gold labels (expert ensembles).
@@ -373,10 +370,10 @@ verdicts:
   cor.02:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report any adversarial or reward-hacking tests of the model rater, nor do they describe specific defenses like injection filters applied to the rater.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.03:
     value: unmet
     rationale: While the authors mention collecting additional rounds of labels for a subset, they do not report the agreement/consistency across these repeated runs.
@@ -392,6 +389,7 @@ verdicts:
   cor.05:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts state that GPT-4 was used to label all scenes, and while gold labels were created by an ensemble of 3 experts for evaluation, the primary annotation was not done by multiple independent annotators for each item.
     evidence:
       - source: paper
@@ -399,7 +397,6 @@ verdicts:
         locator: 2304.03279v4 page 17, chunk 0
         url: https://arxiv.org/abs/2304.03279v4
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.06:
     value: unmet
     rationale: The excerpts do not document every task as solvable or intentionally unsolvable, nor the expected behavior for unsolvable ones.
@@ -427,17 +424,17 @@ verdicts:
   cor.10:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts mention parsing JSON output but do not show that the parser is deterministic or test its consistency on identical inputs.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.11:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report parser accuracy against hand-checked outputs.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts against the scoring pipeline.
@@ -467,3 +464,9 @@ revisions:
       - cor.05
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 34 verdicts agreed, 20 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.12

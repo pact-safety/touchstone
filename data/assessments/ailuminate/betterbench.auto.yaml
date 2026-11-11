@@ -46,14 +46,12 @@ verdicts:
     quotes_verified: true
   des.02:
     value: 15
-    rationale: The documentation explicitly confirms that the translation of the capability to the task is described.
+    rationale: ", but the checklist’s self-reported Y is not sufficient evidence by itself. Sections 2.2, 3 and 4 connect the safety construct to hazard-specific prompts, response criteria and assessment across the benchmark. BetterBench requires coverage across tasks, not the mathematical translation formula demanded by Reading 2. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 43, chunk 1
-        quote: "103: How tested capability or concept translates to benchmarked task is described   Y"
-    by: model
-    quotes_verified: true
+        locator: Sections 2.2
+    by: human
   des.03:
     value: 0
     rationale: The excerpts do not describe how knowing about the tested capability is helpful in the real world.
@@ -62,14 +60,12 @@ verdicts:
     quotes_verified: true
   des.04:
     value: 15
-    rationale: The benchmark provides a five-tier grading scale to provide actionable insights to non-experts.
+    rationale: ", with better evidence than a five-tier scale alone. The Executive Summary explicitly limits results to system-level risk/reliability for specified hazards and use cases, and states that they do not guarantee safety. Section 2.3 provides intended uses. These support both positive and negative interpretation guidance. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 8, chunk 1
-        quote: The clear grades provide actionable insights to non-experts.
-    by: model
-    quotes_verified: true
+        locator: Section 2.3
+    by: human
   des.05:
     value: 15
     rationale: The documentation confirms that domain experts were involved in the production of the benchmark.
@@ -82,44 +78,36 @@ verdicts:
     quotes_verified: true
   des.06:
     value: 15
-    rationale: The documentation confirms that use cases or user personas are described.
+    rationale: "with substantive evidence replacing the checklist self-assertion: Sections 2.1 and 4.1 specify single-turn general-purpose chatbots, US English context, and naive versus knowledgeable malicious/vulnerable user personas, while excluding expert adaptive adversaries. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 29, chunk 0
-        quote: "106: Use cases or user personas are described   Y"
-    by: model
-    quotes_verified: true
+        locator: Sections 2.1
+    by: human
   des.07:
     value: 15
-    rationale: The documentation confirms that domain literature is integrated.
+    rationale: "with substantive evidence: Section 3 explicitly adopts OECD definitions of hazard versus risk in the assessment design, while Sections 1–2 connect benchmark scope/design to cited safety research. The checklist Y alone is not enough. Source: , Sections 1.3, 2.1 and 3."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 43, chunk 1
-        quote: "105: Domain literature is integrated   Y"
-    by: model
-    quotes_verified: true
+        locator: Section 3
+    by: human
   des.08:
     value: 15
-    rationale: The benchmark documents its evaluation metric.
+    rationale: ", supported by Sections 5.6 and 6 rather than the checklist statement. The paper explains the priority on detecting rare policy violations and motivates overall/hazard-specific grades, accessible-system calibration and understandable decision support. Documenting a metric alone would not demonstrate an informed choice. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: "132: Evaluation metric is documented   Y"
-    by: model
-    quotes_verified: true
+        locator: Sections 5.6
+    by: human
   des.09:
     value: 15
-    rationale: The documentation confirms that metric floors and ceilings are included.
+    rationale: "for the defined violation-rate metric and grading scale, with substantive evidence: Section 6.1 defines the rate as unsafe/total × 100% (0–100%) and Table 3 specifies the grade thresholds, including the Excellent endpoint. This substantiates the checklist assertion. Source: , Section 6.1, Tables 2–3."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 43, chunk 1
-        quote: "107: Metric floors and ceilings are included   Y"
-    by: model
-    quotes_verified: true
+        locator: Section 6.1
+    by: human
   des.10:
     value: 0
     rationale: The documentation explicitly states that human performance level is not included.
@@ -163,15 +151,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.01:
-    value: 15
-    rationale: The benchmark uses ModelBench, which is described as standalone software that manages the evaluation life cycle and is available on GitHub.
+    value: 10
+    rationale: ". Public ModelBench code supports partial availability, but Sections 5.2 and 5.5 explicitly withhold the exact evaluator models and ensemble logic. This prevents full reproduction of the official scoring pipeline from released code. The decisive limitation is the confidential evaluator, not the size of the public dataset. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 16, chunk 1
-        quote: The evaluator system is standalone software that manages the entire SUT evaluation life cycle. Called ModelBench ( https://github.com/mlcommons/modelbench )
-    by: model
-    quotes_verified: true
+        locator: Sections 5.2
+    by: human
   imp.02:
     value: 10
     by: human
@@ -193,15 +179,13 @@ verdicts:
     by: human
     quotes_verified: true
   imp.04:
-    value: 15
-    rationale: The benchmark evaluated open-source AI systems and specifically used OLMo v1.0 as a control.
+    value: 10
+    rationale: ModelBench documents self-hosted vLLM through an OpenAI-compatible SUT adapter, requiring additional setup/code.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 26, chunk 2
-        quote: MLCommons used OLMo v1.0 as a control
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/mlcommons/modelbench/blob/a23357d9cc07af9ac25d4f22b397f4842a1d485e/docs/suts-how-to.md
+        locator: reviewer note
+    by: human
   imp.05:
     value: 0
     rationale: The failure mode mitigation questionnaire explicitly marks the addition of globally unique identifiers or encryption as 'N' (not adopted).
@@ -240,14 +224,12 @@ verdicts:
     quotes_verified: true
   imp.09:
     value: 15
-    rationale: The benchmark specifies that for specialized knowledge (medical, legal, etc.), responses should be annotated based on whether they contain a disclaimer.
+    rationale: ", but both readings cite the wrong kind of warning. The Executive Summary begins with a content warning covering example prompts and responses and discussion of hazards. That addresses researcher exposure to sensitive benchmark content. The disclaimer requirement for a model’s specialized advice is a scoring policy, not the evidence for this criterion. Source: , Executive Summary."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 13, chunk 3
-        quote: responses should be annotated purely on the basis of whether they contain advice and whether they contain a disclaimer
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   imp.10:
     value: 0
     rationale: There is no mention of a build status or equivalent implementation in the excerpts.
@@ -256,14 +238,12 @@ verdicts:
     quotes_verified: true
   imp.11:
     value: 15
-    rationale: The failure mode mitigation questionnaire confirms that release requirements are specified (marked 'Y').
+    rationale: "using Reading 1’s substantive quote: “Publishers must” states an enforceable condition of reporting, rather than optional advice. BetterBench distinguishes mandatory release requirements (15) from nonbinding dos/don’ts (10). Reading 2’s score is right, but its checklist assertion is weaker evidence than the publication/versioning requirement. Source: , Section 10."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 44, chunk 0
-        quote: "120: Release requirements are specified   Y"
-    by: model
-    quotes_verified: true
+        locator: Section 10
+    by: human
   doc.01:
     value: 0
     rationale: No requirements file (e.g., requirements.txt) is mentioned or shown in the file listing.
@@ -293,35 +273,26 @@ verdicts:
     by: model
     quotes_verified: true
   doc.05:
-    value: 15
-    rationale: The failure mode mitigation questionnaire explicitly marks the accompanying paper as accepted at a peer-reviewed venue.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: "124: Accompanying paper is accepted at peer-reviewed venue   Y"
-    by: model
-    quotes_verified: true
+    value: 0
+    rationale: No accepted venue is identified in the publication record; MLCommons still lists this as an arXiv technical paper. The checklist “Y” does not identify a verifiable acceptance.
+    evidence: []
+    by: human
   doc.06:
     value: 15
-    rationale: The failure mode mitigation questionnaire confirms the benchmark design process is documented.
+    rationale: "supported by substantive documentation: Sections 1.4, 4.2–4.3 and 5 describe governance, supplier selection, prompt requirements/review, evaluator construction, and transparency versus anti-gaming trade-offs. “Design” versus “construction” is not a meaningful reason to reject this evidence. The checklist Y should be replaced by these sections. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: "125: Benchmark design process is documented   Y"
-    by: model
-    quotes_verified: true
+        locator: Sections 1.4
+    by: human
   doc.07:
     value: 15
-    rationale: The failure mode mitigation questionnaire confirms that test tasks and rationale are documented.
+    rationale: ", based on Sections 2.1 and 3.1–3.3: application scope, hazard categories, response policies and the reasons for a common safety baseline are documented. These sections substantiate the claim; the checklist Y alone does not. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: "126: Test tasks & rationale are documented   Y"
-    by: model
-    quotes_verified: true
+        locator: Sections 2.1
+    by: human
   doc.08:
     value: 0
     rationale: The failure mode mitigation questionnaire explicitly marks this item as not adopted (N).
@@ -346,24 +317,20 @@ verdicts:
     quotes_verified: true
   doc.10:
     value: 15
-    rationale: The failure mode mitigation questionnaire confirms that the test environment design or prompt design process is documented.
+    rationale: "supported by Section 4: supplier procurement, required hazard/persona balance, novelty constraints, seed/template provenance, translation practices, metadata and quality checks are described. This is the actual prompt-design/data-collection evidence missing from both readings’ checklist-only treatment. Source: , Sections 4.1–4.3."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: "128: Test environment design or prompt design process is documented   Y"
-    by: model
-    quotes_verified: true
+        locator: Section 4
+    by: human
   doc.11:
     value: 15
-    rationale: The failure mode mitigation questionnaire confirms the evaluation metric is documented.
+    rationale: "with direct evidence: Section 6.1 gives the unsafe-response percentage, reference-relative ratio and grade thresholds in equations and Tables 2–3; Section 6.2 defines the reference system. This substantiates metric documentation beyond a checklist Y. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: "132: Evaluation metric is documented   Y"
-    by: model
-    quotes_verified: true
+        locator: Section 6.1
+    by: human
   doc.12:
     value: 15
     rationale: The repository contains a LICENSE.md file and the paper mentions a CC-BY 4.0 license for a subset.
@@ -385,55 +352,45 @@ verdicts:
     by: model
     quotes_verified: true
   doc.14:
-    value: 15
-    rationale: The README provides a table defining standardized metadata fields such as Release_prompt_id and Prompt_hash.
+    value: 5
+    rationale: "on the released schema. The pinned README defines structured fields for prompt ID/text, hazard, persona, locale and hash, so 0 is incorrect. This basic custom schema does not establish comprehensive metadata conforming to a recognized standard, as required for 15. BetterBench explicitly awards 5 for basic nonstandard/incomplete metadata. Sources: pinned mlcommons/ailuminate README, Schema section; , Appendix J.3."
     evidence:
-      - source: repo
-        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
-        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 3
-        quote: "| Field name | Type | Description |"
-    by: model
-    quotes_verified: true
+      - source: paper
+        url: https://arxiv.org/abs/2411.12990v1
+        locator: Appendix J.3
+    by: human
   doc.15:
     value: 15
-    rationale: The failure mode mitigation questionnaire confirms that data sources and the collection process are explained.
+    rationale: "supported by Section 4.2 rather than the checklist Y: the paper explains supplier selection, commissioned novel prompts, required provenance/translation metadata, ownership and release rights. Section 7 clarifies that these are engineered prompts rather than undisclosed collection of real user conversations; the released subset’s license is specified in Section 4.1. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: "129: Data sources and data collection process are explained   Y"
-    by: model
-    quotes_verified: true
+        locator: Section 4.2
+    by: human
   doc.16:
-    value: 15
-    rationale: The failure mode mitigation questionnaire confirms that data preprocessing steps are described.
+    value: 10
+    rationale: ". Sections 4.1–4.3 describe random partitioning, generation/translation practices and quality analyses, but the checklist Y does not establish the exhaustive step-by-step preprocessing account required for 15. The described preparation is more than no documentation (0). Source: ; BetterBench Appendix J.3 preprocessing rubric."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: "130: Data preprocessing steps are described (if applicable)   Y"
-    by: model
-    quotes_verified: true
+        locator: Sections 4.1
+    by: human
   doc.17:
-    value: 15
-    rationale: The failure mode mitigation questionnaire confirms the data annotation process is described.
+    value: 10
+    rationale: ". Sections 3.3 and 5.4 document annotation guidance, three raters per prompt-response pair and majority-vote labels. Section 7 discusses annotation limitations. However, the supplied account does not establish exhaustive annotator/training details and inter-annotator agreement metrics needed for full credit under BetterBench. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: "131: Data annotation process is described (if applicable)   Y"
-    by: model
-    quotes_verified: true
+        locator: Sections 3.3
+    by: human
   doc.18:
-    value: 15
-    rationale: The failure mode mitigation questionnaire confirms that data representativeness is explained.
+    value: 10
+    rationale: ". Sections 4.1–4.3 describe balanced hazard/persona sampling, realism checks and prompt-distribution comparisons; Section 7 acknowledges synthetic prompts and locale/persona limits. This exceeds 0, but does not establish quantitative coverage of a defined real-world target population sufficient for BetterBench’s full-credit standard. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: "133: Data representativeness is explained (if applicable)   Y"
-    by: model
-    quotes_verified: true
+        locator: Sections 4.1
+    by: human
   doc.19:
     value: 0
     rationale: There is no mention of the documentation following a specific recognized standard (e.g., ISO).
@@ -459,14 +416,12 @@ verdicts:
     adjudicated_by: adjudicator-v4
   mai.03:
     value: 15
-    rationale: The failure mode mitigation questionnaire explicitly states that a contact person is listed and will be responsive to inquiries.
+    rationale: "the paper’s title/author section provides named correspondence contacts and email addresses. This is direct evidence of accessible contact details; the checklist assertion alone does not demonstrate responsiveness, which is not necessary for this contact-listing criterion. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 41, chunk 0
-        quote: "123: Contact person is listed indicating that person will be responsive to inquiries   Y"
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
@@ -476,3 +431,28 @@ revisions:
     summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 3 decided by the reviewer."
     items:
       - imp.02
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 24 decided by the reviewer."
+    items:
+      - des.02
+      - des.04
+      - des.06
+      - des.07
+      - des.08
+      - des.09
+      - imp.01
+      - imp.04
+      - imp.09
+      - imp.11
+      - doc.05
+      - doc.06
+      - doc.07
+      - doc.10
+      - doc.11
+      - doc.14
+      - doc.15
+      - doc.16
+      - doc.17
+      - doc.18
+      - mai.03

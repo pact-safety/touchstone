@@ -59,11 +59,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: The excerpts do not describe how the benchmark scores should or should not be interpreted or used.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: "with fuller evidence: Section 5 and Appendix B.8 explain EX correctness and VES relative efficiency, including correctness gating, runtime dependence and repeated timing. Appendix B.7 warns that set-based result comparison can count some order-sensitive answers as correct. These explain both what scores convey and an important inference they cannot support. The model–human performance gap alone is not interpretation guidance."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: Section 5
+    by: human
   des.05:
     value: 15
     rationale: The benchmark involved PhD students, MS students, database engineers, and professors to check and annotate data.
@@ -101,17 +103,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.09:
-    value: 10
-    rationale: The efficiency ratio R is defined with a range (0, +∞), but a floor/ceiling for the primary EX metric is not explicitly provided.
+    value: 15
+    rationale: "with corrected rationale: EX is defined as a proportion of correct executions, hence ranges from 0 to 1 (0–100%). Appendix B.8 explicitly gives the efficiency-ratio range and timing limits, so the unbounded nature of efficiency is documented. Human performance is a comparison baseline, not the theoretical ceiling. Reading 2’s score is supportable, but its human-ceiling rationale is not."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 26, chunk 4
-        quote: |-
-          the range for the efficiency ratio,   R , is defined as 
-          R   ∈   (0 ,   + ∞ )
-    by: model
-    quotes_verified: true
+        locator: Appendix B.8
+    by: human
   des.10:
     value: 15
     rationale: Human performance levels are explicitly provided for the benchmark.
@@ -178,17 +176,13 @@ verdicts:
         url: https://arxiv.org/abs/2305.03111v3
     quotes_verified: true
   imp.03:
-    value: 15
-    rationale: The authors describe collecting results by calling the API for models like Codex and ChatGPT.
+    value: 10
+    rationale: the official implementation supports OpenAI/Azure OpenAI model calls and documents run_gpt.sh. Codex and ChatGPT are two models accessed through the same API family; this does not establish integration of two different model APIs for 15. Reading 1’s score is appropriate but its statement that benchmark API evaluation is not supported is too strong.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 22, chunk 2
-        quote: |-
-          We employ programming-based prompts, as described in [   39   ], to collect results
-          by calling the API.
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/AlibabaResearch/DAMO-ConvAI/tree/faf754671f5b850e1b4d1ff870db37a6a2480df6/bird
+        locator: reviewer note
+    by: human
   imp.04:
     value: 15
     rationale: The authors implement their codes based on the hugging-face transformers library and conduct experiments on an NVIDIA Tesla A100, indicating support for local models.
@@ -215,14 +209,12 @@ verdicts:
     quotes_verified: true
   imp.07:
     value: 15
-    rationale: The authors specify setting the temperature to 0 to ensure reproduction of results.
+    rationale: "for the released evaluation workflow: the official README provides run_bird_large.sh, run_gpt.sh and run_evaluation.sh, with setup and EX/VES evaluation instructions. Temperature 0 is not evidence of a script; cite the actual released scripts. Historical test results also depend on hidden test access and model/API versions, so this does not promise exact current reproduction."
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 22, chunk 3
-        quote: In order to minimize the randomness of results, we set the temperature as 0 to ensure reproduction.
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/AlibabaResearch/DAMO-ConvAI/tree/faf754671f5b850e1b4d1ff870db37a6a2480df6/bird
+        locator: reviewer note
+    by: human
   imp.08:
     value: 15
     rationale: The authors report ensuring the stability of the VES metric by running computations 100 times and filtering outliers.
@@ -236,11 +228,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.09:
-    value: 0
-    rationale: While they mention modifying inappropriate content during collection, they do not assess the need for warnings for sensitive/harmful content in the benchmark implementation.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: "for input-content assessment, with corrected reasoning: Appendix A.2 explicitly assesses whether the dataset contains offensive or sensitive material, and A.3 describes removing inappropriate content. The “serious warning” was directed at annotators responsible for introducing such content; it is not a content advisory for exposed users. The evidence establishes input assessment, but not a corresponding assessment of harmful model outputs for full credit."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2305.03111v3
+        locator: Appendix A.2
+    by: human
   imp.10:
     value: 0
     rationale: There is no mention of a build status or equivalent implementation.
@@ -254,17 +248,21 @@ verdicts:
     by: model
     quotes_verified: true
   doc.01:
-    value: 0
-    rationale: The excerpts mention source code is available on GitHub, but do not mention a requirements file.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: the official bird/finetuning directory actually contains requirements.txt, finetuning.yaml, env.txt and a Dockerfile. These are direct dependency/environment artifacts; a source-code URL alone would not be an equivalent requirements file.
+    evidence:
+      - source: repo
+        url: https://github.com/AlibabaResearch/DAMO-ConvAI/tree/faf754671f5b850e1b4d1ff870db37a6a2480df6/bird/finetuning
+        locator: reviewer note
+    by: human
   doc.02:
-    value: 0
-    rationale: No quick-start guide or demo is mentioned in the provided excerpts.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: the linked official README provides environment setup, training/API generation commands, required prediction-file formatting and commands for EX/VES evaluation. This is an actual getting-started guide, not merely a conjecture based on a repository URL.
+    evidence:
+      - source: repo
+        url: https://github.com/AlibabaResearch/DAMO-ConvAI/tree/faf754671f5b850e1b4d1ff870db37a6a2480df6/bird
+        locator: reviewer note
+    by: human
   doc.03:
     value: 0
     rationale: The excerpts do not provide code snippets to verify the use of in-line comments.
@@ -272,11 +270,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.04:
-    value: 0
-    rationale: While source code is available, there is no mention of separate code documentation.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: the official README documents repository components, input/output formats, setup and execution scripts, and names the EX/VES implementation files. This is partial code documentation. A paper’s task definition alone is not comprehensive code documentation, and the evidence does not establish coverage of all relevant functions for 15.
+    evidence:
+      - source: repo
+        url: https://github.com/AlibabaResearch/DAMO-ConvAI/tree/faf754671f5b850e1b4d1ff870db37a6a2480df6/bird
+        locator: reviewer note
+    by: human
   doc.05:
     value: 15
     rationale: The paper was accepted at the 37th Conference on Neural Information Processing Systems (NeurIPS 2023).
@@ -408,15 +408,13 @@ verdicts:
     by: human
     quotes_verified: true
   doc.19:
-    value: 15
-    rationale: The documentation follows the recognized 'Datasheet for Datasets' standard.
+    value: 10
+    rationale: "Appendix A actually uses the Datasheets for Datasets structure, so 0 is incorrect. Several answers lack detail or answer a different question: data-subject consent is answered by referring to paid annotators, impact assessment by referring to model error/efficiency analysis, and sampling strategy simply “No.” This supports use of the recognized format with incomplete sections, not fully comprehensive implementation at 15."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 17, chunk 0
-        quote: We follow instructions provided by   Datasheet for Datasets
-    by: model
-    quotes_verified: true
+        locator: Appendix A
+    by: human
   mai.01:
     value: 0
     rationale: The excerpts do not mention any checks performed on code usability within the last year.
@@ -453,3 +451,16 @@ revisions:
     items:
       - des.07
       - imp.02
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 16 decided by the reviewer."
+    items:
+      - des.04
+      - des.09
+      - imp.03
+      - imp.07
+      - imp.09
+      - doc.01
+      - doc.02
+      - doc.04
+      - doc.19

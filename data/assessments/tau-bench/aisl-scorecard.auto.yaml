@@ -2,13 +2,15 @@
 benchmark: tau-bench
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 59a200c6d575d595120f1cb70fea53cef0632f6b
@@ -71,10 +73,10 @@ verdicts:
   cv.06:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper describes a Stage III verification step involving manual task annotation and validation with agent runs to ensure unique outcomes, and mentions polishing instructions iteratively."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.07:
     value: unmet
     rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
@@ -84,17 +86,17 @@ verdicts:
   cv.08:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The paper compares τ-bench to prior work conceptually but does not provide a table or figure comparing the same models on an original dataset and the adapted benchmark.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.09:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The paper does not explicitly state that it reuses no prior dataset, nor does it list modifications to reused data with reasons. It constructs new domains.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While item counts are stated, there is no power calculation or confidence-interval half-width reported.
@@ -174,10 +176,10 @@ verdicts:
   cv.19:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper compares τ-bench to prior benchmarks (ToolBench, MetaTool, Task-oriented dialogue datasets) and states the gap: prior works lack multi-step interaction and user simulation."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.20:
     value: unmet
     rationale: While it mentions limitations of the user simulator, it does not provide a specific design limitation statement linked to a claim about real-world capability or harm.
@@ -216,15 +218,10 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: met
-    rationale: Scoring is based on database state comparisons rather than parsing free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 6, chunk 1
-        quote: subjective and noisy human judgments can be replaced by simple and objective database state comparisons
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Some tasks also use substring checks on free-form responses; no cross-format parser accuracy study is reported. Database checks alone do not justify N/A.
+    evidence: []
+    by: human
   iv.07:
     value: unmet
     rationale: The paper does not report contamination checks or training-data cutoffs for the evaluated models.
@@ -234,10 +231,10 @@ verdicts:
   iv.08:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The README states 'The tasks in this repo are not updated' and refers to a newer benchmark, but does not document a changelog of environment changes with re-validation for the current version, nor does it explicitly state it uses a static snapshot in the context of the evaluation methodology described in the paper excerpts.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.09:
     value: unmet
     rationale: The excerpts do not provide evidence that the harness resets state (e.g., fresh container or process) per task.
@@ -247,10 +244,10 @@ verdicts:
   iv.10:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "The benchmark does not use multiple-choice questions; it uses database state comparison. However, the rule requires the format to be not multiple choice OR report random-guess baseline. Since it is not MCQ, the first part of the condition is met. Wait, the rule says 'met when: The format is not multiple choice, OR...'. Since the format is not multiple choice, this should be met. Let me re-read. 'The format is not multiple choice'. The evaluation is based on database state comparison, not MCQ. Therefore, the condition 'The format is not multiple choice' is true. Thus, the item is met."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation mentions that manual annotation requires deep understanding of the domain, but it does not name specific experts or user groups consulted or what they defined.
@@ -282,27 +279,25 @@ verdicts:
   ev.05:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark uses simulated users and simplified domains ('mock' environments) rather than evaluating a specific deployed product or configuration. It explicitly states domains are simplified compared to real-world.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.06:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark does not claim to evaluate a specific deployed application, making this item n/a. However, even if applicable, there is no mention of adversarial or misuse configurations being included in the evaluation.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark evaluates general agent capabilities in simulated customer service domains rather than a specific deployed product or application.
+    value: met
+    rationale: §6 discusses simulated-user errors and simplified domain policies, qualifying realism and motivating improvements.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 2, chunk 1
-        quote: we focus on the realm of customer service and create two different domains
-    by: model
-    quotes_verified: true
+        locator: §6
+    by: human
   rel.01:
     value: unmet
     rationale: The documentation does not list library versions (lockfile/pinned requirements), hardware models, or the OS/container image.
@@ -318,10 +313,10 @@ verdicts:
   rel.03:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The decision rule requires quality-control steps and a correction channel (errata, changelog, or versioned release) that records at least one fix. The README mentions an issue tracker ('submit issues') and a commit where the benchmark was rewritten to be 'more type-safe', but it does not explicitly describe a correction channel like an errata or changelog that records fixes to the benchmark data or evaluation logic itself. The rewrite is described as a structural change, not necessarily a documented fix for a flaw in the evaluation results or data.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   rel.04:
     value: unmet
     rationale: While the docs name limitations (e.g., user simulation typos), they do not state the direction of bias or provide an impact estimate for each.
@@ -343,6 +338,7 @@ verdicts:
   cor.01:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts describe using an LM as a user simulator, not as a rater/judge for ground truth verification. The ground truth is verified via database state comparison, not model ratings correlated with human judgments.
     evidence:
       - source: paper
@@ -350,10 +346,10 @@ verdicts:
         locator: 2406.12045v1 page 6, chunk 1
         url: https://arxiv.org/abs/2406.12045v1
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.02:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report any adversarial or reward-hacking tests of a model rater, nor do they describe named defenses against such attacks for a rater. The LM is used for simulation, not rating.
     evidence:
       - source: paper
@@ -361,10 +357,10 @@ verdicts:
         locator: 2406.12045v1 page 6, chunk 1
         url: https://arxiv.org/abs/2406.12045v1
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.03:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report agreement across repeated rating runs on the same inputs for a model rater. The repeated runs (pass^k) test agent consistency, not rater consistency.
     evidence:
       - source: paper
@@ -372,10 +368,10 @@ verdicts:
         locator: 2406.12045v1 page 5, chunk 0
         url: https://arxiv.org/abs/2406.12045v1
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.04:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not measure or mitigate systematic biases in a model rater. The LM is a simulator, and the evaluation is rule-based database comparison.
     evidence:
       - source: paper
@@ -383,7 +379,6 @@ verdicts:
         locator: 2406.12045v1 page 6, chunk 1
         url: https://arxiv.org/abs/2406.12045v1
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: While the text mentions manual annotation and verification, it does not report inter-annotator agreement or the accuracy of a programmatic checker on a labeled sample.
@@ -465,3 +460,10 @@ revisions:
       - cor.02
       - cor.03
       - cor.04
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 37 verdicts agreed, 16 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.06
+      - ev.07

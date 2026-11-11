@@ -199,14 +199,12 @@ verdicts:
     quotes_verified: true
   imp.03:
     value: 10
-    rationale: The benchmark supports evaluation on 'publicly available models', which typically implies API access, though it doesn't explicitly name an API mechanism.
+    rationale: "on the established evidence: BIG-bench evaluates hosted OpenAI GPT models and exposes a model interface for text generation/conditional probabilities. A benchmark programming interface or the phrase “publicly available models” alone does not prove support for two distinct hosted model APIs, required for 15 under BetterBench. Reading 2 has the appropriate partial level but should cite actual GPT evaluation/API integration rather than infer it from availability."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 6, chunk 3
-        quote: supports task evaluation on publicly available models
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   imp.04:
     value: 15
     rationale: The documentation explicitly states that tasks can be evaluated locally.
@@ -261,21 +259,19 @@ verdicts:
     quotes_verified: true
   imp.10:
     value: 15
-    rationale: The benchmark implements a build process via a Docker image script.
+    rationale: "for implemented build/test status: the repository includes the GitHub Actions workflow .github/workflows/run-tests.yml, triggered on main-branch pushes and pull requests, which installs the package/dependencies and runs pytest. A Docker build script alone would not establish status reporting. The repository is now archived, so this establishes the implementation, not a currently maintained successful build."
     evidence:
       - source: repo
-        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
-        locator: google/BIG-bench@092b196c1f8f:docs/doc.md, chunk 20
-        quote: scripts/build_docker_image.sh
-    by: model
-    quotes_verified: true
+        url: https://github.com/google/BIG-bench/blob/092b196c1f8f14a54bbc62f24759d43bde46dd3b/.github/workflows/run-tests.yml
+        locator: reviewer note
+    by: human
   imp.11:
     value: 0
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts mention contributing guidelines and CLA, but do not specify release requirements for the benchmark itself.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.01:
     value: 15
     rationale: The setup.py file explicitly references a requirements.txt file for installation.
@@ -399,15 +395,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.14:
-    value: 15
-    rationale: The benchmark uses a standardized JSON schema for task metadata including name, description, and keywords.
+    value: 10
+    rationale: BIG-bench documents a rich task schema (name, description, keywords, metrics, score bounds, examples and related settings), but a project-specific schema is not a recognized standardized metadata framework. It deserves partial credit rather than 0; the presence of a name field does not justify 15.
     evidence:
       - source: repo
-        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
-        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 9
-        quote: "| `name`            | A short, human-readable task name."
-    by: model
-    quotes_verified: true
+        url: https://github.com/google/BIG-bench/blob/092b196c1f8f14a54bbc62f24759d43bde46dd3b/docs/doc.md#json-schema
+        locator: reviewer note
+    by: human
   doc.15:
     value: 15
     rationale: The paper describes how tasks were sourced from the community via GitHub pull requests.
@@ -431,11 +425,13 @@ verdicts:
     by: human
     quotes_verified: true
   doc.18:
-    value: 0
-    rationale: The excerpts do not explain the representativeness of the data.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: task-keyword/language coverage, contributor recruitment and acknowledged coverage gaps explain representativeness in a general way. They do not establish comprehensive quantitative representativeness against a defined target population of capabilities or real uses. Thus 0 overlooks coverage analysis, while 15 overstates what contributor diversity and task counts prove.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2206.04615v3
+        locator: reviewer note
+    by: human
   doc.19:
     value: 0
     rationale: There is no mention of the documentation following a recognized standard (e.g., Datasheets for Datasets).
@@ -450,25 +446,18 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   mai.02:
-    value: 15
-    rationale: The benchmark provides a Google Group email address for users to request support for additional packages.
-    evidence:
-      - source: repo
-        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
-        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 17
-        quote: If you have a package not listed above that you would like us to support, [shoot us an email](mailto:bigbench@googlegroups.com).
-    by: model
-    quotes_verified: true
+    value: 0
+    rationale: ". A contact address exists, but maintained responsiveness is not established. The official repository was archived April 17, 2026 with longstanding unanswered issues (e.g. #1013, December 2025)."
+    evidence: []
+    by: human
   mai.03:
     value: 15
-    rationale: A specific contact email is provided for copyright and licensing inquiries.
+    rationale: ", citing the general organizer contact: the README introduction explicitly gives bigbench@googlegroups.com for contacting benchmark organizers. This is an easily accessible responsible-team contact under BetterBench; a named individual is not necessary when the rubric also accepts an online feedback form. The copyright-specific address quoted by Reading 2 is a narrower and less appropriate justification."
     evidence:
       - source: repo
         url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
-        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 17
-        quote: For questions related to copyright and licensing, please contact [big-bench-copyright@google.com](mailto:big-bench-copyright@google.com).
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
@@ -479,3 +468,13 @@ revisions:
     items:
       - imp.05
       - imp.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 19 decided by the reviewer."
+    items:
+      - imp.03
+      - imp.10
+      - doc.14
+      - doc.18
+      - mai.02
+      - mai.03

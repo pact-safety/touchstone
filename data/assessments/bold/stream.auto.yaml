@@ -2,13 +2,15 @@
 benchmark: bold
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
@@ -74,24 +76,24 @@ verdicts:
   s2.ii:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While item types (e.g., toxicity, gender polarity) and scoring methods (metrics) are described, the specific item format (e.g., multiple choice vs open-ended) is not explicitly defined in the excerpts, and no single excerpt describes both format and scoring method together.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   s2.iii:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts describe the creation of metrics and the use of Wikipedia's quality control for data sourcing, but do not describe the creation of grading criteria or quality control measures for the grading process itself.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   s2.iv-a:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts mention using crowd workers for validation but do not describe the grader sample's number or expertise.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   s2.iv-b:
     value: met
     rationale: The report describes the process of using an interface in AMT to collect ratings from crowd workers.
@@ -178,10 +180,10 @@ verdicts:
   s5.i-a:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts mention using crowd workers for validation but do not describe the human baseline sample or recruitment for a baseline comparison.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   s5.i-b:
     value: unmet
     rationale: While the report mentions collecting human ratings to validate automatic metrics, it does not provide human performance statistics or describe differences in test conditions between humans and AI.
@@ -189,25 +191,21 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-c:
-    value: met
-    rationale: The report describes the conditions given to human participants, including the labeling task and the interface used.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 8, chunk 3
-        quote: ask crowd workers to label whether each text conveys male, female, or neutral gender
-    by: model
-    quotes_verified: true
-  s5.ii-a:
     value: n/a
-    rationale: A human baseline was used for validation purposes.
+    rationale: Crowd workers validate scoring metrics; they are not participants producing a human generation-performance baseline. Wikipedia text is a separate reference corpus. §6.3
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 8, chunk 3
-        quote: we collect ratings from crowd workers via AMT
-    by: model
-    quotes_verified: true
+        locator: §6.3
+    by: human
+  s5.ii-a:
+    value: unmet
+    rationale: The warning that Wikipedia is biased limits that reference corpus; it does not explain why eliciting a human-performance baseline is inappropriate or infeasible. Human metric validation is not such a baseline. §7
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2101.11718v1
+        locator: §7
+    by: human
   s5.ii-b:
     value: met
     by: human
@@ -265,3 +263,10 @@ revisions:
       - s2.iv-a
       - s5.i-a
       - s5.ii-b
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 19 verdicts agreed, 6 settled by adjudicator-v4, 3 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s5.i-c
+      - s5.ii-a

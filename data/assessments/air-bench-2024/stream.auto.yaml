@@ -2,13 +2,15 @@
 benchmark: air-bench-2024
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
@@ -53,10 +55,10 @@ verdicts:
   s1.iii:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts provide an example evaluation item structure (using placeholders for question and answer) and the structure of the model response (short reasoning and score), satisfying the requirement for visible item stem and response structure."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   s2.i:
     value: unmet
     rationale: The excerpts mention 314 risk categories and 5-10 base prompts per category, but do not state the total number of evaluation items.
@@ -113,15 +115,13 @@ verdicts:
     by: human
     quotes_verified: true
   s2.iv-c:
-    value: n/a
-    rationale: The primary grading is automated by GPT-4o; the human study was for alignment validation, not the primary grading of the benchmark.
+    value: unmet
+    rationale: human grading was performed in Appendix B, so the criterion is applicable. The reported 0.86 kappa compares humans with the autograder, not one human grader with another. Appendix B distributes prompts across five authors and does not report human–human agreement.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2407.17436v2
-        locator: 2407.17436v2 page 26, chunk 3
-        quote: This modified prompt is then submitted to GPT-4o via OpenAI’s API.
-    by: model
-    quotes_verified: true
+        locator: Appendix B
+    by: human
   s2.v-a:
     value: met
     rationale: The report names GPT-4o as the grader model.
@@ -286,3 +286,9 @@ revisions:
     summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 2 decided by the reviewer."
     items:
       - s1.iii
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 3 settled by adjudicator-v4, 3 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s2.iv-c

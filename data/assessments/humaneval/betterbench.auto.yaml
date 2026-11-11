@@ -79,15 +79,13 @@ verdicts:
         url: https://arxiv.org/abs/2107.03374v2
     quotes_verified: true
   des.05:
-    value: 10
-    rationale: The text mentions consensus among cryptography experts regarding specific configurations used in related tests.
+    value: 0
+    rationale: on this evidence — Citing cryptography consensus in separate Codex security tests does not demonstrate expert consultation in HumanEval benchmark design.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 32, chunk 4
-        quote: there is consensus among cryptography experts that these configurations generally should not be used
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   des.06:
     value: 10
     rationale: The text mentions the model being used as an autocomplete tool for a user.
@@ -125,25 +123,21 @@ verdicts:
     by: model
     quotes_verified: true
   des.10:
-    value: 10
-    rationale: The text compares model performance to that of a student who completes an introductory computer science course.
+    value: 0
+    rationale: The expected ability of an introductory-CS student is not a measured human performance baseline.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 10, chunk 1
-        quote: a strong student who completes an introductory computer science course is expected to be able to solve a larger fraction of problems than Codex-12B.
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   des.11:
-    value: 10
-    rationale: The text mentions that certain heuristics outperform evaluating a random sample.
+    value: 0
+    rationale: Randomly selecting among Codex-generated completions compares selection heuristics; it is not random-chance performance on the code-generation task.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 5, chunk 1
-        quote: choosing the sample with the highest mean token log probability outperforms evaluating a random sample
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   des.12:
     value: 15
     rationale: The benchmark uses unit tests to automatically evaluate functional correctness.
@@ -165,15 +159,10 @@ verdicts:
     by: model
     quotes_verified: true
   des.14:
-    value: 10
-    rationale: The text addresses how biased or buggy prompts can result in biased or buggy code.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 30, chunk 1
-        quote: just as buggy prompts result in buggy code, it’s likely that biased prompts or prompts for harmful behavior result in harmful code.
-    by: model
-    quotes_verified: true
+    value: 0
+    rationale: Biased/buggy prompts change task meaning, and sampling temperature changes decoding. Neither establishes sensitivity to semantically equivalent HumanEval inputs (paper §§2,7).
+    evidence: []
+    by: human
   imp.01:
     value: 15
     rationale: The repository contains multiple Python files for evaluation, and the README provides a specific command to run the evaluation script.
@@ -246,11 +235,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.09:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The paper discusses the need for content controls and filtering to reduce harms associated with offensive content, but does not explicitly assess a 'need for warnings'."
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: README Usage and execution.py explicitly warn that running model-generated code is dangerous and requires a robust sandbox. This covers harmful outputs; the quoted bias probes do not assess warnings for benchmark inputs.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
+        locator: reviewer note
+    by: human
   imp.10:
     value: 0
     rationale: There is no evidence of a build status or equivalent implementation for the benchmark itself.
@@ -275,18 +266,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.02:
-    value: 10
-    rationale: The README provides installation and usage instructions, which serves as a quick-start guide.
+    value: 15
+    rationale: "README provides environment setup, installation, sample format, evaluation commands, expected example results and options: a complete evaluation quick-start."
     evidence:
       - source: repo
         url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
-        locator: openai/human-eval@b9453e8f1865:README.md, chunk 0
-        quote: |-
-          ## Installation
-
-          Make sure to use python 3.7 or later
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   doc.03:
     value: 0
     rationale: The provided excerpts do not contain source code with in-line comments.
@@ -294,15 +280,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.04:
-    value: 15
-    rationale: The README describes the repository as an evaluation harness for the dataset described in the accompanying paper.
+    value: 10
+    rationale: README documents installation, input/output format and evaluation usage, but not comprehensive repository structure and all functions.
     evidence:
       - source: repo
         url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
-        locator: openai/human-eval@b9453e8f1865:README.md, chunk 0
-        quote: This is an evaluation harness for the HumanEval problem solving dataset
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   doc.05:
     value: 15
     rationale: The excerpts are from a paper titled 'Evaluating Large Language Models Trained on Code' which is cited as the source of the benchmark.
@@ -463,3 +447,14 @@ revisions:
     items:
       - des.03
       - des.04
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 10 decided by the reviewer."
+    items:
+      - des.05
+      - des.10
+      - des.11
+      - des.14
+      - imp.09
+      - doc.02
+      - doc.04

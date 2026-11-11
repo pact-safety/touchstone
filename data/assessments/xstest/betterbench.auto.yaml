@@ -108,6 +108,7 @@ verdicts:
   des.08:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark informs metric choice by using refusal rates as the primary metric, validated against manual annotation and comparing automated methods.
     evidence:
       - source: paper
@@ -119,7 +120,6 @@ verdicts:
         locator: 2308.01263v3 page 7, chunk 0
         url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   des.09:
     value: 0
     rationale: No metric floors or ceilings are mentioned.
@@ -232,16 +232,20 @@ verdicts:
     quotes_verified: true
   imp.08:
     value: 0
-    rationale: The results are reported as percentages, but there is no mention of statistical significance or uncertainty quantification.
-    evidence: []
-    by: model
-    quotes_verified: true
+    rationale: Table 2 adds full and partial refusal rates; those are not standard deviations or uncertainty intervals.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: Table 2
+    by: human
   imp.09:
-    value: 0
-    rationale: The excerpts do not mention assessing the need for warnings for sensitive or harmful content.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Ethical Considerations explicitly addresses exposure to graphic model responses and annotator well-being; warnings covering both inputs and outputs are not established.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: reviewer note
+    by: human
   imp.10:
     value: 0
     rationale: There is no evidence of a build status or equivalent implementation.
@@ -298,6 +302,7 @@ verdicts:
   doc.06:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The paper documents the benchmark construction process, including the creation of safe prompts and unsafe contrasts.
     evidence:
       - source: paper
@@ -305,10 +310,10 @@ verdicts:
         locator: 2308.01263v3 page 3, chunk 1
         url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.07:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The paper documents the test tasks (10 types) and provides rationale for their design, such as using contrast sets to evaluate decision boundaries.
     evidence:
       - source: paper
@@ -320,7 +325,6 @@ verdicts:
         locator: 2308.01263v3 page 3, chunk 1
         url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.08:
     value: 0
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper documents the normative property that well-calibrated models should not refuse safe prompts."
@@ -328,14 +332,17 @@ verdicts:
     by: model
     quotes_verified: true
   doc.09:
-    value: 0
-    rationale: The excerpts do not explicitly list a 'Limitations' section or document the benchmark's limitations.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: The limitations discuss negative predictive power, restricted coverage and unstable model responses, covering design and interpretation.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2308.01263v3
+        locator: reviewer note
+    by: human
   doc.10:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The paper documents the data collection process (model setup, dates) and prompt design process (hand-crafting, using GPT-4/dictionaries).
     evidence:
       - source: paper
@@ -347,7 +354,6 @@ verdicts:
         locator: 2308.01263v3 page 13, chunk 1
         url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.11:
     value: 15
     rationale: The evaluation metric (refusal rate) and the classification methods are documented.
@@ -455,3 +461,10 @@ revisions:
       - doc.06
       - doc.07
       - doc.10
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 6 settled by adjudicator-v4, 7 decided by the reviewer."
+    items:
+      - imp.08
+      - imp.09
+      - doc.09

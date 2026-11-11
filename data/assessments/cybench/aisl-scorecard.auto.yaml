@@ -2,13 +2,15 @@
 benchmark: cybench
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
@@ -54,10 +56,10 @@ verdicts:
   cv.03:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The documentation does not report independent scores for each sub-component (facet) of the phenomenon in a table or figure; it reports aggregate metrics like 'unguided performance', 'subtask performance', and 'subtask-guided performance', but does not break down scores by the six categories or other facets independently in the provided excerpts.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.04:
     value: met
     rationale: The docs define the task space via 6 categories and report difficulty variation using First Solve Time (FST).
@@ -71,10 +73,10 @@ verdicts:
   cv.05:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The documentation states the goal to span categories and difficulties but does not report per-category item counts over the full documented task space in the provided excerpts, nor does it describe a stratified or quota sampling plan with specific counts for all categories.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.06:
     value: met
     rationale: Every task is verified for solvability through a solution script and continuous integration.
@@ -94,17 +96,17 @@ verdicts:
   cv.08:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The documentation compares Cybench to prior work (InterCode-CTF, NYU CTF) in terms of difficulty and level, but does not provide a table or figure comparing the same models on the original datasets and on Cybench.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.09:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The documentation does not list modifications made to reused data with their reasons; it states tasks are from competitions but does not detail specific adaptations of the raw competition data.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While the item count is stated, there is no power calculation or confidence-interval half-width reported.
@@ -174,11 +176,13 @@ verdicts:
     by: model
     quotes_verified: true
   cv.18:
-    value: unmet
-    rationale: The docs do not contain a single statement linking the specific tasks and metrics to the construct from cv.01 with a stated reason.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: met
+    rationale: §§2.3–2.4 explain whole-task success, partial-credit subtasks and guided versus unguided comparison; §3.3 connects selected CTF tasks to real cybersecurity skills.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2408.08926v4
+        locator: §§2.3
+    by: human
   cv.19:
     value: met
     rationale: The paper compares Cybench to InterCode-CTF and the NYU CTF Dataset, noting that Cybench uses professional-level tasks whereas the others use high school/university levels.
@@ -229,13 +233,14 @@ verdicts:
   iv.06:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The scoring involves parsing free-form output (e.g., 'The response r_t is parsed to derive an action'), so the n/a condition does not hold, and no parser bias analysis is reported.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts state that Mixtral is not included because there is no public information about its data cutoff date, which violates the rule that a cutoff statement missing for any model is unmet.
     evidence:
       - source: paper
@@ -243,10 +248,10 @@ verdicts:
         locator: 2408.08926v4 page 34, chunk 1
         url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.08:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The evaluation uses an external environment (Docker, task servers, web search), so the n/a condition does not hold, and no static snapshot or changelog with re-validation is documented.
     evidence:
       - source: paper
@@ -254,10 +259,10 @@ verdicts:
         locator: 2408.08926v4 page 35, chunk 2
         url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.09:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The evaluation involves stateful agent runs (memory, iterations), so the n/a condition does not hold, and while Docker cache clearing is mentioned, a general harness reset per task is not explicitly documented as the primary mechanism.
     evidence:
       - source: paper
@@ -265,14 +270,13 @@ verdicts:
         locator: 2408.08926v4 page 35, chunk 2
         url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "The benchmark uses CTF tasks which are not multiple choice, but the decision rule requires reporting the format is not multiple choice OR reporting guessing mitigations. The excerpts do not explicitly state the format is not multiple choice in a way that satisfies the 'met' condition for the rule's disjunction without ambiguity, but more critically, the rule says 'met when: The format is not multiple choice...'. The excerpts describe CTF tasks. However, looking at the rule: 'The format is not multiple choice, or...'. The excerpts describe CTF tasks. Are CTF tasks multiple choice? No. But does the text explicitly say 'The format is not multiple choice'? No. It describes 'Capture the Flag challenges'. The rule requires the documentation to name the format or state it is not MCQ. The excerpts do not explicitly state 'This is not multiple choice'. They describe the tasks. Without an explicit statement that the format is not multiple choice, we cannot verify the 'met' condition for the first disjunct. The second disjunct requires guessing mitigations, which are not present. Thus, unmet."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios and acceptance criteria.
@@ -304,24 +308,24 @@ verdicts:
   ev.05:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark does not state that the model, tools, prompt, and environment match a named deployed product or configuration; it uses generic agent scaffolds and Kali Linux.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.06:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not include adversarial or misuse configurations of the system under test; they focus on standard CTF challenges and agent scaffolds.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.07:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While the paper notes limitations (e.g., short time span, small codebases), it does not explicitly list differences between the test setting and real deployment with a stated caveat on how to interpret results in light of those gaps.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation mentions Python versions and a requirements file, but fails to list hardware models, OS, or specific sampling parameters.
@@ -353,6 +357,7 @@ verdicts:
   rel.05:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts mention human teams' solve times as a comparison for difficulty, but do not report a formal human baseline score (e.g., average human performance) for the tasks.
     evidence:
       - source: paper
@@ -360,7 +365,6 @@ verdicts:
         locator: 2408.08926v4 page 1, chunk 1
         url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   rel.06:
     value: unmet
     rationale: The excerpts do not report the score of any trivial or minimal baseline (e.g., random or zero-shot naive).
@@ -370,31 +374,31 @@ verdicts:
   cor.01:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report any correlation between model rater ratings and human judgments. While human performance is mentioned for context, no validation of the automated scoring against human labels is provided.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.02:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report an adversarial or reward-hacking test of the model rater, nor do they describe a named defense against such attacks for the scoring mechanism.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.03:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report agreement across repeated rating runs on the same inputs. They mention running multiple attempts for models, but not for verifying rater consistency.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.04:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not measure any named rater bias (e.g., length, position) with a number, nor do they state a mitigation for such biases in the scoring.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: There is no report of multiple independent annotators labeling items or a programmatic checker's accuracy on a labeled sample.
@@ -431,22 +435,20 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The scoring involves checking for a unique flag string or a correct answer, which does not involve parsing free-form output in the sense of extracting structured data from natural language.
+    value: met
+    rationale: . The released grade_benchmark.py check_flag function uses a deterministic substring test (flag in stdout), with deterministic regex extraction for the partial-flag variant. This is actual parser code; CI alone would not establish the criterion.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 4, chunk 0
-        quote: we parse observations only for flags, and not for subtask answers
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/andyzorigin/cybench/blob/ca483c6443f17a20ba7d6bac3d274859a1721e51/grade_benchmark.py
+        locator: reviewer note
+    by: human
   cor.11:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report parser accuracy against a set of manually verified outputs. They only report that the solution script output matches the reference flag.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scorer.
@@ -479,3 +481,10 @@ revisions:
       - cor.03
       - cor.04
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 32 verdicts agreed, 21 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.18
+      - cor.10

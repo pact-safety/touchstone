@@ -75,15 +75,10 @@ verdicts:
     by: model
     quotes_verified: true
   des.05:
-    value: 10
-    rationale: The benchmark uses 'Full-Time Employees' (FTEs) to train contributors and audit quality, though they are not explicitly labeled as 'domain experts'.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 17, chunk 1
-        quote: We began by training a group of calibrated Full-Time Employees (FTEs) on the nuances of the different archetypes
-    by: model
-    quotes_verified: true
+    value: 0
+    rationale: Calibrated employees, trained contributors and auditors establish quality-control roles, not documented subject-matter expertise or expert influence on benchmark design. The quoted evidence supports neither 10 nor 15.
+    evidence: []
+    by: human
   des.06:
     value: 15
     rationale: The benchmark uses specific scenarios (archetypes) such as an AI email assistant for a PR team to test lying.
@@ -240,11 +235,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.02:
-    value: 0
-    rationale: The excerpts do not mention a quick-start guide or demo.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: The linked MASK Evaluation README provides environment/API setup, data download and commands for response generation, evaluation and metrics. The top-level overview alone would not suffice.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/mask/blob/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea/mask/README.md
+        locator: reviewer note
+    by: human
   doc.03:
     value: 0
     rationale: No code excerpts are provided to verify the presence of in-line comments.
@@ -252,11 +249,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.04:
-    value: 0
-    rationale: The excerpts do not provide evidence of code documentation.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Evaluation README explains the pipeline, directories, CLI options and outputs, but not all functions comprehensively.
+    evidence:
+      - source: repo
+        url: https://github.com/centerforaisafety/mask/blob/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea/mask/README.md
+        locator: reviewer note
+    by: human
   doc.05:
     value: 10
     rationale: A paper is provided and cited as an arXiv preprint, but there is no evidence it was accepted at a peer-reviewed venue.
@@ -330,6 +329,7 @@ verdicts:
   doc.12:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The repository includes a LICENSE file specifying the MIT License.
     evidence:
       - source: repo
@@ -337,7 +337,6 @@ verdicts:
         locator: centerforaisafety/mask@25e0b1201e6c:LICENSE, chunk 0
         url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.13:
     value: 0
     rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
@@ -420,3 +419,10 @@ revisions:
     items:
       - des.08
       - doc.12
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 5 decided by the reviewer."
+    items:
+      - des.05
+      - doc.02
+      - doc.04

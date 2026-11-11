@@ -116,10 +116,10 @@ verdicts:
   des.10:
     value: 0
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not include human performance levels.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   des.11:
     value: 15
     rationale: The benchmark includes a random action strategy as a baseline.
@@ -274,6 +274,7 @@ verdicts:
   doc.04:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: Code documentation is available in the form of detailed markdown files in the docs directory (e.g., Config_en.md, Introduction_en.md).
     evidence:
       - source: repo
@@ -286,7 +287,6 @@ verdicts:
         locator: THUDM/AgentBench@d1e4a10db08c:docs/Config_en.md, chunk 0
         url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.05:
     value: 15
     rationale: The accompanying paper is explicitly stated to be published at ICLR 2024.
@@ -326,15 +326,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.09:
-    value: 10
-    rationale: The paper mentions 'limitations' of traditional frameworks and performs a 'validity analysis' to discern model limitations, though a dedicated limitations section for the benchmark itself is not explicitly shown.
+    value: 5
+    rationale: "on the cited evidence. BetterBench Appendix J.3, “Documentation of limitations,” assigns 5 to discussion of AI-evaluation limitations that is not applied to the benchmark itself. Reading 1 discusses traditional frameworks and model failures, which does not support 10 for AgentBench’s own limitations. Reading 2’s 0 also misses that general limitations are acknowledged. Rubric:"
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 20, chunk 0
-        quote: They often suffer from several limitations
-    by: model
-    quotes_verified: true
+        url: https://arxiv.org/abs/2411.12990v1
+        locator: Appendix J.3
+    by: human
   doc.10:
     value: 15
     rationale: The paper documents the data collection and construction process for environments like Mind2Web.
@@ -390,17 +388,16 @@ verdicts:
     by: model
     quotes_verified: true
   doc.16:
-    value: 15
-    rationale: The paper documents preprocessing steps, such as ranking and filtering HTML elements using DeBERTa for Mind2Web.
+    value: 10
+    rationale: ". AgentBench documents concrete data preparation: Appendix B.1 describes filtering generated OS samples through initialization/reference-solution tests; Appendix C.1–C.2 describes DB augmentation, validation, filtering and sampling. This rules out 0. The cited HTML-element filtering sentence alone does not establish exhaustive preprocessing documentation across all component datasets, as required for 15. BetterBench Appendix J.3 distinguishes a general description (10) from exhaustive step-by-step documentation (15). Sources: and"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 43, chunk 1
-        quote: |-
-          Mind2Web proposes to rank and filter the
-          HTML elements with a small language model, e.g., DeBERTa, to enhance inference efficiency.
-    by: model
-    quotes_verified: true
+        locator: Appendix B.1
+      - source: paper
+        url: https://arxiv.org/abs/2411.12990v1
+        locator: Appendix B.1
+    by: human
   doc.17:
     value: 15
     rationale: The paper mentions the use of annotators for Mind2Web and re-annotation using Claude-2 for bias validation.
@@ -412,15 +409,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.18:
-    value: 15
-    rationale: The paper explains the representativeness of the KG environment as a testing ground for decision-making.
+    value: 5
+    rationale: "on the supplied evidence: representativeness is asserted, with little analysis of how the data represents a target population. BetterBench Appendix J.3 reserves 15 for in-depth analysis including sampling, quantitative population coverage, biases and limitations. Calling KG a “representative testing ground” does not supply that analysis, but is more than no acknowledgment (0). Rubric:"
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 4, chunk 3
-        quote: we propose KG as a representative testing ground to assess the decision-making abilities of AI agents.
-    by: model
-    quotes_verified: true
+        url: https://arxiv.org/abs/2411.12990v1
+        locator: Appendix J.3
+    by: human
   doc.19:
     value: 0
     rationale: The excerpts do not indicate that the documentation follows a recognized standard (e.g., Sphinx, ReadTheDocs).
@@ -434,15 +429,10 @@ verdicts:
     by: model
     quotes_verified: true
   mai.02:
-    value: 15
-    rationale: The README provides a specific email address for users to contact with questions or contributions, serving as a maintained feedback channel.
-    evidence:
-      - source: repo
-        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
-        locator: THUDM/AgentBench@d1e4a10db08c:README.md, chunk 4
-        quote: Please contact [agentbench_fc&#64;googlegroups.com](mailto:agentbench_fc@googlegroups.com) if you have any questions
-    by: model
-    quotes_verified: true
+    value: 0
+    rationale: "A feedback channel exists, but issue #220 (10 April 2026) remains open without a response for over three months, failing the published maintenance rubric."
+    evidence: []
+    by: human
   mai.03:
     value: 15
     by: human
@@ -466,3 +456,11 @@ revisions:
       - des.10
       - doc.04
       - mai.03
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 8 decided by the reviewer."
+    items:
+      - doc.09
+      - doc.16
+      - doc.18
+      - mai.02

@@ -59,15 +59,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 10
-    rationale: The text mentions that a system solving GAIA can be assessed in the context of t-AGI, though it doesn't provide extensive guidelines on interpretation.
+    value: 15
+    rationale: Results explain ranking assistant capability; §6 states that scores do not evaluate reasoning/action traces and describes coverage limitations.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 3, chunk 0
-        quote: Consequently, a system capable of solving   GAIA   can be assessed in the context of t-AGI
-    by: model
-    quotes_verified: true
+        locator: §6
+    by: human
   des.05:
     value: 0
     rationale: The excerpts mention 'annotators' and 'non experts', but do not specify the involvement of domain experts.
@@ -86,11 +84,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.07:
-    value: 0
-    rationale: There is no mention of integrating domain literature into the benchmark design.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: §3.1 explicitly grounds fundamental-ability task design in Chollet (2019), interpretability in Perlitz et al., and evaluation-setup considerations in Liang et al. This exceeds merely listing references.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: §3.1
+    by: human
   des.08:
     value: 15
     rationale: The choice of factoid, concise, and unambiguous answers is justified to allow for simple and robust automatic evaluation.
@@ -102,11 +102,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.09:
-    value: 0
-    rationale: The excerpts do not mention metric floors or ceilings.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: Quasi-exact-match accuracy has bounds 0–100%. Human 92% is an empirical baseline, not a metric ceiling. §3.2
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2311.12983v1
+        locator: §3.2
+    by: human
   des.10:
     value: 15
     rationale: Human performance levels are provided, specifically a 92% success rate.
@@ -204,15 +206,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.08:
-    value: 10
-    rationale: The paper mentions reporting average results when running models multiple times, which is a basic form of uncertainty quantification.
+    value: 0
+    rationale: "Averaging three API runs does not quantify their uncertainty: no dispersion, confidence interval or significance result is established by that sentence. §4"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 8, chunk 0
-        quote: Whenever an API is available, we run the model three times and report the average results.
-    by: model
-    quotes_verified: true
+        locator: §4
+    by: human
   imp.09:
     value: 0
     rationale: There is no mention of assessing the need for warnings for sensitive or harmful content.
@@ -407,3 +407,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - des.04
+      - des.07
+      - des.09
+      - imp.08

@@ -93,6 +93,7 @@ verdicts:
   des.07:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The document integrates domain literature by citing existing libraries (cuDNN, CUTLASS) and prior works on HPC code generation to contextualize the benchmark.
     evidence:
       - source: paper
@@ -100,7 +101,6 @@ verdicts:
         locator: 2502.10517v1 page 3, chunk 2
         url: https://arxiv.org/abs/2502.10517v1
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   des.08:
     value: 15
     rationale: The choice of the 'fast_p' metric is explained as a way to capture both correctness and performance axes.
@@ -151,10 +151,9 @@ verdicts:
     quotes_verified: true
   des.14:
     value: 0
-    rationale: Input sensitivity (e.g., how different input sizes or types affect the result) is not addressed as a design consideration.
+    rationale: Random tensors test generated-kernel correctness, not sensitivity to semantically equivalent prompts given to the model. Neither reading makes this distinction; input sizes/types are also not the BetterBench definition.
     evidence: []
-    by: model
-    quotes_verified: true
+    by: human
   imp.01:
     value: 15
     rationale: The repository provides evaluation code in 'src/eval.py' and scripts like 'scripts/run_and_check.py'.
@@ -242,15 +241,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.01:
-    value: 15
-    rationale: The README explicitly mentions that dependencies can be installed using a requirements.txt file.
+    value: 10
+    rationale: requirements.txt lists dependencies but leaves several unversioned (e.g. packaging, pydra-config and DSL packages). Alternative installation methods do not determine this score.
     evidence:
       - source: repo
-        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
-        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 5
-        quote: install dependencies with `requirements.txt`
-    by: model
-    quotes_verified: true
+        url: https://github.com/ScalingIntelligence/KernelBench/blob/423217d9fda91e0c2d67e4a43bf62f96f6d104f1/requirements.txt
+        locator: reviewer note
+    by: human
   doc.02:
     value: 15
     rationale: The README provides a link to a tutorial notebook on Google Colab and mentions a local version.
@@ -433,3 +430,9 @@ revisions:
     items:
       - des.04
       - des.07
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 5 decided by the reviewer."
+    items:
+      - des.14
+      - doc.01

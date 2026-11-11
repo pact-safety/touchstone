@@ -51,6 +51,7 @@ verdicts:
   iv.03:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While sampling settings and some prompts are mentioned, the full prompt template is not provided in the excerpts (only referenced as being in Appendix B), and the harness/scaffold version is not explicitly stated.
     evidence:
       - source: paper
@@ -62,14 +63,13 @@ verdicts:
         locator: 2410.09024v3 page 7, chunk 0
         url: https://arxiv.org/abs/2410.09024v3
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.04:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not describe any specific controls for confounding variables or spurious correlations, such as answer-position balancing or prompt-format perturbation.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.05:
     value: met
     rationale: The benchmark implements both a canary string and a private test set to prevent contamination.
@@ -102,14 +102,12 @@ verdicts:
     quotes_verified: true
   iv.08:
     value: met
-    rationale: The benchmark describes a human review process where every question is reviewed by a separate human reviewer who did not write it.
+    rationale: "through the model-graded-label validation branch, not simply because a different person reviewed each question. Section 3.2 describes manual checking of grading accuracy, and Appendix A describes human examination of execution logs across samples/models to validate the narrow semantic judges. Neither blinding nor numerical inter-annotator agreement is established; these are not required by the alternative model-label validation branch as written. Source:"
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 6, chunk 2
-        quote: we write all questions by hand and review every question with a separate human reviewer who did not write the question
-    by: model
-    quotes_verified: true
+        locator: Section 3.2
+    by: human
   iv.09:
     value: unmet
     rationale: There is no evidence that the benchmark releases the full model outputs or reasoning traces for all items for external evaluators.
@@ -217,6 +215,7 @@ verdicts:
   rp.07:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts describe the jailbreak template and system prompts but refer to appendices for full details. They do not explicitly state that the prompts and scaffolding are released in a repository, only that the benchmark is released.
     evidence:
       - source: paper
@@ -224,10 +223,10 @@ verdicts:
         locator: 2410.09024v3 page 7, chunk 1
         url: https://arxiv.org/abs/2410.09024v3
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   rp.08:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark uses synthetic tools implemented in the Inspect framework, not public APIs or open weights directly for the tool execution part. It does not state that the harness is built on or exported to a named public evaluation framework standard format for external use.
     evidence:
       - source: paper
@@ -235,7 +234,6 @@ verdicts:
         locator: 2410.09024v3 page 5, chunk 1
         url: https://arxiv.org/abs/2410.09024v3
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
@@ -249,3 +247,8 @@ revisions:
       - iv.11
       - rp.07
       - rp.08
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 4 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - iv.08

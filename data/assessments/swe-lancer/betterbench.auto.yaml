@@ -93,15 +93,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.08:
-    value: 10
-    rationale: The benchmark uses a monetary metric and pass@k, and mentions the choice of E2E tests over unit tests for realism, though a detailed 'informed choice' process for the metric itself is not fully detailed.
+    value: 15
+    rationale: §2.1 ties resolved-task rate to engineering success and payout weighting to actual freelance economic value.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 15, chunk 0
-        quote: SWE-Lancer uniquely maps model performance to monetary metrics
-    by: model
-    quotes_verified: true
+        locator: §2.1
+    by: human
   des.09:
     value: 0
     rationale: The excerpts do not mention metric floors or ceilings.
@@ -147,11 +145,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.01:
-    value: 0
-    rationale: The excerpts mention that end-to-end tests were developed and an evaluation harness exists, but they do not state that the evaluation code is available to the user.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Public evaluation code exists, but the current release covers a reduced task subset.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/preparedness/tree/b78dab1da774a6456b1ed9c48c9ff194ee3ff36d/project/swelancer
+        locator: reviewer note
+    by: human
   imp.02:
     value: 15
     rationale: The text explicitly states that a public evaluation split called SWE-Lancer Diamond is released.
@@ -242,16 +242,12 @@ verdicts:
     quotes_verified: true
   doc.03:
     value: 10
-    rationale: The excerpts show code snippets containing in-line comments.
+    rationale: The benchmark solver contains substantial inline comments and function docstrings; quoted task-repository patches are not the relevant evidence.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 22, chunk 0
-        quote: |-
-          {/* Remove   onValueChange so this field uses the
-          form’s standard   validation   */}
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/openai/preparedness/blob/b78dab1da774a6456b1ed9c48c9ff194ee3ff36d/project/swelancer/swelancer/solvers/swelancer_agent/solver.py
+        locator: reviewer note
+    by: human
   doc.04:
     value: 0
     rationale: There is no mention of available code documentation for the benchmark itself.
@@ -410,3 +406,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 4 decided by the reviewer."
+    items:
+      - des.08
+      - imp.01
+      - doc.03

@@ -2,13 +2,15 @@
 benchmark: harmbench
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
@@ -61,10 +63,10 @@ verdicts:
   s2.ii:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts describe the content of the items (behaviors, contexts, visual inputs) but do not explicitly define the item type in standard testing terminology (e.g., multiple choice, short answer) or specify a scoring method other than binary classification via a classifier.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   s2.iii:
     value: met
     rationale: The report describes the creation of criteria based on TDC 2023 and mentions refining them based on specific test cases.
@@ -82,11 +84,13 @@ verdicts:
     by: human
     quotes_verified: true
   s2.iv-b:
-    value: unmet
-    rationale: The report mentions that humans labeled a validation set using annotation instructions, but it does not describe the actual procedure/process.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: met
+    rationale: Appendix B.1 supplies the criteria applied when humans label validation completions; B.5.1 describes selection of 600 completions and use of majority human labels. These are human grades of model outputs.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: Appendix B.1
+    by: human
   s2.iv-c:
     value: unmet
     rationale: The report mentions 'Inter-annotator agreement' as a heading in the validation set section, but no actual agreement figure is provided in the excerpts.
@@ -145,10 +149,10 @@ verdicts:
   s3.ii:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts state that some models have system-level filters that 'cannot be removed' and others have 'no specific safety measures', but they do not explicitly state the active safeguards during the specific elicitation testing process or adaptations to elicitation as required by the rule.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   s3.iii:
     value: unmet
     rationale: The excerpts do not provide the full prompts, sampling settings, or the number of attempts for the elicitation techniques.
@@ -221,6 +225,7 @@ verdicts:
   s5.ii-b:
     value: met
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The report provides 'Human Jailbreaks' and 'Direct Request' as alternative comparison points (baselines) and explains their nature.
     evidence:
       - source: paper
@@ -232,7 +237,6 @@ verdicts:
         locator: 2402.04249v2 page 22, chunk 2
         url: https://arxiv.org/abs/2402.04249v2
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   s6.i:
     value: unmet
     rationale: The provided excerpts do not contain overall conclusions about a model's capabilities or risk level that cite specific tables, figures, or numbers.
@@ -279,3 +283,9 @@ revisions:
       - s2.v-a
       - s3.ii
       - s5.ii-b
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 18 verdicts agreed, 5 settled by adjudicator-v4, 5 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s2.iv-b

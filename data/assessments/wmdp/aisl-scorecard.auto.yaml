@@ -2,13 +2,15 @@
 benchmark: wmdp
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v7
   repo_commit: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
@@ -102,6 +104,7 @@ verdicts:
   cv.07:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While the paper mentions collecting questions near the boundary, it does not define a named subset of boundary items with a stated size and membership criterion distinct from the main dataset.
     evidence:
       - source: paper
@@ -109,10 +112,10 @@ verdicts:
         locator: 2403.03218v7 page 5, chunk 2
         url: https://arxiv.org/abs/2403.03218v7
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.08:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not contain a table or figure comparing the same model on the original dataset and the adapted benchmark; they compare unlearned vs base models on WMDP.
     evidence:
       - source: paper
@@ -120,10 +123,10 @@ verdicts:
         locator: 2403.03218v7 page 10, chunk 3
         url: https://arxiv.org/abs/2403.03218v7
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.09:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark does not reuse a prior dataset or benchmark; it is a newly generated dataset, so this item is not applicable to the reuse limitation, but the rule requires listing modifications if reused. Since it's not reused, the condition for 'n/a' is met, but the item asks for modifications to reused data. Wait, n/a is allowed when no prior dataset is reused. Let's check cv.09 n/a condition.
     evidence:
       - source: paper
@@ -131,7 +134,6 @@ verdicts:
         locator: 2403.03218v7 page 1, chunk 2
         url: https://arxiv.org/abs/2403.03218v7
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: The item count is stated, but there is no power calculation or confidence-interval half-width reported.
@@ -236,10 +238,10 @@ verdicts:
   iv.02:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not name related phenomena that could be measured by the same tasks, nor do they discuss construct overlap.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.03:
     value: unmet
     rationale: The overlap with memorized facts mentioned in iv.02 is not quantified, nor is a mitigation described.
@@ -261,10 +263,10 @@ verdicts:
   iv.06:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The scoring involves parsing free-form output (JSON) in dataset creation, but the evaluation results do not compare parser output with reference labels on multiple response formats.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report overlap/contamination checks or training cutoffs for every evaluated model; it only suggests this as future work.
@@ -288,20 +290,15 @@ verdicts:
   iv.09:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not document that the harness resets state per task (e.g., fresh container) between evaluation runs.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
-    rationale: The benchmark uses a four-choice multiple-choice format but does not report a random-guess baseline or a named guessing mitigation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 5, chunk 0
-        quote: we design WMDP as a dataset of four-choice multiple-choice questions
-    by: model
-    quotes_verified: true
+    rationale: A 25% random baseline is reported, but no listed mitigation against guessing is demonstrated. A baseline alone is insufficient.
+    evidence: []
+    by: human
   ev.01:
     value: met
     rationale: The documentation states that external biosecurity experts were consulted to formulate the areas of biological information covered in the benchmark.
@@ -338,13 +335,14 @@ verdicts:
   ev.05:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The benchmark is a static evaluation tool for hazardous knowledge, not an evaluation of a specific deployed product or application configuration.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.06:
     value: met
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The documentation includes adversarial configurations, specifically mentioning the use of GCG adversarial suffixes to test if models can be manipulated.
     evidence:
       - source: paper
@@ -352,14 +350,13 @@ verdicts:
         locator: 2403.03218v7 page 24, chunk 0
         url: https://arxiv.org/abs/2403.03218v7
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.07:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While the documentation mentions limitations (e.g., static benchmark, multiple choice limitations), it does not explicitly list differences between the test setting and real deployment with a stated caveat on how to interpret results in light of those specific gaps.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: While some hyperparameters and a library version are mentioned, the documentation lacks a full list of software versions (lockfile), hardware models, and the OS or container image.
@@ -402,38 +399,38 @@ verdicts:
   rel.06:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts state that RMU drops performance to near random accuracy, providing a trivial baseline score for context."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.01:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts mention using GPT-4 as a judge for MT-Bench, but do not provide evidence or correlation data showing that these model ratings correlate with human judgments.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.02:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While the paper discusses adversarial attacks (GCG) against the model being evaluated, it does not report an adversarial test of the model rater (GPT-4) itself, nor does it describe specific defenses applied to the rater to resist reward hacking.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.03:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: There is no report of agreement across repeated rating runs on the same inputs for the model rater.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.04:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not mention measuring any named rater biases (e.g., length, position) or stating mitigations for them.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.05:
     value: met
     rationale: The documentation states that all questions were checked by at least two experts.
@@ -524,3 +521,9 @@ revisions:
       - cor.02
       - cor.03
       - cor.04
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 36 verdicts agreed, 18 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.10

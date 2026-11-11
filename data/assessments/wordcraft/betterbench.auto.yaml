@@ -101,11 +101,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.08:
-    value: 0
-    rationale: While metrics like zero-shot success rates are used, there is no explanation of the informed choice behind the metric selection.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Success and return are connected to goal completion and RL objectives; a comprehensive rationale for every metric is not established.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2007.09185v1
+        locator: reviewer note
+    by: human
   des.09:
     value: 0
     rationale: The excerpts do not provide metric floors or ceilings.
@@ -260,21 +262,21 @@ verdicts:
     by: model
     quotes_verified: true
   doc.04:
-    value: 0
-    rationale: No specific code documentation (like API docs) is provided beyond the README.
-    evidence: []
-    by: model
-    quotes_verified: true
-  doc.05:
-    value: 15
-    rationale: The paper was accepted to the 1st Workshop on Language in Reinforcement Learning, ICML 2020.
+    value: 10
+    rationale: Repository instructions document setup and usage, but full code/API documentation is not established.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 1, chunk 1
-        quote: Accepted to the   1   st   Workshop on Language in Reinforcement Learning , ICML 2020
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+        locator: reviewer note
+    by: human
+  doc.05:
+    value: 10
+    rationale: Accepted at the ICML 2020 Language in Reinforcement Learning workshop; BetterBench distinguishes workshops from main conferences.
+    evidence:
+      - source: repo
+        url: https://github.com/minqi/wordcraft/tree/4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
+        locator: reviewer note
+    by: human
   doc.06:
     value: 15
     by: human
@@ -408,3 +410,10 @@ revisions:
       - des.03
       - doc.06
       - doc.10
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - des.08
+      - doc.04
+      - doc.05

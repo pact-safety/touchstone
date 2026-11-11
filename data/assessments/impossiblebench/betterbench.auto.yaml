@@ -286,11 +286,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.04:
-    value: 0
-    rationale: No separate code documentation (e.g., API reference) is provided in the excerpts.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: README documents usage, scaffolds and analysis APIs, but does not comprehensively document all code/functions. A setup.py module docstring alone cannot establish 15.
+    evidence:
+      - source: repo
+        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
+        locator: reviewer note
+    by: human
   doc.05:
     value: 0
     rationale: The paper is listed as a 'Preprint. Under review.', not accepted at a peer-reviewed venue.
@@ -356,6 +358,7 @@ verdicts:
   doc.12:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The MIT License is explicitly specified in the LICENSE file.
     evidence:
       - source: repo
@@ -366,7 +369,6 @@ verdicts:
         locator: safety-research/impossiblebench@d4f9a149db2b:LICENSE, chunk 0
         url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.13:
     value: 0
     rationale: No globally unique persistent identifiers (like DOIs) for the dataset are provided.
@@ -445,3 +447,8 @@ revisions:
     items:
       - des.08
       - doc.12
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - doc.04

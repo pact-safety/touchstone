@@ -56,14 +56,12 @@ verdicts:
     quotes_verified: true
   1.2.1b:
     value: met
-    rationale: The benchmark states that tasks are priced based on real-world difficulty and that the work remains challenging for frontier models.
+    rationale: §1 explicitly ranges tasks from 15-minute fixes to features taking weeks.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 4, chunk 0
-        quote: SWE-Lancer issues are dynamically priced based on real-world difficulty
-    by: model
-    quotes_verified: true
+        locator: §1
+    by: human
   1.2.1c:
     value: met
     rationale: The benchmark specifies the format as code tasks (IC SWE) and proposal selection (SWE Management), and provides a full example prompt for the manager task.
@@ -132,14 +130,12 @@ verdicts:
     quotes_verified: true
   1.2.4a:
     value: met
-    rationale: The benchmark states items were sourced from the open-source Expensify repository and filtered by human engineers.
+    rationale: Expensify/Upwork sourcing and shared IC/manager prompt templates are documented in §2 and Appendix A.8.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 5, chunk 0
-        quote: The open-source Expensify repository posts tasks on Upwork for freelance engineers with concrete payouts. We sourced real tasks that were previously solved by paid contributors.
-    by: model
-    quotes_verified: true
+        locator: §2
+    by: human
   1.2.4b:
     value: met
     rationale: The benchmark states the item count for the IC SWE Diamond tasks (237) and the SWE Management tasks (724).
@@ -177,11 +173,13 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.1a:
-    value: unmet
-    rationale: The documentation does not define a reference protocol or specify which settings may vary without breaking comparability.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: met
+    rationale: Paper §3.1 defines the baseline; current README permits model changes but explicitly requires internet-disabled rollouts for validity.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/preparedness/tree/b78dab1da774a6456b1ed9c48c9ff194ee3ff36d/project/swelancer
+        locator: §3.1
+    by: human
   2.1.1b:
     value: unmet
     rationale: The excerpts mention a public evaluation split (Diamond) and a private holdout, but do not describe a separate labeled development/validation split for optimization.
@@ -303,10 +301,10 @@ verdicts:
   2.2.1:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark ships runnable evaluation code. Excerpt [paper:p1#0] states: 'we open-source a unified Docker image and a public evaluation split'. Excerpt [paper:p8#0] mentions 'our open-source eval harness'."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.2.2:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies a required JSON format for SWE Manager tasks and provides the path where it must be written."
@@ -495,10 +493,10 @@ verdicts:
   3.3.4:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts discuss limitations and comparisons but do not explicitly state what the scores should *not* be taken to show (e.g., that a high score does not imply safety).
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   3.3.5:
     value: met
     rationale: The benchmark includes a limitations section noting that certain engineering tasks (infrastructure) are underrepresented.
@@ -520,3 +518,10 @@ revisions:
       - 2.2.1
       - 2.4.2D
       - 3.3.4
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - 1.2.1b
+      - 1.2.4a
+      - 2.1.1a

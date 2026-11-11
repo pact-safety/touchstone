@@ -47,10 +47,10 @@ verdicts:
   cv.02:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation explicitly states what is excluded from the benchmark's scope, specifically regarding input modalities and system prompt modifications."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.03:
     value: unmet
     rationale: The paper mentions ten categories of behaviors, but does not report independent scores for each category in the provided tables.
@@ -60,10 +60,10 @@ verdicts:
   cv.04:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The docs define the task space via ten categories corresponding to OpenAI's usage policies and report item counts (10 behaviors per category, totaling 100 harmful behaviors)."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.05:
     value: unmet
     rationale: While categories are mentioned, the documentation does not report per-category item counts or a stratified sampling plan.
@@ -130,15 +130,10 @@ verdicts:
     by: human
     quotes_verified: true
   cv.15:
-    value: met
-    rationale: The headline metric for the judge selection is not a simple mean; it includes agreement, FPR, and FNR.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 6, chunk 0
-        quote: We compute the agreement, false positive rate (FPR), and false negative rate (FNR) for six classifiers.
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Human reference labels use majority vote, and the headline attack success rate uses one binary model judgment per response. Reporting FPR/FNR does not preserve item-level label variability; model ratings remain subjective.
+    evidence: []
+    by: human
   cv.16:
     value: unmet
     rationale: There is no table or figure breaking down failures by a named confound like prompt length or language complexity.
@@ -160,10 +155,10 @@ verdicts:
   cv.19:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation compares JBB to prior benchmarks (AdvBench, HarmBench) and states a concrete difference/gap it addresses (providing artifacts, reproducibility, handling adaptive attacks)."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cv.20:
     value: met
     rationale: The paper provides a limitations statement regarding attacker scope and links the repository of artifacts to the real-world capability of making LLMs more resilient.
@@ -211,6 +206,7 @@ verdicts:
   iv.06:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The scoring involves parsing free-form output using LLM judges (Llama-3-70B), so the n/a condition does not hold. The excerpts report judge agreement and FPR/FNR but do not compare parser output against reference labels on at least two distinct response formats to show agreement per format.
     evidence:
       - source: paper
@@ -218,7 +214,6 @@ verdicts:
         locator: 2404.01318v5 page 6, chunk 1
         url: https://arxiv.org/abs/2404.01318v5
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report overlap/contamination checks or training cutoffs for all evaluated models (e.g., Vicuna, Llama-2, GPT-3.5, GPT-4).
@@ -226,29 +221,24 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs (jailbreak strings) and local/API scoring without a mutable external environment.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 20, chunk 1
-        quote: we rely only a fixed set of jailbreaking strings
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Appendix E does report a post-release drop in GCG success on proprietary models, but not a complete environment changelog with revalidation of all affected results. Fixed prompts do not freeze API behavior.
+    evidence: []
+    by: human
   iv.09:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not explicitly state that the harness resets state per task (e.g., fresh container or conversation) between evaluation runs.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "The benchmark uses open-ended prompts and LLM judges, not multiple-choice questions, so the condition 'format is not multiple choice' is met. However, the decision rule requires reporting the format is not multiple choice OR reporting guessing mitigations. The excerpts confirm the format is not MCQ implicitly by describing jailbreak prompts, but do not explicitly state 'The format is not multiple choice'. Wait, the rule says 'met when: The format is not multiple choice...'. The excerpts describe 'jailbreak prompts' and 'responses'. This implies non-MCQ. But strict adherence requires evidence. The excerpts describe 'jailbreak prompts' and 'responses'. This is not MCQ. Is there a quote saying it is not MCQ? No. But is it MCQ? No. The rule is 'The format is not multiple choice'. The evidence shows it is free-form. Does 'free-form' count as 'not multiple choice'? Yes. But I need a quote. There is no quote saying 'not multiple choice'. However, the n/a is not allowed. The decision rule is 'met when: The format is not multiple choice...'. If I cannot find a quote saying it is not MCQ, can I infer it? The rule says 'Apply each item's decision rule literally, using only the excerpts given below.' and 'Quotes must be at least 12 characters...'. If the excerpt doesn't say 'not multiple choice', I can't use it to prove the 'not multiple choice' condition directly if I must rely on exact quotes for the 'met' condition. However, usually, if the format is clearly not MCQ, it is met. But the instruction says 'Quotes that do not appear in the cited excerpt are discarded'. I will look for a quote describing the format. 'jailbreak prompts' and 'responses'. This is not MCQ. But is there a quote confirming it? No. I will mark as unmet because the specific condition 'The format is not multiple choice' is not explicitly quoted, and no guessing mitigation is reported (because it's not MCQ, but the rule is an OR). Actually, if it's not MCQ, the first part of the OR is true. Do I need a quote for the first part? 'The format is not multiple choice'. The excerpts don't say that. They describe the format. I will mark unmet due to lack of explicit confirmation in quotes."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
@@ -270,10 +260,10 @@ verdicts:
   ev.04:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The documentation does not report results as a separate slice for a named stress condition or shift (e.g., domain, time, adversarial) that differs from the released splits. It mentions 'imbalances in composition' but does not present a separate slice for a specific stress condition.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ev.05:
     value: n/a
     rationale: The benchmark provides a general robustness framework for LLMs and does not claim to evaluate a specific deployed application.
@@ -401,17 +391,17 @@ verdicts:
   cor.10:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not demonstrate that the parser is deterministic or test its consistency on identical inputs.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.11:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report parser accuracy against a set of manually verified outputs.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts against the scorer.
@@ -435,3 +425,9 @@ revisions:
       - ev.04
       - cor.10
       - cor.11
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 10 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - cv.15
+      - iv.08

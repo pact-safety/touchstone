@@ -57,10 +57,10 @@ verdicts:
   1.2.1b:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The documentation describes the benchmark as 'challenging' and notes that difficulty increases with speedup thresholds, but it does not state a specific intended difficulty level (e.g., expert level) or target population.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   1.2.1c:
     value: met
     rationale: The format is described as generating CUDA kernels from PyTorch descriptions, and a one-shot example (an 'add' operator) is mentioned.
@@ -121,10 +121,10 @@ verdicts:
   1.2.3b:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides baseline scores from PyTorch Eager and torch.compile, which serve as reference points for model performance."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   1.2.4a:
     value: unmet
     rationale: While it lists categories, it does not describe the specific sourcing process or report on templating/near-duplicates.
@@ -202,17 +202,17 @@ verdicts:
   2.1.2c:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not explicitly specify which tools and agent scaffold are available to the model in the standard evaluation protocol, nor do they state there are none. The iterative refinement section mentions feedback, but the standard one-shot baseline does not detail an agent scaffold or tool availability in the provided text.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.1.2d:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the execution environment, recommending `modal` for standardization and providing details on GPU hardware and compilation steps."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.1.2e:
     value: met
     rationale: The benchmark specifies a fixed budget of 10 inference calls for repeated sampling and iterative refinement experiments.
@@ -270,24 +270,24 @@ verdicts:
   2.1.2j:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report results under varied protocol settings (sensitivity analysis). They report results for specific models and methods but do not show how results change under variations of the protocol itself.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.2.1:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark ships runnable evaluation code in the repo, including scripts for generation and evaluation."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.2.2:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the required output format (code in codeblocks) and provides logic to extract/evaluate it."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.2.3:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark has identifiable versions (v0, v0.1) linked in the README."
@@ -295,15 +295,10 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.4:
-    value: met
-    rationale: The benchmark recommends using 'modal' cloud functions to standardize the evaluation environment for running kernels.
-    evidence:
-      - source: repo
-        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
-        locator: ScalingIntelligence/KernelBench@423217d9fda9:EVAL.md, chunk 1
-        quote: we recommend using `modal` and we have provided / are adding more various modal cloud functions to standardize the evaluation environment
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: on the cited evidence. The harness executes generated kernels, so N/A is incorrect. Recommending Modal for reproducibility does not establish that benchmark runs use a container/VM with a provided sandbox definition; both are required.
+    evidence: []
+    by: human
   2.2.5:
     value: met
     rationale: The harness supports multiple providers (google, deepseek) via configuration settings in the scripts.
@@ -321,10 +316,10 @@ verdicts:
   2.3.1:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not show that the harness saves full per-item logs containing the model's response and its score. It mentions storing generated kernels and results, but not necessarily full per-item logs with transcripts.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.3.2:
     value: unmet
     rationale: The excerpts do not show that the output logs automatically record the model identifier and benchmark version.
@@ -372,10 +367,10 @@ verdicts:
   2.4.2E:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report results by subset, format or construct separately, other than by level (1, 2, 3) which is a difficulty metric, not necessarily a construct analysis as defined.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   3.1.2:
     value: met
     rationale: The benchmark defines the headline metric 'fast_p' and specifies that it is the fraction of tasks that are both correct and meet a speedup threshold.
@@ -479,3 +474,8 @@ revisions:
       - 2.2.2
       - 2.3.1
       - 2.4.2E
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 10 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - 2.2.4

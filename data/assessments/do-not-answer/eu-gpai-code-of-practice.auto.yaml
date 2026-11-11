@@ -2,13 +2,15 @@
 benchmark: do-not-answer
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 460703484df354958a5e1cd7378a38fcb94a2f3e
@@ -86,21 +88,19 @@ verdicts:
     quotes_verified: true
   iv.08:
     value: met
-    rationale: The benchmark describes how human labels were produced and used a consensus method to resolve disagreements.
+    rationale: for automatic grading — §6 validates GPT-4 and Longformer grades against human judgments. Human consensus alone does not satisfy the specified blinding/agreement control; that part is not established.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2308.13387v2
-        locator: 2308.13387v2 page 7, chunk 3
-        quote: They discussed instances of disagreement, and mutually agreed on the final label through consensus.
-    by: model
-    quotes_verified: true
+        locator: §6
+    by: human
   iv.09:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not state that the benchmark releases full model outputs or reasoning traces for evaluator inspection.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     rationale: There is no documented check for evaluation awareness, sandbagging, or under-elicitation.
@@ -133,10 +133,10 @@ verdicts:
   ev.03:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts provide specific counts and proportions for the diversity of the evaluation environment across different risk areas and harm types."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   rp.01:
     value: unmet
     rationale: The provided excerpts do not report run-to-run variation or a statement that the authors reproduced their headline numbers.
@@ -195,10 +195,10 @@ verdicts:
   rp.08:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not show that the harness runs models through public APIs or is built on a named public evaluation framework. The paper describes using GPT-4 API and fine-tuning PLMs, but does not mention exporting to a public standard format or using a public evaluation framework for the harness.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
@@ -210,3 +210,9 @@ revisions:
       - iv.09
       - ev.03
       - rp.08
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 15 verdicts agreed, 5 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.08

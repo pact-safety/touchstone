@@ -183,15 +183,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.04:
-    value: 10
-    rationale: The paper mentions using the HuggingFace library for experiments with various LMs, which typically supports local models, but does not explicitly state 'local model support'.
+    value: 5
+    rationale: "under the published BetterBench rubric: the paper describes local HuggingFace model experiments, but the linked official release supplies prompts/Wikipedia data and no local evaluation implementation. Mentioned local use without corresponding runnable code is below the 10/15 levels. Merely naming GPT-2/BERT/CTRL does not establish user-facing local-model support."
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 5, chunk 2
-        quote: For language generation experiments, we use the HuggingFace library [   42 ].
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
+        locator: reviewer note
+    by: human
   imp.05:
     value: 0
     rationale: The excerpts do not mention globally unique identifiers or encryption for evaluation instances.
@@ -433,3 +431,8 @@ revisions:
     items:
       - des.04
       - doc.08
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - imp.04

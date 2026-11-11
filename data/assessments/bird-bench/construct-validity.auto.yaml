@@ -74,10 +74,10 @@ verdicts:
   mo.3:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts discuss execution accuracy and efficiency but do not report parser accuracy against hand-checked outputs, repeat-run consistency, or bias comparisons across output formats.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The documentation explicitly states that no sampling strategy was used when asked if the dataset is a sample from a larger set.
@@ -115,15 +115,10 @@ verdicts:
     by: model
     quotes_verified: true
   ru.2:
-    value: n/a
-    rationale: The excerpts indicate that BIRD is a newly introduced benchmark rather than an adaptation of a previous dataset; it is compared to others but not derived from them.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 17, chunk 0
-        quote: To address this issue, we introduce B IRD , the largest cross-domain text-to-SQL benchmark highlighting extensive and realistic databases for community development.
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: "if reused source databases count as adapted prior data: BIRD does reuse databases from sources such as Kaggle/CTU, so a blanket assertion of no reused data is too strong. The quoted comparisons concern other text-to-SQL benchmarks, not strengths and limitations of the actual reused database sources. Being prevalent or schema-focused is not, by itself, a stated strength. If this criterion is restricted to reuse of prior QA task instances, N/A would instead apply; that scope should be explicit."
+    evidence: []
+    by: human
   ru.3:
     value: n/a
     rationale: The benchmark is not an adaptation of a prior dataset, so comparing performance against an 'original' version is not applicable.
@@ -282,3 +277,8 @@ revisions:
     summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 1 decided by the reviewer."
     items:
       - mo.3
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - ru.2

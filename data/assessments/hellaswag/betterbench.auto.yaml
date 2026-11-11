@@ -103,14 +103,12 @@ verdicts:
     quotes_verified: true
   des.09:
     value: 15
-    rationale: The benchmark includes a random chance baseline of 25%.
+    rationale: Four-choice accuracy has bounds 0–100%, with chance explicitly 25%. Human performance is an empirical comparison, not a mathematical ceiling.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 3, chunk 0
-        quote: The baseline (25% accuracy) is random chance.
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   des.10:
     value: 15
     rationale: Human performance is explicitly provided as being over 95%.
@@ -133,11 +131,13 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   des.12:
-    value: 0
-    rationale: The excerpts do not mention a validated automatic evaluation process.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Automatic four-choice accuracy is used. Human solving/validation establishes dataset quality and a baseline, not measured agreement of an automated grader with human grading.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: reviewer note
+    by: human
   des.13:
     value: 15
     rationale: The text explains how HellaSwag differs from SWAG by being more challenging and adversarial to models like BERT.
@@ -149,15 +149,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.14:
-    value: 15
-    rationale: Input sensitivity is addressed by testing performance when context is removed or words are shuffled.
+    value: 0
+    rationale: Removing context or shuffling words changes the information/meaning and diagnoses shortcuts; it does not demonstrate sensitivity testing on semantically equivalent inputs.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 3, chunk 1
-        quote: "We compare: Ending Only No context is provided; just the endings."
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   imp.01:
     value: 15
     rationale: The paper explicitly provides a URL where the code for the benchmark is available.
@@ -298,14 +296,12 @@ verdicts:
     quotes_verified: true
   doc.09:
     value: 10
-    rationale: The paper mentions considering the limits of the current pretraining paradigm.
+    rationale: §6.2 discusses possible shortcut success on the dataset and the need to refresh it. The quoted compute-extrapolation caveat concerns an analysis, not comprehensive benchmark use/design limitations.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 8, chunk 2
-        quote: Though we expect this trend to continue, it also behooves us to consider its limits.
-    by: model
-    quotes_verified: true
+        locator: §6.2
+    by: human
   doc.10:
     value: 0
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The data collection process via Adversarial Filtering is documented."
@@ -367,11 +363,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.18:
-    value: 0
-    rationale: The representativeness of the data is not explained.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Source composition, category splits and human-filtering choices are documented. In-domain/zero-shot splits alone do not quantitatively establish real-world representativeness.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1905.07830v1
+        locator: reviewer note
+    by: human
   doc.19:
     value: 0
     rationale: There is no mention of the documentation following a recognized standard.
@@ -406,3 +404,12 @@ revisions:
     items:
       - des.04
       - des.07
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 8 decided by the reviewer."
+    items:
+      - des.09
+      - des.12
+      - des.14
+      - doc.09
+      - doc.18

@@ -65,11 +65,13 @@ verdicts:
         url: https://arxiv.org/abs/2310.06770v3
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: Resolved-task scores have a defined interpretation, while §7 cautions that test success does not guarantee overall software quality.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: §7
+    by: human
   des.05:
     value: 0
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The 'Verified' version of the benchmark specifically uses problems verified by software engineers."
@@ -202,21 +204,21 @@ verdicts:
     by: model
     quotes_verified: true
   imp.06:
-    value: 15
-    rationale: The paper describes a procedure to ensure the training data repositories are disjoint from the evaluation benchmark to eliminate contamination.
+    value: 10
+    rationale: Temporal performance comparisons provide a partial contamination probe; disjoint fine-tuning repositories alone are not a detection task. §5/Table 7,
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2310.06770v3
-        locator: 2310.06770v3 page 4, chunk 2
-        quote: To eliminate the risk of data contamination, the set of repositories in the training data is disjoint from those included in the evaluation benchmark.
-    by: model
-    quotes_verified: true
+        locator: §5/Table
+    by: human
   imp.07:
-    value: 0
-    rationale: No specific script for replicating the final reported results is mentioned; only general evaluation scripts are provided.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Inference and evaluation scripts support partial reproduction. The quoted “Code for reproduction” is a dataset bug report, not benchmark replication instructions.
+    evidence:
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/blob/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/docs/reference/inference.md
+        locator: reviewer note
+    by: human
   imp.08:
     value: 0
     rationale: The excerpts do not mention statistical significance or uncertainty quantification for the results.
@@ -242,15 +244,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.01:
-    value: 15
-    rationale: The quickstart guide provides a command to install the package and its dependencies using pip.
+    value: 10
+    rationale: pyproject.toml declares dependencies, but many lack versions.
     evidence:
       - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/guides/quickstart.md, chunk 0
-        quote: pip install -e .
-    by: model
-    quotes_verified: true
+        url: https://github.com/SWE-bench/SWE-bench/blob/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/pyproject.toml
+        locator: reviewer note
+    by: human
   doc.02:
     value: 15
     by: human
@@ -265,15 +265,13 @@ verdicts:
         url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
     quotes_verified: true
   doc.03:
-    value: 15
-    rationale: "The provided code excerpts from the paper show the use of in-line comments (e.g., # symbols)."
+    value: 10
+    rationale: Harness code has substantial comments/docstrings, but complete purpose/input/output documentation for every function is not established.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2310.06770v3
-        locator: 2310.06770v3 page 50, chunk 1
-        quote: "#   insert   prolog   (after   docinfo   if   exists)"
-    by: model
-    quotes_verified: true
+      - source: repo
+        url: https://github.com/SWE-bench/SWE-bench/blob/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/run_evaluation.py
+        locator: reviewer note
+    by: human
   doc.04:
     value: 15
     rationale: The repository contains a comprehensive documentation directory with guides and API references.
@@ -422,20 +420,15 @@ verdicts:
   mai.01:
     value: 0
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts describe execution-based validation of task instances (tests passing/failing) but do not mention checking 'code usability' within the last year.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   mai.02:
-    value: 15
-    rationale: The repository README explicitly welcomes contributions, pull requests, and issues as a way to hear from the community.
-    evidence:
-      - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:README.md, chunk 11
-        quote: we welcome any contributions, pull requests, or issues!
-    by: model
-    quotes_verified: true
+    value: 0
+    rationale: "under the published BetterBench responsiveness rubric. The issue channel exists, but #602 (June 19, 2026) remains open; its live Activity section shows only the reporter adding a bug label, with no reply or maintainer acknowledgment as of November 11, 2026. Unacknowledged feedback older than three months excludes 10/15."
+    evidence: []
+    by: human
   mai.03:
     value: 15
     rationale: The README lists specific contact persons along with their website and email addresses.
@@ -459,3 +452,13 @@ revisions:
       - doc.02
       - doc.17
       - mai.01
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 12 decided by the reviewer."
+    items:
+      - des.04
+      - imp.06
+      - imp.07
+      - doc.01
+      - doc.03
+      - mai.02

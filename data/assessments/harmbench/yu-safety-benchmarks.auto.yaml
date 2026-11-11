@@ -2,13 +2,15 @@
 benchmark: harmbench
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
@@ -261,15 +263,13 @@ verdicts:
     by: model
     quotes_verified: true
   r9.a:
-    value: unmet
-    rationale: The source of prompts is mentioned (e.g., modeled after existing datasets), but there is no reported validation of the synthetic prompts themselves.
+    value: met
+    rationale: §4.2 identifies author-designed behaviors informed by summarized provider policies and reports repeated manual filtering for ambiguous dual intent; contextual searchability is checked empirically. Classifier-label validation alone would not validate the prompts.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 5, chunk 2
-        quote: Standard behaviors are modeled after existing datasets of harmful behaviors, including AdvBench and the TDC 2023 Red Teaming Track dataset
-    by: model
-    quotes_verified: true
+        locator: §4.2
+    by: human
   r9.b:
     value: met
     by: human
@@ -334,3 +334,9 @@ revisions:
     items:
       - r8.b
       - r9.b
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 32 verdicts agreed, 5 decided by the reviewer."
+    items:
+      - status
+      - r9.a

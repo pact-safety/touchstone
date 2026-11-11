@@ -2,13 +2,15 @@
 benchmark: harmbench
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
@@ -37,10 +39,10 @@ verdicts:
   c1:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not provide current best reported scores, maximum achievable ceilings, or evidence of headroom/saturation analysis for HarmBench. The text focuses on method development and robustness comparisons rather than benchmark saturation metrics.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   c2:
     value: met
     rationale: The benchmark implements a contamination defense by providing canonical validation and test splits that are intended for evaluation only and should not be used for development.
@@ -58,15 +60,10 @@ verdicts:
     by: model
     quotes_verified: true
   c4:
-    value: met
-    rationale: The benchmark reports a validation pass for its classifiers, showing high agreement with human labels (88.6% and 93.2%) and a low number of errors (51 and 41).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 19, chunk 1
-        quote: The validation classifier obtains   88 . 6%   agreement with human labels, compared to   93 . 2%   for the test classifier.
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: on the cited evidence. Agreement of the automated response classifier with human labels validates a scoring component; it is not an audit reporting the annotation-error rate of the released benchmark data. The quoted classifier percentages cannot establish the required low dataset error rate.
+    evidence: []
+    by: human
   c5:
     value: met
     rationale: The benchmark states its purpose is to uncover vulnerabilities in defenses and improve AI safety, a goal that remains current for the models it evaluates.
@@ -78,11 +75,13 @@ verdicts:
     by: model
     quotes_verified: true
   c6:
-    value: unmet
-    rationale: The provided excerpts do not state the simplifying assumptions the benchmark relies on, which is required to meet this criterion.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: met
+    rationale: within stated scope — §§3.1/B.3 explicitly assume greedy decoding and instruction-following models, and focus on model-level defenses. Category diversity alone is not the relevant assumption evidence.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2402.04249v2
+        locator: §§3.1/B.3
+    by: human
   c7:
     value: unmet
     rationale: There is no evidence of a maintenance process for the benchmark's content to prevent semantic drift, nor a cited source confirming the labels remain representative over time.
@@ -116,3 +115,10 @@ revisions:
     summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4."
     items:
       - c1
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 1 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c4
+      - c6

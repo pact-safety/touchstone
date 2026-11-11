@@ -125,10 +125,10 @@ verdicts:
   des.10:
     value: 0
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While human evaluators are used for validation, the excerpts do not provide a specific human performance level or benchmark score achieved by humans on the task.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   des.11:
     value: 0
     rationale: There is no mention of a random performance level baseline.
@@ -184,15 +184,13 @@ verdicts:
     by: model
     quotes_verified: true
   imp.03:
-    value: 10
-    rationale: The repository includes a notebook that uses a GPT version of the autograder, implying API usage, and the dependencies include the openai library.
+    value: 15
+    rationale: The maintained successor repository supports OpenAI, Perplexity and DeepInfra models through generate.py/LiteLLM.
     evidence:
       - source: repo
-        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
-        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 1
-        quote: "scoring the responses using a GPT version of our autograder: `run_strongreject.ipynb`"
-    by: model
-    quotes_verified: true
+        url: https://github.com/dsbowen/strong_reject/blob/7a551d5b440ec7b75d4f6f5bb7c1719965b76b47/strong_reject/generate.py
+        locator: reviewer note
+    by: human
   imp.04:
     value: 10
     rationale: The paper mentions fine-tuning a Gemma 2B model to serve as an evaluator that can run on a single GPU, implying local model support.
@@ -459,3 +457,8 @@ revisions:
     items:
       - des.04
       - des.10
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 4 settled by adjudicator-v4, 4 decided by the reviewer."
+    items:
+      - imp.03

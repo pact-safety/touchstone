@@ -278,11 +278,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.09:
-    value: 0
-    rationale: The paper discusses limitations of other datasets (WikiHop, bAbI) but does not explicitly document the limitations of ARC itself.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: "ARC-specific limitations are present: Question Types says the category proportions are approximate and subjectively judged from 100 questions; the Corpus section acknowledges indirect evidence and the need for unstated commonsense knowledge. These support partial design/coverage limitations. The synthetic-dataset warning quoted by Reading 1 concerns other datasets, so it cannot establish comprehensive ARC limitations at 15; Reading 2’s absolute 0 overlooks the ARC-specific passages."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: reviewer note
+    by: human
   doc.10:
     value: 15
     rationale: The data collection process is documented, including the use of standardized tests and the search process.
@@ -294,15 +296,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.11:
-    value: 10
-    rationale: The paper mentions reporting scores as percentages on test sets, though a formal metric definition is brief.
+    value: 15
+    rationale: "Baseline Systems defines the metric precisely: one point for a correct answer, 1/k for a k-way tie containing the correct answer, then total points divided by question count and expressed as a percentage. This is substantially stronger than merely saying scores are percentages and is important because the metric is not always strict single-answer accuracy."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 7, chunk 3
-        quote: Scores are reported as percentages on the test sets.
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   doc.12:
     value: 0
     rationale: No specific license is mentioned in the provided excerpts.
@@ -312,10 +312,10 @@ verdicts:
   doc.13:
     value: 0
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.14:
     value: 0
     rationale: No standardized metadata (e.g., Schema.org, Dublin Core) is mentioned.
@@ -323,21 +323,21 @@ verdicts:
     by: model
     quotes_verified: true
   doc.15:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper lists the specific sources of the questions in Table 7 and describes the collection process."
-    evidence: []
-    by: model
-    quotes_verified: true
-  doc.16:
     value: 10
-    rationale: The paper mentions filtering long sentences and noisy sentences for the corpus, which is a preprocessing step.
+    rationale: Appendix A lists source organizations, descriptions and question counts, including an anonymous content partner and its research-use permission. The paper describes question collection and corpus search/processing. This clearly exceeds 0, but does not comprehensively document provenance/licensing for every source to support the full BetterBench level. A table caption alone is insufficient evidence; cite the actual table and Corpus section.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 9, chunk 3
-        quote: We filter long sentences ( >   300   characters), sentences with negation and noisy sentences
-    by: model
-    quotes_verified: true
+        locator: Appendix A
+    by: human
+  doc.16:
+    value: 10
+    rationale: "with corrected scope: the Corpus section describes deduplication, stripping document content to text and sentence segmentation, while the question-set section describes IR/PMI filtering. These are general preprocessing descriptions, not exhaustive reproducible specifications. The quoted >300-character/negation filtering is part of the entailment baseline’s retrieved-evidence processing (Appendix B), not the corpus-wide construction pipeline."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/1803.05457v1
+        locator: Appendix B
+    by: human
   doc.17:
     value: 0
     rationale: The data comes from existing standardized tests; no new annotation process for the ARC dataset itself is documented.
@@ -346,14 +346,12 @@ verdicts:
     quotes_verified: true
   doc.18:
     value: 10
-    rationale: The paper provides a grade-level distribution of the questions, which explains the representativeness of the student population.
+    rationale: grade-level counts, source composition and sampled knowledge/reasoning categories characterize dataset coverage. They do not establish representativeness of a student population (students were not sampled), nor compare coverage comprehensively against a defined population of science questions. Reading 1’s numerical level is appropriate but its student-population explanation is incorrect.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 3, chunk 0
-        quote: "Table 2: Grade-level distribution of ARC questions"
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   doc.19:
     value: 0
     rationale: There is no mention of following a recognized documentation standard.
@@ -389,3 +387,12 @@ revisions:
       - des.07
       - des.10
       - doc.13
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 7 decided by the reviewer."
+    items:
+      - doc.09
+      - doc.11
+      - doc.15
+      - doc.16
+      - doc.18

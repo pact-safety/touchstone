@@ -92,11 +92,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.07:
-    value: 0
-    rationale: There is no mention of integrating domain literature; it mentions inspiration from real-world counterparts.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: §2 explicitly uses prior dialogue/user-simulation research to motivate interactive LM simulation and consistency testing. Real-world inspiration alone would not suffice.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: §2
+    by: human
   des.08:
     value: 15
     rationale: The choice of the pass^k metric is informed by the need for reliability and consistency in real-world agent tasks like customer service.
@@ -250,25 +252,21 @@ verdicts:
     by: model
     quotes_verified: true
   doc.02:
-    value: 10
-    rationale: The README provides a specific command to run the auto error identification feature, which acts as a partial guide/demo for using the benchmark.
+    value: 15
+    rationale: README documents installation, API-key setup and complete evaluation commands.
     evidence:
       - source: repo
         url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
-        locator: sierra-research/tau-bench@59a200c6d575:README.md, chunk 6
-        quote: |-
-          To run the auto error identification, run:
-
-          ```bash
-          python auto_error_identification.py
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   doc.03:
-    value: 0
-    rationale: The provided excerpts do not contain any source code files with in-line comments.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 5
+    rationale: Core environment code has sparse inline comments; comprehensive function documentation is absent. Tool schemas are not a substitute.
+    evidence:
+      - source: repo
+        url: https://github.com/sierra-research/tau-bench/blob/59a200c6d575d595120f1cb70fea53cef0632f6b/tau_bench/envs/base.py
+        locator: reviewer note
+    by: human
   doc.04:
     value: 15
     rationale: The paper explicitly mentions that domain-specific data includes documentation.
@@ -345,6 +343,7 @@ verdicts:
   doc.12:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The repository includes a LICENSE file specifying the MIT License.
     evidence:
       - source: repo
@@ -352,7 +351,6 @@ verdicts:
         locator: sierra-research/tau-bench@59a200c6d575:LICENSE, chunk 0
         url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.13:
     value: 0
     rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
@@ -376,11 +374,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.16:
-    value: 0
-    rationale: While data generation is mentioned, specific preprocessing steps taken on the data are not documented.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: Generation and iterative manual refinement are described, but the cited text does not fully specify all preprocessing changes.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2406.12045v1
+        locator: reviewer note
+    by: human
   doc.17:
     value: 15
     rationale: The paper documents the manual task annotation and validation process.
@@ -410,15 +410,10 @@ verdicts:
     by: model
     quotes_verified: true
   mai.02:
-    value: 10
-    rationale: The README provides a feedback channel by instructing users to submit issues or pull requests if they find problems.
-    evidence:
-      - source: repo
-        url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
-        locator: sierra-research/tau-bench@59a200c6d575:README.md, chunk 6
-        quote: Please submit issues or pull requests if you find problems with the benchmark.
-    by: model
-    quotes_verified: true
+    value: 0
+    rationale: "under the published responsiveness rubric. GitHub issues provide a channel, but #70 (September 29, 2025) remains unanswered in the public listing more than three months later, and the README now says this benchmark is no longer updated."
+    evidence: []
+    by: human
   mai.03:
     value: 0
     rationale: While the paper lists authors, no specific contact person (e.g., email or designated maintainer) is listed for the benchmark maintenance.
@@ -435,3 +430,12 @@ revisions:
     items:
       - des.14
       - doc.12
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 7 decided by the reviewer."
+    items:
+      - des.07
+      - doc.02
+      - doc.03
+      - doc.16
+      - mai.02

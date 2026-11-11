@@ -2,13 +2,15 @@
 benchmark: gaia
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
 model_run:
@@ -73,10 +75,10 @@ verdicts:
   mo.3:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts describe automated evaluation via quasi-exact match but do not report parser accuracy against hand-checked outputs, repeat-run consistency, or bias comparisons across formats.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts mention that questions were 'carefully crafted' and follow a 'design methodology', but no specific sampling strategy over a described task space is documented.
@@ -86,10 +88,10 @@ verdicts:
   ds.2:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts state that 'two rounds of annotations are required' to ensure questions are unambiguous, but they do not document a quality or relevance check for every single item in the dataset.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: There is no mention of a counted subset of permuted or perturbed items, nor are such results reported separately.
@@ -109,24 +111,24 @@ verdicts:
   ru.2:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While the paper acknowledges limitations of the benchmark itself, it does not analyze or report the specific strengths and limitations of the 'existing evaluation datasets' that were repurposed.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ru.3:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The paper does not report or compare performance on the new benchmark against the original repurposed datasets.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ru.4:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The paper does not explain modifications to the reused datasets or how they improve construct validity.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The excerpts mention that contamination is mitigated by the design of the tasks, but no specific contamination test is described or reported.
@@ -171,15 +173,13 @@ verdicts:
     by: model
     quotes_verified: true
   st.3:
-    value: unmet
-    rationale: While human annotators are mentioned, their demographics are not described.
+    value: n/a
+    rationale: for model-output raters — Answers are graded by quasi-exact match, not human ratings. Dataset curators/validators are described demographically in Appendix B, contrary to both readings.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 7, chunk 3
-        quote: validation by two supplementary annotators
-    by: model
-    quotes_verified: true
+        locator: Appendix B
+    by: human
   st.4:
     value: n/a
     rationale: Every label comes from a deterministic key; the paper states there is only one correct answer and evaluation is via quasi exact match.
@@ -267,3 +267,9 @@ revisions:
       - ru.2
       - ru.3
       - ru.4
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 19 verdicts agreed, 6 settled by adjudicator-v4, 3 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - st.3

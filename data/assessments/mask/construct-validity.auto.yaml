@@ -2,13 +2,15 @@
 benchmark: mask
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
@@ -194,15 +196,10 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   st.4:
-    value: n/a
-    rationale: The benchmark explicitly avoids subjective examples, stating that models are incentivized to lie about verifiable facts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 5, chunk 3
-        quote: We avoid examples where the ground-truth is subjective or widely debated. In all cases, models are incentivized to lie about verifiable facts.
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Factual propositions have objective truth values, but an LLM judge rates whether free-form responses resolve them. Reported human–pipeline agreement validates that mapping; no rater-disagreement distribution or human inter-annotator statistic is established.
+    evidence: []
+    by: human
   ea.1:
     value: met
     by: human
@@ -220,10 +217,10 @@ verdicts:
   ea.2:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While the paper mentions that accuracy correlates with compute, it does not provide a table or figure breaking down failures or scores by a named confounder with counts or rates to investigate correlation with non-targeted phenomena.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   ea.3:
     value: unmet
     rationale: The paper states in Figure 8 that 'No one archetype represents a disproportionate amount of honest or lying examples', but it does not discuss specific scoring biases revealed by this analysis.
@@ -287,3 +284,9 @@ revisions:
     items:
       - ea.1
       - ea.2
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 3 settled by adjudicator-v4, 3 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - st.4

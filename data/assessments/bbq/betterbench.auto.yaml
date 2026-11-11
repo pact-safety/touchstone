@@ -123,11 +123,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.11:
-    value: 0
-    rationale: The excerpts do not provide a random performance level baseline.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 15
+    rationale: ", using corrected evidence: Section 6 Accuracy explicitly reports chance accuracy as 33.3%. The question-only model is not random, so Reading 2’s rationale is incorrect, but the actual chance level is indeed included. This corrects my earlier selection after checking the full Results section."
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2110.08193v2
+        locator: Section 6
+    by: human
   des.12:
     value: 0
     rationale: While human validation is mentioned, there is no mention of a validated automatic evaluation method for the benchmark itself.
@@ -264,11 +266,13 @@ verdicts:
     by: model
     quotes_verified: true
   doc.04:
-    value: 0
-    rationale: No specific code documentation (like API docs) is provided beyond the README.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: README documents repository organization, analysis metadata fields, links to model implementation and inference input formatting. This is partial implementation/usage documentation; no comprehensive coverage of relevant functions and scripts is established. Dataset structure alone does not justify 15, and absence of a separate API-doc site does not imply 0.
+    evidence:
+      - source: repo
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+        locator: reviewer note
+    by: human
   doc.05:
     value: 15
     rationale: The paper was published in the Findings of ACL 2022, which is a peer-reviewed venue.
@@ -282,6 +286,7 @@ verdicts:
   doc.06:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The paper details the template construction, name selection, and validation processes.
     evidence:
       - source: paper
@@ -289,7 +294,6 @@ verdicts:
         locator: 2110.08193v2 page 13, chunk 1
         url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.07:
     value: 15
     rationale: The paper documents the test tasks (evaluating model responses to social biases) and the rationale (highlighting attested social biases).
@@ -303,6 +307,7 @@ verdicts:
   doc.08:
     value: 15
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The paper documents assumptions about normative properties, such as the US English-speaking context and the use of names as proxies.
     evidence:
       - source: paper
@@ -310,7 +315,6 @@ verdicts:
         locator: 2110.08193v2 page 8, chunk 3
         url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.09:
     value: 15
     rationale: The paper documents limitations regarding the sample size and the cultural context (US English-speaking).
@@ -400,15 +404,13 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   doc.18:
-    value: 15
-    rationale: The paper explains the representativeness of the names used to reflect extreme distributional differences in name-ethnicity relations.
+    value: 10
+    rationale: the paper explains US-English cultural scope, category/template coverage, name selection and the limitations of names as identity proxies. This is meaningful representativeness reasoning, but deliberately selecting names with extreme demographic associations does not establish comprehensive representativeness of the broader population or naturally occurring QA. The excerpt cannot justify 15.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 5, chunk 3
-        quote: our proper name vocabulary reflects the most extreme distributional differences in name-ethnicity and name-gender relations
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   doc.19:
     value: 0
     rationale: There is no mention of the documentation following a recognized standard (e.g., Datasheets for Datasets).
@@ -445,3 +447,10 @@ revisions:
       - imp.07
       - doc.06
       - doc.08
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 7 decided by the reviewer."
+    items:
+      - des.11
+      - doc.04
+      - doc.18

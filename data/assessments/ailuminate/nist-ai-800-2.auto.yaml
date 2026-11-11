@@ -2,13 +2,15 @@
 benchmark: ailuminate
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
@@ -47,10 +49,10 @@ verdicts:
   1.2.1a:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper lists specific subject areas (12 text-content hazard categories) and classifies them into Physical, Nonphysical, and Contextual hazards."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   1.2.1b:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the sophistication of the represented audience via personas."
@@ -104,10 +106,10 @@ verdicts:
   1.2.3a:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report results by item difficulty tier, nor do they report scores for at least three models of clearly different capability to allow judgment of difficulty suitability.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   1.2.3b:
     value: unmet
     rationale: The documentation explicitly states that human performance levels are not included.
@@ -121,10 +123,10 @@ verdicts:
   1.2.4a:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation states prompts were sourced from multiple populations with distinct demographics and geographic locales, and mentions prompt perturbation/templating."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   1.2.4b:
     value: unmet
     rationale: The excerpts do not state the total number of test items in the full set or subsets.
@@ -134,10 +136,10 @@ verdicts:
   1.2.4c:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark takes steps to reduce contamination by prohibiting training on the sample set via license and signed agreements, and by not providing the evaluation set."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   1.2.4d:
     value: unmet
     rationale: The documentation explicitly marks the inclusion of canary data as 'N' (not adopted).
@@ -163,10 +165,10 @@ verdicts:
   2.1.1b:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts mention 'practice prompts' and 'hidden' prompts but do not explicitly define a labeled development/validation split that is distinct from the test items and available for evaluator optimization.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.1.2a:
     value: unmet
     rationale: While the paper mentions temperature as a source of variance, it does not specify the exact settings used for reported results or state they are left to the evaluator.
@@ -238,10 +240,10 @@ verdicts:
   2.1.2i:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts discuss evaluator uncertainty and human annotation processes but do not report a specific numerical agreement (e.g., Cohen's kappa, accuracy) between the LLM judge and human graders.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.1.2j:
     value: unmet
     rationale: There are no reported results showing how scores change under varied protocol settings.
@@ -307,10 +309,10 @@ verdicts:
   2.4.1.4:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not specify how refusals are scored or if they are reported separately.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.4.1.5:
     value: n/a
     rationale: Items are answered in a single response with no tools or environment.
@@ -324,10 +326,10 @@ verdicts:
   2.4.2C:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not document that task instructions were reviewed for clarity by more than one person or that human testers attempted the tasks.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   2.4.2D:
     value: unmet
     rationale: The excerpts do not provide reference results for a specific model version and protocol for evaluators to replicate.
@@ -337,10 +339,10 @@ verdicts:
   2.4.2E:
     value: unmet
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report results by subset, format, or construct separately.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   3.1.2:
     value: met
     rationale: The benchmark defines the headline metric (S SUT) as the percentage of violating responses and provides the aggregation formula.
@@ -410,15 +412,13 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: n/a
-    rationale: The benchmark uses a 'Reference' system for comparison rather than a baseline measured under specific human or external conditions.
+    value: unmet
+    rationale: "on the cited evidence. A model-based reference is still a baseline, so N/A is not justified. Section 6.2 defines how the reference is selected and combined, but selection criteria alone do not document the baseline run conditions relative to evaluated systems. The quote supports what the reference is, not the full condition required here. Source: , Section 6.2."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 20, chunk 0
-        quote: Reference   Ref   AI system for scoring comparison
-    by: model
-    quotes_verified: true
+        locator: Section 6.2
+    by: human
   3.3.4:
     value: met
     rationale: The benchmark includes disclaimers to prevent users from misinterpreting results, as noted in the mitigation table.
@@ -456,3 +456,9 @@ revisions:
       - 2.4.1.4
       - 2.4.2C
       - 2.4.2E
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 39 verdicts agreed, 11 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 3.3.3

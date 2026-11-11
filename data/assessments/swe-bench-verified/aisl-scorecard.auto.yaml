@@ -202,14 +202,12 @@ verdicts:
     adjudicated_by: adjudicator-v4
   cv.19:
     value: met
-    rationale: The paper compares SWE-bench to traditional NLP benchmarks and states that it addresses the gap of 'contrived' problems by using real-world software engineering tasks.
+    rationale: The original paper contrasts repository-scale tasks with HumanEval’s self-contained functions (§1).
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2310.06770v3
-        locator: 2310.06770v3 page 3, chunk 1
-        quote: Traditional benchmarks in NLP typically involve only short input and output sequences and consider somewhat “contrived” problems... In contrast, SWE-bench’s realistic construction setting
-    by: model
-    quotes_verified: true
+        locator: §1
+    by: human
   cv.20:
     value: unmet
     rationale: The documentation does not provide a specific limitations statement for the design linked to a real-world capability or harm.
@@ -256,17 +254,10 @@ verdicts:
     quotes_verified: true
     adjudicated_by: adjudicator-v4
   iv.06:
-    value: n/a
-    rationale: Scoring is based on whether the patch makes the required tests pass in a Docker environment, not on parsing free-form output for correctness.
-    evidence:
-      - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 0
-        quote: |-
-          3. Runs the repository's test suite
-          4. Determines if the patch successfully resolves the issue
-    by: model
-    quotes_verified: true
+    value: unmet
+    rationale: Patch-format failures matter, but no parser/reference agreement comparison across two formats is established. Execution-based correctness does not eliminate patch parsing.
+    evidence: []
+    by: human
   iv.07:
     value: unmet
     rationale: While the paper mentions disjoint repositories for SWE-Llama, it does not report contamination checks or training cutoffs for every evaluated model (e.g., Claude 2, GPT-4).
@@ -286,14 +277,12 @@ verdicts:
     quotes_verified: true
   iv.09:
     value: met
-    rationale: The harness uses Docker environments for repositories, and the CLI provides a command to clean leftover containers.
+    rationale: run_evaluation.py creates a fresh instance container and removes any old container with that name.
     evidence:
       - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/reference/cli.md, chunk 5
-        quote: "swebench images clean --run-id my-run      # remove leftover containers"
-    by: model
-    quotes_verified: true
+        url: https://github.com/SWE-bench/SWE-bench/blob/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e/swebench/harness/run_evaluation.py
+        locator: reviewer note
+    by: human
   iv.10:
     value: met
     rationale: The benchmark is not multiple choice; it requires generating a patch to pass tests.
@@ -343,17 +332,18 @@ verdicts:
     by: model
     quotes_verified: true
   ev.06:
-    value: n/a
-    rationale: The benchmark evaluates general software engineering capabilities rather than a specific deployed application.
+    value: unmet
+    rationale: No adversarial or misuse configuration is demonstrated. General capability evaluation does not make this criterion inapplicable.
     evidence: []
-    by: model
-    quotes_verified: true
+    by: human
   ev.07:
-    value: n/a
-    rationale: The benchmark evaluates general software engineering capabilities rather than a specific deployed application.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: met
+    rationale: §7 cautions that Python-only coverage and passing tests do not establish comprehensive, efficient, readable software.
+    evidence:
+      - source: paper
+        url: https://arxiv.org/abs/2310.06770v3
+        locator: §7
+    by: human
   rel.01:
     value: unmet
     rationale: The documentation mentions Docker and some hardware recommendations (RAM/CPU), but does not list sampling parameters, pinned library versions/lockfiles, or a specific OS/container image version.
@@ -447,14 +437,12 @@ verdicts:
     adjudicated_by: adjudicator-v4
   cor.08:
     value: met
-    rationale: The benchmark allows for novel solutions that deviate from the reference PR, provided they pass the tests.
+    rationale: Test-based acceptance permits alternative patches; Table 32 shows a successful solution differing from the reference.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2310.06770v3
-        locator: 2310.06770v3 page 3, chunk 3
-        quote: SWE-bench also allows creative freedom, as models can generate novel solutions that may deviate from the reference PR.
-    by: model
-    quotes_verified: true
+        locator: Table 32
+    by: human
   cor.09:
     value: unmet
     rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, or refusals.
@@ -487,3 +475,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 33 settled by adjudicator-v4, 16 decided by the reviewer."
+    items:
+      - cv.19
+      - iv.06
+      - iv.09
+      - ev.06
+      - ev.07
+      - cor.08

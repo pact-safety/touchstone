@@ -67,15 +67,13 @@ verdicts:
     by: model
     quotes_verified: true
   des.05:
-    value: 10
-    rationale: The dataset was created by human problem writers/contractors, though it is not explicitly stated they are 'domain experts'.
+    value: 0
+    rationale: Human problem writers and answer-agreement quality checks do not establish relevant domain expertise or expert involvement in benchmark design.
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 3, chunk 0
-        quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers.
-    by: model
-    quotes_verified: true
+        locator: reviewer note
+    by: human
   des.06:
     value: 0
     rationale: No specific use cases or user personas are described.
@@ -115,10 +113,10 @@ verdicts:
   des.10:
     value: 0
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: While it mentions a bright middle school student can solve the problems, it does not provide a specific human performance level or benchmark score.
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   des.11:
     value: 0
     rationale: No random performance level is provided.
@@ -252,24 +250,28 @@ verdicts:
     by: model
     quotes_verified: true
   doc.03:
-    value: 0
-    rationale: The provided excerpts do not contain the source code itself to verify in-line comments.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 5
+    rationale: calculator.py has sparse attribution/efficiency comments, but most function logic lacks explanations of purpose, inputs and outputs. This is neither no comments nor comprehensive commenting.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/blob/3101c7d5072418e28b9008a6636bde82a006892c/grade_school_math/calculator.py
+        locator: reviewer note
+    by: human
   doc.04:
-    value: 0
-    rationale: No separate code documentation is provided beyond the README.
-    evidence: []
-    by: model
-    quotes_verified: true
+    value: 10
+    rationale: README explains data format, answer extraction, calculator logic and basic commands, but not all relevant functions comprehensively.
+    evidence:
+      - source: repo
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
+        locator: reviewer note
+    by: human
   doc.05:
     value: 0
     by: model
+    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper is published on arXiv, which is a preprint server, but the citation indicates it is a preprint. However, the prompt asks for 'accepted at peer-reviewed venue'. The excerpts do not explicitly state acceptance at a peer-reviewed venue like NeurIPS/ICML, only arXiv. Wait, arXiv is not peer-reviewed. The excerpts do not show acceptance at a peer-reviewed venue. Thus, 0."
     evidence: []
     quotes_verified: true
-    adjudicated_by: adjudicator-v4
   doc.06:
     value: 15
     rationale: The paper describes the design principles and the process of creating the dataset.
@@ -425,3 +427,10 @@ revisions:
       - imp.01
       - doc.05
       - doc.09
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 4 settled by adjudicator-v4, 7 decided by the reviewer."
+    items:
+      - des.05
+      - doc.03
+      - doc.04
