@@ -71,6 +71,12 @@ describe('apply rules', () => {
     expect(Revision.parse(rev).summary).toBe(`Reviewed against a ${MODEL_B} cross-check: 1 verdicts agreed, 2 decided by the reviewer.`);
     expect(rev.by).toBe('Li Bearden');
   });
+  it('leaves a something-else row untouched and keeps an approved pair as draft', () => {
+    const r = run({ i2: 'a', i3: 'other' }, true);
+    expect(r.changed).toEqual(['i2:a']);
+    expect(r.published).toBe(false);
+    expect(r.note).toMatch(/skipped or undecided/);
+  });
   it('keeps existing reviewers and leaves an approved pair with a skip as draft', () => {
     const d = doc() as any;
     d.provenance.reviewers = ['Someone'];

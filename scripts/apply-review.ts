@@ -1,9 +1,10 @@
 /**
  * Apply a person's cross-check decisions to data/assessments/<b>/<s>.auto.yaml.
  *   npx tsx scripts/apply-review.ts --rows <rows.json> --decisions <file> --approvals <file> --adjudication <adjudication.json> [--b-root <dir>] [--dry-run]
- * decisions: one doc per pair { id: "<b>~<s>", data: { choices: { <item>: "a" | "b" | "skip" } } }.
+ * decisions: one doc per pair { id: "<b>~<s>", data: { choices: { <item>: "a" | "b" | "skip" | "other" }, notes?: { <item>: string } } }.
  * approvals: one doc per standard { id: "<s>", data: { approved: true } }.
  * a: keep A's verdict. b: copy B's verdict from --b-root, or from rows.json where B's file is absent. skip/none: untouched.
+ * other: neither reading is right or something is missing; untouched like skip, and listed with the reviewer's note to fix by hand.
  * A choice the adjudicator made stays by: model with adjudicated_by; any other choice is a person's, by: human.
  * An approved standard's pairs with every review row decided become published, reviewed by REVIEWER;
  * the revision says how many rows the adjudicator settled and how many the reviewer decided.
@@ -21,7 +22,7 @@ import { MODEL_B, type Row, type Rows } from './crosscheck.ts';
 
 export const REVIEWER = 'Li Bearden';
 type Doc = Record<string, any>;
-type Choice = 'a' | 'b' | 'skip';
+type Choice = 'a' | 'b' | 'skip' | 'other';
 
 /** The tool's list output: a bare array, or wrapped in `documents`/`items`; empty text means none. Docs may carry their fields in `data`. */
 export function readDocs(text: string): { id: string; data: Doc }[] {
@@ -132,7 +133,8 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
   }
   const root = new URL('..', import.meta.url).pathname;
   const rows: Rows = JSON.parse(readFileSync(values.rows, 'utf8'));
-  const decisions = new Map(readDocs(readFileSync(values.decisions, 'utf8')).map((d) => [d.id, (d.data.choices ?? {}) as Record<string, Choice>]));
+  const decisionDocs = readDocs(readFileSync(values.decisions, 'utf8'));
+  const decisions = new Map(decisionDocs.map((d) => [d.id, (d.data.choices ?? {}) as Record<string, Choice>]));
   // The review page drops a doc's `by` when a person edits one row, so provenance is per row: a choice
   // matching the adjudicator's own is the adjudicator's, and any other is the person's.
   const adjudication = JSON.parse(readFileSync(values.adjudication, 'utf8')) as { prompt_version: string; rows: Record<string, { choice: Choice }> };
@@ -169,4 +171,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
     if (!values['dry-run']) writeFileSync(join(root, rel), render(header, r.doc));
   }
   log(touched ? `${values['dry-run'] ? 'would change' : 'changed'} ${touched} file(s)` : 'nothing to do');
+  for (const d of decisionDocs) for (const [item, ch] of Object.entries(d.data.choices ?? {})) {
+    if (ch === 'other') log(`FIX BY HAND ${d.id}~${item}: ${d.data.notes?.[item] || '(no note)'}`);
+  }
 }
