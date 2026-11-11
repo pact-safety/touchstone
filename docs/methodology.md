@@ -25,7 +25,7 @@ A change that alters what a rule means bumps the standard's `version`. Assessmen
 2. A positive verdict cites at least one piece of evidence at an immutable reference (arXiv `vN`, commit SHA, dataset revision), with a locator (section, page, or file and lines) and, where possible, a quote of at most ~40 words.
 3. A negative verdict cannot quote an absence, so it needs a rationale naming what was looked for.
 4. `n/a` needs a rationale naming the item's n/a condition.
-5. Published assessments by Touchstone need two independent assessors. Automated assessments need at least one human reviewer before they are published. So far, all published assessments are imports from the standards' authors; Touchstone's own automated assessments are drafts awaiting review.
+5. Published assessments by Touchstone need two independent assessors. Automated assessments need at least one human reviewer before they are published. So far, all published assessments are imports from the standards' authors; Touchstone's own automated assessments are drafts awaiting review. The two-assessor rule applies to Touchstone's own hand-written assessments, of which none exist yet (`src/validate.ts` enforces it). Approving a standard publishes each of its ratings whose disputed rows are all decided. Rows the adjudicator settled are not re-checked one by one by the reviewer, and the published rating's revision entry says how many.
 6. A missing verdict is scored as `unmet`.
 
 Disputed cross-check rows are settled by a fixed rule cascade, not by opinion: see [`adjudication.md`](adjudication.md).
@@ -44,9 +44,9 @@ All arithmetic is in [`src/engine.ts`](../src/engine.ts). Values are rounded hal
 
 The benchmark gets the first category, A to E, whose per-dimension limits every dimension meets. If any dimension is invalid or unscored, or no category fits, it is *Unclassified*.
 
-**Points** (BetterBench). Each criterion is 0, 5, 10 or 15. A stage's score is the mean of its applicable criteria; the overall score is the mean of all applicable criteria. This reproduces BetterBench's published scores wherever its published criterion scores agree with its published stage scores.
+**Points** (BetterBench). Each criterion is 0, 5, 10 or 15. A stage's score is the mean of its applicable criteria; the overall score is the mean of all applicable criteria. This reproduces BetterBench's published scores wherever its published criterion scores agree with its published stage scores (`tests/engine.test.ts`: four benchmarks recompute with no discrepancy; BBQ is flagged).
 
-**Checklist** (ABC, construct validity, STREAM). A group's score is met ÷ (met + unmet) × 100; the overall score is the mean of group scores. This reproduces every published ABC overall score. For the construct-validity checklist and STREAM, which publish no scoring rule, it is Touchstone's rule and marked `scoring_defined_by: touchstone`.
+**Checklist** (ABC, construct validity, STREAM). A group's score is met ÷ (met + unmet) × 100; the overall score is the mean of group scores. This reproduces every published ABC overall score (`tests/engine.test.ts`). For the construct-validity checklist and STREAM, which publish no scoring rule, it is Touchstone's rule and marked `scoring_defined_by: touchstone`.
 
 ## Imported assessments
 

@@ -1,6 +1,6 @@
 # Adjudication
 
-When two model readings of the same benchmark and standard disagree, [`scripts/adjudicate.ts`](../scripts/adjudicate.ts) settles each disputed item with a fixed cascade over the standard's own written rule and the verified quotes. Verdicts are derived by fixed rules from LLM judges' answers about quoted evidence, not by a person's opinion; a person reviews the rows the rules leave open. Two judge models answer only blind questions; code checks their words, then derives the value and the choice. This is prompt version 4.
+When two model readings of the same benchmark and standard disagree, [`scripts/adjudicate.ts`](../scripts/adjudicate.ts) settles each disputed item with a fixed cascade over the standard's own written rule and the verified quotes. Verdicts are derived by fixed rules from LLM judges' answers about quoted evidence, not by a person's opinion; a person reviews the rows the rules leave open. Two judge models answer only blind questions; code checks their words, then derives the value and the choice. This is prompt version 4. The script's own version, written to `adjudication.json` and `decisions.json`, is `adjudicator-v1`; verdicts are labelled by prompt version (`adjudicator-v4`).
 
 ## What the judges see and answer
 

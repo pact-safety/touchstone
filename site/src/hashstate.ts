@@ -1,7 +1,7 @@
 // Ratings-view state <-> URL hash query. Pure (no DOM) so tests/hashstate.test.ts can run it in node.
 export const MAX_COMPARE = 4;
 export interface View { q: string; domain: string; modality: string; source: string; value: string; sort: string; dir: number; compare: string[]; stds: string[] }
-export const DEFAULT_VIEW: View = { q: '', domain: '', modality: '', source: 'all', value: '', sort: 'touchstone', dir: -1, compare: [], stds: [] };
+export const DEFAULT_VIEW: View = { q: '', domain: '', modality: '', source: 'published', value: '', sort: 'touchstone', dir: -1, compare: [], stds: [] };
 
 /** Columns whose first click sorts ascending (A to Z, cheapest first). */
 export const ascFirst = (k: string) => k === 'name' || k === 'domain' || k === 'run';
@@ -33,7 +33,7 @@ export function decodeView(qs: string, ok: { sorts: string[]; modalities: string
     q: (p.get('q') ?? '').slice(0, 100),
     domain: pick('domain', ['safety', 'capability'], ''),
     modality: pick('type', ok.modalities, ''),
-    source: pick('source', ['all', 'published', 'automated'], 'all'),
+    source: pick('source', ['all', 'published', 'automated'], DEFAULT_VIEW.source),
     value: pick('value', ['best'], ''),
     sort,
     dir: dirParam === 'asc' ? 1 : dirParam === 'desc' ? -1 : ascFirst(sort) ? 1 : -1,

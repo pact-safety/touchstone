@@ -9,10 +9,14 @@ describe('ratings hash state', () => {
     expect(decodeView('', ok)).toEqual(DEFAULT_VIEW);
   });
   it('round-trips every field', () => {
-    const v = { q: 'web arena', domain: 'safety', modality: 'lm-agent', source: 'published', value: 'best', sort: 'abc', dir: 1, compare: ['a', 'b'], stds: ['s1', 's3'] };
+    const v = { q: 'web arena', domain: 'safety', modality: 'lm-agent', source: 'automated', value: 'best', sort: 'abc', dir: 1, compare: ['a', 'b'], stds: ['s1', 's3'] };
     const h = encodeView(v);
-    expect(h).toBe('#/?q=web+arena&domain=safety&type=lm-agent&source=published&value=best&sort=abc&dir=asc&compare=a,b&stds=s1,s3');
+    expect(h).toBe('#/?q=web+arena&domain=safety&type=lm-agent&source=automated&value=best&sort=abc&dir=asc&compare=a,b&stds=s1,s3');
     expect(decodeView(h.split('?')[1]!, ok)).toEqual(v);
+  });
+  it('defaults source to published and encodes all explicitly', () => {
+    expect(decodeView('', ok).source).toBe('published');
+    expect(encodeView({ ...DEFAULT_VIEW, source: 'all' })).toBe('#/?source=all');
   });
   it('omits dir when it is the sort column default', () => {
     expect(encodeView({ ...DEFAULT_VIEW, sort: 'run', dir: 1 })).toBe('#/?sort=run');

@@ -133,7 +133,7 @@ const columns = () => [
   { key: 'run', label: 'Run cost', tip: 'Estimated cost of a full run as a $ band (tokens), plus the local setup needed. Cheapest first.' },
   ...ratedStds().map((s) => ({ key: s.id, label: s.short, tip: stdTip(s) })),
 ];
-const defaultView = () => ({ q: '', domain: '', modality: '', source: 'all', value: '' });
+const defaultView = () => ({ q: '', domain: '', modality: '', source: DEFAULT_VIEW.source, value: '' });
 const activeCount = () => Object.entries(defaultView()).filter(([k, d]) => state[k as keyof ReturnType<typeof defaultView>] !== d).length + (state.sort !== DEFAULT_VIEW.sort || state.dir !== DEFAULT_VIEW.dir ? 1 : 0);
 
 /** Category A-E share the A-F grade ramp (.ts-grade-*); other standards print their own figure. */
@@ -146,13 +146,14 @@ function ratingLabel(label: string) {
 
 function renderRatings() {
   const watch = data.watch;
-  const rated = new Set(data.summaries.map((a) => a.benchmark)).size;
+  const graded = new Set(data.summaries.filter((a) => a.status === 'published').map((a) => a.benchmark)).size;
+  const drafts = data.summaries.filter((a) => a.status === 'draft').length;
   const modalities = [...new Set([...benchmarks.values()].map((b) => b.modality))].sort();
   const stds = ratedStds();
   main.innerHTML = html`
     <h1 class="t-page" tabindex="-1">Benchmark rigor ratings</h1>
     <p class="mt-4 max-w-3xl text-base text-muted sm:text-lg">How rigorous are the benchmarks AI developers and policymakers rely on? Each standard is scored in its own units, so compare down one standard, not across.</p>
-    <p class="t-caption mt-3">${rated} of ${benchmarks.size} benchmarks rated under ${encoded.length} encoded standards.
+    <p class="t-caption mt-3">${graded} of ${benchmarks.size} benchmarks graded from published ratings; ${drafts} automated drafts await review.
       ${watch ? `Sources are checked manually for now; last checked ${watch.checked_on}.` : 'Source checks have not run yet.'}</p>
     <div class="rt-legend legend mt-4">
       <p>Grade A to F is the median of a benchmark's published ratings (A 85+, B 70+, C 55+, D 40+, E 25+, F below). “1 of 4 standards” is how many of the standards that apply to a benchmark its grade rests on: one standard means low confidence, and more standards that agree mean more. <a class="link tap" href="#/method">How it works</a></p>
@@ -248,9 +249,9 @@ function syncUi() {
 }
 
 function emptyView(): Raw {
-  const names: Record<string, string> = { safety: 'Safety', capability: 'Capability', published: 'Reviewed only', automated: 'Automated only' };
+  const names: Record<string, string> = { safety: 'Safety', capability: 'Capability', all: 'Reviewed, else draft', published: 'Reviewed only', automated: 'Automated only' };
   const active = [state.q && `Search “${state.q}”`, state.domain && `Domain: ${names[state.domain]}`, state.modality && `Type: ${modalityName(state.modality)}`,
-    state.source !== 'all' && `Ratings from: ${names[state.source]}`, state.value && 'Best value only'].filter(Boolean);
+    state.source !== DEFAULT_VIEW.source && `Ratings from: ${names[state.source]}`, state.value && 'Best value only'].filter(Boolean);
   return html`<div class="rt-empty" role="status"><p class="t-sub">No benchmarks match.</p>
     <ul class="mt-2 text-sm" role="list">${active.map((a) => html`<li>${a}</li>`)}</ul>
     <p class="mt-4"><button type="button" class="btn btn-primary" data-clear-filters>Clear filters</button></p></div>`;
@@ -751,7 +752,7 @@ function renderStandard(s: Standard) {
   main.innerHTML = html`
     <p class="text-sm"><a class="link" href="#/standards">Standards</a> <span aria-hidden="true">/</span> ${s.short}</p>
     <h1 class="t-page mt-3" tabindex="-1">${s.name}</h1>
-    <p class="t-caption mt-3">${s.publisher}, ${s.year} · version ${s.version} · <a class="link" href="${safeUrl(s.url)}">Source</a></p>
+    <p class="t-caption mt-3">${s.publisher}, ${s.year} · version ${s.version} · <a class="link" href="${safeUrl(s.url)}">Source</a>${s.archived_url ? html` (<a class="link" href="${safeUrl(s.archived_url)}">archived copy</a>)` : ''}</p>
     <p class="mt-5 max-w-3xl">${s.description}</p>
     ${s.applies_to ? html`<p class="t-caption mt-2">Applies to: ${s.applies_to}</p>` : ''}
     <h2 class="t-section mt-12">How it is scored</h2>
