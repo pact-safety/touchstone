@@ -161,8 +161,9 @@ export const ghCli = (): Gh => ({
     await exec('gh', ['issue', 'create', '--title', title, '--label', label, '--body', body]);
   },
   async commentExists(issue, prefix) {
-    const { stdout } = await exec('gh', ['issue', 'view', String(issue), '--json', 'comments']);
-    return (JSON.parse(stdout) as { comments: { body: string }[] }).comments.some((c) => c.body.split('\n').some((l) => l.startsWith(`## ${prefix}`)));
+    // Paginated, so a tracker with hundreds of digests is still searched in full.
+    const { stdout } = await exec('gh', ['api', '--paginate', `repos/{owner}/{repo}/issues/${issue}/comments`, '--jq', '.[].body | split("\n") | .[]']);
+    return stdout.split('\n').some((l) => l.startsWith(`## ${prefix}`));
   },
   async comment(issue, body) {
     await exec('gh', ['issue', 'comment', String(issue), '--body', body]);
