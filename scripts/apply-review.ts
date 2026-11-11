@@ -88,8 +88,12 @@ export function applyPair(
       const { value, rationale, evidence, quotes_verified } = bv;
       const mine = out.verdicts[r.item];
       const same = isDeepStrictEqual([mine.value, mine.rationale, mine.evidence ?? []], [value, rationale, evidence ?? []]);
-      for (const k of ['rationale', 'evidence', 'quotes_verified']) delete mine[k];
-      Object.assign(mine, { value, rationale, evidence, quotes_verified }, label);
+      // An identical reading keeps its key order, so the file diff shows only the changed keys.
+      if (same) { if (quotes_verified === undefined) delete mine.quotes_verified; else mine.quotes_verified = quotes_verified; Object.assign(mine, label); }
+      else {
+        for (const k of ['rationale', 'evidence', 'quotes_verified']) delete mine[k];
+        Object.assign(mine, { value, rationale, evidence, quotes_verified }, label);
+      }
       if (!same) replaced.push(r.item);
     }
     changed.push(`${r.item}:${c}`);

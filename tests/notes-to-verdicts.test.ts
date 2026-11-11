@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { githubRepos, noteToVerdict } from '../scripts/notes-to-verdicts.ts';
+import { cleanRationale, githubRepos, noteToVerdict } from '../scripts/notes-to-verdicts.ts';
 import { applyPair } from '../scripts/apply-review.ts';
 
 const SHA = 'a'.repeat(40);
@@ -10,12 +10,12 @@ const conv = (note: string | undefined) => noteToVerdict(note, pin) as any;
 describe('noteToVerdict values', () => {
   it.each([
     ['Met — §3.1 grounds it. ' + arxiv, 'met', '§3.1 grounds it.'],
-    ['Unmet — nothing found.', 'unmet', 'nothing found.'],
-    ['N/A — not normative.', 'n/a', 'not normative.'],
-    ['NA: not normative.', 'n/a', 'not normative.'],
-    ['15 — fine. ' + arxiv, 15, 'fine.'],
-    ['10: partial. ' + arxiv, 10, 'partial.'],
-    ['Score 5 based on the paper. ' + arxiv, 5, 'based on the paper.'],
+    ['Unmet — nothing found.', 'unmet', 'Nothing found.'],
+    ['N/A — not normative.', 'n/a', 'Not normative.'],
+    ['NA: not normative.', 'n/a', 'Not normative.'],
+    ['15 — fine. ' + arxiv, 15, 'Fine.'],
+    ['10: partial. ' + arxiv, 10, 'Partial.'],
+    ['Score 5 based on the paper. ' + arxiv, 5, 'Based on the paper.'],
   ])('%s', (note, value, rationale) => {
     const r = conv(note);
     expect(r.verdict).toMatchObject({ value, rationale, by: 'human' });
@@ -47,7 +47,7 @@ describe('noteToVerdict evidence', () => {
       ['repo', `https://github.com/o/r/tree/${SHA}/docs`],
       ['repo', `https://github.com/o/r/blob/${SHA}/x.py`],
     ]);
-    expect(r.verdict.rationale).toBe('code.');
+    expect(r.verdict.rationale).toBe('Code.');
   });
   it('lists GitHub repos for pre-resolution', () => expect(githubRepos('x https://github.com/o/r/blob/main/a.py, y')).toEqual(['o/r']));
   it('drops mutable and unpinnable urls', () => {
@@ -59,6 +59,32 @@ describe('noteToVerdict evidence', () => {
     expect(conv('Met — claimed.')).toEqual({ reason: 'positive verdict without fixed-version evidence' });
   });
   it('accepts a negative or zero verdict with a rationale and no evidence', () => expect(conv('0 — absent').verdict).toMatchObject({ value: 0, evidence: [] }));
+});
+
+describe('rationale cleanup', () => {
+  it.each([
+        ['as required for 15. Ok. Sources: https://a/1 and https://b/2', 'As required for 15. Ok.'],
+    ['Stays between 0 and 1 (0). Rubric: https://arxiv.org/html/2411.12990v1', 'Stays between 0 and 1 (0).'],
+    ['Rubric: https://x.org/a , Appendix J.2, GUID criterion.', 'Appendix J.2, GUID criterion.'],
+    ['on the supplied evidence: representativeness is partial.', 'On the supplied evidence: representativeness is partial.'],
+  ])('%s', (raw, want) => expect(cleanRationale(raw)).toBe(want));
+  it('drops the stray period after Score 10.', () =>
+    expect(conv('Score 10. AgentBench documents concrete data preparation: x. ' + arxiv).verdict.rationale).toBe('AgentBench documents concrete data preparation: x.'));
+  it('applies to a whole note', () => {
+    expect(conv('Score 5. on the supplied evidence: partial. Sources: ' + arxiv + ' and ' + arxiv).verdict.rationale).toBe('On the supplied evidence: partial.');
+  });
+});
+
+describe('the standard\'s own source', () => {
+  const rubric = 'https://arxiv.org/html/2411.12990v1';
+  it('is not cited as evidence', () => {
+    const r = noteToVerdict(`10 — partial, §3. ${arxiv} Rubric: ${rubric}`, pin, true, ['https://arxiv.org/abs/2411.12990v1']) as any;
+    expect(r.verdict.evidence.map((e: any) => e.url)).toEqual(['https://arxiv.org/abs/2311.12983v1']);
+  });
+  it('leaves a positive note with only the rubric unconverted', () =>
+    expect(noteToVerdict(`15 — yes. Rubric: ${rubric}`, pin, true, ['https://arxiv.org/abs/2411.12990'])).toEqual({ reason: 'positive verdict without fixed-version evidence' }));
+  it('matches a non-arXiv standard url ignoring slash and fragment', () =>
+    expect(noteToVerdict('0 — no. https://x.org/s/#a', pin, true, ['https://x.org/s']) ).toMatchObject({ verdict: { evidence: [] } }));
 });
 
 describe('apply-review with note verdicts', () => {
@@ -76,6 +102,12 @@ describe('apply-review with note verdicts', () => {
     expect(r.doc.verdicts.i2).toEqual(nv.i2);
     expect(r.doc.revisions.at(-1)).toMatchObject({ by: 'Li Bearden', items: ['status', 'i2'] });
     expect(r.doc.revisions.at(-1).summary).toContain('1 decided by the reviewer');
+  });
+  it('keeps key order of a verdict whose reading did not change', () => {
+    const d = doc(); (d.verdicts.i2 as any) = { value: 'met', by: 'model', adjudicated_by: 'adj', rationale: 'r', evidence: [], quotes_verified: true };
+    const b = { verdicts: { i2: { value: 'met', rationale: 'r', evidence: [], quotes_verified: true } } };
+    const r = applyPair(d, pair, rows, { i2: 'b' }, b, false, '2026-11-11', () => 'adj');
+    expect(Object.keys(r.doc.verdicts.i2)).toEqual(['value', 'by', 'adjudicated_by', 'rationale', 'evidence', 'quotes_verified']);
   });
   it('without a note verdict the pair stays draft and the row untouched', () => {
     const r = applyPair(doc(), pair, rows, { i2: 'other' }, undefined, true, '2026-11-11');
