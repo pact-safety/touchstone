@@ -2,11 +2,11 @@
 
 ## The re-assessment job
 
-`.github/workflows/nightly.yml` is run manually for now (Actions > Nightly re-assessment > Run workflow). Its daily schedule (04:17 UTC) is commented out, so scheduling is paused.
+`.github/workflows/nightly.yml` is run manually for now (Actions > Nightly re-assessment > Run workflow). Its daily schedule (04:17 UTC) is commented out, so scheduling is paused. The watch workflow below does run on a schedule (`watch.yml`), but its output is not committed; its runs are visible at https://github.com/pact-safety/touchstone/actions .
 
-1. **Watch.** For each benchmark, read the latest arXiv version from the arXiv API and the default branch's head commit from the GitHub API. Results go to `data/watch/state.json`.
+1. **Watch.** For each benchmark, read the latest arXiv version from the arXiv API and the default branch's head commit from the GitHub API. Results go to `data/watch/state.json`, which the nightly job writes only when it runs.
 2. **Queue.** A (benchmark, standard) pair is queued when it has no automated assessment, its sources changed since the last one, or the standard's version changed. Standards apply only within their `scope` (ABC to agent benchmarks, STREAM to safety benchmarks). The order is deterministic: changed sources, then revised standards, then new pairs, each by id.
-3. **Assess** up to `--max-calls` model calls (default 40, set by the `TOUCHSTONE_MAX_CALLS` repository variable). Unfinished pairs wait for the next run.
+3. **Assess** up to `--max-calls` model calls (default 12, set by the `TOUCHSTONE_MAX_CALLS` repository variable). Unfinished pairs wait for the next run.
 4. **Check.** Validate every file and run the tests.
 5. **Propose.** Commit to a `nightly/<date>` branch and open a pull request. Nothing is published until a person merges it.
 

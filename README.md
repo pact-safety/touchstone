@@ -6,6 +6,8 @@ People cite benchmark results to back claims about AI models, and benchmarks dif
 
 **Status.** The published ratings so far are imports from the standards' own authors. The 307 automated assessments are unreviewed drafts produced by google/gemma-4-31b-it; they are shown labelled as drafts and never count toward a score.
 
+**Grades.** The grade is designed as a consensus across standards (see the score doc). As of 2026-11-11 every published rating comes from a single standard: no benchmark has two published ratings. Each grade therefore rests on one standard, with low confidence, and 13 of 48 benchmarks have no grade yet. The worked example in the score doc is illustrative.
+
 ## Principles
 
 - **Judgement and arithmetic are separate.** People, or an open-weights model whose work people review, decide one verdict per item. Scores are a deterministic function of the verdicts ([`src/engine.ts`](src/engine.ts)); the verdicts themselves are judgements. The same verdicts always give the same score, and every score carries a plain-language explanation of how it was calculated.

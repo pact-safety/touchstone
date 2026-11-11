@@ -14,7 +14,7 @@ Ranked by value to the three groups who rely on benchmarks, against the effort t
 | 8 | **Compare view.** Two or more benchmarks of the same construct side by side, item by item (e.g. HarmBench vs StrongREJECT) | Model developers | Helps choose between benchmarks measuring the same thing | Medium | Later |
 | 9 | **Repository probes.** Deterministic checks of a benchmark's code (pinned dependencies, seeds, held-out split or canary, oracle solver, state reset) supplying evidence for items that name a `probe` | Everyone | Moves code-checkable items from model judgement to mechanical fact | Medium | Later |
 | 10 | **Change feed.** RSS/JSON feed and a weekly digest of rating changes and new corrections | Followers, journalists | Ratings that move should be noticed | Small | Later |
-| 11 | **Encode remaining standards.** NIST AI 800-2 (as evaluator-practice items), Yu et al. 2026 safety checklist, Deprecation criteria | Everyone | More standards, more perspectives on each benchmark | Medium each | Later |
+| 11 | **Encode remaining standards.** Done: NIST AI 800-2 (as evaluator-practice items), Yu et al. 2026 safety checklist, Deprecation criteria and the EU GPAI Code of Practice are encoded. The two ISO/IEC standards are paywalled | Everyone | More standards, more perspectives on each benchmark | Medium each | Later |
 
 ## Reliability work still open
 

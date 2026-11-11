@@ -146,13 +146,14 @@ function ratingLabel(label: string) {
 
 function renderRatings() {
   const watch = data.watch;
-  const rated = new Set(data.summaries.map((a) => a.benchmark)).size;
+  const graded = new Set(data.summaries.filter((a) => a.status === 'published').map((a) => a.benchmark)).size;
+  const drafts = data.summaries.filter((a) => a.status === 'draft').length;
   const modalities = [...new Set([...benchmarks.values()].map((b) => b.modality))].sort();
   const stds = ratedStds();
   main.innerHTML = html`
     <h1 class="t-page" tabindex="-1">Benchmark rigor ratings</h1>
     <p class="mt-4 max-w-3xl text-base text-muted sm:text-lg">How rigorous are the benchmarks AI developers and policymakers rely on? Each standard is scored in its own units, so compare down one standard, not across.</p>
-    <p class="t-caption mt-3">${rated} of ${benchmarks.size} benchmarks rated under ${encoded.length} encoded standards.
+    <p class="t-caption mt-3">${graded} of ${benchmarks.size} benchmarks graded from published ratings; ${drafts} automated drafts await review.
       ${watch ? `Sources are checked manually for now; last checked ${watch.checked_on}.` : 'Source checks have not run yet.'}</p>
     <div class="rt-legend legend mt-4">
       <p>Grade A to F is the median of a benchmark's published ratings (A 85+, B 70+, C 55+, D 40+, E 25+, F below). “1 of 4 standards” is how many of the standards that apply to a benchmark its grade rests on: one standard means low confidence, and more standards that agree mean more. <a class="link tap" href="#/method">How it works</a></p>
