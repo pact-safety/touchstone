@@ -2,6 +2,7 @@
 
 Dated history of the project, newest first. The docs describe the current state only.
 
+- 2026-11-11: The daily arXiv digest is posted as a comment on tracker issue #17 (`arxiv.digest_issue`) instead of opening a new issue each day.
 - 2026-11-10: Benchmark pages show Epoch AI's Capabilities Index difficulty and slope where the benchmark is in the index (9 of 48).
 - 2026-11-10: `apply-review.ts` records adjudicated choices as `by: model` with `adjudicated_by` instead of `by: human`, adds the revision entry `check-revisions` requires for draft changes, and rebuilds reading B from `rows.json` when its files are absent.
 - 2026-10-30: Adjudication prompt v4. `mentions` carry verbatim spans like conditions, and code checks them. Version 3 still gave BetterBench level 5 too freely: an observed score range counted as mentioning a floor or ceiling, and a repo name as mentioning a persistent identifier.

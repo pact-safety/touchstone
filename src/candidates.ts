@@ -23,6 +23,8 @@ export const WatchConfig = z.strictObject({
   arxiv: z.strictObject({
     url: z.url(), categories: z.array(z.string()).min(1), terms: z.array(z.string()).min(1), page_size: z.number().int().positive(), max_pages: z.number().int().positive(),
     window_hours: z.number().positive(), max_triage: z.number().int().positive(), introduces: z.string(),
+    /** Tracker issue that gets each day's digest as a comment; unset = one issue per day. */
+    digest_issue: z.number().int().positive().optional(),
   }),
   news: z.strictObject({
     window_hours: z.number().positive(), max_triage: z.number().int().positive(),
@@ -138,6 +140,9 @@ export interface Gh {
   titleExists(prefix: string): Promise<boolean>;
   ensureLabels(): Promise<void>;
   create(title: string, body: string, label: string): Promise<void>;
+  /** True when a comment on this issue has a line starting with `## ${prefix}`. */
+  commentExists(issue: number, prefix: string): Promise<boolean>;
+  comment(issue: number, body: string): Promise<void>;
 }
 
 export const ghCli = (): Gh => ({
@@ -154,6 +159,13 @@ export const ghCli = (): Gh => ({
   },
   async create(title, body, label) {
     await exec('gh', ['issue', 'create', '--title', title, '--label', label, '--body', body]);
+  },
+  async commentExists(issue, prefix) {
+    const { stdout } = await exec('gh', ['issue', 'view', String(issue), '--json', 'comments']);
+    return (JSON.parse(stdout) as { comments: { body: string }[] }).comments.some((c) => c.body.split('\n').some((l) => l.startsWith(`## ${prefix}`)));
+  },
+  async comment(issue, body) {
+    await exec('gh', ['issue', 'comment', String(issue), '--body', body]);
   },
 });
 
@@ -318,8 +330,13 @@ export async function run(o: RunOptions): Promise<RunResult> {
       }
       if (todo.length) {
         const d = digestFor(date, todo);
-        const result = o.dryRun ? 'dry-run' : (await o.gh.titleExists(DIGEST_PREFIX(date))) ? 'duplicate' : 'created';
-        if (result === 'created') { await o.gh.ensureLabels(); await o.gh.create(d.title, d.body, d.label); }
+        const tracker = cfg.arxiv.digest_issue;
+        const dup = async () => tracker ? o.gh.commentExists(tracker, DIGEST_PREFIX(date)) : o.gh.titleExists(DIGEST_PREFIX(date));
+        const result = o.dryRun ? 'dry-run' : (await dup()) ? 'duplicate' : 'created';
+        if (result === 'created') {
+          if (tracker) await o.gh.comment(tracker, `## ${d.title}\n\n${d.body}`);
+          else { await o.gh.ensureLabels(); await o.gh.create(d.title, d.body, d.label); }
+        }
         for (const c of todo) { c.issue = result === 'created' ? 'digest' : result; if (result === 'duplicate') held.add(c.item); }
         digest = { ...d, result };
       }
