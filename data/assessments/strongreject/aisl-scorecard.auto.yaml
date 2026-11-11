@@ -101,10 +101,10 @@ verdicts:
   cv.09:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: While the paper reuses datasets (HarmBench, AdvBench, etc.), it does not list each modification made to the reused data with its reason in the provided excerpts.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: met
     rationale: The item count is stated as 313, and a confidence interval calculation is provided to justify the sample size.
@@ -147,10 +147,10 @@ verdicts:
   cv.15:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The paper uses a single median label per item as ground truth and reports aggregate scores (MAE, correlation), but does not explicitly state that the headline metric avoids being computed *only* from a single mean/majority label in a way that preserves variability, nor does it report distributions.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.16:
     value: unmet
     rationale: The documentation does not break down failures or scores by a named confound in a table or figure.
@@ -226,10 +226,10 @@ verdicts:
   iv.06:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The scoring involves parsing free-form output (Likert scale scores and reasoning), but the excerpts do not compare parser output with reference labels on at least two response formats or report agreement figures per format.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report overlap/contamination checks or training cutoffs for the evaluated models (GPT-4o, GPT-3.5 Turbo, Llama-3.1 70B Instruct).
@@ -239,24 +239,24 @@ verdicts:
   iv.08:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The evaluation uses external models (GPT-4o, etc.) and potentially live data, but the excerpts do not document a static snapshot or a changelog of environment changes with re-validation.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not describe the harness resetting state per task (e.g., fresh container or process) between evaluation runs.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The benchmark uses MMLU which contains multiple-choice questions, but the excerpts do not report the random-guess baseline or a named guessing mitigation for the main results.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
@@ -284,10 +284,10 @@ verdicts:
   ev.05:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The benchmark evaluates models generally and does not state that the model, tools, prompt, and environment match a specific named deployed product or configuration for application-centric evaluation.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
     value: n/a
     rationale: The benchmark evaluates general jailbreak robustness of LLMs rather than a specific deployed application.
@@ -297,10 +297,10 @@ verdicts:
   ev.07:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: "The benchmark does not claim to evaluate a specific deployed application, so this item is n/a. Wait, I already decided ev.06 is n/a. Let's re-evaluate ev.06. The n/a condition is 'The benchmark does not claim to evaluate a specific deployed application.' The excerpts do not show such a claim. So ev.06 is n/a. Similarly, ev.07 is n/a. But wait, the prompt asks for 'met', 'unmet', or 'n/a'. If the condition for n/a is met, I should output n/a. Let's verify the n/a condition for ev.06 and ev.07. 'n/a when: The benchmark does not claim to evaluate a specific deployed application.' The excerpts describe StrongREJECT as a benchmark for jailbreak evaluation. It does not claim to evaluate a specific deployed application (e.g., a specific chatbot for a specific company). Therefore, the n/a condition holds for ev.06 and ev.07. However, I need to be careful. Is 'jailbreak evaluation' considered an 'application'? No, it's a task. The principle says 'If applicable, models deployed to particular applications...'. Since it's not applicable, n/a is correct. But wait, ev.05 is also n/a under the same condition. Let's check ev.05. 'n/a when: The benchmark does not claim to evaluate a specific deployed application.' Yes. So ev.05, ev.06, ev.07 are all n/a. But wait, I need to provide evidence for n/a. The evidence is that the benchmark is general. Let's look at ev.01 again. It is unmet. ev.02 unmet. ev.03 met. ev.04 unmet. ev.05 n/a. ev.06 n/a. ev.07 n/a. Let's double check ev.03. 'Results are reported under more than one prompting or elicitation setting'. The excerpt mentions 'few-shot prompting' was explored but not used in the final evaluator due to cost. It says 'we decided the improvement benefits were not worth the cost'. This implies the final evaluator is zero-shot. Does it report results under *more than one* setting? The paper compares StrongREJECT to other evaluators. It doesn't explicitly show a table of StrongREJECT results under both zero-shot and few-shot. It says 'we explored using few-shot... we decided... not worth the cost'. This suggests only one setting (zero-shot) was used for the final benchmark. So ev.03 might be unmet. Let's re-read ev.03 rule: 'Results are reported under more than one prompting or elicitation setting'. If only zero-shot was used, it's unmet. The excerpt says 'We explored using few-shot prompting... we decided the improvement benefits were not worth the cost.' This implies the final benchmark uses only one setting. So ev.03 is unmet. Let's check ev.04 again. 'Non-IID testing under a variety of stress conditions'. The paper uses prompts from various sources (AdvBench, DAN, etc.). This is a variety of sources, but is it a 'stress condition or shift'? It's a mix of sources. The rule requires 'Results are reported as a separate slice... for at least one named stress condition or shift'. The paper does not report results as a separate slice for 'source' or 'origin'. It reports aggregate results. So ev.04 is unmet. Let's re-evaluate ev.05, 06, 07. The n/a condition is 'The benchmark does not claim to evaluate a specific deployed application.' The excerpts do not show such a claim. They describe it as a general benchmark. So n/a is correct. I need to provide evidence that it does *not* claim to evaluate a specific deployed application. The evidence is the general description. 'We hope that our benchmark will help researchers in this area better evaluate the misuse potential of new jailbreak techniques'. This is general. So n/a is justified. However, the rule for n/a says 'only when the excerpts show that condition holds'. The excerpts show it is a general benchmark, which implies it does not claim to evaluate a specific deployed application. So n/a is valid. But wait, is 'jailbreak evaluation' an application? No. So n/a is correct. Let's finalize. ev.01: unmet. ev.02: unmet. ev.03: unmet (only one setting used). ev.04: unmet. ev.05: n/a. ev.06: n/a. ev.07: n/a. Wait, I need to check if ev.03 is really unmet. The excerpt says 'We explored using few-shot prompting... we decided the improvement benefits were not worth the cost.' This means the final benchmark is zero-shot. So only one setting. Unmet. Correct. ev.04: The paper uses prompts from multiple sources, but does not report results as a separate slice for each source or for a 'stress condition'. It reports aggregate. Unmet. Correct. ev.05, 06, 07: n/a. Correct. Let's write the response."
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The provided excerpts do not list sampling parameters, library versions, hardware models, or OS/container images.
@@ -338,10 +338,10 @@ verdicts:
   rel.06:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts report baselines like 'String matching for non-refusal' and 'GPT-4 Judge', but do not report scores for trivial baselines such as random selection or majority-class prediction.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.01:
     value: met
     rationale: The documentation reports a high Spearman correlation between the StrongREJECT evaluators and human judgments.
@@ -405,24 +405,24 @@ verdicts:
   cor.09:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not state the scoring outcome for edge cases like partial answers, off-format answers, refusals, or errors in the code/docs.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.10:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not demonstrate that the parser is deterministic or test its consistency on identical inputs.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report parser accuracy against a set of manually verified outputs.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scoring pipeline.

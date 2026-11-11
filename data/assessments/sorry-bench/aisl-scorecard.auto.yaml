@@ -56,7 +56,6 @@ verdicts:
   cv.03:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The primary metric reported is the aggregate 'fulfillment rate' across all categories. While per-category rates are shown in a figure, the decision rule requires every named sub-component to have its own reported score in a table or figure, and the text collapses the evaluation into a single binary classification problem for the main results.
     evidence:
       - source: paper
@@ -64,6 +63,7 @@ verdicts:
         locator: 2406.14598v2 page 6, chunk 1
         url: https://arxiv.org/abs/2406.14598v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
     value: met
     rationale: The task space is defined by a 44-class taxonomy, and the paper reports that the dataset contains 440 class-balanced unsafe instructions.
@@ -145,7 +145,6 @@ verdicts:
   cv.14:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The labels are binary (fulfillment/refusal) determined by a judge (human or LLM), which acts as a deterministic key for the evaluation metric. The rule for n/a applies when every label comes from one deterministic key.
     evidence:
       - source: paper
@@ -153,6 +152,7 @@ verdicts:
         locator: 2406.14598v2 page 6, chunk 1
         url: https://arxiv.org/abs/2406.14598v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.15:
     value: unmet
     rationale: Fulfillment/refusal is a human/model judgment under a rubric, not a deterministic answer key. The headline rate averages one binary judgment per response.
@@ -238,10 +238,10 @@ verdicts:
   iv.06:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not compare parser output with reference labels on at least two response formats or report agreement figures per format.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not provide training cutoffs or contamination check results for every evaluated model; it only mentions a general risk of contamination.
@@ -251,17 +251,17 @@ verdicts:
   iv.08:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not document environment changes or re-validation; they mention using a static dataset but do not provide a changelog for the evaluation environment itself.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not show that the harness resets state per task (e.g., fresh container) between evaluation runs.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: met
     rationale: The evaluation does not use multiple-choice questions; it uses open-ended responses judged by an LLM or human.
@@ -304,24 +304,24 @@ verdicts:
   ev.05:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The benchmark evaluates general LLM safety and does not claim to evaluate a specific deployed product or configuration in a way that matches the rule's requirement for a named deployed product.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: "The benchmark does not claim to evaluate a specific deployed application, making this item n/a, but the rule for 'met' requires adversarial configurations to be included. While prefilling is tested, the n/a condition takes precedence if the benchmark doesn't claim to evaluate a specific deployed application. However, looking at the n/a condition: 'The benchmark does not claim to evaluate a specific deployed application.' The excerpts do not claim to evaluate a specific deployed application. Thus, n/a is allowed. Wait, the rule says 'n/a when: The benchmark does not claim to evaluate a specific deployed application.' The excerpts do not show such a claim. Therefore, n/a is the correct verdict."
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: Similar to ev.06, the benchmark does not claim to evaluate a specific deployed application, so the n/a condition applies. However, if we must evaluate the content, the excerpts do not list differences between test and real deployment with caveats on reading results in that specific context.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation mentions a temperature of 0.7, but fails to list library versions, hardware models, or the OS/container image.
@@ -380,10 +380,10 @@ verdicts:
   cor.02:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report any adversarial or reward-hacking tests of the model rater, nor do they describe specific defenses like injection filters applied to the rater itself. They mention adversarial prompts for the *target* models, not the rater.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
     value: unmet
     rationale: While the paper reports consistency of the model under test (the LLM being benchmarked), it does not report consistency across repeated runs of the model rater/judge.
@@ -399,10 +399,10 @@ verdicts:
   cor.05:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts state that '6 annotators are asked to label the same set of 100 model responses' and report 'Cohen Kappa agreement between each pair of annotators' with 'pair-wise agreement is consistently above 86%'. This satisfies the requirement for multiple annotators and reported agreement."
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.06:
     value: unmet
     rationale: The excerpts do not show that every task is documented as solvable or intentionally unsolvable.
@@ -430,17 +430,17 @@ verdicts:
   cor.10:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The scoring involves an LLM judge outputting a number (0 or 1). The excerpts do not show that the parser (if any) is deterministic or tested for consistency on identical inputs. The LLM judge itself is not deterministic (temperature 0.7 used for target models, but the judge's consistency isn't the focus of this item's rule regarding parsing). The rule asks about the 'automated output parser'. The judge outputs a number, which is parsed. There is no evidence of parser consistency testing.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report parser accuracy against hand-checked outputs. They report the LLM judge's agreement with humans, not the accuracy of a parser extracting the score.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for null-agent runs or targeted exploit attempts against the scoring pipeline.

@@ -224,10 +224,10 @@ verdicts:
   iv.08:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The benchmark uses LiveCodeBench (v6 release, April 2025) and SWE-bench Verified. It does not state that a static snapshot is used for the entire evaluation, nor does it provide a changelog of environment changes with re-validation for mutable components like LiveCodeBench.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: unmet
     rationale: The provided excerpts do not show that the harness resets state (e.g., fresh container) per task.
@@ -237,7 +237,6 @@ verdicts:
   iv.10:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: "The benchmark tasks are coding tasks requiring code generation, not multiple-choice questions. However, the decision rule requires reporting that the format is not multiple choice OR reporting guessing mitigations. The excerpts do not explicitly state 'this is not multiple choice' in a way that satisfies the verification rule for the specific item structure, but more importantly, the rule says 'met when: The format is not multiple choice...'. The excerpts describe 'coding tasks' and 'unit tests'. While it is implicitly not MCQ, the strict rule requires evidence. Let's look closer. The rule says 'met when: The format is not multiple choice'. The excerpts say 'coding tasks'. This is not MCQ. However, usually, if it's not MCQ, it's met. But I need a quote. 'create coding tasks' is in p2#3. Is 'coding tasks' sufficient to prove 'not multiple choice'? Yes. But wait, the rule is 'met when: The format is not multiple choice, OR...'. If I can prove it is not MCQ, it is met. Quote: 'create coding tasks of various complexities'. This implies it is not MCQ. However, looking at iv.01-iv.09, they were unmet due to missing specific evidence. For iv.10, the evidence 'create coding tasks' strongly implies non-MCQ. But does it explicitly rule out MCQ? Coding tasks can have MCQ components. The benchmark uses 'unit tests'. Unit tests are not MCQ. Quote: 'modify the test cases... to produce direct conflicts'. This confirms the task is code modification, not MCQ selection. So it is met. Wait, I need to be careful. The rule is 'met when: The format is not multiple choice'. I will cite the description of the task as code modification/unit tests to show it is not MCQ."
     evidence:
       - source: paper
@@ -245,6 +244,7 @@ verdicts:
         locator: 2510.20270v1 page 2, chunk 3
         url: https://arxiv.org/abs/2510.20270v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name any domain experts or user groups consulted to define scenarios or criteria.
@@ -274,21 +274,20 @@ verdicts:
   ev.04:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report results as a separate slice for a named stress condition or shift that differs from released train/dev splits. The 'oneoff' and 'conflicting' variants are mutations of the same tasks, not a distinct external stress condition or shift like domain or time.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.05:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The benchmark does not state that the model, tools, prompt, and environment match a named deployed product or configuration. It simulates environments (Ubuntu, bash) but does not claim to replicate a specific deployed product's exact configuration.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The n/a condition applies because the benchmark does not claim to evaluate a specific deployed application. It is a benchmark framework for measuring cheating propensity, not an evaluation of a specific deployed product.
     evidence:
       - source: paper
@@ -296,6 +295,7 @@ verdicts:
         locator: 2510.20270v1 page 1, chunk 0
         url: https://arxiv.org/abs/2510.20270v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
     value: unmet
     rationale: The paper connects results to deployed coding assistants, so applicability cannot be dismissed. It does not clearly qualify deployment generalization against the artificial impossible-task setting.
@@ -368,10 +368,10 @@ verdicts:
   cor.05:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not mention multiple annotators labeling items independently, nor do they report inter-annotator agreement (e.g., Cohen's kappa).
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.06:
     value: met
     rationale: The benchmark explicitly creates 'impossible' tasks and defines the expected behavior (any pass implies cheating).
@@ -385,10 +385,10 @@ verdicts:
   cor.07:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: "The tasks are intentionally unsolvable (impossible). While the 'correct' behavior is defined as cheating, the excerpts do not provide verified ground-truth solutions in the sense of an oracle solver passing a solvable task, but rather examples of how models cheat. The decision rule requires reference solutions checked by an oracle or second person for *solvable* tasks. Since these are unsolvable, this item might be n/a, but the n/a condition is 'not allowed'. However, the rule says 'For solvable tasks...'. Since there are no solvable tasks documented as such (they are all impossible), this item is technically not applicable to the *solvable* subset, but the n/a rule is forbidden. Let's re-read cor.07 n/a: 'not allowed for this item'. This implies we must judge it met or unmet. The principle is 'Each task has a verified end state'. The end state for impossible tasks is 'cheating'. Is there a 'verified ground-truth solution'? The paper provides 'verified deceptive solutions' (p1#1). But cor.07 specifically asks for 'solvable tasks'. If there are no solvable tasks, does it fail? Or is it unmet because no solvable tasks exist? The rule says 'For solvable tasks, provide...'. If there are none, the condition is vacuously true? No, usually benchmarks require *some* solvable tasks or explicit handling. However, looking at cor.06, it says 'Classify each task as solvable or intentionally unsolvable'. Cor.07 says 'For solvable tasks...'. If the benchmark contains *only* unsolvable tasks, then there are no solvable tasks to provide solutions for. This is a tricky edge case. However, the excerpts show 'LiveCodeBench' and 'SWE-bench' as base benchmarks which *are* solvable, but ImpossibleBench *mutates* them to be impossible. The paper says 'we modify the test cases... to produce direct conflicts'. It does not seem to include the original solvable tasks in the final benchmark evaluation in the same way, or if it does, it doesn't document the ground truth solutions for the *original* solvable tasks in the provided excerpts. The excerpts focus on the *impossible* variants. Therefore, for the tasks in ImpossibleBench, there are no solvable tasks. If the rule applies only to solvable tasks, and there are none, it might be considered met vacuously, but typically 'unmet' is safer if documentation is missing for the *concept* of solvable tasks. Let's look at cor.06 again. It requires classifying *each* task. The excerpts say 'create impossible versions'. It doesn't explicitly say 'we also include solvable tasks'. If the benchmark is *only* impossible tasks, then cor.07's condition 'For solvable tasks' never triggers. But the n/a is not allowed. This suggests the benchmark *should* have solvable tasks or the item is unmet because the 'verified end state' for a solvable task is not provided (because there are none?). Actually, if there are no solvable tasks, the requirement 'For solvable tasks, provide...' is trivially satisfied. However, in benchmark quality assessment, if a benchmark is purely adversarial/unsolvable, it often fails standard correctness checks designed for general benchmarks. Let's look for evidence of solvable tasks. Excerpt p3#2 says 'we use two popular coding benchmarks... as our base benchmarks... we modify the test cases'. It doesn't explicitly say the original solvable tasks are part of the *ImpossibleBench* evaluation suite, or if they are, it doesn't document their solutions. Given the strict 'n/a not allowed', and the lack of evidence for solvable tasks or their solutions, 'unmet' is the most defensible position as the documentation for 'solvable tasks' is missing (either because they don't exist or aren't documented)."
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.08:
     value: unmet
     rationale: The excerpts do not list the scorer's accepted equivalences or show a non-identical correct answer passing.
@@ -404,17 +404,17 @@ verdicts:
   cor.10:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not show that the parser is deterministic or that its consistency is tested. They describe the test mutations and agent behaviors.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report parser accuracy against hand-checked outputs.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: While the paper discusses cheating, it does not report results for a null-agent run or a targeted exploit attempt on the scorer itself.

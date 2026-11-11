@@ -42,7 +42,7 @@ verdicts:
     quotes_verified: true
   cv.02:
     value: met
-    rationale: ", with explicit exclusion evidence: Section 8 states that BIRD uses SQLite and leaves PostgreSQL/MySQL versions to future work, explaining limitations for other SQL syntaxes and query execution plans. Together with the stated text-to-SQL/database-value/efficiency scope, this satisfies both inclusion and exclusion. Reading 1 should not rely on an implied exclusion."
+    rationale: "With explicit exclusion evidence: Section 8 states that BIRD uses SQLite and leaves PostgreSQL/MySQL versions to future work, explaining limitations for other SQL syntaxes and query execution plans. Together with the stated text-to-SQL/database-value/efficiency scope, this satisfies both inclusion and exclusion. Reading 1 should not rely on an implied exclusion."
     evidence:
       - source: paper
         url: https://arxiv.org/abs/2305.03111v3
@@ -51,7 +51,6 @@ verdicts:
   cv.03:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The paper does not report separate scores for each facet (e.g., accuracy vs. efficiency) in a table or figure as independent metrics; it reports Execution Accuracy (EX) and Valid Efficiency Score (VES), but VES is a composite metric, and the rule requires every sub-component named for the phenomenon to have its own reported score. While EX and VES are reported, the 'phenomenon' facets like 'external knowledge' are not scored independently in the main results tables provided in the excerpts.
     evidence:
       - source: paper
@@ -59,6 +58,7 @@ verdicts:
         locator: 2305.03111v3 page 21, chunk 2
         url: https://arxiv.org/abs/2305.03111v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
     value: met
     rationale: The task space is defined by categories (Fundamental and Reasoning) and difficulty levels, with item counts/proportions reported for the latter.
@@ -98,17 +98,17 @@ verdicts:
   cv.08:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper compares the same baseline models on the original dataset (SPIDER) and the adapted benchmark (BIRD) in Figure 6."
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The benchmark reuses prior datasets (SPIDER is mentioned as a prior benchmark, and databases are collected from open-sourced platforms), but the excerpts do not list each modification made to reused data with its reason.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While the item count is stated, there is no power calculation or confidence-interval half-width reported.
@@ -251,10 +251,10 @@ verdicts:
   iv.06:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not compare parser output with reference labels across different response formats to report agreement or accuracy per format.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: met
     rationale: The authors state they self-designed new databases for the test set to ensure LLMs did not preview them during pre-training.
@@ -278,14 +278,13 @@ verdicts:
   iv.09:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not explicitly document that the harness resets state per task (e.g., fresh container) between evaluation runs.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: "The benchmark uses SQL generation, not multiple-choice questions, so the specific MCQ mitigation rule is not applicable in the sense of being met by a mitigation, but the format is not MCQ. However, the rule requires the format to be not MCQ OR report guessing baseline. Since it is not MCQ, it technically satisfies the 'not multiple choice' condition. Wait, the rule says 'met when: The format is not multiple choice...'. The format is SQL generation. Thus it is not multiple choice. So it is met."
     evidence:
       - source: paper
@@ -293,6 +292,7 @@ verdicts:
         locator: 2305.03111v3 page 2, chunk 7
         url: https://arxiv.org/abs/2305.03111v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation identifies three text-to-SQL experts (a research scientist, a PhD student, and a DBA engineer) who defined the validity of questions by assessing them against predefined rules."
@@ -313,10 +313,10 @@ verdicts:
   ev.03:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): Results are reported under multiple prompting settings, specifically zero-shot, few-shot (1-shot pseudo example), and with/without Chain-of-Thought (COT) prompting."
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.04:
     value: unmet
     rationale: The excerpts do not report results as a separate slice for a named stress condition or shift differing from the train/dev splits.
@@ -326,24 +326,24 @@ verdicts:
   ev.05:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The benchmark evaluates general text-to-SQL models (ChatGPT, GPT-4, etc.) and does not state that the evaluation matches a specific named deployed product or configuration.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not mention adversarial inputs or misuse scenarios; they focus on standard evaluation of SQL generation accuracy and efficiency.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not list differences between the test setting and real deployment, nor do they provide caveats on how to interpret results in light of such gaps.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation mentions setting temperature to 0, but fails to list library versions, hardware models, or the OS/container image.
@@ -403,31 +403,31 @@ verdicts:
   cor.01:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report any correlation between model rater judgments and human judgments. While human experts are involved in annotation, there is no mention of a model rater being validated against human judgments.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report any adversarial or reward-hacking tests of a model rater, nor do they describe specific defenses against such attacks in the context of a rater.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report agreement across repeated rating runs on the same inputs. While temperature is set to 0 for generation, this is not reported as a consistency check for a rater.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not measure any named rater biases (e.g., length, position) with numbers, nor do they state mitigations for such biases in a rater.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: met
     rationale: The benchmark uses a double-blind approach with two independent annotators, and those yielding identical results are gathered.
@@ -457,10 +457,10 @@ verdicts:
   cor.08:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not enumerate all valid solution forms or specify acceptance criteria for equivalent correct answers beyond execution result identity.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.09:
     value: unmet
     rationale: The documentation does not specify scoring outcomes for partial answers, off-format answers, refusals, or timeouts.
@@ -470,17 +470,17 @@ verdicts:
   cor.10:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not show that the parser is deterministic or that its consistency is tested on identical inputs.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
     value: unmet
     by: model
-    adjudicated_by: adjudicator-v4
     rationale: The excerpts do not report parser accuracy against hand-checked outputs.
     evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for null-agent runs or targeted exploit attempts on the scoring pipeline.
