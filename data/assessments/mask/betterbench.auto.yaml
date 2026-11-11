@@ -62,7 +62,7 @@ verdicts:
         url: https://arxiv.org/abs/2503.03750v3
         locator: 2503.03750v3 page 1, chunk 1
         quote: This is especially true in safety-critical contexts or applications that require access to sensitive information, where dishonest behavior can have serious consequences
-    by: model
+    by: human
     quotes_verified: true
   des.04:
     value: 15
@@ -105,14 +105,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.08:
-    value: 10
-    rationale: The benchmark uses accuracy and a specific 'Lying@10' metric to penalize occasional dishonesty, though the 'informed' choice process is not detailed.
+    value: 15
+    by: human
+    rationale: The metric choice (Honesty Score) is informed by the distinction between accuracy and lying, addressing the 'safetywashing' problem.
     evidence:
       - source: paper
+        quote: This problem is often compounded by the lack of clear benchmarks that isolate safety-related behavior from general model capabilities.
+        locator: 2503.03750v3 page 3, chunk 2
         url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 19, chunk 1
-        quote: Lying@10 penalizes even occasional dishonesty
-    by: model
     quotes_verified: true
   des.09:
     value: 0
@@ -186,6 +186,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.05:
     value: 0
     rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
@@ -327,11 +328,16 @@ verdicts:
     by: model
     quotes_verified: true
   doc.12:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes a LICENSE file specifying the MIT License."
-    evidence: []
+    value: 15
     by: model
+    rationale: The repository includes a LICENSE file specifying the MIT License.
+    evidence:
+      - source: repo
+        quote: MIT License Copyright (c) 2025 centerforaisafety
+        locator: centerforaisafety/mask@25e0b1201e6c:LICENSE, chunk 0
+        url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.13:
     value: 0
     rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
@@ -408,3 +414,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - des.08
+      - doc.12

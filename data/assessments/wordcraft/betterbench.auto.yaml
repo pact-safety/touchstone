@@ -60,10 +60,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.03:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The text explains that agents capable of learning fast and generalizing to novel situations are required for real-world applications like personal assistants and household robots."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The real-world helpfulness is described by linking the task to applications like personal assistants and household robots that require generalization.
+    evidence:
+      - source: paper
+        quote: Many real-world applications ( e.g. personal assistants and household robots) require agents that can learn fast and generalise well to novel situations
+        locator: 2007.09185v1 page 1, chunk 1
+        url: https://arxiv.org/abs/2007.09185v1
     quotes_verified: true
   des.04:
     value: 0
@@ -77,6 +81,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.06:
     value: 0
     rationale: No specific use cases or user personas are described.
@@ -271,10 +276,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.06:
-    value: 0
-    rationale: The excerpts do not document the process of how the benchmark was constructed.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The paper describes the benchmark construction, noting it is based on Little Alchemy 2 and uses a recipe graph derived from the game's entities and relations.
+    evidence:
+      - source: paper
+        quote: we propose WordCraft, an RL environment based on Little Alchemy 2.
+        locator: 2007.09185v1 page 1, chunk 0
+        url: https://arxiv.org/abs/2007.09185v1
     quotes_verified: true
   doc.07:
     value: 15
@@ -299,10 +308,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.10:
-    value: 0
-    rationale: The excerpts do not document the data collection or prompt design process.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The paper documents the prompt/task design process by describing the MDP formulation, state/action spaces, and the use of KG link prediction to guide the agent.
+    evidence:
+      - source: paper
+        quote: We formulate the RL problem as a Markov Decision Process (MDP) (Sutton & Barto, 2018) defined by the tuple ( S, A, T, R, γ )
+        locator: 2007.09185v1 page 2, chunk 1
+        url: https://arxiv.org/abs/2007.09185v1
     quotes_verified: true
   doc.11:
     value: 15
@@ -388,3 +401,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - des.03
+      - doc.06
+      - doc.10

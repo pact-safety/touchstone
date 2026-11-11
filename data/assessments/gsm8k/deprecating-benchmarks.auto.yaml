@@ -2,13 +2,15 @@
 benchmark: gsm8k
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 3101c7d5072418e28b9008a6636bde82a006892c
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The paper states that even the largest transformer models fail to achieve high test performance, indicating clear headroom.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 1, chunk 0
-        quote: We find that even the largest transformer models fail to achieve high test performance
+    value: unmet
     by: model
+    rationale: The excerpts do not provide current best reported scores or evidence of headroom from the evaluation ceiling; they only describe the dataset creation and verification methodology.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The provided excerpts do not document a contamination defence such as a private held-out set or contamination analysis.
@@ -77,10 +76,18 @@ verdicts:
     by: model
     quotes_verified: true
   c6:
-    value: unmet
-    rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on.
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: "The benchmark states its simplifying assumption that problems are at the 'grade school math level' and rely on 'basic arithmetic operations'. The excerpts show that this assumption holds for the intended use case (evaluating multi-step reasoning in language models) and that the dataset was designed to have 'high diversity' to avoid template-based shortcuts, reflecting real-world complexity better than prior datasets. Excerpt [paper:p3#0] states: 'A bright middle school student should be able to solve every problem.' and 'We actively avoid designing problems that are drawn from the same linguistic template... By creating each individual problem to be relatively unique, held-out test performance becomes a far more relevant metric.'"
+    evidence:
+      - source: paper
+        quote: A bright middle school student should be able to solve every problem.
+        locator: 2110.14168v2 page 3, chunk 0
+        url: https://arxiv.org/abs/2110.14168v2
+      - source: paper
+        quote: We actively avoid designing problems that are drawn from the same linguistic template... By creating each individual problem to be relatively unique, held-out test performance becomes a far more relevant metric.
+        locator: 2110.14168v2 page 3, chunk 0
+        url: https://arxiv.org/abs/2110.14168v2
     quotes_verified: true
   c7:
     value: unmet
@@ -104,6 +111,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r3:
     value: unmet
     rationale: No named maintainer, contact address, or issue tracker is provided in the excerpts to handle queries.
@@ -114,3 +122,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 2 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - c6

@@ -55,10 +55,18 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The paper explicitly warns that scores should not be interpreted as solving the underlying task if the model relies on spurious patterns, and explains that benchmarks must evolve.
+    evidence:
+      - source: paper
+        quote: Indeed, we find that existing deep methods often get fooled by lexical false friends.
+        locator: 1905.07830v1 page 9, chunk 0
+        url: https://arxiv.org/abs/1905.07830v1
+      - source: paper
+        quote: "suggest a path for NLP progress going forward: towards benchmarks that adversarially co-evolve with evolving state-of-the-art models."
+        locator: 1905.07830v1 page 9, chunk 2
+        url: https://arxiv.org/abs/1905.07830v1
     quotes_verified: true
   des.05:
     value: 0
@@ -66,6 +74,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.06:
     value: 0
     rationale: No specific use cases or user personas are described.
@@ -73,10 +82,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.07:
-    value: 0
-    rationale: The excerpts do not show the integration of domain literature.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The paper integrates domain literature by citing previous work on SWAG, BERT, ELMo, and Adversarial Filtering, and builds upon these foundations.
+    evidence:
+      - source: paper
+        quote: This contrasts with past work on adversarial examples (e.g. Jia and Liang, 2017; Glockner et al., 2018; Belinkov and Bisk, 2018)
+        locator: 1905.07830v1 page 3, chunk 1
+        url: https://arxiv.org/abs/1905.07830v1
     quotes_verified: true
   des.08:
     value: 10
@@ -86,7 +99,7 @@ verdicts:
         url: https://arxiv.org/abs/1905.07830v1
         locator: 1905.07830v1 page 6, chunk 1
         quote: we train our models using a four-way cross-entropy loss, where the objective is to predict the correct ending
-    by: model
+    by: human
     quotes_verified: true
   des.09:
     value: 15
@@ -118,6 +131,7 @@ verdicts:
         quote: The baseline (25% accuracy) is random chance.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.12:
     value: 0
     rationale: The excerpts do not mention a validated automatic evaluation process.
@@ -386,3 +400,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - des.04
+      - des.07

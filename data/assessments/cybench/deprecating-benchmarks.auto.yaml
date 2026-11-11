@@ -2,13 +2,15 @@
 benchmark: cybench
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
@@ -45,25 +47,23 @@ verdicts:
     by: model
     quotes_verified: true
   c2:
-    value: met
-    rationale: The benchmark documents a contamination defense by using tasks released after model knowledge cutoff dates and newly written subtasks.
+    value: unmet
+    by: model
+    rationale: The excerpts do not document any contamination defence (such as private splits or canary strings) nor do they report a contamination check or overlap analysis. The paper notes that other datasets risk train-test overlap but does not provide evidence that Cybench has remedied this or verified its own contamination status.
     evidence:
       - source: paper
+        quote: as each dataset is drawn from a single competition, there are only a limited number of recent tasks, risking train test overlap.
+        locator: 2408.08926v4 page 10, chunk 0
         url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 9, chunk 0
-        quote: Nearly all successful runs were on tasks that were released after the knowledge cutoff date.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c3:
-    value: met
-    rationale: The benchmark consists of CTF tasks where the goal is to find a flag; it does not use class-based labels that could be skewed for trivial exploitation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 3, chunk 2
-        quote: An open-source benchmark with 40 recent professional-level CTF tasks.
+    value: unmet
     by: model
+    rationale: The excerpts do not report the label or answer distribution, nor do they provide a trivial baseline score to demonstrate that the benchmark is not skewed by class imbalance. Without this evidence, the condition for being free of statistical bias is not satisfied.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: unmet
     rationale: The excerpts mention verifying that tasks are buildable and solvable via solution scripts and CI, but there is no cited audit or error analysis reporting a low annotation error rate for the labels/data.
@@ -71,35 +71,34 @@ verdicts:
     by: model
     quotes_verified: true
   c5:
-    value: met
-    rationale: The benchmark states its purpose is to evaluate cybersecurity capabilities and risks using tasks that serve as proxies for real-world skills, and no source argues this is irrelevant.
-    evidence:
-      - source: repo
-        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
-        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 0
-        quote: which serves to evaluate agent capabilities and risks on cybersecurity tasks.
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the task serves a specific capability that remains current, nor do they argue against the task being irrelevant or solved. The paper focuses on the selection of recent competitions (2022-2024) but does not explicitly address the criterion of task obsolescence or relevance to current model development in the required manner.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c6:
-    value: met
-    rationale: The benchmark explicitly states its simplifying assumptions (short time span, small codebases, not real-world) and notes that these are limitations of the CTF data source.
+    value: unmet
+    by: model
+    rationale: The excerpts explicitly state that the benchmark relies on simplifying assumptions that do not hold for real-world complexity, such as 'Small codebases' and tasks being 'Not drawn from real-world'. The rule requires that stated assumptions are not contradicted by the current context, but here the paper admits the tasks are 'not actually real-world' and 'do not typically capture this complexity'.
     evidence:
       - source: paper
+        quote: Small codebases. CTF tasks typically involve a few files of tens to hundreds of lines to code. In reality, systems can include thousands or hundreds of thousands of files... CTF tasks do not typically capture this complexity.
+        locator: 2408.08926v4 page 39, chunk 3
         url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 39, chunk 2
-        quote: the tasks are intended to be solved in a short time span, involve small codebases, and are not real-world
-    by: model
+      - source: paper
+        quote: Not drawn from real-world. CTF tasks are created specifically for competitions... they are not actually real-world.
+        locator: 2408.08926v4 page 40, chunk 0
+        url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c7:
-    value: met
-    rationale: The benchmark uses recent competition data (2022-2024) and there is no evidence that the meaning of the tasks or labels has shifted since creation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 34, chunk 1
-        quote: are recent (all hosted and released publicly between 2022 and 2024)
+    value: unmet
     by: model
+    rationale: The excerpts do not show a maintenance process or revision that addresses meaning drift. The benchmark uses static tasks from competitions released between 2022 and 2024, but there is no evidence of a process to refresh items or address semantic drift over time.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: unmet
     rationale: The provided excerpts do not show an explicit version identifier (like a DOI or release tag) displayed alongside the benchmark name in its main references.
@@ -126,3 +125,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 5 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c2
+      - c3
+      - c5
+      - c6
+      - c7

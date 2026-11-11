@@ -2,13 +2,15 @@
 benchmark: procgen
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
@@ -55,15 +57,16 @@ verdicts:
     by: model
     quotes_verified: true
   c3:
-    value: met
-    rationale: The benchmark consists of procedurally generated environments with no fixed classes or labels that could be skewed.
+    value: unmet
+    by: model
+    rationale: "This item has no n/a condition, so n/a is not allowed. Model's reasoning: The benchmark is a reinforcement learning suite focused on continuous control and visual generalization, not classification with discrete class labels that could be skewed."
     evidence:
       - source: paper
+        quote: designed to benchmark both sample efficiency and generalization in reinforcement learning.
+        locator: 1912.01588v2 page 1, chunk 0
         url: https://arxiv.org/abs/1912.01588v2
-        locator: 1912.01588v2 page 1, chunk 3
-        quote: algorithmic creation of a near-infinite supply of highly randomized content
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: unmet
     rationale: The provided excerpts contain no mention of a quality audit, validation pass, or error analysis regarding the annotation or label error rate.
@@ -86,6 +89,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c7:
     value: unmet
     rationale: There is no evidence of a maintenance process for the content to prevent semantic drift, and the excerpts do not provide a cited source confirming the labels/tasks remain representative.
@@ -122,3 +126,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 8 verdicts agreed, 2 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c3

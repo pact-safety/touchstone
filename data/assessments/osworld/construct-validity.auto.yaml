@@ -2,13 +2,15 @@
 benchmark: osworld
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 044bc33901cb893808e3f91ebc9a17ed8e54b44c
@@ -54,6 +56,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: unmet
     rationale: The paper mentions various skills/abilities needed for tasks, but it does not state that these sub-components are scored separately, nor does it explicitly state the phenomenon is unitary.
@@ -73,17 +76,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The excerpts indicate that the VLM specifies action objects by number index which is mapped via post-processing, and the results are based on success rates, but there is no evidence of automated parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 11, chunk 1
-        quote: |-
-          the VLM is supposed to specify the action object by its
-          number index, which will be mapped into our action space by post-processing
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or bias comparisons across output formats. While automated parsing is implied by the use of indices and code spaces, the specific validation metrics are missing.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts mention the number of tasks and the operating systems used, but they do not document a sampling strategy over a described task space.
@@ -91,15 +89,12 @@ verdicts:
     by: model
     quotes_verified: true
   ds.2:
-    value: met
-    rationale: The documentation states that 9 authors with computer science backgrounds carefully annotated each example to ensure reliability and reproducibility.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 2, chunk 3
-        quote: 9 authors with computer science backgrounds carefully annotate each example
+    value: unmet
     by: model
+    rationale: While the paper mentions that authors 'carefully annotate each example' and that there are 'custom execution-based evaluation scripts', it does not document a specific quality or relevance check that every item passed, nor does it describe a verification process for the dataset items themselves beyond the annotation step.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: While the benchmark tests different resolutions, there is no mention of a counted subset of permuted or perturbed items with results reported separately from the main score.
@@ -186,6 +181,7 @@ verdicts:
         quote: human performance is consistent across these tasks
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
     value: n/a
     rationale: The labels are based on deterministic keys such as internal signals from APIs, JSON values, and reference golden files.
@@ -226,16 +222,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.4:
-    value: met
-    rationale: The authors propose a specific direction to improve scores by boosting model efficiency to handle longer contexts, citing the robotics community as a rationale.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 17, chunk 3
-        quote: we need to boost the efficiency of our models, enabling them to process much longer contexts and perform inference computations efficiently, akin to the robotics community
+    value: unmet
     by: model
+    rationale: The excerpts list future work directions (e.g., enhancing VLM capabilities, better context support) but do not report any conducted experiments aimed at improving scores, nor do they propose a specific named direction with a stated rationale for immediate implementation beyond general research goals.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark links its tasks to real-world computer use cases and the goal of creating computer assistants.
@@ -264,7 +258,16 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 21 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3
+      - ds.2
+      - ea.4

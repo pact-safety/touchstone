@@ -2,13 +2,15 @@
 benchmark: tau-bench
 standard: abc
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 59a200c6d575d595120f1cb70fea53cef0632f6b
@@ -44,6 +46,7 @@ verdicts:
         quote: whether the final database is identical to the unique ground truth outcome database
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.2:
     value: met
     rationale: The benchmark uses substring matching for user responses, meaning extra words around the correct answer do not cause failure.
@@ -52,37 +55,25 @@ verdicts:
         url: https://arxiv.org/abs/2406.12045v1
         locator: 2406.12045v1 page 4, chunk 2
         quote: the user responses contain   "54.04" ,   "41.64"   as substrings
-    by: model
+    by: human
     quotes_verified: true
   O.a.3:
-    value: met
-    rationale: The benchmark uses substring matching for outputs; an answer negating the ground truth (e.g., not containing the required substring) would not be scored correct.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 4, chunk 2
-        quote: the user responses contain   "54.04" ,   "41.64"   as substrings
-    by: model
+    value: unmet
+    by: human
+    rationale: The benchmark uses substring matching for outputs, so this item is not n/a. There is no evidence that negating the ground truth is scored incorrect.
+    evidence: []
     quotes_verified: true
   O.a.4:
-    value: met
-    rationale: The benchmark uses substring matching for outputs; listing all possible answers would not satisfy the specific unique ground truth database state requirement.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 4, chunk 2
-        quote: whether the final database is identical to the unique ground truth outcome database
-    by: model
+    value: unmet
+    by: human
+    rationale: The benchmark uses substring matching for outputs, so this item is not n/a. There is no evidence that listing all candidates does not score as correct.
+    evidence: []
     quotes_verified: true
   O.a.5:
-    value: met
-    rationale: The ground truth requires a specific database state and specific substrings, making generic guesses like 'yes' incorrect.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 4, chunk 2
-        quote: the agent is successful if the only database write action is   return_delivered_order_items(order_id="#W2890441", item_ids=["2366567022"], payment_method_id="credit_card_1061405")
-    by: model
+    value: unmet
+    by: human
+    rationale: The benchmark uses substring matching for outputs, so this item is not n/a. There is no evidence that a generic guess scores incorrect for every item.
+    evidence: []
     quotes_verified: true
   O.b.1:
     value: n/a
@@ -175,14 +166,10 @@ verdicts:
     by: model
     quotes_verified: true
   O.f.3:
-    value: met
-    rationale: The ground truth requires specific API write actions, meaning a no-op would fail the identity check with the ground truth database.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 4, chunk 2
-        quote: whether the final database is identical to the unique ground truth outcome database
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts do not show that a no-op or single-write baseline fails the check.
+    evidence: []
     quotes_verified: true
   O.g.1:
     value: n/a
@@ -194,6 +181,7 @@ verdicts:
         quote: whether the final database is identical to the unique ground truth outcome database
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.g.2:
     value: n/a
     rationale: The benchmark does not score by matching a final answer.
@@ -204,6 +192,7 @@ verdicts:
         quote: whether the final database is identical to the unique ground truth outcome database
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.h.1:
     value: n/a
     rationale: The benchmark uses a binary reward (0 or 1), not a continuous quality metric.
@@ -221,25 +210,23 @@ verdicts:
     by: model
     quotes_verified: true
   T.2:
-    value: n/a
-    rationale: The benchmark uses simulated users and programmatic APIs (JSON databases) rather than external API tools that would require rate limit handling.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 1, chunk 2
-        quote: measure an agent’s ability to interact with (simulated) human users and programmatic APIs
+    value: unmet
     by: model
+    rationale: The excerpts mention setting API keys and using a 'tenacity' package, but do not document how the harness handles retries and rate limits for external API tools.
+    evidence:
+      - source: repo
+        quote: '"tenacity>=8.3.0"'
+        locator: sierra-research/tau-bench@59a200c6d575:setup.py, chunk 0
+        url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.3:
-    value: n/a
-    rationale: The benchmark uses simulated users and programmatic APIs rather than external API tools.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 1, chunk 2
-        quote: measure an agent’s ability to interact with (simulated) human users and programmatic APIs
+    value: unmet
     by: model
+    rationale: The excerpts do not describe any mechanism for detecting API outages or stopping/excluding runs if an API becomes inaccessible.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.4:
     value: unmet
     rationale: There is no mention of how the environment is reset or if residual data is cleared between runs.
@@ -257,15 +244,12 @@ verdicts:
     by: model
     quotes_verified: true
   T.6:
-    value: met
-    rationale: The environment uses JSON databases and Python API tools, which are part of the modular framework and frozen in the repository.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 4, chunk 1
-        quote: "τ -bench is constructed in a modular fashion with several components: (a) JSON databases, (b) Python API tools"
+    value: unmet
     by: model
+    rationale: The README warns that the tasks are outdated and directs users to a different repository for fixed tasks, implying the environment is not frozen or stable.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.7:
     value: met
     rationale: The construction process includes a stage for human labeling and checking of the data.
@@ -282,6 +266,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.9:
     value: unmet
     rationale: The excerpts do not mention an automated Oracle solver that ships with the benchmark to solve all challenges.
@@ -362,6 +347,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.9:
     value: unmet
     rationale: There is no numerical estimation of the impact of unavoidable flaws on the results.
@@ -396,3 +382,15 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 30 verdicts agreed, 8 settled by adjudicator-v4, 5 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - O.a.3
+      - O.a.4
+      - O.a.5
+      - O.f.3
+      - T.2
+      - T.3
+      - T.6

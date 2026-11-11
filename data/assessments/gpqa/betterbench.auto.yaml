@@ -35,24 +35,24 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   des.01:
-    value: 10
-    rationale: The benchmark focuses on high-quality, difficult multiple-choice questions in biology, physics, and chemistry, though a formal definition of the 'capability' is implicit (expert-level knowledge).
+    value: 15
+    by: human
+    rationale: The benchmark explicitly defines the tested capability as questions that are 'hard and Google-proof' and require 'highly-trained experts' to answer, distinguishing it from benchmarks solvable by non-experts.
     evidence:
       - source: paper
+        quote: we require that questions be hard and Google-proof in order to be suitable for scalable oversight experiments.
+        locator: 2311.12022v1 page 12, chunk 1
         url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 13, chunk 0
-        quote: We present GPQA , a challenging dataset of multiple-choice questions written by domain experts in biology, physics, and chemistry.
-    by: model
     quotes_verified: true
   des.02:
-    value: 10
-    rationale: The translation to the task is described as creating questions that are 'Google-proof' and hard for non-experts but answerable by experts.
+    value: 15
+    by: human
+    rationale: The document describes how the capability (expert knowledge) translates to the task via a pipeline where experts write questions that non-experts cannot answer even with internet access.
     evidence:
       - source: paper
+        quote: We instruct question writers to write difficult questions in their domain of expertise that other experts in the domain will be able to answer correctly, but that non-experts cannot answer even with the internet at their disposal.
+        locator: 2311.12022v1 page 3, chunk 4
         url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 12, chunk 1
-        quote: we require that questions be hard and Google-proof in order to be suitable for scalable oversight experiments.
-    by: model
     quotes_verified: true
   des.03:
     value: 15
@@ -65,14 +65,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 10
-    rationale: The text describes limitations regarding statistical power and the need for large effect sizes to detect differences in accuracy.
+    value: 15
+    by: human
+    rationale: The document explicitly warns that scores should not be used for model training due to small size and lack of statistical power, and notes non-expert accuracy may not translate to realistic settings.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2311.12022v1
+        quote: This means is not ideal for model training, and it does not provide a lot of statistical power for accuracy comparisons
         locator: 2311.12022v1 page 12, chunk 2
-        quote: it does not provide a lot of statistical power for accuracy comparisons, requiring large effect sizes (e.g., 50% → 60% accuracy) in order to detect differences
-    by: model
+        url: https://arxiv.org/abs/2311.12022v1
     quotes_verified: true
   des.05:
     value: 15
@@ -262,7 +262,7 @@ verdicts:
         url: https://github.com/idavidrein/gpqa/tree/56686c06f5e19865c153de0fdb11be3890014df7
         locator: idavidrein/gpqa@56686c06f5e1:README.md, chunk 0
         quote: Run an evaluation with `python baselines/run_baseline.py main {CLI FLAGS}`
-    by: model
+    by: human
     quotes_verified: true
   doc.03:
     value: 0
@@ -297,10 +297,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.07:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper documents the test tasks (graduate-level MCQs) and the rationale (Google-proof questions for scalable oversight)."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The paper documents the test tasks (graduate-level Q&A in physics, chemistry, biology) and provides the rationale (scalable oversight, Google-proof).
+    evidence:
+      - source: paper
+        quote: To study methods for scalable oversight in this setting, we need tasks that non-experts are unable to complete on their own.
+        locator: 2311.12022v1 page 2, chunk 0
+        url: https://arxiv.org/abs/2311.12022v1
     quotes_verified: true
   doc.08:
     value: 15
@@ -337,20 +341,27 @@ verdicts:
     by: model
     quotes_verified: true
   doc.11:
-    value: 10
-    rationale: The paper mentions accuracy and calibration, though a formal definition of the metric is implicit for MCQs.
+    value: 15
+    by: human
+    rationale: The evaluation metric is documented as accuracy, with examples of accuracy reporting in tables and text.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2311.12022v1
+        quote: In contrast, our non-experts achieve only 34% accuracy, and GPT-4 with few-shot chain-of-thought prompting achieves 39%
         locator: 2311.12022v1 page 2, chunk 2
-        quote: experts achieve 65% accuracy, and many of their errors arise not from disagreement
-    by: model
+        url: https://arxiv.org/abs/2311.12022v1
     quotes_verified: true
   doc.12:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes a LICENSE file specifying the MIT License."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The repository includes a LICENSE file specifying the MIT License.
+    evidence:
+      - source: repo
+        quote: |-
+          MIT License
+
+          Copyright (c) 2022 I. David Rein
+        locator: idavidrein/gpqa@56686c06f5e1:LICENSE, chunk 0
+        url: https://github.com/idavidrein/gpqa/tree/56686c06f5e19865c153de0fdb11be3890014df7
     quotes_verified: true
   doc.13:
     value: 0
@@ -398,7 +409,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.12022v1
         locator: 2311.12022v1 page 12, chunk 3
         quote: We make no claim that GPQA is a representative sample of any population of questions
-    by: model
+    by: human
     quotes_verified: true
   doc.19:
     value: 0
@@ -430,9 +441,19 @@ verdicts:
         url: https://arxiv.org/abs/2311.12022v1
         locator: 2311.12022v1 page 1, chunk 2
         quote: Correspondence to   idavidrein@gmail.com, {julianjm,bowman}@nyu.edu
-    by: model
+    by: human
     quotes_verified: true
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 9 decided by the reviewer."
+    items:
+      - des.01
+      - des.02
+      - des.04
+      - doc.07
+      - doc.11
+      - doc.12

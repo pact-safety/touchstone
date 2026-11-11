@@ -2,13 +2,15 @@
 benchmark: ailuminate
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
@@ -83,29 +85,18 @@ verdicts:
     by: model
     quotes_verified: true
   iv.07:
-    value: met
-    rationale: The benchmark reports a manual inspection of outputs through human annotation of sampled prompt-response pairs to determine labels.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 18, chunk 1
-        quote: MLCommons contracted two companies to conduct human annotations of the prompts and System-Under-Test (SUT) generated responses
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts describe the evaluator pipeline and error analysis in general terms, but do not report a manual inspection of specific model outputs or trajectories with sample sizes and findings.
+    evidence: []
     quotes_verified: true
   iv.08:
-    value: met
-    rationale: The benchmark describes using three raters and a simple majority vote to produce labels, and documents the measurement of interrater reliability.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 18, chunk 1
-        quote: Each sampled prompt-response pair received either a nonviolating or violating label from each of three raters. A simple majority vote determined the final result.
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 37, chunk 0
-        quote: "30: Measure and iterate on methods until high interrater reliability is achieved"
+    value: unmet
     by: model
+    rationale: The excerpts mention human annotators and majority voting, but do not report inter-annotator agreement figures or describe blinding procedures for the annotators.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: unmet
     rationale: The excerpts do not state that the benchmark releases full model outputs or reasoning traces for evaluators to read.
@@ -149,15 +140,12 @@ verdicts:
     by: model
     quotes_verified: true
   ev.03:
-    value: met
-    rationale: The spread of the evaluation is described across the axis of hazard categories, specifying there are 12 of them.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 7, chunk 1
-        quote: The benchmark assesses SUT responses with respect to 12 text-content hazard categories.
+    value: unmet
     by: model
+    rationale: The excerpts mention that the benchmark assesses 12 hazard categories and supports multiple languages, but they do not provide counts or proportions for the spread of the evaluation along these axes, which is required by the decision rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.01:
     value: unmet
     rationale: The excerpts do not report run-to-run variation or a statement that the authors reproduced their own headline numbers.
@@ -174,36 +162,32 @@ verdicts:
         quote: Accompanying paper is accepted at peer-reviewed venue
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.03:
-    value: met
-    rationale: Practice prompt datasets are available to MLCommons members via a documented access-controlled request form.
-    evidence:
-      - source: repo
-        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
-        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 4
-        quote: If you are a MLCommons member or represent a member organization, and wish access to these data sets, [please complete this form](https://mlcommons.org/ailuminate/submit-a-sut/).
+    value: unmet
     by: model
+    rationale: The test items (prompts) are not publicly downloadable. Access is restricted to MLCommons members via a form and verification process, which does not satisfy the requirement for obtainability by outside researchers via public download or documented access-controlled request for general research.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.04:
-    value: met
-    rationale: The benchmark runner (ModelBench) is released in a GitHub repository and includes components to send prompts and receive annotations.
+    value: unmet
+    by: model
+    rationale: While the harness (ModelBench) is mentioned, the excerpts do not confirm that the scoring code and grader prompts are released in a repository runnable against a new model without the authors' help. The evaluator is described as a 'response evaluator based on specialized models', implying a proprietary or closed component not fully open for independent execution.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
+        quote: "The evaluator system is standalone software that manages the entire SUT evaluation life cycle. Called ModelBench... it includes the following components: 1. A prompt database... 2. A benchmark runner... 3. A benchmark-run-journal data store... 4. A report generator"
         locator: 2503.05731v2 page 16, chunk 1
-        quote: Called ModelBench ( https://github.com/mlcommons/modelbench ), it includes the following components
-    by: model
-    quotes_verified: true
-  rp.05:
-    value: met
-    rationale: The documentation confirms that the benchmark design, test tasks, prompt design, and evaluation metrics are documented.
-    evidence:
-      - source: paper
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: Benchmark design process is documented
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  rp.05:
+    value: unmet
+    by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts confirm that the benchmark design, prompt generation, and evaluation methodology are documented. Specifically, mitigations 125, 126, 128, 129, 130, 131, and 132 are marked as 'Y' (adopted), indicating documentation of the design process, tasks, environment, data sources, preprocessing, annotation, and metrics."
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.06:
     value: unmet
     rationale: There is no evidence of a pinned software environment (lockfile/container) or a statement of the compute needed for a full run.
@@ -217,16 +201,29 @@ verdicts:
     by: model
     quotes_verified: true
   rp.08:
-    value: met
-    rationale: The benchmark accesses some SUTs through APIs.
+    value: unmet
+    by: model
+    rationale: The excerpts do not state that the harness runs models through public APIs or open weights, nor that it is built on or exported to a named public evaluation framework or standard format. It mentions accessing some SUTs through APIs, but does not confirm the harness itself uses public APIs or standards for the evaluation process.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
+        quote: We accessed some SUTs through APIs, which give developers an opportunity to include additional safeguards.
         locator: 2503.05731v2 page 22, chunk 3
-        quote: We accessed some SUTs through APIs
-    by: model
+        url: https://arxiv.org/abs/2503.05731v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 14 verdicts agreed, 7 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.07
+      - iv.08
+      - ev.03
+      - rp.03
+      - rp.04
+      - rp.05
+      - rp.08

@@ -65,14 +65,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 10
-    rationale: The documentation warns users to be paranoid about results and suggests that speedups >2x are highly unlikely, which guides interpretation.
+    value: 15
+    by: human
+    rationale: The document provides guidance on interpreting scores, warning against reward hacking and explaining the metric's sensitivity to speedup thresholds.
     evidence:
-      - source: repo
-        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
-        locator: ScalingIntelligence/KernelBench@423217d9fda9:EVAL.md, chunk 0
-        quote: be always paranoid about suspiciously good results — kernel engineers and existing compilers are already pretty good, so a >2x speedup for anything is highly unlikely
-    by: model
+      - source: paper
+        quote: By adjusting the threshold parameter p , we enable evaluation of kernel performance at different speedup thresholds and capture the speedup distributions.
+        locator: 2502.10517v1 page 5, chunk 0
+        url: https://arxiv.org/abs/2502.10517v1
     quotes_verified: true
   des.05:
     value: 0
@@ -88,14 +88,19 @@ verdicts:
         url: https://arxiv.org/abs/2502.10517v1
         locator: 2502.10517v1 page 3, chunk 3
         quote: Mimicking an AI researcher’s workflow, the PyTorch code contains a class named Model derived from torch.nn.Module()
-    by: model
+    by: human
     quotes_verified: true
   des.07:
-    value: 0
-    rationale: While the paper cites other works, it does not describe the integration of domain literature into the benchmark design itself.
-    evidence: []
+    value: 15
     by: model
+    rationale: The document integrates domain literature by citing existing libraries (cuDNN, CUTLASS) and prior works on HPC code generation to contextualize the benchmark.
+    evidence:
+      - source: paper
+        quote: Existing works in the space of HPC code generation have evaluated LM performance on translating arbitrary code samples from C++ to CUDA [ 35 , 41 ] or generating well-known, low-level kernels such as GEMMs [ 38 , 42 ].
+        locator: 2502.10517v1 page 3, chunk 2
+        url: https://arxiv.org/abs/2502.10517v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.08:
     value: 15
     rationale: The choice of the 'fast_p' metric is explained as a way to capture both correctness and performance axes.
@@ -330,7 +335,7 @@ verdicts:
         url: https://arxiv.org/abs/2502.10517v1
         locator: 2502.10517v1 page 21, chunk 1
         quote: we prompt the model with the following template depending on the feedback it expects
-    by: model
+    by: human
     quotes_verified: true
   doc.11:
     value: 15
@@ -422,3 +427,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - des.04
+      - des.07

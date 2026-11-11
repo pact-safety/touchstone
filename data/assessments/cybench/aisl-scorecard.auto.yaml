@@ -50,16 +50,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
-    value: met
-    rationale: The benchmark defines three distinct performance metrics (unguided, subtask-guided, and subtask performance) and reports them independently in tables.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 5, chunk 0
-        quote: 1. Unguided performance is the performance on a task without subtask guidance, and outputs a binary score (i.e., 0 or 1 ). 2. Subtask-guided performance is the performance on the final subtask only, and outputs a binary score
+    value: unmet
     by: model
+    rationale: The documentation does not report independent scores for each sub-component (facet) of the phenomenon in a table or figure; it reports aggregate metrics like 'unguided performance', 'subtask performance', and 'subtask-guided performance', but does not break down scores by the six categories or other facets independently in the provided excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
     value: met
     rationale: The docs define the task space via 6 categories and report difficulty variation using First Solve Time (FST).
@@ -71,15 +69,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.05:
-    value: met
-    rationale: The documentation reports per-category item counts for the task space.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 35, chunk 0
-        quote: "Forensics; 4 tasks : Analyze and extract hidden or deleted information from data files, memory dumps, or network traffic to uncover secrets or reconstruct events."
+    value: unmet
     by: model
+    rationale: The documentation states the goal to span categories and difficulties but does not report per-category item counts over the full documented task space in the provided excerpts, nor does it describe a stratified or quota sampling plan with specific counts for all categories.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.06:
     value: met
     rationale: Every task is verified for solvability through a solution script and continuous integration.
@@ -97,25 +92,19 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark curates tasks from CTF competitions rather than reusing a prior AI benchmark dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 2, chunk 3
-        quote: In these competitions, teams compete to solve CTF challenges
+    value: unmet
     by: model
+    rationale: The documentation compares Cybench to prior work (InterCode-CTF, NYU CTF) in terms of difficulty and level, but does not provide a table or figure comparing the same models on the original datasets and on Cybench.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark curates tasks from CTF competitions rather than reusing a prior AI benchmark dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 2, chunk 3
-        quote: In these competitions, teams compete to solve CTF challenges
+    value: unmet
     by: model
+    rationale: The documentation does not list modifications made to reused data with their reasons; it states tasks are from competitions but does not detail specific adaptations of the raw competition data.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While the item count is stated, there is no power calculation or confidence-interval half-width reported.
@@ -206,6 +195,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.01:
     value: unmet
     rationale: The documentation does not identify specific secondary capabilities nor provide control conditions or ablation results for them.
@@ -237,55 +227,52 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The benchmark uses a bash agent where outcomes are based on retrieving a flag from the environment, not parsing free-form output for correctness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 5, chunk 2
-        quote: the objective is to identify a vulnerability and execute the exploit in order to retrieve a secret string known as a flag
+    value: unmet
     by: model
+    rationale: The scoring involves parsing free-form output (e.g., 'The response r_t is parsed to derive an action'), so the n/a condition does not hold, and no parser bias analysis is reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
-    value: met
-    rationale: The paper provides the knowledge cutoff dates for the evaluated models and the release dates of the competitions used for the tasks.
+    value: unmet
+    by: model
+    rationale: The excerpts state that Mixtral is not included because there is no public information about its data cutoff date, which violates the rule that a cutoff statement missing for any model is unmet.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
+        quote: Mixtral is not included because there is no public information about the data cutoff date.
         locator: 2408.08926v4 page 34, chunk 1
-        quote: We map the date that the competitions released the challenges on Github and the knowledge cutoff dates
-    by: model
+        url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs and local scoring via Docker containers, not a mutable external environment.
-    evidence:
-      - source: repo
-        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
-        locator: andyzorigin/cybench@ca483c6443f1:docs/add_model.md, chunk 1
-        quote: Run `docker build -t cybench/cybench:latest . --load`
+    value: unmet
     by: model
-    quotes_verified: true
-  iv.09:
-    value: met
-    rationale: The documentation states that the Docker cache is cleared upon task instantiation to reset state.
+    rationale: The evaluation uses an external environment (Docker, task servers, web search), so the n/a condition does not hold, and no static snapshot or changelog with re-validation is documented.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
+        quote: To patch the vulnerability, we isolated the task server from the agent environment
         locator: 2408.08926v4 page 35, chunk 2
-        quote: We mitigated this issue by clearing the Docker cache upon task instantiation.
-    by: model
+        url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
-  iv.10:
-    value: met
-    rationale: The tasks are not multiple choice; they require executing exploits to retrieve a flag.
+    adjudicated_by: adjudicator-v4
+  iv.09:
+    value: unmet
+    by: model
+    rationale: The evaluation involves stateful agent runs (memory, iterations), so the n/a condition does not hold, and while Docker cache clearing is mentioned, a general harness reset per task is not explicitly documented as the primary mechanism.
     evidence:
       - source: paper
+        quote: We mitigated this issue by clearing the Docker cache upon task instantiation.
+        locator: 2408.08926v4 page 35, chunk 2
         url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 5, chunk 2
-        quote: the objective is to identify a vulnerability and execute the exploit in order to retrieve a secret string known as a flag
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  iv.10:
+    value: unmet
+    by: model
+    rationale: "The benchmark uses CTF tasks which are not multiple choice, but the decision rule requires reporting the format is not multiple choice OR reporting guessing mitigations. The excerpts do not explicitly state the format is not multiple choice in a way that satisfies the 'met' condition for the rule's disjunction without ambiguity, but more critically, the rule says 'met when: The format is not multiple choice...'. The excerpts describe CTF tasks. However, looking at the rule: 'The format is not multiple choice, or...'. The excerpts describe CTF tasks. Are CTF tasks multiple choice? No. But does the text explicitly say 'The format is not multiple choice'? No. It describes 'Capture the Flag challenges'. The rule requires the documentation to name the format or state it is not MCQ. The excerpts do not explicitly state 'This is not multiple choice'. They describe the tasks. Without an explicit statement that the format is not multiple choice, we cannot verify the 'met' condition for the first disjunct. The second disjunct requires guessing mitigations, which are not present. Thus, unmet."
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios and acceptance criteria.
@@ -315,35 +302,26 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark evaluates general cybersecurity capabilities via CTF tasks rather than a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 10, chunk 3
-        quote: We have presented Cybench, a new benchmark for evaluating agents on cybersecurity tasks.
+    value: unmet
     by: model
+    rationale: The benchmark does not state that the model, tools, prompt, and environment match a named deployed product or configuration; it uses generic agent scaffolds and Kali Linux.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark evaluates general cybersecurity capabilities via CTF tasks rather than a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 10, chunk 3
-        quote: We have presented Cybench, a new benchmark for evaluating agents on cybersecurity tasks.
+    value: unmet
     by: model
+    rationale: The excerpts do not include adversarial or misuse configurations of the system under test; they focus on standard CTF challenges and agent scaffolds.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark evaluates general cybersecurity capabilities via CTF tasks rather than a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 10, chunk 3
-        quote: We have presented Cybench, a new benchmark for evaluating agents on cybersecurity tasks.
+    value: unmet
     by: model
+    rationale: While the paper notes limitations (e.g., short time span, small codebases), it does not explicitly list differences between the test setting and real deployment with a stated caveat on how to interpret results in light of those gaps.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation mentions Python versions and a requirements file, but fails to list hardware models, OS, or specific sampling parameters.
@@ -373,15 +351,16 @@ verdicts:
     by: model
     quotes_verified: true
   rel.05:
-    value: met
-    rationale: The benchmark reports First Solve Time (FST) as a human baseline for the tasks.
+    value: unmet
+    by: model
+    rationale: The excerpts mention human teams' solve times as a comparison for difficulty, but do not report a formal human baseline score (e.g., average human performance) for the tasks.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
+        quote: Without subtask guidance, agents leveraging Claude 3.5 Sonnet, GPT-4o, OpenAI o1-preview, and Claude 3 Opus successfully solved complete tasks that took human teams up to 11 minutes to solve.
         locator: 2408.08926v4 page 1, chunk 1
-        quote: successfully solved complete tasks that took human teams up to 11 minutes to solve.
-    by: model
+        url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.06:
     value: unmet
     rationale: The excerpts do not report the score of any trivial or minimal baseline (e.g., random or zero-shot naive).
@@ -389,29 +368,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The excerpts describe an evaluator that checks for a correct answer or a unique flag string, but do not mention using a model as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report any correlation between model rater ratings and human judgments. While human performance is mentioned for context, no validation of the automated scoring against human labels is provided.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The excerpts describe an evaluator that checks for a correct answer or a unique flag string, but do not mention using a model as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report an adversarial or reward-hacking test of the model rater, nor do they describe a named defense against such attacks for the scoring mechanism.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The excerpts describe an evaluator that checks for a correct answer or a unique flag string, but do not mention using a model as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on the same inputs. They mention running multiple attempts for models, but not for verifying rater consistency.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The excerpts describe an evaluator that checks for a correct answer or a unique flag string, but do not mention using a model as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not measure any named rater bias (e.g., length, position) with a number, nor do they state a mitigation for such biases in the scoring.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: There is no report of multiple independent annotators labeling items or a programmatic checker's accuracy on a labeled sample.
@@ -424,6 +407,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.07:
     value: met
     rationale: The benchmark uses solution scripts to verify solvability, and these are checked against a reference flag in continuous integration.
@@ -457,15 +441,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.11:
-    value: n/a
-    rationale: The scoring involves checking for a unique flag string or a correct answer, which does not involve parsing free-form output in the sense of extracting structured data from natural language.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 4, chunk 0
-        quote: we parse observations only for flags, and not for subtask answers
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against a set of manually verified outputs. They only report that the solution script output matches the reference flag.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scorer.
@@ -476,3 +457,25 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 21 settled by adjudicator-v4."
+    items:
+      - cv.03
+      - cv.05
+      - cv.08
+      - cv.09
+      - iv.06
+      - iv.07
+      - iv.08
+      - iv.09
+      - iv.10
+      - ev.05
+      - ev.06
+      - ev.07
+      - rel.05
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.11

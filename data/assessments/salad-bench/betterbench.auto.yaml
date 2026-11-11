@@ -65,10 +65,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: The excerpts do not describe how the benchmark scores should or should not be interpreted or used.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The text describes how scores should be interpreted, noting that high overall safety rates do not obscure specific risks and that strict safety can harm helpfulness.
+    evidence:
+      - source: paper
+        quote: a high overall safety rate does not obscure the identification of tasks and categories that may present risks.
+        locator: 2402.05044v4 page 2, chunk 2
+        url: https://arxiv.org/abs/2402.05044v4
     quotes_verified: true
   des.05:
     value: 15
@@ -104,7 +108,7 @@ verdicts:
         url: https://arxiv.org/abs/2402.05044v4
         locator: 2402.05044v4 page 7, chunk 2
         quote: Evaluation results of F1 scores are detailed in Table 3. The comprehensive outcomes reveal that MD-Judge markedly surpasses its counterparts
-    by: model
+    by: human
     quotes_verified: true
   des.09:
     value: 0
@@ -118,6 +122,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.11:
     value: 0
     rationale: The excerpts do not provide a random performance level baseline.
@@ -142,7 +147,7 @@ verdicts:
         url: https://arxiv.org/abs/2402.05044v4
         locator: 2402.05044v4 page 2, chunk 2
         quote: Considering limitations of existing benchmarks, we propose a challenging benchmark namely SALAD-Bench
-    by: model
+    by: human
     quotes_verified: true
   des.14:
     value: 0
@@ -151,14 +156,18 @@ verdicts:
     by: model
     quotes_verified: true
   imp.01:
-    value: 10
-    rationale: The README provides installation instructions and a QuickStart code snippet for the evaluator, suggesting code is available, though a full evaluation script is not explicitly shown.
+    value: 15
+    by: human
+    rationale: The repository README explicitly provides installation instructions and Python code snippets for importing and using the evaluation components, indicating that evaluation code is available.
     evidence:
       - source: repo
-        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
-        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 4
         quote: "pip install -e .  # install salad-bench"
-    by: model
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 4
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
+      - source: repo
+        quote: from saladbench.evaluator import DDPMDJudgeEvaluator, MDJudgeEvaluator
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 4
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
     quotes_verified: true
   imp.02:
     value: 10
@@ -188,7 +197,7 @@ verdicts:
         url: https://arxiv.org/abs/2402.05044v4
         locator: 2402.05044v4 page 6, chunk 2
         quote: When generating from open-sourced models, we strictly follow its chat template
-    by: model
+    by: human
     quotes_verified: true
   imp.05:
     value: 0
@@ -214,6 +223,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.09:
     value: 0
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (5): The paper mentions restricting access to authorized researchers to mitigate risks of sensitive content, but does not assess the need for warnings."
@@ -243,7 +253,7 @@ verdicts:
           pip install transformers==4.36.1
           pip install ray
           pip install flash-attn
-    by: model
+    by: human
     quotes_verified: true
   doc.02:
     value: 15
@@ -268,10 +278,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.05:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The README explicitly states that the benchmark was accepted to the Findings of ACL2024, a peer-reviewed venue."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The README explicitly states that the SALAD-Bench paper was accepted to the Findings of ACL2024, which is a peer-reviewed venue.
+    evidence:
+      - source: repo
+        quote: 📆[2024-05-16] **SALAD-Bench** is accepted to the Findings of ACL2024.
+        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 1
+        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
     quotes_verified: true
   doc.06:
     value: 15
@@ -419,3 +433,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 7 decided by the reviewer."
+    items:
+      - des.04
+      - imp.01
+      - doc.05

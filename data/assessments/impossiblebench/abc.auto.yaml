@@ -40,6 +40,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.2:
     value: n/a
     rationale: The benchmark uses unit tests and LLM judges for scoring, not string matching.
@@ -116,12 +117,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.e.2:
     value: n/a
     rationale: End-to-end testing is not used.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.f.1:
     value: n/a
     rationale: Outcomes are scored by unit test pass/fail or LLM judge analysis of transcripts, not environment state matching.
@@ -233,15 +236,12 @@ verdicts:
     by: model
     quotes_verified: true
   R.2:
-    value: met
-    rationale: The repository provides the official implementation and code to run the evaluations.
-    evidence:
-      - source: repo
-        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
-        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 0
-        quote: This repository provides the official Inspect AI implementation for ImpossibleBench evaluations.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The repository contains the source code for the evaluation harness, including setup.py and agent implementations."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.3:
     value: unmet
     rationale: There is no mention of a private held-out split, rotating split, or canary strings to prevent contamination.
@@ -275,19 +275,12 @@ verdicts:
     by: model
     quotes_verified: true
   R.7:
-    value: met
-    rationale: The paper describes a quality control process to remove invalid mutations, and the README records a bug fix for the LiveCodeBench split.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 4, chunk 0
-        quote: To reduce noise, we verify their validity by testing them against both the original patches from the base benchmarks and empty patches
-      - source: repo
-        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
-        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 0
-        quote: "Update (Oct 12, 2026): @Theosdoor [found](https://github.com/safety-research/impossiblebench/issues/3) a bug on the LiveCodeBench split"
+    value: unmet
     by: model
+    rationale: While quality control steps are described, there is no mention of a correction channel with a recorded fix (errata, changelog) for flaws found after release.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.8:
     value: unmet
     rationale: The excerpts do not name unavoidable flaws and their likely direction of effect on results.
@@ -328,3 +321,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4."
+    items:
+      - R.2
+      - R.7

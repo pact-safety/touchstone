@@ -35,24 +35,32 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   des.01:
-    value: 10
-    rationale: The benchmark focuses on the 'safety evaluation of autonomous vehicles', but a formal definition of the 'capability' or 'concept' is not explicitly provided in a single definition statement.
+    value: 15
+    by: human
+    rationale: The benchmark explicitly defines the tested capability as the safety and security of autonomous vehicles, specifically focusing on safety-critical scenarios.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2206.09682v4
-        locator: 2206.09682v4 page 1, chunk 0
         quote: "SafeBench: A Benchmarking Platform for Safety Evaluation of Autonomous Vehicles"
-    by: model
+        locator: 2206.09682v4 page 1, chunk 0
+        url: https://arxiv.org/abs/2206.09682v4
+      - source: repo
+        quote: Safebench is a benchmarking platform based on Carla simulator for evaluating safety and security of autonomous vehicles.
+        locator: trust-ai/SafeBench@dec22690c23f:docs/source/components.md, chunk 0
+        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
     quotes_verified: true
   des.02:
-    value: 10
-    rationale: The text describes using safety-critical scenarios to evaluate AD algorithms, though the exact translation process is described across multiple sections rather than a single mapping.
+    value: 15
+    by: human
+    rationale: The excerpts describe how the capability (safety) translates to tasks via specific metrics like collision rate and overall score on generated scenarios.
     evidence:
       - source: paper
+        quote: The overall score (OS) before and after scenario selection (S-OS) are used to demonstrate the safety-critical scenario generation capability
+        locator: 2206.09682v4 page 8, chunk 0
         url: https://arxiv.org/abs/2206.09682v4
-        locator: 2206.09682v4 page 6, chunk 3
-        quote: We test various types of algorithms based on the safety-critical scenarios in SafeBench.
-    by: model
+      - source: paper
+        quote: "we consider three levels of evaluation metrics: Safety, Functionality, and Etiquette"
+        locator: 2206.09682v4 page 9, chunk 1
+        url: https://arxiv.org/abs/2206.09682v4
     quotes_verified: true
   des.03:
     value: 15
@@ -65,10 +73,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: There is no description of how the resulting scores should or should not be interpreted or used.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The excerpts provide guidance on interpreting scores, noting trade-offs between functionality and safety, and warning that simulation results require on-track testing.
+    evidence:
+      - source: paper
+        quote: This observation suggests the inherent contradiction between some safety metrics and functionality metrics
+        locator: 2206.09682v4 page 9, chunk 2
+        url: https://arxiv.org/abs/2206.09682v4
     quotes_verified: true
   des.05:
     value: 0
@@ -164,18 +176,15 @@ verdicts:
         url: https://arxiv.org/abs/2206.09682v4
         locator: 2206.09682v4 page 2, chunk 4
         quote: In SafeBench, we have integrated 2 , 352 testing scenarios
-    by: model
+    by: human
     quotes_verified: true
   imp.03:
-    value: 10
-    rationale: The repository contains a flask REST API for object detection, suggesting API support, though not explicitly detailed for all evaluation tasks.
-    evidence:
-      - source: repo
-        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
-        locator: trust-ai/SafeBench@dec22690c23f:FILE LISTING, chunk 3
-        quote: safebench/agent/object_detection/utils/flask_rest_api/restapi.py
+    value: 0
     by: model
+    rationale: The excerpts describe evaluation via Docker containers and local execution (grpc channels), but do not mention support for evaluation via a public API endpoint for external models.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.04:
     value: 15
     rationale: The documentation explicitly mentions a local evaluation mode.
@@ -355,10 +364,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.16:
-    value: 0
-    rationale: The excerpts do not document data preprocessing steps, as the data is simulated.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The paper describes the scenario generation and selection process, which constitutes the data preprocessing steps.
+    evidence:
+      - source: paper
+        quote: We only keep scenarios that cause collisions for at least 2 algorithms during testing, which is shown in red in Figure 3.
+        locator: 2206.09682v4 page 7, chunk 2
+        url: https://arxiv.org/abs/2206.09682v4
     quotes_verified: true
   doc.17:
     value: 0
@@ -401,9 +414,18 @@ verdicts:
           The source code of Safebench is contributed by:
           - Wenhao Ding, CMU, wenhaod@andrew.cmu.edu
           - Chejian Xu, UIUC, chejian2@illinois.edu
-    by: model
+    by: human
     quotes_verified: true
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - des.01
+      - des.02
+      - des.04
+      - imp.03
+      - doc.16

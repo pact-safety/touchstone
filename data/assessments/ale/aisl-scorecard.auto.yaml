@@ -2,13 +2,15 @@
 benchmark: ale
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 816fd1591f1b73133c269fe753f10a0490ab4a63
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   cv.01:
-    value: met
-    rationale: The documentation defines the target phenomenon as the development of AI agents for Atari 2600 games, with evidence being the accumulated reward.
-    evidence:
-      - source: repo
-        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
-        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:README.md, chunk 0
-        quote: The Arcade Learning Environment (ALE) is a simple framework that allows researchers and hobbyists to develop AI agents for Atari 2600 games.
+    value: unmet
     by: model
+    rationale: The excerpts describe ALE as a framework or platform for evaluating agents, but do not provide a precise operational definition of the target phenomenon (e.g., 'general AI competency') stating which specific observable outputs count as evidence of it.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.02:
     value: unmet
     rationale: The documentation does not explicitly name an aspect of the phenomenon that is excluded or not covered.
@@ -51,27 +50,19 @@ verdicts:
     by: model
     quotes_verified: true
   cv.03:
-    value: n/a
-    rationale: The paper treats the phenomenon as a single construct of general competency across games, and does not name distinct facets to be scored independently.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 2, chunk 1
-        quote: "ALE proposes an achievable stepping stone: techniques for general competency across the gamut of Atari 2600 games."
+    value: unmet
     by: model
+    rationale: The paper reports aggregate scores (e.g., average normalized scores) across games rather than reporting independent scores for distinct facets of the phenomenon.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
-    value: met
-    rationale: The docs define the task space as Atari 2600 games and report item counts for training and testing sets.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 5, chunk 1
-        quote: |-
-          Our training set consisted of five games:   Asterix , 
-          Beam Rider ,   Freeway ,   Seaquest   and   Space Invaders .
+    value: unmet
     by: model
+    rationale: While the task space (Atari games) is named, the documentation does not report item counts along a stated difficulty or variation dimension in the provided excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.05:
     value: unmet
     rationale: The documentation does not report per-category item counts or a stratified sampling plan over the task space.
@@ -91,11 +82,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark provides an interface to existing games rather than adapting a prior AI benchmark dataset.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a table or figure comparing the same models on an original dataset and the adapted benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
     value: n/a
     rationale: The benchmark provides an interface to existing games rather than adapting a prior AI benchmark dataset.
@@ -157,15 +149,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.19:
-    value: met
-    rationale: The paper compares ALE to RL competitions and states that ALE addresses the gap of perceptual grounding from raw screens.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 14, chunk 1
-        quote: By contrast, the Arcade Learning Environment and the domain-independent setting force us to consider the question of perceptual grounding
+    value: unmet
     by: model
+    rationale: While prior work is cited, the excerpts do not explicitly compare ALE to a named prior benchmark of the same construct and state a concrete difference or gap addressed.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.20:
     value: unmet
     rationale: The documentation lacks a specific limitations statement for the design and a supported claim linking scores to real-world capability.
@@ -203,14 +192,18 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: met
-    rationale: Scoring is based on game scores/points read from the environment, not parsing free-form output.
+    value: n/a
+    by: human
+    rationale: The n/a condition is met because scoring involves reading outcomes from the environment state (scores/frames) rather than parsing free-form output.
     evidence:
       - source: paper
+        quote: The agent’s performance is
+        locator: 1207.4708v2 page 5, chunk 2
         url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 3, chunk 1
+      - source: paper
         quote: The reward at each time-step is defined on a game by game basis, typically by taking the difference in score or points between frames.
-    by: model
+        locator: 1207.4708v2 page 3, chunk 1
+        url: https://arxiv.org/abs/1207.4708v2
     quotes_verified: true
   iv.07:
     value: unmet
@@ -229,25 +222,23 @@ verdicts:
     by: model
     quotes_verified: true
   iv.09:
-    value: met
-    rationale: The documentation states that an episode starts following a reset command, indicating state is cleared.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 5, chunk 2
-        quote: An   episode   starts on the frame that follows the reset command
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly state that the harness resets state per task (e.g., fresh container) between evaluation runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
-    value: met
-    rationale: The evaluation is based on game scores, not multiple-choice questions.
+    value: unmet
+    by: model
+    rationale: "The evaluation uses continuous scores from game environments, not multiple-choice questions, but the item requires verifying the format is not MCQ or has mitigations; the excerpts confirm it is not MCQ but do not explicitly state 'not multiple choice' in a way that satisfies the specific reporting requirement for the verdict logic if interpreted strictly as needing a statement. However, since it is not MCQ, the condition 'The format is not multiple choice' is factually true. But the rule says 'met when: The format is not multiple choice...'. The excerpts show it is not MCQ. Wait, the rule is 'met when: The format is not multiple choice, OR...'. Since it is not MCQ, it should be met. Let's re-read carefully. 'The format is not multiple choice'. The excerpts describe scores, frames, rewards. It is clearly not MCQ. So it is met. I need a quote showing it is not MCQ or just that it uses scores. The quote about scores implies it is not MCQ. Let's use the score quote."
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
+        quote: The reward at each time-step is defined on a game by game basis, typically by taking the difference in score or points between frames.
         locator: 1207.4708v2 page 3, chunk 1
-        quote: typically by taking the difference in score or points between frames
-    by: model
+        url: https://arxiv.org/abs/1207.4708v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
@@ -273,35 +264,26 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark is presented as a general platform for evaluating AI agents, not as an evaluation for a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 1, chunk 0
-        quote: ALE provides an interface to hundreds of Atari 2600 game environments
+    value: unmet
     by: model
+    rationale: The benchmark is for general AI competency in emulated Atari games, not a specific deployed product or configuration in the real world.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark is presented as a general platform for evaluating AI agents, not as an evaluation for a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 1, chunk 0
-        quote: ALE provides an interface to hundreds of Atari 2600 game environments
+    value: unmet
     by: model
+    rationale: The excerpts do not mention adversarial or misuse configurations of the system under test.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark is presented as a general platform for evaluating AI agents, not as an evaluation for a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 1, chunk 0
-        quote: ALE provides an interface to hundreds of Atari 2600 game environments
+    value: unmet
     by: model
+    rationale: The excerpts do not list differences between the test setting and real deployment or provide caveats on interpreting results in light of such gaps.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The provided excerpts do not list sampling parameters, library versions, hardware models, or OS/container images.
@@ -347,45 +329,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The benchmark uses an emulator to extract scores automatically, not a model as a rater.
-    evidence:
-      - source: repo
-        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
-        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:README.md, chunk 1
-        quote: Automatic extraction of game score and end-of-game signal for more than 100  Atari 2600 games.
+    value: unmet
     by: model
+    rationale: The excerpts do not mention the use of model raters or any correlation between model ratings and human judgments. The scoring is based on game scores, not model-based ratings.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The benchmark uses an emulator to extract scores automatically, not a model as a rater.
-    evidence:
-      - source: repo
-        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
-        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:README.md, chunk 1
-        quote: Automatic extraction of game score and end-of-game signal for more than 100  Atari 2600 games.
+    value: unmet
     by: model
+    rationale: The excerpts do not mention the use of model raters, nor do they describe adversarial tests or defenses for a rater. The scoring is deterministic based on game states.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The benchmark uses an emulator to extract scores automatically, not a model as a rater.
-    evidence:
-      - source: repo
-        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
-        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:README.md, chunk 1
-        quote: Automatic extraction of game score and end-of-game signal for more than 100  Atari 2600 games.
+    value: unmet
     by: model
+    rationale: The excerpts do not mention the use of model raters or repeated rating runs. The environment is deterministic (with specific stochasticity settings), but no rater consistency is reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The benchmark uses an emulator to extract scores automatically, not a model as a rater.
-    evidence:
-      - source: repo
-        url: https://github.com/Farama-Foundation/Arcade-Learning-Environment/tree/816fd1591f1b73133c269fe753f10a0490ab4a63
-        locator: Farama-Foundation/Arcade-Learning-Environment@816fd1591f1b:README.md, chunk 1
-        quote: Automatic extraction of game score and end-of-game signal for more than 100  Atari 2600 games.
+    value: unmet
     by: model
+    rationale: The excerpts do not mention the use of model raters or the measurement of rater biases. The scoring is based on raw or normalized game scores.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: There is no report of multiple annotators labeling items independently or programmatic verification accuracy on a labeled sample.
@@ -446,3 +416,23 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 40 verdicts agreed, 14 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.01
+      - cv.03
+      - cv.04
+      - cv.08
+      - cv.19
+      - iv.06
+      - iv.09
+      - iv.10
+      - ev.05
+      - ev.06
+      - ev.07
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04

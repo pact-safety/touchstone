@@ -2,13 +2,15 @@
 benchmark: gpqa
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 56686c06f5e19865c153de0fdb11be3890014df7
@@ -40,6 +42,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1a:
     value: met
     rationale: The documentation explicitly lists the subject areas covered by the benchmark.
@@ -50,6 +53,7 @@ verdicts:
         quote: multiple-choice questions written by domain experts in biology, physics, and chemistry
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1b:
     value: met
     rationale: The benchmark specifies that the items are graduate-level and intended to be difficult for non-experts even with internet access.
@@ -61,15 +65,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.1c:
-    value: met
-    rationale: The format is stated as multiple-choice and several example items are provided in the excerpts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 1, chunk 0
-        quote: challenging dataset of 448 multiple-choice questions
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The item format is stated as multiple-choice, and several example items are shown in the excerpts."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1d:
     value: met
     rationale: The benchmark uses accuracy based on the correct answer choice, and the prompt instructions specify the required answer format for extraction.
@@ -149,7 +150,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.12022v1
         locator: 2311.12022v1 page 10, chunk 0
         quote: containing 546, 448, and 198 questions respectively
-    by: model
+    by: human
     quotes_verified: true
   1.2.4c:
     value: met
@@ -177,6 +178,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.1a:
     value: unmet
     rationale: The documentation does not define a reference protocol for comparison or specify which settings may vary without breaking comparability.
@@ -209,6 +211,7 @@ verdicts:
         quote: Each box below lists the full prompt used to measure baseline model performance.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2c:
     value: met
     rationale: The benchmark specifies the use of a search engine tool for open-book evaluations and a structured framework (self-ask) for the agent loop.
@@ -255,6 +258,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2h:
     value: n/a
     rationale: The benchmark uses regex matching for scoring, not an LLM judge.
@@ -322,15 +326,16 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.5:
-    value: met
-    rationale: The harness takes the model as a configuration setting and supports multiple OpenAI models.
+    value: unmet
+    by: model
+    rationale: The README states that currently only GPT-3.5 and GPT-4 are implemented, and it requires an OpenAI key, suggesting it is not model-agnostic or compatible with other providers without code changes.
     evidence:
       - source: repo
-        url: https://github.com/idavidrein/gpqa/tree/56686c06f5e19865c153de0fdb11be3890014df7
-        locator: idavidrein/gpqa@56686c06f5e1:README.md, chunk 0
         quote: Currently only `gpt-3.5-turbo-16k-0613` and `gpt-4` have been implemented in this codebase.
-    by: model
+        locator: idavidrein/gpqa@56686c06f5e1:README.md, chunk 0
+        url: https://github.com/idavidrein/gpqa/tree/56686c06f5e19865c153de0fdb11be3890014df7
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.1:
     value: unmet
     rationale: The excerpts do not show that the harness saves full per-item logs of responses and scores.
@@ -361,7 +366,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.12022v1
         locator: 2311.12022v1 page 20, chunk 0
         quote: "Table 7: For each baseline model and data subset, the percent of questions that the model abstains from answering."
-    by: model
+    by: human
     quotes_verified: true
   2.4.1.5:
     value: n/a
@@ -384,15 +389,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2D:
-    value: met
-    rationale: The benchmark publishes reference results for several models (Llama-2, GPT-3.5, GPT-4) and protocols.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 19, chunk 0
-        quote: "Table 6: Baseline model accuracies on the full, main, and diamond sets"
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark publishes reference results (baselines) for specific models (GPT-4, Llama-2, etc.) with the exact model versions and protocol used."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
     value: met
     rationale: Scores are reported separately for the Extended, Main, and Diamond subsets.
@@ -404,14 +406,10 @@ verdicts:
     by: model
     quotes_verified: true
   3.1.2:
-    value: met
-    rationale: The benchmark defines accuracy as its headline metric and reports it across different subsets (Extended, Main, Diamond).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 10, chunk 0
-        quote: Accuracy by subset (%)
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts provide aggregate accuracy percentages for models and humans but do not define the specific headline metric formula or the precise aggregation functions (e.g., mean, median) used to derive these scores from item-level data.
+    evidence: []
     quotes_verified: true
   3.1.3:
     value: unmet
@@ -426,15 +424,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.2.2:
-    value: met
-    rationale: The repository contains several CSV files in the baseline_results folder which provide per-run results.
-    evidence:
-      - source: repo
-        url: https://github.com/idavidrein/gpqa/tree/56686c06f5e19865c153de0fdb11be3890014df7
-        locator: idavidrein/gpqa@56686c06f5e1:FILE LISTING, chunk 0
-        quote: baseline_results/merged.csv
+    value: unmet
     by: model
+    rationale: The excerpts list baseline aggregate results in tables and mention downloadable dataset files, but they do not show that per-item scores for reference runs are published in a downloadable file.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.3:
     value: unmet
     rationale: The excerpts do not report the cost (tokens, money, or time) for the AI model reference runs.
@@ -487,6 +482,7 @@ verdicts:
         quote: We make no claim that GPQA is a representative sample of any population of questions that are likely to come up in the course of scientific practice.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.5:
     value: met
     rationale: The benchmark includes a dedicated Limitations section that discusses its small size and lack of statistical power.
@@ -499,7 +495,18 @@ verdicts:
           •   Small size.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 37 verdicts agreed, 11 settled by adjudicator-v4, 3 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.1c
+      - 2.2.5
+      - 2.4.2D
+      - 3.1.2
+      - 3.2.2

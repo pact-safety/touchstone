@@ -2,13 +2,15 @@
 benchmark: tau-bench
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 59a200c6d575d595120f1cb70fea53cef0632f6b
@@ -51,15 +53,12 @@ verdicts:
     by: model
     quotes_verified: true
   c3:
-    value: met
-    rationale: The benchmark is described as having a well-balanced spectrum of task difficulties, and it does not use classes or labels that could be exploited by a majority-class baseline.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 13, chunk 0
-        quote: τ -bench tasks have a well-balanced and diverse spectrum of difficulties
+    value: unmet
     by: model
+    rationale: The excerpts do not report the label or answer distribution, nor do they report a majority-class or trivial baseline score. While the text mentions 'diverse user scenarios', it does not provide the quantitative evidence required to verify that the distribution is balanced or that a trivial baseline scores well below capable performance.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: unmet
     rationale: While the authors describe a validation process using gpt-4-turbo trials to polish instructions, there is no cited audit or error analysis reporting a specific low error rate for the final benchmark data.
@@ -67,27 +66,19 @@ verdicts:
     by: model
     quotes_verified: true
   c5:
-    value: met
-    rationale: The benchmark serves to evaluate agents' ability to handle real-world digital tasks involving human interaction, a purpose that remains current as evidenced by the reported gaps in model performance.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 2, chunk 3
-        quote: We hope that   τ   -bench enables the evaluation and development of more consistent and capable agents for real-world digital tasks involving human interaction.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark states its purpose is to evaluate agents in 'real-world digital tasks involving human interaction' and notes that current agents 'struggle with complex reasoning... and handling compound requests,' indicating the task is not effectively solved and remains relevant for evaluating agent consistency and rule-following."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c6:
-    value: met
-    rationale: The benchmark explicitly states that its schemas and APIs are simplified compared to real-world domains to ensure logical consistency.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 6, chunk 1
-        quote: |-
-          Each   τ   -bench domain’s data schemas, APIs, and rules are simplified
-          compared to real-world domains
+    value: unmet
     by: model
+    rationale: The excerpts explicitly state that 'data schemas, APIs, and rules are simplified compared to real-world domains' and that the benchmark 'trade[s] off quantity for quality' by using a small set of tasks. While the authors acknowledge this simplification, the decision rule requires that no stated or evident assumption is shown no longer to hold. The explicit admission of simplification and the lack of multi-fact complexity (relying on single-fact-like database states) suggests the assumption that these simplified domains reflect real-world complexity is contradicted by the benchmark's own design description, which admits it is not fully representative of real-world complexity.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c7:
     value: unmet
     rationale: The repository explicitly warns that the tasks are outdated and that a newer version (tau3-bench) contains fixes for the airline and retail domain tasks, indicating the original content has become unrepresentative or flawed.
@@ -120,3 +111,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 3 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c3
+      - c5
+      - c6

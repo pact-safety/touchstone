@@ -65,10 +65,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The benchmark explicitly warns against interpreting training performance as meaningful progress due to overfitting, describing how scores should be interpreted.
+    evidence:
+      - source: paper
+        quote: However, test performance demonstrates that the agents have in fact learned almost nothing about the underlying level distribution.
+        locator: 1912.01588v2 page 4, chunk 2
+        url: https://arxiv.org/abs/1912.01588v2
     quotes_verified: true
   des.05:
     value: 0
@@ -83,10 +87,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.07:
-    value: 0
-    rationale: While other benchmarks are cited, there is no evidence of integrating domain-specific literature into the design.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The benchmark integrates domain literature by citing and comparing against related works like ALE, bsuite, and Animal-AI.
+    evidence:
+      - source: paper
+        quote: bsuite (Osband et al., 2019) is a set of simple environments designed to serve as “an MNIST for reinforcement learning.”
+        locator: 1912.01588v2 page 7, chunk 0
+        url: https://arxiv.org/abs/1912.01588v2
     quotes_verified: true
   des.08:
     value: 0
@@ -139,10 +147,14 @@ verdicts:
     by: model
     quotes_verified: true
   imp.01:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The repository provides the environment code and an interactive script, and refers to a separate repository for the experimental code."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The evaluation code is fully available as open-source software, with installation instructions and source code provided in the repository.
+    evidence:
+      - source: repo
+        quote: git clone git@github.com:openai/procgen.git
+        locator: openai/procgen@37b521dbb530:README.md, chunk 19
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
     quotes_verified: true
   imp.02:
     value: 15
@@ -152,7 +164,7 @@ verdicts:
         url: https://arxiv.org/abs/1912.01588v2
         locator: 1912.01588v2 page 1, chunk 3
         quote: These environments greatly benefit from the use of procedural content generation, the algorithmic creation of a near-infinite supply of highly randomized content.
-    by: model
+    by: human
     quotes_verified: true
   imp.03:
     value: 0
@@ -201,10 +213,14 @@ verdicts:
     by: model
     quotes_verified: true
   imp.10:
-    value: 0
-    rationale: No build status (like a CI badge) is mentioned or shown in the excerpts.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The repository includes a GitHub workflow file (.github/workflows/main.yml) which typically implements build status checks.
+    evidence:
+      - source: repo
+        quote: .github/workflows/main.yml
+        locator: openai/procgen@37b521dbb530:FILE LISTING, chunk 0
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
     quotes_verified: true
   imp.11:
     value: 0
@@ -251,7 +267,7 @@ verdicts:
         url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
         locator: openai/procgen@37b521dbb530:README.md, chunk 17
         quote: To render the environment, pass `render_mode="human"` to the constructor
-    by: model
+    by: human
     quotes_verified: true
   doc.05:
     value: 10
@@ -264,14 +280,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.06:
-    value: 10
-    rationale: The paper mentions the environments were designed to satisfy certain criteria, but a detailed step-by-step construction process is not fully detailed in the excerpts.
+    value: 15
+    by: human
+    rationale: The benchmark construction process is documented in the paper, describing the design desiderata and procedural generation.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/1912.01588v2
+        quote: "We designed all environments to satisfy the following criteria. High Diversity: Procedural generation logic is given maximal freedom"
         locator: 1912.01588v2 page 2, chunk 0
-        quote: We designed all environments to satisfy the following criteria.
-    by: model
+        url: https://arxiv.org/abs/1912.01588v2
     quotes_verified: true
   doc.07:
     value: 15
@@ -281,7 +297,7 @@ verdicts:
         url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
         locator: openai/procgen@37b521dbb530:README.md, chunk 7
         quote: "`coinrun` | A simple platformer. The goal is to collect the coin at the far right of the level"
-    by: model
+    by: human
     quotes_verified: true
   doc.08:
     value: 0
@@ -300,14 +316,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.10:
-    value: 10
-    rationale: The paper discusses the design of the environments to isolate RL challenges, though a formal 'process' document is not provided.
+    value: 15
+    by: human
+    rationale: The test environment design and prompt design (level generation) process is documented in the paper.
     evidence:
       - source: paper
+        quote: "High Diversity: Procedural generation logic is given maximal freedom, subject to basic design constraints."
+        locator: 1912.01588v2 page 2, chunk 0
         url: https://arxiv.org/abs/1912.01588v2
-        locator: 1912.01588v2 page 2, chunk 2
-        quote: These environments were designed to be tractable for baseline RL agents
-    by: model
     quotes_verified: true
   doc.11:
     value: 15
@@ -320,11 +336,19 @@ verdicts:
     by: model
     quotes_verified: true
   doc.12:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): An MIT License is provided in the repository."
-    evidence: []
+    value: 15
     by: model
+    rationale: The MIT License is explicitly included in the repository excerpts.
+    evidence:
+      - source: repo
+        quote: |-
+          MIT License
+
+          Copyright (c) 2019 OpenAI
+        locator: openai/procgen@37b521dbb530:LICENSE, chunk 0
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.13:
     value: 0
     rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
@@ -338,10 +362,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.15:
-    value: 0
-    rationale: The environments are procedurally generated, but the specific data sources for the generation logic are not documented in the excerpts.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: Data sources (procedural generation) and collection (algorithmic generation) are documented.
+    evidence:
+      - source: paper
+        quote: We introduce Procgen Benchmark, a suite of 16 procedurally generated game-like environments
+        locator: 1912.01588v2 page 1, chunk 0
+        url: https://arxiv.org/abs/1912.01588v2
     quotes_verified: true
   doc.16:
     value: 0
@@ -397,3 +425,15 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 10 decided by the reviewer."
+    items:
+      - des.04
+      - des.07
+      - imp.01
+      - imp.10
+      - doc.06
+      - doc.10
+      - doc.12
+      - doc.15

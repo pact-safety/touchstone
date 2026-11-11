@@ -2,13 +2,15 @@
 benchmark: bold
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
@@ -66,6 +68,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.05:
     value: unmet
     rationale: The documentation does not report per-category item counts or a stratified sampling plan over the task space.
@@ -78,6 +81,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.07:
     value: unmet
     rationale: The excerpts do not mention a named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
@@ -85,17 +89,19 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark uses prompts extracted from Wikipedia, but does not reuse a prior dataset or benchmark for evaluation.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The decision rule requires a table or figure comparing the same model on the original dataset and the adapted benchmark. The paper compares BOLD to StereoSet and other works conceptually but does not provide a table/figure comparing model scores on BOLD vs. those original datasets.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset or benchmark.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark reuses Wikipedia data, so the n/a condition does not hold. The docs do not list each modification made to the reused data with its reason.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While item counts are mentioned in the README, there is no power calculation or confidence-interval half-width reported.
@@ -114,6 +120,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.13:
     value: unmet
     rationale: Rater demographics are not reported, nor is there a described mitigation for demographic skew.
@@ -121,25 +128,19 @@ verdicts:
     by: model
     quotes_verified: true
   cv.14:
-    value: met
-    rationale: The paper reports a Spearman's correlation coefficient and classification metrics (accuracy, precision, recall, f1) to compare automatic metrics against human labels, which are subjective.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 9, chunk 4
-        quote: "To compare automatic and human annotated metrics, we compute the following between labels computed with automatic metrics and labels from human annotations: (1) Spearman’s ρ correlation coefficient, and (2) accuracy, precision, recall and f1-score"
+    value: unmet
     by: model
+    rationale: The labels are not purely deterministic (human annotations are used for validation), but the paper does not report per-item disagreement distributions or inter-annotator agreement statistics beside the aggregate scores.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.15:
-    value: met
-    rationale: The headline metrics for validation are not simple means; they include f1-scores and correlation coefficients based on per-class analysis.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 9, chunk 4
-        quote: we compute the second set of metrics on a per-class basis and use the average of per-class scores weighted by the number of samples in each class.
+    value: unmet
     by: model
+    rationale: The headline metrics (proportions, ratios) are aggregates, but the paper does not explicitly state that the metric is not computed *only* from a single mean or majority label in a way that preserves variability, and for the automated metrics, the ground truth is not a single deterministic key.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.16:
     value: unmet
     rationale: The paper does not provide a table or figure breaking down failures by a named confound like prompt length or language complexity.
@@ -158,6 +159,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: met
     rationale: The paper compares BOLD to StereoSet and states that BOLD's metrics directly measure social biases in generated texts rather than the probability of choosing a stereotypical text.
@@ -213,11 +215,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The evaluation uses automated metrics (like VADER and a BERT-based classifier) to score generated text, but the scoring is based on the content of the generated text rather than parsing a specific free-form response format into a label.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The evaluation uses automated metrics and human annotations, not a parser comparing output against reference labels across multiple response formats.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not provide a contamination check or the training-data cutoff for all evaluated models (BERT, GPT-2, CTRL).
@@ -225,27 +228,26 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs (prompts extracted from Wikipedia) and local scoring metrics, involving no external or mutable environment.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not document environment changes or re-validation, nor do they explicitly state the use of a static snapshot for the evaluation environment.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: n/a
-    rationale: The benchmark consists of independent text generation calls based on prompts, which are stateless model calls.
+    value: unmet
+    by: model
+    rationale: The excerpts do not describe the harness resetting state per task (e.g., fresh container or process) between evaluation runs.
     evidence: []
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
-    value: met
-    rationale: The evaluation uses open-ended language generation rather than multiple-choice questions.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 10, chunk 4
-        quote: We presented a novel dataset BOLD and a set of metrics to evaluate fairness in open-ended language generation.
+    value: unmet
     by: model
+    rationale: The evaluation tasks are open-ended text generation, not multiple choice, but the excerpts do not report a random-guess baseline or guessing mitigation because the format is not MCQ.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
@@ -279,35 +281,26 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark evaluates general bias in open-ended language generation rather than claiming to evaluate a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 2, chunk 0
-        quote: we propose to examine bias in open-ended language generation by triggering or prompting language models (LMs) with seed words matching the distribution of human-written text.
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed product or configuration; it evaluates general language models on Wikipedia prompts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark evaluates general bias in open-ended language generation rather than claiming to evaluate a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 2, chunk 0
-        quote: we propose to examine bias in open-ended language generation by triggering or prompting language models (LMs) with seed words matching the distribution of human-written text.
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application, so this item is not applicable in the context of application-centric evaluations, but strictly speaking, it does not include adversarial configurations of a specific deployed system.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark evaluates general bias in open-ended language generation rather than claiming to evaluate a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 2, chunk 0
-        quote: we propose to examine bias in open-ended language generation by triggering or prompting language models (LMs) with seed words matching the distribution of human-written text.
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application, so the requirement to document differences from real deployment for a specific application is not met as the premise is absent.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: While sampling hyperparameters are provided, there is no mention of library versions (lockfile/pinned requirements), hardware model, or OS/container image.
@@ -377,11 +370,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.03:
-    value: n/a
-    rationale: The metrics described (VADER, BERT-based toxicity, unigram matching) are used as raters, but there is no report of repeated runs on identical inputs to verify consistency.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on the same inputs; they only report single-pass correlations and agreement among different annotators.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
     value: unmet
     rationale: While the paper mentions that unigram matching is reliant on a manually chosen list, it does not measure a specific rater bias with a number and provide a mitigation.
@@ -423,17 +417,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The scoring involves automated metrics (VADER, BERT, token counting) rather than parsing free-form output for a specific answer string.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not show that the parser is deterministic or that its consistency is tested on identical inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The scoring involves automated metrics rather than parsing free-form output for a specific answer string.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for null-agent runs or targeted exploit attempts on the scoring pipeline.
@@ -444,3 +440,22 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 37 verdicts agreed, 18 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.08
+      - cv.09
+      - cv.14
+      - cv.15
+      - iv.06
+      - iv.08
+      - iv.09
+      - iv.10
+      - ev.05
+      - ev.06
+      - ev.07
+      - cor.03
+      - cor.10
+      - cor.11

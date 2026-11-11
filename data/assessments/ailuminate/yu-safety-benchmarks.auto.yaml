@@ -2,13 +2,15 @@
 benchmark: ailuminate
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
@@ -75,15 +77,12 @@ verdicts:
     by: model
     quotes_verified: true
   r2.a:
-    value: met
-    rationale: The benchmark describes using expert psychiatric knowledge to annotate responses that average human annotators might miss, which is a concrete mechanism for discovering novel risks in a specific category.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 23, chunk 0
-        quote: The project employed expert psychiatric knowledge to annotate unacceptable SUT responses that the average human annotator may miss.
+    value: unmet
     by: model
+    rationale: The excerpts describe the use of human-generated prompts and LLM-based evaluation, but do not describe a concrete mechanism for *discovering* novel risks (like fuzzing or red-teaming) within the benchmark construction process itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r2.b:
     value: met
     rationale: The contributing guide describes a pull-request process via GitHub and requires a signed CLA for integration.
@@ -121,19 +120,12 @@ verdicts:
     by: model
     quotes_verified: true
   r3.b:
-    value: met
-    rationale: The benchmark documents sourcing prompts from different geographic locales and from multiple populations with distinct demographic attributes.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 32, chunk 0
-        quote: Source prompts from multiple populations with distinct prompt writer demographic attributes
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 32, chunk 0
-        quote: Source prompt vendors from different geographic locales
+    value: unmet
     by: model
+    rationale: The excerpts mention using human annotators to verify evaluator accuracy but do not document annotator selection, disagreement patterns, or demographics.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r3.c:
     value: met
     rationale: The benchmark holds a private prompt set for benchmarking and describes a process for periodically introducing new prompts to monitor for performance differences.
@@ -175,15 +167,12 @@ verdicts:
     by: model
     quotes_verified: true
   r5.a:
-    value: met
-    rationale: The report cites OECD definitions to justify its definitions of hazard and risk.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 9, chunk 2
-        quote: This report adheres to the OECD definitions [OECD, 2024]
+    value: unmet
     by: model
+    rationale: The severity scale (Poor to Excellent) is based on relative ratios to a reference system, but the excerpts do not cite a specific source or framework justifying these specific level definitions or thresholds.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r5.b:
     value: unmet
     rationale: The benchmark provides a five-tier scale but does not state if the intervals are equal, power-law, or catastrophic thresholds.
@@ -206,6 +195,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r6.b:
     value: unmet
     rationale: The benchmark mentions measuring interrater reliability in its mitigation table, but does not report a specific statistic like Cohen's kappa.
@@ -230,6 +220,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.b:
     value: met
     rationale: The benchmark states that it adheres to OECD definitions for hazards and risk.
@@ -324,6 +315,7 @@ verdicts:
         quote: doing so would be almost impossible given user privacy requirements
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r10.a:
     value: met
     rationale: The benchmark has a versioning system (v1.0) and a stated update cycle that includes reviewing the SUT task and creating new versioned releases.
@@ -364,3 +356,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 31 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r2.a
+      - r3.b
+      - r5.a

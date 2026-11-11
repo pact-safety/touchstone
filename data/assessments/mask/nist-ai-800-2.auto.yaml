@@ -2,13 +2,15 @@
 benchmark: mask
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
@@ -50,6 +52,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1b:
     value: unmet
     rationale: The documentation does not state an intended difficulty level or target human population for the items.
@@ -144,15 +147,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.4b:
-    value: met
-    rationale: The benchmark states it has a total of 1,500 examples, including a public set of 1,000 and a held-out set of 500.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 5, chunk 0
-        quote: MASK consists of   1 , 000   high-quality adversarially-selected human-labeled examples that... We also maintain a separate, held-out set of   500   examples
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The item count is stated as 1,500 examples total, with a breakdown of 1,000 public and 500 held-out."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4c:
     value: met
     rationale: The benchmark maintains a held-out set of 500 examples to track potential overfitting/contamination.
@@ -186,15 +186,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.1b:
-    value: met
-    rationale: The benchmark provides a private hold-out set of 500 examples separate from the 1,000 public examples.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 14, chunk 0
-        quote: By publicly releasing 1 , 000 carefully curated examples (with a private 500 -example hold-out set)
+    value: unmet
     by: model
+    rationale: The excerpts mention a private hold-out set but do not explicitly define a separate 'development' or 'validation' split used for optimization distinct from the test items in the manner required.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2a:
     value: unmet
     rationale: The documentation does not specify sampling settings (temperature, top_p) or state that they are left to the evaluator.
@@ -281,6 +278,7 @@ verdicts:
         quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves 86 . 4% agreement with human annotators
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2j:
     value: unmet
     rationale: The excerpts do not report results under varied protocol settings like different prompt wordings or sampling.
@@ -294,15 +292,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.2:
-    value: met
-    rationale: The benchmark uses an LLM judge to extract proposition resolutions and programmatically maps them to metrics.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 7, chunk 1
-        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution and then compare these programmatically.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the output format (JSON) for the LLM judge and describes the extraction logic."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.3:
     value: unmet
     rationale: There is no mention of version identifiers or a changelog for the benchmark.
@@ -458,32 +453,42 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: met
-    rationale: The benchmark describes baseline interventions (Developer system prompt and LoRRA) used to improve honesty in small Llama models.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 9, chunk 0
-        quote: We test two baseline interventions to improve the honesty of two small Llama models
-    by: model
-    quotes_verified: true
-  3.3.4:
     value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation states that results may not generalize to multimodal inputs, longer dialogues, or non-English settings."
-    evidence: []
     by: model
+    rationale: The excerpts do not describe a baseline measured under specific conditions (tools, time, incentives) comparable to model runs; they only compare different models.
+    evidence: []
     quotes_verified: true
-  3.3.5:
+    adjudicated_by: adjudicator-v4
+  3.3.4:
     value: met
-    rationale: The benchmark includes a limitations section that identifies issues such as reliance on an LLM judge and potential misclassification noise.
+    by: model
+    rationale: The documentation states that reported honesty rates should be interpreted as worst-case propensities rather than deployment-time performance.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
+        quote: reported honesty rates should be interpreted as worst-case propensities rather than deployment-time performance.
         locator: 2503.03750v3 page 14, chunk 1
-        quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves 86 . 4% agreement with human annotators, leaving non-trivial room for misclassification noise
-    by: model
+        url: https://arxiv.org/abs/2503.03750v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  3.3.5:
+    value: unmet
+    by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark documents limitations including sensitivity to prompt format (archetypes), label noise (LLM judge agreement), and generalization to non-English/multimodal settings."
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 43 verdicts agreed, 8 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.4b
+      - 2.1.1b
+      - 2.2.2
+      - 3.3.3
+      - 3.3.4
+      - 3.3.5

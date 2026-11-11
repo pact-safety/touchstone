@@ -35,10 +35,18 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   des.01:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark is defined as a dataset of multiple-choice questions measuring hazardous capabilities in biosecurity, cybersecurity, and chemistry."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The benchmark explicitly defines the tested capability as 'hazardous capabilities' and 'knowledge of hazardous topics' in biosecurity, cybersecurity, and chemistry.
+    evidence:
+      - source: paper
+        quote: Because WMDP measures knowledge of hazardous topics, models with a low score on WMDP likely lack the knowledge needed to help with malicious use.
+        locator: 2403.03218v7 page 5, chunk 0
+        url: https://arxiv.org/abs/2403.03218v7
+      - source: paper
+        quote: WMDP is an automatic, public benchmark of hazardous capabilities that serves as a guide for risk mitigation
+        locator: 2403.03218v7 page 4, chunk 3
+        url: https://arxiv.org/abs/2403.03218v7
     quotes_verified: true
   des.02:
     value: 15
@@ -66,16 +74,18 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 10
-    rationale: The text mentions that low scores likely indicate a lack of knowledge needed for malicious use and suggests using scores as risk markers for further evaluation.
+    value: 15
+    by: human
+    rationale: The document describes how scores should be interpreted, noting that low scores indicate a lack of hazardous knowledge and high scores may flag models for further evaluation.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
+        quote: Because WMDP measures knowledge of hazardous topics, models with a low score on WMDP likely lack the knowledge needed to help with malicious use.
         locator: 2403.03218v7 page 5, chunk 0
-        quote: |-
-          Because WMDP measures knowledge of hazardous topics, models with a low score on WMDP
-          likely lack the knowledge needed to help with malicious use.
-    by: model
+        url: https://arxiv.org/abs/2403.03218v7
+      - source: paper
+        quote: For example, a model scoring above a particular threshold on WMDP could be flagged for more comprehensive evaluation, such as human red teaming with biosecurity experts.
+        locator: 2403.03218v7 page 28, chunk 2
+        url: https://arxiv.org/abs/2403.03218v7
     quotes_verified: true
   des.05:
     value: 15
@@ -112,14 +122,18 @@ verdicts:
     by: model
     quotes_verified: true
   des.08:
-    value: 10
-    rationale: The choice of multiple-choice questions is justified as a common paradigm to test knowledge in language models.
+    value: 15
+    by: human
+    rationale: The document explains the choice of multiple-choice questions as a common paradigm to test knowledge and measures forget/retain performance to validate the metric.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
+        quote: Multiple-choice is a common paradigm to test knowledge in language models (Hendrycks et al., 2020b; Rein et al., 2023).
         locator: 2403.03218v7 page 5, chunk 0
-        quote: Multiple-choice is a common paradigm to test knowledge in language models
-    by: model
+        url: https://arxiv.org/abs/2403.03218v7
+      - source: paper
+        quote: We measure forget performance by evaluating the knowledge of models on WMDP with both question-answering (QA) and probing.
+        locator: 2403.03218v7 page 11, chunk 1
+        url: https://arxiv.org/abs/2403.03218v7
     quotes_verified: true
   des.09:
     value: 10
@@ -131,7 +145,7 @@ verdicts:
         quote: |-
           WMDP
           and MMLU scores are percents; 25% is random.
-    by: model
+    by: human
     quotes_verified: true
   des.10:
     value: 0
@@ -216,7 +230,7 @@ verdicts:
         url: https://arxiv.org/abs/2403.03218v7
         locator: 2403.03218v7 page 24, chunk 0
         quote: for GPT-4, we manually evaluated with the same prompt template.
-    by: model
+    by: human
     quotes_verified: true
   imp.04:
     value: 15
@@ -242,7 +256,7 @@ verdicts:
         url: https://arxiv.org/abs/2403.03218v7
         locator: 2403.03218v7 page 29, chunk 1
         quote: models that have memorized key biological concepts from the training data may be equally likely to do well
-    by: model
+    by: human
     quotes_verified: true
   imp.07:
     value: 10
@@ -252,7 +266,7 @@ verdicts:
         url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
         locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 3
         quote: Our unlearned models with reproducible hyperparameters on WMDP-Bio and WMDP-Cyber... are available at
-    by: model
+    by: human
     quotes_verified: true
   imp.08:
     value: 0
@@ -301,10 +315,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.04:
-    value: 0
-    rationale: No specific code documentation (e.g., API docs) is provided in the excerpts.
-    evidence: []
-    by: model
+    value: 10
+    by: human
+    rationale: The README provides a description of the benchmark and links to the paper, but detailed code documentation (e.g., docstrings) is not present in the excerpts.
+    evidence:
+      - source: repo
+        quote: "The WMDP Benchmark: Measuring and Reducing Malicious Use With Unlearning"
+        locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 0
+        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
     quotes_verified: true
   doc.05:
     value: 10
@@ -452,3 +470,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 8 decided by the reviewer."
+    items:
+      - des.01
+      - des.04
+      - des.08
+      - doc.04

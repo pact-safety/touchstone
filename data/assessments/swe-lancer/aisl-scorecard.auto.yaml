@@ -55,15 +55,16 @@ verdicts:
     by: model
     quotes_verified: true
   cv.03:
-    value: met
-    rationale: The benchmark identifies IC SWE and SWE Manager as distinct task types and reports separate pass rates for each in the results.
+    value: unmet
+    by: model
+    rationale: The documentation does not report separate scores for distinct facets (e.g., factual accuracy vs. tone) in a table or figure; it reports aggregate pass rates and earnings for IC SWE and SWE Manager tasks.
     evidence:
       - source: paper
+        quote: Table 3. Diamond Task Pass Rates by Nature of Work
+        locator: 2502.12115v4 page 13, chunk 0
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 6, chunk 0
-        quote: outperforming the next-best model (o1) by 9.7% on IC SWE (Diamond) tasks and 3.4% on SWE Manager (Diamond) tasks.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
     value: met
     rationale: The task space is defined by categories (e.g., Bug Fixes, New Features) and item counts are reported for these categories.
@@ -75,11 +76,16 @@ verdicts:
     by: model
     quotes_verified: true
   cv.05:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation reports per-category item counts for the task space in Table 7."
-    evidence: []
+    value: met
     by: model
+    rationale: The documentation reports per-category item counts over the documented task space in Tables 7 and 8, showing the distribution of tasks by nature and price range.
+    evidence:
+      - source: paper
+        quote: Table 7. Number of tasks by task nature within SWE-Lancer Diamond and SWE-Lancer Full datasets.
+        locator: 2502.12115v4 page 29, chunk 0
+        url: https://arxiv.org/abs/2502.12115v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.06:
     value: met
     rationale: Tasks were screened by at least three experienced human software engineers based on specific criteria, and a rating system was used to verify they were well-specified.
@@ -97,31 +103,30 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark uses original tasks sourced from Upwork and the Expensify repository rather than adapting a prior benchmark dataset.
+    value: unmet
+    by: model
+    rationale: The documentation compares SWE-Lancer to prior benchmarks qualitatively and by model performance on different benchmarks, but does not provide a table or figure comparing the same model on the original dataset and the adapted benchmark.
     evidence:
       - source: paper
+        quote: Table 5. Comparison of SWE-Lancer to existing coding and SWE-related benchmarks
+        locator: 2502.12115v4 page 15, chunk 0
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 8, chunk 4
-        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 8, chunk 4
-        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
+    value: unmet
     by: model
+    rationale: The documentation does not list modifications made to reused data with their reasons; it describes sourcing new data from Upwork and Expensify.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While item counts are provided, there is no power calculation or confidence-interval half-width compared to the smallest model gap.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.11:
     value: unmet
     rationale: Confidence intervals are reported for earnings for some models, but not for every score in the main results tables.
@@ -148,6 +153,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.14:
     value: n/a
     rationale: "Labels are deterministic: IC SWE tasks are graded by end-to-end tests (execution-based), and SWE Manager tasks are compared against the original manager's choice."
@@ -169,10 +175,18 @@ verdicts:
     by: model
     quotes_verified: true
   cv.16:
-    value: unmet
-    rationale: There is no table or figure breaking down failures by a named confound like format or length.
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: Failures are broken down by named confounds such as task category (Bug Fixes, New Features) and price range in tables showing pass rates.
+    evidence:
+      - source: paper
+        quote: Table 3. Diamond Task Pass Rates by Nature of Work
+        locator: 2502.12115v4 page 13, chunk 0
+        url: https://arxiv.org/abs/2502.12115v4
+      - source: paper
+        quote: Figure 8. o1 pass@1 performance on Diamond IC SWE tasks by price range of task.
+        locator: 2502.12115v4 page 6, chunk 1
+        url: https://arxiv.org/abs/2502.12115v4
     quotes_verified: true
   cv.17:
     value: met
@@ -185,10 +199,14 @@ verdicts:
     by: model
     quotes_verified: true
   cv.18:
-    value: unmet
-    rationale: The docs do not contain a single statement naming the tasks, each metric, and the construct from cv.01 with a stated reason.
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: The docs contain statements naming the tasks (IC SWE, SWE Manager), metrics (pass@1, earnings), and the construct (real-world software engineering capability) they measure, with reasons.
+    evidence:
+      - source: paper
+        quote: We track the percent of tasks resolved and the total payout earned by the model
+        locator: 2502.12115v4 page 4, chunk 1
+        url: https://arxiv.org/abs/2502.12115v4
     quotes_verified: true
   cv.19:
     value: met
@@ -217,15 +235,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.02:
-    value: met
-    rationale: The documentation identifies that the benchmark includes open-ended problems and full-stack development, which distinguishes it from benchmarks focusing solely on bugfixes.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 15, chunk 3
-        quote: SWE-Lancer includes open-ended problems (adding new features, reliability) and full-stack development
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly name related phenomena that could be measured by the same tasks, nor do they discuss construct overlap with other benchmarks in the context of identifying overlapping constructs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.03:
     value: unmet
     rationale: The documentation does not quantify the overlap with related phenomena or describe specific mitigation steps for that overlap.
@@ -245,15 +260,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: met
-    rationale: The evaluation of SWE Management tasks involves matching the model's selection to ground truth, and the outcomes for IC SWE tasks are verified by end-to-end tests (environment state), meaning free-form parsing is not the primary scoring mechanism for the core phenomenon.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 4, chunk 0
-        quote: The model’s selection is evaluated by assessing whether it matches ground truth.
+    value: unmet
     by: model
+    rationale: The evaluation involves parsing free-form code and JSON outputs (e.g., manager decisions), so the n/a condition does not apply. The excerpts do not show parser output compared with reference labels on at least two response formats with agreement figures.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper mentions that contamination is possible depending on cutoff dates and suggests filtering, but it does not report a specific overlap check result or state the training-data cutoff for every evaluated model.
@@ -285,15 +297,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.10:
-    value: met
-    rationale: The IC SWE tasks are not multiple choice; they require modifying code and passing end-to-end tests.
+    value: unmet
+    by: model
+    rationale: The SWE Management tasks involve choosing the best proposal from a list, which is a multiple-choice format. The excerpts do not report a random-guess baseline or a named guessing mitigation for these tasks.
     evidence:
       - source: paper
+        quote: The model is given (1) multiple proposed solutions to the same issue... The model’s selection is evaluated by assessing whether it matches ground truth.
+        locator: 2502.12115v4 page 4, chunk 0
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 3, chunk 1
-        quote: IC SWE tasks in the Diamond set require modifying 2 files and 69 lines of code
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: met
     rationale: The documentation states that 100 professional software engineers reviewed tasks for clarity, specificity, and executability.
@@ -333,16 +346,21 @@ verdicts:
     by: model
     quotes_verified: true
   ev.06:
-    value: n/a
-    rationale: The benchmark evaluates general software engineering tasks from a repository rather than claiming to evaluate a specific deployed application product configuration.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not mention adversarial or misuse configurations of the system under test; they focus on standard bug fixes and feature implementations.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark evaluates general software engineering tasks from a repository rather than claiming to evaluate a specific deployed application product configuration.
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: The paper lists differences between the test setting and real deployment (e.g., no multimodal inputs, no internet access, single attempt) and interprets results in light of these gaps.
+    evidence:
+      - source: paper
+        quote: Our current evaluation harness does not support multimodal inputs; however, the majority of Expensify GitHub issues contain videos... Because there is not widespread support for such inputs, we prioritized making information about the prompt and environment available via text
+        locator: 2502.12115v4 page 9, chunk 2
+        url: https://arxiv.org/abs/2502.12115v4
     quotes_verified: true
   rel.01:
     value: unmet
@@ -377,15 +395,16 @@ verdicts:
     by: model
     quotes_verified: true
   rel.05:
-    value: met
-    rationale: The benchmark reports a human baseline for managerial tasks, assessing model decisions against the choices of the original hired engineering managers.
+    value: unmet
+    by: model
+    rationale: The excerpts report model performance but do not report a human or expert baseline for the tasks, nor do they state why none is relevant.
     evidence:
       - source: paper
+        quote: IC SWE Manager Model Cutoff Date Pass@1 (Before) Pass@1 (After) Pass@1 (Before) Pass@1 (After) GPT-4o 2023-10-01 0.038 (n=79) 0.101 (n=158) 0.373 (n=142) 0.244 (n=123)
+        locator: 2502.12115v4 page 13, chunk 1
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 1, chunk 0
-        quote: managerial decisions are assessed against the choices of the original hired engineering managers.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.06:
     value: unmet
     rationale: The excerpts report performance for frontier models (GPT-4o, o1, Claude 3.5 Sonnet), but no trivial or minimal baseline (e.g., random or zero-shot naive) is reported.
@@ -393,29 +412,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The excerpts do not indicate that a model is used as a rater; IC SWE tasks use end-to-end tests and SWE Manager tasks are assessed against original manager choices.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts mention a validation campaign with 99% agreement for SWE Management tasks, but do not report a correlation between a model rater and human judgments for the primary IC SWE tasks or the benchmark's overall scoring mechanism.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The excerpts do not indicate that a model is used as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts describe the benchmark as 'un-hackable' and resistant to cheating, but do not report specific adversarial tests or reward-hacking tests performed on a model rater, nor do they document specific defenses like injection filters applied to a rater.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The excerpts do not indicate that a model is used as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts state that tests are 'triple-verified' by engineers, but this refers to human verification of test quality, not repeated automated rating runs on identical inputs to measure consistency.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The excerpts do not indicate that a model is used as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: There is no mention of measuring systematic biases (e.g., length, position) in a model rater, nor any stated mitigation for such biases.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: met
     rationale: IC SWE tasks were screened by at least three human engineers, and the text reports a validation campaign for Manager tasks with 99% agreement.
@@ -459,25 +482,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: Scoring for IC SWE tasks is based on end-to-end browser automation tests, not parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 1, chunk 3
-        quote: SWE-Lancer evaluates IC SWE tasks using end-to-end tests created by a team of professional software engineers. These end-to-end tests use browser automation to verify application behavior
+    value: unmet
     by: model
+    rationale: The excerpts do not demonstrate that the automated output parser is deterministic or test for its consistency on identical inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: Scoring for IC SWE tasks is based on end-to-end browser automation tests, not parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 1, chunk 3
-        quote: SWE-Lancer evaluates IC SWE tasks using end-to-end tests created by a team of professional software engineers. These end-to-end tests use browser automation to verify application behavior
+    value: unmet
     by: model
+    rationale: There is no report of parser accuracy against hand-checked outputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: While the paper claims the benchmark is 'un-hackable' and resistant to cheating, it does not report results for a null-agent run or a targeted exploit attempt on the scorer.
@@ -488,3 +505,25 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 17 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - cv.03
+      - cv.05
+      - cv.08
+      - cv.09
+      - cv.16
+      - cv.18
+      - iv.02
+      - iv.06
+      - iv.10
+      - ev.06
+      - ev.07
+      - rel.05
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.10
+      - cor.11

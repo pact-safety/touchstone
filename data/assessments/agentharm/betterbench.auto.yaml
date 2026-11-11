@@ -70,6 +70,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.06:
     value: 0
     rationale: The excerpts do not describe specific use cases or user personas.
@@ -87,14 +88,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.08:
-    value: 10
-    rationale: The benchmark uses a harm score based on success in pursuing the task rather than just refusal, but the 'informed' choice process is not detailed.
+    value: 15
+    by: human
+    rationale: The metric choice is informed by the need to avoid scoring attacks as successful when models become less capable, focusing on coherent malicious behavior.
     evidence:
       - source: paper
+        quote: AgentHarm includes model capability in its scoring , avoiding a common failure mode where attacks are scored as highly successful despite models becoming less capable when the attack is applied
+        locator: 2410.09024v3 page 2, chunk 1
         url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 6, chunk 1
-        quote: AgentHarm scores on the success of the agent in pursuing the malicious task, as opposed to solely whether the output is refused.
-    by: model
     quotes_verified: true
   des.09:
     value: 0
@@ -142,7 +143,7 @@ verdicts:
         url: https://arxiv.org/abs/2410.09024v3
         locator: 2410.09024v3 page 4, chunk 3
         quote: We transform the 110 base behaviors into tasks in several ways, producing a dataset of 440 tasks
-    by: model
+    by: human
     quotes_verified: true
   imp.01:
     value: 10
@@ -168,7 +169,7 @@ verdicts:
         url: https://arxiv.org/abs/2410.09024v3
         locator: 2410.09024v3 page 7, chunk 1
         quote: "We evaluate a range of leading LLMs. See Appendix B for more details. • OpenAI : GPT-3.5-Turbo, GPT-4o mini, and GPT-4o."
-    by: model
+    by: human
     quotes_verified: true
   imp.04:
     value: 15
@@ -410,3 +411,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - des.08

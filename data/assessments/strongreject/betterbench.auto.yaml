@@ -65,14 +65,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 10
-    rationale: The text describes what a score of 0 and 1 represent, though it doesn't provide comprehensive guidelines on interpretation or usage.
+    value: 15
+    by: human
+    rationale: The text explicitly warns against using the automated evaluator score as a maximization criterion for jailbreak search algorithms due to potential robustness issues.
     evidence:
-      - source: repo
-        url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
-        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 3
-        quote: The StrongREJECT autograder scores jailbreak responses between 0 and 1, where 1 is a successful jailbreak with harmful information the model shouldn't disclose.
-    by: model
+      - source: paper
+        quote: This could be abused by, e.g., using the automated evaluator score as the maximization criterion for a jailbreak search algorithm like PAIR [ 4 ].
+        locator: 2402.10260v2 page 14, chunk 2
+        url: https://arxiv.org/abs/2402.10260v2
     quotes_verified: true
   des.05:
     value: 0
@@ -80,6 +80,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.06:
     value: 15
     rationale: "The benchmark describes a user persona for the human evaluators: a malicious actor trying to accomplish an objective."
@@ -108,7 +109,7 @@ verdicts:
         url: https://arxiv.org/abs/2402.10260v2
         locator: 2402.10260v2 page 3, chunk 1
         quote: Existing automated evaluation methods usually fail to measure how much a victim model’s response assists the attacker.
-    by: model
+    by: human
     quotes_verified: true
   des.09:
     value: 15
@@ -120,16 +121,14 @@ verdicts:
         quote: The StrongREJECT autograder scores jailbreak responses between 0 and 1
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.10:
-    value: 15
-    rationale: The benchmark includes human labelers as a performance baseline to validate the automated evaluator.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.10260v2
-        locator: 2402.10260v2 page 3, chunk 3
-        quote: we compare the StrongREJECT evaluator to human labelers.
+    value: 0
     by: model
+    rationale: While human evaluators are used for validation, the excerpts do not provide a specific human performance level or benchmark score achieved by humans on the task.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.11:
     value: 0
     rationale: There is no mention of a random performance level baseline.
@@ -343,6 +342,7 @@ verdicts:
         quote: Limitations. We note three limitations with our current work.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.10:
     value: 15
     rationale: The paper documents the prompt design process for identifying non-refusals.
@@ -393,7 +393,7 @@ verdicts:
         url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
         locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 2
         quote: Source indicates which dataset a given prompt originates from
-    by: model
+    by: human
     quotes_verified: true
   doc.16:
     value: 15
@@ -453,3 +453,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 4 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - des.04
+      - des.10

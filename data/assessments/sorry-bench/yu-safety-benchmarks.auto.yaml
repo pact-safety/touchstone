@@ -2,13 +2,15 @@
 benchmark: sorry-bench
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 7da10addffb6790cfeb75281eaffb5a176861653
@@ -179,15 +181,12 @@ verdicts:
     by: model
     quotes_verified: true
   r5.c:
-    value: met
-    rationale: The benchmark cites OpenAI's usage policy and U.S. law as bases for its risk categories.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 18, chunk 0
-        quote: closely related to crimes or torts as defined by U.S. law
+    value: unmet
     by: model
+    rationale: The benchmark does not name an established risk-management or safety-engineering practice it follows. It references prior datasets and model specs for taxonomy construction, but does not claim adherence to a specific established safety engineering practice framework.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r6.a:
     value: met
     rationale: The benchmark reports the standard deviation for fulfillment rates for a subset of models.
@@ -226,12 +225,22 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.b:
-    value: unmet
-    rationale: The excerpts do not name whose judgments (experts, policy frameworks, etc.) define the harm constructs for the benchmark.
-    evidence: []
+    value: met
     by: model
+    rationale: The benchmark explicitly states that its categories are flagged as risky by model developers and aligns with their policy guidelines, indicating that developer policies inform the judgments.
+    evidence:
+      - source: paper
+        quote: These categories are not inherently offensive but are flagged as risky by some model developers (e.g., Gemini) because the models lack qualifications in these areas.
+        locator: 2406.14598v2 page 18, chunk 2
+        url: https://arxiv.org/abs/2406.14598v2
+      - source: paper
+        quote: This aligns with Gemini’s policy guideline on “Harmful Factual Inaccuracies,” which emphasizes that the model should avoid providing advice that could cause real-world harm to users’ health, safety, or finances.
+        locator: 2406.14598v2 page 18, chunk 3
+        url: https://arxiv.org/abs/2406.14598v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.c:
     value: met
     rationale: The benchmark acknowledges that whether providing legal advice is acceptable is a point of disagreement among stakeholders.
@@ -242,6 +251,7 @@ verdicts:
         quote: some might find it acceptable for their models to provide legal advice, while others may believe this is too high-risk
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.d:
     value: met
     rationale: The benchmark explains that its proxy (fulfillment rate of unsafe instructions) relates to real-world harm, specifically mentioning medical or financial loss.
@@ -270,6 +280,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r8.d:
     value: met
     rationale: The benchmark states that datasets and evaluation code are hosted on public platforms (HuggingFace and Github).
@@ -286,6 +297,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.b:
     value: met
     rationale: The benchmark argues that its linguistic mutations reflect how real-world users phrase unsafe prompts.
@@ -314,6 +326,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r10.b:
     value: unmet
     rationale: There is no evidence that members of affected communities were consulted to assess if scenarios reflect their experiences.
@@ -340,3 +353,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 30 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r5.c
+      - r7.b

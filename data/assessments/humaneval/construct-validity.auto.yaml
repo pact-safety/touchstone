@@ -2,13 +2,15 @@
 benchmark: humaneval
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: b9453e8f1865df0a0057a1383767caa400acfbcf
@@ -44,6 +46,7 @@ verdicts:
         quote: We say a model is intent misaligned if it outputs B, in some case where the user would prefer it outputs A
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: unmet
     rationale: While the paper discusses various aspects of the phenomenon, it does not explicitly state the scope and name a specific excluded aspect of the phenomenon being measured.
@@ -69,15 +72,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses unit tests to evaluate functional correctness rather than automated parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 6, chunk 3
-        quote: the percentage of problems where the model finds a correct solution (called the “strict accuracy”)
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias. The text discusses BLEU scores and unit tests but not automated parsing validation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts mention the creation of a dataset of 164 original problems, but they do not document a sampling strategy used to ensure these are representative of the overall task space.
@@ -168,6 +168,7 @@ verdicts:
         quote: we create a dataset of 164 original programming problems
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.2:
     value: unmet
     rationale: The provided excerpts do not show a main results table where every score has a confidence interval or standard error.
@@ -202,7 +203,7 @@ verdicts:
         url: https://arxiv.org/abs/2107.03374v2
         locator: 2107.03374v2 page 9, chunk 2
         quote: The most common failure modes we observe are when the docstring model leaves out an important detail
-    by: model
+    by: human
     quotes_verified: true
   ea.2:
     value: unmet
@@ -234,7 +235,7 @@ verdicts:
         url: https://arxiv.org/abs/2107.03374v2
         locator: 2107.03374v2 page 2, chunk 1
         quote: some comparable to simple software interview questions
-    by: model
+    by: human
     quotes_verified: true
   jv.2:
     value: unmet
@@ -262,3 +263,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 23 verdicts agreed, 3 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3

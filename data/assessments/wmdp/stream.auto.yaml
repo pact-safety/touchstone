@@ -2,13 +2,15 @@
 benchmark: wmdp
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v7
   repo_commit: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
@@ -165,6 +167,7 @@ verdicts:
         quote: M ISTRAL -7B- V 0.1
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.ii:
     value: unmet
     rationale: The excerpts do not specify which safety mitigations were active during the testing of the benchmark or any adaptations to the elicitation process.
@@ -204,23 +207,26 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-a:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for the benchmark performance.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe a human baseline sample or recruitment; the study focuses on AI model unlearning.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for the benchmark performance.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not provide human performance statistics or describe differences with the AI test.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-c:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for the benchmark performance.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe how human performance was elicited.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
     value: unmet
     rationale: The report does not provide a reason why a human baseline would be inappropriate or infeasible.
@@ -228,15 +234,12 @@ verdicts:
     by: model
     quotes_verified: true
   s5.ii-b:
-    value: met
-    rationale: The report uses GPT-4 as a comparison point for the QA evaluation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 11, chunk 1
-        quote: For comparison, we also benchmark GPT-4 zero-shot on each of these tasks.
+    value: unmet
     by: model
+    rationale: The excerpts do not provide an alternative comparison point or explain it.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.i:
     value: met
     rationale: The report provides conclusions about the model's capabilities (e.g., RMU's ability to reduce hazardous knowledge while maintaining general knowledge) and connects them to specific figures and tables.
@@ -251,6 +254,7 @@ verdicts:
         quote: We assess whether RMU is able to reduce QA accuracy on WMDP in Table 1.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.ii:
     value: unmet
     rationale: The excerpts do not mention falsification conditions or the pre-registration status of the study.
@@ -279,3 +283,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s5.i-a
+      - s5.i-b
+      - s5.i-c
+      - s5.ii-b

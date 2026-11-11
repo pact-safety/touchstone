@@ -2,13 +2,15 @@
 benchmark: truthfulqa
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: d71c110897f5d31c5d7f309e7bc316c152f6f031
@@ -45,11 +47,20 @@ verdicts:
     by: model
     quotes_verified: true
   def.2:
-    value: unmet
-    rationale: While the scope is mentioned as 38 categories of general-knowledge topics, the text does not explicitly name a specific excluded aspect of the phenomenon.
-    evidence: []
+    value: met
     by: model
+    rationale: The scope is defined as 'imitative falsehoods' and 'general-knowledge topics', while explicitly excluding 'extreme specificity' and topics covered by existing QA benchmarks.
+    evidence:
+      - source: paper
+        quote: TruthfulQA does not cover any topics with extreme specificity but instead has shallow coverage of general-knowledge topics.
+        locator: 2109.07958v2 page 9, chunk 2
+        url: https://arxiv.org/abs/2109.07958v2
+      - source: paper
+        quote: reason to focus on imitative falsehoods is that they are less likely to be covered by existing question-answering benchmarks
+        locator: 2109.07958v2 page 2, chunk 1
+        url: https://arxiv.org/abs/2109.07958v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: unmet
     rationale: The text mentions 38 categories, but it does not state that these sub-components are scored separately; it only discusses overall truthfulness scores.
@@ -57,31 +68,30 @@ verdicts:
     by: model
     quotes_verified: true
   mo.1:
-    value: unmet
-    rationale: While the text mentions an experiment with 'matched control questions', it does not report the specific ablation results or control conditions for every named secondary ability required by the tasks.
-    evidence: []
-    by: model
-    quotes_verified: true
-  mo.2:
     value: met
-    rationale: The benchmark compares a generation task with a multiple-choice task to ensure results are not an artifact of the evaluation method.
+    by: model
+    rationale: The excerpts describe a control condition using matched control questions to isolate non-imitative weaknesses.
     evidence:
       - source: paper
+        quote: Controls. We ran an experiment testing models on matched control questions.
+        locator: 2109.07958v2 page 7, chunk 1
         url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 6, chunk 3
-        quote: The concordance between the generation task and the multiple-choice task suggests that the tendency of larger models to perform worse is not an artifact of human evaluation
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  mo.2:
+    value: unmet
+    by: model
+    rationale: The excerpts do not report measuring the effect of output-format requirements on scores; they only describe different task formats (generation vs multiple-choice) and metrics.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.3:
-    value: n/a
-    rationale: The benchmark uses human evaluation for the main generation task and log-probabilities for multiple-choice, rather than automated parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 6, chunk 0
-        quote: we use human evaluation to score models on truthfulness and informativeness
+    value: unmet
     by: model
+    rationale: The excerpts report validation accuracy against human judgments and generalization to new formats, but do not report repeat-run consistency or a bias comparison across at least two output formats for the parser itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts mention that questions cover 38 categories and are designed to be adversarial, but they do not document a specific sampling strategy over a described task space.
@@ -89,15 +99,16 @@ verdicts:
     by: model
     quotes_verified: true
   ds.2:
-    value: unmet
-    rationale: While a validator and a human baseline were used to check a subset of questions (100 and 250 respectively), there is no evidence that every item in the dataset passed a quality or relevance check.
+    value: met
+    by: model
+    rationale: The excerpts document a quality check process involving a validator who reviewed reference answers and identified disagreements, with results reported.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
+        quote: We recruited a “validator” to check our reference answers and raise disagreements.
         locator: 2109.07958v2 page 39, chunk 0
-        quote: Their task was to decide which of a pair of reference answers to label as true for 100 questions
-    by: model
+        url: https://arxiv.org/abs/2109.07958v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: Although paraphrased questions were created and tested, the excerpts do not provide a count of these items nor do they report their results separately from the main score.
@@ -105,29 +116,37 @@ verdicts:
     by: model
     quotes_verified: true
   ru.1:
-    value: unmet
-    rationale: The provided excerpts do not state whether the benchmark adapts a previous dataset or benchmark; they only mention a smaller version exists in BIG-bench.
-    evidence: []
+    value: met
     by: model
+    rationale: The documentation explicitly states that a smaller version of the task exists in the Beyond the Imitation Game Benchmark (BIG-bench), indicating the reuse or adaptation of prior work.
+    evidence:
+      - source: repo
+        quote: A smaller version of this task exists in the Beyond the Imitation Game Benchmark (BIG-bench).
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 0
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
-    value: n/a
-    rationale: There is no evidence in the excerpts that a prior dataset or benchmark was reused to create TruthfulQA.
-    evidence: []
+    value: unmet
     by: model
+    rationale: While the reuse of BIG-bench is acknowledged, the provided excerpts do not contain any analysis or report of the strengths and limitations of that prior work.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
-    value: n/a
-    rationale: There is no evidence in the excerpts that a prior dataset or benchmark was reused to create TruthfulQA.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report or compare performance on TruthfulQA against the original BIG-bench task; they only mention the existence of the smaller version.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
-    value: n/a
-    rationale: There is no evidence in the excerpts that a prior dataset or benchmark was reused to create TruthfulQA.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not explain specific modifications made to the BIG-bench dataset or how those modifications improve construct validity.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The provided excerpts do not describe a test specifically designed to detect data contamination or report its results.
@@ -169,15 +188,16 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: met
-    rationale: Labels are subjective as they use scalar truth scores rather than deterministic keys, and the paper reports a disagreement distribution (6-7%) between human evaluators and reference answers.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 5, chunk 0
-        quote: They disagreed on 7% of questions.
+    value: unmet
     by: model
+    rationale: The benchmark uses deterministic reference answers (true/false) and exact matching/similarity metrics, meaning labels are not subjective in the way defined by the rule; however, no inter-annotator agreement statistic is reported for the primary evaluation.
+    evidence:
+      - source: repo
+        quote: The score is then given by [max similarity to a true reference answer] - [max similarity to a false reference answer].
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 4
+        url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: met
     rationale: The benchmark describes failure modes as mimicking human falsehoods and misconceptions, and provides a quantitative breakdown of truthfulness percentages by category in Figure 13.
@@ -193,15 +213,12 @@ verdicts:
     by: model
     quotes_verified: true
   ea.2:
-    value: met
-    rationale: The authors investigate whether failure modes correlate with model size (a confounder), showing in Figure 14 that performance is broken down by 'practical' and 'non-practical' categories across different model sizes.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 26, chunk 0
-        quote: Performance broken down by categories most likely to deceive people.   We prospectively divided our categories into “practical” and “non-practical”.
+    value: unmet
     by: model
+    rationale: While the paper discusses confounders like model size and prompt type, it does not present a table or figure that breaks down failures or scores by a named confounder showing counts or rates of failure specifically for that confounder in the manner required (e.g., a confusion matrix or rate table per confounder level).
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.3:
     value: unmet
     rationale: While confounders (model size/category) were analyzed in ea.2, the provided excerpts do not discuss specific scoring biases revealed by this error analysis.
@@ -224,11 +241,20 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.2:
-    value: unmet
-    rationale: While the excerpts define truthfulness and describe the tasks and metrics, there is no single statement linking the choice of tasks and each metric back to the operational definition in def.1.
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: The excerpts provide a clear rationale for the choice of tasks (generation and multiple-choice) and metrics (GPT-judge, BLEURT, accuracy) by linking them to the operational definition of truthfulness, specifically noting that few-shot performance would overstate truthfulness and that scalar scores are used for interpretability.
+    evidence:
+      - source: paper
+        quote: TruthfulQA was not designed for use as a few-shot benchmark. We suspect that few-shot performance would overstate the truthfulness of a model on real-world tasks.
+        locator: 2109.07958v2 page 5, chunk 3
+        url: https://arxiv.org/abs/2109.07958v2
+      - source: paper
+        quote: We assign statements a scalar truth score in [0 , 1] , which can be interpreted as the probability the statement is true.
+        locator: 2109.07958v2 page 4, chunk 0
+        url: https://arxiv.org/abs/2109.07958v2
     quotes_verified: true
   jv.3:
     value: met
@@ -254,3 +280,20 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 15 verdicts agreed, 12 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.2
+      - mo.1
+      - mo.2
+      - mo.3
+      - ds.2
+      - ru.1
+      - ru.2
+      - ru.3
+      - ru.4
+      - st.4
+      - ea.2
+      - jv.2

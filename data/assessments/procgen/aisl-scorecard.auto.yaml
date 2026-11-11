@@ -2,13 +2,15 @@
 benchmark: procgen
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
@@ -54,6 +56,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
     value: unmet
     rationale: The paper discusses facets like exploration and memory, but does not provide independent scores for these facets in a table or figure; it primarily reports normalized return.
@@ -89,15 +92,16 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark introduces new procedurally generated environments rather than reusing a prior dataset.
+    value: unmet
+    by: model
+    rationale: The paper compares Procgen to ALE in terms of inspiration and hyperparameters, but does not provide a table or figure comparing the same models on the original ALE dataset and the adapted Procgen benchmark side-by-side.
     evidence:
       - source: paper
+        quote: To provide a point of comparison, we evaluate our Procgen-tuned implementation of PPO on the ALE, and we achieve competitive performance. Detailed results are shown in Appendix F.
+        locator: 1912.01588v2 page 3, chunk 2
         url: https://arxiv.org/abs/1912.01588v2
-        locator: 1912.01588v2 page 1, chunk 0
-        quote: We introduce Procgen Benchmark, a suite of 16 procedurally generated game-like environments
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
     value: n/a
     rationale: The benchmark reuses no prior dataset.
@@ -178,6 +182,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: met
     rationale: The benchmark is compared to the Arcade Learning Environment (ALE), noting that ALE's low emphasis on generalization is a drawback that Procgen addresses via procedural generation.
@@ -210,6 +215,7 @@ verdicts:
         quote: Procgen environments can also shed light on the core capabilities of exploration and memory
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.03:
     value: unmet
     rationale: There is no quantification of the overlap between generalization and exploration/memory, nor described mitigation steps.
@@ -255,15 +261,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.09:
-    value: n/a
-    rationale: The evaluation consists of RL episodes where the agent interacts with the environment; the items are not single stateless model calls.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1912.01588v2
-        locator: 1912.01588v2 page 4, chunk 2
-        quote: If the agent fails at any point, the episode terminates
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly state or show that the harness resets state per task (e.g., fresh container or process) between evaluation runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: met
     rationale: The benchmark does not use multiple-choice questions; it uses episodic returns from environment interaction.
@@ -293,33 +296,33 @@ verdicts:
     by: model
     quotes_verified: true
   ev.04:
-    value: met
-    rationale: The benchmark reports results for a separate test slice (held out levels) to measure generalization, distinct from the training set.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1912.01588v2
-        locator: 1912.01588v2 page 5, chunk 0
-        quote: To benchmark generalization, we recommend training on 500 levels from each environment and testing on held out levels
+    value: unmet
     by: model
+    rationale: While the benchmark uses train/test splits, the excerpts do not report results for a separate slice under a named stress condition or shift that differs from the standard splits.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.05:
-    value: n/a
-    rationale: The benchmark is a general RL evaluation suite and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark is designed for general RL research and generalization, not for evaluating a specific deployed product or application configuration.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark is a general RL evaluation suite and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not mention adversarial or misuse configurations of the system under test.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark is a general RL evaluation suite and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not list differences between the test setting and real deployment, nor do they provide caveats on reading results in light of such gaps.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation does not provide a complete list of required hardware models, OS, or a lockfile/pinned requirements for the environment.
@@ -333,19 +336,21 @@ verdicts:
     by: model
     quotes_verified: true
   rel.03:
-    value: met
-    rationale: The documentation provides a changelog that records multiple fixes (e.g., render options and interactive script).
+    value: unmet
+    by: model
+    rationale: The excerpts mention a changelog and issue tracker, but the decision rule explicitly states that an issue tracker alone does not count, and the changelog entries describe feature additions or bug fixes rather than a documented quality-control process for evaluation flaws.
     evidence:
       - source: repo
-        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
-        locator: openai/procgen@37b521dbb530:README.md, chunk 22
-        quote: See [CHANGES](CHANGES.md) for changes present in each release.
-      - source: repo
-        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
+        quote: |-
+          # Changelog
+
+          ## 0.10.7
+
+          * Custom `ToBaselinesVecEnv` to support `VecVideoRecorder` from @bragajj: https://github.com/openai/procgen/pull/62
         locator: openai/procgen@37b521dbb530:CHANGES.md, chunk 0
-        quote: fix render option for gym environment
-    by: model
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.04:
     value: unmet
     rationale: While the docs name several flaws (e.g., in 'bigfish' and 'caveflyer'), they do not state the direction of bias, provide impact estimates, or specify which conclusions remain valid.
@@ -373,29 +378,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The excerpts describe a reinforcement learning benchmark based on episodic returns and game rules, with no mention of a model being used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not mention the use of model raters or any correlation between model ratings and human judgments.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The excerpts describe a reinforcement learning benchmark based on episodic returns and game rules, with no mention of a model being used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not mention the use of model raters or any adversarial/reward-hacking tests for raters.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The excerpts describe a reinforcement learning benchmark based on episodic returns and game rules, with no mention of a model being used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not mention the use of model raters or consistency tests for repeated ratings.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The excerpts describe a reinforcement learning benchmark based on episodic returns and game rules, with no mention of a model being used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not mention the use of model raters or mitigation of rater biases.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: There is no mention of multiple human annotators labeling items or a programmatic verification method with reported accuracy for the ground truth labels.
@@ -431,15 +440,16 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: Scoring is based on raw episodic returns (rewards) from the environment, which does not involve parsing free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1912.01588v2
-        locator: 1912.01588v2 page 3, chunk 0
-        quote: We report the mean raw episodic return
+    value: unmet
     by: model
+    rationale: The scoring relies on episodic return (a scalar reward), which is deterministic and not a free-form parser, but the item requires validation of parser consistency if parsing occurs. Since no free-form parsing is described, this might be n/a, but the rule for n/a is 'Scoring involves no parsing of free-form output'. The scoring is based on reward signals, not parsing text. However, the excerpts do not explicitly state 'no parsing of free-form output' as a design choice for the n/a condition, but rather describe the environment mechanics. Let's look at cor.11 n/a condition. It is the same. The scoring is automated via environment reward. There is no 'parser' for free-form output. Thus n/a is appropriate if the condition holds. The condition is 'Scoring involves no parsing of free-form output'. The excerpts describe scoring via 'episode_return' and 'raw episodic return'. This is not parsing free-form output. So n/a is allowed. Wait, the prompt says 'n/a is allowed only for items that state an n/a condition, and only when the excerpts show that condition holds.' The excerpts show scoring is based on return/reward, not parsing. So n/a is valid.
+    evidence:
+      - source: repo
+        quote: Your score is displayed as "episode_return" in the lower left.
+        locator: openai/procgen@37b521dbb530:README.md, chunk 2
+        url: https://github.com/openai/procgen/tree/37b521dbb530f0734fd82f72d921f5e0e715c0d1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
     value: n/a
     rationale: Scoring is based on raw episodic returns (rewards) from the environment, which does not involve parsing free-form output.
@@ -460,3 +470,20 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 40 verdicts agreed, 15 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.08
+      - iv.09
+      - ev.04
+      - ev.05
+      - ev.06
+      - ev.07
+      - rel.03
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.10

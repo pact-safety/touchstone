@@ -2,13 +2,15 @@
 benchmark: winogrande
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 727e837f77521ef38bcc56df3b275c8da43f45af
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   def.1:
-    value: met
-    rationale: The phenomenon is operationalized as a fill-in-the-blank problem where the output is the selection of one of two names in the context.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 5, chunk 1
-        quote: W INO G RANDE   is formatted as a fill-in-the-blank problem where the blank corresponds to the mention of one of the two names in the context
+    value: unmet
     by: model
+    rationale: The excerpts describe the data collection process, format (fill-in-the-blank), and validation criteria, but do not provide a precise operational definition of the underlying phenomenon (e.g., 'commonsense reasoning' or 'coreference resolution') that specifies which observable outputs count as evidence of that phenomenon.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: unmet
     rationale: While the scope is described as social and physical commonsense, no excluded aspects of the phenomenon are named.
@@ -184,6 +183,7 @@ verdicts:
         quote: we compute human performance as the majority vote of three crowd workers for each question.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
     value: n/a
     rationale: The labels are deterministic (predictions of 1 or 2), and the evaluation is based on accuracy against labels, not subjective ratings.
@@ -240,6 +240,7 @@ verdicts:
         quote: The COPA task – identifying causes and effects – is very different from that in W INO - G RANDE .
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.4:
     value: met
     rationale: The authors discuss the risk that results might reflect spurious dataset biases rather than true commonsense reasoning capabilities.
@@ -254,3 +255,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 25 verdicts agreed, 3 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.1

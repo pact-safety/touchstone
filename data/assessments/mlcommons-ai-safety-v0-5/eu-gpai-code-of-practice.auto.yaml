@@ -2,13 +2,15 @@
 benchmark: mlcommons-ai-safety-v0-5
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 79accfe1424a7994399154ae34fd960fe93a4259
@@ -63,15 +65,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.05:
-    value: met
-    rationale: The benchmark establishes a requirement that publishers do not train on the benchmark dataset and must retract results if contamination is found.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 8, chunk 0
-        quote: Publishers do not train directly on or against the benchmark dataset and retract any reported results if and when benchmark data is found to have been in training data.
+    value: unmet
     by: model
+    rationale: The excerpts state that publishers commit to not training on the data, but do not document a specific contamination safeguard like a canary string in the released files or a contamination analysis performed by the benchmark authors.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.06:
     value: unmet
     rationale: The benchmark reports using a low temperature to reduce variability, but does not report results from repeated runs or varied conditions (like different temperatures).
@@ -83,15 +82,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.07:
-    value: met
-    rationale: The paper reports a manual inspection of a human eval set to validate LlamaGuard, stating the sample size and the resulting accuracy.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 23, chunk 0
-        quote: Of the 660 items in the human eval set categorised as unsafe (based on the classifications provided by LlamaGuard), 358 are unsafe
+    value: unmet
     by: model
+    rationale: The excerpts do not report a manual inspection of model outputs or trajectories, nor do they state the sample size or findings of such an error analysis.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.08:
     value: met
     rationale: The benchmark describes using human annotators and reports an inter-annotator agreement figure (Cohen's Kappa).
@@ -110,7 +106,7 @@ verdicts:
         url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
         locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 4
         quote: response - raw response as received from the SUT
-    by: model
+    by: human
     quotes_verified: true
   iv.10:
     value: unmet
@@ -119,25 +115,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.11:
-    value: met
-    rationale: The docs describe that items were hand-crafted using sentence fragments and templates, and that updates are managed with precise version numbers.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 17, chunk 1
-        quote: We create the test items by combining (1) sentence fragments with (2) templates.
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 7, chunk 1
-        quote: Updates will be managed and maintained through ModelGauge and ModelBench, with precise version numbers and process management.
+    value: unmet
     by: model
+    rationale: While the test specification is mentioned, the excerpts do not describe the specific methods for creating and managing new evaluations, such as versioning details or item retirement processes.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The excerpts do not describe the full evaluation environment, such as input/output formats, available tools/sandboxes, or specific access restrictions for the model.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.02:
     value: met
     rationale: The documentation explicitly states that the ecological validity of the prompts could be low because they lack reliable data about real-world AI harms.
@@ -226,7 +216,16 @@ verdicts:
         quote: A SUT driver is code that interfaces with a SUT provider (like Together.ai or Huggingface).
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 16 verdicts agreed, 5 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.05
+      - iv.07
+      - iv.11

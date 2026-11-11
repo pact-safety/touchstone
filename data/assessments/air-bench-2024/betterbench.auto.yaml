@@ -117,15 +117,12 @@ verdicts:
     by: model
     quotes_verified: true
   des.10:
-    value: 15
-    rationale: The benchmark includes a human alignment study to validate the autograders, providing a human performance baseline for agreement.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2407.17436v2
-        locator: 2407.17436v2 page 22, chunk 1
-        quote: the Cohen’s Kappa score between human evaluators and the Autograders was found to be 0.86
+    value: 0
     by: model
+    rationale: The excerpts discuss human evaluation for validation (Kappa score) but do not include a human performance level (e.g., average human refusal rate) as a benchmark reference point.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.11:
     value: 0
     rationale: There is no mention of a random performance level.
@@ -133,11 +130,16 @@ verdicts:
     by: model
     quotes_verified: true
   des.12:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The automatic evaluation (Autograders) is validated against human evaluators with a Kappa score of 0.86."
-    evidence: []
+    value: 15
     by: model
+    rationale: The benchmark has validated automatic evaluation (Autograders) by showing strong agreement (Kappa 0.86) with human evaluators.
+    evidence:
+      - source: paper
+        quote: Our evaluation process, using GPT-4o , with category-specific system prompts, achieves a Kappa score of 0.86, indicating strong evaluation agreement to human annotators.
+        locator: 2407.17436v2 page 2, chunk 4
+        url: https://arxiv.org/abs/2407.17436v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.13:
     value: 15
     rationale: The paper maps and compares AIR-Bench 2024 against other benchmarks like HEx-PHI, HarmBench, and SALAD-Bench.
@@ -253,7 +255,7 @@ verdicts:
           Usage & HOW-TO
 
           We have 3 pipelines:
-    by: model
+    by: human
     quotes_verified: true
   doc.03:
     value: 0
@@ -288,10 +290,18 @@ verdicts:
     by: model
     quotes_verified: true
   doc.07:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper documents the test tasks (prompts) and the rationale (aligning with regulations/policies)."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The paper documents the test tasks (prompts) and the rationale behind them, including the risk categories and the goal of assessing safety alignment.
+    evidence:
+      - source: paper
+        quote: "AIR-B ENCH   2024: A Safety Benchmark Based on Risk Categories from Regulations and Policies"
+        locator: 2407.17436v2 page 1, chunk 0
+        url: https://arxiv.org/abs/2407.17436v2
+      - source: paper
+        quote: Each prompt is meticulously crafted to mimic real-world scenarios, maximizing the benchmark’s ability to identify failure modes
+        locator: 2407.17436v2 page 2, chunk 4
+        url: https://arxiv.org/abs/2407.17436v2
     quotes_verified: true
   doc.08:
     value: 0
@@ -330,11 +340,18 @@ verdicts:
     by: model
     quotes_verified: true
   doc.12:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository specifies Apache 2.0 for code and CC-BY-4.0 for the dataset."
-    evidence: []
+    value: 15
     by: model
+    rationale: The README and LICENSE file specify the licenses for the code (Apache 2.0) and the dataset (CC-BY-4.0).
+    evidence:
+      - source: repo
+        quote: |-
+          - The code in this repository is licensed under [Apache 2.0](https://github.com/stanford-crfm/air-bench-2024/blob/main/LICENSE).
+          - The dataset in the [Hugging Face repository](https://huggingface.co/datasets/stanford-crfm/air-bench-2024) is licensed under [cc-by-4.0](https://huggingface.co/datasets/choosealicense/licenses/blob/main/markdown/cc-by-4.0.md).
+        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:README.md, chunk 8
+        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.13:
     value: 0
     rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided in the excerpts.
@@ -411,3 +428,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - des.10
+      - des.12
+      - doc.07
+      - doc.12

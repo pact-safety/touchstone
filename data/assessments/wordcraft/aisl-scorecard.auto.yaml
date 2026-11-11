@@ -50,6 +50,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
     value: unmet
     rationale: The paper does not explicitly state the phenomenon is a single unitary construct, nor does it report independent scores for distinct facets of the phenomenon in a table or figure.
@@ -72,6 +73,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.06:
     value: unmet
     rationale: There is no mention of a verification step (human or automated) to ensure each generated item actually tests the target phenomenon.
@@ -85,14 +87,10 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark is based on Little Alchemy 2 but creates its own tasks from the entities/recipes; it does not reuse a prior benchmark dataset for evaluation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 3
-        quote: WordCraft is a simplified version of Little Alchemy 2, sharing the same entities and valid recipes
-    by: model
+    value: unmet
+    by: human
+    rationale: The paper compares WordCraft to TextWorld and Little Alchemy 2 conceptually but does not provide a table or figure comparing the same models on the original dataset and the adapted benchmark.
+    evidence: []
     quotes_verified: true
   cv.09:
     value: n/a
@@ -171,15 +169,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.19:
-    value: met
-    rationale: The benchmark is compared to TextWorld, noting that WordCraft has a larger number of objects and lacks movement-related actions to isolate commonsense reasoning.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 3, chunk 0
-        quote: the underlying KG of TextWorld (which is perhaps the closest comparison), contains 99 different objects and 10 types of relations
+    value: unmet
     by: model
+    rationale: While TextWorld is mentioned as a comparison, the excerpts do not provide a concrete difference or gap this benchmark addresses in a comparative table or figure against a prior benchmark of the same construct.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.20:
     value: unmet
     rationale: The documentation lacks a specific limitations statement for the design and a supported claim linking scores to a real-world capability or harm.
@@ -217,15 +212,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The environment is a game based on combining entities (Little Alchemy 2), where outcomes are state transitions rather than parsing free-form text.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 1
-        quote: a fast RL environment based on the popular game Little Alchemy 2
+    value: unmet
     by: model
+    rationale: The evaluation uses an RL environment where outcomes are determined by environment state (success/failure of crafting), not free-form output parsing, making this item n/a, but the n/a condition is not explicitly stated as holding in the text for this specific item, and no parser agreement figures are provided.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report contamination checks or training-data cutoffs for the evaluated models.
@@ -233,35 +225,26 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs (recipes) and local scoring in a simulated environment.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 1
-        quote: a fast RL environment based on the popular game Little Alchemy 2
+    value: unmet
     by: model
+    rationale: The excerpts do not document environment changes, re-validation, or confirm the use of a static snapshot.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: n/a
-    rationale: The benchmark consists of RL episodes where the agent interacts with an environment state, and each item is a stateless model call for policy/value prediction.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 1
-        quote: We formulate the RL problem as a Markov Decision Process (MDP)
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly state or show that state is cleared between evaluation runs (e.g., fresh container or process).
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
-    value: met
-    rationale: The task is not multiple choice; it involves selecting entities to combine in a game environment.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 1
-        quote: the player is tasked with crafting over 700 different entities by combining previously discovered entities
+    value: unmet
     by: model
+    rationale: The task is not multiple choice, but the excerpts do not explicitly state the format is not multiple choice in a way that satisfies the rule's requirement to report the format or mitigation; however, the task is clearly an RL crafting task, not MCQ. The rule requires 'The format is not multiple choice' OR mitigation. The text describes it as an RL environment. It does not explicitly state 'This is not an MCQ benchmark'. Without explicit confirmation, we cannot verify the 'not multiple choice' claim via exact quote satisfying the rule's documentation requirement for the format.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
@@ -291,35 +274,26 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark is presented as a general environment for benchmarking commonsense agents rather than evaluating a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 3, chunk 0
-        quote: "WordCraft: An Environment for Benchmarking Commonsense Agents"
+    value: unmet
     by: model
+    rationale: The benchmark evaluates agents in a simulation environment (Little Alchemy 2) and does not state that the model, tools, or environment match a named deployed product or configuration.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark is presented as a general environment for benchmarking commonsense agents rather than evaluating a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 3, chunk 0
-        quote: "WordCraft: An Environment for Benchmarking Commonsense Agents"
+    value: unmet
     by: model
+    rationale: The excerpts do not mention including adversarial or misuse configurations of the system under test.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark is presented as a general environment for benchmarking commonsense agents rather than evaluating a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 3, chunk 0
-        quote: "WordCraft: An Environment for Benchmarking Commonsense Agents"
+    value: unmet
     by: model
+    rationale: The excerpts do not list differences between the test setting and real deployment, nor do they provide caveats on how to interpret results in light of such gaps.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: While training parameters are listed, the documentation lacks library versions (lockfile/pinned requirements), hardware model, and OS or container image.
@@ -365,45 +339,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The benchmark uses a deterministic environment based on a recipe graph, not a model as a rater or judge.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 3
-        quote: The environment is deterministic and fully-observable.
+    value: unmet
     by: model
+    rationale: The excerpts mention collecting a human baseline but do not report any correlation or agreement metrics between a model rater and human judgments.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The benchmark uses a deterministic environment based on a recipe graph, not a model as a rater or judge.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 3
-        quote: The environment is deterministic and fully-observable.
+    value: unmet
     by: model
+    rationale: There is no documentation of adversarial testing, reward-hacking tests, or specific defenses like injection filters for a model rater.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The benchmark uses a deterministic environment based on a recipe graph, not a model as a rater or judge.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 3
-        quote: The environment is deterministic and fully-observable.
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on identical inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The benchmark uses a deterministic environment based on a recipe graph, not a model as a rater or judge.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 3
-        quote: The environment is deterministic and fully-observable.
+    value: unmet
     by: model
+    rationale: No systematic biases in a model rater are measured or mitigated in the provided text.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: There is no report of multiple independent annotators labeling items or programmatic verification accuracy on a labeled sample.
@@ -417,15 +379,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.07:
-    value: met
-    rationale: The benchmark uses a ground-truth recipe graph from Little Alchemy 2 as the reference for solutions.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 3
-        quote: sharing the same entities and valid recipes
+    value: unmet
     by: model
+    rationale: While valid recipes are mentioned, there is no report that reference solutions were checked by an oracle solver or reviewed by a second person.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.08:
     value: unmet
     rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing.
@@ -439,25 +398,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The environment is based on selecting entities from a table, not parsing free-form text output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 4
-        quote: The action a corresponds to choosing one of the available entities
+    value: unmet
     by: model
+    rationale: The scoring involves checking if a combination is a valid recipe, which likely involves parsing or matching, but consistency tests for the parser are not reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The environment is based on selecting entities from a table, not parsing free-form text output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 4
-        quote: The action a corresponds to choosing one of the available entities
+    value: unmet
     by: model
+    rationale: Parser accuracy against hand-checked outputs is not reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for null/trivial-agent runs or targeted exploit attempts on the scorer.
@@ -468,3 +421,23 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 17 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - cv.08
+      - cv.19
+      - iv.06
+      - iv.08
+      - iv.09
+      - iv.10
+      - ev.05
+      - ev.06
+      - ev.07
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.07
+      - cor.10
+      - cor.11

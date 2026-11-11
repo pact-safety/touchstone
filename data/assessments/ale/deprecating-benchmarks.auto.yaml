@@ -2,13 +2,15 @@
 benchmark: ale
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 816fd1591f1b73133c269fe753f10a0490ab4a63
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The benchmark provides baseline results and human scores, and the provided table shows that top models (like LSH) significantly exceed human beginner scores in several games, while the authors state the platform offers 'conceivable near-term advancements'.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 3, chunk 0
-        quote: a challenging platform offering conceivable near-term advancements in learning, modelling, and planning.
+    value: unmet
     by: model
+    rationale: The excerpts do not provide current best reported scores or evidence that the benchmark has headroom relative to a ceiling. The provided text is from 2012 and only shows early baseline results, not current saturation status.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The provided excerpts do not document a contamination defense such as a private held-out test set or a contamination analysis.
@@ -51,15 +50,12 @@ verdicts:
     by: model
     quotes_verified: true
   c3:
-    value: met
-    rationale: The benchmark uses game scores rather than class labels, and it reports trivial baseline agents (Random, Const, Perturb) that score well below the learning agents in most games.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 6, chunk 1
-        quote: In 40 games out of 55, learning agents perform better than the baseline agents.
+    value: unmet
     by: model
+    rationale: The excerpts do not report the label or answer distribution, nor do they report a majority-class or trivial baseline score that is well below capable performance. While Table 1 shows baseline scores, it does not provide the distribution data required to assess balance.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: unmet
     rationale: The provided excerpts contain no mention of a quality review, audit, or error analysis regarding the annotation or label error rate of the benchmark data.
@@ -67,15 +63,16 @@ verdicts:
     by: model
     quotes_verified: true
   c5:
-    value: met
-    rationale: The benchmark states its purpose is to evaluate the development of general, domain-independent agents, a goal that remains current for the models it is used on.
+    value: unmet
+    by: model
+    rationale: The excerpts do not state that the task serves a current capability or decision for modern models. Instead, they suggest the task is a stepping stone to more recent platforms, implying the Atari 2600 task itself is not the current end-goal for general competency evaluation.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
+        quote: Should technology advance so as to render general Atari 2600 game playing achievable, our challenge problem can always be extended to use more recent video game platforms.
         locator: 1207.4708v2 page 15, chunk 1
-        quote: This article has introduced the Arcade Learning Environment, a platform for evaluating the development of general, domain-independent agents.
-    by: model
+        url: https://arxiv.org/abs/1207.4708v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c6:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark explicitly states that while Atari 2600 games are simpler than modern consoles, they provide challenges associated with real-world applications."
@@ -83,15 +80,12 @@ verdicts:
     by: model
     quotes_verified: true
   c7:
-    value: met
-    rationale: The benchmark's content is based on emulated Atari 2600 games, which are frozen historical artifacts, and there is no evidence that the meaning of the tasks has shifted.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 2, chunk 0
-        quote: ALE is a software framework for interfacing with emulated Atari 2600 game environments.
+    value: unmet
     by: model
+    rationale: The excerpts do not show a maintenance process or revision that addresses meaning drift. The documentation mentions versioning (v0, v4, v5) but does not demonstrate a process for addressing semantic drift of the task or labels over time.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: met
     rationale: The benchmark uses explicit version identifiers (v0, v4, v5) for its environments, and the documentation describes the history and recommendation of these versions.
@@ -118,3 +112,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 6 verdicts agreed, 4 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - c3
+      - c5
+      - c7

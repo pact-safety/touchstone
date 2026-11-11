@@ -45,10 +45,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.02:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark translates the concept of safety refusal into a task of evaluating whether a model response is a 'fulfillment' or 'refusal' of unsafe instructions."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The excerpts describe how the capability (safety refusal) translates to the benchmark task via a taxonomy of 44 categories and linguistic mutations.
+    evidence:
+      - source: paper
+        quote: We construct a class-balanced LLM safety refusal evaluation dataset comprising 440 unsafe instructions, across 44 fine-grained risk categories.
+        locator: 2406.14598v2 page 3, chunk 2
+        url: https://arxiv.org/abs/2406.14598v2
     quotes_verified: true
   des.03:
     value: 15
@@ -71,15 +75,12 @@ verdicts:
     by: model
     quotes_verified: true
   des.05:
-    value: 10
-    rationale: The benchmark uses 6 annotators to label data, but it is not explicitly stated that these individuals are 'domain experts'.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 6, chunk 3
-        quote: 6 authors manually label each of them as either “fulfillment” or “refusal” to the user request
+    value: 0
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The authors mention curating a human judgment dataset with manual labeling by authors/annotators, indicating human involvement in design/evaluation."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.06:
     value: 15
     rationale: The benchmark describes capturing the behavior of 'average-case bad users' and 'worst-case adversaries'.
@@ -91,11 +92,16 @@ verdicts:
     by: model
     quotes_verified: true
   des.07:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The taxonomy was built by referencing and compiling 10 prior works."
-    evidence: []
+    value: 15
     by: model
+    rationale: The taxonomy is built by referencing and compiling 10 prior works, integrating domain literature.
+    evidence:
+      - source: paper
+        quote: we have referenced and compiled 10 prior work ... to build our taxonomy.
+        locator: 2406.14598v2 page 23, chunk 2
+        url: https://arxiv.org/abs/2406.14598v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.08:
     value: 15
     rationale: The authors justify the use of time cost as a universal metric to bridge the gap between local and API-based evaluation methods.
@@ -118,12 +124,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.11:
     value: 0
     rationale: The excerpts do not provide a random performance level baseline.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.12:
     value: 15
     rationale: The authors validated their automated evaluators against a human judgment dataset using Cohen Kappa scores.
@@ -184,6 +192,7 @@ verdicts:
         quote: "To evaluate **API-based models (GPT, Claude, and Gemini series)**, run the following command:"
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.04:
     value: 15
     rationale: The README provides instructions and scripts (e.g., gen_model_answer_vllm.py) for evaluating local models using vLLM.
@@ -329,14 +338,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.11:
-    value: 10
-    rationale: The paper mentions 'fulfillment rate' and 'compliance rate' as metrics, though a formal definition is not fully detailed in the excerpts.
+    value: 15
+    by: human
+    rationale: The paper documents the evaluation metrics, including compliance/refusal rates and time cost as a metric for efficiency.
     evidence:
       - source: paper
+        quote: J.3   J USTIFICATION OF   T IME   C OST AS A   M ETRIC
+        locator: 2406.14598v2 page 31, chunk 2
         url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 10, chunk 0
-        quote: Alongside overall compliance rate on our “Base” dataset
-    by: model
     quotes_verified: true
   doc.12:
     value: 0
@@ -384,7 +393,7 @@ verdicts:
         url: https://arxiv.org/abs/2406.14598v2
         locator: 2406.14598v2 page 25, chunk 0
         quote: In total, the construction of our human judge dataset involves an effort of   ∼ 50 human hours.
-    by: model
+    by: human
     quotes_verified: true
   doc.18:
     value: 0
@@ -420,7 +429,16 @@ verdicts:
         quote: Correspond to Tinghao Xie (thx@princeton.edu)
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 6 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - des.02
+      - des.05
+      - des.07
+      - doc.11

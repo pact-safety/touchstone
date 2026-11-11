@@ -2,13 +2,15 @@
 benchmark: mlcommons-ai-safety-v0-5
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 79accfe1424a7994399154ae34fd960fe93a4259
@@ -173,15 +175,12 @@ verdicts:
     by: model
     quotes_verified: true
   s4.i:
-    value: met
-    rationale: The report provides summary statistics, specifically the percentage of responses flagged as unsafe by LlamaGuard.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 22, chunk 2
-        quote: LlamaGuard flagged 27,045 responses (4.8%) as unsafe.
+    value: unmet
     by: model
+    rationale: The excerpts do not contain specific summary statistics (e.g., mean, maximum) for model performance. Figure 1 on page 25 shows categorical grades (H, M-H, etc.) rather than numerical performance statistics, and no mean or max values are quoted.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s4.ii:
     value: unmet
     rationale: While the total number of responses is mentioned, there is no report of uncertainty measures or the number of evaluation runs per model.
@@ -195,23 +194,30 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-a:
-    value: n/a
-    rationale: The report does not use a human baseline for performance; it uses a reference model.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe a human baseline sample or its recruitment; they describe human experts creating dataset fragments, not serving as a performance baseline.
+    evidence:
+      - source: paper
+        quote: All of the sentence fragments have been created by human experts with experience in AI safety.
+        locator: 2404.12241v2 page 17, chunk 2
+        url: https://arxiv.org/abs/2404.12241v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
-    value: n/a
-    rationale: The report does not use a human baseline for performance; it uses a reference model.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The report does not provide human performance statistics or compare them to AI test results; it uses AI reference models for comparison.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-c:
-    value: n/a
-    rationale: The report does not use a human baseline for performance; it uses a reference model.
-    evidence: []
+    value: unmet
     by: model
+    rationale: There is no description of how human performance was elicited because no human performance baseline is reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
     value: unmet
     rationale: The report does not explain why a human baseline would be inappropriate or infeasible.
@@ -219,15 +225,12 @@ verdicts:
     by: model
     quotes_verified: true
   s5.ii-b:
-    value: met
-    rationale: The report uses a reference model as an alternative comparison point and explains the selection process.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 24, chunk 1
-        quote: we use three state-of-the-art open source SUTs as candidate references models.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report provides an alternative comparison point using reference models and explains the selection and scoring methodology."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.i:
     value: met
     rationale: The report provides overall risk level conclusions for the SUTs and explicitly references Figure 1 for the grades.
@@ -274,3 +277,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 23 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s4.i
+      - s5.i-a
+      - s5.i-b
+      - s5.i-c
+      - s5.ii-b

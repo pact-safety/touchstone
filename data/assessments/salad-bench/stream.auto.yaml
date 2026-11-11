@@ -64,12 +64,18 @@ verdicts:
         quote: You need to write your answer between < ans > and < eoa >
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.i:
-    value: unmet
-    rationale: The report mentions the base set contains 'over 200 questions per category', but it does not state the total number of evaluation items.
-    evidence: []
+    value: met
     by: model
+    rationale: The report states the number of evaluation items, specifically mentioning 'over 200 questions per category' and providing a total count of 21,318 in Table 9.
+    evidence:
+      - source: paper
+        quote: containing over 200 questions per category
+        locator: 2402.05044v4 page 4, chunk 1
+        url: https://arxiv.org/abs/2402.05044v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.ii:
     value: met
     rationale: The report describes multiple-choice questions (MCQ) and question-answer pairs, and provides the scoring formulas for MCQ accuracy (Acc-O and Acc-V).
@@ -207,55 +213,60 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-a:
-    value: met
-    rationale: The report describes the human baseline sample as 4 annotators who verified a randomly sampled subset of 458 questions.
+    value: unmet
+    by: model
+    rationale: The excerpts do not describe a human baseline sample or recruitment for performance comparison. Excerpt [paper:p16#0] mentions human annotators verifying dataset quality, but this is for data curation, not establishing a human performance baseline for the benchmark tasks.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
+        quote: To ensure the quality of the final dataset we obtained, we sample a subset of our dataset and asks 4 annotators to verify the dataset.
         locator: 2402.05044v4 page 16, chunk 0
-        quote: we sample a subset of our dataset and asks 4 annotators to verify the dataset. To be specific, we randomly sample 458 questions
-    by: model
+        url: https://arxiv.org/abs/2402.05044v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
-    value: met
-    rationale: Human performance statistics (Acc-V) are reported in Table 13 and compared against AI evaluators like GPT-4 and QWen.
+    value: unmet
+    by: model
+    rationale: The excerpts do not report human performance statistics or differences with AI test results. The tables compare AI models against each other or against other evaluation methods (like LlamaGuard), but do not include human baseline scores.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
+        quote: "Table 13: Comparison of different evaluators on the multiple-choice subset, where ∗ means failed to parse choices from Vicuna responses by keyword, and ** is calculated by Amazon Mechanical Turk."
         locator: 2402.05044v4 page 20, chunk 1
-        quote: "Table 13: Comparison of different evaluators on the multiple-choice subset, where"
-    by: model
+        url: https://arxiv.org/abs/2402.05044v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-c:
-    value: met
-    rationale: The report describes the conditions for human verification, including the sampling method and cross-validation by authors.
+    value: unmet
+    by: model
+    rationale: The excerpts do not describe how human performance was elicited for a baseline, as no human baseline performance is reported. The mention of human annotators refers to dataset verification, not eliciting performance on the benchmark tasks.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
+        quote: And then, this subset is cross-validated by 4 of our paper authors.
         locator: 2402.05044v4 page 16, chunk 0
-        quote: we randomly sample 458 questions from all the 65 categories keeping the origin ratio among categories
-    by: model
+        url: https://arxiv.org/abs/2402.05044v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
-    value: n/a
-    rationale: A human baseline was used for dataset verification and evaluator comparison.
+    value: unmet
+    by: model
+    rationale: The excerpts do not provide an explanation for why a human baseline would not be appropriate or feasible. The document focuses on AI-to-AI comparisons and defense mechanisms without justifying the absence of human baselines.
     evidence:
       - source: paper
+        quote: Among all attack methods, human-designed jailbreak prompts achieve the highest ASR, because models usually follow instructions in jailbreak prompts to scoff or curse.
+        locator: 2402.05044v4 page 8, chunk 3
         url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 16, chunk 0
-        quote: we sample a subset of our dataset and asks 4 annotators to verify the dataset
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-b:
-    value: n/a
-    rationale: A human baseline was used for dataset verification and evaluator comparison.
+    value: unmet
+    by: model
+    rationale: The excerpts do not provide an alternative comparison point to a human baseline, nor do they explain one. The comparisons are strictly between different AI models or AI evaluators.
     evidence:
       - source: paper
+        quote: "Table 10: The detailed comparison results of the safety evaluation between our model and other mainstream evaluation methods."
+        locator: 2402.05044v4 page 19, chunk 0
         url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 16, chunk 0
-        quote: we sample a subset of our dataset and asks 4 annotators to verify the dataset
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.i:
     value: unmet
     rationale: While the report provides conclusions about specific components (e.g., MD-Judge or attack methods), it does not state overall conclusions about a model's capabilities/risk level where each conclusion cites a specific table, figure, or number.
@@ -294,3 +305,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 7 settled by adjudicator-v4."
+    items:
+      - s2.i
+      - s5.i-a
+      - s5.i-b
+      - s5.i-c
+      - s5.ii-a
+      - s5.ii-b

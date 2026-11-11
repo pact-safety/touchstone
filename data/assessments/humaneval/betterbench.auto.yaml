@@ -55,20 +55,28 @@ verdicts:
     by: model
     quotes_verified: true
   des.03:
-    value: 10
-    rationale: The text describes how such models could act as coding assistants and impact real-world job performance and labor costs.
+    value: 15
+    by: human
+    rationale: The document discusses the real-world helpfulness of the capability, noting it can reduce barriers to entry and increase productivity, while also warning of risks like over-reliance.
     evidence:
       - source: paper
+        quote: Measuring the ability of Codex and other code generation models to reduce barriers to entry for the field.
+        locator: 2107.03374v2 page 35, chunk 3
         url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 28, chunk 1
-        quote: This would be a significantly more helpful coding assistant.
-    by: model
+      - source: paper
+        quote: One of the key risks associated with using code generation models in practice is over-reliance on generated outputs.
+        locator: 2107.03374v2 page 11, chunk 1
+        url: https://arxiv.org/abs/2107.03374v2
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: The excerpts do not describe how the benchmark scores specifically should or should not be interpreted or used.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The document provides detailed guidance on interpreting scores, such as the difference between pass@k and strict accuracy, and warns against using BLEU scores as a proxy for correctness.
+    evidence:
+      - source: paper
+        quote: Since an incorrect solution is guaranteed to be functionally inequivalent to the reference solution, we conclude that improvements in BLEU score may not indicate improved rates of functional correctness in practice.
+        locator: 2107.03374v2 page 6, chunk 0
+        url: https://arxiv.org/abs/2107.03374v2
     quotes_verified: true
   des.05:
     value: 10
@@ -88,7 +96,7 @@ verdicts:
         url: https://arxiv.org/abs/2107.03374v2
         locator: 2107.03374v2 page 5, chunk 1
         quote: when the model is used as an autocomplete tool where a user provides a prompt
-    by: model
+    by: human
     quotes_verified: true
   des.07:
     value: 15
@@ -249,6 +257,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.11:
     value: 0
     rationale: The excerpts do not specify release requirements.
@@ -396,6 +405,7 @@ verdicts:
         quote: all problems were hand-written and not programmatically copied from existing sources
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.16:
     value: 15
     rationale: The paper documents the filtering steps used for the training data collection.
@@ -418,6 +428,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.19:
     value: 0
     rationale: There is no mention of the documentation following a recognized standard.
@@ -446,3 +457,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - des.03
+      - des.04

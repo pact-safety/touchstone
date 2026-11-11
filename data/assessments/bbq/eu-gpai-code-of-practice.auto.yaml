@@ -2,13 +2,15 @@
 benchmark: bbq
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
@@ -75,15 +77,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.07:
-    value: met
-    rationale: The authors performed a manual inspection of templates during validation and edited those that failed human judgment.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 15, chunk 3
-        quote: we edited the template to state that each person had only recently started their diet, and this change caused the template to then pass human validation.
+    value: unmet
     by: model
+    rationale: The excerpts do not report a manual inspection of model outputs or trajectories, nor do they state the sample inspected or findings of an error analysis.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.08:
     value: met
     rationale: The benchmark describes using human annotators and reports inter-annotator agreement using Krippendorf's alpha.
@@ -107,21 +106,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.11:
-    value: met
-    rationale: The paper describes the process for creating templates and the validation process for including them in the dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 5, chunk 4
-        quote: We validate examples from each template on Amazon Mechanical Turk.
+    value: unmet
     by: model
+    rationale: While the name selection process is described, the excerpts do not describe how the benchmark is versioned, maintained, or how items are retired.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: While the excerpts mention input formats and output scoring, they do not describe the tools/sandbox available, interaction length, or specific access restrictions of the evaluation environment.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.02:
     value: met
     rationale: The authors explicitly state that their technique may fail to measure biases that could manifest in other domains, which is a concrete limitation of the evaluation setting.
@@ -159,15 +156,12 @@ verdicts:
     by: model
     quotes_verified: true
   rp.03:
-    value: met
-    rationale: The test items are available for public download via the provided GitHub repository.
-    evidence:
-      - source: repo
-        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
-        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 1
-        quote: This folder contains each set of generated examples for BBQ. This is the folder you would use to test BBQ.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts indicate the full dataset is available via a public GitHub repository, satisfying the condition that 'test items are obtainable by outside researchers (public download)'."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.04:
     value: unmet
     rationale: While a repository exists, the excerpts do not show that a runnable harness or scoring code is released for new models.
@@ -206,3 +200,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 18 verdicts agreed, 4 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.07
+      - iv.11
+      - rp.03

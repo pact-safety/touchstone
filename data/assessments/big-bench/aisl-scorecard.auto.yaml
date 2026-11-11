@@ -2,13 +2,15 @@
 benchmark: big-bench
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 092b196c1f8f14a54bbc62f24759d43bde46dd3b
@@ -85,17 +87,19 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The excerpts do not indicate that the benchmark reuses a prior dataset; it is described as a collection of contributed tasks.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a table or figure comparing the same models on an original dataset and the adapted benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The excerpts do not indicate that the benchmark reuses a prior dataset.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not list modifications made to reused data with their reasons; they focus on new task submissions.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: The excerpts do not provide a power calculation or confidence-interval half-width for the reported scores.
@@ -130,6 +134,7 @@ verdicts:
         quote: "exact_string_match: Accuracy on exact."
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.15:
     value: n/a
     rationale: The labels are based on deterministic keys (exact match or target scores), not subjective ratings.
@@ -140,16 +145,14 @@ verdicts:
         quote: "exact_string_match: Accuracy on exact."
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.16:
-    value: met
-    rationale: The paper breaks down performance by the named confound of 'keyword' (which represents different capabilities/categories) in Figure App.3 and other analysis.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 46, chunk 2
-        quote: performance of BIG-G, BIG-G sparse, and GPT models broken down by keyword.
+    value: unmet
     by: model
+    rationale: Failures are not broken down by named confounds (e.g., format, length) in a table or figure showing counts or rates.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.17:
     value: unmet
     rationale: The paper discusses 'brittleness' and 'breakthroughs', but does not report named failure categories with associated counts or shares.
@@ -163,19 +166,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.19:
-    value: met
-    rationale: The paper compares BIG-bench to SuperGLUE and notes that existing benchmarks have a 'narrow scope' which BIG-bench addresses by being 'extremely difficult and diverse'.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 7, chunk 0
-        quote: Existing benchmarks have narrow scope and show rapidly saturating performance. (a) SuperGLUE (Wang et al., 2019a) is a leading recent benchmark
-      - source: paper
-        url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 6, chunk 0
-        quote: we introduce a large-scale, extremely difficult and diverse benchmark.
+    value: unmet
     by: model
+    rationale: While prior benchmarks like SuperGLUE are mentioned, the excerpts do not compare BIG-bench against them in a table/figure or state a concrete difference/gap addressed in the required manner.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.20:
     value: met
     rationale: The paper provides a limitations statement (e.g., inability to process long contexts) and links performance to real-world capabilities/harms (e.g., automation of social bias).
@@ -190,6 +186,7 @@ verdicts:
         quote: allow us to identify and mitigate potential harmful social effects, ranging from job loss to automation of social bias
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.01:
     value: unmet
     rationale: The excerpts do not report control conditions or ablation results for secondary capabilities.
@@ -224,48 +221,46 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.06:
-    value: n/a
-    rationale: The benchmark uses JSON and programmatic tasks where outcomes are based on exact string matches or predicted probabilities of targets, not parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 8, chunk 1
-        quote: "exact_string_match: Accuracy on exact."
+    value: unmet
     by: model
+    rationale: The scoring involves parsing free-form output (e.g., exact string match, multiple choice grading). The excerpts do not compare parser output with reference labels on at least two response formats or report agreement/accuracy figures per format.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report overlap/contamination checks or training cutoffs for every evaluated model.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs and local scoring (JSON/programmatic tasks) without an external mutable environment.
+    value: unmet
+    by: model
+    rationale: The excerpts state that 'task formatting and even task content sometimes changed over this time', indicating the environment was not a static snapshot, and no changelog with re-validation is reported.
     evidence:
       - source: paper
+        quote: task formatting and even task content sometimes changed over this time
+        locator: 2206.04615v3 page 10, chunk 3
         url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 7, chunk 2
-        quote: "BIG-bench supports two types of tasks: JSON and programmatic."
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: n/a
-    rationale: The tasks are described as single input/target-output pairs or probability checks, which are stateless model calls.
-    evidence:
-      - source: repo
-        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
-        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 10
-        quote: As a single input/target-output pair, where the target output will be compared against the model output.
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly state that the harness resets state per task (e.g., fresh container) in the documentation or code snippets provided.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports random-guess baselines for multiple-choice tasks."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: While the paper mentions that domain experts can contribute tasks, it does not name specific experts or user groups consulted or what they defined.
@@ -372,29 +367,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The provided excerpts do not indicate that a model is used as a rater or judge to create ground truth; they describe human raters and programmatic metrics.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts mention a 'Human rater baseline performance' section but do not provide any evidence of correlation between model raters and human judgments, nor do they document such agreement.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The provided excerpts do not indicate that a model is used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: There is no mention of adversarial testing, reward hacking, or specific defenses (like injection filters) applied to a model rater in the provided excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The provided excerpts do not indicate that a model is used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on the same inputs for any model rater.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The provided excerpts do not indicate that a model is used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: While the paper discusses model biases (e.g., social bias), it does not report measurements of systematic biases in a model *rater* or judge, as no model rater is described.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: There is no report of multiple annotators labeling items independently with inter-annotator agreement, nor is there a reported accuracy for a programmatic checker on a labeled sample.
@@ -408,19 +407,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.07:
-    value: met
-    rationale: The benchmark provides target strings for JSON tasks, and the checkmate_in_one task specifically notes that a unique checkmating move exists for all positions.
-    evidence:
-      - source: repo
-        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
-        locator: google/BIG-bench@092b196c1f8f:README.md, chunk 10
-        quote: As a single input/target-output pair, where the target output will be compared against the model output.
-      - source: paper
-        url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 22, chunk 1
-        quote: In all presented positions, a unique checkmating move exists.
+    value: unmet
     by: model
+    rationale: While reference solutions are implied (e.g., `target` in JSON tasks), the excerpts do not explicitly state that these were checked by an oracle solver or reviewed by a second person.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.08:
     value: met
     rationale: The documentation specifies that multiple valid targets are allowed for metrics, providing an example of non-identical correct answers ('two' and '2').
@@ -431,6 +423,7 @@ verdicts:
         quote: 'Multiple valid targets (specified as a list) are allowed for all metrics, for example `{"input": "1 + 1 = ", "target": ["two","2"]}`.'
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.09:
     value: unmet
     rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, refusals, and errors/timeouts.
@@ -438,24 +431,17 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The described metrics (exact_string_match, multiple_choice_grade) rely on exact matches or log probabilities of provided targets, not the parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 8, chunk 1
-        quote: "exact_string_match: Accuracy on exact."
+    value: unmet
     by: model
+    rationale: The excerpts do not demonstrate that the automated output parser is deterministic or tested for consistency on identical inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The described metrics rely on exact matches or log probabilities of provided targets, not the parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 8, chunk 1
-        quote: "exact_string_match: Accuracy on exact."
-    by: model
+    value: unmet
+    by: human
+    rationale: There is no report of parser accuracy against hand-checked outputs.
+    evidence: []
     quotes_verified: true
   cor.12:
     value: unmet
@@ -467,3 +453,22 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 34 verdicts agreed, 20 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.08
+      - cv.09
+      - cv.16
+      - cv.19
+      - iv.06
+      - iv.08
+      - iv.09
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.07
+      - cor.10
+      - cor.11

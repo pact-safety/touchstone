@@ -44,6 +44,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
     value: unmet
     rationale: The paper identifies different reasoning types and knowledge types, but does not report independent scores for these facets in the results tables.
@@ -76,6 +77,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.07:
     value: unmet
     rationale: The paper does not define a specific named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
@@ -83,11 +85,16 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark consists of a new question set and corpus assembled from various sources, not an adaptation of a single prior benchmark dataset.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The paper compares ARC to prior work conceptually but does not provide a table or figure comparing the same models on the original dataset (Kaggle) and the adapted benchmark (ARC).
+    evidence:
+      - source: paper
+        quote: Table 6 summarizes the scores obtained by various baseline algorithms on the test partitions of the Challenge and Easy sets.
+        locator: 1803.05457v1 page 7, chunk 1
+        url: https://arxiv.org/abs/1803.05457v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
     value: n/a
     rationale: The benchmark does not reuse a prior dataset/benchmark in a way that requires modification analysis.
@@ -100,6 +107,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.11:
     value: unmet
     rationale: The main results table (Table 6) reports percentages but does not provide confidence intervals or standard errors for every score.
@@ -171,15 +179,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.02:
-    value: met
-    rationale: The documentation names related phenomena such as retrieval-style tasks and factoid-style questions that could be measured by similar tasks.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 1, chunk 1
-        quote: many of these datasets focused on retrieval-style tasks, where surface-level cues alone were usually sufficient to identify an answer.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation explicitly names related phenomena (datasets/tasks) that could be measured by similar tasks, such as reading comprehension and question answering."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.03:
     value: unmet
     rationale: There is no quantification of the overlap with related phenomena or description of mitigation steps.
@@ -199,11 +204,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The benchmark uses multiple-choice questions where the model selects an option, involving no parsing of free-form output.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The evaluation uses multiple-choice questions with explicit answer choices, not free-form output requiring parsing; thus, the n/a condition for 'no parsing of free-form output' applies.
+    evidence:
+      - source: paper
+        quote: TriviaQA (Joshi et al., 2017) broadened this task by providing several articles with a question, and used questions authored independently of the articles. Again, though, the questions were largely factoid-style, e.g., “Who won the Nobel Peace Prize in 2009?”.
+        locator: 1803.05457v1 page 2, chunk 1
+        url: https://arxiv.org/abs/1803.05457v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report overlap/contamination checks or training-data cutoffs for the evaluated models.
@@ -217,17 +227,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.09:
-    value: n/a
-    rationale: Each item is a single stateless model call to select a multiple-choice answer.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not document that the harness resets state per task (e.g., fresh container or process) between evaluation runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark uses multiple-choice questions and reports a random-guess baseline ('Guess-all')."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
@@ -253,17 +265,19 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark evaluates general AI capabilities on science questions and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark evaluates general AI capabilities on science questions and does not claim to evaluate a specific deployed product or configuration.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark evaluates general AI capabilities on science questions and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: "The benchmark does not claim to evaluate a specific deployed application, so the n/a condition applies, but the item asks for adversarial inputs which are not present. However, since n/a is allowed when the benchmark does not claim to evaluate a specific deployed application, we must check if ev.06 allows n/a. Yes, ev.06 has 'n/a when: The benchmark does not claim to evaluate a specific deployed application.'"
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
     value: n/a
     rationale: The benchmark evaluates general AI capabilities on science questions and does not claim to evaluate a specific deployed application.
@@ -311,29 +325,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a model as a rater or judge for the ground truth; the scoring is based on a fixed rubric for multiple-choice answers.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report any agreement between a model rater and human judgments. The paper describes using baseline solvers (IR, PMI, neural models) to filter questions, not as raters for annotation quality.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a model as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: There is no mention of adversarial testing or reward-hacking defenses for any model rater. The baselines are solvers, not raters, and no such tests are described.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a model as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs. The baselines are deterministic or stochastic solvers, not raters whose consistency is measured in this manner.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a model as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: No systematic biases in a model rater are measured or mitigated. The paper discusses retrieval bias in IR solvers, but this is not a rater bias in the context of annotation verification.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: There is no report of multiple annotators labeling items independently or a programmatic verification method with documented accuracy for the labels.
@@ -347,15 +365,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.07:
-    value: met
-    rationale: The excerpts provide examples of questions with marked correct answers, indicating reference solutions are provided.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 6, chunk 0
-        quote: (C) The mass will stay the same, but the weight will change. [correct]
+    value: unmet
     by: model
+    rationale: While reference answers are provided (e.g., '[correct]' tags), the excerpts do not document that these were checked by an oracle solver or reviewed by a second person. They are stated as correct in the dataset definition.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.08:
     value: unmet
     rationale: While a scoring rubric is mentioned, there is no list of accepted equivalences or a demonstration of a non-identical correct answer passing.
@@ -369,25 +384,27 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The benchmark uses multiple-choice questions where the system 'chooses the correct answer', implying no parsing of free-form output is required for scoring.
+    value: unmet
+    by: model
+    rationale: The scoring is based on selecting an answer option, not parsing free-form output. Therefore, the n/a condition 'Scoring involves no parsing of free-form output' applies.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
+        quote: For each question, a system receives 1 point if it chooses the correct answer
         locator: 1803.05457v1 page 6, chunk 3
-        quote: a system receives 1 point if it chooses the correct answer
-    by: model
+        url: https://arxiv.org/abs/1803.05457v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The benchmark uses multiple-choice questions, so scoring involves no parsing of free-form output.
+    value: unmet
+    by: model
+    rationale: The scoring involves selecting from multiple-choice options, not parsing free-form output. Thus, the n/a condition applies.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
+        quote: For each question, a system receives 1 point if it chooses the correct answer
         locator: 1803.05457v1 page 6, chunk 3
-        quote: a system receives 1 point if it chooses the correct answer
-    by: model
+        url: https://arxiv.org/abs/1803.05457v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scoring pipeline.
@@ -398,3 +415,20 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 17 settled by adjudicator-v4."
+    items:
+      - cv.08
+      - iv.02
+      - iv.06
+      - iv.09
+      - ev.05
+      - ev.06
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.07
+      - cor.10
+      - cor.11

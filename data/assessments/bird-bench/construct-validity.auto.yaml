@@ -48,6 +48,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: met
     rationale: The phenomenon is broken down into three additional challenges (sub-components) which are analyzed separately in the results (e.g., efficiency analysis in Appendix B.5 and knowledge evidence analysis).
@@ -71,15 +72,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The excerpts describe the generation of SQL queries but do not mention the use of automated parsing of free-form output to extract the SQL; the models are described as fetching SQL in an 'end-to-end fashion'.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 22, chunk 1
-        quote: SQL can be fetched in an end-to-end fashion by easily fine-tuning.
+    value: unmet
     by: model
+    rationale: The excerpts discuss execution accuracy and efficiency but do not report parser accuracy against hand-checked outputs, repeat-run consistency, or bias comparisons across output formats.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The documentation explicitly states that no sampling strategy was used when asked if the dataset is a sample from a larger set.
@@ -134,7 +132,7 @@ verdicts:
         url: https://arxiv.org/abs/2305.03111v3
         locator: 2305.03111v3 page 17, chunk 0
         quote: To address this issue, we introduce B IRD , the largest cross-domain text-to-SQL benchmark highlighting extensive and realistic databases for community development.
-    by: model
+    by: human
     quotes_verified: true
   ru.4:
     value: n/a
@@ -178,6 +176,7 @@ verdicts:
         quote: B IRD   contains complex   12,751   examples
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.2:
     value: unmet
     rationale: The main results table (Table 4) provides point estimates for accuracy and efficiency but does not include confidence intervals or standard errors for every score.
@@ -198,6 +197,7 @@ verdicts:
         quote: the test set databases are curated and designed by our specialized team
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
     value: n/a
     rationale: The labels are deterministic keys (SQL execution results), as the benchmark measures if predicted SQL result sets align with ground-truth SQL result sets.
@@ -252,6 +252,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: met
     rationale: The benchmark is compared to SPIDER, noting that previous benchmarks like it focus only on database schema and lack attention to values.
@@ -276,3 +277,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - mo.3

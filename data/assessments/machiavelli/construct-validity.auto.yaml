@@ -2,13 +2,15 @@
 benchmark: machiavelli
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
@@ -35,25 +37,19 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   def.1:
-    value: met
-    rationale: The paper provides a mathematical operational definition of power based on observable outputs such as watts, money, wellbeing, or social influence.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 4, chunk 1
-        quote: I ( s )   ∈   R   is some scalar measure of power exerted in a state   s   and measured in terms of watts, money, wellbeing, or social influence.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts provide a precise mathematical definition for 'Power' and specify observable outputs (watts, money, wellbeing, social influence) that count as evidence."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
-    value: met
-    rationale: The scope is defined by physical impact in scenes, and it explicitly excludes hypothetical actions and non-physical power.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 24, chunk 1
-        quote: Do   not   count   power   for   hypothetical actions,   or   effects   that   are   not   shown   in   the   scene
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The scope is defined as power exerted in a state, and excluded aspects are explicitly named, such as hypothetical actions and non-physical power not leading to direct physical impact."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: unmet
     rationale: While the paper discusses different conceptualizations of power (e.g., prospective power, exercised power), it does not state that the phenomenon is unitary nor does it show that these sub-components are scored separately.
@@ -73,15 +69,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The excerpts show that the model is prompted to provide answers as JSON objects, which is a structured format rather than free-form output requiring automated parsing.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 19, chunk 2
-        quote: provide your answer as a JSON object with the following format
+    value: unmet
     by: model
+    rationale: The excerpts describe the use of automated parsing for JSON outputs and a 'DeBERTA-based harmfulness model' for scoring, but they do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts do not document a sampling strategy over a described task space; they only mention identifying a test set based on correlation between points and harms.
@@ -94,6 +87,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: There is no mention of a counted subset of permuted or perturbed items, nor are such results reported separately.
@@ -139,15 +133,12 @@ verdicts:
     by: model
     quotes_verified: true
   ct.2:
-    value: met
-    rationale: The repository structure mentions a test set of games used for baseline agents.
-    evidence:
-      - source: repo
-        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
-        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 4
-        quote: Run trajectories for baseline agents on test set games
+    value: unmet
     by: model
+    rationale: The excerpts mention a 'test set' in the context of running baseline agents but do not explicitly state that a private or held-out split exists to facilitate ongoing, uncontaminated evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.3:
     value: unmet
     rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
@@ -180,16 +171,18 @@ verdicts:
         quote: human annotators from Surge AI
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
-    value: met
-    rationale: The labels are subjective (human and model ratings), and the paper reports the Spearman rank correlation (an agreement statistic) between gold labels and other labels.
+    value: unmet
+    by: model
+    rationale: The excerpts report Spearman rank correlation and agreement statistics, but they do not report a per-item disagreement distribution or an inter-annotator agreement statistic (such as Cohen's Kappa or Fleiss' Kappa) that captures the inherent variability of subjective labels.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 18, chunk 0
         quote: Table 8 shows the agreement (Spearman rank correlation) of gold labels against the model labels and crowdworker labels.
-    by: model
+        locator: 2304.03279v4 page 18, chunk 0
+        url: https://arxiv.org/abs/2304.03279v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: The excerpts mention 'failure modes' in a general risk context, but do not provide a qualitative and quantitative analysis where specific failure modes are both described and counted.
@@ -216,7 +209,7 @@ verdicts:
         url: https://arxiv.org/abs/2304.03279v4
         locator: 2304.03279v4 page 6, chunk 2
         quote: We investigate methods for encouraging our language-model agent and our RL agent to behave morally.
-    by: model
+    by: human
     quotes_verified: true
   jv.1:
     value: met
@@ -234,23 +227,33 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
-    value: met
-    rationale: The benchmark is compared to Hendrycks et al. (2021c), noting a difference in the richness of labels and the ability to measure more behaviors.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 8, chunk 1
-        quote: The main qualitative difference is that we collect a richer set of labels, allowing us to measure more behaviors
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts compare MACHIAVELLI to existing benchmarks (Wang et al., 2019; Sri-vastava et al., 2022; Liang et al., 2022; Côté et al., 2018; Shridhar et al., 2021; Hausknecht et al., 2020) and state that previous benchmarks measured isolated reasoning or physical exploration, whereas MACHIAVELLI focuses on interactive social environments."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.4:
     value: unmet
     rationale: The excerpts do not discuss limitations or design trade-offs specifically concerning what the scores do or do not measure.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 17 verdicts agreed, 10 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.1
+      - def.2
+      - mo.3
+      - ct.2
+      - st.4
+      - jv.3

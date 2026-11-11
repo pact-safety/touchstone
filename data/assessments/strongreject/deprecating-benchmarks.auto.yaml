@@ -2,13 +2,15 @@
 benchmark: strongreject
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The text indicates that while a 'Best' jailbreak could nearly achieve a perfect score, most tested jailbreaks resulted in scores substantially lower, showing headroom for typical model performance.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.10260v2
-        locator: 2402.10260v2 page 8, chunk 1
-        quote: most jailbreaks we tested did not result in high-quality responses to forbidden prompts
+    value: unmet
     by: model
+    rationale: The excerpts do not provide current best reported scores on the benchmark's standard evaluation or demonstrate that top scores leave clear headroom from the maximum achievable score. While it mentions that selecting the most effective jailbreak could achieve a 'perfect StrongREJECT score', it does not provide the actual top model scores or uncertainty intervals required to verify the rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The excerpts do not document a contamination defense such as a private held-out set or regular refreshing; the dataset is released publicly.
@@ -51,15 +50,12 @@ verdicts:
     by: model
     quotes_verified: true
   c3:
-    value: met
-    rationale: The benchmark is described as consisting of forbidden prompts with factually verifiable answers where a full score requires specific information, meaning it does not rely on class labels that could be skewed.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.10260v2
-        locator: 2402.10260v2 page 3, chunk 2
-        quote: a full score requires victim models to provide specific information that fully answers the forbidden prompt
+    value: unmet
     by: model
+    rationale: The excerpts do not report the label or answer distribution to show it is balanced, nor do they report a majority-class or trivial baseline score. While one excerpt mentions 'better class balancing' in the context of training a fine-tuned evaluator, this refers to the evaluator's training data, not the benchmark's evaluation distribution or trivial baseline performance.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: unmet
     rationale: While the paper compares the automated evaluator to human labels, there is no cited audit or error analysis reporting a low error rate for the benchmark data labels themselves.
@@ -67,15 +63,12 @@ verdicts:
     by: model
     quotes_verified: true
   c5:
-    value: met
-    rationale: The benchmark serves the purpose of evaluating jailbreak effectiveness, which remains current for the models used.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.10260v2
-        locator: 2402.10260v2 page 14, chunk 0
-        quote: a new dataset of forbidden prompts to use in jailbreak evaluation
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the task of jailbreak evaluation remains relevant or current. While they discuss the risks of jailbreaking, they do not explicitly affirm the ongoing relevance of the task in the context of the benchmark's design criteria, nor do they argue against obsolescence.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c6:
     value: unmet
     rationale: The provided excerpts do not state the simplifying assumptions the benchmark relies on.
@@ -101,16 +94,26 @@ verdicts:
     by: model
     quotes_verified: true
   r3:
-    value: met
-    rationale: The benchmark provides a list of authors in the pyproject.toml and a repository that is actively pointing users to a newer version, indicating maintenance and a point of contact.
+    value: unmet
+    by: model
+    rationale: The rule requires a named maintainer or contact address published for the benchmark, or a monitored issue tracker. The excerpts list authors of the paper and authors in the pyproject.toml, but do not provide a specific contact address, maintainer name for support queries, or evidence of a monitored issue tracker for the benchmark. The README points to a different repository for replication, but does not provide contact info for the benchmark itself.
     evidence:
       - source: repo
+        quote: Please refer to that repository for full paper replication including human evaluation details and using the fine-tuned version of the StrongReject evaluator.
+        locator: alexandrasouly/strongreject@f7cad6c17e62:README.md, chunk 0
         url: https://github.com/alexandrasouly/strongreject/tree/f7cad6c17e624e21d8df2278e918ae1dddb4cb56
-        locator: alexandrasouly/strongreject@f7cad6c17e62:pyproject.toml, chunk 0
-        quote: authors = ["Alexandra Souly", "Qingyuan Lu", "Dillon Bowen", "Tu Trinh", "Elvis Hsieh", "Sana Pandey", "Pieter Abbeel", "Justin Svegliato", "Scott Emmons", "Olivia Watkins", "Sam Toyer"]
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 6 verdicts agreed, 4 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - c3
+      - c5
+      - r3

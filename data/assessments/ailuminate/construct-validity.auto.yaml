@@ -2,13 +2,15 @@
 benchmark: ailuminate
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
@@ -59,15 +61,12 @@ verdicts:
     by: model
     quotes_verified: true
   def.3:
-    value: met
-    rationale: The benchmark identifies hazard-specific grades, indicating that the phenomenon is broken down into sub-components (hazards) and measured separately.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 19, chunk 1
-        quote: Provide   hazard-specific grades   to enable reasoning about a SUT’s strengths and weaknesses.
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the phenomenon is unitary, nor do they explicitly name sub-components that are scored separately. While hazard-specific grades are mentioned, the text does not confirm they are separate scores for sub-components of the phenomenon, and silence on this structural detail counts as unmet.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.1:
     value: unmet
     rationale: The excerpts mention using OLMo v1.0 as a control to demonstrate difficulty, but they do not identify secondary abilities required by the tasks or report control conditions/ablations for them.
@@ -81,23 +80,27 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark does not use automated parsing of free-form output; it explicitly states that requirements for SUTs to produce outputs in a specific expected format are not used.
+    value: unmet
+    by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias. While mitigations are listed, the actual results of such validations are not provided in the excerpts.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  ds.1:
+    value: met
+    by: model
+    rationale: The excerpts document specific sampling strategies, such as ensuring prompts are evenly distributed over hazards and personas, and sourcing from multiple vendors.
     evidence:
       - source: paper
+        quote: Prompts must be evenly distributed over hazards and personas.
+        locator: 2503.05731v2 page 15, chunk 0
         url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 38, chunk 0
-        quote: |-
-          97: SUT is required to produce outputs conforming to the evaluator's expected format (e.g., true/false, multiple choice selection, etc.)
-          N
-    by: model
+      - source: paper
+        quote: Source prompts from multiple vendors with distinct populations of prompt writers
+        locator: 2503.05731v2 page 33, chunk 1
+        url: https://arxiv.org/abs/2503.05731v2
     quotes_verified: true
-  ds.1:
-    value: unmet
-    rationale: While the text mentions that 'data sampling strategies' contributed to a configurable threshold for evaluators, it does not document a sampling strategy used to ensure task items are representative of the overall task space.
-    evidence: []
-    by: model
-    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.2:
     value: unmet
     rationale: The excerpts do not provide evidence that every item in the dataset passed a documented quality or relevance check.
@@ -158,6 +161,7 @@ verdicts:
         quote: Do not provide the evaluation set
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.3:
     value: unmet
     rationale: There is no report of a search or overlap check of source materials against a named training corpus or model.
@@ -182,16 +186,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
-    value: met
-    rationale: The benchmark uses a safety-model jury to generate labels (subjective) and reports measuring interrater reliability.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 37, chunk 0
-        quote: Measure and iterate on methods until high interrater reliability is achieved
+    value: unmet
     by: model
+    rationale: The excerpts do not report a per-item disagreement distribution or an inter-annotator agreement statistic, which is required to capture variability of subjective labels.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: While the benchmark mentions failure modes in a questionnaire, it does not provide a qualitative and quantitative analysis where failure modes are both described and counted.
@@ -211,15 +213,12 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The benchmark reports an experiment with Brainstorm to improve evaluation quality in the suicide & self-harm category using expert psychiatric knowledge.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 23, chunk 0
-        quote: The project employed expert psychiatric knowledge to annotate unacceptable SUT responses that the average human annotator may miss.
+    value: unmet
     by: model
+    rationale: The excerpts mention 'Potential Grading Improvements' and 'Future Work' but these are generic future-work lines or high-level suggestions, not specific reported experiments aimed at improving scores.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: unmet
     rationale: The excerpts mention 'real-world' contexts and 'user information foraging tasks', but they do not name a specific real-world application and link it to the benchmark tasks.
@@ -233,15 +232,12 @@ verdicts:
     by: model
     quotes_verified: true
   jv.3:
-    value: met
-    rationale: The benchmark compares its prompt-length-density distributions with open datasets from ChatBotArena and WildGuardMix.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 15, chunk 1
-        quote: "Figure 1 shows the prompt-length-density distributions compared with two open datasets: one from real users of ChatBotArena and another from WildGuardMix"
+    value: unmet
     by: model
+    rationale: The excerpts do not name any existing benchmark for comparison, nor do they state any differences between AILuminate and other evaluations.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.4:
     value: met
     rationale: The documentation identifies a failure mode where the benchmark does not measure a property of the SUT linked to the user task.
@@ -256,3 +252,14 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 20 verdicts agreed, 8 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.3
+      - mo.3
+      - ds.1
+      - st.4
+      - ea.4
+      - jv.3

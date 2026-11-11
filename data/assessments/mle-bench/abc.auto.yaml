@@ -40,30 +40,35 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.2:
     value: n/a
     rationale: The benchmark scores based on competition metrics via a grader, not by string matching final answers.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.3:
     value: n/a
     rationale: The benchmark scores based on competition metrics via a grader, not by substring matching final answers.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.4:
     value: n/a
     rationale: The benchmark scores based on competition metrics via a grader, not by substring matching final answers.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.5:
     value: n/a
     rationale: The benchmark scores based on competition metrics via a grader, not by substring matching final answers.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.b.1:
     value: unmet
     rationale: While an LLM judge is used for rule-breaking detection, there is no report of its accuracy, self-consistency, and human agreement.
@@ -82,60 +87,70 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.c.2:
     value: n/a
     rationale: The benchmark uses competition-specific metrics on a test set, not unit or end-to-end test cases.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.d.1:
     value: n/a
     rationale: Fuzz testing is not used.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.d.2:
     value: n/a
     rationale: Fuzz testing is not used.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.d.3:
     value: n/a
     rationale: Fuzz testing is not used.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.e.1:
     value: n/a
     rationale: End-to-end testing (in the sense of code coverage) is not used; it uses competition metrics.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.e.2:
     value: n/a
     rationale: End-to-end testing (in the sense of code coverage) is not used; it uses competition metrics.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.f.1:
     value: n/a
     rationale: Outcomes are scored by competition metrics on a CSV submission, not by matching environment state.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.f.2:
     value: n/a
     rationale: Outcomes are scored by competition metrics on a CSV submission, not by matching environment state.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.f.3:
     value: n/a
     rationale: Outcomes are scored by competition metrics on a CSV submission, not by matching environment state.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.g.1:
     value: met
     rationale: The benchmark requires CSV submissions and states that the required format is described in each competition's description.
@@ -144,7 +159,7 @@ verdicts:
         url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
         locator: openai/mle-bench@507f92e1138b:README.md, chunk 13
         quote: Answers for competitions must be submitted in CSV format; the required format is described in each competition's description
-    by: model
+    by: human
     quotes_verified: true
   O.g.2:
     value: unmet
@@ -158,6 +173,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.1:
     value: unmet
     rationale: The pyproject.toml specifies minimum versions for dependencies (e.g., '>=3.11'), but the rule requires every tool to have a stated version or lockfile entry, and no lockfile is provided in the excerpts.
@@ -175,18 +191,12 @@ verdicts:
     by: model
     quotes_verified: true
   T.3:
-    value: met
-    rationale: The harness implements automatic retries for OpenAI API errors and returns the error message to the agent after a maximum of 10 retries, preventing silent failure.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 18, chunk 1
-        quote: |-
-          Add automatic retries with the   tenacity   library to the   complete_text_openai 
-          function for any OpenAI API Errors; return the error message to the agent after a maximum
-          of 10 retries.
+    value: unmet
     by: model
+    rationale: The excerpts describe handling rate limits and API errors via retries, but do not document a mechanism for detecting API outages and stopping the run or excluding the task if the API becomes inaccessible.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.4:
     value: unmet
     rationale: The excerpts describe the use of Docker containers and virtual machines, but do not explicitly state that each task starts from a fresh environment or that state is cleared between runs.
@@ -317,6 +327,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.11:
     value: unmet
     rationale: No specific caveat is provided stating which conclusions should not be drawn from the results due to named flaws.
@@ -343,3 +354,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 18 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - T.3

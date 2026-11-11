@@ -2,13 +2,15 @@
 benchmark: gaia
 standard: abc
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
 model_run:
@@ -38,6 +40,7 @@ verdicts:
         quote: evaluation is done via quasi exact match between a model’s answer and the ground truth (up to some normalization that is tied to the “type” of the ground truth)
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.2:
     value: unmet
     rationale: There is no evidence that extra words around a correct answer are ignored; the system prompt explicitly tells models to use 'as few words as possible'.
@@ -207,25 +210,19 @@ verdicts:
     by: model
     quotes_verified: true
   T.2:
-    value: n/a
-    rationale: The benchmark relies on interactions with the real world and does not provide a specific set of API tools to be consistently accessible.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 4, chunk 0
-        quote: GAIA does not specify possible APIs, and relies on interactions with the real world.
+    value: unmet
     by: model
+    rationale: The excerpts do not document how the harness handles retries or rate limits for external API tools.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.3:
-    value: n/a
-    rationale: The benchmark relies on interactions with the real world and does not provide a specific set of API tools.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 4, chunk 0
-        quote: GAIA does not specify possible APIs, and relies on interactions with the real world.
+    value: unmet
     by: model
+    rationale: The excerpts do not describe a mechanism for detecting API outages and stopping the run or excluding the task.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.4:
     value: unmet
     rationale: There is no mention of a fresh environment or clearing residual data between runs.
@@ -330,6 +327,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.6:
     value: met
     rationale: The benchmark explicitly states it aims to evaluate AI systems rather than specific architectures.
@@ -394,3 +392,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 39 verdicts agreed, 4 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - T.2
+      - T.3

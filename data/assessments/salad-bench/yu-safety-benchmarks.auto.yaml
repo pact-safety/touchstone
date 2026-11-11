@@ -2,13 +2,15 @@
 benchmark: salad-bench
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
@@ -40,6 +42,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1.b:
     value: unmet
     rationale: The excerpts do not document specific risks that are excluded or state deployment assumptions such as language, turns, or tool use.
@@ -58,6 +61,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r2.a:
     value: met
     rationale: The benchmark describes the use of red-teaming and adversarial jailbreaks to discover more challenging questions.
@@ -97,15 +101,12 @@ verdicts:
     by: model
     quotes_verified: true
   r3.b:
-    value: met
-    rationale: The benchmark documents that annotators met to clarify requirements and that they held discussions to resolve disagreements.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 16, chunk 1
-        quote: we will organize a new round of meeting discussion for the data samples that the annotators did not agree on
+    value: unmet
     by: model
+    rationale: The excerpts mention 4 annotators and meetings to resolve disagreements, but do not document annotator selection, demographics, or specific disagreement patterns in sufficient detail to meet the 'two of' criteria.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r3.c:
     value: unmet
     rationale: While the benchmark restricts access to authorized researchers, it does not describe a contamination check or state the temporal validity/refresh date of the evaluation set.
@@ -117,19 +118,12 @@ verdicts:
     by: model
     quotes_verified: true
   r4.a:
-    value: met
-    rationale: The benchmark reports results as 'safety rate' and 'success rate', which are proportions/rates.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 5, chunk 9
-        quote: keep only questions with the lowest   success rate   r succ
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 7, chunk 3
-        quote: There is a significant drop in safety rates
+    value: unmet
     by: model
+    rationale: The excerpts report 'success rate' and 'safety rate' but do not explicitly label results as 'observed rate' or 'failure frequency' in the manner required to distinguish them from calibrated 'probability'. While 'probability' is mentioned in the context of the evaluator's output mechanism, the benchmark results themselves are not labeled with the specific terminology required by the rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r4.b:
     value: unmet
     rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
@@ -155,15 +149,12 @@ verdicts:
     by: model
     quotes_verified: true
   r5.c:
-    value: met
-    rationale: The benchmark explicitly states that its taxonomy was inspired by previous taxonomy rules and policies from Weidinger et al., OpenAI, and Meta.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 3, chunk 0
-        quote: Inspired by previous taxonomy rules and policies (Weidinger et al., 2023; OpenAI, 2023; Meta, 2023)
+    value: unmet
     by: model
+    rationale: The excerpts do not name a specific established risk-management or safety-engineering practice that the benchmark follows. It mentions being inspired by policies, but does not claim adherence to a specific engineering practice like ISO standards or NIST frameworks.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r6.a:
     value: unmet
     rationale: No confidence intervals, standard errors, or worst-case bounds are reported for the main metrics.
@@ -198,12 +189,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.b:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies that toxic content is defined by established community guidelines and ethical standards."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.c:
     value: unmet
     rationale: The provided excerpts do not mention any contested normative choices or value conflicts in the harm definitions.
@@ -233,27 +226,26 @@ verdicts:
     by: model
     quotes_verified: true
   r8.c:
-    value: met
-    rationale: The judge model (MD-Judge) is provided with version numbers in the repository documentation.
-    evidence:
-      - source: repo
-        url: https://github.com/OpenSafetyLab/SALAD-BENCH/tree/575d5369c5355c0ed76e27860a889aa2f3c3e0e5
-        locator: OpenSafetyLab/SALAD-BENCH@575d5369c535:README.md, chunk 6
-        quote: model_ckpt = "OpenSafetyLab/MD-Judge-v0.1"
+    value: unmet
     by: model
+    rationale: While the judge model (MD-Judge) has a version (v0.1), the scoring rubric and annotation guidelines do not carry a version, date, or commit hash in the provided excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r8.d:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): A public code repository is provided with a README and example scripts to enable replication."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.a:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark states prompts come from public datasets and self-instructed generation, and reports validation via human verification."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.b:
     value: unmet
     rationale: The benchmark does not provide a justification for why its scenarios represent real-world use or state the limitations of its synthetic data in that context.
@@ -294,6 +286,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r10.d:
     value: unmet
     rationale: The benchmark does not acknowledge that model-level scores differ from system-level safety or identify further deployment evaluations.
@@ -304,3 +297,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 26 verdicts agreed, 11 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r3.b
+      - r4.a
+      - r5.c
+      - r8.c

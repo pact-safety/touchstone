@@ -2,13 +2,15 @@
 benchmark: hellaswag
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
 model_run:
@@ -45,15 +47,12 @@ verdicts:
     by: model
     quotes_verified: true
   c3:
-    value: met
-    rationale: The benchmark uses a 4-way setting where a random baseline (25%) is reported and is well below the performance of models and humans.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 11, chunk 1
-        quote: Sometimes, BERT never converges (accuracy around 25%)
+    value: unmet
     by: model
+    rationale: The excerpts do not report the label or answer distribution, nor do they provide a trivial baseline score to demonstrate that the distribution is balanced or that imbalance exploitation is ineffective.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: met
     rationale: The benchmark describes a quality review process involving several rounds of human filtering to ensure high agreement and remove false negatives.
@@ -108,3 +107,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 9 verdicts agreed, 1 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c3

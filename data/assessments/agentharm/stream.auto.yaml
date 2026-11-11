@@ -2,13 +2,15 @@
 benchmark: agentharm
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
 model_run:
@@ -70,6 +72,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iii:
     value: met
     rationale: The report states that rubrics are human-written and that quality control involved manual inspection and separate human reviewers.
@@ -151,11 +154,20 @@ verdicts:
     by: model
     quotes_verified: true
   s3.ii:
-    value: unmet
-    rationale: The report does not specify which safety mitigations were active during testing or if any were disabled.
-    evidence: []
+    value: met
     by: model
+    rationale: The report specifies active safeguards (none for most, forced tool call for some) and adaptations (jailbreak template), explicitly stating 'None' for the baseline condition.
+    evidence:
+      - source: paper
+        quote: GPT-3.5 Turbo   None   62.2%
+        locator: 2410.09024v3 page 18, chunk 1
+        url: https://arxiv.org/abs/2410.09024v3
+      - source: paper
+        quote: Universal jailbreak template. We use the rule-based jailbreak template from Andriushchenko et al. (2025), with minor modification to adapt it to the agentic setting
+        locator: 2410.09024v3 page 7, chunk 1
+        url: https://arxiv.org/abs/2410.09024v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.iii:
     value: unmet
     rationale: While sampling settings (temperature 0) and some prompt details are provided, the full prompt for all tests and the specific scaffold version are not fully detailed in the excerpts.
@@ -226,6 +238,7 @@ verdicts:
         quote: We also include a benign variant of the dataset as a baseline for model capabilities.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.i:
     value: unmet
     rationale: While the report provides conclusions about the benchmark's quality and the effect of attacks, it does not state overall conclusions about specific models' risk levels that cite a specific table, figure, or number.
@@ -260,3 +273,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 25 verdicts agreed, 3 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s3.ii

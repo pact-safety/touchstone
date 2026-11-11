@@ -2,13 +2,15 @@
 benchmark: safebench
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The reported overall scores for AD algorithms (e.g., 0.606, 0.679) are well below the maximum possible score of 1.0, leaving clear headroom.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.09682v4
-        locator: 2206.09682v4 page 24, chunk 0
-        quote: PPO   0.568   0.783   0.671   0.606
+    value: unmet
     by: model
+    rationale: The excerpts provide specific scores for various algorithms but do not state the maximum achievable score, human-level ceiling, or demonstrate that the top scores leave clear headroom or separate models beyond uncertainty. Without a stated ceiling or saturation analysis, the condition of being free of saturation cannot be verified.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The provided excerpts do not document a contamination defense such as a private held-out set or contamination analysis.
@@ -110,7 +109,14 @@ verdicts:
         quote: This info needs to emailed to team@cloudcv.org
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 8 verdicts agreed, 2 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1

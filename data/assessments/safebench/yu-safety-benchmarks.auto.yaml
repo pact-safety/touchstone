@@ -46,7 +46,7 @@ verdicts:
         url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
         locator: trust-ai/SafeBench@dec22690c23f:docs/source/tracks.md, chunk 1
         quote: The metrics we evaluate are collision rate, out of road length, distance to driving route, incomplete driving route, and running time.
-    by: model
+    by: human
     quotes_verified: true
   r1.b:
     value: unmet
@@ -80,7 +80,7 @@ verdicts:
     value: unmet
     rationale: While there is a submission process for a challenge, there is no documented process for community contributions to the benchmark itself including integration and credit.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   r2.c:
     value: unmet
@@ -96,7 +96,7 @@ verdicts:
         url: https://arxiv.org/abs/2206.09682v4
         locator: 2206.09682v4 page 3, chunk 2
         quote: model the surrounding agents (e.g., vehicles and pedestrians) as adversarial agents to generate safety-critical driving scenarios.
-    by: model
+    by: human
     quotes_verified: true
   r3.a:
     value: unmet
@@ -194,6 +194,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.b:
     value: unmet
     rationale: The excerpts do not state whose values or judgments (experts, policy, etc.) define the harm constructs.
@@ -261,24 +262,21 @@ verdicts:
     by: model
     quotes_verified: true
   r9.c:
-    value: met
-    rationale: The benchmark evaluates autonomous driving, which is inherently a multi-turn/continuous interaction process.
-    evidence:
-      - source: repo
-        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
-        locator: trust-ai/SafeBench@dec22690c23f:docs/source/components.md, chunk 0
-        quote: Safebench is a benchmarking platform based on Carla simulator for evaluating safety and security of autonomous vehicles
+    value: unmet
     by: model
+    rationale: The excerpts describe single-run evaluations of agents in scenarios, with no mention of multi-turn evaluation for risks like manipulation or trust exploitation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.d:
-    value: met
-    rationale: The benchmark states that no personal information was used because it relies on simulation, meaning in-the-wild data collection was not used.
+    value: n/a
+    by: human
+    rationale: The benchmark uses synthetic data from the CARLA simulator, so data collection was not constrained by privacy or curation opacity of in-the-wild data.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2206.09682v4
+        quote: We note that we don’t use any personal information since our experiments are based on Carla simulation.
         locator: 2206.09682v4 page 21, chunk 1
-        quote: we don’t use any personal information since our experiments are based on Carla simulation
-    by: model
+        url: https://arxiv.org/abs/2206.09682v4
     quotes_verified: true
   r10.a:
     value: unmet
@@ -300,19 +298,23 @@ verdicts:
         url: https://arxiv.org/abs/2206.09682v4
         locator: 2206.09682v4 page 4, chunk 0
         quote: This platform runs in the Docker [ 54 ] container and is built upon the Carla simulator [ 28 ]
-    by: model
+    by: human
     quotes_verified: true
   r10.d:
-    value: met
-    rationale: The benchmark states that simulation cannot reflect real-world conditions and that on-track testing is necessary before deployment.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.09682v4
-        locator: 2206.09682v4 page 10, chunk 3
-        quote: the simulation in SafeBench cannot exactly reflect real-world conditions. On-track testing is necessary before deploying AD algorithms in the real world
+    value: unmet
     by: model
+    rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name additional evaluation needed for deployment beyond the general limitation statement.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 5 decided by the reviewer."
+    items:
+      - r9.c
+      - r9.d
+      - r10.d

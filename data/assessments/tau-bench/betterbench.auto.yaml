@@ -72,7 +72,7 @@ verdicts:
         url: https://arxiv.org/abs/2406.12045v1
         locator: 2406.12045v1 page 5, chunk 0
         quote: pass^k can capture the reliability of the agent at handling variations in conversations with the same underlying semantics while adhering to the domain policies and rules
-    by: model
+    by: human
     quotes_verified: true
   des.05:
     value: 0
@@ -80,6 +80,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.06:
     value: 15
     rationale: The benchmark uses user simulation with specific instructions that set up user identity, intent, and preferences.
@@ -145,14 +146,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.14:
-    value: 10
-    rationale: The paper addresses sensitivity to stochasticity through the pass^k metric and mentions how the agent handles variations in conversations.
+    value: 15
+    by: human
+    rationale: Input sensitivity is addressed by analyzing how agents handle stochasticity and partial information, using multiple trials to test consistency.
     evidence:
       - source: paper
+        quote: This showcases the fragile nature of such agents in handling stochasticity and partial information, which is common in human-agent interaction.
+        locator: 2406.12045v1 page 2, chunk 3
         url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 5, chunk 0
-        quote: pass^k can capture the reliability of the agent at handling variations in conversations with the same underlying semantics
-    by: model
     quotes_verified: true
   imp.01:
     value: 15
@@ -184,12 +185,14 @@ verdicts:
         quote: We test various state-of-the-art proprietary and open language models for agents through their APIs
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.04:
     value: 0
     rationale: The excerpts mention testing models via APIs and note that only two models release weights, but do not explicitly state support for running local models.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.05:
     value: 0
     rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
@@ -338,12 +341,18 @@ verdicts:
         quote: The reward of a task episode r = r action × r output ∈ { 0 , 1 } is based on
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.12:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository contains a LICENSE file specifying the MIT License."
-    evidence: []
+    value: 15
     by: model
+    rationale: The repository includes a LICENSE file specifying the MIT License.
+    evidence:
+      - source: repo
+        quote: MIT License Copyright (c) 2024 Sierra
+        locator: sierra-research/tau-bench@59a200c6d575:LICENSE, chunk 0
+        url: https://github.com/sierra-research/tau-bench/tree/59a200c6d575d595120f1cb70fea53cef0632f6b
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.13:
     value: 0
     rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
@@ -420,3 +429,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - des.14
+      - doc.12

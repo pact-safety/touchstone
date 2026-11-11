@@ -2,13 +2,15 @@
 benchmark: bird-bench
 standard: abc
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
 model_run:
@@ -39,15 +41,12 @@ verdicts:
     by: model
     quotes_verified: true
   O.a.2:
-    value: n/a
-    rationale: The benchmark scores based on the result set of the executed SQL, not by string matching the SQL or the answer.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 6, chunk 0
-        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The scoring mechanism relies on result set alignment rather than string matching, so extra words in the SQL generation do not cause failure as long as the result is correct."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.3:
     value: n/a
     rationale: The benchmark scores based on the result set of the executed SQL, not by substring matching.
@@ -56,28 +55,22 @@ verdicts:
         url: https://arxiv.org/abs/2305.03111v3
         locator: 2305.03111v3 page 6, chunk 0
         quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
-    by: model
+    by: human
     quotes_verified: true
   O.a.4:
-    value: n/a
-    rationale: The benchmark scores based on the result set of the executed SQL, not by substring matching.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 6, chunk 0
-        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): Listing all candidates would likely produce a result set different from the specific ground truth result set, thus failing the alignment check."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.5:
-    value: n/a
-    rationale: The benchmark scores based on the result set of the executed SQL, not by substring matching.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 6, chunk 0
-        quote: EX is defined as the proportion of examples in the evaluation set for which the executed results of both the predicted and ground-truth SQLs are identical
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark uses Execution Accuracy based on result set identity, meaning a generic guess will not match the specific result set of the ground truth SQL."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.b.1:
     value: n/a
     rationale: No LLM judge is used; scoring is based on execution results (EX) and efficiency (VES).
@@ -138,15 +131,12 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.e.2:
-    value: met
-    rationale: The benchmark minimizes randomness by setting temperature to 0 and runs VES 100 times to evaluate average results, dropping outliers.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 22, chunk 3
-        quote: we set the temperature as 0 to ensure reproduction
-    by: model
+    value: unmet
+    by: human
+    rationale: While the paper mentions dropping outliers for efficiency measurement, it does not explicitly demonstrate that the core execution accuracy tests are non-flaky or deterministic across repeat runs.
+    evidence: []
     quotes_verified: true
   O.f.1:
     value: n/a
@@ -186,7 +176,7 @@ verdicts:
         url: https://arxiv.org/abs/2305.03111v3
         locator: 2305.03111v3 page 22, chunk 3
         quote: we provide a 1-shot pseudo example for ChatGPT to learn the procedure of thinking and output format
-    by: model
+    by: human
     quotes_verified: true
   O.g.2:
     value: unmet
@@ -207,17 +197,19 @@ verdicts:
     by: model
     quotes_verified: true
   T.2:
-    value: n/a
-    rationale: The benchmark uses a database and LLM APIs for generation, but the evaluation harness itself does not use external API tools for the task execution; it compares SQL results.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not document how the harness handles retries and rate limits for external API tools.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.3:
-    value: n/a
-    rationale: No external API tools are used in the evaluation process itself.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe mechanisms for detecting API outages or stopping runs/excluding tasks.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.4:
     value: unmet
     rationale: There is no mention of clearing residual data or starting each task from a fresh environment.
@@ -310,6 +302,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.6:
     value: met
     rationale: The benchmark evaluates text-to-SQL parsers, specifically mentioning fine-tuning (FT) and in-context learning (ICL) models.
@@ -340,6 +333,7 @@ verdicts:
         quote: this may result in false positives for questions utilizing "ORDER BY."
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.9:
     value: met
     rationale: The impact of the 'ORDER BY' flaw is numerically estimated as accounting for less than 1% of the benchmark.
@@ -350,6 +344,7 @@ verdicts:
         quote: such instances are uncommon, accounting for less than 1% of B IRD .
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.10:
     value: unmet
     rationale: The results tables provided do not include confidence intervals or significance tests for the scores.
@@ -382,3 +377,14 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 31 verdicts agreed, 9 settled by adjudicator-v4, 3 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - O.a.2
+      - O.a.4
+      - O.a.5
+      - O.e.2
+      - T.2
+      - T.3

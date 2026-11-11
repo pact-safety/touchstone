@@ -2,13 +2,15 @@
 benchmark: arc-challenge
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
 model_run:
@@ -116,15 +118,12 @@ verdicts:
     by: model
     quotes_verified: true
   ru.4:
-    value: met
-    rationale: The text explains that the creation of a Challenge partition is a modification intended to prevent scores from being dominated by simple algorithms.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 2, chunk 0
-        quote: First, the creation of a Challenge partition is to avoid scores being dominated by the performance of simple algorithms
+    value: unmet
     by: model
+    rationale: The text describes modifications (creating a Challenge partition, providing a corpus) but does not explicitly explain how each modification improves construct validity in the required manner.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The excerpts describe baseline solvers used to define 'Challenge' questions, but they do not describe a test specifically designed to detect data contamination in the benchmark nor report such results.
@@ -132,15 +131,12 @@ verdicts:
     by: model
     quotes_verified: true
   ct.2:
-    value: met
-    rationale: The text mentions the existence of test partitions for the Challenge and Easy sets.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 7, chunk 1
-        quote: Table 6 summarizes the scores obtained by various baseline algorithms on the test partitions of the Challenge and Easy sets.
+    value: unmet
     by: model
+    rationale: The excerpts mention a 'Challenge Set' and 'Easy Set' but do not explicitly state that a private or held-out split exists for ongoing evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.3:
     value: unmet
     rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model to investigate pre-exposure.
@@ -203,18 +199,21 @@ verdicts:
         quote: This suggests the need for a more advanced retrieval strategy for questions that require combining multiple facts
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: unmet
     rationale: The excerpts describe the benchmark as a challenge for the AI community to improve reasoning and text comprehension, but they do not name a specific real-world application linked to the tasks.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.2:
     value: unmet
     rationale: While the text provides an operational definition of a 'Challenge question', it does not provide a quotable statement linking the choice of tasks and each metric to that definition.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: met
     rationale: The benchmark is compared to the bAbI dataset, noting that bAbI's use of synthetic text and a synthetic world limits its realism and difficulty.
@@ -235,7 +234,15 @@ verdicts:
         quote: The result of this is that scores become dominated by the performance of simple algorithms
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - ru.4
+      - ct.2

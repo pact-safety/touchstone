@@ -83,14 +83,10 @@ verdicts:
     by: model
     quotes_verified: true
   c7:
-    value: met
-    rationale: The benchmark is grounded in the current regulatory landscape and uses a process to ensure prompts mimic real-world scenarios and maintain semantic meaning during expansion.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2407.17436v2
-        locator: 2407.17436v2 page 2, chunk 3
-        quote: directly grounded in the current regulatory landscape.
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts describe the creation and generation process but do not show a maintenance process, revision history, or refresh of outdated items to address semantic drift over time.
+    evidence: []
     quotes_verified: true
   r1:
     value: unmet
@@ -105,16 +101,18 @@ verdicts:
     by: model
     quotes_verified: true
   r3:
-    value: met
-    rationale: The benchmark is hosted in a GitHub repository (stanford-crfm/air-bench-2024), which provides an issue tracker for queries, and the project is active as indicated by the 2024 date in the name and recent paper version.
-    evidence:
-      - source: repo
-        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
-        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:LICENSE, chunk 2
-        quote: communication on electronic mailing lists, source code control systems, and issue tracking systems
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts do not provide a named maintainer or a specific contact address for queries related to the deprecated benchmark. While a GitHub repository exists, there is no evidence that an issue tracker is monitored or that maintainers respond to issues.
+    evidence: []
     quotes_verified: true
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 decided by the reviewer."
+    items:
+      - c7
+      - r3

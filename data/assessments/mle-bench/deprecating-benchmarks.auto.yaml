@@ -2,13 +2,15 @@
 benchmark: mle-bench
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v6
   repo_commit: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
@@ -54,16 +56,14 @@ verdicts:
         quote: We have mitigations in place to prevent plagiarism of the top participants’ code or test labels (log analysis and plagiarism detector)
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c3:
-    value: met
-    rationale: The benchmark consists of open-ended machine learning engineering tasks (Kaggle competitions) rather than classification tasks with labels that could be skewed.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 2, chunk 2
-        quote: MLE-bench consists of 75 machine learning engineering tasks manually sourced from Kaggle
+    value: unmet
     by: model
+    rationale: The excerpts do not report the label or answer distribution, nor do they provide a majority-class or trivial baseline score to demonstrate that the benchmark is free of statistical bias.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: unmet
     rationale: The provided excerpts do not contain a cited audit, validation pass, or error analysis reporting a low error rate for the benchmark data labels.
@@ -90,30 +90,21 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c7:
-    value: met
-    rationale: The benchmark uses contemporary Kaggle competitions and there is no evidence provided that the meaning of the tasks or labels has shifted since creation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 1, chunk 2
-        quote: Many of the competitions are contemporary challenges with real-world value
+    value: unmet
     by: model
+    rationale: The decision rule requires the benchmark to state when its content or labels were collected AND show a maintenance process or revision that addresses meaning drift. The excerpts mention that competitions are 'contemporary' and that the team 'manually ported' them, but they do not provide a dated release history, a specific collection date for the labels/content, or a documented maintenance/revision process to address semantic drift over time. The lack of this specific documentation means the condition is not satisfied.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
-    value: met
-    rationale: The benchmark has a version identifier '1.0.0' in its project configuration and mentions a planned 'v2 release' to record changes.
-    evidence:
-      - source: repo
-        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
-        locator: openai/mle-bench@507f92e1138b:pyproject.toml, chunk 0
-        quote: version = "1.0.0"
-      - source: repo
-        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
-        locator: openai/mle-bench@507f92e1138b:README.md, chunk 16
-        quote: we plan to release batched fixes in the upcoming v2 release of MLE-bench
+    value: unmet
     by: model
+    rationale: The excerpts mention a future 'v2 release' and a 'version column' for the leaderboard, but do not show an explicit version identifier (like a DOI or release tag) currently visible alongside the benchmark name in the main references or documentation. The current state is described as 'v1' implicitly by the existence of a future v2, but no specific version string is cited as the current identifier.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r2:
     value: unmet
     rationale: There is no stated plan for archiving artifacts at the end of life, nor is there evidence of a persistent archive like a DOI-backed one.
@@ -121,16 +112,22 @@ verdicts:
     by: model
     quotes_verified: true
   r3:
-    value: met
-    rationale: The benchmark is hosted in a public GitHub repository (openai/mle-bench) which serves as an issue tracker and has been active (as evidenced by the v2 release plan and current versioning).
-    evidence:
-      - source: repo
-        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
-        locator: openai/mle-bench@507f92e1138b:README.md, chunk 16
-        quote: we plan to release batched fixes in the upcoming v2 release of MLE-bench on the [openai/frontier-evals](https://github.com/openai/frontier-evals) repo
+    value: unmet
     by: model
+    rationale: The excerpts do not provide a named maintainer, a specific contact address, or evidence of a monitored issue tracker where maintainers respond to queries. While the repo is on GitHub, no contact information or support channel is explicitly detailed in the provided text.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 4 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c3
+      - c7
+      - r1
+      - r3

@@ -50,6 +50,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1b:
     value: met
     rationale: The benchmark states it uses 'professional-level CTF tasks' and defines difficulty based on human first solve time (FST).
@@ -181,15 +182,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2a:
-    value: met
-    rationale: The benchmark specifies input and output token limits for reported results.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 7, chunk 2
-        quote: agents have a single attempt with a input token limit of 6000 tokens and output token limit of 2000 tokens
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation specifies inference settings such as token limits (input/output) and iteration limits, which serve as the budget/constraints for the reported results."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2b:
     value: unmet
     rationale: While the paper mentions prompts and a format, the exact verbatim prompt text or templates for each item are not provided in the excerpts.
@@ -276,16 +274,14 @@ verdicts:
         quote: Claude 3.5 Sonnet Structured bash 69.01% 73.73% 50.88% Action-only 72.51% 67.74% 49.12% Pseudoterminal 67.25% 72.17% 48.54% Web search 73.68% 67.46% 49.71%
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.1:
-    value: met
-    rationale: The benchmark provides runnable code (run_benchmark.py) and instructions in the README.
-    evidence:
-      - source: repo
-        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
-        locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 6
-        quote: python3 run_benchmark.py --max_iterations 15 --unguided_mode --max_input_tokens 6000 --max_output_tokens 2000 --model openai/gpt-4-turbo-2024-04-09
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark ships runnable evaluation code (run_benchmark.py, run_task.sh) with instructions for querying models, scoring, and logging."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.2:
     value: met
     rationale: The benchmark specifies a required response format and provides logic to parse observations for flags.
@@ -375,25 +371,19 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2D:
-    value: met
-    rationale: The benchmark publishes reference results for several models (Claude 3.5, GPT-4o, etc.) with specific scaffolds.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 31, chunk 1
-        quote: Claude 3.5 Sonnet Structured bash 69.01% 73.73% 50.88%
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark publishes reference results (scores for various models) with the protocol used, allowing evaluators to check their setup."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
-    value: met
-    rationale: The benchmark reports results by subset (e.g., subtask performance vs overall performance).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 31, chunk 0
-        quote: "Table 4: Structured bash agent: Performance comparing subtask submission... and overall subtask success"
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports results by subset (e.g., by scaffold, by model, and implicitly by task category/difficulty in other tables)."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
     value: unmet
     rationale: The provided excerpts do not define a headline metric or the precise method for aggregating item scores.
@@ -417,15 +407,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.2.2:
-    value: met
-    rationale: The file listing shows several completion JSON files for specific tasks (item-level results) in the outputs directory.
-    evidence:
-      - source: repo
-        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
-        locator: andyzorigin/cybench@ca483c6443f1:FILE LISTING, chunk 0
-        quote: agent/outputs/benchmark/1d0b47440190cdaf/[Very Easy] Dynastic_completion.json
+    value: unmet
     by: model
+    rationale: The excerpts do not show that per-item scores for reference runs are published in a downloadable file; they only show example output file paths in a repository listing.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.3:
     value: unmet
     rationale: The excerpts do not report the cost (tokens, money, or time) for the reference runs.
@@ -433,15 +420,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.2.4:
-    value: met
-    rationale: The file listing shows run output JSON files which contain the logs/transcripts of the agent's interactions.
-    evidence:
-      - source: repo
-        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
-        locator: andyzorigin/cybench@ca483c6443f1:FILE LISTING, chunk 0
-        quote: agent/outputs/openai/gpt-4-turbo-2024-04-09/[Very Easy] Dynastic/2024_05_20_18_46_53_run_output.json
+    value: unmet
     by: model
+    rationale: The excerpts do not state that full or representative transcripts from reference runs are downloadable.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2:
     value: met
     rationale: The benchmark provides a validity argument that CTFs are well-established tools to measure cybersecurity skills.
@@ -463,15 +447,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: met
-    rationale: The benchmark uses First Solve Time (FST) as a baseline and describes it as the time it takes the first human team to solve a challenge.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 3, chunk 0
-        quote: We leverage first solve time (FST), the time it takes the first human team to solve a given challenge in a competition
+    value: unmet
     by: model
+    rationale: While a baseline (US AISI/UK AISI) is mentioned, the excerpts do not describe the conditions (tools, time, incentives) under which that baseline was measured in sufficient detail to compare with model runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: unmet
     rationale: The documentation does not explicitly name a conclusion that the scores should not be taken to show.
@@ -479,16 +460,25 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.5:
-    value: met
-    rationale: The benchmark documents limitations regarding the data sources, specifically that CTF tasks are not real-world and have short time spans.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 39, chunk 2
-        quote: In particular, distributionally, the tasks are intended to be solved in a short time span, involve small codebases, and are not real-world
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation includes a section on limitations, noting that tasks are not real-world and have a short time span."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 10 settled by adjudicator-v4."
+    items:
+      - 2.1.2a
+      - 2.2.1
+      - 2.4.2D
+      - 2.4.2E
+      - 3.2.2
+      - 3.2.4
+      - 3.3.3
+      - 3.3.5

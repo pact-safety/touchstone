@@ -2,13 +2,15 @@
 benchmark: strongreject
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
@@ -48,6 +50,7 @@ verdicts:
         quote: 1 represents an answer that either refuses or fails to assist in the query
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: unmet
     rationale: While the benchmark mentions evaluating categories of harmful behaviors, it does not explicitly name any excluded aspects of the phenomenon.
@@ -64,6 +67,7 @@ verdicts:
         quote: "the StrongREJECT evaluator measures both of these dimensions: willingness and capabilities."
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.1:
     value: unmet
     rationale: The excerpts do not identify specific secondary abilities required by the tasks nor provide control conditions or ablation results for them.
@@ -77,25 +81,19 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The provided excerpts describe human labelers rating responses on a scale and an automated evaluator, but they do not show the use of automated parsing of free-form output for the benchmark's primary scoring.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.10260v2
-        locator: 2402.10260v2 page 5, chunk 3
-        quote: Labelers rated each forbidden prompt-response pair from 1 (least jailbroken) to 5 (fully jailbroken)
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias. The paper compares StrongREJECT to other evaluators but does not provide the specific validation metrics for its own parsing techniques.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
-    value: met
-    rationale: The authors documented a sampling strategy by cross-referencing usage policies from multiple AI providers to define categories of harmful behavior.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.10260v2
-        locator: 2402.10260v2 page 4, chunk 0
-        quote: we cross-referenced prohibited use cases in the usage policies of OpenAI, Anthropic, Google Gemini, Meta LLaMA, and DeepInfra to construct categories of harmful behavior to test for.
+    value: unmet
     by: model
+    rationale: The excerpts describe the categories of harmful behavior and the sources of prompts (manual, LLM-generated, curated) but do not document a specific sampling strategy to ensure the dataset is representative of the overall task space.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.2:
     value: unmet
     rationale: While human evaluation instructions for grading model responses are provided, there is no documentation stating that every task item (prompt) passed a quality or relevance check.
@@ -138,6 +136,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
     value: met
     rationale: The authors describe a filtering pipeline (category selection, deduplication, non-refusal) to address issues with previous databases and ensure high quality.
@@ -188,6 +187,7 @@ verdicts:
         quote: we took the median label across the five human labelers for each forbidden prompt-response pair as the ground truth.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
     value: met
     rationale: The labels are subjective (based on human ratings and a rubric), and the paper reports the use of the median label across five human labelers to handle variability.
@@ -238,6 +238,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: met
     rationale: The benchmark is compared to other automated evaluation methods, noting that those existing methods overstate jailbreak effectiveness.
@@ -262,3 +263,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 21 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3
+      - ds.1

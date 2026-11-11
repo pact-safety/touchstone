@@ -40,6 +40,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s1.ii:
     value: met
     rationale: The report provides explicit thresholds for classifying sentiment and gender polarity.
@@ -71,35 +72,26 @@ verdicts:
     by: model
     quotes_verified: true
   s2.ii:
-    value: met
-    rationale: The report describes the item format (classification labels) and the scoring method (unigram matching).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 4, chunk 4
-        quote: Our first gender polarity metric (termed   unigram matching ) counts the total number of male and female specific tokens in the text.
+    value: unmet
     by: model
+    rationale: While item types (e.g., toxicity, gender polarity) and scoring methods (metrics) are described, the specific item format (e.g., multiple choice vs open-ended) is not explicitly defined in the excerpts, and no single excerpt describes both format and scoring method together.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iii:
-    value: met
-    rationale: The report provides annotation guidelines for toxicity and describes the quality control procedure of the source data (Wikipedia).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 12, chunk 5
-        quote: Toxicity annotation guidelines . Determine whether the given text is toxic or not.
+    value: unmet
     by: model
+    rationale: The excerpts describe the creation of metrics and the use of Wikipedia's quality control for data sourcing, but do not describe the creation of grading criteria or quality control measures for the grading process itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iv-a:
-    value: met
-    rationale: The report describes the use of crowd workers for validation samples.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 8, chunk 4
-        quote: ask crowd workers to label each text as conveying positive, negative, or neutral sentiment.
+    value: unmet
     by: model
+    rationale: The excerpts mention using crowd workers for validation but do not describe the grader sample's number or expertise.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iv-b:
     value: met
     rationale: The report describes the process of using an interface in AMT to collect ratings from crowd workers.
@@ -110,6 +102,7 @@ verdicts:
         quote: Example of an interface used to collect crowd-worker ratings in AMT.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iv-c:
     value: unmet
     rationale: There is no mention of an inter-grader agreement figure (e.g., Cohen's Kappa) between human graders.
@@ -183,15 +176,12 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-a:
-    value: met
-    rationale: The report describes the recruitment of crowd workers via AMT and the sample size for the gender polarity validation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 8, chunk 3
-        quote: we collect ratings from crowd workers via AMT
+    value: unmet
     by: model
+    rationale: The excerpts mention using crowd workers for validation but do not describe the human baseline sample or recruitment for a baseline comparison.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
     value: unmet
     rationale: While the report mentions collecting human ratings to validate automatic metrics, it does not provide human performance statistics or describe differences in test conditions between humans and AI.
@@ -219,14 +209,14 @@ verdicts:
     by: model
     quotes_verified: true
   s5.ii-b:
-    value: n/a
-    rationale: A human baseline was used for validation purposes.
+    value: met
+    by: human
+    rationale: The report provides Wikipedia texts as an alternative comparison point to benchmark fairness.
     evidence:
       - source: paper
+        quote: Therefore, we caution users of BOLD against a comparison with Wikipedia sentences as a fair baseline.
+        locator: 2101.11718v1 page 10, chunk 3
         url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 8, chunk 3
-        quote: we collect ratings from crowd workers via AMT
-    by: model
     quotes_verified: true
   s6.i:
     value: unmet
@@ -266,3 +256,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 6 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - s2.ii
+      - s2.iii
+      - s2.iv-a
+      - s5.i-a
+      - s5.ii-b

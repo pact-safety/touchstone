@@ -2,13 +2,15 @@
 benchmark: webarena
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: dce04686a56253aefba7b18a4fa0937cf1dc987b
@@ -108,6 +110,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2c:
     value: n/a
     rationale: The benchmark makes no claim that its scores predict any downstream outcome.
@@ -193,15 +196,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2a:
-    value: met
-    rationale: The benchmark reports results for GPT-3.5-TURBO-16K-0613 using a specific temperature setting.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 17, chunk 1
-        quote: we provide the results of GPT-3.5- TURBO -16 K -0613 with temperature 0.0
+    value: unmet
     by: model
+    rationale: The excerpts mention temperature 0.0 for GPT-3.5 in Table 5, but do not specify inference settings (like temperature or top_p) for all reported results or state that they are left to the evaluator.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2b:
     value: met
     rationale: The paper states that full prompts are available in the appendix.
@@ -242,6 +242,7 @@ verdicts:
         quote: continuously issues the command type [2430] [DMV area] until it reaches the maximum step limit.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2f:
     value: unmet
     rationale: The documentation does not specify the number of allowed submission attempts or the feedback given for incorrect attempts.
@@ -274,22 +275,21 @@ verdicts:
         quote: we manually checked 40 examples and found that 39 of them are identical to our human judgment.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2j:
-    value: met
-    rationale: The benchmark reports results under varied protocol settings, specifically removing a sentence in ablation studies.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 18, chunk 2
-        quote: We remove this sentence in our ablation studies.
+    value: unmet
     by: model
+    rationale: The excerpts do not report results under varied protocol settings (sensitivity analyses).
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.1:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a runnable script (run.py) and instructions for end-to-end evaluation."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.2:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies required formats (e.g., 'In summary...') and provides extraction logic in the prompt constructor."
@@ -359,15 +359,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.1.5:
-    value: met
-    rationale: The benchmark uses a self-hosted Docker environment to control the state and prevent external contamination.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 2, chunk 2
-        quote: We deliver the hosting services using Docker containers
+    value: unmet
     by: model
+    rationale: The excerpts do not document steps against solution contamination or grader gaming, such as internet-access policies or hardened graders.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2C:
     value: met
     rationale: The benchmark documents that human testers (graduate students) attempted the tasks.
@@ -464,7 +461,7 @@ verdicts:
         url: https://arxiv.org/abs/2307.13854v4
         locator: 2307.13854v4 page 16, chunk 0
         quote: this environment reset method, through restarting Docker containers from the original images, will have a non-negligible but small impact on evaluation time
-    by: model
+    by: human
     quotes_verified: true
   3.3.3:
     value: met
@@ -492,3 +489,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 43 verdicts agreed, 7 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 2.1.2a
+      - 2.1.2j
+      - 2.4.1.5

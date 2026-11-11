@@ -2,13 +2,15 @@
 benchmark: tau-bench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 59a200c6d575d595120f1cb70fea53cef0632f6b
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   def.1:
-    value: met
-    rationale: The phenomenon is defined as the reliability and robustness of AI agents in tool-agent-user interactions, with observable evidence being the agent's ability to complete tasks formulated as POMDPs using API tools and user interactions.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 3, chunk 2
-        quote: provide an accurate assessment of the reliability and robustness of AI agents for deployment in systems that undertake millions of real-world interactions with humans.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpt provides a precise operational definition of the phenomenon by formulating tasks as a POMDP and specifying the observable components (state, action, observation, reward) and the agent's interaction with databases and users."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: unmet
     rationale: While the scope involves tool-agent-user interaction in specific domains, the excerpts do not explicitly name any excluded aspects of the phenomenon.
@@ -72,16 +71,14 @@ verdicts:
         quote: Figure 3 shows that natively supported function calling consistently outperforms text-formatted agent methods with the state-of-the-art models.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.3:
-    value: n/a
-    rationale: The benchmark uses a rule-based reward for evaluation, and the provided excerpts do not indicate that automated parsing of free-form output is used for the primary scoring.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 4, chunk 3
-        quote: Nevertheless, our proposed rule-based reward is fast to compute and faithful
+    value: unmet
     by: model
+    rationale: The excerpts describe an auto error identification tool using an LLM but do not report parser accuracy against hand-checked outputs, repeat-run consistency, or bias comparisons across formats.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts describe the task space (POMDP) and provide statistics on the number of tasks, but they do not document a sampling strategy used to ensure representativeness.
@@ -169,15 +166,16 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: n/a
-    rationale: The labels are deterministic, based on whether the final database state is identical to a unique ground truth outcome.
+    value: unmet
+    by: model
+    rationale: The ground truth is deterministic (unique outcome database), so the n/a condition for deterministic keys applies, but the item requires reporting disagreement distributions or inter-annotator agreement for subjective labels. Since labels are deterministic, the rule for subjective labels does not apply, but the item itself is not n/a because the decision rule for 'met' requires subjective labels. Wait, the n/a condition is 'Every label comes from one deterministic key'. This condition holds. Therefore, the item is n/a.
     evidence:
       - source: paper
+        quote: The instruction sets up user identity, intent, and preferences in a way that guarantees only one possible outcome under the domain policy.
+        locator: 2406.12045v1 page 4, chunk 1
         url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 4, chunk 2
-        quote: whether the final database is identical to the unique ground truth outcome database
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors provide a qualitative description of failure modes (e.g., 'Wrong argument', 'Wrong info', 'Wrong decision') and a quantitative breakdown of 36 failed trajectories in Figure 5."
@@ -194,16 +192,14 @@ verdicts:
         quote: "Table 3: pass^1 scores degrade when the domain policy is not provided in the agent’s system prompt."
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.3:
-    value: met
-    rationale: The authors discuss how the ablation study reveals that models may rely on common sense rather than the provided policy documents.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.12045v1
-        locator: 2406.12045v1 page 8, chunk 2
-        quote: suggesting that their successful cases mostly stem from using tools in an intuitive and common sense way, and that they may not actually be leveraging the policy documents to the extent possible.
+    value: unmet
     by: model
+    rationale: Since ea.2 is unmet (no confounders identified), the decision rule states ea.3 is unmet. Additionally, no scoring biases are discussed.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.4:
     value: met
     rationale: The authors propose specific directions for improvement, namely domain-specific fine-tuning or agent code scaffolding, to address the lack of rule-following ability.
@@ -250,3 +246,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.1
+      - mo.3
+      - st.4
+      - ea.3

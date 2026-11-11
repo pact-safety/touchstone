@@ -2,13 +2,15 @@
 benchmark: bbq
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
@@ -84,22 +86,29 @@ verdicts:
         quote: Overall accuracy on BBQ is highest for UnifiedQA with a RACE-style input format at 77.8%
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.3:
-    value: n/a
-    rationale: The benchmark uses multiple-choice tasks where the model's top output is scored by exact match against answer options, rather than parsing free-form output.
+    value: unmet
+    by: model
+    rationale: The paper uses exact match scoring for multiple-choice outputs, not automated parsing of free-form output, so the n/a condition applies. However, the decision rule requires parser accuracy, consistency, and bias comparison to be reported if automated parsing is used. Since no automated parsing is used, the n/a condition is met.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 0
         quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
-    by: model
+        locator: 2110.08193v2 page 6, chunk 0
+        url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
-    value: unmet
-    rationale: The excerpts describe the categories of bias and the template construction, but they do not document a sampling strategy used to ensure the items are representative of the overall task space.
-    evidence: []
+    value: met
     by: model
+    rationale: The excerpts document a sampling strategy where one item from each of the template's four conditions is randomly sampled for validation, ensuring representation across the constructed dataset's conditions.
+    evidence:
+      - source: paper
+        quote: One item from each of the template’s four conditions is randomly sampled from the constructed dataset
+        locator: 2110.08193v2 page 5, chunk 4
+        url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.2:
     value: met
     rationale: The authors describe a validation process where items from each template are rated by annotators, and templates are edited and re-validated until they pass a 4/5 agreement threshold.
@@ -126,18 +135,21 @@ verdicts:
         quote: We introduce the Bias Benchmark for QA (BBQ), a dataset of question sets constructed by the authors
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
     value: unmet
     rationale: While the text mentions adapting nationality labels from UnQover, it does not report the strengths and limitations of that prior work.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
     value: unmet
     rationale: There is no comparison of performance between the new BBQ benchmark and the original datasets from which labels were adapted.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
     value: unmet
     rationale: The text mentions adding regional classifications to adapted nationality labels, but it does not explain how this specific modification improves construct validity.
@@ -148,6 +160,7 @@ verdicts:
         quote: Nationality labels are adapted from the list used by UnQover; we add regional classifications
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The provided excerpts do not describe any contamination tests performed on the benchmark or report their results.
@@ -219,15 +232,12 @@ verdicts:
     by: model
     quotes_verified: true
   ea.3:
-    value: met
-    rationale: The authors discuss scoring biases revealed in the error analysis, specifically noting differences in bias levels across different stereotypes and labels.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 7, chunk 4
-        quote: there are differences among the biases tested, with examples targeting associations to anger and violence showing very low bias and examples targeting criminality, for example, showing higher bias.
+    value: unmet
     by: model
+    rationale: Since ea.2 is met (confounders like context ambiguity and specific stereotypes are shown to correlate with scores), ea.3 is not n/a. However, the excerpts do not discuss specific scoring biases revealed in the error analysis; they only report the bias scores themselves.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.4:
     value: unmet
     rationale: The excerpts do not report any experiments to improve scores, nor do they propose a specific named direction with a rationale; they only state the benchmark is an 'enabling tool' for future work.
@@ -250,6 +260,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: met
     rationale: The benchmark is compared to UnQover, noting that UnQover compares model scores (likelihoods) rather than discrete model outputs.
@@ -274,3 +285,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 19 verdicts agreed, 9 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3
+      - ds.1
+      - ea.3

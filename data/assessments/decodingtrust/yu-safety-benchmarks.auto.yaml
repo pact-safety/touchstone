@@ -2,13 +2,15 @@
 benchmark: decodingtrust
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v5
   repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
@@ -55,15 +57,12 @@ verdicts:
     by: model
     quotes_verified: true
   r1.c:
-    value: met
-    rationale: The benchmark acknowledges that results might not capture the dynamic nature of trustworthiness due to constant model updates.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 108, chunk 1
-        quote: our results might not fully capture the dynamic nature of the trustworthiness of these models
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a sentence stating that passing the benchmark does not guarantee safety against untested or emergent risks. It mentions results might not capture dynamic nature, but not the specific disclaimer required.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1.d:
     value: met
     rationale: The benchmark compares its results to the SoTA model on the AdvGLUE benchmark and notes performance differences.
@@ -104,16 +103,14 @@ verdicts:
         quote: If we include more tasks or find any errors, we will correct the dataset and update the results in the leaderboard accordingly
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r2.d:
-    value: met
-    rationale: The benchmark incorporates evaluations using text-based games (Jiminy Cricket) to evaluate agent behavior in interactive scenarios.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 48, chunk 2
-        quote: The Jiminy Cricket [ 75 ] dataset is originally designed to evaluate an agent’s ability to act morally in text-based games
+    value: unmet
     by: model
+    rationale: The benchmark focuses on single-turn evaluations (classification, text generation) and does not include multi-agent or interactive evaluation settings where emergent risks arise through interaction.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r3.a:
     value: met
     rationale: The benchmark discusses temporal distribution shift as a method for testing robustness, framing it as a challenge for GPT models.
@@ -146,6 +143,7 @@ verdicts:
         quote: Toxicity Probability estimates the empirical frequency of generating toxic language
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r4.b:
     value: unmet
     rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
@@ -153,15 +151,12 @@ verdicts:
     by: model
     quotes_verified: true
   r4.c:
-    value: met
-    rationale: The benchmark identifies that evaluations are based on general-purpose use and that specific user requirements or contexts may differ, limiting generalization.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 62, chunk 2
-        quote: Our evaluations here are based on general purpose, and sometimes users would have specific safety or trustworthiness requirements
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly name specific factors limiting generalization such as limited prompt diversity or missing user context in the context of reporting limitations.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r5.a:
     value: unmet
     rationale: While the benchmark mentions severity levels (minor, moderate, great), it does not cite a source to justify the scale.
@@ -195,15 +190,12 @@ verdicts:
     by: model
     quotes_verified: true
   r6.b:
-    value: n/a
-    rationale: The scoring described uses automated tools (Perspective API) or programmatic checks (accuracy, leakage rates) rather than human or LLM judges.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 12, chunk 2
-        quote: We use Perspective API, an online automated model for toxic language and hate speech detection.
+    value: unmet
     by: model
+    rationale: The excerpts do not report an inter-rater agreement statistic (e.g., Cohen’s κ) for human or LLM judges; they rely on automated metrics like Perspective API.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r6.c:
     value: unmet
     rationale: The benchmark reports variance across random seeds (for toxicity), but does not report variance across all three required dimensions (seeds, rephrasings, and evaluator versions).
@@ -232,6 +224,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.c:
     value: met
     rationale: The benchmark acknowledges that perspectives like toxicity and stereotype bias involve subjectivity.
@@ -248,6 +241,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r8.a:
     value: unmet
     rationale: While it records the interface (API), model versions, and mentions parameters like temperature, it does not provide the specific system prompt used for all reported runs in the excerpts.
@@ -281,15 +275,12 @@ verdicts:
     by: model
     quotes_verified: true
   r9.a:
-    value: met
-    rationale: The benchmark states prompts are from standard benchmarks, manually designed, or LLM-generated, and reports toxicity comparisons for synthetic prompts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 18, chunk 0
-        quote: "Table 4: Prompt toxicity comparison in terms of average toxicity and their corresponding toxic range."
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark states that prompts are sourced from standard benchmarks (real user logs) and LLM-generated prompts, and validates the latter."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.b:
     value: met
     rationale: The benchmark states that evaluating on language translations is insufficient as real-world styles are more complex, identifying a limitation.
@@ -344,3 +335,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 28 verdicts agreed, 9 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r1.c
+      - r2.d
+      - r4.c
+      - r6.b
+      - r9.a

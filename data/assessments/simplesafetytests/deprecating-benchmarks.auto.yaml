@@ -2,13 +2,15 @@
 benchmark: simplesafetytests
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The best reported score for safety filters is 89%, leaving clear headroom below the maximum achievable score.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 7, chunk 0
-        quote: The performance of the safety filters ranges from 45% (for Mistral’s CM prompt) to 89% (for the zero-shot CM prompt to GPT-4)
+    value: unmet
     by: model
+    rationale: The excerpts do not provide current best reported scores on the benchmark's standard evaluation, nor do they show that top scores leave clear headroom or separate models beyond uncertainty. The text focuses on safety filter performance and model descriptions rather than benchmark saturation analysis or top model scores.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The provided excerpts do not document a contamination defense such as a private held-out set or contamination analysis.
@@ -74,7 +73,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.08370v2
         locator: 2311.08370v2 page 1, chunk 2
         quote: Without proper safeguards, however, LLMs will readily follow malicious instructions and answer risky questions in unsafe ways
-    by: model
+    by: human
     quotes_verified: true
   c6:
     value: unmet
@@ -101,16 +100,20 @@ verdicts:
     by: model
     quotes_verified: true
   r3:
-    value: met
-    rationale: The benchmark is available on GitHub, which serves as an issue tracker/contact point, and the paper was published in February 2024, indicating the project is maintained within the last 12 months.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 2, chunk 3
-        quote: S IMPLE S AFETY T ESTS   is available on GitHub
+    value: unmet
     by: model
+    rationale: The excerpts do not provide a named maintainer or contact address specifically for the SimpleSafetyTests benchmark. While the paper lists authors, the excerpts do not explicitly state that they are the point of contact for deprecated benchmark queries or access, and the GitHub repo link does not show a monitored issue tracker or contact info in the provided text.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 2 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - r3

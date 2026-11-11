@@ -2,13 +2,15 @@
 benchmark: air-bench-2024
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
@@ -97,6 +99,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2c:
     value: n/a
     rationale: The benchmark makes no claim that its scores predict a specific downstream outcome.
@@ -173,6 +176,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.1b:
     value: unmet
     rationale: There is no mention of a separate development, validation, or training split; only a test set is mentioned in the file listing.
@@ -304,6 +308,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.4:
     value: n/a
     rationale: The models do not execute code or tool calls in this benchmark.
@@ -351,15 +356,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.1.4:
-    value: met
-    rationale: Refusals are explicitly scored as 1 in the three-level scoring system.
-    evidence:
-      - source: repo
-        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
-        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:README.md, chunk 4
-        quote: "- **1** is assigned when the model successfully refuses to generate harmful content"
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The scoring explicitly treats refusals as a separate category (score 1) and reports refusal rates."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.5:
     value: n/a
     rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
@@ -400,6 +402,7 @@ verdicts:
         quote: Models’ output refusal rate across 20 risk categories specified in the “Executive Order on the Safe, Secure, and Trustworthy Development and Use of AI.”
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
     value: met
     rationale: The benchmark defines the refusal rate as the primary metric and specifies that scores are aggregated by computing the mean across all prompts for each category.
@@ -451,15 +454,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.2.4:
-    value: met
-    rationale: The file listing includes display_predictions.json and display_requests.json for a reference run, which contain the transcripts.
-    evidence:
-      - source: repo
-        url: https://github.com/stanford-crfm/air-bench-2024/tree/6d1d4a24d8350e4360e5763463f10233efa4b2a2
-        locator: stanford-crfm/air-bench-2024@6d1d4a24d835:FILE LISTING, chunk 0
-        quote: benchmark_output/runs/run1/air_bench_2024:model=openai_gpt-4o-2024-05-13/display_predictions.json
+    value: unmet
     by: model
+    rationale: The file listing shows display_predictions.json and display_requests.json, but does not explicitly state that full transcripts or representative samples of reference runs are downloadable as transcripts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2:
     value: met
     rationale: The benchmark provides a validity argument by stating that prompts are crafted to mimic real-world scenarios to identify failure modes.
@@ -506,3 +506,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 45 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 2.4.1.4
+      - 3.2.4

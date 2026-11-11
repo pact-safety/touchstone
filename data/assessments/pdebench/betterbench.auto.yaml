@@ -35,16 +35,29 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   des.01:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark defines the general learning problem as approximating solutions to PDEs, which are vector-valued functions."
-    evidence: []
+    value: 15
     by: model
+    rationale: The benchmark explicitly defines the tested capabilities as solving Partial Differential Equations (PDEs) and performing inverse problems, providing specific mathematical formulations for the equations involved.
+    evidence:
+      - source: paper
+        quote: "The basic PDEs are stylized, simple models: 1D advection/Burgers/Diffusion-Reaction/Diffusion-Sorption equations, 2D Diffusion-Reaction equation, and 2D DarcyFlow"
+        locator: 2210.07182v7 page 5, chunk 1
+        url: https://arxiv.org/abs/2210.07182v7
+      - source: paper
+        quote: We additionally consider inverse problems for PDEs [ 53 , 56 ], with the goal to identify unobserved latent parameters using ML.
+        locator: 2210.07182v7 page 3, chunk 1
+        url: https://arxiv.org/abs/2210.07182v7
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.02:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark describes how the capability of simulating physical systems translates to tasks like forward and inverse problems using specific PDEs."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The document describes how the PDEs (capability) translate to benchmark tasks by defining forward problems (simulation) and inverse problems (parameter identification) with specific metrics and data structures.
+    evidence:
+      - source: paper
+        quote: To evaluate ML methods for scientific problems, we consider several metrics that go beyond the standard RMSE and include properties of the underlying physics.
+        locator: 2210.07182v7 page 3, chunk 0
+        url: https://arxiv.org/abs/2210.07182v7
     quotes_verified: true
   des.03:
     value: 15
@@ -57,14 +70,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 10
-    rationale: The authors describe why standard RMSE is not a good proxy for evaluation in certain regimes, providing guidance on interpretation.
+    value: 15
+    by: human
+    rationale: The document explicitly states that standard error measures like RMSE are not good proxies for evaluation in turbulent regimes, guiding users on how to interpret scores.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2210.07182v7
+        quote: The results show that the standard error measure in ML, the RMSE on test data, is not a good proxy for evaluating ML models, in particular in turbulent and non-smooth regimes where it fails to capture small spatial scale changes.
         locator: 2210.07182v7 page 3, chunk 0
-        quote: the standard error measure in ML, the RMSE on test data, is not a good proxy for evaluating ML models, in particular in turbulent and non-smooth regimes
-    by: model
+        url: https://arxiv.org/abs/2210.07182v7
     quotes_verified: true
   des.05:
     value: 0
@@ -73,10 +86,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.06:
-    value: 0
-    rationale: The excerpts do not describe specific use cases or user personas.
-    evidence: []
-    by: model
+    value: 10
+    by: human
+    rationale: The document describes use cases such as developing ML models for fitting out-of-distribution data and testing baselines, but does not describe specific user personas.
+    evidence:
+      - source: paper
+        quote: The dataset could possibly be used for developing or testing ML models for fitting the out-of-distribution data, such as unseen physical parameters.
+        locator: 2210.07182v7 page 48, chunk 0
+        url: https://arxiv.org/abs/2210.07182v7
     quotes_verified: true
   des.07:
     value: 15
@@ -132,6 +149,7 @@ verdicts:
         quote: Of these, the excellent work of [ 44 ] is most closely related, but with only four physical systems, it still lacks sufficient scale and diversity of data
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.14:
     value: 15
     rationale: The benchmark specifically includes PDEs that exhibit sensitive dependence on initial conditions to challenge models.
@@ -176,6 +194,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.04:
     value: 15
     rationale: The benchmark provides scripts to train and evaluate models locally using PyTorch and other libraries.
@@ -242,6 +261,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.01:
     value: 0
     rationale: The excerpts do not mention a requirements file (e.g., requirements.txt).
@@ -249,14 +269,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.02:
-    value: 10
-    rationale: The paper mentions providing an 'easy on-ramp' and the repo provides a 'Directory Tour', but a formal quick-start guide is not explicitly shown.
+    value: 15
+    by: human
+    rationale: The README and paper provide a quick-start guide with code snippets for loading data and using the API.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2210.07182v7
-        locator: 2210.07182v7 page 2, chunk 3
-        quote: providing an easy on-ramp to be extended
-    by: model
+      - source: repo
+        quote: This repository consists of the code used to generate the datasets, to upload and download the datasets from the data repository, as well as to train and evaluate different machine learning models as baselines.
+        locator: pdebench/PDEBench@4ff3e3a4aa15:README.md, chunk 0
+        url: https://github.com/pdebench/PDEBench/tree/4ff3e3a4aa1561721b5571fa3a048a0a463e0568
     quotes_verified: true
   doc.03:
     value: 0
@@ -282,7 +302,7 @@ verdicts:
         url: https://github.com/pdebench/PDEBench/tree/4ff3e3a4aa1561721b5571fa3a048a0a463e0568
         locator: pdebench/PDEBench@4ff3e3a4aa15:README.md, chunk 0
         quote: The code repository for the NeurIPS 2022 paper
-    by: model
+    by: human
     quotes_verified: true
   doc.06:
     value: 15
@@ -384,7 +404,7 @@ verdicts:
         url: https://arxiv.org/abs/2210.07182v7
         locator: 2210.07182v7 page 47, chunk 2
         quote: At most we rejected meaningless solutions because of the failure of numerical simulations
-    by: model
+    by: human
     quotes_verified: true
   doc.17:
     value: 0
@@ -400,7 +420,7 @@ verdicts:
         url: https://arxiv.org/abs/2210.07182v7
         locator: 2210.07182v7 page 45, chunk 0
         quote: The datasets that we provide are intended to be representative of challenging physical systems.
-    by: model
+    by: human
     quotes_verified: true
   doc.19:
     value: 15
@@ -442,3 +462,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 4 settled by adjudicator-v4, 7 decided by the reviewer."
+    items:
+      - des.01
+      - des.02
+      - des.04
+      - des.06
+      - doc.02

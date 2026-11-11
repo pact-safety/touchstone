@@ -2,13 +2,15 @@
 benchmark: machiavelli
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The paper explicitly states that there is still a significant gap between current model performance and optimal performance.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 8, chunk 2
-        quote: Overall, there is still an appreciable gap between current models and agents which optimally navigate the trade-off
+    value: unmet
     by: model
+    rationale: The excerpts do not provide current best reported scores on a standard evaluation that leave clear headroom, nor do they provide a source showing score differences separate top models beyond uncertainty. The provided tables show specific agent variants (e.g., DRRN, GPT-4) but do not establish a 'current best' ceiling or saturation analysis for the benchmark as a whole.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The provided excerpts do not document a contamination defense such as a private held-out set or contamination analysis.
@@ -51,25 +50,23 @@ verdicts:
     by: model
     quotes_verified: true
   c3:
-    value: met
-    rationale: The benchmark reports the distribution of points (labels) and notes that the majority (76.7%) do not conflict with moral behavior, providing the required distribution data.
+    value: unmet
+    by: model
+    rationale: While the excerpts report that 76.7% of points do not conflict with moral behavior, they do not report a balanced label distribution or a trivial baseline score that is well below capable performance. The distribution is skewed (majority class is 'not in conflict'), and no trivial baseline is provided to show that exploiting this imbalance does not yield high scores.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 7, chunk 3
         quote: The majority of the points (76.7%) in the games do not inherently conflict with moral behavior
-    by: model
-    quotes_verified: true
-  c4:
-    value: met
-    rationale: The benchmark includes a quality review comparing model labels against expert and crowdworker labels, finding that the final 'model+' labels surpass crowd ensemble labels in 16/18 categories.
-    evidence:
-      - source: paper
+        locator: 2304.03279v4 page 7, chunk 3
         url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 18, chunk 1
-        quote: Our final   model+   labels surpass   crowd ens   labels in 16/18 label categories.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  c4:
+    value: unmet
+    by: model
+    rationale: The excerpts describe the annotation process and compare model labels to human labels, but they do not provide a specific error rate or an audit report confirming a 'low error rate' or the absence of 'substantial annotation errors'. Without a cited audit or error analysis reporting a low error rate, the condition is not met.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c5:
     value: met
     rationale: The benchmark defines its purpose as measuring an agent's ability to navigate complex trade-offs in social environments, a capability that remains current for the models evaluated.
@@ -87,15 +84,12 @@ verdicts:
     by: model
     quotes_verified: true
   c7:
-    value: met
-    rationale: The benchmark's content is based on human-written games and automated labels, and there is no evidence provided that the meaning of these labels or tasks has shifted over time.
-    evidence:
-      - source: repo
-        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
-        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
-        quote: Our environment is based on human-written, text-based Choose-Your-Own-Adventure games
+    value: unmet
     by: model
+    rationale: The excerpts do not show a maintenance process, revision history, or evidence that the meaning of labels has been checked for drift over time. The benchmark appears static with no cited source showing it addresses meaning drift.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: unmet
     rationale: The provided excerpts do not show an explicit version identifier (like a release tag or DOI) visible alongside the benchmark name in its main references.
@@ -109,16 +103,23 @@ verdicts:
     by: model
     quotes_verified: true
   r3:
-    value: met
-    rationale: The benchmark provides a GitHub repository which serves as an issue tracker and point of contact, and the repository contains recent commit hashes (e.g., ebb44e197f66).
-    evidence:
-      - source: repo
-        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
-        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 0
-        quote: git clone git@github.com:aypan17/machiavelli.git
+    value: unmet
     by: model
+    rationale: The excerpts do not provide a named maintainer or a specific contact address for queries related to the deprecated benchmark. While a GitHub repository is mentioned, there is no evidence in the excerpts that an issue tracker is monitored or that a specific point of contact is published for authorized access or queries.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 5 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - c3
+      - c4
+      - c7
+      - r3

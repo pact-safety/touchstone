@@ -49,25 +49,27 @@ verdicts:
     by: model
     quotes_verified: true
   iv.03:
-    value: met
-    rationale: The prompt template is referenced, sampling settings (temperature 0, max tokens 4096) are provided, and the harness is described as a simple while loop.
+    value: unmet
+    by: model
+    rationale: While sampling settings and some prompts are mentioned, the full prompt template is not provided in the excerpts (only referenced as being in Appendix B), and the harness/scaffold version is not explicitly stated.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2410.09024v3
+        quote: Unless otherwise specified, we use temperature 0 with up to 4096 generated output tokens.
         locator: 2410.09024v3 page 6, chunk 3
-        quote: we use temperature 0 with up to 4096 generated output tokens
-    by: model
-    quotes_verified: true
-  iv.04:
-    value: met
-    rationale: The benchmark uses a chat-only version of the dataset as a control to compare refusal rates against the agentic setting.
-    evidence:
-      - source: paper
         url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 17, chunk 0
-        quote: We observe that the refusal rates systematically increase for chat-only tasks compared to agent tasks.
-    by: model
+      - source: paper
+        quote: see Table 4 in Appendix B for the full system prompt
+        locator: 2410.09024v3 page 7, chunk 0
+        url: https://arxiv.org/abs/2410.09024v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  iv.04:
+    value: unmet
+    by: model
+    rationale: The excerpts do not describe any specific controls for confounding variables or spurious correlations, such as answer-position balancing or prompt-format perturbation.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.05:
     value: met
     rationale: The benchmark implements both a canary string and a private test set to prevent contamination.
@@ -121,14 +123,14 @@ verdicts:
     by: model
     quotes_verified: true
   iv.11:
-    value: met
-    rationale: The paper describes that items were written by hand and reviewed by separate human reviewers.
+    value: unmet
+    by: human
+    rationale: While item creation (human-written) and review are mentioned, the excerpts do not describe how the benchmark is versioned, maintained, or how items are retired.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2410.09024v3
+        quote: Instead, we write all questions by hand and review every question with a separate human reviewer who did not write the question.
         locator: 2410.09024v3 page 6, chunk 2
-        quote: we write all questions by hand and review every question with a separate human reviewer
-    by: model
+        url: https://arxiv.org/abs/2410.09024v3
     quotes_verified: true
   ev.01:
     value: met
@@ -172,7 +174,7 @@ verdicts:
         url: https://arxiv.org/abs/2410.09024v3
         locator: 2410.09024v3 page 8, chunk 2
         quote: Mistral demonstrates notably higher variability in its responses, with a standard deviation of ±8.5%
-    by: model
+    by: human
     quotes_verified: true
   rp.02:
     value: met
@@ -213,26 +215,37 @@ verdicts:
     by: model
     quotes_verified: true
   rp.07:
-    value: met
-    rationale: The authors release the specific jailbreak template and system prompts used to query the models.
+    value: unmet
+    by: model
+    rationale: The excerpts describe the jailbreak template and system prompts but refer to appendices for full details. They do not explicitly state that the prompts and scaffolding are released in a repository, only that the benchmark is released.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2410.09024v3
+        quote: We use the rule-based jailbreak template from Andriushchenko et al. (2025)
         locator: 2410.09024v3 page 7, chunk 1
-        quote: We use the rule-based jailbreak template from Andriushchenko et al. (2025), with minor modification to adapt it to the agentic setting
-    by: model
+        url: https://arxiv.org/abs/2410.09024v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.08:
-    value: met
-    rationale: The harness runs models through public APIs (OpenAI, Anthropic, Google) and is built on the Inspect framework.
+    value: unmet
+    by: model
+    rationale: The benchmark uses synthetic tools implemented in the Inspect framework, not public APIs or open weights directly for the tool execution part. It does not state that the harness is built on or exported to a named public evaluation framework standard format for external use.
     evidence:
       - source: paper
+        quote: We use synthetic tools for all tasks, implemented using Inspect
+        locator: 2410.09024v3 page 5, chunk 1
         url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 7, chunk 1
-        quote: "We evaluate a range of leading LLMs. See Appendix B for more details. •   OpenAI : GPT-3.5-Turbo, GPT-4o mini, and GPT-4o."
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 4 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - iv.03
+      - iv.04
+      - iv.11
+      - rp.07
+      - rp.08

@@ -2,13 +2,15 @@
 benchmark: jailbreakbench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v5
   repo_commit: 23dbdf6b19650521604456229bc1d9c4156c85c1
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   def.1:
-    value: met
-    rationale: The benchmark uses a judge classifier to determine if a response is a valid jailbreak, and the provided output example shows a boolean 'jailbroken' field as the observable evidence.
-    evidence:
-      - source: repo
-        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
-        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 4
-        quote: jailbroken=True
+    value: unmet
     by: model
+    rationale: The excerpts state that 'there is no standardized definition of a valid jailbreak' and that evaluation techniques vary (human labeling, rule-based, etc.). While it mentions using Llama-3-70B as a judge to track attack success rate, it does not provide a precise, operational definition of the phenomenon itself within the provided text, instead highlighting the lack of standardization.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: unmet
     rationale: While the benchmark mentions focusing on state-of-the-art adaptive attacks and defenses, it does not explicitly name any excluded aspects of the phenomenon.
@@ -69,15 +68,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses LLM-based classifiers (Llama-3-70B) to determine if an output is a jailbreak, which is a classification task rather than automated parsing of free-form output into structured data.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 6, chunk 2
-        quote: we choose Llama-3-70B as the classifier in our benchmark
+    value: unmet
     by: model
+    rationale: The excerpts describe using a classifier (Llama-3-70B) but do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: met
     rationale: The authors describe a curation process to ensure the dataset covers a diverse and balanced span of categories to be representative of misuse.
@@ -89,15 +85,16 @@ verdicts:
     by: model
     quotes_verified: true
   ds.2:
-    value: met
-    rationale: The authors document a data processing step to ensure behaviors are unique and uniformly distributed across misuse categories.
+    value: unmet
+    by: model
+    rationale: The excerpts do not document a quality or relevance check passed by every item; they only mention ensuring behaviors are unique and uniformly distributed.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
+        quote: We ensure that the behaviors are unique and uniformly distributes across the categories
         locator: 2404.01318v5 page 24, chunk 1
-        quote: We ensure that the behaviors are unique and uniformly distributes across the categories of misuse
-    by: model
+        url: https://arxiv.org/abs/2404.01318v5
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: While the paper mentions using perturbations for a specific defense (SmoothLLM), it does not document a counted subset of permuted task items with results reported separately from the main score.
@@ -180,16 +177,14 @@ verdicts:
         quote: We use the majority vote of three expert annotators as the ground truth label.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
-    value: met
-    rationale: The labels are subjective (model ratings/human ratings), and the paper reports an inter-annotator agreement statistic for the human experts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 6, chunk 1
-        quote: Three experts labeled each prompt-response pair, and the agreement between them was approximately 95%.
+    value: unmet
     by: model
+    rationale: While the paper reports inter-annotator agreement for judge selection, the primary benchmark scores (ASR) are single-point aggregations (percentages) without per-item disagreement distributions or inter-annotator statistics for the main results.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: The excerpts do not provide a qualitative description of common failure modes nor a count of them.
@@ -206,6 +201,7 @@ verdicts:
         quote: In Table 5, we record the attack success rates of PAIR, GCG, and JBC with respect to the three sources which were used to curate JBB-Behaviors
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.3:
     value: unmet
     rationale: While ea.2 was met, the excerpts do not show a discussion of scoring biases revealed by this analysis.
@@ -213,15 +209,12 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors propose a specific direction for improving model resilience by fine-tuning on jailbreak strings.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 9, chunk 2
-        quote: a promising approach to making LLMs more resilient to jailbreaking attacks is to fine-tune them on jailbreak strings
+    value: unmet
     by: model
+    rationale: The excerpts mention that the benchmark facilitates the development of adaptive algorithms and that users can submit defenses, but they do not report any specific experiment conducted by the authors to improve model scores, nor do they propose a specific named direction with a stated rationale for improvement.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark is linked to the real-world application of testing the robustness of LLMs and their defenses against jailbreak attacks.
@@ -262,3 +255,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 21 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.1
+      - mo.3
+      - ds.2
+      - st.4
+      - ea.4

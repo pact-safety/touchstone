@@ -69,11 +69,16 @@ verdicts:
     by: model
     quotes_verified: true
   r1.d:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark compares itself to UnQover, noting a difference in evaluation method (model outputs vs. likelihoods)."
-    evidence: []
+    value: met
     by: model
+    rationale: The benchmark compares its coverage and method against the prior benchmark UnQover, stating a difference in evaluation method (outputs vs likelihoods).
+    evidence:
+      - source: paper
+        quote: By shifting from measuring likelihoods (as UnQover does) to measuring model outputs, BBQ uses a stricter definition of what counts as biased model behavior.
+        locator: 2110.08193v2 page 10, chunk 0
+        url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r2.a:
     value: unmet
     rationale: The excerpts do not describe a mechanism for discovering novel risks outside the existing categories.
@@ -118,6 +123,7 @@ verdicts:
         quote: we edit any templates that fail human validation (i.e., ones on which fewer than 4/5 annotators agree with our assigned gold label)
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r3.c:
     value: unmet
     rationale: There is no mention of contamination detection or a stated temporal validity period for the evaluation set.
@@ -125,15 +131,12 @@ verdicts:
     by: model
     quotes_verified: true
   r4.a:
-    value: met
-    rationale: The benchmark reports results as a 'Rate of choosing (%)'.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 9, chunk 0
-        quote: Rate of choosing (%)
+    value: unmet
     by: model
+    rationale: The benchmark reports 'bias scores' and 'accuracy' but does not explicitly label results as 'observed rate' or 'failure frequency' as required. While it mentions 'rate of choosing' in one table, it does not consistently use these terms for main metrics, nor does it reserve 'probability' for calibrated estimates.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r4.b:
     value: unmet
     rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
@@ -151,15 +154,12 @@ verdicts:
     by: model
     quotes_verified: true
   r5.a:
-    value: met
-    rationale: The benchmark cites the US Equal Employment Opportunities Commission (EEOC, 2021) as a source for its demographic categories.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 4, chunk 1
-        quote: mostly taken from the protected demographic categories defined by the US Equal Employment Opportunities Commission (EEOC, 2021)
+    value: unmet
     by: model
+    rationale: The benchmark does not cite a source for its severity scale levels. It defines bias based on stereotype reinforcement and attribution but does not provide a principled severity scale with cited sources for weighting.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r5.b:
     value: unmet
     rationale: The excerpts do not state whether severity levels are equally spaced, follow a power law, or have catastrophic thresholds.
@@ -201,10 +201,18 @@ verdicts:
     by: model
     quotes_verified: true
   r7.a:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark targets representational harms and provides an operational definition based on Crawford (2017)."
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: The benchmark provides operational definitions for bias, specifically defining it as 'representational harms' and specifying that bias is measured by the percent of non-UNKNOWN outputs that align with a social bias.
+    evidence:
+      - source: paper
+        quote: In defining bias for this study, our design aligns most closely with the definition of representational harms by Crawford (2017) as harms that “occur when systems reinforce the subordination of some groups along the lines of identity.”
+        locator: 2110.08193v2 page 3, chunk 1
+        url: https://arxiv.org/abs/2110.08193v2
+      - source: paper
+        quote: The bias score reflects the percent of non- UNKNOWN outputs that align with a social bias.
+        locator: 2110.08193v2 page 6, chunk 1
+        url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
   r7.b:
     value: unmet
@@ -213,15 +221,12 @@ verdicts:
     by: model
     quotes_verified: true
   r7.c:
-    value: met
-    rationale: The authors explicitly acknowledge that there are many conflicting ways bias is defined in NLP.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 1, chunk 3
-        quote: There are many, often conflicting, ways bias is defined in NLP (Blodgett et al., 2020)
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly name any contested normative choices in the harm definitions as contested. While it mentions limitations, it does not frame the definition choices themselves as contested normative decisions.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.d:
     value: met
     rationale: The benchmark explains that its measured behavior (stereotype reinforcement/attribution) relates to the real-world risk of harming marginalized groups.
@@ -281,15 +286,16 @@ verdicts:
     by: model
     quotes_verified: true
   r9.c:
-    value: n/a
-    rationale: The benchmark targets social biases in QA outputs based on short contexts, which does not emerge over extended multi-turn interaction.
+    value: unmet
+    by: model
+    rationale: The benchmark evaluates single-turn question-answering scenarios, not multi-turn interactions.
     evidence:
       - source: paper
+        quote: Each example is presented as a multiple-choice question with three choices.
+        locator: 2110.08193v2 page 1, chunk 2
         url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 9, chunk 3
-        quote: BBQ allows us to make conclusions about model behavior given very short contexts
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.d:
     value: n/a
     rationale: The dataset was hand-built by authors using templates, not collected from in-the-wild user logs constrained by privacy.
@@ -328,3 +334,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 6 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - r1.d
+      - r4.a
+      - r5.a
+      - r7.a
+      - r7.c
+      - r9.c

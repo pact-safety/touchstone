@@ -246,7 +246,7 @@ verdicts:
     value: 0
     rationale: While the dataset license is mentioned, there are no specified release requirements for the benchmark itself.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   doc.01:
     value: 15
@@ -296,6 +296,7 @@ verdicts:
         quote: The detailed construction of the AdvGLUE dataset is shown in Table 39 in Appendix C.1.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.07:
     value: 15
     rationale: The paper documents test tasks and their rationales, such as the use of RealtimeQA for OOD evaluation.
@@ -307,10 +308,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.08:
-    value: 0
-    rationale: The excerpts do not document assumptions of normative properties.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The paper documents assumptions regarding normative properties, such as the definition of in-distribution vs OOD data and the handling of subjectivity in trustworthiness metrics.
+    evidence:
+      - source: paper
+        quote: Therefore, under this context, we define knowledge included in the training data (before a specific time) as in-distribution and those after the specific time as OOD.
+        locator: 2306.11698v5 page 29, chunk 2
+        url: https://arxiv.org/abs/2306.11698v5
     quotes_verified: true
   doc.09:
     value: 15
@@ -347,6 +352,7 @@ verdicts:
           classifying different scenarios in the testing set) as the evaluation metric.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.12:
     value: 15
     rationale: The dataset is specified to be distributed under the CC BY-SA 4.0 license.
@@ -445,3 +451,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - doc.08

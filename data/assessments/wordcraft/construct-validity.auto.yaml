@@ -2,13 +2,15 @@
 benchmark: wordcraft
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
@@ -45,11 +47,16 @@ verdicts:
     by: model
     quotes_verified: true
   def.2:
-    value: unmet
-    rationale: While the scope is described as a simplified version of Little Alchemy 2, the text does not name any specific excluded aspects of the phenomenon.
-    evidence: []
+    value: met
     by: model
+    rationale: The scope is stated as a text-based environment based on Little Alchemy 2, and excluded aspects are acknowledged, such as the graphical interface and the open-ended nature of the original game.
+    evidence:
+      - source: paper
+        quote: "WordCraft is a simplified version of Little Alchemy 2, sharing the same entities and valid recipes: First, the interface is text-based rather than graphical. Second, instead of a single open-ended task, WordCraft consists of a large number of simpler tasks."
+        locator: 2007.09185v1 page 2, chunk 3
+        url: https://arxiv.org/abs/2007.09185v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: unmet
     rationale: The paper does not identify sub-components of the phenomenon nor does it explicitly state that the phenomenon is unitary.
@@ -172,16 +179,18 @@ verdicts:
         quote: We also collect a human baseline at the same difficulty settings of WordCraft.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
-    value: n/a
-    rationale: The labels are based on a deterministic recipe graph (valid recipes), which constitutes a deterministic key.
+    value: unmet
+    by: model
+    rationale: "The benchmark uses deterministic recipes (exact answers) as the ground truth for success, so subjective labels are not used. However, the item requires reporting inter-annotator agreement or disagreement distributions for subjective labels, which are not applicable here, but the rule for 'met' requires such stats if labels are subjective. Since labels are deterministic, the n/a condition applies, but the prompt asks to decide based on the rule. Wait, st.4 n/a is 'Every label comes from one deterministic key'. WordCraft success is deterministic (recipe exists or not). Thus st.4 is n/a. Let me re-read st.4 n/a condition: 'Every label comes from one deterministic key (exact answer, test suite or state check); rubric, preference, human and model ratings are subjective.' WordCraft is a test suite/state check. So st.4 is n/a."
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
+        quote: Each non-starter item can be created by combining two other items. For example, combining “moon” and “butterfly” yields “moth”
         locator: 2007.09185v1 page 2, chunk 2
-        quote: 3,417 permissible item combinations (referred to as valid recipes throughout this paper)
-    by: model
+        url: https://arxiv.org/abs/2007.09185v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: The provided excerpts do not contain a qualitative or quantitative analysis of common failure modes, nor do they count them.
@@ -201,15 +210,16 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors report experiments using different embeddings and Knowledge Graph (KG) models to improve zero-shot success rates.
+    value: unmet
+    by: model
+    rationale: The 'Future Work' section lists generic directions (extending to longer horizon, introducing modalities) without reporting any specific experiment aimed at improving scores or providing a specific named direction with a stated rationale for improvement.
     evidence:
       - source: paper
+        quote: There are multiple avenues that we plan to further explore. Extending WordCraft to the longer horizon setting... We also plan to introduce additional modalities such as images and control into WordCraft.
+        locator: 2007.09185v1 page 4, chunk 3
         url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 4, chunk 1
-        quote: We benchmark variants of our full agent with the link prediction module and compare zero-shot performance under different combinations of link prediction scores
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The text identifies personal assistants and household robots as real-world applications that require the capabilities (fast learning and generalization) the benchmark aims to enable.
@@ -232,13 +242,23 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.4:
     value: unmet
     rationale: The excerpts do not discuss limitations or design trade-offs specifically concerning what the scores do or do not measure regarding construct validity.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.2
+      - st.4
+      - ea.4

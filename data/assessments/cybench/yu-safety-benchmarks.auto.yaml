@@ -2,13 +2,15 @@
 benchmark: cybench
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
@@ -35,25 +37,19 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   r1.a:
-    value: met
-    rationale: The benchmark identifies cybersecurity risk categories (CTF categories) and specifies the performance metrics for unguided and subtask modes.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 2, chunk 3
-        quote: "CTF challenges, which span six categories: cryptography, web security, reverse engineering, forensics, exploitation, and other miscellaneous skills"
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly list the risk types evaluated (e.g., toxicity, bias) nor do they state the specific metrics or methods used to measure each distinct risk type in a comprehensive manner required by the rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1.b:
-    value: met
-    rationale: The benchmark documents excluded tools (decompilers) and deployment assumptions regarding memory and iterations.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 39, chunk 0
-        quote: we do not explore cybersecurity-specific tool-use such as decompilers, and we run a limited number of iterations
+    value: unmet
     by: model
+    rationale: While the benchmark mentions it focuses on professional-level tasks and recent competitions, it does not explicitly document excluded risks (e.g., single-turn only) or specific deployment assumptions like language or tool-use constraints in the provided text.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1.c:
     value: unmet
     rationale: The excerpts do not contain a statement acknowledging that a good score does not guarantee safety against untested or emergent risks.
@@ -61,15 +57,12 @@ verdicts:
     by: model
     quotes_verified: true
   r1.d:
-    value: met
-    rationale: The benchmark compares its difficulty and coverage against the NYU CTF Dataset (Shao et al., 2024b).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 100, chunk 0
-        quote: To provide a reference for the difficulty of the tasks included in the NYU CTF Dataset (Shao et al., 2024b) and our tasks, we selected two comparable tasks
+    value: unmet
     by: model
+    rationale: The excerpts mention prior works (e.g., Yang et al., Shao et al.) but do not explicitly compare Cybench's coverage against them in terms of risk categories or evaluation methods as required.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r2.a:
     value: unmet
     rationale: No concrete mechanism for discovering novel risks outside existing categories (like fuzzing or red-teaming) is described.
@@ -89,15 +82,12 @@ verdicts:
     by: model
     quotes_verified: true
   r2.d:
-    value: met
-    rationale: The benchmark uses an agent-based interactive evaluation where the agent executes commands in a Kali Linux container and receives observations.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 37, chunk 1
-        quote: The agent maintains a memory of everything that has happened and receives observations from executing commands.
+    value: unmet
     by: model
+    rationale: The benchmark evaluates single agents solving tasks. The excerpts do not state that no risk can arise through interaction, nor do they include multi-agent or interactive evaluation settings.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r3.a:
     value: unmet
     rationale: The benchmark mentions train-test overlap and data distribution, but does not frame distribution shift as a safety-critical issue.
@@ -122,6 +112,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r4.b:
     value: unmet
     rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
@@ -265,15 +256,12 @@ verdicts:
     by: model
     quotes_verified: true
   r9.c:
-    value: met
-    rationale: The benchmark uses an agent that maintains memory and interacts in a loop (iterations), which constitutes multi-turn evaluation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 3, chunk 0
-        quote: The agent maintains a memory, which it leverages to output a response that includes an action
+    value: unmet
     by: model
+    rationale: The excerpts describe tasks as self-contained challenges (e.g., 'capture the flag') and do not mention including multi-turn evaluation for risks like manipulation or trust exploitation that emerge over extended interaction.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.d:
     value: n/a
     rationale: The benchmark uses CTF competition data, not in-the-wild data constrained by privacy or curation opacity.
@@ -290,6 +278,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r10.b:
     value: unmet
     rationale: There is no evidence that affected communities were consulted to assess if scenarios reflect their experienced harms.
@@ -297,15 +286,12 @@ verdicts:
     by: model
     quotes_verified: true
   r10.c:
-    value: met
-    rationale: The benchmark specifies that it evaluates the model within a 'structured bash agent scaffold' and an environment (Kali Linux).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 3, chunk 0
-        quote: which is then executed in the environment (Kali Linux)
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark evaluates the model within a system context, specifically using a cybersecurity agent with a memory, action space (bash commands, web search), and an environment (Kali Linux, task servers)."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r10.d:
     value: unmet
     rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
@@ -316,3 +302,14 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 29 verdicts agreed, 8 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r1.a
+      - r1.b
+      - r1.d
+      - r2.d
+      - r9.c
+      - r10.c

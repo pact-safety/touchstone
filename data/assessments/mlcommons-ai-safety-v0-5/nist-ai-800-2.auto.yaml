@@ -54,6 +54,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1b:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark defines personas, including a 'vulnerable' user with limited domain knowledge."
@@ -85,7 +86,7 @@ verdicts:
         url: https://arxiv.org/abs/2404.12241v2
         locator: 2404.12241v2 page 21, chunk 2
         quote: Our grading system involves scoring whether each test item is unsafe or not with an automated evaluator model (LlamaGuard [   59 ])
-    by: model
+    by: human
     quotes_verified: true
   1.2.2a:
     value: met
@@ -124,15 +125,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.3b:
-    value: met
-    rationale: The benchmark reports the percentage of unsafe responses for a selected reference model.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 25, chunk 1
-        quote: "Table 6:   Percentage of unsafe responses of the reference model for each hazard category."
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): A baseline measure is provided using a reference model (the worst-performing of three candidate models) to compare SUT scores against."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4a:
     value: met
     rationale: The benchmark states it created new datasets of prompts and mentions the use of templates.
@@ -185,6 +183,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.1b:
     value: unmet
     rationale: The excerpts describe the total dataset and how items were generated, but do not mention a separate development, validation, or training split.
@@ -258,21 +257,19 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2h:
-    value: met
-    rationale: The benchmark specifies the judge model (LlamaGuard), the scoring method (unsafe vs not unsafe), and the rubric (hazard categories).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 22, chunk 1
-        quote: We use LlamaGuard [   59 ] for this purpose, which is an input-output safety filter built on top of the Llama 2 model [   23 ].
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the judge model (LlamaGuard), its basis (Llama 2), and the rubric (unsafe/not unsafe classification)."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2i:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports the accuracy of the LlamaGuard judge compared to human gold standard labels as a number."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2j:
     value: unmet
     rationale: The excerpts do not report results under varied protocol settings, only the results of the standard run.
@@ -280,30 +277,19 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.1:
-    value: met
-    rationale: The benchmark provides a public repository with runnable code (modelbench and modelgauge) and installation instructions.
-    evidence:
-      - source: repo
-        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
-        locator: mlcommons/modelbench@79accfe1424a:README.md, chunk 2
-        quote: |-
-          Clone this repository.
-
-          ```shell
-          git clone https://github.com/mlcommons/modelbench.git
-          ```
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark ships runnable evaluation code (ModelBench/ModelGauge) with run instructions in the README."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.2:
-    value: met
-    rationale: The benchmark uses LlamaGuard to assess if responses are unsafe and the run journal describes the translation of raw responses into a common format.
-    evidence:
-      - source: repo
-        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
-        locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 2
-        quote: translated sut response - the result of translating a raw response into a common format
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the output format (unsafe/not unsafe) and ships the logic (LlamaGuard) that extracts/assesses the answer."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.3:
     value: met
     rationale: The benchmark uses version identifiers (v0.5) and the documentation discusses the handling of deprecated versions.
@@ -357,15 +343,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.1.3:
-    value: met
-    rationale: The dataset was created and vetted by the MLCommons AI Safety working group, and human annotators verified the labels.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 54, chunk 0
-        quote: The dataset was created and vetted by MLCommons AI Safety working Group, which comprises a large number of researchers, engineers and practitioners.
+    value: unmet
     by: model
+    rationale: The excerpts do not document a specific validation step where items were checked to be solvable and correctly keyed, other than general creation by experts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.4:
     value: unmet
     rationale: The documentation mentions that they have items to test false refusal but explicitly states this is not included in v0.5.
@@ -376,6 +359,7 @@ verdicts:
         quote: However, this is not included in v0.5, as we do not have the resources to actually assess whether models’ responses constitute a false refusal.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.5:
     value: n/a
     rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
@@ -440,15 +424,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.2.1:
-    value: met
-    rationale: The benchmark provides a 'run journal' in JSONL format to record the protocol and results of the evaluation pipeline.
-    evidence:
-      - source: repo
-        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
-        locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 0
-        quote: The goal of the ModelBench run journal is to provide a clear record of what happened during the scoring of SUTs against benchmarks. It is a JSONL file consisting of one line per event during the run.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation provides a structured run journal format (JSONL) and describes the fields and structure required to record protocol and results."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.2:
     value: unmet
     rationale: While the tool can generate item-level results, the excerpts do not show that per-item scores for a reference run are published in a downloadable file.
@@ -521,3 +502,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 10 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - 1.2.3b
+      - 2.1.2h
+      - 2.2.1
+      - 2.2.2
+      - 2.4.1.3
+      - 3.2.1

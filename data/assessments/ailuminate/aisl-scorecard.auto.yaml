@@ -2,13 +2,15 @@
 benchmark: ailuminate
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
@@ -66,6 +68,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.05:
     value: unmet
     rationale: The documentation does not report per-category item counts or a stratified sampling plan over the task space.
@@ -89,29 +92,33 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The excerpts do not indicate that the benchmark reuses a prior dataset; it describes producing new prompts and using a custom fine-tuning dataset.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The decision rule requires a table or figure comparing the same model on the original dataset and the adapted benchmark. The excerpts mention prior work (v0.5) but do not provide a comparative table of scores on an original vs adapted dataset.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
     value: n/a
     rationale: The excerpts do not indicate that the benchmark reuses a prior dataset.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While it mentions calibrating prompt count to statistical analysis, it does not report a power calculation or confidence-interval half-width compared to model gaps.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.11:
     value: unmet
     rationale: The main results table is not provided, and there is no evidence that every score has a confidence interval or standard error.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.12:
     value: met
     rationale: The documentation provides response-evaluation guidance and principles for annotators to maintain consistency.
@@ -166,6 +173,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: unmet
     rationale: The documentation mentions other studies and benchmarks (like BET), but does not provide a concrete comparison of a named prior benchmark to state a specific gap addressed.
@@ -267,35 +275,26 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark is described as a general safety-evaluation framework for general purpose chat systems, not a specific deployed application.
-    evidence:
-      - source: repo
-        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
-        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 0
-        quote: provides safety testing for general purpose chat systems
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application or product configuration; it is a general safety benchmark. Therefore, the n/a condition applies.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark is described as a general safety-evaluation framework for general purpose chat systems, not a specific deployed application.
-    evidence:
-      - source: repo
-        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
-        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 0
-        quote: provides safety testing for general purpose chat systems
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application. Therefore, the n/a condition applies.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark is described as a general safety-evaluation framework for general purpose chat systems, not a specific deployed application.
-    evidence:
-      - source: repo
-        url: https://github.com/mlcommons/ailuminate/tree/769cc2be9d20c8d4fb26ce53b68865ed41dfb8e2
-        locator: mlcommons/ailuminate@769cc2be9d20:README.md, chunk 0
-        quote: provides safety testing for general purpose chat systems
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application. Therefore, the n/a condition applies.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation does not list specific library versions, hardware models, or OS/container images required for reproduction.
@@ -309,35 +308,26 @@ verdicts:
     by: model
     quotes_verified: true
   rel.03:
-    value: met
-    rationale: The docs describe quality-control steps (e.g., human validation) and a correction channel via versioned releases.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 45, chunk 0
-        quote: create a new versioned release of the benchmark
+    value: unmet
     by: model
+    rationale: While the docs mention an 'evolution' process and 'periodic declarations', they do not describe a specific correction channel like an errata or changelog that records at least one fix.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.04:
-    value: met
-    rationale: The docs identify evaluator error as a flaw, state it biases results toward predicting more unsafe responses, and explain that using a reference system with the same bias mitigates the impact on grades.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 21, chunk 0
-        quote: The evaluator, therefore, likely predicts more unsafe responses compared with the ground truth.
+    value: unmet
     by: model
+    rationale: The excerpts do not name specific flaws with their direction of bias, impact estimates, and valid conclusions as required by the decision rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.05:
-    value: met
-    rationale: The benchmark uses a named reference system (Ref) as the reference point for scoring comparison.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 20, chunk 0
-        quote: Reference Ref AI system for scoring comparison
+    value: unmet
     by: model
+    rationale: The excerpts report a 'Reference' system for scoring comparison but do not report a human or expert baseline for tasks humans routinely perform.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.06:
     value: unmet
     rationale: No scores for trivial baselines (like random selection or zero-shot naive models) are reported.
@@ -373,15 +363,16 @@ verdicts:
     by: model
     quotes_verified: true
   cor.05:
-    value: met
-    rationale: The fine-tuning dataset used three raters per prompt-response pair, and a majority vote was used to determine the result.
+    value: unmet
+    by: model
+    rationale: The excerpts describe using three raters for the fine-tuning dataset, but do not report inter-annotator agreement metrics (e.g., Cohen's kappa) for the final evaluation or ground truth labeling.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 18, chunk 1
         quote: Each sampled prompt-response pair received either a nonviolating or violating label from each of three raters. A simple majority vote determined the final result.
-    by: model
+        locator: 2503.05731v2 page 18, chunk 1
+        url: https://arxiv.org/abs/2503.05731v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.06:
     value: unmet
     rationale: The excerpts do not document every task as solvable or intentionally unsolvable, nor the expected behavior for unsolvable ones.
@@ -407,25 +398,23 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The evaluator uses an ensemble of LLMs to classify responses as violating or nonviolating, which does not involve parsing free-form output into a structured format via a parser.
+    value: unmet
+    by: model
+    rationale: The scoring involves parsing LLM outputs for policy violations, but the excerpts do not show the parser is deterministic or test its consistency.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
+        quote: a mechanism for assessing SUT responses as violating or nonviolating
         locator: 2503.05731v2 page 8, chunk 0
-        quote: The AIL UMINATE evaluator employs an ensemble of specialized LLM models fine-tuned to automate evaluation
-    by: model
+        url: https://arxiv.org/abs/2503.05731v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The evaluator uses an LLM ensemble for classification, not a free-form output parser.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.05731v2
-        locator: 2503.05731v2 page 8, chunk 0
-        quote: The AIL UMINATE evaluator employs an ensemble of specialized LLM models fine-tuned to automate evaluation
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for null/trivial-agent runs or targeted exploit attempts on the scoring pipeline.
@@ -436,3 +425,18 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 40 verdicts agreed, 15 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.08
+      - ev.05
+      - ev.06
+      - ev.07
+      - rel.03
+      - rel.04
+      - rel.05
+      - cor.05
+      - cor.10
+      - cor.11

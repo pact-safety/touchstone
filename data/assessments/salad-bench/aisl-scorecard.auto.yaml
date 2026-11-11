@@ -2,13 +2,15 @@
 benchmark: salad-bench
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
@@ -44,6 +46,7 @@ verdicts:
         quote: The toxic content domain encompasses the production of content that contravenes established community guidelines and ethical standards such as insult, child abuse, violent content, etc.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.02:
     value: unmet
     rationale: While the documentation defines what is in scope via the taxonomy, it does not explicitly name an aspect of the phenomenon that is excluded.
@@ -67,35 +70,26 @@ verdicts:
     by: model
     quotes_verified: true
   cv.05:
-    value: met
-    rationale: The authors describe a verification process where they sampled questions from all 65 categories while keeping the original ratio.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 16, chunk 0
-        quote: we randomly sample 458 questions from all the 65 categories keeping the origin ratio among categories
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation states a stratified sampling plan for human verification, ensuring coverage across categories, and reports per-category counts in the taxonomy description."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.06:
-    value: met
-    rationale: The dataset underwent human verification by 4 annotators, and a consistency rate of 94.3% for taxonomy labels is reported.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 16, chunk 1
-        quote: The annotation results indicate that our data taxonomy labels match human taxonomy labels with a consistency rate of 94.3% .
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The docs describe a documented verification step involving human annotators cross-validating a sample, with a reported consistency rate of 94.3% for taxonomy labels."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.07:
-    value: met
-    rationale: An 'attack-enhanced subset' exists for probing boundary conditions, and the text describes the use of 20 human-designed jailbreak prompts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 16, chunk 2
-        quote: We select 20 human-designed jailbreak prompts from jailbreakchat.com
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): A named subset of boundary/adversarial items ('attack-enhanced subset') exists, its size is implied by the source counts in Table 9, and the criterion (jailbreak prompts, red-teaming algorithms) is stated."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.08:
     value: unmet
     rationale: The benchmark reuses several datasets (e.g., Advbench, ToxicChat), but no table or figure compares the same model on the original vs. adapted benchmark.
@@ -145,37 +139,33 @@ verdicts:
     by: model
     quotes_verified: true
   cv.16:
-    value: met
-    rationale: The authors break down safety rates by domain and task in figures, which serves as a breakdown by named confounds/dimensions.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 20, chunk 3
-        quote: The safety performance across tasks is showcased in Figure 12 and Figure 13.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): Failures/scores are broken down by named confounds such as domain, task, and model type in Figures 10-15, showing rates for each."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.17:
     value: unmet
     rationale: The paper discusses general performance drops on attack-enhanced sets, but does not report named failure categories with associated counts or shares.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.18:
     value: unmet
     rationale: The docs do not contain a single statement that names the tasks, each metric, and the construct from cv.01 they measure with a stated reason.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
-    value: met
-    rationale: The paper compares SALAD-Bench to existing benchmarks and states that prior benchmarks are often limited in scope (only safety or only attack/defense).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 13, chunk 2
-        quote: these benchmarks often have limited usage scope, either designed solely for safety assessment (Wang et al., 2023b; Shen et al., 2023) or aimed at testing attack and defense strategies (Zou et al., 2023)
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper compares SALAD-Bench to prior benchmarks (e.g., AdvBench, ToxicChat) and states concrete differences, such as SALAD-Bench covering both attack and defense and having a hierarchical taxonomy."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.20:
     value: unmet
     rationale: While limitations are listed, there is no specific claim linking the benchmark scores to a real-world capability or harm with support or caveat.
@@ -225,17 +215,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs and local scoring/LLM calls without an external mutable environment.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the environment is a static snapshot, nor do they publish a changelog of environment changes with re-validation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: n/a
-    rationale: The evaluation consists of stateless model calls for QA and MCQ tasks.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not show that the harness resets state per task (e.g., fresh container or process) between evaluation runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     rationale: The benchmark includes multiple-choice questions but does not report a random-guess baseline or a named guessing mitigation.
@@ -266,36 +258,36 @@ verdicts:
         url: https://arxiv.org/abs/2402.05044v4
         locator: 2402.05044v4 page 20, chunk 3
         quote: there is a notable difference in safety rates when comparing the base set to the attack-enhanced subset
-    by: model
+    by: human
     quotes_verified: true
   ev.04:
-    value: met
-    rationale: The benchmark reports results for an 'attack-enhanced subset' as a separate slice, which represents a stress condition (adversarial shift) differing from the base set.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 20, chunk 3
-        quote: there is a notable difference in safety rates when comparing the base set to the attack-enhanced subset
+    value: unmet
     by: model
+    rationale: While attack-enhanced subsets are mentioned, the excerpts do not report results as a separate slice with item counts for a named stress condition or shift distinct from train/dev splits.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.05:
-    value: n/a
-    rationale: The benchmark evaluates general LLM safety and resilience against attacks rather than a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark evaluates various LLMs but does not state that the model, tools, prompt, and environment match a named deployed product or configuration.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark evaluates general LLM safety and resilience against attacks rather than a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark includes attack-enhanced subsets and evaluates defense methods, but the excerpts do not explicitly state that adversarial or misuse configurations of the system under test are included as part of the evaluation protocol for manipulation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark evaluates general LLM safety and resilience against attacks rather than a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not list differences between the test setting and real deployment, nor do they provide caveats on how to read results in light of such gaps.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The provided excerpts do not list sampling parameters, library versions, hardware models, or OS/container images.
@@ -350,16 +342,14 @@ verdicts:
         quote: Compared to results from human evaluator, our MCQ-Judge achieves similar results on Acc-V of GPT-4 and Vicuna
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: met
-    rationale: The evaluator uses a designated output format to ensure strict adherence, which serves as a defense against reward hacking/formatting issues.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 17, chunk 6
-        quote: Output format aims to utilize LLMs’ ability to follow instructions, ensuring that our evaluator adheres strictly to our designated format.
+    value: unmet
     by: model
+    rationale: The excerpts describe defense methods for the target models (e.g., paraphrasing, perturbation) but do not report an adversarial or reward-hacking test of the model rater itself, nor do they describe a named defense for the rater.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
     value: unmet
     rationale: There is no report of agreement across repeated rating runs on the same inputs for the model rater.
@@ -411,17 +401,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The benchmark uses predefined correct answers for MCQs and a model rater for QA, rather than parsing free-form output into a structured answer for a deterministic parser check.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not show that the parser is deterministic or that its consistency is tested on identical inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The benchmark uses predefined correct answers for MCQs and a model rater for QA, rather than parsing free-form output into a structured answer for a deterministic parser check.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null-agent run or targeted exploit attempts on the scoring pipeline.
@@ -432,3 +424,22 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 36 verdicts agreed, 18 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.05
+      - cv.06
+      - cv.07
+      - cv.16
+      - cv.19
+      - iv.08
+      - iv.09
+      - ev.04
+      - ev.05
+      - ev.06
+      - ev.07
+      - cor.02
+      - cor.10
+      - cor.11

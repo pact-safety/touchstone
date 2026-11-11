@@ -2,13 +2,15 @@
 benchmark: finrl-meta
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 286fef6c828a02a2ccf807c05b292d8cb28f8e95
@@ -35,22 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   def.1:
-    value: met
-    rationale: The benchmark defines the phenomenon as a 'universe of market environments for data-driven financial reinforcement learning' and provides observable outputs such as 'Change of portfolio value', 'Portfolio log-return', and 'Sharpe ratio' as rewards.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 4, chunk 2
-        quote: FinRL-Meta builds a universe of market environments for data-driven financial reinforcement learning.
-      - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 3, chunk 0
-        quote: |-
-          Reward   Change of portfolio value
-          Portfolio log-return
-          Sharpe ratio
+    value: unmet
     by: model
+    rationale: The excerpts describe the components of the environments (state, action, reward) but do not provide a precise operational definition of the abstract phenomenon being measured (e.g., 'financial RL capability' or 'market efficiency') that links specific observable outputs to that phenomenon.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: unmet
     rationale: While the scope is described as a universe of market environments, the excerpts do not name any specific excluded aspects of the phenomenon.
@@ -76,15 +68,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses a gym-style environment where agents produce transitions in the form of {state, action, reward, next state}, which is structured data rather than free-form output requiring automated parsing.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 7, chunk 1
-        quote: a trading agent interacts with a market environment to produce transitions in the form of   { state, action, reward, next state } .
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or bias comparisons across output formats.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts mention the possibility of sampling data samples for curriculum learning in the future, but they do not document a sampling strategy used to ensure the current benchmark's items are representative of the overall task space.
@@ -120,15 +109,16 @@ verdicts:
     by: model
     quotes_verified: true
   ru.3:
-    value: met
-    rationale: The benchmark reports results for a reproduced ensemble strategy [68] and compares it against other algorithms and the DJIA index.
+    value: unmet
+    by: model
+    rationale: The document compares performance against baselines like DJIA and other algorithms, but does not compare performance against the 'original' benchmark if one is considered the prior work, nor does it explicitly compare against a prior benchmark's results in the manner required.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 10, chunk 0
         quote: "Table 2: Reproducing the ensemble strategy of [68]."
-    by: model
+        locator: 2211.03107v1 page 10, chunk 0
+        url: https://arxiv.org/abs/2211.03107v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
     value: unmet
     rationale: The documentation does not list specific modifications made to the reused datasets or explain how such modifications improve construct validity.
@@ -217,6 +207,7 @@ verdicts:
         quote: To improve the performance for the large-scale markets, we are exploiting GPU-based massive parallel simulation such as Isaac Gym [ 44 ].
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark is linked to the real-world application of algorithmic trading.
@@ -245,7 +236,16 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 23 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.1
+      - mo.3
+      - ru.3

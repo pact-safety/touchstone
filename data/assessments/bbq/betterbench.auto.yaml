@@ -101,14 +101,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.08:
-    value: 10
-    rationale: The authors mention using exact match for scoring and a bias score, though the full derivation of the metric is not detailed in the excerpts.
+    value: 15
+    by: human
+    rationale: The document explains the choice of metric by contrasting it with likelihood-based measures like UnQover, arguing for a stricter definition based on discrete outputs.
     evidence:
       - source: paper
+        quote: By shifting from measuring likelihoods (as UnQover does) to measuring model outputs, BBQ uses a stricter definition of what counts as biased model behavior.
+        locator: 2110.08193v2 page 10, chunk 0
         url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 0
-        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
-    by: model
     quotes_verified: true
   des.09:
     value: 0
@@ -188,7 +188,7 @@ verdicts:
         url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
         locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 5
         quote: The relevant code for the RoBERTa and DeBERTaV3 models that were finetuned on RACE can be found the [here]
-    by: model
+    by: human
     quotes_verified: true
   imp.05:
     value: 0
@@ -203,10 +203,18 @@ verdicts:
     by: model
     quotes_verified: true
   imp.07:
-    value: 0
-    rationale: While analysis scripts are present, there is no specific script provided to replicate the full results of the paper.
-    evidence: []
-    by: model
+    value: 10
+    by: human
+    rationale: Scripts for generating data and calculating bias scores are present, but the excerpts do not explicitly confirm a single script to replicate all results (e.g., training scripts are linked externally).
+    evidence:
+      - source: repo
+        quote: analysis_scripts/BBQ_calculate_bias_score.R
+        locator: nyu-mll/BBQ@bea11bd97d79:FILE LISTING, chunk 0
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
+      - source: repo
+        quote: generate_from_template_all_categories.py
+        locator: nyu-mll/BBQ@bea11bd97d79:FILE LISTING, chunk 0
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
     quotes_verified: true
   imp.08:
     value: 0
@@ -214,6 +222,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.09:
     value: 5
     rationale: The authors warn human annotators about sensitive content, but they do not assess the need for warnings for the model evaluation itself.
@@ -271,11 +280,16 @@ verdicts:
     by: model
     quotes_verified: true
   doc.06:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper describes the template construction and the process of creating the dataset."
-    evidence: []
+    value: 15
     by: model
+    rationale: The paper details the template construction, name selection, and validation processes.
+    evidence:
+      - source: paper
+        quote: In the interest of transparency and reproducibility, we describe here the full process and criteria that went into our creation of the name database for BBQ.
+        locator: 2110.08193v2 page 13, chunk 1
+        url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.07:
     value: 15
     rationale: The paper documents the test tasks (evaluating model responses to social biases) and the rationale (highlighting attested social biases).
@@ -287,11 +301,16 @@ verdicts:
     by: model
     quotes_verified: true
   doc.08:
-    value: 0
-    rationale: The excerpts do not explicitly document assumptions of normative properties.
-    evidence: []
+    value: 15
     by: model
+    rationale: The paper documents assumptions about normative properties, such as the US English-speaking context and the use of names as proxies.
+    evidence:
+      - source: paper
+        quote: the data in BBQ is only designed to test biases associated with US English-speaking cultural contexts
+        locator: 2110.08193v2 page 8, chunk 3
+        url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.09:
     value: 15
     rationale: The paper documents limitations regarding the sample size and the cultural context (US English-speaking).
@@ -332,6 +351,7 @@ verdicts:
         quote: released under the CC-BY 4.0 license.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.13:
     value: 0
     rationale: No globally unique persistent identifier (like a DOI) for the dataset is provided.
@@ -346,7 +366,7 @@ verdicts:
         url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
         locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 3
         quote: "`additional_metadata.csv`, with the following structure:"
-    by: model
+    by: human
     quotes_verified: true
   doc.15:
     value: 15
@@ -378,6 +398,7 @@ verdicts:
         quote: unique templates written by the authors and validated using crowdworker judgments
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.18:
     value: 15
     rationale: The paper explains the representativeness of the names used to reflect extreme distributional differences in name-ethnicity relations.
@@ -416,3 +437,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 4 decided by the reviewer."
+    items:
+      - des.08
+      - imp.07
+      - doc.06
+      - doc.08

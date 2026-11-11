@@ -42,7 +42,7 @@ verdicts:
         url: https://arxiv.org/abs/2308.03688v3
         locator: 2308.03688v3 page 3, chunk 2
         quote: We introduce the concept of evaluating LLMs as agents and present A GENT B ENCH
-    by: model
+    by: human
     quotes_verified: true
   des.02:
     value: 15
@@ -55,14 +55,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.03:
-    value: 15
-    rationale: The benchmark mentions that the environments are based on real-world scenarios to offer a practical testbed.
+    value: 10
+    by: human
+    rationale: The benchmark mentions practical usability and real-world scenarios, but does not explicitly describe how knowing the capability is helpful in the real world beyond general statements about agent potential.
     evidence:
       - source: paper
+        quote: gpt-4 presents the best performance on 6 out of 8 datasets in A GENT B ENCH ; on House Holding, it achieves a success rate of 78%, indicating its practical usability in this scenario.
+        locator: 2308.03688v3 page 7, chunk 4
         url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 3, chunk 2
-        quote: It defines eight distinct environments of 3 types based on real-world scenarios, offering a practical testbed for LLMs’ wide array of capabilities.
-    by: model
     quotes_verified: true
   des.04:
     value: 0
@@ -70,6 +70,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.05:
     value: 0
     rationale: There is no mention of domain experts being involved in the design.
@@ -77,14 +78,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.06:
-    value: 15
-    rationale: The benchmark describes use cases such as assisting human interaction with computer interfaces.
+    value: 10
+    by: human
+    rationale: The benchmark describes various environments and scenarios (web, code, game) which serve as use cases, but does not explicitly describe user personas.
     evidence:
       - source: paper
+        quote: It defines eight distinct environments of 3 types based on real-world scenarios, offering a practical testbed for LLMs’ wide array of capabilities.
+        locator: 2308.03688v3 page 3, chunk 2
         url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 4, chunk 1
-        quote: a very practical mission for LLM agents is to assist human interaction with computer interfaces.
-    by: model
     quotes_verified: true
   des.07:
     value: 15
@@ -113,15 +114,12 @@ verdicts:
     by: model
     quotes_verified: true
   des.10:
-    value: 10
-    rationale: The benchmark mentions human validation for the LTP system and compares automatic evaluation to it, though a specific performance level value is not provided.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 35, chunk 0
-        quote: We evaluate the LTP System by human validation, validating system’s accuracy on milestone recognition and fact verification.
+    value: 0
     by: model
+    rationale: The excerpts do not include human performance levels.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.11:
     value: 15
     rationale: The benchmark includes a random action strategy as a baseline.
@@ -274,11 +272,21 @@ verdicts:
     by: model
     quotes_verified: true
   doc.04:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository includes multiple documentation files such as Introduction, Configuration, and Entrance guides."
-    evidence: []
+    value: 15
     by: model
+    rationale: Code documentation is available in the form of detailed markdown files in the docs directory (e.g., Config_en.md, Introduction_en.md).
+    evidence:
+      - source: repo
+        quote: |-
+          # Configuration System
+
+          [🌏中文版](Config_cn.md)
+
+          ## Basic Syntax
+        locator: THUDM/AgentBench@d1e4a10db08c:docs/Config_en.md, chunk 0
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.05:
     value: 15
     rationale: The accompanying paper is explicitly stated to be published at ICLR 2024.
@@ -436,12 +444,25 @@ verdicts:
     by: model
     quotes_verified: true
   mai.03:
-    value: 0
-    rationale: While a group email is provided, no specific individual contact person is listed.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The README explicitly lists a contact email address for questions or contributions, satisfying the criterion that a contact person (or point of contact) is listed.
+    evidence:
+      - source: repo
+        quote: Please contact [agentbench_fc&#64;googlegroups.com](mailto:agentbench_fc@googlegroups.com) if you have any questions or would like to contribute your results.
+        locator: THUDM/AgentBench@d1e4a10db08c:README.md, chunk 4
+        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
     quotes_verified: true
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 4 decided by the reviewer."
+    items:
+      - des.03
+      - des.06
+      - des.10
+      - doc.04
+      - mai.03

@@ -2,13 +2,15 @@
 benchmark: simplesafetytests
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
@@ -40,6 +42,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s1.ii:
     value: unmet
     rationale: There is no mention of a specific threshold or decision rule that maps a score to a conclusion about a capability of concern, nor a statement that no such rule exists.
@@ -124,7 +127,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.08370v2
         locator: 2311.08370v2 page 6, chunk 3
         quote: a zero-shot prompt sent to GPT-4 that we have newly created
-    by: model
+    by: human
     quotes_verified: true
   s2.v-b:
     value: met
@@ -136,6 +139,7 @@ verdicts:
         quote: returns a binary label (safe/unsafe)
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.v-c:
     value: met
     rationale: The report compares the performance of automated safety filters against the human-labeled ground truth.
@@ -144,7 +148,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.08370v2
         locator: 2311.08370v2 page 7, chunk 0
         quote: The performance of the safety filters ranges from 45% (for Mistral’s CM prompt) to 89% (for the zero-shot CM prompt to GPT-4)
-    by: model
+    by: human
     quotes_verified: true
   s3.i:
     value: unmet
@@ -186,6 +190,7 @@ verdicts:
         quote: OpenAI CM API does not have attributes for Scams (4% accuracy on unsafe responses) and Illegal items (0% accuracy on unsafe responses)
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s4.ii:
     value: unmet
     rationale: The excerpts do not provide uncertainty measures or the number of evaluation runs conducted.
@@ -199,29 +204,33 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-a:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for performance comparison.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe a human baseline sample or recruitment; the study focuses on LLMs and automated safety filters.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for performance comparison.
-    evidence: []
+    value: unmet
     by: model
+    rationale: No human performance statistics or comparisons with AI are reported in the provided excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-c:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for performance comparison.
-    evidence: []
+    value: unmet
     by: model
+    rationale: There is no description of how human performance was elicited, as no human baseline was used.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
     value: unmet
     rationale: The report does not provide a reason why a human baseline was not used or would be inappropriate.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-b:
     value: met
     rationale: The report uses safety filters (e.g., OpenAI CM API, Perspective API) as alternative comparison points for performance.
@@ -270,3 +279,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 19 verdicts agreed, 7 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s5.i-a
+      - s5.i-b
+      - s5.i-c

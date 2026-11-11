@@ -2,13 +2,15 @@
 benchmark: wmdp
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v7
   repo_commit: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
@@ -264,6 +266,7 @@ verdicts:
         quote: we release our datasets, code, and models publicly at https://wmdp . ai
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.a:
     value: met
     rationale: The prompts are stated to be expert-written, and the benchmark reports validation by having questions checked by at least two experts.
@@ -321,15 +324,12 @@ verdicts:
     by: model
     quotes_verified: true
   r10.c:
-    value: met
-    rationale: The benchmark explicitly states it focuses on reducing risk for API-access models.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 29, chunk 2
-        quote: WMDP focuses on reducing risk for API-access models
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark explicitly states it evaluates the model's knowledge via question-answering, testing the model alone rather than within a system context with user interaction or safeguards."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r10.d:
     value: met
     rationale: The benchmark states that scores do not capture the full extent of risk and suggests other benchmarks (e.g., open-ended conversations) are needed.
@@ -344,3 +344,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 35 verdicts agreed, 2 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r10.c

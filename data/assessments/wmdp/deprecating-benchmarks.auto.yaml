@@ -2,13 +2,15 @@
 benchmark: wmdp
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v7
   repo_commit: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
@@ -41,15 +43,16 @@ verdicts:
     by: model
     quotes_verified: true
   c2:
-    value: unmet
-    rationale: The benchmark is described as a 'public benchmark' and the authors explicitly admit that 'Memorized facts may be particularly over-represented' because questions were drawn from open-access papers likely in the training data, with no documented defense against this leakage.
+    value: met
+    by: model
+    rationale: The benchmark documents a contamination defence by identifying and removing sensitive questions, treating them as a 'held-out set of private questions'. This serves as a private held-out split to check for leakage of especially hazardous knowledge.
     evidence:
       - source: paper
+        quote: During our dataset generation process, we identified 122 questions in biosecurity that contained sensitive information and removed them from WMDP-Bio. We treat these as a held-out set of private questions with especially hazardous knowledge.
+        locator: 2403.03218v7 page 13, chunk 1
         url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 29, chunk 1
-        quote: Memorized facts may be particularly over-represented in our biological benchmark since many questions that were developed were drawn from open-access papers that were likely also included in the model’s training data.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c3:
     value: unmet
     rationale: There is no report of the label/answer distribution or a trivial baseline score to demonstrate that the benchmark is free of statistical bias.
@@ -63,15 +66,16 @@ verdicts:
     by: model
     quotes_verified: true
   c5:
-    value: met
-    rationale: The benchmark states its purpose is to measure and reduce hazardous capabilities, which remains current for the models it is used on.
+    value: unmet
+    by: model
+    rationale: The excerpts explicitly state that WMDP is a static benchmark that cannot anticipate evolving risks, implying the task may become obsolete or insufficient as threats change, rather than confirming the task remains current and relevant without obsolescence.
     evidence:
       - source: paper
+        quote: WMDP is a static benchmark which cannot anticipate the evolving landscape of cyber and biological risks, as threats continuously change and new technologies emerge.
+        locator: 2403.03218v7 page 29, chunk 1
         url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 5, chunk 1
-        quote: WMDP should guide risk mitigation by enabling researchers to measure and reduce models’ hazardous capabilities.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c6:
     value: unmet
     rationale: The benchmark does not explicitly state its simplifying assumptions in the provided text, and the decision rule requires this for a 'met' verdict.
@@ -114,3 +118,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 8 verdicts agreed, 2 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c2
+      - c5

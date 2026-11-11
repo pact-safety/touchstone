@@ -2,13 +2,15 @@
 benchmark: mask
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
@@ -44,6 +46,7 @@ verdicts:
         quote: publicly releasing 1 , 000 carefully curated examples
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.02:
     value: unmet
     rationale: The benchmark does not report a statistical power figure or minimum detectable difference.
@@ -57,15 +60,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.04:
-    value: met
-    rationale: The benchmark uses a specific control to ensure beliefs are not spurious by repeating the question and probing related details to verify consistency.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 15, chunk 0
-        quote: We repeat this question three times to verify consistency, then ask two additional prompts that probe related details of the proposition.
+    value: unmet
     by: model
+    rationale: The excerpts do not describe specific controls for confounding variables such as answer-position balancing, blind baselines, or length/format controls used to mitigate spurious correlation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.05:
     value: met
     rationale: The benchmark documents the use of a private hold-out set as a contamination safeguard.
@@ -113,15 +113,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.10:
-    value: met
-    rationale: The benchmark includes a check for evaluation awareness/sandbagging by comparing pipeline labels with model self-reports of lying.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 16, chunk 1
-        quote: We then compare these self-reports to our evaluation pipeline’s labels in cases where the model was strictly honest or dishonest
+    value: unmet
     by: model
+    rationale: The excerpts do not document a check for evaluation awareness, sandbagging, or under-elicitation, such as comparing results with and without an evaluation cue.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.11:
     value: met
     rationale: The documentation describes the human-led creation process (training, onboarding, and criteria) and the automated proposition generation.
@@ -144,6 +141,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.03:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The spread of the evaluation is described across scenario types (archetypes) with specific proportions provided in Figure 8."
@@ -173,20 +171,12 @@ verdicts:
     by: model
     quotes_verified: true
   rp.04:
-    value: met
-    rationale: The repository contains the evaluation harness, scoring code (metric.py), and grader prompts (evaluation_prompts.py).
-    evidence:
-      - source: repo
-        url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
-        locator: centerforaisafety/mask@25e0b1201e6c:FILE LISTING, chunk 0
-        quote: |-
-          mask/evaluate.py
-          mask/generate_responses.py
-          mask/metric.py
-          mask/process_metrics.py
-          mask/prompts/evaluation_prompts.py
+    value: unmet
     by: model
+    rationale: While code files are listed, the excerpts do not confirm that the harness is runnable against a new model without the authors' help. Specifically, there is no evidence of pinned dependencies (lockfile) or documentation of how to run the evaluation independently, which are required for the code to be considered 'released' in a usable manner under the strict rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.05:
     value: met
     rationale: The paper describes the construction of items, the querying process (pressure vs belief prompts), and the scoring method (LLM judge mapping to propositions).
@@ -195,7 +185,7 @@ verdicts:
         url: https://arxiv.org/abs/2503.03750v3
         locator: 2503.03750v3 page 7, chunk 1
         quote: "Our benchmark does not differ across models: belief-elicitation prompts, pressure prompts, and judge criteria are identical regardless of the model being tested."
-    by: model
+    by: human
     quotes_verified: true
   rp.06:
     value: unmet
@@ -204,32 +194,30 @@ verdicts:
     by: model
     quotes_verified: true
   rp.07:
-    value: met
-    rationale: The prompts used to query the models are released in the repository.
-    evidence:
-      - source: repo
-        url: https://github.com/centerforaisafety/mask/tree/25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
-        locator: centerforaisafety/mask@25e0b1201e6c:FILE LISTING, chunk 0
-        quote: mask/prompts/evaluation_prompts.py
+    value: unmet
     by: model
+    rationale: The excerpts describe the prompts conceptually (e.g., 'pressure prompts', 'belief elicitation prompts') but do not show that the actual prompt text, scaffolding, or few-shot examples are released in the repository.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.08:
-    value: met
-    rationale: The benchmark evaluates frontier LLMs, which are accessed via public APIs or open weights (e.g., Llama).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 7, chunk 0
-        quote: |-
-          Claude 3.7 
-          Sonnet 
-          Llama 405B   GPT-4.5 
-          Preview 
-          GPT-4o   DeepSeek 
-          V3
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the harness runs models through public APIs or is built on a named public evaluation framework. It mentions using an LLM judge, but does not specify if this is a public API or standard format.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 14 verdicts agreed, 7 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.04
+      - iv.10
+      - rp.04
+      - rp.07
+      - rp.08

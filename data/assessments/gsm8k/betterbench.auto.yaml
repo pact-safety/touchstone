@@ -83,10 +83,18 @@ verdicts:
     by: model
     quotes_verified: true
   des.07:
-    value: 0
-    rationale: While other datasets and papers are cited, there is no evidence that domain literature (math education/theory) was integrated into the design.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The document integrates domain literature by citing previous math word problem datasets and methods, and comparing GSM8K to them.
+    evidence:
+      - source: paper
+        quote: Early math word problem datasets (Kushman et al., 2014; Roy and Roth, 2015) are relatively small and are not well suited for testing the limits of modern language models.
+        locator: 2110.14168v2 page 3, chunk 2
+        url: https://arxiv.org/abs/2110.14168v2
+      - source: paper
+        quote: The MATH dataset (Hendrycks et al., 2021) is larger and significantly more complex than GSM8K
+        locator: 2110.14168v2 page 4, chunk 1
+        url: https://arxiv.org/abs/2110.14168v2
     quotes_verified: true
   des.08:
     value: 15
@@ -105,15 +113,12 @@ verdicts:
     by: model
     quotes_verified: true
   des.10:
-    value: 10
-    rationale: The text mentions the performance level of a 'bright middle school student'.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 3, chunk 0
-        quote: A bright middle school student should be able to solve every problem.
+    value: 0
     by: model
+    rationale: While it mentions a bright middle school student can solve the problems, it does not provide a specific human performance level or benchmark score.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.11:
     value: 0
     rationale: No random performance level is provided.
@@ -146,15 +151,20 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.01:
-    value: 10
-    rationale: The repository provides some code for training, sampling, and solution extraction, but it is explicitly described as being for illustrative purposes and not used for the paper's experiments.
+    value: 15
+    by: human
+    rationale: The repository provides evaluation code, specifically `dataset.py` which contains the `is_correct` function for parsing solutions, and `view_model_solutions.py` for viewing results.
     evidence:
       - source: repo
+        quote: Some example python code to do so is shown in `dataset.py:is_correct`.
+        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 2
         url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
-        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 6
-        quote: We include this code for illustrative purposes only. This pipeline was not used for any experiments in the paper.
-    by: model
+      - source: repo
+        quote: grade_school_math/dataset.py
+        locator: openai/grade-school-math@3101c7d50724:FILE LISTING, chunk 0
+        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
     quotes_verified: true
   imp.02:
     value: 15
@@ -180,7 +190,7 @@ verdicts:
         url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
         locator: openai/grade-school-math@3101c7d50724:README.md, chunk 6
         quote: python train.py
-    by: model
+    by: human
     quotes_verified: true
   imp.05:
     value: 0
@@ -200,6 +210,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.08:
     value: 0
     rationale: The excerpts do not report statistical significance or uncertainty quantification for the results.
@@ -253,15 +264,12 @@ verdicts:
     by: model
     quotes_verified: true
   doc.05:
-    value: 15
-    rationale: The benchmark is accompanied by a paper that is cited as an arXiv preprint, which is a standard venue for this field.
-    evidence:
-      - source: repo
-        url: https://github.com/openai/grade-school-math/tree/3101c7d5072418e28b9008a6636bde82a006892c
-        locator: openai/grade-school-math@3101c7d50724:README.md, chunk 6
-        quote: journal={arXiv preprint arXiv:2110.14168}
+    value: 0
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper is published on arXiv, which is a preprint server, but the citation indicates it is a preprint. However, the prompt asks for 'accepted at peer-reviewed venue'. The excerpts do not explicitly state acceptance at a peer-reviewed venue like NeurIPS/ICML, only arXiv. Wait, arXiv is not peer-reviewed. The excerpts do not show acceptance at a peer-reviewed venue. Thus, 0."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.06:
     value: 15
     rationale: The paper describes the design principles and the process of creating the dataset.
@@ -293,14 +301,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.09:
-    value: 10
-    rationale: The documentation mentions that some problems may contain breaking errors or ambiguities.
+    value: 15
+    by: human
+    rationale: The paper explicitly documents limitations, such as potential subtle errors and the calculator implementation bugs.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
+        quote: It is possible that a larger percentage of problems contain subtle errors.
         locator: 2110.14168v2 page 15, chunk 0
-        quote: We estimate this to be the fraction of problems that contain breaking errors or ambiguities.
-    by: model
+        url: https://arxiv.org/abs/2110.14168v2
     quotes_verified: true
   doc.10:
     value: 15
@@ -408,3 +416,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 4 settled by adjudicator-v4, 4 decided by the reviewer."
+    items:
+      - des.07
+      - des.10
+      - imp.01
+      - doc.05
+      - doc.09

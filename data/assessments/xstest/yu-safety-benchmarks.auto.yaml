@@ -2,13 +2,15 @@
 benchmark: xstest
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
@@ -35,19 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   r1.a:
-    value: met
-    rationale: The benchmark identifies risk types (safe vs unsafe prompts) and specifies measurement methods including manual annotation, string-matching, and GPT-4 classification.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 6, chunk 3
-        quote: First, we use a simple string-match method
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 6, chunk 2
-        quote: We evaluate model performance on XST EST using manual annotation
+    value: unmet
     by: model
+    rationale: The excerpts list prompt types (e.g., homonyms, safe contexts) but do not explicitly name standard risk categories like 'toxicity' or 'bias' as evaluated risks, nor do they state the specific metric for measuring them beyond 'compliance/refusal' rates.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1.b:
     value: met
     rationale: The benchmark states it has 'limited coverage' and specifies deployment assumptions regarding language (English), turn count (single-turn), and prompt length/complexity.
@@ -105,19 +100,12 @@ verdicts:
     by: model
     quotes_verified: true
   r3.b:
-    value: met
-    rationale: The benchmark documents that annotators were the authors of the paper and that they are experienced in dealing with the content.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 4, chunk 3
-        quote: All annotations were completed by three authors of this paper
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 9, chunk 2
-        quote: All annotating authors are experienced in dealing with this kind of content.
+    value: unmet
     by: model
+    rationale: The excerpts state that 'three authors of this paper' performed the annotation, but do not document annotator selection, disagreement patterns, or demographics.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r3.c:
     value: unmet
     rationale: There is no mention of contamination detection or the temporal validity/refresh date of the evaluation set.
@@ -174,6 +162,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r6.b:
     value: met
     rationale: The benchmark reports Fleiss' kappa for annotator agreement.
@@ -222,31 +211,23 @@ verdicts:
     by: model
     quotes_verified: true
   r7.d:
-    value: met
-    rationale: The benchmark explains that it measures 'exaggerated safety' (the proxy) and relates it to the real-world concern of the tension between helpfulness and harmlessness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 1, chunk 0
-        quote: |-
-          there is a tension between these two
-          objectives, since harmlessness requires models
-          to refuse to comply with unsafe prompts, and
-          thus not be helpful.
+    value: unmet
     by: model
+    rationale: The excerpts do not articulate the relationship between the measured proxies (refusal rates on specific prompts) and real-world safety concerns. They focus on the internal consistency of model behavior rather than real-world impact.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r8.a:
-    value: met
-    rationale: The benchmark records the interface (API for GPT-4), access dates for all models, inference parameters (temperature zero), and system prompts.
+    value: unmet
+    by: model
+    rationale: While the paper mentions using an API for GPT-4 and setting temperature to zero, it does not record the access date for all models in a way that satisfies the rule for 'reported runs' comprehensively, nor does it explicitly list system prompts for all runs in the excerpts provided (only mentions 'standard system prompt' for GPT-4 and 'safety-emphasising system prompt' for others generally). Specifically, it lacks the specific access dates for Llama2 and Mistral inference runs in the text excerpts, only mentioning collection dates for responses which might be distinct from access dates, and omits specific inference parameters for non-zero-temperature runs if any existed (though it says zero). However, the biggest missing piece is the explicit recording of system prompts for all models in the excerpts (only GPT-4's is quoted).
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
+        quote: "For   GPT-4 , we use the standard system prompt: “You are a helpful assistant.”"
         locator: 2308.01263v3 page 13, chunk 1
-        quote: |-
-          set the temperature to
-          zero to make responses deterministic.
-    by: model
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r8.b:
     value: unmet
     rationale: There is no mention of fixing or reporting random seeds for data sampling or inference.
@@ -283,29 +264,19 @@ verdicts:
     by: model
     quotes_verified: true
   r9.b:
-    value: met
-    rationale: The benchmark argues that its scenarios (safe prompts that look unsafe) are used to identify 'lexical overfitting' and the balance between helpfulness and harmlessness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 2, chunk 0
-        quote: |-
-          Our findings
-          suggest that exaggerated safety is a consequence
-          of lexical overfitting, whereby models are overly
-          sensitive to certain words or phrases.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark argues that its scenarios resemble real use by testing for 'exaggerated safety' which is a risk in deployment, and acknowledges limitations by stating the prompts are short, simple, and single-turn."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.c:
-    value: met
-    rationale: The benchmark explicitly states it evaluates in single-turn settings, but the decision rule for 'met' is whether it includes multi-turn evaluation. It does not. However, the n/a condition applies if no risk targets emerge over extended interaction. The targeted risk is 'exaggerated safety' based on lexical triggers in single prompts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 9, chunk 1
-        quote: evaluate in single-turn conversational settings.
+    value: unmet
     by: model
+    rationale: The benchmark explicitly states it evaluates in single-turn settings, so it does not include multi-turn evaluation. The n/a condition is not met because the risk of 'exaggerated safety' (refusing safe prompts) can emerge in single-turn interactions, so the risk does not exclusively emerge over extended interaction.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.d:
     value: n/a
     rationale: The benchmark uses hand-crafted prompts, not in-the-wild data collection constrained by privacy.
@@ -351,3 +322,14 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 30 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r1.a
+      - r3.b
+      - r7.d
+      - r8.a
+      - r9.b
+      - r9.c

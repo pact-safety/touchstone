@@ -2,13 +2,15 @@
 benchmark: decodingtrust
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v5
   repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
@@ -47,23 +49,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.03:
-    value: met
-    rationale: The documentation provides sampling settings (temperature, max tokens), model versions, and system prompts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 10, chunk 3
-        quote: we can set specific parameters, such as temperature and maximum tokens
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 10, chunk 3
-        quote: we utilized the March 14th version of GPT-4 ( gpt-4-0314 ), and the March 1st version of GPT-3.5 ( gpt-3.5-turbo-0301 )
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 11, chunk 2
-        quote: we generate up to 150 tokens, set the temperature parameter to 1, and use a top- p value of 1
+    value: unmet
     by: model
+    rationale: While some parameters like temperature and model versions are mentioned, the full prompt templates are not provided in the excerpts (only references to figures/appendices), and harness/sandbox configurations are not detailed.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.04:
     value: met
     rationale: The benchmark uses a zero-shot baseline to control for the effect of spurious correlations in demonstrations.
@@ -95,25 +86,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.07:
-    value: met
-    rationale: The paper reports manual inspection of model outputs, specifically noting sarcastic responses from GPT-4.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 84, chunk 1
-        quote: upon manual evaluation of the model outputs, we observe that sometimes GPT-4 would agree with a statement sarcastically
+    value: unmet
     by: model
+    rationale: The excerpts do not report a manual inspection of model outputs or trajectories with specific sample sizes and findings of error analysis.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.08:
-    value: met
-    rationale: The benchmark uses PerspectiveAPI for toxicity, and the text notes that these automatic evaluations generally align with human judgments.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 57, chunk 1
-        quote: the automatic evaluations performed by PerspectiveAPI are shown generally align with human judgments
+    value: unmet
     by: model
+    rationale: The excerpts do not describe blinding procedures or report inter-annotator agreement figures for human labels.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: unmet
     rationale: The excerpts do not state that the harness stores or releases the full model outputs per item for evaluator review.
@@ -156,25 +141,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.03:
-    value: met
-    rationale: The evaluation spread is described across eight primary areas of trustworthiness (scenario types/domains).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 109, chunk 1
-        quote: |-
-          This project is organized around the following eight primary areas of trustworthiness, including:
-          –   Toxicity 
-          –   Stereotype and bias 
-          –   Adversarial robustness 
-          –   Out-of-Distribution Robustness 
-          –   Privacy 
-          –   Robustness to Adversarial Demonstrations 
-          –   Machine Ethics 
-          –   Fairness
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The evaluation covers diversity across multiple axes, including different model types (GPT-3.5, GPT-4, open LLMs), task formats (sentiment, NLI, moral scenarios), and robustness dimensions (adversarial, OOD style, knowledge)."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.01:
     value: unmet
     rationale: The excerpts do not report run-to-run variation or a statement that the authors reproduced their own headline numbers.
@@ -203,22 +177,21 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.05:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper and README provide details on how items are constructed, how models are queried, and how outputs are scored."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.06:
-    value: met
-    rationale: The software environment is provided as a Docker image, and a Conda environment with specific versions is listed.
-    evidence:
-      - source: repo
-        url: https://github.com/AI-secure/DecodingTrust/tree/161ae8321ced62f45fcd9ceb412e05b47c603cd4
-        locator: AI-secure/DecodingTrust@161ae8321ced:README.md, chunk 11
-        quote: To use DecodingTrust with docker, simply pull the following docker image.
+    value: unmet
     by: model
+    rationale: While Docker images and Singularity containers are provided, the excerpts do not explicitly state that the software environment is pinned via a lockfile or that the compute needed for a full run is stated.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.07:
     value: met
     rationale: The prompts and system prompts used to query the models are released in the repository and described in the paper.
@@ -239,3 +212,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 14 verdicts agreed, 8 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.03
+      - iv.07
+      - iv.08
+      - ev.03
+      - rp.06

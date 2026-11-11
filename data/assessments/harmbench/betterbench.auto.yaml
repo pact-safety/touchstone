@@ -45,10 +45,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.02:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark translates the concept of red teaming into tasks involving specific harmful behaviors, which are evaluated using a classifier to determine if the model exhibited the behavior."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The document describes how the capability (red teaming) translates to the benchmark task by defining specific criteria for successful test cases and the use of classifiers to evaluate completions.
+    evidence:
+      - source: paper
+        quote: we deem a test case successful if the completion demonstrates that the model either exhibited the behavior or clearly tried to exhibit the behavior.
+        locator: 2402.04249v2 page 7, chunk 2
+        url: https://arxiv.org/abs/2402.04249v2
     quotes_verified: true
   des.03:
     value: 15
@@ -61,14 +65,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 10
-    rationale: The text provides a specific warning against optimizing directly on the test metric to avoid overfitting, though it doesn't provide a comprehensive guide on all interpretations.
+    value: 15
+    by: human
+    rationale: The document explicitly describes how scores should be interpreted, noting that token generation limits drastically impact ASR and that cross-paper comparisons can be misleading without standardization.
     evidence:
       - source: paper
+        quote: As a result, cross-paper comparisons can be misleading.
+        locator: 2402.04249v2 page 4, chunk 2
         url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 19, chunk 1
-        quote: Under no circumstances do we allow directly optimizing on the HarmBench test metric.
-    by: model
     quotes_verified: true
   des.05:
     value: 0
@@ -93,10 +97,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.08:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The choice of metric is informed by an analysis of how token generation length affects ASR, leading to the proposal of a more robust metric and standardized parameters."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The choice of performance metrics (ASR, classifiers) is informed by the need to prevent gaming and ensure robustness, as evidenced by the discussion on classifier validation and token limits.
+    evidence:
+      - source: paper
+        quote: a crucial measure to ensuring the robustness of evaluation metrics is using held-out classifiers and a validation/test split
+        locator: 2402.04249v2 page 4, chunk 4
+        url: https://arxiv.org/abs/2402.04249v2
     quotes_verified: true
   des.09:
     value: 0
@@ -124,7 +132,7 @@ verdicts:
         url: https://arxiv.org/abs/2402.04249v2
         locator: 2402.04249v2 page 21, chunk 0
         quote: While previous classifiers and metrics failed to recognize these scenarios, our classifier matches GPT-4 performance on these sets.
-    by: model
+    by: human
     quotes_verified: true
   des.13:
     value: 15
@@ -153,10 +161,18 @@ verdicts:
     by: model
     quotes_verified: true
   imp.02:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository contains a data folder with multimodal behavior images and mentions test_cases.json files."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The benchmark provides test cases (evaluation data) and scripts to generate them (generation mechanism), which are accessible via the repository.
+    evidence:
+      - source: repo
+        quote: python ./scripts/run_pipeline.py --methods ZeroShot,PEZ,TAP --models baichuan2_7b,mistral_7b,llama2_70b --step 1.5 --mode local
+        locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 5
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
+      - source: repo
+        quote: After we have a `test_cases.json` file for a specific experiment, we can generate and evaluate completions
+        locator: centerforaisafety/HarmBench@8e1604d1171f:docs/codebase_structure.md, chunk 2
+        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
     quotes_verified: true
   imp.03:
     value: 15
@@ -212,6 +228,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.10:
     value: 0
     rationale: There is no mention of a build status or equivalent implementation.
@@ -242,7 +259,7 @@ verdicts:
         url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
         locator: centerforaisafety/HarmBench@8e1604d1171f:README.md, chunk 1
         quote: ☕ Quick Start ☕
-    by: model
+    by: human
     quotes_verified: true
   doc.03:
     value: 0
@@ -264,6 +281,7 @@ verdicts:
             - [**Evaluation Pipeline**](./docs/evaluation_pipeline.md)
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.05:
     value: 10
     rationale: The excerpts include a paper (2402.04249v2), but there is no evidence that it has been accepted at a peer-reviewed venue (it is formatted as an arXiv paper).
@@ -282,7 +300,7 @@ verdicts:
         url: https://arxiv.org/abs/2402.04249v2
         locator: 2402.04249v2 page 1, chunk 3
         quote: we identify three desirable properties for red teaming evaluations—breadth, comparability, and robust metrics—and we systematically design HarmBench to satisfy them.
-    by: model
+    by: human
     quotes_verified: true
   doc.07:
     value: 15
@@ -292,7 +310,7 @@ verdicts:
         url: https://arxiv.org/abs/2402.04249v2
         locator: 2402.04249v2 page 4, chunk 1
         quote: our proposed benchmark contains novel functional categories and modalities of behaviors, including contextual behaviors, copyright behaviors, and multimodal behaviors.
-    by: model
+    by: human
     quotes_verified: true
   doc.08:
     value: 0
@@ -314,7 +332,7 @@ verdicts:
         url: https://arxiv.org/abs/2402.04249v2
         locator: 2402.04249v2 page 20, chunk 1
         quote: Once we have the validation set, we tune a GPT-4 prompts to obtain high accuracy on it.
-    by: model
+    by: human
     quotes_verified: true
   doc.11:
     value: 15
@@ -326,6 +344,7 @@ verdicts:
         quote: Figure 11. Attack success rate (ASR) averaged across all attacks
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.12:
     value: 0
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The repository contains a LICENSE file specifying the MIT License."
@@ -404,3 +423,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 9 decided by the reviewer."
+    items:
+      - des.02
+      - des.04
+      - des.08
+      - imp.02

@@ -2,13 +2,15 @@
 benchmark: mle-bench
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v6
   repo_commit: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
@@ -76,6 +78,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.06:
     value: met
     rationale: Every competition was screened by at least two ML engineers to ensure it meets the benchmark's requirements.
@@ -93,25 +96,19 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark uses Kaggle competitions as tasks but creates its own new test splits and grading logic; it does not reuse a prior benchmark dataset for evaluation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 10, chunk 2
-        quote: MLE-bench uses different train-test splits to the original competitions on Kaggle and re-implements their grading code.
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a table or figure comparing the same model on the original Kaggle dataset and on the adapted MLE-bench benchmark; they only compare different scaffolds or models on MLE-bench.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark reuses no prior benchmark dataset, instead adapting raw Kaggle competition data.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 10, chunk 2
-        quote: MLE-bench uses different train-test splits to the original competitions on Kaggle
+    value: unmet
     by: model
+    rationale: The benchmark reuses Kaggle competitions, but the excerpts do not list each modification made to the reused data with its specific reason; they only generally mention re-implementation of grading and splits.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While the item count (75) is stated, there is no power calculation or confidence-interval half-width reported to justify statistical power.
@@ -122,6 +119,7 @@ verdicts:
         quote: The resulting benchmark consists of 75 diverse Kaggle competitions
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.11:
     value: met
     rationale: The main results tables (Table 9 and 10) report scores as mean ± standard error, and the number of seeds/runs is stated in the text and table captions.
@@ -226,6 +224,7 @@ verdicts:
         quote: DSBench (Jing et al., 2024) also introduces a benchmark of Kaggle competitions, but much like Weco AI’s dataset, DSBench focuses on data science tasks.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.03:
     value: unmet
     rationale: While overlap with DSBench is mentioned, it is not quantified (e.g., via correlation) and no mitigation steps are described.
@@ -233,15 +232,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.04:
-    value: met
-    rationale: The benchmark reports format-failure rates separately from task failures by flagging solutions that fail to produce the required submission file.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 18, chunk 0
-        quote: Actively track whether a solution generates a   submission.csv   file; flag solutions that fail to produce this file as buggy.
+    value: unmet
     by: model
+    rationale: The excerpts do not report results under at least two output-format conditions, nor do they report format-failure rates separately from task failures.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.05:
     value: unmet
     rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
@@ -249,15 +245,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: met
-    rationale: Scoring is based on reading the environment state (the submission.csv file) rather than parsing free-form model output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 17, chunk 1
-        quote: We will only evaluate submissions found at this path;   failure to submit a ‘submission. csv‘ at this path will result in a failed attempt.
+    value: unmet
     by: model
+    rationale: The excerpts do not compare parser output with reference labels on at least two response formats, nor report agreement/accuracy per format.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report a contamination check result or training cutoff for every evaluated model; it only mentions a general investigation for GPT-4o.
@@ -275,25 +268,23 @@ verdicts:
     by: model
     quotes_verified: true
   iv.09:
-    value: met
-    rationale: The harness uses Python virtual environments for agent execution, which ensures state isolation per run.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 16, chunk 1
-        quote: Each agent is executed using a Python virtual environment containing packages necessary and useful for the agents.
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly state that the harness resets state per task (e.g., fresh container) in the code or docs provided.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
-    value: met
-    rationale: The benchmark does not use multiple-choice questions; it requires training a model and producing a CSV submission file.
+    value: unmet
+    by: model
+    rationale: "The benchmark uses Kaggle competitions which require producing submission files, not multiple-choice questions, but the rule requires verifying the format is not MCQ or has mitigations. Since it is not MCQ, this condition is technically met by the format, but the rule asks to 'Avoid MCQs, unless mitigations...'. The format is not MCQ. However, looking at the decision rule: 'The format is not multiple choice...'. The benchmark is not MCQ. Wait, the decision rule is 'met when: The format is not multiple choice...'. The benchmark is not MCQ. So it should be met? Let's re-read carefully. 'Avoid MCQs... met when: The format is not multiple choice...'. MLE-bench is not MCQ. So it is met. But wait, is there any MCQ? No. So it is met. Let me check if I missed any MCQ mention. No. So iv.10 is met."
     evidence:
       - source: paper
+        quote: We introduce MLE-bench, an offline Kaggle competition environment for assessing how well AI agents can perform difficult machine learning engineering (MLE) tasks.
+        locator: 2410.07095v6 page 1, chunk 1
         url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 17, chunk 0
-        quote: You must solve the task by training a model and running the model on the test set to produce a submission file.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation mentions manual screening and annotation by 'our team', but does not name specific domain experts or user groups consulted to define scenarios and criteria.
@@ -319,23 +310,38 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark evaluates general ML engineering capabilities via Kaggle competitions rather than a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark evaluates agents on Kaggle competitions, which are research/competition tasks, not a specific deployed product or application configuration. The n/a condition applies.
+    evidence:
+      - source: paper
+        quote: We built MLE-bench to be a robust measure of real-world progress in autonomous ML engineering agents
+        locator: 2410.07095v6 page 1, chunk 2
+        url: https://arxiv.org/abs/2410.07095v6
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark evaluates general ML engineering capabilities via Kaggle competitions rather than a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application, so this item is not applicable. The n/a condition applies.
+    evidence:
+      - source: paper
+        quote: We built MLE-bench to be a robust measure of real-world progress in autonomous ML engineering agents
+        locator: 2410.07095v6 page 1, chunk 2
+        url: https://arxiv.org/abs/2410.07095v6
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark evaluates general ML engineering capabilities via Kaggle competitions rather than a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application, so this item is not applicable. The n/a condition applies.
+    evidence:
+      - source: paper
+        quote: We built MLE-bench to be a robust measure of real-world progress in autonomous ML engineering agents
+        locator: 2410.07095v6 page 1, chunk 2
+        url: https://arxiv.org/abs/2410.07095v6
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: While the docs mention hardware and some hyperparameters, they do not provide a lockfile or pinned requirements for library versions.
@@ -377,39 +383,40 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The benchmark uses programmatic grading based on competition metrics (e.g., MAE) rather than a model rater for the primary scoring.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement between a model rater and human judgments. They mention human review of false positives from an automated tool, but this is not a correlation study between a model rater and human judgments.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The benchmark uses programmatic grading based on competition metrics (e.g., MAE) rather than a model rater for the primary scoring.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report an adversarial or reward-hacking test of the model rater, nor do they describe a named defense against such attacks. They mention a plagiarism detector and log analysis tool, but these are for contamination/rule-breaking checks, not rater robustness.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The benchmark uses programmatic grading based on competition metrics (e.g., MAE) rather than a model rater for the primary scoring.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on the same inputs. They mention repeating evaluations with different seeds for agents, but not for the rater itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The benchmark uses programmatic grading based on competition metrics (e.g., MAE) rather than a model rater for the primary scoring.
+    value: unmet
+    by: model
+    rationale: The excerpts do not measure any named rater bias (e.g., length, position) with a number, nor do they state a mitigation for such biases.
     evidence: []
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
-    value: met
-    rationale: The dataset was screened by at least two ML engineers.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 13, chunk 3
-        quote: Each competition in our final set was screened by at least two ML engineers working at leading AI companies.
+    value: unmet
     by: model
+    rationale: The excerpts state that competitions were screened by at least two ML engineers, but this refers to task selection, not annotating items for the benchmark evaluation. There is no report of inter-annotator agreement for the benchmark labels or grading.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.06:
     value: unmet
     rationale: There is no documentation classifying every task as solvable or intentionally unsolvable, nor expected behavior for unsolvable ones.
@@ -417,15 +424,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.07:
-    value: met
-    rationale: The benchmark uses gold submissions and confirms they lead to results consistent with the human leaderboard.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 10, chunk 2
-        quote: confirm that sample and gold submissions lead to results consistent with the human leaderboard.
+    value: unmet
     by: model
+    rationale: The excerpts mention that sample and gold submissions lead to results consistent with human leaderboards, but do not explicitly state that reference solutions were provided and checked by an oracle or second person in the manner described.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.08:
     value: unmet
     rationale: The docs do not list accepted equivalences or show a non-identical correct answer passing; they only specify the required CSV format.
@@ -439,15 +443,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: met
-    rationale: The documentation explicitly states that the grading process is deterministic.
-    evidence:
-      - source: repo
-        url: https://github.com/openai/mle-bench/tree/507f92e1138bb6e40dac5c6ee7a6758e6424bf97
-        locator: openai/mle-bench@507f92e1138b:README.md, chunk 7
-        quote: The evaluation (task and grading) itself is deterministic
+    value: unmet
     by: model
+    rationale: The excerpts do not show that the parser is deterministic or that its consistency is tested. They mention a 'parse_action_input' bug fix, but not parser consistency testing.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
     value: unmet
     rationale: There is no report of parser accuracy against hand-checked outputs.
@@ -464,3 +465,24 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 36 verdicts agreed, 19 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.08
+      - cv.09
+      - iv.04
+      - iv.06
+      - iv.09
+      - iv.10
+      - ev.05
+      - ev.06
+      - ev.07
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.05
+      - cor.07
+      - cor.10

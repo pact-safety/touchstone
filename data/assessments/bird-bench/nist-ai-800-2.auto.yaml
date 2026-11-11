@@ -122,6 +122,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4b:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The total number of questions and the split of databases (training, development, testing) are stated."
@@ -161,11 +162,20 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.1b:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a development set separate from the test set."
-    evidence: []
+    value: met
     by: model
+    rationale: The documentation explicitly states that the data is divided into training, development, and testing sets, with the development set being public and distinct from the test set.
+    evidence:
+      - source: paper
+        quote: "In B IRD , we divide it into three sets: training, development, and testing. Training and development sets are public while testing data set is hidden"
+        locator: 2305.03111v3 page 17, chunk 2
+        url: https://arxiv.org/abs/2305.03111v3
+      - source: paper
+        quote: Our data consists of 9,428 instances for the training set, 1,534 instances for the development set, and 1,789 instances for the concealed test set.
+        locator: 2305.03111v3 page 17, chunk 3
+        url: https://arxiv.org/abs/2305.03111v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2a:
     value: met
     rationale: The benchmark specifies that temperature is set to 0 for reproduction.
@@ -177,25 +187,19 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2b:
-    value: met
-    rationale: The benchmark refers to a detailed prompt design shown in Figure 9.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 22, chunk 3
-        quote: The detailed prompt design is shown in Figure 9.
+    value: unmet
     by: model
+    rationale: While the paper mentions prompt designs (e.g., Figure 9) and strategies like COT, it does not provide the exact verbatim prompt text or templates in the provided excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2c:
-    value: met
-    rationale: The benchmark specifies the use of the Azure OpenAI API and programming-based prompts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 22, chunk 2
-        quote: We employ programming-based prompts, as described in [ 39 ], to collect results by calling the API. Also, we choose the Azure OpenAI API
+    value: unmet
     by: model
+    rationale: The excerpts do not specify which tools or agent scaffolds are available to the model; they focus on text-to-SQL generation without mentioning agentic tool use.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2d:
     value: unmet
     rationale: The benchmark does not provide a container image, VM, or full OS/package specification for the execution environment.
@@ -261,15 +265,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.2:
-    value: met
-    rationale: The benchmark specifies the use of HashSet to compare results to handle ambiguity in row order and duplicates.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 24, chunk 4
-        quote: Therefore, we use HashSet rather than List to compare final results since HashSet disregards row order and automatically filters repetitive rows
+    value: unmet
     by: model
+    rationale: The excerpts do not specify the required answer format or ship the logic that extracts answers from responses.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.3:
     value: unmet
     rationale: There is no record of version identifiers or a changelog for the benchmark.
@@ -287,14 +288,10 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.5:
-    value: met
-    rationale: The harness supports multiple providers including Codex, ChatGPT, GPT-4, Claude-2, and Palm-2.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 7, chunk 1
-        quote: we provide zero-shot results of Codex ( code-davinci-002 ), ChatGPT ( gpt-3.5-turbo ), GPT-4 ( gpt-4-32k ), Claude-2 ( claude-2.0 ), Palm-2 ( text-bison-001 ).
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts do not show that the harness can run models from different providers without code changes.
+    evidence: []
     quotes_verified: true
   2.3.1:
     value: unmet
@@ -350,6 +347,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
     value: met
     rationale: Scores are reported separately for subsets based on difficulty (simple, moderate, challenging).
@@ -397,15 +395,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.2:
-    value: met
-    rationale: The benchmark provides a validity argument that existing benchmarks lack focus on values, creating a gap with real-world applications.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 17, chunk 0
-        quote: current cross-domain text-to-SQL benchmarks only focus on the database schema, which lacks full attention to values, resulting in a gap between academic and real-world applications.
+    value: unmet
     by: model
+    rationale: The excerpts assert the benchmark's value but do not present a validity argument or empirical evidence linking scores to the construct.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2a:
     value: met
     rationale: The benchmark claims to represent real-world scenarios and notes that self-designed schemas may differ from real-world scenarios.
@@ -416,6 +411,7 @@ verdicts:
         quote: the value distribution and schemas may differ from real-world scenarios in this way.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.3:
     value: met
     rationale: The benchmark describes the baseline models (fine-tuning and ICL) and the hardware (NVIDIA Tesla A100 80GB) used for experiments.
@@ -446,3 +442,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 8 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - 2.1.1b
+      - 2.1.2b
+      - 2.1.2c
+      - 2.2.2
+      - 2.2.5
+      - 3.3.2

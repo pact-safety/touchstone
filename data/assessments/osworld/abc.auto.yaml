@@ -2,13 +2,15 @@
 benchmark: osworld
 standard: abc
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 044bc33901cb893808e3f91ebc9a17ed8e54b44c
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   O.a.1:
-    value: n/a
-    rationale: The benchmark uses executable evaluation scripts and state checks rather than scoring by string matching.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 8, chunk 3
-        quote: the OSW ORLD benchmark provides example-wise, execution-based evaluation for tasks
+    value: unmet
     by: model
+    rationale: The excerpts do not document string matching equivalences or show that semantically equivalent expressions are accepted. The benchmark uses executable evaluation scripts rather than string matching.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.2:
     value: n/a
     rationale: The benchmark uses executable evaluation scripts and state checks rather than scoring by string matching.
@@ -85,25 +84,19 @@ verdicts:
     by: model
     quotes_verified: true
   O.b.1:
-    value: n/a
-    rationale: No LLM judge is used for scoring; evaluation is based on executable scripts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 8, chunk 3
-        quote: the OSW ORLD benchmark provides example-wise, execution-based evaluation for tasks
+    value: unmet
     by: model
+    rationale: The excerpts do not report judge accuracy, self-consistency, or agreement with humans for an LLM judge. The evaluation is performed via executable scripts, not an LLM judge.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.b.2:
-    value: n/a
-    rationale: No LLM judge is used for scoring; evaluation is based on executable scripts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 8, chunk 3
-        quote: the OSW ORLD benchmark provides example-wise, execution-based evaluation for tasks
+    value: unmet
     by: model
+    rationale: The excerpts do not report results of adversarial inputs against an LLM judge, nor do they describe an LLM judge defense. The evaluation is script-based.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.c.1:
     value: met
     rationale: The documentation states that each example is scrutinized and iterated upon by different individuals three times for correctness.
@@ -173,35 +166,26 @@ verdicts:
     by: model
     quotes_verified: true
   O.g.1:
-    value: n/a
-    rationale: The benchmark does not score by matching a final answer string, but by execution scripts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 8, chunk 3
-        quote: the OSW ORLD benchmark provides example-wise, execution-based evaluation for tasks
+    value: unmet
     by: model
+    rationale: The excerpts do not state that task prompts specify the required answer format; tasks are open-ended GUI interactions.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.g.2:
-    value: n/a
-    rationale: The benchmark does not score by matching a final answer string, but by execution scripts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 8, chunk 3
-        quote: the OSW ORLD benchmark provides example-wise, execution-based evaluation for tasks
+    value: unmet
     by: model
+    rationale: The excerpts do not state the answer-space size or chance success rate, nor do they mention chance-corrected scoring.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.h.1:
-    value: n/a
-    rationale: The benchmark uses binary success/failure based on scripts rather than a continuous quality metric.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 8, chunk 3
-        quote: the OSW ORLD benchmark provides example-wise, execution-based evaluation for tasks
+    value: unmet
     by: model
+    rationale: The excerpts do not report any exploit attempts against a continuous quality metric.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.1:
     value: unmet
     rationale: While some packages in setup.py have versions, many (e.g., 'fabric', 'requests') do not, and there is no mention of a lockfile for all tools.
@@ -313,15 +297,12 @@ verdicts:
     by: model
     quotes_verified: true
   R.4:
-    value: met
-    rationale: The README contains a dated update log showing versioned updates and fixes.
-    evidence:
-      - source: repo
-        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
-        locator: xlang-ai/OSWorld@044bc33901cb:README.md, chunk 2
-        quote: "2025-07-28: Introducing **OSWorld-Verified**! We have made major updates, fixed several issues reported by the community"
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The README lists dated updates and fixes, indicating a versioned update process."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.5:
     value: unmet
     rationale: While it mentions capabilities and outcomes, it does not provide a single quotable statement explaining why a specific measure indicates a specific capability.
@@ -339,15 +320,12 @@ verdicts:
     by: model
     quotes_verified: true
   R.7:
-    value: met
-    rationale: The benchmark describes a correction channel (community reports) and a recorded fix in the update log.
-    evidence:
-      - source: repo
-        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
-        locator: xlang-ai/OSWorld@044bc33901cb:README.md, chunk 2
-        quote: fixed several issues reported by the community
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The README documents updates and fixes for issues reported by the community, serving as a correction channel."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.8:
     value: unmet
     rationale: The excerpts do not name specific unavoidable flaws and their likely direction of effect on results.
@@ -373,15 +351,12 @@ verdicts:
     by: model
     quotes_verified: true
   R.12:
-    value: met
-    rationale: The benchmark reports and compares agent performance against human performance.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 3, chunk 0
-        quote: We also observe performance changes in these agents compared to consistent human performance
+    value: unmet
     by: model
+    rationale: The excerpts mention human performance in the context of comparison but do not report specific human baseline scores in the provided text.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.13:
     value: unmet
     rationale: There is no report of a score for a do-nothing or trivial agent.
@@ -392,3 +367,17 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 34 verdicts agreed, 9 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - O.a.1
+      - O.b.1
+      - O.b.2
+      - O.g.1
+      - O.g.2
+      - O.h.1
+      - R.4
+      - R.7
+      - R.12

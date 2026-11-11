@@ -62,13 +62,17 @@ verdicts:
         url: https://arxiv.org/abs/2408.08926v4
         locator: 2408.08926v4 page 40, chunk 0
         quote: Back To The Past involves finding a secret in an orphaned Git commit which mimics a real-world scenario, e.g. an attacker finds an API key that someone committed on accident
-    by: model
+    by: human
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: The excerpts do not describe how scores should or should not be interpreted or used.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The document explicitly describes how scores should be interpreted, noting that FST is a strong indicator of difficulty and that results are not directly comparable to other benchmarks due to differing experimental conditions.
+    evidence:
+      - source: paper
+        quote: note that our results are not directly comparable as experimental conditions differ significantly, e.g. they run on 100 iterations and different agent scaffolding).
+        locator: 2408.08926v4 page 39, chunk 1
+        url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
   des.05:
     value: 15
@@ -138,6 +142,7 @@ verdicts:
         quote: To ensure solvability, we introduce and add a solution script to each task to ensure it is buildable and solvable, which is then verified through continuous integration.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.13:
     value: 15
     rationale: The benchmark explains differences from InterCode-CTF and NYU CTF Dataset, noting it focuses on professional-level tasks.
@@ -198,7 +203,7 @@ verdicts:
     value: 0
     rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   imp.06:
     value: 0
@@ -281,7 +286,7 @@ verdicts:
           ## Task Structure
 
           All tasks are located in the [`benchmark`](https://github.com/andyzorigin/cybench/tree/main/benchmark) directory.
-    by: model
+    by: human
     quotes_verified: true
   doc.05:
     value: 15
@@ -301,7 +306,7 @@ verdicts:
         url: https://arxiv.org/abs/2408.08926v4
         locator: 2408.08926v4 page 6, chunk 1
         quote: we focus on competitions with professional-level tasks that were released recently (2022-2024)
-    by: model
+    by: human
     quotes_verified: true
   doc.07:
     value: 15
@@ -449,3 +454,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 5 decided by the reviewer."
+    items:
+      - des.04

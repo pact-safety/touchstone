@@ -35,11 +35,16 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   O.a.1:
-    value: n/a
-    rationale: The benchmark uses end-to-end tests for IC SWE tasks and matching against ground truth IDs for Manager tasks, not string matching of answers.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark uses end-to-end tests, not string matching, so this item is not applicable to the scoring method described. However, the n/a condition for O.a.1 is 'The benchmark does not score by string matching'. The excerpts confirm it uses end-to-end tests. Thus, it is n/a.
+    evidence:
+      - source: paper
+        quote: SWE-Lancer evaluates IC SWE tasks using end-to-end tests created by a team of professional software engineers.
+        locator: 2502.12115v4 page 1, chunk 3
+        url: https://arxiv.org/abs/2502.12115v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.2:
     value: n/a
     rationale: The benchmark does not score by string matching.
@@ -70,6 +75,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.b.2:
     value: n/a
     rationale: No LLM judge is used.
@@ -114,7 +120,7 @@ verdicts:
     value: unmet
     rationale: While tests are described as comprehensive, no specific coverage figure or list of exercised components is provided.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   O.e.2:
     value: unmet
@@ -157,11 +163,16 @@ verdicts:
     by: model
     quotes_verified: true
   O.h.1:
-    value: n/a
-    rationale: The benchmark uses binary success (pass/fail) or matching, not a continuous quality metric.
-    evidence: []
+    value: unmet
     by: model
+    rationale: No continuous quality metric is used. The benchmark uses binary pass/fail for tasks (resolved or not) and payout. There is no continuous quality metric to exploit.
+    evidence:
+      - source: paper
+        quote: We track the percent of tasks resolved and the total payout earned by the model
+        locator: 2502.12115v4 page 4, chunk 1
+        url: https://arxiv.org/abs/2502.12115v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.1:
     value: unmet
     rationale: The excerpts mention a pre-built Docker image and libraries being installed, but do not specify versions for the tools or provide a lockfile.
@@ -186,6 +197,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.5:
     value: met
     rationale: The harness uses Docker containers with no internet access and removes GitHub remotes to prevent the agent from fetching ground truth or external info.
@@ -212,6 +224,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.8:
     value: met
     rationale: The curation criteria require that the issue was resolved in the past and the fix is confirmed by local execution.
@@ -240,6 +253,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.2:
     value: met
     rationale: The authors explicitly mention providing an open-source evaluation harness.
@@ -272,6 +286,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.6:
     value: met
     rationale: The text states that models operate with a basic scaffold to interact with the codebase.
@@ -288,6 +303,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.8:
     value: unmet
     rationale: The text discusses contamination as a limitation but does not name specific unavoidable flaws with their likely direction of effect on results.
@@ -306,6 +322,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.11:
     value: unmet
     rationale: No specific caveats are attached to named flaws that explicitly state which conclusions should not be drawn.
@@ -328,3 +345,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 9 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - O.a.1
+      - O.h.1

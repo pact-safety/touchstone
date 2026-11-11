@@ -2,13 +2,15 @@
 benchmark: impossiblebench
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
@@ -80,6 +82,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iii:
     value: met
     rationale: The report describes the creation of impossible tasks via mutation strategies and details the quality control process of verifying validity against original and empty patches.
@@ -130,6 +133,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.v-b:
     value: met
     rationale: The report describes the automated grading process for cheating classification, including the prompt used to judge if a transcript is 'cheating' or 'legit'.
@@ -146,6 +150,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.i:
     value: met
     rationale: The report provides specific model identifiers such as 'Claude Sonnet 3.7' and 'GPT-4.1'.
@@ -191,35 +196,40 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-a:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for performance comparison.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe a human baseline sample or recruitment; the benchmark focuses on AI agents and cheating propensity.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for performance comparison.
-    evidence: []
+    value: unmet
     by: model
+    rationale: No human performance statistics or comparisons with AI test results are reported in the provided excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-c:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for performance comparison.
-    evidence: []
+    value: unmet
     by: model
+    rationale: There is no description of how human performance was elicited, as no human baseline is mentioned.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
     value: unmet
     rationale: The excerpts do not provide a reason why a human baseline would be inappropriate or infeasible.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-b:
     value: unmet
     rationale: The excerpts do not provide an alternative comparison point to a human baseline, nor an explanation for one.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.i:
     value: unmet
     rationale: The report discusses cheating behaviors and rates, but there are no overall conclusions about model capabilities or risk levels that cite specific tables, figures, or numbers as required by the rule.
@@ -254,3 +264,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 20 verdicts agreed, 8 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s5.i-a
+      - s5.i-b
+      - s5.i-c

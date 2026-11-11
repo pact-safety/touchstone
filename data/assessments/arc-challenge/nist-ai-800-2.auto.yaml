@@ -2,13 +2,15 @@
 benchmark: arc-challenge
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
 model_run:
@@ -90,6 +92,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2c:
     value: n/a
     rationale: The benchmark makes no claim that its scores predict any downstream outcome.
@@ -122,6 +125,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4b:
     value: met
     rationale: The total item count and the counts for the Challenge and Easy subsets are provided.
@@ -138,6 +142,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4d:
     value: unmet
     rationale: No canary strings are mentioned in the provided excerpts.
@@ -247,15 +252,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.1:
-    value: met
-    rationale: The benchmark provides a link to public code that implements the baseline solvers.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 7, chunk 3
-        quote: Code available at https://github.com/allenai/arc-solvers
+    value: unmet
     by: model
+    rationale: The excerpts mention code availability for solvers but do not provide runnable evaluation code that runs the end-to-end evaluation with logging instructions.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.2:
     value: unmet
     rationale: While the scoring rubric is provided, the documentation does not provide the logic/code that extracts answers from model responses.
@@ -312,6 +314,7 @@ verdicts:
         quote: Which item below is not made from a material grown in nature?
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.5:
     value: n/a
     rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
@@ -329,25 +332,19 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2D:
-    value: met
-    rationale: The benchmark publishes scores for several baseline models on the test sets.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 7, chunk 1
-        quote: Table 6 summarizes the scores obtained by various baseline algorithms on the test partitions
+    value: unmet
     by: model
+    rationale: The excerpts provide baseline scores but do not publish reference results with the exact model version and protocol used for external verification.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
-    value: met
-    rationale: The benchmark reports scores separately for the 'Challenge' and 'Easy' subsets.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 7, chunk 2
-        quote: Solver Challenge Easy Set Set
+    value: unmet
     by: model
+    rationale: The excerpts do not report results separately for each subset, item format, or sub-construct.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
     value: met
     rationale: The benchmark defines the scoring rubric for individual items and the aggregation method (mean) for the overall score.
@@ -438,3 +435,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 44 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 2.2.1
+      - 2.4.2D
+      - 2.4.2E

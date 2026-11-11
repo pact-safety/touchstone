@@ -45,15 +45,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.1a:
-    value: met
-    rationale: The benchmark lists subject areas including algorithmic problems and multi-file software scenarios.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 2, chunk 1
-        quote: study cheating behaviors across both algorithmic problems and realistic multi-file software scenarios
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation lists specific subject areas/task categories: LiveCodeBench (coding tasks) and SWE-bench (software engineering/bug fixing)."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1b:
     value: unmet
     rationale: The documentation discusses the effect of task difficulty but does not state a specific intended difficulty level or target population for the items.
@@ -136,12 +133,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4c:
     value: unmet
     rationale: There is no mention of a private split, contamination analysis, or specific date-based creation to reduce training-data contamination.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4d:
     value: unmet
     rationale: No canary strings are mentioned in the documentation or data descriptions.
@@ -164,6 +163,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.1b:
     value: unmet
     rationale: The excerpts mention 'original', 'oneoff', and 'conflicting' splits, but these are task variants, not a separate development/validation split for optimization.
@@ -192,6 +192,7 @@ verdicts:
           Implement the function according to the provided specification.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2c:
     value: met
     rationale: The benchmark defines a minimal scaffold without tools and a full scaffold with specific tools (bash, python, text_editor, think).
@@ -315,15 +316,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.3.1:
-    value: met
-    rationale: The analysis tools load logs from a folder, and the judge analyzes transcripts, implying per-item logs are saved.
-    evidence:
-      - source: repo
-        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
-        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 3
-        quote: After running evaluations to generate logs, use the `DataLoader` class to load and analyze the results
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The analysis tools provided allow loading evaluation results which contain transcripts, implying full logs are saved."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.2:
     value: unmet
     rationale: The excerpts do not show that the output logs include the model identifier and benchmark version.
@@ -363,17 +361,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2D:
-    value: met
-    rationale: The benchmark publishes cheating rates for specific models (GPT-5, Claude Opus 4.1) and protocols (scaffolds).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 7, chunk 2
-        quote: |-
-          GPT-5’s cheating rate on 
-          Conflicting-SWEbench   with full scaffold rises from 54% to 66%
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides replication scripts and instructions to replicate paper results, implying reference results are available for comparison."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
     value: met
     rationale: The benchmark reports results by subset (oneoff, conflicting) and scaffold type.
@@ -385,35 +378,26 @@ verdicts:
     by: model
     quotes_verified: true
   3.1.2:
-    value: met
-    rationale: The benchmark defines the headline metric as 'cheating rates' and specifies that a score of 0% is ideal.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 2, chunk 1
-        quote: A score of 0% on these impossible tasks is ideal
+    value: unmet
     by: model
+    rationale: The excerpts describe the benchmark's goal and methodology but do not define the specific headline metric (e.g., 'cheating rate') or the precise aggregation functions (e.g., mean, pass@k) used to calculate scores across trials or items.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.3:
-    value: met
-    rationale: The benchmark reports results with 90% confidence intervals.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 7, chunk 1
-        quote: together with 90% confidence intervals
+    value: unmet
     by: model
+    rationale: While Figure 6 mentions '90% confidence intervals' for cheating rates, the excerpts do not explicitly state that the reported scores carry standard errors or confidence intervals as a standard reporting practice for all results, nor do they name the method for uncertainty estimation in the context of the headline metric definition.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.1:
-    value: met
-    rationale: The repository provides replication scripts that use the exact configuration from the paper experiments.
-    evidence:
-      - source: repo
-        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
-        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 2
-        quote: These commands use the exact configuration from our paper experiments
+    value: unmet
     by: model
+    rationale: The excerpts mention an 'Inspect AI implementation' and 'demo.py' scripts, but do not provide a structured config file, schema, or report template that captures protocol settings and results for evaluators to use.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.2:
     value: unmet
     rationale: There is no mention of a downloadable file containing per-item scores for reference runs.
@@ -433,15 +417,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.2:
-    value: met
-    rationale: The benchmark provides a validity argument that scores serve as a proxy for cheating propensity because tasks are impossible to complete without cheating.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 2, chunk 3
-        quote: the scores agents obtain on this benchmark can serve as a noiseless proxy for their cheating propensity
+    value: unmet
     by: model
+    rationale: The excerpts assert that scores serve as a 'noiseless proxy for their cheating propensity' but do not provide a validity argument or empirical evidence (like expert review or correlation with other measures) to support this link.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2a:
     value: met
     rationale: The benchmark claims to simulate real-world setups and states that providing read/write access to tests differs from original benchmarks but reflects real software engineering.
@@ -453,11 +434,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: n/a
-    rationale: The benchmark reports model performance but does not report a human or non-model baseline for comparison.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report any baseline results (e.g., human performance) or describe the conditions under which such a baseline was measured.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: unmet
     rationale: The documentation does not explicitly name a conclusion that the scores do not support.
@@ -474,3 +456,15 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 12 settled by adjudicator-v4."
+    items:
+      - 1.2.1a
+      - 2.3.1
+      - 2.4.2D
+      - 3.1.2
+      - 3.1.3
+      - 3.2.1
+      - 3.3.2
+      - 3.3.3

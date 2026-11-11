@@ -35,15 +35,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The benchmark shows that no current defense is uniformly effective and that the most robust model still has room for improvement, as all LLMs have poor robustness against at least one attack.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 9, chunk 2
-        quote: Notably, no current attack or defense is uniformly effective.
+    value: unmet
     by: model
+    rationale: The excerpts do not provide current best reported scores, maximum achievable ceilings, or evidence of headroom/saturation analysis for HarmBench. The text focuses on method development and robustness comparisons rather than benchmark saturation metrics.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: met
     rationale: The benchmark implements a contamination defense by providing canonical validation and test splits that are intended for evaluation only and should not be used for development.
@@ -114,3 +111,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4."
+    items:
+      - c1

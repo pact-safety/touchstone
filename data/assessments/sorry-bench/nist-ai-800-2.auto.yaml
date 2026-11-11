@@ -198,6 +198,7 @@ verdicts:
           records (used to directly train evaluators), and the rest 4,400 as the   test   split.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2a:
     value: met
     rationale: The benchmark specifies a temperature of 0.7 for its primary results.
@@ -214,6 +215,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2c:
     value: n/a
     rationale: The benchmark consists of single model responses to instructions with no tools or agent loops.
@@ -336,6 +338,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.1:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness saves answers to .jsonl files, which contain the model's responses."
@@ -442,6 +445,7 @@ verdicts:
         quote: we report the approximate   time cost 7   per evaluation pass on the SORRY-Bench dataset
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.4:
     value: unmet
     rationale: The excerpts do not provide evidence that full or representative transcripts of reference runs are downloadable.
@@ -454,6 +458,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2a:
     value: met
     rationale: The benchmark claims to reflect real-world variations via linguistic mutations and notes that its results may not reveal if a model is helpful/useful in practice.
@@ -465,11 +470,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: n/a
-    rationale: The benchmark reports results for LLMs but does not report a baseline (e.g., human or non-LLM) for comparison of model behavior.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts compare models to other benchmarks or evaluators but do not describe baseline conditions (who/what was measured, tools, incentives) for a human or other baseline.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: met
     rationale: The benchmark explicitly states that a lower fulfillment rate does not necessarily equate to greater safety.
@@ -494,3 +500,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 6 settled by adjudicator-v4."
+    items:
+      - 3.3.3

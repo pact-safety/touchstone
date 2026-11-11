@@ -2,13 +2,15 @@
 benchmark: bold
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
@@ -77,25 +79,19 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses automated metrics (classifiers) to score generated text rather than parsing free-form output for specific structured answers.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 1, chunk 1
-        quote: We also propose new automated metrics for toxicity, psycholinguistic norms, and text gender polarity
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias. They mention validating automated metrics against human annotations, but not the specific parser validation criteria listed in the rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
-    value: met
-    rationale: The authors document using English Wikipedia as a source for gathering prompts to ensure diversity across domains and demographics.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 2, chunk 5
-        quote: we take English Wikipedia as a source for gathering prompts
+    value: unmet
     by: model
+    rationale: The excerpts mention using Wikipedia as a source and describe its diversity, but they do not document a specific sampling strategy over the task space to ensure representativeness.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.2:
     value: unmet
     rationale: The excerpts do not provide evidence that every item in the dataset passed a documented quality or relevance check.
@@ -118,6 +114,7 @@ verdicts:
         quote: We presented a novel dataset BOLD
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
     value: n/a
     rationale: The benchmark is described as a novel dataset, and the excerpts do not indicate that a prior dataset was reused or adapted.
@@ -189,15 +186,12 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: met
-    rationale: The benchmark uses human ratings (subjective labels) and reports inter-annotator agreement/correlation statistics (Spearman's rho) to compare them with automatic metrics.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 9, chunk 4
-        quote: "we compute the following between labels computed with automatic metrics and labels from human annotations: (1) Spearman’s ρ correlation coefficient"
+    value: unmet
     by: model
+    rationale: The excerpts report correlation coefficients and classification metrics between automatic and human labels, but do not report a per-item disagreement distribution or an inter-annotator agreement statistic.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: met
     rationale: The authors describe specific failure modes (e.g., misclassifying neutral as male) and provide quantitative counts/rates via precision, recall, and f1-scores in Table 8.
@@ -206,7 +200,7 @@ verdicts:
         url: https://arxiv.org/abs/2101.11718v1
         locator: 2101.11718v1 page 9, chunk 5
         quote: a larger proportion of mismatch is caused by a text that is annotator’s neutral (blue curve) but automated metrics’ male
-    by: model
+    by: human
     quotes_verified: true
   ea.2:
     value: unmet
@@ -221,15 +215,12 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors propose a specific direction to improve the benchmark by expanding the data to include more domains and diverse groups.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 10, chunk 2
-        quote: One important and immediate future direction is to expand BOLD by adding data from additional domains and by including diverse groups within each domain.
+    value: unmet
     by: model
+    rationale: The excerpts mention future directions to expand the benchmark but do not report an experiment aimed at improving model scores or a specific named direction with a stated rationale for improvement.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is linked to real-world applications such as conversation bots and automatic storytelling."
@@ -243,15 +234,12 @@ verdicts:
     by: model
     quotes_verified: true
   jv.3:
-    value: met
-    rationale: The benchmark is compared to StereoSet, noting that BOLD uses prompts from Wikipedia and measures bias in generated text rather than ranking probabilities.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 2, chunk 4
-        quote: Both the dataset and evaluation metrics in [ 25 ] and [ 26 ] are fundamentally different from the work presented here.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper names StereoSet and Nangia et al. as existing benchmarks and explicitly states a difference: BOLD measures bias in generated texts rather than probability of choosing stereotypical sentences."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.4:
     value: met
     rationale: The authors state that benchmarking on BOLD is not an indication that a model is completely fair because it only covers a limited set of domains and groups.
@@ -266,3 +254,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 21 verdicts agreed, 6 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3
+      - ds.1
+      - st.4
+      - ea.4
+      - jv.3

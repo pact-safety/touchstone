@@ -40,6 +40,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.02:
     value: unmet
     rationale: While the benchmark lists 8 environments, it does not explicitly name an aspect of the agent phenomenon that is excluded or not covered.
@@ -47,35 +48,30 @@ verdicts:
     by: model
     quotes_verified: true
   cv.03:
-    value: met
-    rationale: The benchmark breaks down the phenomenon into different environments, and Table 2 reports a specific metric (e.g., SR, F1, Reward) for each.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 6, chunk 0
-        quote: "Table 2: Statistics and metrics of 8 environments in A GENT B ENCH   evaluation."
+    value: unmet
     by: model
+    rationale: The paper reports an overall score and per-environment scores, but does not provide independent reported scores for distinct sub-facets (e.g., factual accuracy vs. tone) within the environments.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
-    value: met
-    rationale: "The task space is defined by 8 environments, and Table 2 reports item counts (#Dev and #Test) for these categories."
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 6, chunk 0
-        quote: "Table 2: Statistics and metrics of 8 environments in A GENT B ENCH   evaluation."
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The docs define the task space via 8 named environments and report item counts (#Dev, #Test) for each."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.05:
-    value: met
-    rationale: Table 2 reports per-category item counts for the documented task space (the 8 environments).
+    value: unmet
+    by: model
+    rationale: The documentation states that data was 'randomly sampled' from filtered data, which the decision rule explicitly excludes as sufficient evidence for coverage.
     evidence:
       - source: paper
+        quote: We first tested the validity of the raw data and then randomly sample from each category from filtered data to form the final dataset.
+        locator: 2308.03688v3 page 25, chunk 1
         url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 6, chunk 0
-        quote: "Table 2: Statistics and metrics of 8 environments in A GENT B ENCH   evaluation."
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.06:
     value: met
     rationale: For generated QA problems in the OS task, the docs state they were 'strictly filtered by passing the unit tests'.
@@ -130,12 +126,14 @@ verdicts:
         quote: We invite 8 annotators majored in programming to select challenging ones.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.13:
     value: unmet
     rationale: Rater demographics are not reported, nor is there a check for demographic skew in judgements.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.14:
     value: n/a
     rationale: The labels are deterministic (e.g., passing unit tests, exact match, or state checks), not subjective.
@@ -157,25 +155,23 @@ verdicts:
     by: model
     quotes_verified: true
   cv.16:
-    value: met
-    rationale: Failures are broken down by named confounds/categories (Invalid Format, Invalid Action, etc.) in Table 6/Figure 6, with specific rates reported for OSS vs Commercial models.
+    value: unmet
+    by: model
+    rationale: The paper analyzes failure modes (TLE, IF, IA) but does not break down scores by confounds like formatting, language complexity, or prompt length in a table/figure showing counts/rates for those specific confounds.
     evidence:
       - source: paper
+        quote: "Context Limit Exceeded (CLE) : the length of interaction history exceeds the LLM’s maximum context length"
+        locator: 2308.03688v3 page 4, chunk 0
         url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 46, chunk 0
-        quote: Specifically, 10.4% of the Open-Sourced model outcomes were marked as Invalid Format, in comparison to the 6.0% from Commercial API-based models.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.17:
-    value: met
-    rationale: The docs report named failure categories (e.g., Task Limit Exceeded) and their ratios in Table 4.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 8, chunk 1
-        quote: The predominant failure cause in A GENT B ENCH   tasks is   Task Limit Exceeded
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The docs report named failure categories (Completed, Invalid Format, Invalid Action, Task Limit Exceeded) with counts or shares in Table 4."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.18:
     value: unmet
     rationale: The docs do not contain a single statement linking the tasks and metrics to the construct defined in cv.01 with a stated reason.
@@ -213,15 +209,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.04:
-    value: met
-    rationale: The paper reports 'Invalid Format' as a separate category of failure, distinct from task completion or other failures.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 45, chunk 2
-        quote: "Invalid Format : Denotes instances where models, despite receiving clear instructions, failed to return responses in the expected format."
+    value: unmet
     by: model
+    rationale: The excerpts do not report results under at least two output-format conditions, nor do they report format-failure rates separately from task failures in a way that isolates the effect of format requirements on scores. It mentions 'Invalid Format' errors but does not provide a comparative analysis of format effects on scores.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.05:
     value: unmet
     rationale: No prompt-perturbation experiment or variance measure for sensitivity to wording changes is reported.
@@ -229,14 +222,10 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The benchmark evaluates agents based on environment state changes (e.g., success rate in a game or OS) or specific outcome metrics rather than parsing free-form output for correctness.
-    evidence:
-      - source: repo
-        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
-        locator: THUDM/AgentBench@d1e4a10db08c:docs/Introduction_en.md, chunk 3
-        quote: We report LLMs’ win rate as the evaluation metric.
-    by: model
+    value: unmet
+    by: human
+    rationale: The evaluation involves parsing free-form output (e.g., 'Thought' and 'Action' in ReAct format, or JSON). The excerpts do not compare parser output with reference labels on at least two response formats to report agreement or accuracy per format. It mentions using BLEU for similarity if format is invalid, but not a systematic bias test across formats.
+    evidence: []
     quotes_verified: true
   iv.07:
     value: unmet
@@ -265,15 +254,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.10:
-    value: met
-    rationale: The primary evaluation is based on success rates and win rates in interactive environments, not multiple-choice questions (except for one specific sub-task in Web Browsing which is not the primary format).
+    value: unmet
+    by: model
+    rationale: "The benchmark uses tasks that are not multiple choice (e.g., OS interaction, DB, KG, Game). However, the rule requires that if the format is not multiple choice, it is met. Wait, the rule says: 'The format is not multiple choice, OR the multiple-choice results report...'. Since the benchmark is primarily not multiple choice (it's agent interaction), the first condition 'The format is not multiple choice' should be met. Let's re-read carefully. 'Avoid MCQs, unless mitigations are in place...'. The decision rule is: 'The format is not multiple choice, or the multiple-choice results report...'. AgentBench tasks are interactive agent tasks, not MCQs. Therefore, the format is not multiple choice. This condition is met."
     evidence:
       - source: paper
+        quote: All datasets, whether newly created or adapted from existing ones, are meticulously designed and reformulated to simulate interactive environments where text-only LLMs can operate as autonomous agents.
+        locator: 2308.03688v3 page 2, chunk 3
         url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 39, chunk 1
-        quote: We employ the overall   Success Rate   as a measure of model performance
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name specific domain experts or user groups consulted to define scenarios and criteria.
@@ -307,15 +297,12 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark provides a general testbed for LLM capabilities across various environments rather than claiming to evaluate a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 3, chunk 2
-        quote: offering a practical testbed for LLMs’ wide array of capabilities
+    value: unmet
     by: model
+    rationale: The benchmark evaluates LLMs in simulated environments (OS, KG, Web, Games) but does not state that the model, tools, prompt, and environment match a named deployed product or configuration. It uses simulated or scraped environments (e.g., 'simulated environment' in [paper:p38#2], 'scraped from amazon.com' in [paper:p40#1]).
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
     value: n/a
     rationale: The benchmark provides a general testbed for LLM capabilities rather than claiming to evaluate a specific deployed application.
@@ -340,7 +327,7 @@ verdicts:
     value: unmet
     rationale: While the docs mention Docker images and a temperature setting, they do not list library versions (lockfile/pinned requirements), hardware models, or the OS version.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   rel.02:
     value: unmet
@@ -377,43 +364,40 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The provided excerpts do not indicate that a model is used as a rater or judge for the ground truth; evaluation is based on success rates, F1, and programmatic checking pipelines.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement between a model rater and human judgments. While [paper:p35#0] mentions comparing automatic evaluation with human evaluation, it states they 'found that automatic evaluation sometimes more tolerate for the agent', which is a qualitative observation of bias rather than a reported correlation or agreement metric (e.g., kappa, Pearson r) required by the decision rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The provided excerpts do not indicate that a model is used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report an adversarial or reward-hacking test of the model rater, nor do they describe a named defense against adversarial inputs for the rater itself. The defenses mentioned (e.g., unit tests, checking pipelines) are for the agent's output verification, not the rater's robustness.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The provided excerpts do not indicate that a model is used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across at least two repeated rating runs on the same inputs. While [paper:p33#1] mentions randomness in game generation, it does not describe a consistency test of the rater itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The provided excerpts do not indicate that a model is used as a rater or judge.
+    value: unmet
+    by: model
+    rationale: The excerpts do not measure any named rater bias with a number and state a mitigation. [paper:p26#1] discusses bias in data augmentation and shows scoring patterns, but this is about the dataset generation, not the rater's systematic bias in scoring.
     evidence: []
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
-    value: met
-    rationale: The OS dataset used 8 human annotators to select challenging problems and conducted cross-verification for each sample.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 22, chunk 0
-        quote: We invite 8 annotators majored in programming to select challenging ones.
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 22, chunk 1
-        quote: Finally, we conduct a cross verification for each evaluation sample to make sure it’s correct.
+    value: unmet
     by: model
+    rationale: The excerpts do not report inter-annotator agreement (e.g., Cohen's kappa) for multiple annotators labeling items. [paper:p22#0] mentions 8 annotators selecting problems, but does not report agreement metrics for the labeling of the final evaluation items.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.06:
     value: unmet
     rationale: While some tasks are described as solvable, there is no documentation classifying every task as either solvable or intentionally unsolvable with expected behaviors for the latter.
@@ -435,15 +419,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.08:
-    value: met
-    rationale: The benchmark specifies that for single number answers in selection-type problems, equivalent representations are accepted.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 25, chunk 0
-        quote: If the answer is a single number, all equivalent representations are accepted (e.g., 5, "5.0", ’+5’ are considered identical).
+    value: unmet
     by: model
+    rationale: The excerpts do not list accepted equivalences or show that non-identical correct answers pass. [paper:p25#0] mentions 'all equivalent representations are accepted (e.g., 5, "5.0", ’+5’ are considered identical)' for Database tasks, but does not provide a comprehensive list of equivalences for all tasks or demonstrate this for other task types.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.09:
     value: unmet
     rationale: The documentation does not explicitly state the scoring outcome for all required edge cases (partial answers, off-format answers, refusals, and errors/timeouts) in a unified way.
@@ -451,25 +432,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The scoring for the described environments (OS, DB, etc.) relies on executing scripts or exact matches of final answers rather than parsing free-form output for correctness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 22, chunk 2
-        quote: The result is correct if and only if all the scripts exit with code 0 .
+    value: unmet
     by: model
+    rationale: The excerpts do not show that the parser is deterministic or test its consistency. [paper:p22#2] describes a checking pipeline of scripts, but does not discuss the determinism or consistency testing of a parser for free-form output.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The scoring involves programmatic verification (scripts) or exact matches rather than parsing free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 22, chunk 2
-        quote: The result is correct if and only if all the scripts exit with code 0 .
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs. The checking pipelines described are script-based (e.g., exit codes), not parsers of free-form text with reported accuracy metrics.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There is no report of a null-agent run or targeted exploit attempts against the scoring pipeline.
@@ -480,3 +455,24 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 19 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - cv.03
+      - cv.04
+      - cv.05
+      - cv.16
+      - cv.17
+      - iv.04
+      - iv.06
+      - iv.10
+      - ev.05
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.05
+      - cor.08
+      - cor.10
+      - cor.11

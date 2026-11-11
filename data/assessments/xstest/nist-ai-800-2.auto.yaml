@@ -2,13 +2,15 @@
 benchmark: xstest
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   1.2.1:
-    value: met
-    rationale: The benchmark specifies it measures 'exaggerated safety behaviours' through the task of refusing prompts that are safe.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 4, chunk 2
-        quote: to specifically test exaggerated safety behaviours, i.e. the propensity of models to refuse prompts even though they are safe
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation names the construct (exaggerated safety behaviours) and the task (identifying refusal on safe prompts)."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1a:
     value: met
     rationale: The benchmark lists specific task categories such as Homonyms, Figurative Language, and Safe Targets.
@@ -54,6 +53,7 @@ verdicts:
         quote: "T2: Figurative Language tests for figures of speech using words which would be unsafe in other contexts"
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1b:
     value: unmet
     rationale: The documentation does not state an intended difficulty level or target human population for the items.
@@ -76,6 +76,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2a:
     value: met
     rationale: The documentation explicitly states that the benchmark has limited coverage, specifically mentioning short, simple, English-language questions in single-turn settings.
@@ -131,6 +132,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4b:
     value: met
     rationale: The item count is stated for both safe (250) and unsafe (200) prompt sets.
@@ -232,25 +234,19 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2g:
-    value: met
-    rationale: The benchmark uses a single sample per item (implied by the reporting of rates and the use of zero temperature for determinism).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 4, chunk 2
-        quote: We set the temperature to zero for all models to make responses deterministic.
+    value: unmet
     by: model
+    rationale: The excerpts do not specify the number of trials per item or how trials are aggregated for the benchmark's general protocol, only that the paper's specific experiments used deterministic settings.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2h:
-    value: met
-    rationale: The benchmark specifies the judge model (GPT-4), the prompt, and the rubric (taxonomy).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 13, chunk 2
-        quote: "For the GPT-4-based evaluation , we used the following prompt: “’I need your help with classifying responses"
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the judge model (GPT-4), the prompt, and the rubric for the automated evaluation method explored."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2i:
     value: unmet
     rationale: While human agreement is reported, there is no reported numerical agreement between the LLM judge and humans or other judges.
@@ -269,16 +265,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.2:
-    value: met
-    rationale: The benchmark provides string-match logic and a GPT-4 prompt for extracting/classifying answers.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 13, chunk 2
-        quote: For the string-match evaluation we matched on the following sequences at the beginning of model responses
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the required output format (compliance/refusal) and provides logic (string-match or GPT-4 prompt) to extract/parse answers."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.3:
     value: unmet
     rationale: There are no version identifiers or changelogs provided in the excerpts.
@@ -302,15 +296,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.3.1:
-    value: met
-    rationale: The benchmark provides all model completions on GitHub.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 2, chunk 1
-        quote: XST EST , all model responses and annotations are available on GitHub.
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the harness saves full per-item logs containing the model's response and score, only that responses are available on GitHub.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.2:
     value: unmet
     rationale: The excerpts do not show that the logs record the model identifier and benchmark version.
@@ -384,15 +375,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.2.2:
-    value: met
-    rationale: The benchmark states that all model responses for all prompts are shared on GitHub.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 6, chunk 1
-        quote: All model responses can be found at github.com/paul-rottger/exaggerated-safety.
+    value: unmet
     by: model
+    rationale: The excerpts state that model responses are available on GitHub, but they do not explicitly confirm that per-item scores for reference runs are published in a downloadable file; they primarily discuss aggregate rates and provide verbatim examples in the text.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.3:
     value: unmet
     rationale: The excerpts do not report tokens, money, or time per run for the reference results.
@@ -400,15 +388,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.2.4:
-    value: met
-    rationale: The benchmark provides a link to GitHub where all model responses (transcripts) can be found.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 6, chunk 1
-        quote: All model responses can be found at github.com/paul-rottger/exaggerated-safety.
+    value: unmet
     by: model
+    rationale: The excerpts state that responses are on GitHub, but do not confirm that full transcripts or a representative sample of reference runs are downloadable as transcripts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2:
     value: unmet
     rationale: The documentation asserts the link between the test and exaggerated safety but does not provide a validity argument or empirical evidence (like expert review) to link scores to the construct.
@@ -422,11 +407,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: n/a
-    rationale: The benchmark reports results for several models but does not report a baseline (e.g., human or non-LLM) to compare against.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report a baseline measured under specific conditions (e.g., human subjects) to compare against model runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: met
     rationale: The documentation explicitly states that doing well on the benchmark does not necessarily show a generalisable model strength.
@@ -453,3 +439,16 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 39 verdicts agreed, 12 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.1
+      - 2.1.2g
+      - 2.1.2h
+      - 2.2.2
+      - 2.3.1
+      - 3.2.2
+      - 3.2.4
+      - 3.3.3

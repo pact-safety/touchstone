@@ -2,13 +2,15 @@
 benchmark: agentbench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: d1e4a10db08c87075c78972e48ecc182be03e2d5
@@ -47,15 +49,12 @@ verdicts:
     by: model
     quotes_verified: true
   def.3:
-    value: met
-    rationale: The benchmark identifies sub-components (metrics) for the LTP system and measures them separately.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 35, chunk 0
-        quote: "Round Efficiency (RE):   How fast the model can guess out the truth within the maximum round. •   Query Relevance (QR):   Relevance between model’s questions and the truth. •   Game Progress (GP):   Progress before a game end"
+    value: unmet
     by: model
+    rationale: The excerpts mention sub-components like 'Round Efficiency' and 'Query Relevance' for specific tasks, but do not state that the general phenomenon is unitary, nor do they provide a clear framework showing how sub-components of the general phenomenon are measured separately across the benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.1:
     value: unmet
     rationale: The excerpts do not identify specific secondary abilities required by the tasks nor provide corresponding control conditions or ablation results for them.
@@ -73,15 +72,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses simulated environments to execute actions and determine success, rather than parsing free-form output for correctness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 39, chunk 0
-        quote: After receiving the action from the model, the environment provides feedback
+    value: unmet
     by: model
+    rationale: The excerpts describe using BLEU similarity to handle invalid formats but do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts mention that datasets are 'publicly available' and that they 'sample and categorize' for specific tasks, but they do not document a sampling strategy over a described task space to ensure representativeness.
@@ -169,31 +165,35 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: n/a
-    rationale: The labels are based on deterministic keys such as 'gold standard answers', 'hash of the table', and 'checking method to judge the correctness', which are not subjective.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 27, chunk 1
-        quote: calculated by comparing the model’s predicted answers to the gold standard answers
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 25, chunk 1
-        quote: compare the hash of the table after the agent’s operation with the hash of the table after the correct SQL operation
-    by: model
-    quotes_verified: true
-  ea.1:
     value: unmet
-    rationale: While common errors are described (e.g., Invalid Format, Invalid Action), the excerpts do not provide counts for these failure modes.
+    by: model
+    rationale: The metrics rely on deterministic keys such as exact match, hash comparison, or success/failure flags, which are not subjective labels requiring disagreement distributions.
     evidence:
       - source: paper
+        quote: we assess it based on the exact match between the predicted and gold answer sets.
+        locator: 2308.03688v3 page 27, chunk 1
         url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 47, chunk 0
-        quote: |-
-          Invalid Format ,   Invalid Action , and   Text Limit Exceeded 
-          are common errors.
-    by: model
+      - source: paper
+        quote: we calculate and compare the hash of the table after the agent’s operation with the hash of the table after the correct SQL operation.
+        locator: 2308.03688v3 page 25, chunk 1
+        url: https://arxiv.org/abs/2308.03688v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  ea.1:
+    value: met
+    by: model
+    rationale: The excerpts explicitly name common error types (qualitative) and provide specific counts or rates for these errors (quantitative), such as the percentage of TLE trajectories showing repetition.
+    evidence:
+      - source: paper
+        quote: Invalid Format , Invalid Action , and Text Limit Exceeded are common errors.
+        locator: 2308.03688v3 page 47, chunk 0
+        url: https://arxiv.org/abs/2308.03688v3
+      - source: paper
+        quote: more than 90% of the trajectories experiencing Task Limit Exceeded (TLE) demonstrate a significant level of repetition.
+        locator: 2308.03688v3 page 55, chunk 2
+        url: https://arxiv.org/abs/2308.03688v3
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.2:
     value: unmet
     rationale: The excerpts do not show a table or figure breaking down failures or scores by a named confounder.
@@ -248,7 +248,17 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 23 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.3
+      - mo.3
+      - st.4
+      - ea.1

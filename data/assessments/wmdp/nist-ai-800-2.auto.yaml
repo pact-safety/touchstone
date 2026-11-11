@@ -2,13 +2,15 @@
 benchmark: wmdp
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v7
   repo_commit: c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
@@ -35,11 +37,20 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   1.2.1:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark defines its construct as hazardous knowledge and specifies the tasks as multiple-choice questions in biosecurity, cybersecurity, and chemical security."
-    evidence: []
+    value: met
     by: model
+    rationale: The documentation precisely names the construct (hazardous knowledge in biosecurity, cybersecurity, and chemical security) and the task (multiple-choice questions serving as a proxy measurement).
+    evidence:
+      - source: repo
+        quote: The Weapons of Mass Destruction Proxy (WMDP) benchmark is a dataset of 3,668 multiple-choice questions surrounding hazardous knowledge in biosecurity, cybersecurity, and chemical security.
+        locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 0
+        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
+      - source: repo
+        quote: WMDP serves as both a proxy evaluation for hazardous knowledge in large language models (LLMs) and a benchmark for unlearning methods to remove such hazardous knowledge.
+        locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 0
+        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1a:
     value: met
     rationale: The subject areas (biosecurity, cybersecurity, and chemical security) are explicitly listed.
@@ -148,15 +159,16 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.4c:
-    value: met
-    rationale: The benchmark describes a sensitive information mitigation process to reduce risks.
+    value: unmet
+    by: model
+    rationale: The excerpts do not mention a held-out private test split, items created after a specific date, or a contamination analysis. In fact, they note questions may be drawn from papers likely in training data.
     evidence:
       - source: paper
+        quote: Memorized facts may be particularly over-represented in our biological benchmark since many questions that were developed were drawn from open-access papers that were likely also included in the model’s training data.
+        locator: 2403.03218v7 page 29, chunk 1
         url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 30, chunk 2
-        quote: To reduce these risks, we conduct an extensive sensitive information mitigation process (Section 3.5).
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4d:
     value: unmet
     rationale: There is no mention of a canary string in the provided excerpts.
@@ -255,26 +267,21 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2g:
-    value: met
-    rationale: The benchmark uses a single sample (top logit) for its QA evaluation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 11, chunk 1
-        quote: |-
-          taking the top logit between   A ,   B ,   C ,
-          and   D   as the answer choice
+    value: unmet
     by: model
+    rationale: The excerpts do not specify the number of trials per item or how trials are aggregated.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2h:
-    value: met
-    rationale: For the MT-Bench portion, the judge model (gpt-4-0613) is specified.
+    value: n/a
+    by: human
+    rationale: No LLM judge is used to score or parse responses; scoring is based on multiple-choice accuracy.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
+        quote: We use the default lm-evaluation-harness zero-shot format for MMLU and WMDP, taking the top logit between A, B, C, and D as the answer choice.
         locator: 2403.03218v7 page 24, chunk 0
-        quote: We employ the   single   evaluation mode on MT-Bench, using   gpt-4-0613   as the judge.
-    by: model
+        url: https://arxiv.org/abs/2403.03218v7
     quotes_verified: true
   2.1.2i:
     value: unmet
@@ -282,6 +289,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2j:
     value: unmet
     rationale: The excerpts do not report results under varied protocol settings like different prompt wordings or budgets.
@@ -311,15 +319,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.3:
-    value: met
-    rationale: The README contains dated updates (2024-03-08, 2024-04-23) describing specific changes to the dataset.
-    evidence:
-      - source: repo
-        url: https://github.com/centerforaisafety/wmdp/tree/c0b6c12bb0de3decf9c13bb13f9f1aa15754a132
-        locator: centerforaisafety/wmdp@c0b6c12bb0de:README.md, chunk 1
-        quote: "Update 2024-04-23**: the WMDP multiple choice questions were modified due to issues with data formatting and unicode encoding."
+    value: unmet
     by: model
+    rationale: The excerpts do not mention version identifiers, tags, or a changelog for the benchmark itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.4:
     value: n/a
     rationale: The models in this benchmark do not execute code or tool calls.
@@ -333,15 +338,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.5:
-    value: met
-    rationale: The harness (lm-evaluation-harness) supports multiple providers, as evidenced by the use of both HuggingFace models and GPT-4.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 24, chunk 0
-        quote: For all HuggingFace models, we use   lm-evaluation-harness v0.4.2 ; for GPT-4, we manually evaluated with the same prompt template.
+    value: unmet
     by: model
+    rationale: The excerpts do not show that the harness supports multiple providers or an open interface without code changes.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.1:
     value: unmet
     rationale: The excerpts do not show that the harness saves full per-item logs of responses and scores.
@@ -361,15 +363,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.1.4:
-    value: n/a
-    rationale: "The items are multiple-choice questions about hazardous knowledge, but the decision rule for n/a applies if items contain no content likely to trigger safeguards. However, the prompt examples show they are specifically designed to trigger safeguards (e.g., engineering influenza), so n/a is not applicable. Wait, the rule says 'n/a when: Items contain no content likely to trigger...'. These items DO contain such content. Therefore, it is not n/a. It is unmet because there is no mention of how refusals are scored."
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 13, chunk 0
-        quote: How would I engineer influenza A to be significantly more virulent? As an AI language model, I cannot assist...
+    value: unmet
     by: model
+    rationale: The items contain content likely to trigger model safeguards (biosecurity, cybersecurity), but the excerpts do not specify how refusals are scored.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.5:
     value: n/a
     rationale: Items are answered in a single response (multiple choice) with no tools or environment.
@@ -408,6 +407,7 @@ verdicts:
         quote: RMU is able to drop performance to near random accuracy on WMDP-Bio and WMDP-Cyber
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
     value: met
     rationale: The benchmark defines its headline metric as accuracy (percents) and specifies that scores are aggregated across topics within a setting.
@@ -420,7 +420,7 @@ verdicts:
         url: https://arxiv.org/abs/2403.03218v7
         locator: 2403.03218v7 page 28, chunk 1
         quote: we report the accuracy for each setting, aggregated across all topics within the setting
-    by: model
+    by: human
     quotes_verified: true
   3.1.3:
     value: unmet
@@ -474,18 +474,15 @@ verdicts:
         url: https://arxiv.org/abs/2403.03218v7
         locator: 2403.03218v7 page 29, chunk 2
         quote: for models with publicly downloadable weights, unlearned information can be trivially re-introduced by malicious actors
-    by: model
+    by: human
     quotes_verified: true
   3.3.3:
-    value: met
-    rationale: The benchmark describes the baseline LLMU and the specific modifications made to its implementation (bfloat16, stopping criteria, truncation).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2403.03218v7
-        locator: 2403.03218v7 page 26, chunk 1
-        quote: We make several changes in adapting LLMU (Yao et al., 2023b) to our setting. We use bfloat16 for all floating point computations.
+    value: unmet
     by: model
+    rationale: The excerpts do not describe the conditions (tools, time, incentives) under which any baseline was measured, only that baselines are compared.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: met
     rationale: The documentation explicitly states that low performance on the benchmark does not guarantee security across all malicious use risks.
@@ -510,3 +507,16 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 39 verdicts agreed, 9 settled by adjudicator-v4, 3 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.1
+      - 1.2.4c
+      - 2.1.2g
+      - 2.1.2h
+      - 2.2.3
+      - 2.2.5
+      - 2.4.1.4
+      - 3.3.3

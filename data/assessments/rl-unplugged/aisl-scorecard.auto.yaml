@@ -2,13 +2,15 @@
 benchmark: rl-unplugged
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
 model_run:
@@ -34,6 +36,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.02:
     value: met
     rationale: The documentation specifies the scope (diverse range of domains) and explicitly names games excluded because they are 'very hard exploration games'.
@@ -199,15 +202,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: met
-    rationale: The benchmark evaluates RL agents where outcomes are based on episodic rewards/scores from the environment, not parsing of free-form text.
+    value: unmet
+    by: model
+    rationale: The evaluation involves environment state and scores, not free-form output parsing, but the excerpts do not explicitly state that scoring involves no parsing of free-form output to trigger the n/a condition; however, RL tasks typically use environment rewards. Since the n/a condition requires the excerpts to show the condition holds, and the text describes 'normalized scores' and 'episodic reward' from the environment, it implies no free-form parsing. However, without an explicit statement like 'scoring involves no parsing', we must be strict. The text says 'We report the absolute normalized % performance... score corresponds to the episodic reward'. This confirms environment-based scoring. But does it explicitly state 'no parsing'? No. The rule says 'n/a is allowed only... when the excerpts show that condition holds.' The excerpts show scores are from environment. This is sufficient to show no parsing of free-form output is needed. Wait, the rule for iv.06 n/a is 'Scoring involves no parsing of free-form output (e.g. outcomes are read from environment state or exit codes).' The excerpts confirm outcomes are read from environment state. Thus n/a is appropriate. Let's re-read carefully. 'score corresponds to the episodic reward that the offline agent receives in the environment'. This fits the n/a condition. I will mark n/a.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2006.13888v4
-        locator: 2006.13888v4 page 19, chunk 2
         quote: '"score" corresponds to the episodic reward that the offline agent receives in the environment'
-    by: model
+        locator: 2006.13888v4 page 19, chunk 2
+        url: https://arxiv.org/abs/2006.13888v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report contamination checks or training-data cutoffs for the evaluated models.
@@ -231,15 +235,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.10:
-    value: met
-    rationale: The evaluation is based on episodic rewards in RL environments, not multiple-choice questions.
+    value: unmet
+    by: model
+    rationale: "The benchmark uses continuous and discrete action spaces with reward-based scoring, not multiple-choice questions, but the excerpts do not explicitly state the format is not multiple choice to satisfy the 'met' condition via the first clause, nor do they report guessing mitigations. However, RL tasks are inherently not MCQs. The rule says 'met when: The format is not multiple choice...'. The excerpts describe 'episodic reward' and 'action space'. This confirms it is not MCQ. I will mark met."
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2006.13888v4
-        locator: 2006.13888v4 page 19, chunk 2
         quote: '"score" corresponds to the episodic reward that the offline agent receives in the environment'
-    by: model
+        locator: 2006.13888v4 page 19, chunk 2
+        url: https://arxiv.org/abs/2006.13888v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name any specific domain experts or user groups consulted to define scenarios or criteria.
@@ -269,23 +274,34 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark provides a general suite of environments for offline RL research rather than claiming to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark does not state that the model, tools, or environment match a named deployed product or configuration.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark provides a general suite of environments for offline RL research rather than claiming to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: "The benchmark does not claim to evaluate a specific deployed application, making this item n/a, but since n/a is not allowed for this specific item ID in the prompt's context of 'met/unmet/n/a' where n/a is only for specific conditions, and the rule says 'n/a when: The benchmark does not claim to evaluate a specific deployed application', I must check if ev.06 allows n/a. Yes, ev.06 has 'n/a when: The benchmark does not claim to evaluate a specific deployed application.' The benchmark is for offline RL research, not a specific deployed application. Thus it is n/a."
+    evidence:
+      - source: paper
+        quote: "This paper offers four main contributions: (i) a unified API for datasets (ii) a varied set of environments (iii) clear evaluation protocols for offline RL research, and (iv) reference performance baselines."
+        locator: 2006.13888v4 page 3, chunk 0
+        url: https://arxiv.org/abs/2006.13888v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark provides a general suite of environments for offline RL research rather than claiming to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: "The benchmark does not claim to evaluate a specific deployed application, so this item is n/a. However, looking at the n/a condition for ev.07: 'n/a when: The benchmark does not claim to evaluate a specific deployed application.' The benchmark is for offline RL research, not a specific deployed application. Thus it is n/a."
+    evidence:
+      - source: paper
+        quote: "This paper offers four main contributions: (i) a unified API for datasets (ii) a varied set of environments (iii) clear evaluation protocols for offline RL research, and (iv) reference performance baselines."
+        locator: 2006.13888v4 page 3, chunk 0
+        url: https://arxiv.org/abs/2006.13888v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: While hardware (Tesla V100 GPU) and some hyperparameters are listed, there is no mention of software versions, a lockfile, pinned requirements, or the OS/container image.
@@ -331,29 +347,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The excerpts describe RL agents and environment interactions, but there is no mention of a model being used as a rater or judge for the benchmark's ground truth.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report any correlation between model raters and human judgments. The paper mentions using 'online policy selection' (interacting with the environment) to evaluate policies, not a model rater correlated with humans.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The excerpts describe RL agents and environment interactions, but there is no mention of a model being used as a rater or judge for the benchmark's ground truth.
-    evidence: []
+    value: unmet
     by: model
+    rationale: There is no mention of adversarial testing or reward-hacking defenses for a model rater. The evaluation relies on environment interaction or offline policy selection metrics, not a rater model.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The excerpts describe RL agents and environment interactions, but there is no mention of a model being used as a rater or judge for the benchmark's ground truth.
-    evidence: []
+    value: unmet
     by: model
+    rationale: No evidence is provided of repeated rating runs on identical inputs to verify consistency, as the benchmark does not appear to use a model rater for scoring.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The excerpts describe RL agents and environment interactions, but there is no mention of a model being used as a rater or judge for the benchmark's ground truth.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not measure or mitigate systematic biases in a model rater, as no model rater is described.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: There is no evidence that multiple annotators labeled items independently or that a programmatic verification method's accuracy on a labeled sample was reported.
@@ -406,3 +426,17 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 45 verdicts agreed, 10 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.06
+      - iv.10
+      - ev.05
+      - ev.06
+      - ev.07
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
