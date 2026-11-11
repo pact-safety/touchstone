@@ -182,8 +182,9 @@ describe('run', () => {
   const oneFeed = { ...cfg, news: { ...cfg.news, feeds: [cfg.news.feeds[1]!] } };
   const gh = (existing: string[] = []) => {
     const created: string[] = [];
-    const g: Gh = { exists: async (n) => existing.some((e) => e.includes(n)), titleExists: async (p) => existing.some((e) => e.startsWith(p)), ensureLabels: async () => {}, create: async (t) => { created.push(t); } };
-    return { g, created };
+    const comments: string[] = [];
+    const g: Gh = { exists: async (n) => existing.some((e) => e.includes(n)), titleExists: async (p) => existing.some((e) => e.startsWith(p)), ensureLabels: async () => {}, create: async (t) => { created.push(t); }, commentExists: async (_i, p) => comments.some((b) => b.split('\n').some((l) => l.startsWith(`## ${p}`))), comment: async (_i, b) => { comments.push(b); } };
+    return { g, created, comments };
   };
   const base = (extra: object) => ({ source: 'news' as const, cfg: oneFeed, llm, state: { seen: {}, http: {} } as SeenState, dryRun: false, now: NOW, fetchImpl: (async () => new Response(feedXml(3), { status: 200, headers: { etag: '"e1"' } })) as typeof fetch, llmFetch: reply(V()), searchPause: 0, ...extra });
 
@@ -218,7 +219,8 @@ describe('run', () => {
 
   describe('arXiv digest', () => {
     const atom = (n: number) => `<feed>${Array.from({ length: n }, (_, k) => `<entry><id>http://arxiv.org/abs/2610.${100 + k}v1</id><published>${new Date(NOW.getTime() - (k + 1) * 36e5).toISOString()}</published><title>FooBench ${k}: a benchmark</title><summary>We introduce FooBench.</summary><link href="http://arxiv.org/abs/2610.${100 + k}v1" rel="alternate"/></entry>`).join('')}</feed>`;
-    const arx = (extra: object) => ({ ...base({}), source: 'arxiv' as const, cfg, fetchImpl: (async () => new Response(atom(3), { status: 200 })) as typeof fetch, ...extra });
+    const arxCfg = { ...cfg, arxiv: { ...cfg.arxiv, digest_issue: undefined } }; // issue-per-day mode; tracker mode is tested below
+    const arx = (extra: object) => ({ ...base({}), source: 'arxiv' as const, cfg: arxCfg, fetchImpl: (async () => new Response(atom(3), { status: 200 })) as typeof fetch, ...extra });
 
     it('files one digest, not one issue per paper, and marks papers seen', async () => {
       const { g, created } = gh();
@@ -254,6 +256,18 @@ describe('run', () => {
       expect(created).toHaveLength(0);
       expect(r.digest?.result).toBe('duplicate');
       expect(o.state.seen).toEqual({});
+    });
+    it('with digest_issue, posts one comment on the tracker and no issue; a repeat the same day posts nothing', async () => {
+      const { g, created, comments } = gh();
+      const tracker = { cfg: { ...cfg, arxiv: { ...cfg.arxiv, digest_issue: 17 } } };
+      const r = await run(arx({ gh: g, ...tracker }) as never);
+      expect(created).toHaveLength(0);
+      expect(comments).toHaveLength(1);
+      expect(comments[0]).toMatch(/^## \[arXiv digest\] 2026-10-28:/);
+      expect(r.digest?.result).toBe('created');
+      const r2 = await run(arx({ gh: g, ...tracker }) as never);
+      expect(comments).toHaveLength(1);
+      expect(r2.digest?.result).toBe('duplicate');
     });
     it('drops papers already listed in an earlier digest', async () => {
       const { g, created } = gh(['- [FooBench 0](http://arxiv.org/abs/2610.100v1) | arXiv 2610.100']);
