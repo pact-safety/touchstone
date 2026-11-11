@@ -2,13 +2,15 @@
 benchmark: agentharm
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
 model_run:
@@ -29,15 +31,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The reported harm scores for top models (e.g., GPT-4o at 70.7% and Claude 3.5 Sonnet at 65.1%) leave significant headroom below the maximum possible score.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 8, chunk 2
-        quote: GPT-4o’s harm score increases from 70.7% to 83.7% (best-of-5), while Claude 3.5 Sonnet improves from 65.1% to 79.7% (best-of-5).
+    value: unmet
     by: model
+    rationale: The excerpts report high harm scores for top models (e.g., 90.8% for Mistral) but do not provide evidence of headroom relative to a ceiling, nor do they discuss saturation or uncertainty intervals separating top models.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: met
     rationale: The benchmark employs a private test set and a canary string to defend against contamination.
@@ -53,15 +52,12 @@ verdicts:
     by: model
     quotes_verified: true
   c3:
-    value: met
-    rationale: The benchmark includes a benign variant of the dataset to serve as a baseline for model capabilities.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 2, chunk 1
-        quote: We also include a benign variant of the dataset as a baseline for model capabilities.
+    value: unmet
     by: model
+    rationale: The excerpts do not report the label or answer distribution, nor do they provide a trivial baseline score to demonstrate that the benchmark is free from statistical bias.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: met
     rationale: The creators implemented a quality review process where every hand-written question was reviewed by a separate human reviewer and the grading system was validated via manual inspection.
@@ -90,18 +86,15 @@ verdicts:
         url: https://arxiv.org/abs/2410.09024v3
         locator: 2410.09024v3 page 4, chunk 2
         quote: We focus on digitally realizable behaviors, i.e., those that do not require real-world actions.
-    by: model
+    by: human
     quotes_verified: true
   c7:
-    value: met
-    rationale: The benchmark is a recent release (ICLR 2025) and there is no evidence that its labels or task meanings have shifted since creation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 5, chunk 0
-        quote: Published as a conference paper at ICLR 2025
+    value: unmet
     by: model
+    rationale: The excerpts do not show a maintenance process, revision history, or evidence that the meaning of labels has been checked for drift over time.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: unmet
     rationale: The provided excerpts do not mention a version identifier or a system for recording changes per version.
@@ -124,3 +117,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 6 verdicts agreed, 3 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - c3
+      - c7

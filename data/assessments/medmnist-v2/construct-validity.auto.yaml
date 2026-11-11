@@ -2,13 +2,15 @@
 benchmark: medmnist-v2
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 805b74237fb5bd2db376fd94e50646b6a8905d9d
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   def.1:
-    value: met
-    rationale: The benchmark is defined as a collection of MNIST-like datasets for performing classification tasks on small images.
-    evidence:
-      - source: repo
-        url: https://github.com/MedMNIST/MedMNIST/tree/805b74237fb5bd2db376fd94e50646b6a8905d9d
-        locator: MedMNIST/MedMNIST@805b74237fb5:README.md, chunk 4
-        quote: As an MNIST-like dataset collection to perform classification tasks on small images
+    value: unmet
     by: model
+    rationale: The excerpts describe the dataset format, preprocessing, and tasks (classification), but do not provide a precise operational definition of the underlying phenomenon (e.g., 'medical image classification' as a construct) specifying which observable outputs count as evidence of that phenomenon.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: unmet
     rationale: While the scope is described (diverse modalities, scales, and tasks), the excerpts do not name any specific excluded aspects of the phenomenon.
@@ -51,15 +50,12 @@ verdicts:
     by: model
     quotes_verified: true
   def.3:
-    value: met
-    rationale: The phenomenon is divided into 2D and 3D sub-components (MedMNIST2D and MedMNIST3D), and performance is reported separately for them.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 6, chunk 2
-        quote: It contains 12 pre-processed 2D datasets (MedMNIST2D) and 6 pre-processed 3D datasets (MedMNIST3D)
+    value: unmet
     by: model
+    rationale: The excerpts mention sub-components like 2D and 3D datasets and different tasks (binary/multi-class, etc.), but they do not state that these are scored separately as sub-components of a unitary phenomenon, nor do they explicitly state the phenomenon is unitary.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.1:
     value: unmet
     rationale: The excerpts do not identify any secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
@@ -209,15 +205,12 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors report experiments using various methods (ResNets, AutoML tools) to benchmark and evaluate performance on the datasets.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 2, chunk 2
-        quote: We benchmark several standard deep learning methods and AutoML tools with MedMNIST v2 on both 2D and 3D datasets
+    value: unmet
     by: model
+    rationale: The excerpts describe benchmarking existing models and tools but do not report experiments aimed at improving scores or propose specific named directions with rationales for improvement.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark is linked to the real-world application of healthcare and biomedical image analysis.
@@ -245,16 +238,22 @@ verdicts:
     by: model
     quotes_verified: true
   jv.4:
-    value: met
-    rationale: The authors discuss a design trade-off where they focus on the machine learning part rather than the end-to-end system to better evaluate algorithm generalization.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 1, chunk 3
-        quote: Therefore, a large but simple dataset focusing on the machine learning part like VDD, rather than the end-to-end system like MSD, will serve as a better benchmark to evaluate the generalization performance of the machine learning algorithms
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a discussion of limitations or design trade-offs concerning what the scores do or do not measure; they only mention that labels might be simplified if tasks are too difficult, but do not frame this as a construct validity limitation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 24 verdicts agreed, 4 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.1
+      - def.3
+      - ea.4
+      - jv.4

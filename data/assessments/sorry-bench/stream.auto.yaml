@@ -2,13 +2,15 @@
 benchmark: sorry-bench
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 7da10addffb6790cfeb75281eaffb5a176861653
@@ -54,6 +56,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s1.iii:
     value: met
     rationale: The report provides several example user requests (stems) and describes the structure of the model response as being evaluated as either 'refusal' or 'fulfillment'.
@@ -80,6 +83,7 @@ verdicts:
         quote: in total 440 * 8 = 3,520 records
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.ii:
     value: met
     rationale: The report describes the item format as a binary scale (refusal or compliance) and the scoring method as assigning a score of 1 or 0.
@@ -106,6 +110,7 @@ verdicts:
         quote: 6 authors manually label each of them
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iv-b:
     value: met
     rationale: The report describes the human grading process using a web interface where annotators evaluate LLM-generated responses.
@@ -146,6 +151,7 @@ verdicts:
         quote: we directly prompt LLMs to judge a given (unsafe instruction, model response) pair as “refusal” or “compliance”
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.v-c:
     value: met
     rationale: The report compares the agreement of automated evaluators (like GPT-3.5-turbo +Fine-tuned) with human annotations.
@@ -166,6 +172,7 @@ verdicts:
         quote: GPT-3.5-turbo ( 0 . 11   for the 1106 version)
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.ii:
     value: unmet
     rationale: The excerpts do not specify the safety mitigations active during the testing of the models, nor do they state that none were used.
@@ -241,15 +248,12 @@ verdicts:
     by: model
     quotes_verified: true
   s5.ii-b:
-    value: met
-    rationale: The report provides a comparison against other safety benchmarks as an alternative reference point.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 17, chunk 0
-        quote: "Table 4: A cross-comparison of scores reported by different safety benchmarks."
+    value: unmet
     by: model
+    rationale: The excerpts do not provide an alternative comparison point or explain one in the context of lacking a human baseline.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.i:
     value: unmet
     rationale: The report makes general claims about which models are 'safest' or 'unsafe', but these conclusions do not cite a specific table, figure, or number.
@@ -288,3 +292,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s5.ii-b

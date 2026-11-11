@@ -2,13 +2,15 @@
 benchmark: swe-bench-verified
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
@@ -50,6 +52,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: unmet
     rationale: The provided excerpts do not identify sub-components of the phenomenon nor do they explicitly state that the phenomenon is unitary.
@@ -69,17 +72,16 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The evaluation process described involves applying a generated patch and running a test suite, rather than parsing free-form output into a structured format for scoring.
-    evidence:
-      - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 0
-        quote: |-
-          Applies the model's generated patch
-          3. Runs the repository's test suite
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias.
+    evidence:
+      - source: paper
+        quote: We validate the robustness of the script written to parse correctly T and δ by applying both patches to the corresponding codebase C and running the tests
+        locator: 2310.06770v3 page 18, chunk 4
+        url: https://arxiv.org/abs/2310.06770v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts describe a 3-stage pipeline to find high-quality instances, but they do not document a sampling strategy over a described task space to ensure representativeness.
@@ -104,24 +106,28 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
-    value: n/a
-    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
-    evidence: []
+    value: unmet
     by: model
+    rationale: While the paper discusses limitations of the benchmark (e.g., Python-only, execution-based testing), it does not explicitly analyze and report the strengths and limitations of the *adapted prior work* (the original SWE-bench dataset) in the context of this adaptation. It focuses on the new instances and the benchmark's own limitations.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
-    value: n/a
-    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not show a comparison of performance on the new benchmark against the original benchmark. They compare models against each other or different retrieval settings within the same benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
-    value: n/a
-    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not list specific modifications to the reused dataset and explain how they improve construct validity. They describe the creation of new instances and mirrors, but not modifications to the prior dataset itself with validity arguments.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The excerpts describe data collection and filtering processes, but do not describe a specific contamination test applied to the benchmark or report its results.
@@ -138,6 +144,7 @@ verdicts:
         quote: we have intentionally made specifications for evaluating the test split private
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.3:
     value: unmet
     rationale: While the paper mentions ensuring solutions were not in training corpora by using dates, it does not report a search or overlap check against a named training corpus or model.
@@ -202,7 +209,7 @@ verdicts:
         url: https://arxiv.org/abs/2310.06770v3
         locator: 2310.06770v3 page 50, chunk 2
         quote: This example highlights the importance and potential for training language models and designing inference procedures that allow for the automated discovery of such information.
-    by: model
+    by: human
     quotes_verified: true
   jv.1:
     value: met
@@ -220,6 +227,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: met
     rationale: The benchmark is compared to HumanEval, noting that HumanEval involves self-contained problems while SWE-bench uses a realistic software engineering setting.
@@ -244,3 +252,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 19 verdicts agreed, 8 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3
+      - ru.2
+      - ru.3
+      - ru.4

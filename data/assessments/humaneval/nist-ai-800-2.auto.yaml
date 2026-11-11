@@ -45,15 +45,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.1a:
-    value: met
-    rationale: The benchmark covers the task of synthesizing standalone functions from docstrings.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 7, chunk 2
-        quote: synthesizing functions from docstrings
+    value: unmet
     by: model
+    rationale: The excerpts describe the task as 'docstring-conditional code generation' or 'function synthesis' but do not list specific subject areas, domains, or a named taxonomy of topics covered by the items.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1b:
     value: met
     rationale: The benchmark states the difficulty level is comparable to easy interview problems.
@@ -181,14 +178,14 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2c:
-    value: met
-    rationale: The benchmark specifies that it uses a sandbox environment to execute code, but does not use an agentic loop or tools.
+    value: n/a
+    by: human
+    rationale: The benchmark items are answered in a single model response with no tools, code execution, environment or multi-step loop involved in the generation phase; code execution happens post-generation for scoring.
     evidence:
       - source: paper
+        quote: Therefore, we developed a sandbox environment to safely run untrusted programs against unit tests.
+        locator: 2107.03374v2 page 4, chunk 1
         url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 2, chunk 2
-        quote: Finally, we discuss the sandbox environment we used to safely execute model-generated code.
-    by: model
     quotes_verified: true
   2.1.2d:
     value: met
@@ -260,6 +257,7 @@ verdicts:
         quote: uating at temperatures 0.2, 0.4, and 0.8 for GPT-Neo, and from temperatures 0.2 and 0.8 for GPT-J.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.1:
     value: met
     rationale: The benchmark provides a public repository with a setup script and a console script to run the evaluation.
@@ -352,25 +350,19 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2D:
-    value: met
-    rationale: The benchmark publishes reference results for multiple models (GPT-Neo, GPT-J, Codex) with their pass@k scores.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 7, chunk 0
-        quote: Table 1. Codex, GPT-Neo, & TabNine evaluations for HumanEval.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): Scores for multiple models (Codex, GPT-Neo, etc.) are published with model versions and protocol details."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
-    value: n/a
-    rationale: The benchmark has one item format (docstring to code) and claims a single construct (functional correctness).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 2, chunk 2
-        quote: In this section, we discuss the details of our evaluation framework. We begin by defining the pass@ k metric
+    value: unmet
     by: model
+    rationale: The excerpts do not report results by subset, format or construct.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
     value: met
     rationale: The benchmark defines the headline metric as pass@k and provides a specific formula for its unbiased estimation.
@@ -410,6 +402,7 @@ verdicts:
           `passed`
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.3:
     value: unmet
     rationale: There is no report of tokens, money, or time per run for the reference results.
@@ -423,15 +416,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.2:
-    value: met
-    rationale: The benchmark explains that the items resemble software interview questions to assess language comprehension and algorithms.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 2, chunk 1
-        quote: These problems assess language comprehension, algorithms, and simple mathematics, with some comparable to simple software interview questions.
+    value: unmet
     by: model
+    rationale: The excerpts describe the dataset creation and metrics but do not present a validity argument or empirical evidence linking the scores to the intended construct of code generation capability.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2a:
     value: met
     rationale: The benchmark claims to approximate real-world programming tasks but notes that real tasks involve iterations and bug fixes, whereas the benchmark uses multiple samples.
@@ -442,16 +432,14 @@ verdicts:
         quote: Real-world programming tasks often involve iterations of approaches and bug fixes, which is approximated by generating many samples
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.3:
-    value: met
-    rationale: The benchmark reports baselines (GPT-J and GPT models) and specifies the dataset used for the comparison.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 2, chunk 1
-        quote: In contrast, the 6B parameter GPT-J (Wang & Komatsuzaki, 2021) achieves 11.4% on the same dataset
+    value: unmet
     by: model
+    rationale: The excerpts do not report a baseline with described conditions (who/what was measured, tools, incentives) for comparison.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: unmet
     rationale: The documentation does not explicitly name a conclusion that the scores do not support.
@@ -459,20 +447,24 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.5:
-    value: met
-    rationale: The documentation includes a 'Known Issues' section that describes a memory allocation error that may cause correct programs to fail.
-    evidence:
-      - source: repo
-        url: https://github.com/openai/human-eval/tree/b9453e8f1865df0a0057a1383767caa400acfbcf
-        locator: openai/human-eval@b9453e8f1865:README.md, chunk 3
-        quote: |-
-          ## Known Issues
-
-          While evaluation uses very little memory, you might see the following error
-          message when the system is running out of RAM.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The README explicitly lists a known issue regarding memory usage that can cause correct programs to fail, which is a limitation of the benchmark."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 9 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - 1.2.1a
+      - 2.1.2c
+      - 2.4.2D
+      - 2.4.2E
+      - 3.3.2
+      - 3.3.3
+      - 3.3.5

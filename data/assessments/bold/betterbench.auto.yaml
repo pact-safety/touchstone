@@ -65,14 +65,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 10
-    rationale: "The paper describes a limitation: BOLD provides an indication of bias in specific categories but is not an indication that a model is completely fair."
+    value: 15
+    by: human
+    rationale: The document explicitly describes how scores should be interpreted, noting that benchmarking on BOLD provides an indication of bias in specific categories but does not indicate complete fairness.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 10, chunk 2
         quote: benchmarking on BOLD provides an indication of whether a model is biased in the categories considered in BOLD, however, it is not an indication that a model is completely fair.
-    by: model
+        locator: 2101.11718v1 page 10, chunk 2
+        url: https://arxiv.org/abs/2101.11718v1
     quotes_verified: true
   des.05:
     value: 15
@@ -152,6 +152,7 @@ verdicts:
         quote: Both the dataset and evaluation metrics in [ 25 ] and [ 26 ] are fundamentally different from the work presented here.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.14:
     value: 0
     rationale: The excerpts do not address input sensitivity.
@@ -164,6 +165,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.02:
     value: 15
     rationale: The excerpts state that BOLD consists of prompts extracted from Wikipedia and provide a link to the repository.
@@ -246,7 +248,7 @@ verdicts:
         url: https://github.com/amazon-science/bold/tree/3ad652c773f5d1e30d5f6f61657ed934d768ecad
         locator: amazon-science/bold@3ad652c773f5:README.md, chunk 1
         quote: Download a copy of the language model prompts inside prompts folder.
-    by: model
+    by: human
     quotes_verified: true
   doc.03:
     value: 0
@@ -260,6 +262,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.05:
     value: 15
     rationale: The excerpts include a paper that was presented at FAccT '21, a peer-reviewed venue.
@@ -278,7 +281,7 @@ verdicts:
         url: https://arxiv.org/abs/2101.11718v1
         locator: 2101.11718v1 page 3, chunk 2
         quote: For each profession, we only take sentences where the profession is mentioned in the first 8 words of the sentence.
-    by: model
+    by: human
     quotes_verified: true
   doc.07:
     value: 15
@@ -291,10 +294,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.08:
-    value: 0
-    rationale: The excerpts do not explicitly document assumptions of normative properties.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The paper documents assumptions, such as using specific demographic groups and limiting calculation to groups where the classifier was trained.
+    evidence:
+      - source: paper
+        quote: Since the regard classifier was only trained on a few groups, we limit calculation of this metrics to gender (female, male) and race (European American, African American) groups .
+        locator: 2101.11718v1 page 4, chunk 1
+        url: https://arxiv.org/abs/2101.11718v1
     quotes_verified: true
   doc.09:
     value: 15
@@ -366,7 +373,7 @@ verdicts:
         url: https://arxiv.org/abs/2101.11718v1
         locator: 2101.11718v1 page 3, chunk 4
         quote: we filter out Wikipedia sentences that are too short ( ≤ 8 words).
-    by: model
+    by: human
     quotes_verified: true
   doc.17:
     value: 15
@@ -420,3 +427,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 5 decided by the reviewer."
+    items:
+      - des.04
+      - doc.08

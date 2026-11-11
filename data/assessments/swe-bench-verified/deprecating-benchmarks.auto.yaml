@@ -2,13 +2,15 @@
 benchmark: swe-bench-verified
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The temporal analysis table shows that the top model scores (e.g., 5.72% for Claude 2 in 2019) are very low, leaving significant headroom below the maximum achievable score.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2310.06770v3
-        locator: 2310.06770v3 page 28, chunk 0
-        quote: 2019   437   112   5.72   1.49   1.79   4.55   2.21
+    value: unmet
     by: model
+    rationale: The provided excerpts do not contain any reported scores, leaderboards, or analysis of saturation levels for SWE-bench Verified. Without evidence of current best scores or headroom, the condition for being free of saturation cannot be verified.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The excerpts state that the benchmark is collected from public repositories and the authors plan to open source the task instances, but no specific contamination defense (like a private held-out set or contamination analysis) is documented.
@@ -51,15 +50,16 @@ verdicts:
     by: model
     quotes_verified: true
   c3:
-    value: met
-    rationale: The benchmark is described as having task instances associated with a diverse set of code changes, and the provided scores for various models are very low, indicating that a trivial baseline would not score highly.
+    value: unmet
+    by: model
+    rationale: The excerpts do not report the label or answer distribution for SWE-bench Verified, nor do they provide a trivial baseline score. While they mention issue categories, they do not demonstrate that the distribution is balanced or that a majority-class baseline scores poorly.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2310.06770v3
+        quote: While the absolute majority of issues are associated with bug fixes, SWE-bench’s task instances are associated with a diverse set of code changes
         locator: 2310.06770v3 page 21, chunk 3
-        quote: SWE-bench’s task instances are associated with a diverse set of code changes with purposes beyond debugging and error correction.
-    by: model
+        url: https://arxiv.org/abs/2310.06770v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: unmet
     rationale: The provided excerpts describe the data collection and filtering process, but they do not contain a cited audit, validation pass, or error analysis reporting a low error rate for the labels/annotations.
@@ -83,15 +83,16 @@ verdicts:
     by: model
     quotes_verified: true
   c7:
-    value: met
-    rationale: The benchmark is designed for temporal robustness, allowing it to be updated with new task instances to prevent it from becoming outdated as models are trained on newer code.
+    value: unmet
+    by: model
+    rationale: While the benchmark mentions 'Continuous Updates' and temporal robustness, it does not provide evidence of a specific maintenance process or revision history that addresses semantic drift of labels or task meaning over time. The excerpts do not show that meaning drift has been actively addressed or that labels have been refreshed to prevent outdated interpretations.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2310.06770v3
+        quote: Continuous Updates. SWE-bench’s collection process is easily extensible to any open source code repositories, allowing for easy and low-maintenance extension to new programming languages and code domains.
         locator: 2310.06770v3 page 16, chunk 3
-        quote: This design also provides SWE-bench with temporal robustness
-    by: model
+        url: https://arxiv.org/abs/2310.06770v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: unmet
     rationale: While the benchmark mentions 'version' as a field for task instances, there is no explicit version identifier for the benchmark itself visible alongside its name in main references.
@@ -118,3 +119,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 3 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - c3
+      - c7

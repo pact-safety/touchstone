@@ -2,13 +2,15 @@
 benchmark: decodingtrust
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v5
   repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
@@ -66,16 +68,14 @@ verdicts:
         quote: It employs a careful filtering process to ensure a high-quality benchmark.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c5:
-    value: met
-    rationale: The benchmark identifies the capability it serves (e.g., identifying unknown knowledge or robustness against adversarial attacks) and these remain current challenges for LLMs.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 29, chunk 2
-        quote: Consequently, the ability to identify unknown knowledge is crucial for GPT models.
+    value: unmet
     by: model
+    rationale: The provided excerpts do not contain any statement from the benchmark creators asserting that the tasks (e.g., bias detection, adversarial robustness) remain relevant or current for the models they evaluate. Without such a statement, the condition for 'met' is not satisfied.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c6:
     value: unmet
     rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on to reflect real-world complexity.
@@ -83,15 +83,12 @@ verdicts:
     by: model
     quotes_verified: true
   c7:
-    value: met
-    rationale: The benchmark is maintained by designated individuals and includes a mechanism for updates and corrections to prevent it from becoming outdated.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 110, chunk 0
-        quote: Please contact Boxin Wang ( boxinw2@illinois.edu ) and Prof. Bo Li ( lbo@illinois.edu ), who are responsible for maintenance.
+    value: unmet
     by: model
+    rationale: While the excerpts mention a maintenance plan ('If we include more tasks or find any errors, we will correct the dataset'), they do not provide evidence of a specific maintenance process or revision history that addresses semantic drift or meaning changes over time. The excerpts lack the required evidence of a dated release history or relabeling process addressing drift.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: unmet
     rationale: The provided excerpts do not show an explicit version identifier (like a release tag or DOI) visible alongside the benchmark name in its main references.
@@ -118,3 +115,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 3 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c5
+      - c7

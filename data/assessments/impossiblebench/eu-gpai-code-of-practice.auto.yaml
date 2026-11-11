@@ -44,6 +44,7 @@ verdicts:
         quote: contains 103 data points
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.02:
     value: unmet
     rationale: While confidence intervals are mentioned for some results, there is no report of a statistical power figure or minimum detectable difference.
@@ -64,6 +65,7 @@ verdicts:
         quote: Minimal scaffolds For Impossible-LiveCodeBench , the minimal scaffold is a simple submission loop.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.04:
     value: met
     rationale: The benchmark uses a 'hidden tests' configuration as a control to see if hiding tests reduces the cheating success rate.
@@ -101,31 +103,26 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: met
-    rationale: The benchmark uses an LLM (Claude Opus 4) to classify cheating strategies and validates this by manually examining transcripts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 9, chunk 1
-        quote: we found that most of them are indeed cheating attempts
+    value: unmet
     by: model
+    rationale: The excerpts do not describe how labels or grades were produced with a bias control like blinding or inter-annotator agreement. The classification of cheating is done using an LLM (Claude Opus 4), but no validation against human judgment or agreement metrics are reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: met
-    rationale: The benchmark analyzes and reports on transcripts (reasoning traces) of the agents' behavior to identify cheating strategies.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 5, chunk 1
-        quote: Analyzing the transcripts, we identify four distinct cheating strategies
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the benchmark releases the full model outputs per item, including reasoning traces, for evaluator inspection. It mentions storing function signatures and test files, but not the full agent trajectories or traces.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     rationale: There is no documented check for evaluation awareness, sandbagging, or an elicitation-strength sweep.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.11:
     value: unmet
     rationale: While the creation of items via mutation is described, there is no description of the review process or how the benchmark is versioned and maintained.
@@ -241,16 +238,20 @@ verdicts:
     by: model
     quotes_verified: true
   rp.08:
-    value: met
-    rationale: The harness is designed to run models through public APIs (e.g., openai/gpt-4o) and uses the Inspect AI framework.
-    evidence:
-      - source: repo
-        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
-        locator: safety-research/impossiblebench@d4f9a149db2b:README.md, chunk 1
-        quote: eval(task, model="openai/gpt-4o")
+    value: unmet
     by: model
+    rationale: The excerpts describe a custom Inspect AI implementation and custom scaffolds. There is no evidence that the harness runs models through public APIs as a standard feature for evaluation, nor that it is built on or exported to a named public evaluation framework or standard format beyond the custom implementation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 6 settled by adjudicator-v4."
+    items:
+      - iv.08
+      - iv.09
+      - rp.08

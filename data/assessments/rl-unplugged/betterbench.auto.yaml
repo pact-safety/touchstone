@@ -40,6 +40,7 @@ verdicts:
           new policies from logged data, without any further interactions with the environment
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.02:
     value: 15
     rationale: The benchmark describes how the concept translates to tasks by mapping task domains to axes like action space, observation space, and exploration difficulty.
@@ -191,6 +192,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.04:
     value: 0
     rationale: The excerpts do not explicitly state support for local model evaluation, only the provision of datasets and code.
@@ -333,6 +335,7 @@ verdicts:
         quote: We use the arithmetic mean with the exception of Atari where we use median
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.12:
     value: 0
     rationale: No license is specified in the provided excerpts.
@@ -382,14 +385,14 @@ verdicts:
     by: model
     quotes_verified: true
   doc.18:
-    value: 15
-    rationale: The representativeness is explained by covering diverse axes like action and observation spaces.
+    value: 10
+    by: human
+    rationale: The paper explains the representativeness by selecting tasks to cover diverse properties (action/observation space, difficulty) and excluding Atari games where DQN performed poorly.
     evidence:
       - source: paper
+        quote: we only include games where the online DQN’s performance that has generated the dataset was significantly better than the random policy.
+        locator: 2006.13888v4 page 6, chunk 2
         url: https://arxiv.org/abs/2006.13888v4
-        locator: 2006.13888v4 page 3, chunk 2
-        quote: We chose the task domains to include tasks that vary along the following axes.
-    by: model
     quotes_verified: true
   doc.19:
     value: 0
@@ -419,3 +422,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - doc.18

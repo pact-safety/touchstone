@@ -2,13 +2,15 @@
 benchmark: agentharm
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
 model_run:
@@ -115,15 +117,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.3b:
-    value: met
-    rationale: A benign variant of the dataset is used as a baseline for model capabilities.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 2, chunk 1
-        quote: We also include a benign variant of the dataset as a baseline for model capabilities.
+    value: unmet
     by: model
+    rationale: The excerpts do not report a human baseline score for the same agentic tasks. They report model scores and refusal rates, but no human performance data is provided.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4a:
     value: met
     rationale: The documentation states that all questions were written by hand and reviewed by humans.
@@ -180,6 +179,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.1b:
     value: met
     rationale: The benchmark provides a validation set separate from the public and private test sets.
@@ -226,18 +226,25 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2e:
-    value: unmet
-    rationale: While it mentions a token limit for output, it does not define a stopping condition (like max steps) for the agentic loop itself.
-    evidence: []
+    value: met
     by: model
+    rationale: The benchmark specifies a token limit (4096) and describes the agent loop structure, serving as the stopping condition/budget.
+    evidence:
+      - source: paper
+        quote: Unless otherwise specified, we use temperature 0 with up to 4096 generated output tokens.
+        locator: 2410.09024v3 page 6, chunk 3
+        url: https://arxiv.org/abs/2410.09024v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2f:
     value: unmet
     rationale: The benchmark mentions single attempts and best-of-n sampling, but does not specify the feedback given to the agent after an incorrect submission.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2g:
     value: met
     rationale: The benchmark specifies the use of a single attempt for main results and describes a best-of-n aggregation for other experiments.
@@ -307,21 +314,22 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.5:
-    value: unmet
-    rationale: The documentation does not show that the harness supports multiple providers via a configuration setting or open interface.
-    evidence: []
-    by: model
-    quotes_verified: true
-  2.3.1:
     value: met
-    rationale: The benchmark provides execution logs showing the full transcript and the resulting score.
+    by: human
+    rationale: The benchmark uses the Inspect framework which supports multiple models, and the paper evaluates a range of leading LLMs from different providers.
     evidence:
       - source: paper
+        quote: "Models. We evaluate a range of leading LLMs. See Appendix B for more details. • OpenAI : GPT-3.5-Turbo, GPT-4o mini, and GPT-4o. • Anthropic : Claude 3 Haiku, Claude 3 Sonnet, Claude-3-Opus, and Claude-3.5-Sonnet."
+        locator: 2410.09024v3 page 7, chunk 1
         url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 9, chunk 3
-        quote: "Figure 4: Execution logs of Claude 3.5 Sonnet for the “Fake Documents” task."
-    by: model
     quotes_verified: true
+  2.3.1:
+    value: unmet
+    by: model
+    rationale: The excerpts describe the scoring logic and show example logs, but do not explicitly state that the harness saves full per-item logs containing the transcript and score as a standard output feature.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.2:
     value: unmet
     rationale: The provided excerpts do not show that the logs record the model identifier and benchmark version.
@@ -374,6 +382,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports results broken down by harm category."
@@ -386,6 +395,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.3:
     value: met
     rationale: The benchmark reports average scores with standard deviations (e.g., ± 0.7%) for several models.
@@ -419,15 +429,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.2.4:
-    value: met
-    rationale: The documentation states that Appendix D contains execution logs of agents, which serve as transcripts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 10, chunk 2
-        quote: Appendix D shows many examples of harmful and benign tasks, detailed and open-ended tasks, grading functions, tool implementations, and execution logs
+    value: unmet
     by: model
+    rationale: The excerpts mention execution logs in Appendix D but do not state that full transcripts or representative samples are downloadable.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2:
     value: met
     rationale: The benchmark provides a validity argument by stating that tasks are designed based on the terms of use of major LLM providers to represent misuse potential.
@@ -448,16 +455,14 @@ verdicts:
         quote: opting to use a predefined tool set and not include real world interactions
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.3:
-    value: met
-    rationale: The benchmark includes a benign variant of the dataset as a baseline for model capabilities.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.09024v3
-        locator: 2410.09024v3 page 2, chunk 1
-        quote: We also include a benign variant of the dataset as a baseline for model capabilities.
+    value: unmet
     by: model
+    rationale: The excerpts do not describe a baseline measured under specific conditions (tools, time, incentives) comparable to model runs; they only compare model-to-model performance.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: met
     rationale: The benchmark explicitly states that it measures basic agentic capabilities and not advanced autonomous capabilities.
@@ -482,3 +487,14 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 39 verdicts agreed, 11 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.3b
+      - 2.1.2e
+      - 2.2.5
+      - 2.3.1
+      - 3.2.4
+      - 3.3.3

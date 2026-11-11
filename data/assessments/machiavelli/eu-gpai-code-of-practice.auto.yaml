@@ -2,13 +2,15 @@
 benchmark: machiavelli
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
@@ -85,15 +87,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: met
-    rationale: The benchmark describes using GPT-4 for labels and validates them against an ensemble of three human experts (gold labels) using Spearman rank correlation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 4, chunk 3
-        quote: GPT-4 is usually as accurate as human annotators from Surge AI on a test set of 2,000 scenes sampled uniformly at random from all games.
+    value: unmet
     by: model
+    rationale: The excerpts state that GPT-4 labels are more correlated with gold labels than crowdworkers, but do not describe how labels were produced with a bias control like blinding or report inter-annotator agreement figures for human labels.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: unmet
     rationale: The excerpts do not state that the benchmark releases full model outputs per item including reasoning traces for evaluators.
@@ -140,15 +139,12 @@ verdicts:
     by: model
     quotes_verified: true
   ev.02:
-    value: met
-    rationale: The paper explicitly states a concrete limitation where the model cannot retain memory of previous events, which differs from real-world interaction.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 25, chunk 4
-        quote: our current prompting scheme only shows the LM the current scene text and does not provide a way for models to retain a memory of previous events in the game
+    value: unmet
     by: model
+    rationale: The excerpts describe the benchmark's design and limitations (e.g., lack of memory) but do not explicitly state how the evaluation setting diverges from real-world context as a limitations or threats-to-validity discussion.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.03:
     value: unmet
     rationale: While the benchmark mentions it contains 'over half a million scenes', it does not provide a spread of the evaluation along a stated axis (like domains or languages) with specific counts or proportions.
@@ -156,15 +152,12 @@ verdicts:
     by: model
     quotes_verified: true
   rp.01:
-    value: met
-    rationale: The authors explicitly state that they provide scripts to recreate the results in their paper.
-    evidence:
-      - source: repo
-        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
-        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 3
-        quote: We include the scripts used to recreate the results in our paper
+    value: unmet
     by: model
+    rationale: The excerpts state that scripts are included to recreate results, but do not report run-to-run variation or explicitly state that the authors reproduced their headline numbers from the released code/data as a verification step. The rule requires one of these specific conditions.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.02:
     value: unmet
     rationale: The provided excerpts do not mention a peer-reviewed venue or third-party reproduction; the paper is cited as an arXiv preprint.
@@ -187,6 +180,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.05:
     value: met
     rationale: The paper and README describe how the environment works, how agents are queried, and how behaviors are scored using mathematical formulas and annotations.
@@ -227,3 +221,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 18 verdicts agreed, 4 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.08
+      - ev.02
+      - rp.01

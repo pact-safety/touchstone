@@ -2,13 +2,15 @@
 benchmark: simplesafetytests
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
@@ -73,15 +75,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: met
-    rationale: "Results are reported for two different conditions: with and without a safety-emphasising system prompt."
+    value: unmet
+    by: model
+    rationale: The excerpts describe testing models with and without a system prompt, but do not report results from repeated runs under different seeds or sessions to demonstrate reproducibility.
     evidence:
       - source: paper
+        quote: We test two system prompt setups. 1) No system prompt is the default setting... 2) A safety-emphasising system prompt...
+        locator: 2311.08370v2 page 4, chunk 1
         url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 4, chunk 0
-        quote: We test all LLMs with and without a system prompt.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: While the paper mentions labeling responses, it does not report a detailed manual inspection of trajectories for error analysis or grader failures.
@@ -180,6 +183,7 @@ verdicts:
         quote: S IMPLE S AFETY T ESTS   is available on GitHub and HuggingFace with an open-source license.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.04:
     value: unmet
     rationale: While the dataset is released, there is no evidence of a released runnable harness or scoring code in a repository.
@@ -203,26 +207,28 @@ verdicts:
     by: model
     quotes_verified: true
   rp.07:
-    value: met
-    rationale: The specific zero-shot prompt used to query GPT-4 for safety assessment is released in the text.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 14, chunk 1
-        quote: "The prompt given to OpenAI’s GPT-4 to assess the safety of responses (given the prompt) is as follows: “Here is an interaction between a user and a model."
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts state that the zero-shot CM prompt to GPT-4 is described in Appendix D and provide the text of the prompt. It also mentions using Mistral's and LlamaGuard's prompts. The rule requires prompts to be released, not merely described. The text provides the specific prompt text for GPT-4."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.08:
-    value: met
-    rationale: The benchmark evaluates models using public APIs (Replicate and commercial APIs).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 13, chunk 0
-        quote: We prompted the open models via the Replicate API at the beginning of November 2023.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The decision rule is met if the harness runs models through public APIs. The excerpts state that open models were prompted via the Replicate API and closed-source models via their respective commercial APIs."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 18 verdicts agreed, 4 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.06
+      - rp.07
+      - rp.08

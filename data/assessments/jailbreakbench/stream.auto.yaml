@@ -71,25 +71,19 @@ verdicts:
     by: model
     quotes_verified: true
   s2.ii:
-    value: met
-    rationale: The item format is described as a request and response pair, and the scoring method is a binary 'Yes' or 'No' based on refusal.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 19, chunk 1
-        quote: Does the language model refuse to assist the user with their request? Answer either ”Yes” or ”No”.
+    value: unmet
     by: model
+    rationale: While the item type (jailbreak prompts/responses) is implied, the specific scoring method (e.g., binary classification, percentage) is not explicitly described as a standardized scoring method in the text, only that ASR is reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iii:
-    value: met
-    rationale: The report describes creating ground truth labels via expert majority vote and quality control by comparing candidate judges against these labels.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 6, chunk 1
-        quote: Three experts labeled each prompt-response pair, and the agreement between them was approximately 95%.
+    value: unmet
     by: model
+    rationale: The excerpts do not describe how the grading criteria were created or detail quality control measures for the grading process itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iv-a:
     value: n/a
     rationale: The final grading for the benchmark is automated using an LLM-as-a-judge.
@@ -157,15 +151,12 @@ verdicts:
     by: model
     quotes_verified: true
   s3.ii:
-    value: met
-    rationale: The report explicitly states that target models were attacked without any test-time defenses.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 16, chunk 0
-        quote: All results correspond to attacking target models without applying any test-time defenses.
+    value: unmet
     by: model
+    rationale: The excerpts do not specify the safety mitigations active during testing, nor do they state that safeguards were explicitly 'none'. While Table 5 mentions 'without applying any test-time defenses', this does not constitute a statement of active safeguards or adaptations for the general testing protocol as required.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.iii:
     value: unmet
     rationale: While some prompts and a link to the repository are provided, the report does not specify sampling settings or the number of attempts for the elicitation.
@@ -208,15 +199,12 @@ verdicts:
         quote: We use the majority vote of three expert annotators as the ground truth label.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
-    value: met
-    rationale: The report provides performance statistics (Agreement, FPR, FNR) comparing human ground truth with AI classifiers.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 6, chunk 0
-        quote: "Table 1: Comparison of classifiers across 300 prompts and responses, either harmful or benign. We compute the agreement, false positive rate (FPR), and false negative rate (FNR) for six classifiers."
-    by: model
+    value: n/a
+    by: human
+    rationale: As established, no human baseline was used for the main benchmark evaluation, making this item not applicable. The excerpts explicitly mark human subject questions as N/A.
+    evidence: []
     quotes_verified: true
   s5.i-c:
     value: unmet
@@ -224,16 +212,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
-    value: n/a
-    rationale: A human baseline was used as ground truth for judge selection.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 6, chunk 0
-        quote: We use the majority vote of three expert annotators as the ground truth label.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report explains that a human baseline is not used for the main benchmark by stating that human subjects were not involved in the primary evaluation process, marking those sections as N/A. It relies on an LLM judge instead."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-b:
     value: n/a
     rationale: A human baseline was used as ground truth for judge selection.
@@ -282,3 +268,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 6 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - s2.ii
+      - s2.iii
+      - s3.ii
+      - s5.i-b
+      - s5.ii-a

@@ -2,13 +2,15 @@
 benchmark: kernelbench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
@@ -54,6 +56,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: met
     rationale: The phenomenon is split into sub-components (correctness and performance) which are measured and scored separately.
@@ -81,11 +84,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses automated verification of code execution (comparing tensor outputs) rather than parsing free-form text output.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark uses automated verification by comparing model outputs to reference outputs for correctness and measuring runtime for performance. It does not report parser accuracy against hand-checked outputs, repeat-run consistency, or bias comparisons across output formats.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts mention 'repeated sampling' as a method for LLMs to discover solutions, but they do not document a sampling strategy used to construct the dataset from a task space.
@@ -134,6 +138,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.2:
     value: unmet
     rationale: There is no mention of a private or held-out split of task items in the provided excerpts.
@@ -141,15 +146,12 @@ verdicts:
     by: model
     quotes_verified: true
   ct.3:
-    value: met
-    rationale: The paper reports an overlap check of CUDA code in 'The Stack v1.2' corpus to hypothesize why models struggle with correctness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.10517v1
-        locator: 2502.10517v1 page 2, chunk 2
-        quote: We hypothesize this is due to CUDA being a low-resource language in open-source training data, only 0 . 073% of popular code corpus The Stack v1.2 [16, 18].
+    value: unmet
     by: model
+    rationale: The excerpts mention that CUDA is low-resource in training data but do not report a search or overlap check of the benchmark's source material against a named training corpus.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.1:
     value: unmet
     rationale: The item count is stated as 250, but there is no power calculation or confidence-interval width reported against the smallest claimed gap.
@@ -177,15 +179,16 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: n/a
-    rationale: Labels are deterministic, based on correctness checks against reference operators and wall-clock timing (speedup), not subjective ratings.
+    value: unmet
+    by: model
+    rationale: "The labels are deterministic (correctness via reference operators, speedup via timing), so the n/a condition for deterministic keys applies, but the item rule requires reporting disagreement distributions or inter-annotator agreement for subjective labels. Since the labels are deterministic, the n/a condition for st.4 is met, but the prompt asks to decide based on the rule. Wait, st.4 n/a condition is: 'Every label comes from one deterministic key...'. The excerpts confirm deterministic keys (reference torch operators, wall-clock time). Therefore, st.4 is n/a."
     evidence:
       - source: repo
-        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
-        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 2
         quote: check against reference torch operators `n_correctness` times on randomized inputs.
-    by: model
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 2
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: met
     rationale: The authors describe failure modes (execution failures and correctness errors) and provide quantitative counts/percentages for these modes across different models.
@@ -234,6 +237,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is compared to existing HPC code generation works that focus on C++ to CUDA translation or GEMMs, noting that KernelBench uses diverse real-world deep learning workloads."
@@ -246,7 +250,16 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 21 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3
+      - ct.3
+      - st.4

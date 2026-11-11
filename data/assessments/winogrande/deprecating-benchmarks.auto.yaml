@@ -2,13 +2,15 @@
 benchmark: winogrande
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 727e837f77521ef38bcc56df3b275c8da43f45af
@@ -52,16 +54,22 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
-    value: met
-    rationale: The benchmark employs a rigorous validation process where three crowd workers must agree on the correct answer and the lack of ambiguity for a question to be deemed valid.
+    value: unmet
+    by: model
+    rationale: The excerpts describe the creation of the dataset and the use of an adversarial filtering algorithm to remove biases, but they do not provide a specific audit, validation pass, or error rate statistic (e.g., percentage of errors) that demonstrates a 'low error rate' or confirms the absence of substantial annotation errors. The text mentions 'annotation artifacts' as a general problem in large-scale datasets and states the goal of mitigation, but does not report a successful audit result with a low error rate for the final released data.
     evidence:
       - source: paper
+        quote: Several recent studies ... have reported the presence of annotation artifacts in large-scale datasets.
+        locator: 1907.10641v2 page 3, chunk 0
         url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 2, chunk 4
-        quote: We validate each collected question through a distinct set of three crowd workers.
-    by: model
+      - source: paper
+        quote: WSC problems have been considered challenging to craft by crowdsourcing ... we present an effective approach to creating a large-scale dataset ... while maintaining its original properties
+        locator: 1907.10641v2 page 2, chunk 2
+        url: https://arxiv.org/abs/1907.10641v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c5:
     value: met
     rationale: The benchmark serves as a tool for evaluating commonsense reasoning via pronoun resolution, a purpose that remains current as it is used to test if models rely on statistical patterns or true reasoning.
@@ -70,7 +78,7 @@ verdicts:
         url: https://arxiv.org/abs/1907.10641v2
         locator: 1907.10641v2 page 1, chunk 2
         quote: has been used as a benchmark for evaluating commonsense reasoning.
-    by: model
+    by: human
     quotes_verified: true
   c6:
     value: unmet
@@ -97,12 +105,24 @@ verdicts:
     by: model
     quotes_verified: true
   r3:
-    value: unmet
-    rationale: While the README has a 'Questions?' section, it is empty, and no named maintainer, contact address, or active issue tracker is provided in the excerpts.
-    evidence: []
+    value: met
     by: model
+    rationale: The README explicitly provides a point of contact for queries, including an email address and a Google Group, satisfying the requirement for a named maintainer or contact address.
+    evidence:
+      - source: repo
+        quote: "Email: keisukes[at]allenai.org"
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 4
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 6 verdicts agreed, 3 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c4
+      - r3

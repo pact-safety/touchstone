@@ -55,14 +55,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.03:
-    value: 10
-    rationale: The text mentions that the skill is foundational for machine-automated software engineering and raises AI safety questions, though it doesn't explicitly detail 'how knowing' it is helpful in a practical real-world application sense.
+    value: 15
+    by: human
+    rationale: The benchmark addresses real-world utility by using real GitHub issues and noting that solving them requires skills possessed by experienced software engineers.
     evidence:
       - source: paper
+        quote: Real-world software engineering tasks . Since each task instance in SWE-bench consists of a large and complex codebase and a description of a relevant issue, solving SWE-bench requires demonstrating sophisticated skills and knowledge possessed by experienced software engineers
+        locator: 2310.06770v3 page 3, chunk 1
         url: https://arxiv.org/abs/2310.06770v3
-        locator: 2310.06770v3 page 32, chunk 0
-        quote: a potential future of machine-automated software engineering raises many important questions and has important potential ramifications with regards to AI Safety
-    by: model
     quotes_verified: true
   des.04:
     value: 0
@@ -131,14 +131,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.13:
-    value: 10
-    rationale: The text explains how SWE-bench differs from traditional NLP benchmarks (which use short sequences and contrived problems).
+    value: 15
+    by: human
+    rationale: The benchmark explains differences from related benchmarks by contrasting its realistic, long-input, execution-based nature with traditional NLP benchmarks that use short, contrived problems.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2310.06770v3
-        locator: 2310.06770v3 page 3, chunk 1
         quote: Traditional benchmarks in NLP typically involve only short input and output sequences and consider somewhat “contrived” problems created specifically for the benchmark. In contrast, SWE-bench’s realistic construction setting imbues the dataset with unique properties
-    by: model
+        locator: 2310.06770v3 page 3, chunk 1
+        url: https://arxiv.org/abs/2310.06770v3
     quotes_verified: true
   des.14:
     value: 10
@@ -148,7 +148,7 @@ verdicts:
         url: https://arxiv.org/abs/2310.06770v3
         locator: 2310.06770v3 page 7, chunk 1
         quote: Finetuned models are sensitive to context distribution shifts.
-    by: model
+    by: human
     quotes_verified: true
   imp.01:
     value: 15
@@ -190,6 +190,7 @@ verdicts:
         quote: "`run_llama.py`: Runs inference using Llama models (e.g., SWE-Llama)"
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.05:
     value: 15
     rationale: The benchmark uses a unique identifier created from the repository and pull number for each instance.
@@ -251,10 +252,17 @@ verdicts:
     by: model
     quotes_verified: true
   doc.02:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): A dedicated Quick Start Guide is available and listed in the documentation index."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: A quick-start guide is explicitly available and documented in the repository structure and content.
+    evidence:
+      - source: repo
+        quote: |-
+          # Quick Start Guide
+
+          This guide will help you get started with SWE-bench, from installation to running your first evaluation.
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/guides/quickstart.md, chunk 0
+        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
     quotes_verified: true
   doc.03:
     value: 15
@@ -372,7 +380,7 @@ verdicts:
         url: https://arxiv.org/abs/2310.06770v3
         locator: 2310.06770v3 page 16, chunk 0
         quote: From a list of the top   5 , 000   most downloaded PyPI libraries during August 2023, we select the top   100   packages
-    by: model
+    by: human
     quotes_verified: true
   doc.16:
     value: 15
@@ -384,11 +392,16 @@ verdicts:
         quote: we first remove any Markdown-style comments
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.17:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The 'Verified' variant is described as consisting of expert-verified solvable problems."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The data annotation process (derived from GitHub issues and PRs, with expert verification for the 'Verified' set) is documented.
+    evidence:
+      - source: paper
+        quote: SWE-bench is a benchmark featuring GitHub issues from popular repositories that report bugs or request new features, and pull requests that make changes to the repository to resolve these issues.
+        locator: 2310.06770v3 page 2, chunk 2
+        url: https://arxiv.org/abs/2310.06770v3
     quotes_verified: true
   doc.18:
     value: 15
@@ -407,15 +420,12 @@ verdicts:
     by: model
     quotes_verified: true
   mai.01:
-    value: 10
-    rationale: The text describes a process to verify the usability of task instances via execution, though it does not explicitly date this check within the last year.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2310.06770v3
-        locator: 2310.06770v3 page 16, chunk 2
-        quote: We verify the usability of a task instance via execution.
+    value: 0
     by: model
+    rationale: The excerpts describe execution-based validation of task instances (tests passing/failing) but do not mention checking 'code usability' within the last year.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mai.02:
     value: 15
     rationale: The repository README explicitly welcomes contributions, pull requests, and issues as a way to hear from the community.
@@ -440,3 +450,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 6 decided by the reviewer."
+    items:
+      - des.03
+      - des.13
+      - doc.02
+      - doc.17
+      - mai.01

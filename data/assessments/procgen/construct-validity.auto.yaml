@@ -2,13 +2,15 @@
 benchmark: procgen
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 37b521dbb530f0734fd82f72d921f5e0e715c0d1
@@ -107,11 +109,20 @@ verdicts:
     by: model
     quotes_verified: true
   ru.2:
-    value: unmet
-    rationale: While the documentation mentions changes to CoinRun, it does not explicitly state a strength and a limitation of the original CoinRun work.
-    evidence: []
+    value: met
     by: model
+    rationale: The paper discusses the strengths (generalization, procedural generation) and limitations (overfitting in prior benchmarks like ALE, which motivated the work) of the prior context and adapted work.
+    evidence:
+      - source: paper
+        quote: While the diversity between games in the ALE is one of the benchmark’s greatest strengths, the low emphasis on generalization presents a significant drawback.
+        locator: 1912.01588v2 page 1, chunk 1
+        url: https://arxiv.org/abs/1912.01588v2
+      - source: paper
+        quote: In these environments, employing procedural generation is far more effective than relying on fixed, human-designed content.
+        locator: 1912.01588v2 page 1, chunk 3
+        url: https://arxiv.org/abs/1912.01588v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
     value: unmet
     rationale: The provided excerpts do not show a performance comparison between the new benchmark and the original CoinRun environment.
@@ -216,12 +227,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.2:
     value: unmet
     rationale: There is no quotable statement linking the choice of tasks and metrics to a specific operational definition provided in a 'def.1' section.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: met
     rationale: The benchmark is compared to bsuite, noting that bsuite includes a single environment for visual generalization while Procgen has it across all environments.
@@ -246,3 +259,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 25 verdicts agreed, 3 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - ru.2

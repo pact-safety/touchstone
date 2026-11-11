@@ -2,13 +2,15 @@
 benchmark: impossiblebench
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
@@ -71,27 +73,19 @@ verdicts:
     by: model
     quotes_verified: true
   c7:
-    value: met
-    rationale: The benchmark is based on established benchmarks and its content is current (referencing 2025 models and data), with no evidence that its labels or task meanings have shifted.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 3, chunk 1
-        quote: Starting from tasks that are known to be diverse and high quality
+    value: unmet
     by: model
+    rationale: The excerpts do not state when the content or labels were collected, nor do they show a maintenance process or revision addressing meaning drift. The data is sourced from 2025 releases, but no drift analysis is provided.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
-    value: met
-    rationale: The benchmark has an explicit version identifier '0.1.0' associated with its name in the setup configuration.
-    evidence:
-      - source: repo
-        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
-        locator: safety-research/impossiblebench@d4f9a149db2b:setup.py, chunk 1
-        quote: |-
-          name="impossiblebench",
-              version="0.1.0"
+    value: unmet
     by: model
+    rationale: The excerpts do not show an explicit version identifier (such as a DOI or release tag) displayed alongside the benchmark name in main references, nor do they demonstrate that changes are recorded per version. The setup.py shows a static version '0.1.0' but does not link it to the benchmark name in references or show versioned change logs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r2:
     value: unmet
     rationale: There is no mention of a deprecation plan or a policy for archiving artifacts at the end of life.
@@ -99,16 +93,21 @@ verdicts:
     by: model
     quotes_verified: true
   r3:
-    value: met
-    rationale: The benchmark provides a GitHub URL which serves as an issue tracker and point of contact, and the project is current (referenced as April 2025).
-    evidence:
-      - source: repo
-        url: https://github.com/safety-research/impossiblebench/tree/d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
-        locator: safety-research/impossiblebench@d4f9a149db2b:setup.py, chunk 1
-        quote: url="https://github.com/fjzzq2002/impossiblebench"
+    value: unmet
     by: model
+    rationale: No named maintainer or contact address is published for the benchmark. While there is a GitHub issue tracker, the excerpts do not show that it is monitored or that maintainers respond to issues; the only issue mentioned is a bug report without evidence of a response mechanism.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 3 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c7
+      - r1
+      - r3

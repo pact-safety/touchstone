@@ -60,18 +60,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.03:
-    value: 10
-    rationale: The text describes how refusing safe prompts limits helpfulness in general applications, though it doesn't explicitly frame this as the 'real world' utility of the benchmark itself.
+    value: 15
+    by: human
+    rationale: The benchmark explains that understanding this capability is helpful for identifying systematic failure modes and ensuring models are helpful without exaggerating safety.
     evidence:
       - source: paper
+        quote: Therefore, we believe that XST EST can deliver the most value not by highlighting single examples of failure, but rather by helping to identify systematic failure modes
+        locator: 2308.01263v3 page 9, chunk 2
         url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 8, chunk 2
-        quote: |-
-          If models like Llama2.0, and to a lesser extent
-          Llama2.1, consistently refuse such prompts, this
-          directly limits their helpfulness in general question-
-          answering applications.
-    by: model
     quotes_verified: true
   des.04:
     value: 15
@@ -96,24 +92,34 @@ verdicts:
     by: model
     quotes_verified: true
   des.07:
-    value: 10
-    rationale: The benchmark integrates prior work on functional testing for NLP and safety risks in LLMs.
+    value: 15
+    by: human
+    rationale: The benchmark integrates domain literature by citing prior work on functional testing, bias evaluation, and safety risks to motivate its design.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
+        quote: The structure of XST EST is motivated by prior work on functional testing for NLP... Functional tests evaluate the input-output behaviour of software on sets of targeted test cases
         locator: 2308.01263v3 page 2, chunk 1
-        quote: |-
-          The structure of XST EST   is
-          motivated by prior work on functional testing for
-          NLP.
-    by: model
+        url: https://arxiv.org/abs/2308.01263v3
+      - source: paper
+        quote: This risk motivates a growing body of research that aims to make models safer, through techniques such as red-teaming
+        locator: 2308.01263v3 page 1, chunk 1
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
   des.08:
-    value: 0
-    rationale: The text mentions using refusal rates, but does not provide a rationale for why this specific metric was chosen over others.
-    evidence: []
+    value: 15
     by: model
+    rationale: The benchmark informs metric choice by using refusal rates as the primary metric, validated against manual annotation and comparing automated methods.
+    evidence:
+      - source: paper
+        quote: We differentiate between full refusal and partial refusal and full compliance , as explained in §4.2.
+        locator: 2308.01263v3 page 6, chunk 0
+        url: https://arxiv.org/abs/2308.01263v3
+      - source: paper
+        quote: "Table 2: Refusal rates (%) on safe prompts (top) and unsafe prompts (bottom) for the models described in §4.1, using different evaluation methods"
+        locator: 2308.01263v3 page 7, chunk 0
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.09:
     value: 0
     rationale: No metric floors or ceilings are mentioned.
@@ -146,17 +152,18 @@ verdicts:
     by: model
     quotes_verified: true
   des.13:
-    value: 10
-    rationale: The benchmark is compared to prior functional testing frameworks and safety risk tests, though specific differences are implied rather than detailed.
+    value: 15
+    by: human
+    rationale: The benchmark explains differences to related work by positioning itself as a diagnostic test suite for exaggerated safety, distinct from general safety or bias benchmarks.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
+        quote: Analogously, we design XST EST as a small and hand-crafted diagnostic test suite for exaggerated safety, which is split into sets of targeted test prompts.
         locator: 2308.01263v3 page 2, chunk 1
-        quote: |-
-          Analogously, we
-          design XST EST   as a small and hand-crafted
-          diagnostic test suite for exaggerated safety
-    by: model
+        url: https://arxiv.org/abs/2308.01263v3
+      - source: paper
+        quote: Without proper safeguards, however, LLMs will readily follow malicious instructions and generate toxic content... This risk motivates a growing body of research that aims to make models safer
+        locator: 2308.01263v3 page 1, chunk 1
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
   des.14:
     value: 0
@@ -192,7 +199,7 @@ verdicts:
         url: https://arxiv.org/abs/2308.01263v3
         locator: 2308.01263v3 page 9, chunk 1
         quote: GPT-4, which we access through an API
-    by: model
+    by: human
     quotes_verified: true
   imp.04:
     value: 0
@@ -200,6 +207,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.05:
     value: 0
     rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
@@ -264,6 +272,7 @@ verdicts:
           2. Using the language model you want to test, collect responses on the test prompts listed in the "prompt" column of the csv.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.03:
     value: 0
     rationale: The provided excerpts do not include the source code content to verify in-line comments.
@@ -287,17 +296,31 @@ verdicts:
     by: model
     quotes_verified: true
   doc.06:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper describes the process of hand-crafting prompts and creating contrast sets."
-    evidence: []
+    value: 15
     by: model
+    rationale: The paper documents the benchmark construction process, including the creation of safe prompts and unsafe contrasts.
+    evidence:
+      - source: paper
+        quote: Specifically, for each safe test prompt in each safe prompt type, we make minimal edits to create a clearly unsafe counterpart
+        locator: 2308.01263v3 page 3, chunk 1
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.07:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper documents the prompt types (e.g., Privacy, Figurative Language) and the rationale for using contrast sets."
-    evidence: []
+    value: 15
     by: model
+    rationale: The paper documents the test tasks (10 types) and provides rationale for their design, such as using contrast sets to evaluate decision boundaries.
+    evidence:
+      - source: paper
+        quote: "T10: Privacy (Fictional) tests for privacy-related prompts that are safe because they refer to fictional characters"
+        locator: 2308.01263v3 page 3, chunk 1
+        url: https://arxiv.org/abs/2308.01263v3
+      - source: paper
+        quote: This is motivated by the effectiveness of contrast sets for evaluating model decision boundaries
+        locator: 2308.01263v3 page 3, chunk 1
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.08:
     value: 0
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The paper documents the normative property that well-calibrated models should not refuse safe prompts."
@@ -311,11 +334,20 @@ verdicts:
     by: model
     quotes_verified: true
   doc.10:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The prompt design process (hand-crafting and contrast creation) is documented."
-    evidence: []
+    value: 15
     by: model
+    rationale: The paper documents the data collection process (model setup, dates) and prompt design process (hand-crafting, using GPT-4/dictionaries).
+    evidence:
+      - source: paper
+        quote: To aid our work, we used online dictionaries as well as GPT-4, which, for instance, helped us find more relevant examples of homonyms and figurative language.
+        locator: 2308.01263v3 page 3, chunk 2
+        url: https://arxiv.org/abs/2308.01263v3
+      - source: paper
+        quote: We collected all responses for GPT-4, Llama2.0 and Llama2.1 on September 18th, 2023. Responses for MistrI were collected on September 28th, and MistrG on October 5th, 2023.
+        locator: 2308.01263v3 page 13, chunk 1
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.11:
     value: 15
     rationale: The evaluation metric (refusal rate) and the classification methods are documented.
@@ -412,3 +444,14 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 6 settled by adjudicator-v4, 4 decided by the reviewer."
+    items:
+      - des.03
+      - des.07
+      - des.08
+      - des.13
+      - doc.06
+      - doc.07
+      - doc.10

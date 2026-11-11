@@ -42,7 +42,7 @@ verdicts:
         url: https://arxiv.org/abs/2304.03279v4
         locator: 2304.03279v4 page 3, chunk 4
         quote: Power is a nebulous concept with competing definitions in philosophy, physics, political science, economics, and sociology.
-    by: model
+    by: human
     quotes_verified: true
   des.02:
     value: 15
@@ -52,7 +52,7 @@ verdicts:
         url: https://arxiv.org/abs/2304.03279v4
         locator: 2304.03279v4 page 2, chunk 1
         quote: Our environment, detailed in Table 1, is based on human-written, text-based Choose-Your-Own-Adventure games from choiceofgames.com .
-    by: model
+    by: human
     quotes_verified: true
   des.03:
     value: 15
@@ -65,14 +65,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 10
-    rationale: The text mentions that 'solving' the benchmark does not necessarily solve all classic safety problems, providing a limit on interpretation.
+    value: 15
+    by: human
+    rationale: The benchmark explains that scores represent harm reduction relative to a random baseline and notes that solving the benchmark does not imply solving all safety problems.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 31, chunk 3
         quote: Consequently, “solving” this benchmark would not necessarily imply a solution to many classic safety problems.
-    by: model
+        locator: 2304.03279v4 page 31, chunk 3
+        url: https://arxiv.org/abs/2304.03279v4
     quotes_verified: true
   des.05:
     value: 15
@@ -101,10 +101,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.08:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The metric is an informed choice based on the proportion of harms relative to a random baseline to measure ethical behavior."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: Performance metrics are informed by the need to measure trade-offs between reward optimization and ethical behavior, using harm reduction ratios.
+    evidence:
+      - source: paper
+        quote: Following this setup, the best possible score for all behavioral metrics is 0%, though in many games there may be no path which completes all achievements or avoids all harm.
+        locator: 2304.03279v4 page 5, chunk 1
+        url: https://arxiv.org/abs/2304.03279v4
     quotes_verified: true
   des.09:
     value: 10
@@ -114,18 +118,15 @@ verdicts:
         url: https://arxiv.org/abs/2304.03279v4
         locator: 2304.03279v4 page 5, chunk 1
         quote: Following this setup, the best possible score for all behavioral metrics is 0%
-    by: model
+    by: human
     quotes_verified: true
   des.10:
-    value: 15
-    rationale: The benchmark compares model labels against human labels and expert labels.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 4, chunk 3
-        quote: Model labels are competitive with human labels.
+    value: 0
     by: model
+    rationale: The excerpts do not provide a specific human performance level or benchmark for human agents on the MACHIAVELLI tasks.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.11:
     value: 15
     rationale: A random agent baseline is used to calculate behavioral scores.
@@ -154,7 +155,7 @@ verdicts:
         url: https://arxiv.org/abs/2304.03279v4
         locator: 2304.03279v4 page 1, chunk 2
         quote: Previous benchmarks aimed at evaluating these complex systems have measured language understanding (Wang et al., 2019) or reasoning in isolated scenarios
-    by: model
+    by: human
     quotes_verified: true
   des.14:
     value: 10
@@ -193,10 +194,18 @@ verdicts:
     by: model
     quotes_verified: true
   imp.04:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The repo includes code for baseline agents (RL, LM) and a local environment, implying local model support, though not explicitly stated as a general feature."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The benchmark supports local model evaluation, evidenced by the inclusion of RL agents (DRRN) and LM agents that can be run locally or via provided scripts.
+    evidence:
+      - source: repo
+        quote: All python scripts are designed to be run from the root of this repo using module notation, e.g. `python -m machiavelli.game.machiavelli_env -g <GAME>`.
+        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 5
+        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
+      - source: paper
+        quote: Reinforcement learning (RL) agent. This agent is adapted from DRRN (He et al., 2016) using the codebase in Yao et al. (2020).
+        locator: 2304.03279v4 page 5, chunk 2
+        url: https://arxiv.org/abs/2304.03279v4
     quotes_verified: true
   imp.05:
     value: 0
@@ -278,7 +287,7 @@ verdicts:
         url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
         locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 3
         quote: "docs/                       # Code for website"
-    by: model
+    by: human
     quotes_verified: true
   doc.05:
     value: 15
@@ -376,7 +385,7 @@ verdicts:
         url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
         locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 1
         quote: The data is available through [Google Drive]
-    by: model
+    by: human
     quotes_verified: true
   doc.16:
     value: 0
@@ -428,3 +437,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 9 decided by the reviewer."
+    items:
+      - des.04
+      - des.08
+      - des.10
+      - imp.04

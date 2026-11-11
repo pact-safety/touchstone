@@ -2,13 +2,15 @@
 benchmark: safebench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
@@ -50,16 +52,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
-    value: met
-    rationale: The paper identifies different levels of evaluation metrics (functionality vs safety) and provides separate scores for them.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.09682v4
-        locator: 2206.09682v4 page 22, chunk 3
-        quote: We evaluate different combinations of input state spaces and RL algorithms on 3 different levels of evaluation metrics.
+    value: unmet
     by: model
+    rationale: The excerpts mention multiple metrics and modules but do not explicitly state that the phenomenon is unitary, nor do they clearly demonstrate that sub-components are scored separately in a way that satisfies the rule's requirement for explicit naming and separate scoring of sub-components of the phenomenon itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.1:
     value: unmet
     rationale: The excerpts mention functionality and etiquette levels, but there is no report of control conditions or ablation results for these secondary abilities.
@@ -101,33 +101,33 @@ verdicts:
     by: model
     quotes_verified: true
   ru.1:
-    value: met
-    rationale: The documentation explicitly states that existing assets were used and cites the creators.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.09682v4
-        locator: 2206.09682v4 page 16, chunk 1
-        quote: If your work uses existing assets, did you cite the creators? [Yes]
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a clear statement indicating whether SafeBench adapts a previous dataset or benchmark. While it mentions using existing assets and citing creators, it does not explicitly state if the dataset itself is an adaptation of prior work.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
     value: unmet
     rationale: While the paper mentions using existing assets, it does not provide a specific analysis of the strengths and limitations of a reused dataset or benchmark.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
     value: unmet
     rationale: There is no comparison of performance between the new benchmark and an original version of a reused dataset.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
     value: unmet
     rationale: The documentation does not list specific modifications made to reused datasets or explain how they improve construct validity.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The excerpts describe robustness tests and adversarial attacks, but they do not describe a test to detect data contamination (leakage) of the benchmark into training sets.
@@ -176,7 +176,7 @@ verdicts:
         url: https://arxiv.org/abs/2206.09682v4
         locator: 2206.09682v4 page 9, chunk 0
         quote: "CR: collision rate, RR: frequency of running red lights, SS: frequency of running stop signs"
-    by: model
+    by: human
     quotes_verified: true
   ea.1:
     value: unmet
@@ -197,15 +197,16 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The paper identifies a specific direction for improvement (model architecture and input state space) based on the observation that PPO with 4D+BEV performed best.
+    value: unmet
+    by: model
+    rationale: The excerpts mention future work to test more diverse algorithms but do not report any specific experiment aimed at improving scores on the benchmark, nor do they propose a specific named direction with a stated rationale for improving scores.
     evidence:
       - source: paper
+        quote: testing more diverse AD algorithms, including commercial systems such as Baidu Apollo [ 87 ] and Openpilot [ 88 ] would be interesting future work.
+        locator: 2206.09682v4 page 10, chunk 3
         url: https://arxiv.org/abs/2206.09682v4
-        locator: 2206.09682v4 page 21, chunk 3
-        quote: PPO with 4D+BEV input achieves the best OS on SafeBench testing scenarios, which indicates potential possible directions for researchers to design their own model architecture and input state space.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark is linked to the real-world application of autonomous driving (AD).
@@ -242,3 +243,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 20 verdicts agreed, 7 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.3
+      - ru.1
+      - ea.4

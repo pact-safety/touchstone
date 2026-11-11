@@ -2,13 +2,15 @@
 benchmark: sorry-bench
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 7da10addffb6790cfeb75281eaffb5a176861653
@@ -55,15 +57,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.03:
-    value: met
-    rationale: The excerpts provide the sampling settings (temperature, top-p, max tokens), the prompt template (via a few-shot example), and the harness/scaffold logic (via the README).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 8, chunk 0
-        quote: at a temperature of 0.7 8 , Top-P of 1.0, and max tokens of 1024
+    value: unmet
     by: model
+    rationale: While sampling settings are mentioned, the full prompt template is not provided in the excerpts, only described or linked to appendices not included here.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.04:
     value: met
     rationale: The benchmark uses prompt-format perturbation (linguistic mutations) and reports the resulting fulfillment rates.
@@ -95,15 +94,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.07:
-    value: met
-    rationale: The authors report conducting error analysis on a subset of 26 open-weight LLMs.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 37, chunk 1
-        quote: we only conduct repetitive experiments and error analysis for 26 open-weight LLMs on SORRY-Bench
+    value: unmet
     by: model
+    rationale: The excerpts describe the creation of the benchmark and meta-evaluation of judges, but do not report a manual inspection of model outputs or trajectories with specific error analysis findings.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.08:
     value: met
     rationale: The benchmark describes how human labels were produced and reports an inter-annotator agreement figure (Cohen Kappa).
@@ -127,15 +123,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.11:
-    value: met
-    rationale: The paper describes the two-stage process for creating the taxonomy and the method for crafting the class-balanced dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 4, chunk 4
-        quote: This two-stage approach ensures an extensive and unified taxonomy
+    value: unmet
     by: model
+    rationale: While the paper mentions human-in-the-loop methods and taxonomy updates, it does not describe the specific methods for creating/managing new evaluations or the versioning/maintenance process of the benchmark itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The excerpts do not provide a complete description of the evaluation environment, specifically missing details on tools/sandboxes, interaction length, and access restrictions.
@@ -172,6 +165,7 @@ verdicts:
         quote: reporting the standard deviation of fulfillment rates across three runs
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.02:
     value: met
     rationale: The benchmark paper is stated to be published as a conference paper at ICLR 2025.
@@ -215,15 +209,12 @@ verdicts:
     by: model
     quotes_verified: true
   rp.07:
-    value: met
-    rationale: The prompts used for the automated safety evaluators are released in the paper and the repository.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 27, chunk 0
-        quote: "the prompt for GPT-3.5-turbo as a judge is:"
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The repository includes specific scripts for mutations and judge prompts, and the paper details the few-shot examples and prompt templates used."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.08:
     value: met
     rationale: The harness supports running models through public APIs (GPT-4) and open weights (vLLM).
@@ -238,3 +229,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 17 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.03
+      - iv.07
+      - iv.11
+      - rp.07

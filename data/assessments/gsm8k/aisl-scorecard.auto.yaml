@@ -2,13 +2,15 @@
 benchmark: gsm8k
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 3101c7d5072418e28b9008a6636bde82a006892c
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   cv.01:
-    value: met
-    rationale: The documentation defines the target phenomenon as multi-step mathematical reasoning and specifies that evidence of it is the ability to solve grade school math word problems.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 1, chunk 0
-        quote: they still struggle to robustly perform multi-step mathematical reasoning
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation provides a precise definition of the target phenomenon (grade school math word problems) by specifying observable outputs (natural language solutions with elementary calculations) and the target population (bright middle school students)."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.02:
     value: met
     rationale: The scope is defined as grade school math, and it explicitly excludes concepts beyond early Algebra.
@@ -66,6 +65,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.05:
     value: unmet
     rationale: The documentation does not report per-category item counts or a stratified sampling plan.
@@ -89,25 +89,19 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark is presented as a new curated dataset created by human writers, not an adaptation of a prior dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 3, chunk 0
-        quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers
+    value: unmet
     by: model
+    rationale: The documentation compares GSM8K to prior datasets (AQuA-RAT, MathQA, ASDiv) in terms of quality and diversity, but it does not provide a table or figure comparing the same model on the original dataset and on the adapted benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 3, chunk 0
-        quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers
+    value: unmet
     by: model
+    rationale: The documentation states that GSM8K was created by human problem writers to avoid issues in prior datasets, but it does not explicitly list modifications made to a reused dataset with reasons, as it appears to be a new collection rather than a modification of a specific prior dataset.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: The item count is stated, but no power calculation or confidence-interval half-width is reported.
@@ -126,12 +120,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.13:
     value: unmet
     rationale: Rater demographics are not reported, nor is there a check for demographic skew.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.14:
     value: n/a
     rationale: The labels are deterministic (correct or incorrect based on the final numeric answer).
@@ -170,16 +166,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
-    value: met
-    rationale: The paper compares GSM8K to several prior benchmarks (AQuA-RAT, MathQA) and states it addresses gaps like problem templatization and poor quality control.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 4, chunk 0
-        quote: AQuA-RAT (Ling et al., 2017) contains 100K problems, but this dataset unfortunately suffers from both a high degree of problem templatization and poor quality control
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation compares GSM8K to prior benchmarks (AQuA-RAT, MathQA, ASDiv) and states concrete differences/gaps addressed, such as high diversity and high quality, avoiding templatization and poor quality control."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.20:
     value: unmet
     rationale: The documentation lacks a specific limitations statement for the design and a supported claim linking scores to real-world capability.
@@ -221,11 +215,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: Scoring involves parsing the numeric value following a specific token, which is a fixed extraction rather than parsing free-form output formats for bias.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The scoring involves parsing free-form output (extracting numeric values), but the excerpts do not compare parser output with reference labels across different response formats or report agreement figures.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report contamination checks or provide the training-data cutoff for the evaluated GPT-3 models relative to the benchmark release date.
@@ -233,21 +228,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs and local scoring (parsing a token), involving no external or mutable environment.
+    value: unmet
+    by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The evaluation uses a static dataset (GSM8K) with fixed inputs and local scoring (calculator.py), involving no external or mutable environment."
     evidence: []
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: n/a
-    rationale: The evaluation consists of single model calls (sampling a solution) for each test problem.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 6, chunk 1
-        quote: Test performance is determined by a single low temperature ( T = 0) sample for each test problem.
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly state that the harness resets state per task (e.g., fresh container or process) between evaluation runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: met
     rationale: The benchmark does not use multiple choice questions; it requires generating a natural language solution and a final numeric answer.
@@ -271,15 +264,12 @@ verdicts:
     by: model
     quotes_verified: true
   ev.03:
-    value: met
-    rationale: The results compare performance between models that output the final answer directly versus those that generate a full natural language solution.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 7, chunk 1
-        quote: If we instead finetune a 6B model to directly output the final answer without any intermediate steps, performance drops drastically from 20.6% to 5.2%.
+    value: unmet
     by: model
+    rationale: The excerpts describe using specific temperatures (T=0 and T=0.7) for sampling, but do not report results under different prompting or elicitation settings such as zero-shot vs few-shot or with/without chain of thought.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.04:
     value: unmet
     rationale: The excerpts do not report results for a separate slice based on a named stress condition or shift that differs from the train/dev splits.
@@ -333,15 +323,16 @@ verdicts:
     by: model
     quotes_verified: true
   rel.05:
-    value: met
-    rationale: The documentation states that a bright middle school student should be able to solve every problem, establishing a human baseline for the task.
+    value: unmet
+    by: model
+    rationale: The excerpts do not report a human baseline score for the GSM8K task.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 3, chunk 0
         quote: A bright middle school student should be able to solve every problem.
-    by: model
+        locator: 2110.14168v2 page 3, chunk 0
+        url: https://arxiv.org/abs/2110.14168v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.06:
     value: unmet
     rationale: No scores for trivial baselines (like random selection or zero-shot naive models) are reported in the excerpts.
@@ -349,29 +340,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The benchmark uses human-created problems and a programmatic check of the final numeric answer, not a model as a rater for the ground truth.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts describe human annotation and quality control but do not report any correlation between a model rater and human judgments.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The benchmark uses human-created problems and a programmatic check of the final numeric answer, not a model as a rater for the ground truth.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts mention the risk of adversarial solutions but do not report an adversarial test of the model rater or describe specific defenses like injection filters.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The benchmark uses human-created problems and a programmatic check of the final numeric answer, not a model as a rater for the ground truth.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on identical inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The benchmark uses human-created problems and a programmatic check of the final numeric answer, not a model as a rater for the ground truth.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not measure any named rater bias with a number or state a mitigation for it.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: met
     rationale: The documentation states that workers re-solved problems and agreement with original solutions was checked, with a reported disagreement rate of 1.7%.
@@ -432,3 +427,21 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 38 verdicts agreed, 17 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.01
+      - cv.08
+      - cv.09
+      - cv.19
+      - iv.06
+      - iv.08
+      - iv.09
+      - ev.03
+      - rel.05
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04

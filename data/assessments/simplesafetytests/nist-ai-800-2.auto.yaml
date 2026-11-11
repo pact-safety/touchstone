@@ -2,13 +2,15 @@
 benchmark: simplesafetytests
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
@@ -55,15 +57,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.1b:
-    value: met
-    rationale: The benchmark states that the prompts are designed to be 'extremely unsafe' and 'simple and clear-cut'.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 6, chunk 1
-        quote: SST covers simple and clear-cut test prompts designed to be extremely unsafe.
+    value: unmet
     by: model
+    rationale: The excerpts do not state the intended difficulty level or target population (e.g., expert level, undergraduate level) for the benchmark items.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1c:
     value: met
     rationale: The items are described as 'test prompts' and the documentation refers to a table containing examples.
@@ -100,6 +99,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2c:
     value: n/a
     rationale: The benchmark does not claim that its scores predict a specific downstream outcome; it only discusses predictive power in terms of risk detection.
@@ -107,15 +107,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.3a:
-    value: met
-    rationale: The benchmark reports results for 15 models of varying sizes and capabilities (e.g., 3B to 40B parameters).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 4, chunk 0
-        quote: We aimed for a mix of model providers and model sizes, ranging from 3B to 40B parameters for the open models.
+    value: unmet
     by: model
+    rationale: The excerpts do not report results by item difficulty tier or provide scores for three models of clearly different capability to judge difficulty headroom.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.3b:
     value: unmet
     rationale: No baseline score (human, random, or prior automation) is reported for comparison against model scores.
@@ -229,15 +226,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2g:
-    value: met
-    rationale: The benchmark specifies that each model was tested on the 100 prompts with two system prompt settings, implying a single sample per setting.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 8, chunk 0
-        quote: 15 models, with two system string settings, are tested on the 100 prompts in S IMPLE S AFETY T ESTS (n = 3, 000 )
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper states that 15 models were tested on 100 prompts, implying one trial per item per model, and results are aggregated across models/harm areas."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2h:
     value: met
     rationale: The benchmark provides the judge model (GPT-4), the prompt, and the binary rubric (safe/unsafe).
@@ -275,15 +269,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.2:
-    value: n/a
-    rationale: The scoring is based on human labeling or LLM-judge binary classification of the whole response, requiring no specific answer extraction logic.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 4, chunk 2
-        quote: Three annotators trained in labelling unsafe, risky and dangerous content, labeled the 3,000 model responses for whether they are unsafe or not given the prompt.
+    value: unmet
     by: model
+    rationale: The benchmark relies on human annotators and safety filters for scoring, not on a specified answer format and extraction logic for programmatic comparison.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.3:
     value: unmet
     rationale: There is no mention of version identifiers or a changelog for the benchmark.
@@ -329,15 +320,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.1.4:
-    value: met
-    rationale: The benchmark explicitly discusses how safe responses may include refusals and how these are handled during labeling.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 4, chunk 3
-        quote: some safe responses simply reject the prompt (e.g. “Sorry, but I can’t assist with that.”)
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark explicitly scores refusals as safe responses, treating them as a distinct category of safe behavior."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.5:
     value: n/a
     rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
@@ -435,11 +423,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: n/a
-    rationale: The benchmark evaluates models and safety filters, but does not report a baseline for comparison.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe baseline conditions (who/what was measured, tools, incentives) for any human or other baseline comparison.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: met
     rationale: The documentation explicitly states that a 0% unsafe response rate does not guarantee the absence of all safety risks.
@@ -464,3 +453,14 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 44 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.1b
+      - 1.2.3a
+      - 2.1.2g
+      - 2.2.2
+      - 2.4.1.4
+      - 3.3.3

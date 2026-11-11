@@ -2,13 +2,15 @@
 benchmark: air-bench-2024
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 6d1d4a24d8350e4360e5763463f10233efa4b2a2
@@ -72,15 +74,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.04:
-    value: met
-    rationale: The benchmark uses dialect and syntax mutations to control for and test robustness against linguistic shortcuts/confounds.
+    value: unmet
+    by: model
+    rationale: While the benchmark uses dialect mutations to increase diversity, it does not describe specific controls against confounding variables such as answer-position balancing, blind baselines, or length/format controls to mitigate spurious correlations.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2407.17436v2
+        quote: "To enhance the diversity and robustness of the base prompts, we apply two mutation techniques: uncommon dialects [ 55 ] and authority endorsement [ 73 ]."
         locator: 2407.17436v2 page 25, chunk 1
-        quote: "we apply two mutation techniques: uncommon dialects [   55 ] and authority endorsement [ 73 ]"
-    by: model
+        url: https://arxiv.org/abs/2407.17436v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.05:
     value: unmet
     rationale: There is no mention of canary strings, private test splits, or contamination analysis.
@@ -118,15 +121,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.09:
-    value: met
-    rationale: The evaluation pipeline extracts and stores short reasoning from the judge model for each item.
+    value: unmet
+    by: model
+    rationale: The excerpts state that the judge model provides 'short reasoning', but do not confirm that the benchmark releases the full model outputs per item, including the model's own reasoning traces, for evaluator inspection.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2407.17436v2
-        locator: 2407.17436v2 page 24, chunk 0
         quote: We parsed and extracted the score and short reasoning from the judge model’s generated output.
-    by: model
+        locator: 2407.17436v2 page 24, chunk 0
+        url: https://arxiv.org/abs/2407.17436v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     rationale: There is no documented check for evaluation awareness, sandbagging, or under-elicitation.
@@ -134,25 +138,23 @@ verdicts:
     by: model
     quotes_verified: true
   iv.11:
-    value: met
-    rationale: The paper describes the creation process (base instructions, mutation, manual review) and the use of the AIR 2024 taxonomy for management.
+    value: unmet
+    by: model
+    rationale: While the excerpts mention manual review and curation, they do not describe the specific methods for managing the benchmark's integrity, such as versioning, change logs, or the retirement of items.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2407.17436v2
-        locator: 2407.17436v2 page 4, chunk 2
-        quote: Data and evaluation curation pipeline of the AIR-B ENCH   2024. (a) illustrates the regulation/policy-taxonomy-based initial curation
-      - source: paper
-        url: https://arxiv.org/abs/2407.17436v2
+        quote: In cases where the generated prompts are of low quality or fail to maintain the original semantic meaning, we manually refine and correct them to ensure the integrity of the expanded dataset.
         locator: 2407.17436v2 page 25, chunk 2
-        quote: we manually review the outputs to ensure the quality and coherence of the variations.
-    by: model
+        url: https://arxiv.org/abs/2407.17436v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation describes the input/output format (prompts, token lengths, and score parsing), the tools used (HELM framework, API clients), and the interaction settings (temperature 0.0)."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.02:
     value: unmet
     rationale: The excerpts do not state any concrete ways the evaluation setting differs from real-world use; they only claim to mimic real-world scenarios.
@@ -202,15 +204,12 @@ verdicts:
     by: model
     quotes_verified: true
   rp.05:
-    value: met
-    rationale: The paper describes how items are constructed, how models are queried, and how outputs are scored.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2407.17436v2
-        locator: 2407.17436v2 page 24, chunk 0
-        quote: "Our evaluation pipeline, implemented using the open-source HELM framework [38], consists of the following steps:"
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper details the evaluation methodology, including the use of the HELM framework, temperature settings, token limits, and the specific structure of the judge prompts and scoring rules."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.06:
     value: unmet
     rationale: While a lockfile is present in the file listing, the compute needed for a full run is not stated.
@@ -218,17 +217,12 @@ verdicts:
     by: model
     quotes_verified: true
   rp.07:
-    value: met
-    rationale: The repository and paper provide the specific prompts and templates used to query the models and the judge.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2407.17436v2
-        locator: 2407.17436v2 page 26, chunk 1
-        quote: |-
-          ###prompt_template: "
-          You will be given a user request and a model response to that request.
+    value: unmet
     by: model
+    rationale: The excerpts describe the generation of prompts and the use of judge prompts but do not provide the actual released prompts, scaffolding, or few-shot examples used to query models, only describing them or showing snippets of the judge prompt generation process.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.08:
     value: met
     rationale: The benchmark is built on the public HELM framework and uses public APIs.
@@ -243,3 +237,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 16 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.04
+      - iv.09
+      - iv.11
+      - rp.05
+      - rp.07

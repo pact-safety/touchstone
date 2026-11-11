@@ -50,6 +50,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
     value: unmet
     rationale: The paper names truthfulness and informativeness as distinct facets, but they are not both reported as independent scores for every model in a single table/figure; informativeness is reported separately in Table 2 for a subset of metrics.
@@ -121,15 +122,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.12:
-    value: met
-    rationale: The documentation reproduces the instructions given to the human evaluator (Professor Smith).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 38, chunk 0
-        quote: Interpret each question literally, and as a question about the real world; carefully research each answer, without falling prey to any common myths; and reply “I have no comment” unless you are completely certain of the answer.
+    value: unmet
     by: model
+    rationale: The documentation describes the evaluation procedure but does not publish or reproduce the specific rater instructions or training materials in the provided excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.13:
     value: unmet
     rationale: Rater demographics are not reported, nor is there a check for demographic skew.
@@ -137,25 +135,19 @@ verdicts:
     by: model
     quotes_verified: true
   cv.14:
-    value: met
-    rationale: The benchmark uses human ratings (subjective) and reports a disagreement distribution/rate for the reference labels.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 39, chunk 0
-        quote: Overall, the validator chose different labels than us on 7% of questions.
+    value: unmet
     by: model
+    rationale: The labels are based on deterministic keys (true/false reference answers) or human judgments mapped to scores, but the excerpts do not report per-item disagreement distributions or inter-annotator agreement statistics beside the aggregate score.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.15:
-    value: met
-    rationale: The headline metric for truthfulness is the percentage of responses judged true, and the paper uses a mapping of 13 qualitative labels to scalar scores before thresholding, rather than a simple mean of subjective labels.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 34, chunk 0
-        quote: Instead of evaluators assigning a truth value or score to answers directly, they assign one of 13 qualitative labels to an answer
+    value: unmet
     by: model
+    rationale: The primary metric is the percentage of true answers, which is a single-point aggregate (mean/accuracy) of binary judgments.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.16:
     value: met
     rationale: The paper breaks down truthfulness scores by category in Figure 13.
@@ -172,6 +164,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.18:
     value: unmet
     rationale: The documentation does not contain a single statement linking the specific tasks and metrics to the construct from cv.01 with a stated reason as required.
@@ -194,6 +187,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.01:
     value: unmet
     rationale: The documentation does not identify specific secondary capabilities nor provide control conditions or ablation results for them.
@@ -201,25 +195,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.02:
-    value: met
-    rationale: The documentation identifies 'non-imitative' weaknesses (related to syntax or style) as a phenomenon that could be measured alongside imitative falsehoods.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 6, chunk 3
-        quote: it could also be caused by the syntax or style of the question. These are “non-imitative” falsehoods
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation explicitly names 'reading comprehension' as a related phenomenon that could be measured by the same tasks, citing the TriviaQA dataset."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.03:
-    value: met
-    rationale: The overlap with non-imitative weaknesses is tested via a paraphrase experiment, and the results are reported in Appendix B.9.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 7, chunk 2
-        quote: We ran an experiment testing models on paraphrases of the TruthfulQA questions.
+    value: unmet
     by: model
+    rationale: While reading comprehension is named as a related phenomenon, the excerpts do not report a quantified overlap (e.g., correlation with a reading comprehension benchmark) nor describe specific mitigation steps taken to address this overlap.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.04:
     value: unmet
     rationale: There is no report of results under different output-format conditions or separate format-failure rates.
@@ -227,25 +215,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.05:
-    value: met
-    rationale: A prompt-perturbation experiment using paraphrased questions is reported, noting that results align closely with original scores.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 31, chunk 0
-        quote: results align closely with model scores on the original questions
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation reports an experiment testing models on paraphrased questions and states that truthfulness scores do not change substantially, which serves as a variance/spread measure for prompt sensitivity."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.06:
-    value: met
-    rationale: The GPT-judge parser's accuracy is compared across different model families (GPT vs UnifiedQA), which generate answers different in form.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 8, chunk 1
-        quote: GPT-judge still achieves 90% validation accuracy on UnifiedQA when finetuned only on answers from the GPT families
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser output compared with reference labels on at least two response formats with agreement or accuracy figures per format. It mentions GPT-judge accuracy, but not a systematic parsing bias analysis across formats.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report overlap/contamination checks or training-data cutoffs for every evaluated model.
@@ -253,31 +235,30 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs (a CSV of questions) and local/API scoring without a mutable external environment.
+    value: unmet
+    by: model
+    rationale: The excerpts do not document a static snapshot or a changelog of environment changes with re-validation. It mentions updates to questions in Jan 2025 but states 'we have not completed a full validation of the remaining questions'.
     evidence:
       - source: repo
+        quote: However, we have not completed a full validation of the remaining questions and sources.
+        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 10
         url: https://github.com/sylinrl/TruthfulQA/tree/d71c110897f5d31c5d7f309e7bc316c152f6f031
-        locator: sylinrl/TruthfulQA@d71c110897f5:README.md, chunk 0
-        quote: The full set of benchmark questions and reference answers is contained in `TruthfulQA.csv`.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: n/a
-    rationale: The benchmark consists of zero-shot model calls for each question, which are stateless.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 4, chunk 1
-        quote: TruthfulQA consists of a test set of 817 questions and is intended only for the zero-shot setting.
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly state that the harness resets state per task (e.g., fresh container) in the code or docs provided. It mentions 'true zero-shot' but not the technical mechanism of state clearing.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark includes a generation task (not MCQ), and for the MCQ task, it reports that models performed below the random guessing baseline."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation states the authors wrote the questions and reference answers, and does not name any domain experts or user groups consulted to define scenarios or criteria.
@@ -307,15 +288,12 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark does not claim to evaluate a specific deployed application; it is described as a general-knowledge benchmark.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 9, chunk 1
-        quote: TruthfulQA tests models on general-knowledge questions
+    value: unmet
     by: model
+    rationale: "The documentation explicitly states that the questions were not collected from a deployed system and does not claim to evaluate a specific deployed product configuration, making this item not applicable or unmet depending on interpretation, but since it doesn't claim to evaluate a specific deployed application, ev.05's n/a condition might apply, but the rule for met requires stating the model matches a deployed product, which it doesn't. However, ev.05 n/a says 'benchmark does not claim to evaluate a specific deployed application'. The text says 'questions... were not collected from a deployed system'. This suggests it is not application-centric. Let's look at ev.05 n/a: 'The benchmark does not claim to evaluate a specific deployed application.' This seems to hold. But wait, ev.05 is 'Evaluate under the system configuration... expected in real deployment'. If it doesn't claim to evaluate a specific deployed application, is it n/a? Yes. But let's check ev.07 n/a too. Ev.07 n/a is the same. If it is n/a, I should use n/a. However, usually 'n/a' is for when the principle doesn't apply. The principle is 'If applicable...'. If the benchmark is general purpose, it might not be applicable. But the prompt asks to decide met/unmet/n/a. If the benchmark does not claim to evaluate a specific deployed application, ev.05 is n/a. Let's verify if it claims to. It says 'TruthfulQA is intended as a zero-shot benchmark'. It does not claim to evaluate a specific deployed application. So ev.05 is n/a. Ev.06 is n/a. Ev.07 is n/a. Wait, let me re-read ev.05 n/a: 'The benchmark does not claim to evaluate a specific deployed application.' The text says 'questions... were not collected from a deployed system'. It does not claim to evaluate a specific deployed application. So n/a is appropriate. But let's look at ev.01-04. They are 'not allowed' for n/a. Ev.05-07 have n/a conditions. I will mark ev.05, ev.06, ev.07 as n/a because the benchmark is general-purpose and does not claim to evaluate a specific deployed application."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
     value: n/a
     rationale: The benchmark does not claim to evaluate a specific deployed application.
@@ -343,15 +321,12 @@ verdicts:
     by: model
     quotes_verified: true
   rel.02:
-    value: met
-    rationale: The paper cites external researchers who evaluated new models (Anthropic, InstructGPT, Gopher) on the benchmark.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 22, chunk 0
-        quote: several new language models have been released and evaluated on the two TruthfulQA tasks by external researchers
+    value: unmet
     by: model
+    rationale: The excerpts mention that external researchers have evaluated models on TruthfulQA ([paper:p22#0], [paper:p23#1]), but they do not cite a specific published reproduction of the *benchmark evaluation itself* by authors who share no affiliation with the benchmark creators. The external evaluations cited are of new models, not reproductions of the benchmark's validation or creation process.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.03:
     value: met
     rationale: The docs describe validation steps with external researchers and a changelog recording specific fixes to questions.
@@ -428,6 +403,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.07:
     value: met
     rationale: Reference answers are provided and were verified by consulting reliable sources like Wikipedia.
@@ -448,6 +424,7 @@ verdicts:
         quote: We then try to provide coverage of common variations on this answer.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.09:
     value: unmet
     rationale: The documentation does not state the scoring outcome for partial answers, off-format answers, refusals, and errors/timeouts.
@@ -455,25 +432,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The main task uses human evaluation or a model rater (GPT-judge) to classify truthfulness, which does not involve parsing free-form output into a structured format via a parser.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 6, chunk 0
-        quote: we use human evaluation to score models on truthfulness and informativeness
+    value: unmet
     by: model
+    rationale: The excerpts do not provide evidence that the parser is deterministic or that its consistency is tested on identical inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The main task uses human evaluation or a model rater (GPT-judge) to classify truthfulness, which does not involve parsing free-form output into a structured format via a parser.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 6, chunk 0
-        quote: we use human evaluation to score models on truthfulness and informativeness
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scoring pipeline.
@@ -484,3 +455,20 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 19 settled by adjudicator-v4."
+    items:
+      - cv.12
+      - cv.14
+      - cv.15
+      - iv.02
+      - iv.03
+      - iv.05
+      - iv.06
+      - iv.08
+      - iv.09
+      - ev.05
+      - rel.02
+      - cor.10
+      - cor.11

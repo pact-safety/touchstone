@@ -54,6 +54,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.04:
     value: 0
     rationale: The excerpts do not describe how scores should or should not be interpreted or used.
@@ -73,14 +74,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.07:
-    value: 10
-    rationale: The benchmark integrates literature by citing previous work on standardized tests and QA datasets, though it doesn't explicitly integrate 'domain literature' in a scientific sense.
+    value: 15
+    by: human
+    rationale: The document integrates domain literature by citing previous work on standardized tests and AI challenges, such as Brachman (2005) and Clark and Etzioni (2016).
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 1, chunk 2
         quote: Standardized tests have previously been proposed as a Grand Challenge for AI (Brachman, 2005; Clark and Etzioni, 2016)
-    by: model
+        locator: 1803.05457v1 page 1, chunk 2
+        url: https://arxiv.org/abs/1803.05457v1
     quotes_verified: true
   des.08:
     value: 0
@@ -95,14 +96,10 @@ verdicts:
     by: model
     quotes_verified: true
   des.10:
-    value: 10
-    rationale: The text mentions that some systems can match human performance on other datasets, but does not provide a specific human performance level for ARC itself.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 2, chunk 2
-        quote: even matching human performance (Simonite, 2018)
-    by: model
+    value: 0
+    by: human
+    rationale: The excerpts do not provide a specific human performance level or accuracy score for the ARC Challenge Set.
+    evidence: []
     quotes_verified: true
   des.11:
     value: 15
@@ -313,15 +310,12 @@ verdicts:
     by: model
     quotes_verified: true
   doc.13:
-    value: 10
-    rationale: A URL is provided for the dataset, though it is not explicitly labeled as a persistent identifier like a DOI.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1803.05457v1
-        locator: 1803.05457v1 page 2, chunk 1
-        quote: The ARC Dataset, Corpus, Models, and Leaderboard can be accessed at http://data.allenai.org/arc.
+    value: 0
     by: model
+    rationale: No globally unique, persistent identifier (like a DOI) for the dataset is provided in the excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.14:
     value: 0
     rationale: No standardized metadata (e.g., Schema.org, Dublin Core) is mentioned.
@@ -388,3 +382,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - des.07
+      - des.10
+      - doc.13

@@ -2,13 +2,15 @@
 benchmark: rl-unplugged
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
 model_run:
@@ -34,6 +36,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: met
     rationale: The scope is stated to include a range of task domains like Atari and robotics, and specific excluded games (e.g., AirRaid) are named.
@@ -73,21 +76,27 @@ verdicts:
     by: model
     quotes_verified: true
   ds.1:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors document a sampling strategy for Atari games, ordering them by difficulty and picking every fifth game to ensure a diverse set."
-    evidence: []
-    by: model
-    quotes_verified: true
-  ds.2:
     value: met
-    rationale: For the Atari dataset, the authors only included games where the generating agent's performance was significantly better than a random policy.
+    by: model
+    rationale: The excerpts document specific sampling strategies used to ensure the dataset is representative, such as sub-sampling to reduce successful episodes and selecting games based on difficulty.
     evidence:
       - source: paper
+        quote: we reduce the sizes of the datasets via sub-sampling. In addition, we further reduce the number of successful episodes in each dataset by 2 / 3
+        locator: 2006.13888v4 page 5, chunk 2
         url: https://arxiv.org/abs/2006.13888v4
+      - source: paper
+        quote: we chose nine to allow for online policy selection. Specifically, we ordered all games according to the their difficulty, 4 and picked every fifth game
         locator: 2006.13888v4 page 6, chunk 2
-        quote: we only include games where the online DQN’s performance that has generated the dataset was significantly better than the random policy.
-    by: model
+        url: https://arxiv.org/abs/2006.13888v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  ds.2:
+    value: unmet
+    by: model
+    rationale: The excerpts describe how data was generated and selected (e.g., excluding games where DQN performed poorly), but do not document a quality or relevance check passed by every individual item in the dataset.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: There is no mention of a counted subset of permuted or perturbed items with results reported separately.
@@ -110,12 +119,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
     value: unmet
     rationale: The excerpts do not provide a performance comparison between the new benchmark and the original prior datasets/benchmarks.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
     value: unmet
     rationale: The text mentions modifications (e.g., sub-sampling dataset sizes), but it does not explain how these specific modifications improve construct validity.
@@ -191,15 +202,12 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors propose a specific direction for future work, suggesting the combination of behavior regularization and robust off-policy algorithms.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2006.13888v4
-        locator: 2006.13888v4 page 8, chunk 3
-        quote: Combining behavior regularization methods ( e.g. , BCQ) with robust off-policy algorithms (REM, IQN) is a promising direction for future work.
+    value: unmet
     by: model
+    rationale: The excerpts mention that combining methods is a 'promising direction for future work' and that future work is expected to improve over naive baselines, but these are generic future-work lines rather than reported experiments or specific named directions with stated rationales for improving scores.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark links its tasks (simulated robotics and Atari) to real-world applications like robots and dialog by addressing properties like partial observability and high-dimensional sensory streams.
@@ -227,12 +235,26 @@ verdicts:
     by: model
     quotes_verified: true
   jv.4:
-    value: unmet
-    rationale: The excerpts discuss implementation difficulties and reproducibility, but do not state a limitation or trade-off concerning what the scores specifically do or do not measure regarding construct validity.
-    evidence: []
+    value: met
     by: model
+    rationale: The paper discusses limitations regarding the performance of offline RL methods on partially observable environments and the difficulty of reproducing baselines, which concerns what the scores measure and the benchmark's utility.
+    evidence:
+      - source: paper
+        quote: However, on partially-observable environments such as the locomotion suite the offline RL methods’ performance is lower.
+        locator: 2006.13888v4 page 9, chunk 2
+        url: https://arxiv.org/abs/2006.13888v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 21 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - ds.1
+      - ds.2
+      - ea.4
+      - jv.4

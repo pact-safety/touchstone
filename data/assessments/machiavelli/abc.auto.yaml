@@ -40,6 +40,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.2:
     value: n/a
     rationale: The benchmark does not score by string matching.
@@ -123,43 +124,40 @@ verdicts:
     by: model
     quotes_verified: true
   O.f.1:
-    value: met
-    rationale: The benchmark uses a goal predicate (achievements) rather than matching a single state snapshot.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 5, chunk 0
-        quote: We define reward as the sum of the points agent’s achievements.
+    value: n/a
     by: model
+    rationale: Outcomes are not scored by matching environment state; they are scored by behavioral metrics and reward.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.f.2:
-    value: unmet
-    rationale: There is no evidence that scoring checks if unrelated states were damaged.
-    evidence: []
+    value: n/a
     by: model
+    rationale: Outcomes are not scored by matching environment state.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.f.3:
-    value: unmet
-    rationale: No baseline showing that a no-op or single-write fails the check is provided.
-    evidence: []
+    value: n/a
     by: model
+    rationale: Outcomes are not scored by matching environment state.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.g.1:
-    value: met
-    rationale: The prompts for the LM agents explicitly specify the required JSON answer format.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 26, chunk 2
-        quote: Respond with a single JSON object containing "reasoning" (string) and "action" (integer) fields
+    value: n/a
     by: model
-    quotes_verified: true
-  O.g.2:
-    value: unmet
-    rationale: The answer-space size and resulting chance success rate are not stated.
+    rationale: Answers are not scored by matching a final answer; behavioral metrics are used.
     evidence: []
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  O.g.2:
+    value: n/a
+    by: model
+    rationale: Answers are not scored by matching a final answer.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.h.1:
     value: unmet
     rationale: No exploit attempts against the quality metrics are reported.
@@ -223,14 +221,14 @@ verdicts:
     by: model
     quotes_verified: true
   T.9:
-    value: met
-    rationale: The results table includes an 'Oracle' agent, implying an automated reference solver exists.
+    value: unmet
+    by: human
+    rationale: The excerpts mention baselines like DRRN and GPT-4, but do not claim the existence of an Oracle solver that can automatically solve all challenges.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 8, chunk 2
         quote: Oracle   23.3   76.7   76.7
-    by: model
+        locator: 2304.03279v4 page 8, chunk 2
+        url: https://arxiv.org/abs/2304.03279v4
     quotes_verified: true
   T.10:
     value: unmet
@@ -254,12 +252,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.3:
     value: unmet
     rationale: While a test set is identified, there is no mention of a private held-out split, rotating split, or canary strings to prevent contamination.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.4:
     value: unmet
     rationale: The excerpts do not document a versioned update process or a dated update schedule to avoid overfitting.
@@ -317,15 +317,12 @@ verdicts:
     by: model
     quotes_verified: true
   R.12:
-    value: met
-    rationale: The benchmark reports results for human annotators and experts as baselines for label quality.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 18, chunk 3
-        quote: Label   GPT-4   GPT-4 ens   GPT-4+   human   human ens   expert   expert ens
+    value: unmet
     by: model
+    rationale: The baselines reported are Random, LM, and RL agents; no human expert baseline scores are reported in the excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.13:
     value: met
     rationale: The benchmark reports and uses a random agent as a baseline for behavioral scores.
@@ -342,3 +339,14 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 9 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - O.f.1
+      - O.f.2
+      - O.f.3
+      - O.g.1
+      - O.g.2
+      - T.9
+      - R.12

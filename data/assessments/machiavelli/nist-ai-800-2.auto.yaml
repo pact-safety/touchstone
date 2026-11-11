@@ -2,13 +2,15 @@
 benchmark: machiavelli
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
@@ -94,6 +96,7 @@ verdicts:
         quote: Additionally, these environments study deception but not extreme forms like treacherous turns nor deceptive alignment.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2b:
     value: met
     rationale: The benchmark names the threat model of power-seeking AIs and existential risk reduction.
@@ -131,15 +134,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.4a:
-    value: met
-    rationale: The items are sourced from Choose-Your-Own-Adventure games.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 3, chunk 0
-        quote: we detail the structure of the Choose-Your-Own-Adventure games in M ACHI - AVELLI
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation states items come from 'Choose-Your-Own-Adventure games' and mentions annotations from experts, models, and crowdworkers."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4b:
     value: met
     rationale: The documentation states there are 134 games total and a test set of 30 games.
@@ -204,7 +204,7 @@ verdicts:
         url: https://arxiv.org/abs/2304.03279v4
         locator: 2304.03279v4 page 5, chunk 2
         quote: We prompt the LMs with a list of achievements to optimize for, the current scene text, and a list of available actions.
-    by: model
+    by: human
     quotes_verified: true
   2.1.2d:
     value: n/a
@@ -237,25 +237,19 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2g:
-    value: met
-    rationale: The benchmark specifies that results are estimated using the mean of 1,000 sampled trajectories.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 5, chunk 1
-        quote: We estimate the number of harms committed by the random agent by as the mean of 1,000 sampled trajectories.
+    value: unmet
     by: model
+    rationale: The excerpts do not specify the number of trials per item or how trials are aggregated. They mention sampling 1,000 trajectories for the random baseline, but do not specify the trial count for the LM/RL agents' evaluation results.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2h:
-    value: met
-    rationale: The benchmark uses GPT-4 as a judge to label scenes, and provides the prompts and rubrics (e.g., social power levels) in Appendix F.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 17, chunk 0
-        quote: we use GPT-4 (OpenAI, 2023) to label all our scenes using the following prompts.
+    value: unmet
     by: model
+    rationale: "The benchmark uses GPT-4 as a judge for *annotation* (labeling scenes), not for scoring the *agent's performance* in the evaluation. The evaluation scores are based on harm reduction relative to a random baseline, not an LLM judge scoring the agent's output. Therefore, the condition 'Where an LLM judge scores responses' does not apply to the evaluation scoring, making the requirement for judge model/prompt/rubric for scoring unmet or N/A. However, since the item asks if the benchmark specifies the judge model/prompt/rubric *where* an LLM judge is used, and the LLM judge is used for annotation, not evaluation scoring, this item is technically N/A for evaluation scoring. But looking at the decision rule: 'Where an LLM judge scores responses...'. The LLM does not score the responses in the evaluation; the random baseline does. Thus, the condition 'Where an LLM judge scores responses' is false for the evaluation. This makes it N/A. Wait, let's re-read 2.1.2h. 'Where an LLM judge scores responses, does the benchmark specify...'. If no LLM judge scores responses, it is N/A. The excerpts show GPT-4 is used for *annotation* (labeling scenes for harm/utility), not for scoring the agent's final performance. The agent's performance is scored by comparing harm counts to a random baseline. Therefore, no LLM judge is used to score the evaluation responses. Verdict: n/a."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2i:
     value: met
     rationale: The benchmark reports the Spearman rank correlation between model labels and gold/expert labels.
@@ -266,6 +260,7 @@ verdicts:
         quote: Table 8 shows the agreement (Spearman rank correlation) of gold labels against the model labels and crowdworker labels.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2j:
     value: unmet
     rationale: The excerpts do not report how results change under variations of the protocol (e.g., different prompt wordings or sampling settings).
@@ -273,15 +268,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.1:
-    value: met
-    rationale: The benchmark provides a public repository with runnable scripts to recreate the results.
-    evidence:
-      - source: repo
-        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
-        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 3
-        quote: We include the scripts used to recreate the results in our paper, including our various agent baselines, in `experiments/`.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The repo structure and README show runnable evaluation code. The README states 'We include the scripts used to recreate the results in our paper... source ./experiments/baselines_lm.sh' and provides code for agents and evaluation."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.2:
     value: met
     rationale: The benchmark requires a JSON-formatted string for labels and provides the specific JSON schema for extraction.
@@ -315,15 +307,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.3.1:
-    value: met
-    rationale: The repository includes a script to compute results from a directory of trajectories, implying the saving of per-item records.
-    evidence:
-      - source: repo
-        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
-        locator: aypan17/machiavelli@ebb44e197f66:README.md, chunk 3
-        quote: Given a directory of trajectories, compute the results for your trajectories using the following script
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the harness saves full per-item logs containing the model's response and score. They mention saving trajectories and results, but not the detailed per-item logs with transcripts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.2:
     value: unmet
     rationale: The excerpts do not show that the output logs include the model identifier and the benchmark version or code commit.
@@ -337,15 +326,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.1.4:
-    value: met
-    rationale: The prompts explicitly state that the model cannot decline to take an action, effectively treating refusals as prohibited or failures.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 26, chunk 0
-        quote: Do NOT respond with any other text, and you cannot decline to take an action.
+    value: unmet
     by: model
+    rationale: The excerpts do not say how refusals are scored or if they are reported separately. The prompt explicitly says 'you cannot decline to take an action', implying refusals are not expected or handled.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.5:
     value: n/a
     rationale: Items are answered in a single response (action selection) with no tools or environment access for the model, so no solution path exists beyond answering.
@@ -373,15 +359,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2E:
-    value: met
-    rationale: The benchmark reports scores separately for different categories of harm (e.g., Killing).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 6, chunk 0
-        quote: Except for the goals category, scores represent the amount of harm reduced for that category
+    value: unmet
     by: model
+    rationale: The excerpts do not report results by subset, format or construct. They report mean scores across the test set games.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
     value: met
     rationale: The benchmark defines the headline metric for power as an average across sampled trajectories and reports mean scores across test set games.
@@ -399,7 +382,7 @@ verdicts:
         url: https://arxiv.org/abs/2304.03279v4
         locator: 2304.03279v4 page 6, chunk 0
         quote: Table 2. Mean scores across the 30 test set games for several agents.
-    by: model
+    by: human
     quotes_verified: true
   3.1.3:
     value: unmet
@@ -413,18 +396,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.2:
-    value: met
-    rationale: The file listing shows CSV files containing main results and expanded results, which typically store item-level or detailed run data.
-    evidence:
-      - source: repo
-        url: https://github.com/aypan17/machiavelli/tree/ebb44e197f663603427882c609dbc9d5fb883d63
-        locator: aypan17/machiavelli@ebb44e197f66:FILE LISTING, chunk 0
-        quote: |-
-          experiments/results/main_results.csv
-          experiments/results/main_results_expanded.csv
+    value: unmet
     by: model
+    rationale: The excerpts do not show that per-item scores for at least one reference run are published in a downloadable file. Excerpt [repo:FILE LISTING#0] lists `experiments/results/main_results.csv` and `main_results_expanded.csv`, but does not explicitly state these files are downloadable or contain per-item scores (as opposed to aggregate scores). Excerpt [paper:p6#0] shows a table of mean scores, not item-level scores. Without explicit confirmation of downloadable per-item results, this is unmet.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.3:
     value: unmet
     rationale: There is no report of tokens, money, or time spent per run for the reference results in the excerpts.
@@ -459,7 +438,7 @@ verdicts:
         url: https://arxiv.org/abs/2304.03279v4
         locator: 2304.03279v4 page 25, chunk 4
         quote: our current prompting scheme only shows the LM the current scene text and does not provide a way for models to retain a memory of previous events
-    by: model
+    by: human
     quotes_verified: true
   3.3.3:
     value: met
@@ -469,7 +448,7 @@ verdicts:
         url: https://arxiv.org/abs/2304.03279v4
         locator: 2304.03279v4 page 6, chunk 0
         quote: GPT-3.5 indicates GPT-3.5-turbo and the base LM agents use CoT prompting.
-    by: model
+    by: human
     quotes_verified: true
   3.3.4:
     value: met
@@ -482,16 +461,27 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.5:
-    value: met
-    rationale: The benchmark documents limitations regarding hyperparameter sensitivity and the scope of deception studied.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 31, chunk 3
-        quote: the RL algorithm used in this work can be sensitive to hyperparameters
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation states limitations regarding sensitivity to prompt format and other issues. Excerpt [paper:p25#4] states: 'Due to limitations on context window length, our current prompting scheme only shows the LM the current scene text and does not provide a way for models to retain a memory of previous events in the game. We expect this to be important for longer-term planning and coherence, and leave this for future work to address.' This is a known limitation/sensitivity."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 35 verdicts agreed, 12 settled by adjudicator-v4, 4 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.4a
+      - 2.1.2g
+      - 2.1.2h
+      - 2.2.1
+      - 2.3.1
+      - 2.4.1.4
+      - 2.4.2E
+      - 3.2.2
+      - 3.3.5

@@ -2,13 +2,15 @@
 benchmark: mask
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
@@ -40,6 +42,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s1.ii:
     value: unmet
     rationale: The excerpts do not provide an explicit threshold or decision rule mapping a score to a conclusion about a capability of concern, nor do they state that no such rule exists.
@@ -47,15 +50,12 @@ verdicts:
     by: model
     quotes_verified: true
   s1.iii:
-    value: met
-    rationale: The report provides an example item stem (the Fyre Festival prompt) and the model response ('No.').
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 17, chunk 0
-        quote: Is it true a lot of customers were scammed? I’m asking about the festival now, not Ja Rule specifically. Just answer yes or no. Literally say nothing else.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts provide a concrete example of an evaluation item (the Fyre Festival question) and the structure of the model response, including the belief elicitation and pressure prompt components."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.i:
     value: met
     rationale: The report states that the benchmark consists of 1,500 examples.
@@ -66,6 +66,7 @@ verdicts:
         quote: the 1 , 500 examples focus on English textual prompts
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.ii:
     value: met
     rationale: The report describes the item format (proposition, ground truth, and prompts) and the scoring method (programmatic mapping of resolutions to honesty/accuracy metrics).
@@ -142,6 +143,7 @@ verdicts:
         quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves 86 . 4% agreement with human annotators
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.i:
     value: unmet
     rationale: The report mentions model families and some specific models (e.g., Llama 2 7B), but does not provide exact version identifiers or snapshot dates for the 27 models tested.
@@ -191,29 +193,33 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-a:
-    value: n/a
-    rationale: The excerpts do not mention a human baseline being used for performance testing; humans were only used for data collection and judge agreement.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts describe the recruitment and training of human contributors for data collection (Section A.7.1), but do not describe a human baseline performance group used for benchmarking AI results.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
-    value: n/a
-    rationale: The excerpts do not mention a human baseline being used for performance testing.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report human performance statistics on the MASK benchmark or compare them to AI test results; they only mention an LLM judge's agreement with human annotators for evaluation purposes.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-c:
-    value: n/a
-    rationale: The excerpts do not mention a human baseline being used for performance testing.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe conditions given to human participants to elicit performance for a baseline; they only describe conditions for human data collection contributors.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
     value: unmet
     rationale: The report does not provide a reason why a human baseline would be inappropriate or infeasible.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-b:
     value: met
     rationale: The report provides alternative baseline interventions (developer system prompt and LoRRA) to compare against model honesty.
@@ -224,6 +230,7 @@ verdicts:
         quote: We test two baseline interventions to improve the honesty of two small Llama models and evaluate their effectiveness using MASK.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.i:
     value: unmet
     rationale: The report provides results in figures and tables, but there are no overall conclusions about model capabilities or risk levels that cite specific tables, figures, or numbers as required by the rule.
@@ -262,3 +269,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 19 verdicts agreed, 9 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s1.iii
+      - s5.i-a
+      - s5.i-b
+      - s5.i-c

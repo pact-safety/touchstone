@@ -2,13 +2,15 @@
 benchmark: machiavelli
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ebb44e197f663603427882c609dbc9d5fb883d63
@@ -72,6 +74,7 @@ verdicts:
         quote: We annotate 572,322 scenes
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.ii:
     value: met
     rationale: The report describes the item format as JSON-formatted strings and the scoring method as scalar, binary, or categorical values (e.g., {0, 1, 2}).
@@ -100,6 +103,7 @@ verdicts:
         quote: Table 8 shows the agreement (Spearman rank correlation) of gold labels against the model labels
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iv-a:
     value: n/a
     rationale: Grading is automated using GPT-4.
@@ -161,17 +165,12 @@ verdicts:
     by: model
     quotes_verified: true
   s3.i:
-    value: met
-    rationale: The report identifies specific models tested, including davinci and LLaMA models with specific parameter counts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 28, chunk 3
-        quote: |-
-          we evaluate   davinci   (base GPT-3 model),   llama-*   (LLaMA models with
-          7B, 13B and 30B parameters)
+    value: unmet
     by: model
+    rationale: The excerpts mention model families (e.g., 'davinci', 'llama-*') but do not provide exact model version identifiers or snapshot dates required by the decision rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.ii:
     value: unmet
     rationale: The excerpts do not specify the safety mitigations active during testing or any adaptations to elicitation.
@@ -200,6 +199,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s4.iii:
     value: met
     rationale: The report provides results for alternative testing conditions, specifically comparing 'base' models against those using '+ shaping' or '+ EthicsPrompt'.
@@ -217,15 +217,12 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-b:
-    value: met
-    rationale: The report compares GPT-4's labels to those of human annotators and crowdworkers, noting that GPT-4 is 'usually as accurate as human annotators'.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2304.03279v4
-        locator: 2304.03279v4 page 4, chunk 3
-        quote: GPT-4 is usually as accurate as human annotators from Surge AI
+    value: unmet
     by: model
+    rationale: The excerpts do not provide specific human performance statistics (e.g., mean scores) nor do they describe differences in test conditions between humans and AI. It only states GPT-4 is 'more correlated' and 'more performant' in some categories, without the required statistical reporting.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-c:
     value: unmet
     rationale: The excerpts do not describe the specific conditions or instructions given to the human participants to elicit their performance.
@@ -294,3 +291,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 23 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s3.i
+      - s5.i-b

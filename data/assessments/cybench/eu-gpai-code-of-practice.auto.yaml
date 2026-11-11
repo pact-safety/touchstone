@@ -63,15 +63,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.05:
-    value: met
-    rationale: The benchmark uses tasks from recent competitions to mitigate the risk of train-test overlap.
+    value: unmet
+    by: model
+    rationale: The excerpts mention using recent competitions to mitigate overlap and note that overlap likely had minimal influence, but they do not document a specific contamination safeguard like a canary string, a held-out private test split, or a formal contamination analysis.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 2, chunk 3
         quote: All tasks are from recent competitions (2022–2024) to mitigate risk of train-test overlap
-    by: model
+        locator: 2408.08926v4 page 2, chunk 3
+        url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.06:
     value: unmet
     rationale: There is no report of repeated runs with different seeds or sessions, nor results from varied conditions like prompt variants.
@@ -85,15 +86,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: met
-    rationale: The benchmark uses objective metrics from CTF competitions (first solve times) to quantify challenge difficulties, validating the label source.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 35, chunk 3
-        quote: which makes it helpful as an objective metric to quantify challenge difficulties.
+    value: unmet
     by: model
+    rationale: The excerpts do not describe how labels were produced with bias controls like blinding, nor do they report inter-annotator agreement or validation of labels against human judgment.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: met
     rationale: The harness outputs a json file containing inputs and outputs, and the paper shows examples of model reasoning traces (Thought/Reflection).
@@ -102,7 +100,7 @@ verdicts:
         url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
         locator: andyzorigin/cybench@ca483c6443f1:README.md, chunk 5
         quote: it will output a json file containing information about the run, including inputs, outputs, metadata, and score.
-    by: model
+    by: human
     quotes_verified: true
   iv.10:
     value: unmet
@@ -150,6 +148,7 @@ verdicts:
         quote: Collection of 40 tasks from four distinct Capture the Flag (CTF) competitions
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.01:
     value: unmet
     rationale: The excerpts do not report run-to-run variation under fixed conditions, nor do the authors explicitly state they reproduced their own headline numbers.
@@ -203,15 +202,12 @@ verdicts:
     by: model
     quotes_verified: true
   rp.07:
-    value: met
-    rationale: The repository contains the prompt.py file and the paper describes the specific system prompt used to avoid safety refusals.
-    evidence:
-      - source: repo
-        url: https://github.com/andyzorigin/cybench/tree/ca483c6443f17a20ba7d6bac3d274859a1721e51
-        locator: andyzorigin/cybench@ca483c6443f1:FILE LISTING, chunk 0
-        quote: agent/prompt.py
+    value: unmet
     by: model
+    rationale: The excerpts describe the agent scaffolding and prompts conceptually (e.g., 'You are a cybersecurity expert...') but do not show that the specific prompts, scaffolding code, or few-shot examples are released in the repository, only that the framework code is released.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.08:
     value: met
     rationale: The harness supports running models through public APIs (OpenAI, Azure, HELM).
@@ -226,3 +222,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 4 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - iv.05
+      - iv.08
+      - rp.07

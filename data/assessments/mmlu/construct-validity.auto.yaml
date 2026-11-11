@@ -2,13 +2,15 @@
 benchmark: mmlu
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 4450500f923c49f1fb1dd3d99108a0bd9717b660
@@ -35,15 +37,16 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   def.1:
-    value: met
-    rationale: The paper defines the measurement as classification accuracy on multiple choice questions.
+    value: unmet
+    by: model
+    rationale: The excerpts describe the benchmark as measuring 'classification accuracy on multiple choice questions' and assessing 'general world knowledge and basic reasoning ability', but they do not provide a precise operational definition specifying which observable outputs count as evidence of the phenomenon (e.g., they do not define the phenomenon itself, only the task format).
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2009.03300v3
+        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions.
         locator: 2009.03300v3 page 3, chunk 1
-        quote: we instead create a simple-to-evaluate test that measures classification accuracy on multiple choice questions
-    by: model
+        url: https://arxiv.org/abs/2009.03300v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: unmet
     rationale: While the paper mentions including harder specialized subjects, it does not explicitly name any excluded aspects of the phenomenon.
@@ -115,35 +118,26 @@ verdicts:
     by: model
     quotes_verified: true
   ru.2:
-    value: n/a
-    rationale: The benchmark does not reuse or adapt a prior dataset; it was manually collected from online sources.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2009.03300v3
-        locator: 2009.03300v3 page 3, chunk 2
-        quote: The questions in the dataset were manually collected by graduate and undergraduate students from freely available sources online.
+    value: unmet
     by: model
+    rationale: While the paper discusses limitations of prior benchmarks (e.g., easy topics, linguistic focus), it does not explicitly analyze and report the strengths and limitations of the specific prior datasets (e.g., GRE, USMLE) that were reused to create MMLU.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
-    value: n/a
-    rationale: The benchmark does not reuse or adapt a prior dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2009.03300v3
-        locator: 2009.03300v3 page 3, chunk 2
-        quote: The questions in the dataset were manually collected by graduate and undergraduate students from freely available sources online.
+    value: unmet
     by: model
+    rationale: The paper compares MMLU to other benchmarks like GLUE and SuperGLUE, but it does not report performance on the original prior datasets (e.g., GRE, USMLE) to compare against MMLU performance on those same tasks.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
-    value: n/a
-    rationale: The benchmark does not reuse or adapt a prior dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2009.03300v3
-        locator: 2009.03300v3 page 3, chunk 2
-        quote: The questions in the dataset were manually collected by graduate and undergraduate students from freely available sources online.
+    value: unmet
     by: model
+    rationale: The paper describes the modification of using a multitask format and few-shot learning, but it does not explicitly list each modification to the reused datasets and explain how each specifically improves construct validity.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The provided excerpts do not describe any specific contamination tests or report results from such tests.
@@ -213,40 +207,55 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors identify a specific direction for improvement (increasing accuracy on Professional Law and Moral Scenarios tasks) with the rationale that these are crucial for alignment with human values.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2009.03300v3
-        locator: 2009.03300v3 page 8, chunk 1
-        quote: future research should especially aim to increase accuracy on these tasks
+    value: unmet
     by: model
+    rationale: The text suggests future research should aim to increase accuracy on specific tasks, but this is a generic future-work line rather than a reported experiment or specific named direction with a stated rationale for improvement.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: unmet
     rationale: The excerpts mention 'real-world domains' and 'real-world language use', but they do not name a specific real-world application and link it to the benchmark tasks.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.2:
     value: unmet
     rationale: There is no provided operational definition 'def.1' in the excerpts to which the task choice and metrics are linked.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is compared to commonsense benchmarks like HellaSwag, noting that while those assess abilities every child has, MMLU includes harder specialized subjects."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.4:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors state a limitation regarding the text-only format, noting that it cannot capture concepts conveyed through other modalities."
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: "The excerpt discusses a design trade-off/limitation: the benchmark is text-only and does not capture concepts conveyed through other modalities like images or audio, which limits what it measures regarding multimodal understanding."
+    evidence:
+      - source: paper
+        quote: Existing large-scale NLP models, such as GPT-3, do not incorporate multimodal information, so we design our benchmark to capture a diverse array of tasks in a text-only format.
+        locator: 2009.03300v3 page 7, chunk 3
+        url: https://arxiv.org/abs/2009.03300v3
     quotes_verified: true
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 19 verdicts agreed, 8 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.1
+      - ru.2
+      - ru.3
+      - ru.4
+      - ea.4
+      - jv.4

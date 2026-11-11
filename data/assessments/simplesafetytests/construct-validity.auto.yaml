@@ -2,13 +2,15 @@
 benchmark: simplesafetytests
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: d7aee9a9422a5a5488f478fd79c2479c891c0f3b
@@ -45,21 +47,27 @@ verdicts:
     by: model
     quotes_verified: true
   def.2:
-    value: unmet
-    rationale: While the text mentions 'five harm areas', it does not explicitly state the overall scope of the phenomenon nor does it name specific excluded aspects of the phenomenon being measured.
-    evidence: []
-    by: model
-    quotes_verified: true
-  def.3:
     value: met
-    rationale: The phenomenon is divided into five harm areas and two prompt categories, and the evidence shows that safety filters' performance differs across these harm areas, indicating separate measurement.
+    by: model
+    rationale: The scope is stated as covering 'harm areas' and 'prompt categories', and excluded aspects are acknowledged, such as privacy risks and copyright issues due to the synthetic nature of the data.
     evidence:
       - source: paper
+        quote: In total, there are 100 prompts, equally split into five harm areas and two prompt categories.
+        locator: 2311.08370v2 page 3, chunk 2
         url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 7, chunk 1
-        quote: The safety filters’ performance differs across the five harm areas, as shown in Figure 4.
-    by: model
+      - source: paper
+        quote: The test prompts are all synthetic, and none have been taken from existing datasets or real-world user interactions with LLMs. Therefore, the dataset can be shared without any privacy or copyright risks.
+        locator: 2311.08370v2 page 3, chunk 1
+        url: https://arxiv.org/abs/2311.08370v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  def.3:
+    value: unmet
+    by: model
+    rationale: The excerpts state that prompts are split into harm areas and categories, but they do not explicitly state that the phenomenon's sub-components are measured or scored separately in the final evaluation results.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.1:
     value: unmet
     rationale: The excerpts do not identify any secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
@@ -73,15 +81,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses human annotators to label responses, and the safety filters mentioned return labels (e.g., binary safe/unsafe) rather than requiring the parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 6, chunk 2
-        quote: Three annotators each hand-labeled the 3,000 models’ responses to SST to evaluate model safety
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias. While hand-labeling is mentioned, it is not used to validate an automated parser's accuracy in the manner described.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: While the paper describes five harm areas and the number of prompts, it does not document a sampling strategy used to ensure these items are representative of the overall task space.
@@ -94,6 +99,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: There is no mention of a subset of permuted or perturbed items, nor are any such results reported separately.
@@ -110,6 +116,7 @@ verdicts:
         quote: The test prompts were originally created by one of the authors
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
     value: n/a
     rationale: The benchmark does not reuse a prior dataset or benchmark.
@@ -222,6 +229,7 @@ verdicts:
         quote: We also believe there is value in creating perturbations and variations of each prompt using LLMs or other AI-based tools so as to better test model robustness.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark is linked to real-world applications such as informing regulations, policies, and industry efforts to steer models.
@@ -258,3 +266,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.2
+      - def.3
+      - mo.3

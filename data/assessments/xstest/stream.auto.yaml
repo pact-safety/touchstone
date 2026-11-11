@@ -2,13 +2,15 @@
 benchmark: xstest
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
@@ -102,6 +104,7 @@ verdicts:
         quote: we evaluate all models by manually annotating their responses on XST EST
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iv-c:
     value: unmet
     rationale: No inter-grader agreement figure is reported for the manual annotations.
@@ -141,15 +144,12 @@ verdicts:
     by: model
     quotes_verified: true
   s3.ii:
-    value: met
-    rationale: The report describes the use of original system prompts and the addition of a guardrail system prompt as adaptations/mitigations.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 2, chunk 0
-        quote: Meta’s open-access Llama2 chat model (Touvron et al., 2023), with and without its original system prompt, Mistral AI’s open-source instruction-tuned 7B model, with and without a guardrail system prompt
+    value: unmet
     by: model
+    rationale: The excerpts mention testing models 'with and without its original system prompt' and 'with and without a guardrail system prompt', but do not explicitly state the active safeguards or adaptations in a manner that satisfies the requirement for an explicit statement of what was active during the specific test runs described in the results.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.iii:
     value: unmet
     rationale: While the report mentions prompts and system prompts, it does not provide sampling settings or the number of attempts.
@@ -183,39 +183,40 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-a:
-    value: n/a
-    rationale: The provided excerpts describe the evaluation of LLMs (Llama2, Mistral, GPT-4) but do not mention the use of a human baseline.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe a human baseline sample or recruitment; they only describe AI models and their evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
-    value: n/a
-    rationale: The provided excerpts describe the evaluation of LLMs (Llama2, Mistral, GPT-4) but do not mention the use of a human baseline.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts provide AI performance statistics but do not report human performance statistics or differences with AI.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-c:
-    value: n/a
-    rationale: The provided excerpts describe the evaluation of LLMs (Llama2, Mistral, GPT-4) but do not mention the use of a human baseline.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts describe how AI performance was elicited (prompts/system prompts) but do not describe how human performance was elicited.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
     value: unmet
     rationale: The report does not provide a reason why a human baseline would be inappropriate or infeasible.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-b:
-    value: met
-    rationale: The report uses other LLMs as comparison points to evaluate the balance between helpfulness and harmlessness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 2, chunk 0
-        quote: use the test suite to evaluate three state-of-the-art LLMs
+    value: unmet
     by: model
+    rationale: The excerpts do not provide an alternative comparison point (such as a human baseline) nor explain one; they only compare different AI model configurations.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.i:
     value: unmet
     rationale: While the report states conclusions about exaggerated safety, these general conclusions do not each cite a specific table, figure, or number.
@@ -254,3 +255,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 21 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s3.ii
+      - s5.i-a
+      - s5.i-b
+      - s5.i-c
+      - s5.ii-b

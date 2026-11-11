@@ -2,13 +2,15 @@
 benchmark: mle-bench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v6
   repo_commit: 507f92e1138bb6e40dac5c6ee7a6758e6424bf97
@@ -49,11 +51,20 @@ verdicts:
     by: model
     quotes_verified: true
   def.2:
-    value: unmet
-    rationale: While the benchmark mentions using Kaggle competitions, it does not explicitly state the scope of the phenomenon nor name any excluded aspects.
-    evidence: []
+    value: met
     by: model
+    rationale: The scope is defined as Kaggle competitions, and the paper explicitly acknowledges excluded aspects such as sensitive data and specific data science templates used by other benchmarks.
+    evidence:
+      - source: paper
+        quote: Our benchmark uses publicly available Kaggle competitions. No sensitive data is used
+        locator: 2410.07095v6 page 11, chunk 1
+        url: https://arxiv.org/abs/2410.07095v6
+      - source: paper
+        quote: DSBench’s filtering criteria removes any competitions whose datasets do not fit a simple template that is used to automate task creation. This precludes many interesting competitions with non-standard formats.
+        locator: 2410.07095v6 page 9, chunk 3
+        url: https://arxiv.org/abs/2410.07095v6
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: unmet
     rationale: The excerpts do not identify sub-components of the phenomenon that are scored separately, nor do they explicitly state the phenomenon is unitary.
@@ -73,25 +84,19 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses a 'submission.csv' file and re-implemented grading code, which is a structured file format rather than free-form output requiring automated parsing.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 2, chunk 0
-        quote: Score   submission.csv
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency for the parser, or a comparison across output formats for bias. The grading is described as deterministic and based on re-implemented code, not free-form parsing validation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
-    value: met
-    rationale: The authors describe a sampling strategy starting from the Meta Kaggle dataset and applying specific exclusion and screening criteria to arrive at the final set.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 3, chunk 0
-        quote: To arrive at the set of competitions constituting MLE-bench, we begin with the 5673 completed Kaggle competitions listed on the Meta Kaggle dataset 1
+    value: unmet
     by: model
+    rationale: The excerpts describe the manual screening and selection criteria for Kaggle competitions (e.g., excluding community competitions, ensuring reproducibility), but they do not document a specific sampling strategy over the task space to ensure representativeness of the overall task space.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.2:
     value: met
     rationale: The dataset items were manually screened for relevance and quality, and excluded if grading or splits could not be recreated.
@@ -102,6 +107,7 @@ verdicts:
         quote: We manually screen the remaining 586 competitions for relevance to modern-day ML engineering.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: There is no mention of a counted subset of permuted or perturbed items or separate reporting for such items.
@@ -119,11 +125,20 @@ verdicts:
     by: model
     quotes_verified: true
   ru.2:
-    value: unmet
-    rationale: While the benchmark uses Kaggle competitions, the provided excerpts do not analyze or report specific strengths and limitations of the prior Kaggle work itself.
-    evidence: []
+    value: met
     by: model
+    rationale: The text reports a limitation regarding the coverage of AI R&D capabilities and the difficulty of detecting strategy reuse, and implies strengths by selecting competitions with clear problem statements and clean datasets.
+    evidence:
+      - source: paper
+        quote: Coverage of AI R&D capabilities. We built MLE-bench to better understand the risk of AI R&D acceleration via automated ML engineers, but the tasks included in MLE-bench don’t cover the full spectrum of capabilities required for AI R&D.
+        locator: 2410.07095v6 page 10, chunk 1
+        url: https://arxiv.org/abs/2410.07095v6
+      - source: paper
+        quote: MLE-bench selects for Kaggle competitions that provide clear problem statements, datasets that are clean and well-documented, and have clear metrics for optimization.
+        locator: 2410.07095v6 page 10, chunk 1
+        url: https://arxiv.org/abs/2410.07095v6
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
     value: unmet
     rationale: There is no comparison of performance between the new benchmark and the original Kaggle competitions provided in the excerpts.
@@ -166,6 +181,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.1:
     value: unmet
     rationale: While the number of competitions (75) is mentioned, there is no power calculation or confidence-interval width reported against the smallest claimed gap.
@@ -193,27 +209,34 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: n/a
-    rationale: Labels are deterministic, based on competition metrics (e.g., AUROC) and leaderboard positions, not subjective ratings.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark relies on deterministic grading code and exact metric comparisons (e.g., AUROC, loss functions) against a private leaderboard. The excerpts do not report any per-item disagreement distribution or inter-annotator agreement statistic, as the labels are determined by automated scripts rather than subjective human ratings.
+    evidence:
+      - source: paper
+        quote: Evaluation metrics vary by competition, from standard metrics like area under the receiver operating characteristic (AUROC) to domain-specific loss functions.
+        locator: 2410.07095v6 page 4, chunk 0
+        url: https://arxiv.org/abs/2410.07095v6
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: While failure modes are described (e.g., context window filling, resource overloading), they are not counted.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.2:
-    value: met
-    rationale: Failures/scores are broken down by complexity level and task category in Tables 9 and 10.
+    value: unmet
+    by: model
+    rationale: While the paper investigates contamination (a confounder) in Section 4, it does not present a table or figure that breaks down failure modes or scores by this confounder to show correlations. The results are presented by complexity and category, not by the confounder itself.
     evidence:
       - source: paper
+        quote: Our experiments find no evidence of results being systematically inflated due to memorization.
+        locator: 2410.07095v6 page 8, chunk 1
         url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 6, chunk 3
-        quote: See Table 9 and Table 10 for our headline results broken down by complexity level and task category respectively.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.3:
     value: unmet
     rationale: The provided excerpts do not discuss scoring biases revealed by the breakdown of results by complexity or category.
@@ -249,17 +272,12 @@ verdicts:
     by: model
     quotes_verified: true
   jv.3:
-    value: met
-    rationale: The benchmark is compared to MLAgentBench and ML-Bench, noting differences in task complexity and the nature of the problems (open-ended vs. pre-existing codebases).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2410.07095v6
-        locator: 2410.07095v6 page 9, chunk 2
-        quote: |-
-          In contrast, MLE-bench provides significantly more tasks with more complexity, and
-          requires agents to attempt the task from scratch.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpt names existing benchmarks (MLAgentBench, ML-Bench) and states specific differences (task count, complexity, starting from scratch vs baseline, codebase understanding vs open-ended problems)."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.4:
     value: met
     rationale: The authors discuss a limitation regarding the benchmark's coverage, stating that it does not cover the full spectrum of AI R&D because it selects for clean datasets and clear problem statements.
@@ -270,7 +288,20 @@ verdicts:
         quote: the tasks included in MLE-bench don’t cover the full spectrum of capabilities required for AI R&D.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 17 verdicts agreed, 11 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.2
+      - mo.3
+      - ds.1
+      - ru.2
+      - st.4
+      - ea.2
+      - jv.3

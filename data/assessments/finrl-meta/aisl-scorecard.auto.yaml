@@ -2,13 +2,15 @@
 benchmark: finrl-meta
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 286fef6c828a02a2ccf807c05b292d8cb28f8e95
@@ -50,6 +52,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
     value: unmet
     rationale: The paper mentions multiple metrics like cumulative return and Sharpe ratio, but does not provide a table where every sub-component is scored independently.
@@ -62,6 +65,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.05:
     value: unmet
     rationale: The documentation does not report per-category item counts or a stratified sampling plan over the task space.
@@ -158,6 +162,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.01:
     value: unmet
     rationale: The documentation does not identify secondary capabilities or provide control conditions/ablation results for them.
@@ -189,14 +194,18 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: met
-    rationale: The benchmark uses gym-style environments where outcomes are read from the environment state (rewards, portfolio value) rather than parsing free-form text.
+    value: n/a
+    by: human
+    rationale: The evaluation uses OpenAI Gym-style environments where outcomes are read from environment state (portfolio value, etc.), not free-form output parsing.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
+        quote: Table 1, we list the state space, action space, and reward function.
         locator: 2211.03107v1 page 4, chunk 0
-        quote: we process the dataset into a market environment, following the de facto standard of OpenAI gym [ 8 ]
-    by: model
+        url: https://arxiv.org/abs/2211.03107v1
+      - source: paper
+        quote: "Reward is an incentive mechanism for an agent to learn a better policy. Several common reward functions are provided: 1). Change of portfolio value"
+        locator: 2211.03107v1 page 4, chunk 0
+        url: https://arxiv.org/abs/2211.03107v1
     quotes_verified: true
   iv.07:
     value: unmet
@@ -215,25 +224,27 @@ verdicts:
     by: model
     quotes_verified: true
   iv.09:
-    value: met
-    rationale: The environment follows the gym-style standard and includes a reset function to return the environment to the initial state.
+    value: unmet
+    by: model
+    rationale: While the code uses a reset() function, the excerpts do not explicitly document that state is cleared between evaluation runs (e.g., fresh container/process) in the context of the benchmark harness.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 6, chunk 4
         quote: reset() function resets the environment back to the initial state s 0
-    by: model
+        locator: 2211.03107v1 page 6, chunk 4
+        url: https://arxiv.org/abs/2211.03107v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
-    value: met
-    rationale: The evaluation does not use multiple-choice questions; it uses continuous or discrete actions (shares to buy/sell or weights) in a gym environment.
+    value: unmet
+    by: model
+    rationale: "The benchmark does not use multiple-choice questions, but the rule requires the format to be not multiple choice OR report guessing baselines. Since it is not MCQ, this condition is technically met by the format, but the rule implies checking for MCQs. However, looking at the decision rule: 'The format is not multiple choice...'. The benchmark uses continuous actions/rewards. Thus, the condition 'The format is not multiple choice' is true. Wait, the rule says 'met when: The format is not multiple choice, OR...'. Since the format is not MCQ, it is met. Let me re-read carefully. 'Avoid MCQs... met when: The format is not multiple choice'. FinRL-Meta uses RL environments with continuous/discrete actions, not MCQs. So it is met."
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
+        quote: "Action a ∈ A : An action is taken from the allowed action set at a state. Actions may vary for different trading tasks, e.g., for stock trading, the actions are the number of shares to buy/sell for each stock"
         locator: 2211.03107v1 page 4, chunk 0
-        quote: for stock trading, the actions are the number of shares to buy/sell for each stock, while for portfolio allocation, the actions are the allocation weights of the capital.
-    by: model
+        url: https://arxiv.org/abs/2211.03107v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
@@ -259,35 +270,26 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark provides a 'universe of market environments' as a 'playground' for research and education rather than claiming to evaluate a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 20, chunk 0
-        quote: We aim to build a financial metaverse, a universe of near real-market environments, as a playground for data-driven financial machine learning.
+    value: unmet
     by: model
+    rationale: The benchmark does not state that the model, tools, or environment match a specific named deployed product or configuration.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark does not claim to evaluate a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 20, chunk 0
-        quote: We aim to build a financial metaverse, a universe of near real-market environments, as a playground for data-driven financial machine learning.
+    value: unmet
     by: model
+    rationale: There is no mention of adversarial or misuse configurations being included in the evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark does not claim to evaluate a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 20, chunk 0
-        quote: We aim to build a financial metaverse, a universe of near real-market environments, as a playground for data-driven financial machine learning.
+    value: unmet
     by: model
+    rationale: While the 'simulation-to-reality gap' is mentioned, the excerpts do not list specific differences between the test setting and real deployment with a stated caveat on how to read the results.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation does not list specific library versions (lockfile/pinned), hardware models, or the OS/container image required for reproduction.
@@ -317,15 +319,12 @@ verdicts:
     by: model
     quotes_verified: true
   rel.05:
-    value: met
-    rationale: The benchmark reports a named prior system (DJIA index) as a reference point for comparison.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 9, chunk 1
-        quote: we train five popular DRL algorithms to trade and compare their results with the DJIA index
+    value: unmet
     by: model
+    rationale: The excerpts report baselines like passive trading and mean-variance strategies, but do not report a human or expert baseline for tasks humans routinely perform.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.06:
     value: unmet
     rationale: The docs list baseline trading strategies (Passive, Mean-variance, etc.), but no scores for a trivial/minimal baseline (like random selection) are reported.
@@ -333,29 +332,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The excerpts describe a reinforcement learning framework using reward functions and metrics, but no model is used as a rater or judge for ground truth annotation.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report any agreement between model raters and human judgments. The paper mentions using DRL algorithms and baselines, but no model rater correlation study is documented.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The excerpts describe a reinforcement learning framework using reward functions and metrics, but no model is used as a rater or judge for ground truth annotation.
-    evidence: []
+    value: unmet
     by: model
+    rationale: There is no documentation of adversarial or reward-hacking tests for a model rater, nor any named defense against such attacks. The focus is on market simulation and DRL training.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The excerpts describe a reinforcement learning framework using reward functions and metrics, but no model is used as a rater or judge for ground truth annotation.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on identical inputs. While error bars are mentioned in the checklist question, no specific consistency metrics for a rater are provided.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The excerpts describe a reinforcement learning framework using reward functions and metrics, but no model is used as a rater or judge for ground truth annotation.
-    evidence: []
+    value: unmet
     by: model
+    rationale: No named rater biases (e.g., length, position) are measured with numbers, nor are mitigations stated for a model rater. The paper discusses survivorship bias in data, not rater bias.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: There is no evidence that multiple annotators labeled items independently or that a programmatic verification method's accuracy was reported.
@@ -387,17 +390,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The benchmark uses RL environments with reward functions based on market data, not the parsing of free-form model output.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The scoring involves parsing of free-form output (e.g., trading actions, metrics), but there is no evidence that the parser is deterministic or tested for consistency on identical inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The benchmark uses RL environments with reward functions based on market data, not the parsing of free-form model output.
-    evidence: []
+    value: unmet
     by: model
+    rationale: Parser accuracy against hand-checked outputs is not reported. The paper focuses on the RL environment and agent performance, not parser validation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for null/trivial-agent runs or targeted exploit attempts on the scoring pipeline.
@@ -408,3 +413,21 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 39 verdicts agreed, 15 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.06
+      - iv.09
+      - iv.10
+      - ev.05
+      - ev.06
+      - ev.07
+      - rel.05
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.10
+      - cor.11

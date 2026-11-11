@@ -2,13 +2,15 @@
 benchmark: bbq
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   s1.i:
-    value: met
-    rationale: The report describes the capability being measured (biases in model predictions for QA systems) and the relevant threat models (stereotype reinforcement and stereotype attribution).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 2, chunk 5
-        quote: We focus on harms that arise when biased models are deployed as QA systems. The harms we assess reflect (i) stereotype reinforcement, which risks perpetuating biases, and (ii) stereotype attribution
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report explicitly states the measured capability (stereotype reinforcement and attribution) and the relevant threat model (harms when biased models are deployed as QA systems)."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s1.ii:
     value: unmet
     rationale: The excerpts do not provide an explicit threshold or decision rule mapping a score level to a conclusion about a capability of concern, nor do they state that none exists.
@@ -51,15 +50,12 @@ verdicts:
     by: model
     quotes_verified: true
   s1.iii:
-    value: met
-    rationale: The report provides an example item stem and the structure of the model response (multiple choice options including a specific target and UNKNOWN).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 15, chunk 3
-        quote: the correct answer to “Who fails at dieting?” was “the overweight person” rather than UNKNOWN
+    value: unmet
     by: model
+    rationale: The excerpts describe the structure of the evaluation (multiple-choice QA) and provide examples of context and bias targets, but do not show a specific item stem and the structure of a model response together.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.i:
     value: unmet
     rationale: The provided excerpts do not state the total number of evaluation items in the BBQ dataset.
@@ -91,28 +87,24 @@ verdicts:
     by: model
     quotes_verified: true
   s2.iv-a:
-    value: met
-    rationale: The report describes the number of annotators per item and their expertise/qualification criteria.
+    value: n/a
+    by: human
+    rationale: The grading of the benchmark models is automated, not human or expert graded. The human validation described is for dataset construction, not model evaluation grading.
     evidence:
       - source: paper
+        quote: we score by exact match between the top output and each answer option.
+        locator: 2110.08193v2 page 6, chunk 0
         url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 5, chunk 4
-        quote: Each item is rated by five annotators
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 15, chunk 1
-        quote: The qualification is open to all MTurk workers located in the US with a HIT approval rate above 98% and more than 5000 tasks completed
-    by: model
     quotes_verified: true
   s2.iv-b:
-    value: met
-    rationale: The report describes the human validation procedure using Amazon Mechanical Turk.
+    value: n/a
+    by: human
+    rationale: The grading of the benchmark models is automated, not human or expert graded.
     evidence:
       - source: paper
+        quote: we score by exact match between the top output and each answer option.
+        locator: 2110.08193v2 page 6, chunk 0
         url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 5, chunk 4
-        quote: We validate examples from each template on Amazon Mechanical Turk.
-    by: model
     quotes_verified: true
   s2.iv-c:
     value: met
@@ -124,16 +116,18 @@ verdicts:
         quote: Agreement between raters is high, with a Krippendorf’s α of 0.883
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.v-a:
-    value: n/a
-    rationale: Grading is performed by exact match against gold labels, not by a model grader.
+    value: unmet
+    by: model
+    rationale: The report states that scoring is done by exact match, which is a deterministic string comparison, not by a base model. No grader model is named or described.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
+        quote: we score by exact match between the top output and each answer option.
         locator: 2110.08193v2 page 6, chunk 0
-        quote: we score by exact match between the top output and each answer option
-    by: model
+        url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.v-b:
     value: n/a
     rationale: Grading is performed by exact match against gold labels, not by a model grader.
@@ -142,7 +136,7 @@ verdicts:
         url: https://arxiv.org/abs/2110.08193v2
         locator: 2110.08193v2 page 6, chunk 0
         quote: we score by exact match between the top output and each answer option
-    by: model
+    by: human
     quotes_verified: true
   s2.v-c:
     value: n/a
@@ -208,6 +202,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report provides raw and aggregate human accuracy statistics."
@@ -215,15 +210,12 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-c:
-    value: met
-    rationale: The report describes the conditions for human participants, including the time taken per task and the pay rate.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 15, chunk 2
-        quote: We estimate that each task took up to 2 minutes to complete, 13   for an effective minimum pay rate of $15/hr.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report describes the conditions for human participants, including the nature of the tasks, validation criteria, and compensation."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
     value: n/a
     rationale: A human baseline was used.
@@ -237,10 +229,18 @@ verdicts:
     by: model
     quotes_verified: true
   s6.i:
-    value: unmet
-    rationale: While the report states conclusions about model behavior, it does not cite a specific table, figure, or number for each conclusion.
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: The report states overall conclusions about model capabilities and risk levels, citing specific tables and numbers to support these claims.
+    evidence:
+      - source: paper
+        quote: Table 2 shows the results on just 72 examples
+        locator: 2110.08193v2 page 9, chunk 2
+        url: https://arxiv.org/abs/2110.08193v2
+      - source: paper
+        quote: Models achieve low accuracy in these ambiguous contexts (no more than 67.5%), and their errors reinforce stereotypes up to 77% of the time.
+        locator: 2110.08193v2 page 9, chunk 3
+        url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
   s6.ii:
     value: unmet
@@ -266,7 +266,20 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 17 verdicts agreed, 7 settled by adjudicator-v4, 4 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s1.i
+      - s1.iii
+      - s2.iv-a
+      - s2.iv-b
+      - s2.v-a
+      - s5.i-c
+      - s6.i

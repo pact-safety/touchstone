@@ -2,13 +2,15 @@
 benchmark: ale
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 816fd1591f1b73133c269fe753f10a0490ab4a63
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   def.1:
-    value: met
-    rationale: The phenomenon (performance) is operationally defined as the average score achieved during evaluation episodes.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 6, chunk 0
-        quote: measured as the average score achieved during the evaluation episodes.
+    value: unmet
     by: model
+    rationale: The excerpts describe the ALE as a simulator or environment for evaluating agents, but they do not provide a precise, operational definition of the abstract phenomenon being measured (e.g., 'general competency' or 'intelligence'). They define technical components like reward and action spaces, but not the psychological or AI construct itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: unmet
     rationale: While the paper mentions the scope of human benchmarks is limited, it does not provide a general scope for the phenomenon being measured nor name specific excluded aspects of that phenomenon.
@@ -102,24 +101,28 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
-    value: n/a
-    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
-    evidence: []
+    value: unmet
     by: model
+    rationale: While the paper discusses prior work, it does not explicitly analyze and report the specific strengths and limitations of the Atari 2600 games themselves as the adapted prior work in the context of the benchmark's construction validity.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
-    value: n/a
-    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts provide benchmark results for agents on ALE but do not compare these results against performance on the original Atari 2600 benchmark or prior datasets.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
-    value: n/a
-    rationale: The excerpts do not show that a prior dataset or benchmark was reused.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The documentation describes modifications like action repeat and minimal action sets but does not explicitly explain how these modifications improve construct validity compared to the original dataset.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The excerpts do not describe any tests specifically designed to detect data contamination or report results for such tests.
@@ -201,15 +204,12 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors report running experiments with five different sets of features to address the design issue of linear function approximation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1207.4708v2
-        locator: 1207.4708v2 page 4, chunk 1
-        quote: We ran experiments using five different sets of features
+    value: unmet
     by: model
+    rationale: The excerpts describe the ALE as a benchmark platform and report baseline results for existing agents (SARSA, etc.). They do not report any new experiments aimed at improving scores on the benchmark, nor do they propose specific named directions with stated rationales for improvement.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The text states that the Atari 2600 platform provides challenges typically associated with real-world applications."
@@ -246,3 +246,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.1
+      - ru.2
+      - ru.3
+      - ru.4
+      - ea.4

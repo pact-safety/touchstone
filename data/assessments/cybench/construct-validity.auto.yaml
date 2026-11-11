@@ -2,13 +2,15 @@
 benchmark: cybench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
@@ -67,25 +69,19 @@ verdicts:
     by: model
     quotes_verified: true
   mo.2:
-    value: met
-    rationale: The authors measured the effect of output-format requirements by comparing 'Structured bash' against 'action-only' (removing all fields besides the Action).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 7, chunk 2
-        quote: "we experiment with: 1) removing all fields in the response besides the Action ( action-only )"
+    value: unmet
     by: model
+    rationale: The excerpts discuss token limits and output formats (e.g., 'action-only', 'pseudoterminal') as part of agent scaffolding experiments, but do not explicitly measure or report the 'effect of output-format requirements on scores' as a distinct variable separate from the scaffolding/expressivity changes. The rule requires measuring the effect of format requirements specifically, which is not shown.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.3:
-    value: n/a
-    rationale: The benchmark uses a solution script to compare the final line of output (the flag) to a reference flag, rather than parsing free-form natural language output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 35, chunk 1
-        quote: this script reproduces the automatable steps to solve the task and outputs the retrieved flag as its final line, which is then compared to a reference flag
+    value: unmet
     by: model
+    rationale: The excerpts mention that tasks are verified solvable and flags are compared to reference flags in CI ([paper:p35#1]), but do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias. The automated parsing is implied by the CI flag comparison, but the specific validation metrics (accuracy, consistency, bias) are not reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The provided excerpts do not document a sampling strategy over a described task space to ensure representativeness.
@@ -161,15 +157,12 @@ verdicts:
     by: model
     quotes_verified: true
   ct.3:
-    value: met
-    rationale: The paper reports an overlap check by comparing task release dates against the knowledge cutoff dates of the evaluated models.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 9, chunk 0
-        quote: There is minimal overlap between training and test data on any solved task besides those for Claude 3.5 Sonnet.
+    value: unmet
     by: model
+    rationale: The excerpts discuss knowledge cutoff dates and minimal overlap qualitatively, but do not report a search or overlap check of the benchmark's source material against a named training corpus or model.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.1:
     value: unmet
     rationale: The item count is stated, but there is no power calculation or confidence-interval width reported.
@@ -201,15 +194,12 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: n/a
-    rationale: Every label comes from a deterministic key (the CTF flag), which is not a subjective rating.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
-        locator: 2408.08926v4 page 5, chunk 2
-        quote: the objective is to identify a vulnerability and execute the exploit in order to retrieve a secret string known as a flag.
+    value: unmet
     by: model
+    rationale: "The excerpts do not report per-item disagreement distributions or inter-annotator agreement statistics. The scoring appears to be deterministic (exact match of flags or binary success/failure), which might make this item n/a, but the decision rule for n/a requires that *every* label comes from one deterministic key. The excerpts mention 'subtask performance' and fractional scores, but do not explicitly confirm that *all* labels are deterministic keys without subjective elements, nor do they report the required statistics if they were subjective. However, looking at the n/a condition: 'Every label comes from one deterministic key... rubric, preference, human and model ratings are subjective.' The benchmark uses CTF flags (deterministic). If all labels are deterministic, it is n/a. But the excerpts don't explicitly state *every* label is deterministic in a way that excludes subjective rubrics for partial credit. More importantly, the decision rule for 'met' requires reporting disagreement/agreement stats. Since the labels are likely deterministic (CTF flags), the n/a condition might apply. Let's re-read st.4 n/a: 'n/a when: Every label comes from one deterministic key...'. The excerpts say 'Task verifiability' and 'retrieve a secret string known as a flag'. This implies deterministic keys. However, there are 'subtasks' and 'fractional scores'. Are these subjective? The text says 'outputs a fractional score based on the fraction of subtasks solved'. This suggests deterministic subtask completion. If all are deterministic, it is n/a. But wait, the prompt asks to apply the decision rule literally. If I cannot confirm *every* label is deterministic from the excerpts, I must default to unmet if the stats aren't there. The excerpts do not explicitly state that *all* labels are deterministic keys. They mention 'human teams' performance for difficulty, but the benchmark evaluation itself uses 'verifiability'. Without explicit confirmation that *no* subjective labels exist, and no stats reported, 'unmet' is the safer, literal application of 'If the excerpts do not show that the rule is satisfied, the verdict is unmet'."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: The excerpts do not provide a qualitative description of common failure modes nor a count of them.
@@ -229,15 +219,16 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors report experimenting on four different agent scaffolds to improve performance.
+    value: unmet
+    by: model
+    rationale: The excerpts describe the benchmark's design, task categories, and evaluation results, but do not report any experiments aimed at improving model scores or propose specific named directions with stated rationales for improvement.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2408.08926v4
+        quote: As LMs continue to improve and the world becomes increasingly digitalized, the impact of cybersecurity agents will only grow.
         locator: 2408.08926v4 page 10, chunk 3
-        quote: Here, we introduce and experiment on 4 agent scaffolds
-    by: model
+        url: https://arxiv.org/abs/2408.08926v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark links tasks involving CVEs to real-world cybersecurity skills.
@@ -278,3 +269,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 23 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.2
+      - mo.3
+      - ct.3
+      - st.4
+      - ea.4

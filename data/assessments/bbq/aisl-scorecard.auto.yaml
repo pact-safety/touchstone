@@ -2,13 +2,15 @@
 benchmark: bbq
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
@@ -50,6 +52,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
     value: unmet
     rationale: The paper names sub-components (categories like religion, nationality), but the provided excerpts do not show a table or figure where every single named sub-component has its own reported score.
@@ -57,15 +60,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.04:
-    value: met
-    rationale: The docs define the task space via categories and report item counts for these categories in Table 3.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 14, chunk 2
-        quote: "Table 3:   Total number of examples within each of BBQ’s categories."
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The docs define the task space by naming categories (e.g., race, gender, SES) and report item counts (e.g., 58,492 total, broken down by category in Table 3), covering the range of variation."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.05:
     value: met
     rationale: The documentation reports per-category item counts for the documented task space in Table 3.
@@ -76,6 +76,7 @@ verdicts:
         quote: Table 3 shows the number of unique examples in each of the categories included in BBQ.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.06:
     value: met
     rationale: The docs describe a human validation step where items must be agreed upon by 4/5 annotators for inclusion.
@@ -86,6 +87,7 @@ verdicts:
         quote: we set a threshold of 4/5 annotators agreeing with our gold label for inclusion in the final dataset
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.07:
     value: unmet
     rationale: There is no mention of a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
@@ -93,25 +95,23 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark is described as 'hand-built' and 'constructed by the authors', and no prior dataset is reused for the benchmark items themselves.
+    value: unmet
+    by: model
+    rationale: The rule requires a table or figure comparing the same model on the original dataset and the adapted benchmark. The paper compares BBQ to UnQover but does not compare the same model on both datasets in a table/figure.
     evidence:
       - source: paper
+        quote: By shifting from measuring likelihoods (as UnQover does) to measuring model outputs, BBQ uses a stricter definition of what counts as biased model behavior. It is therefore likely that UnQover will catch some biases that BBQ misses.
+        locator: 2110.08193v2 page 10, chunk 0
         url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 1, chunk 0
-        quote: We introduce the Bias Benchmark for QA (BBQ), a dataset of question sets constructed by the authors
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset for its construction.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 1, chunk 0
-        quote: We introduce the Bias Benchmark for QA (BBQ), a dataset of question sets constructed by the authors
+    value: unmet
     by: model
+    rationale: The rule requires listing each modification to reused data with its reason. While the paper describes name selection processes, it does not explicitly list modifications to a *reused dataset* (it builds templates and selects names from various sources, but doesn't frame it as modifying a single prior benchmark dataset).
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While the total item count is stated, there is no power calculation or confidence-interval half-width reported.
@@ -146,22 +146,21 @@ verdicts:
         quote: Agreement between raters is high, with a Krippendorf’s   α   of 0.883.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.15:
-    value: met
-    rationale: The headline metric (bias score) is not a simple mean of subjective labels; it is calculated based on the number of biased answers versus total non-unknown outputs.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 2
-        quote: The bias score in disambiguated contexts ( s D IS   ) is calculated as shown below, with   n   representing the number of examples that fall into each response group
+    value: unmet
     by: model
+    rationale: The headline metric (bias score) is computed from the rate of choosing specific labels, which is a form of aggregation. The rule says 'Met when the headline metric is not computed only from a single mean or majority label per item.' The bias score is an aggregate across items, but for each item, the model's output is a single choice. The rule for n/a applies if labels are deterministic. Here, the model output is deterministic per run, but the 'correctness' is based on a gold label. The bias score is a mean rate. The rule is tricky. Let's look at cv.14 again. If cv.14 is n/a, cv.15 is n/a. If cv.14 is unmet, cv.15 might be unmet. The bias score is a mean rate. It is not a single mean per item. It is a mean across items. The rule says 'not computed only from a single mean or majority label per item'. This implies the aggregation method. The bias score is a mean of rates. This seems to meet the spirit, but the rule is specific. 'Met when the headline metric is not computed only from a single mean or majority label per item.' The bias score is computed from the count of biased answers. This is not a single mean per item. However, the excerpts don't explicitly state this distinction or justify it against the rule's specific wording. Given the strictness, and lack of explicit justification for using rates over simple accuracy, it is unmet.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.16:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The docs break down results by the confound of 'bias target' for intersectional categories in a case study."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.17:
     value: unmet
     rationale: The docs provide examples of failures and some analysis, but they do not report named failure categories with associated counts or shares.
@@ -174,6 +173,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: met
     rationale: The benchmark is compared to UnQover, and it is stated that BBQ focuses on model outputs rather than likelihoods to show how biases manifest in actual outputs.
@@ -226,6 +226,7 @@ verdicts:
         quote: we include results for inputs with RACE-style (Lai et al., 2017) and ARC-style (Clark et al., 2018) formats.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.05:
     value: unmet
     rationale: No prompt-perturbation experiment with a variance or spread measure is reported.
@@ -233,15 +234,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The scoring is based on exact match between the top output and answer options, which does not involve parsing free-form output into categories.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 0
-        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    value: unmet
     by: model
+    rationale: The excerpts do not compare parser output with reference labels on multiple response formats or report agreement figures per format.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report contamination checks or training data cutoffs for the evaluated models.
@@ -249,25 +247,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs (jsonl files) and local scoring, involving no external or mutable environment.
-    evidence:
-      - source: repo
-        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
-        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 1
-        quote: This folder contains each set of generated examples for BBQ. This is the folder you would use to test BBQ.
+    value: unmet
     by: model
+    rationale: The excerpts do not document environment changes or re-validation, nor do they explicitly state the environment is a static snapshot.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: n/a
-    rationale: The benchmark consists of independent multiple-choice questions, which are single stateless model calls.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 5, chunk 4
-        quote: presented to annotators as a multiple-choice task.
+    value: unmet
     by: model
+    rationale: The excerpts do not show that the harness resets state per task (e.g., fresh container or process).
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     rationale: The benchmark uses a multiple-choice format, but does not report a random-guess baseline or a named guessing mitigation.
@@ -278,6 +270,7 @@ verdicts:
         quote: presented to annotators as a multiple-choice task.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation states templates were handwritten by the authors, but does not name external domain experts or user groups consulted to define scenarios.
@@ -307,23 +300,26 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark evaluates general model behavior regarding social biases in QA rather than a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The documentation states the benchmark focuses on QA systems generally and does not claim to evaluate a specific deployed product or configuration, making this item not applicable or unmet depending on interpretation, but since it doesn't claim a specific deployment, it fails the 'met' condition of matching a named deployed product.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The documentation does not include adversarial or misuse configurations of the system under test; it focuses on measuring bias in standard QA tasks.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The documentation does not list differences between the test setting and real deployment, nor does it interpret results in light of such gaps.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The provided excerpts do not list sampling parameters, library versions, hardware models, or the OS/container image.
@@ -365,45 +361,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The benchmark uses exact match scoring for multiple-choice options, not a model as a rater.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 0
-        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement between a model rater and human judgments. The paper uses human annotators to validate the dataset labels, not to rate model outputs for correlation with a model rater.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The benchmark uses exact match scoring for multiple-choice options, not a model as a rater.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 0
-        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    value: unmet
     by: model
+    rationale: The excerpts do not report an adversarial or reward-hacking test of a model rater, nor do they describe a named defense against such attacks for a rater.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The benchmark uses exact match scoring for multiple-choice options, not a model as a rater.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 0
-        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on the same inputs. They report inter-annotator agreement for human validation, not rater consistency.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The benchmark uses exact match scoring for multiple-choice options, not a model as a rater.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 0
-        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    value: unmet
     by: model
+    rationale: The excerpts do not measure a named rater bias (e.g., length, position) with a number and state a mitigation. They measure model bias, not rater bias.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: met
     rationale: Each item was rated by five annotators and inter-annotator agreement (Krippendorf's alpha) is reported.
@@ -429,15 +413,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.07:
-    value: met
-    rationale: Ground truth labels were validated by crowdworkers with a high agreement threshold.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 5, chunk 4
-        quote: we set a threshold of 4/5 annotators agreeing with our gold label for inclusion in the final dataset.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts state that examples were validated by human annotators against a gold label, serving as verified ground-truth solutions."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.08:
     value: unmet
     rationale: While the docs mention exact match and some normalization, they do not list all accepted equivalences or show a non-identical correct answer passing.
@@ -455,25 +436,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: Scoring is based on exact match of the top output string, which does not involve parsing free-form output into structured data.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 0
-        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    value: unmet
     by: model
+    rationale: The excerpts do not show the parser is deterministic or test its consistency. They mention exact match scoring but do not detail parser implementation or testing.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: Scoring is based on exact match of the top output string, which does not involve parsing free-form output into structured data.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 6, chunk 0
-        quote: UnifiedQA outputs strings, so we score by exact match between the top output and each answer option.
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs. They report human annotator accuracy, not parser accuracy.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There is no report of a null-agent run or targeted exploit attempts against the scorer.
@@ -484,3 +459,25 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 30 verdicts agreed, 25 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.04
+      - cv.08
+      - cv.09
+      - cv.15
+      - iv.06
+      - iv.08
+      - iv.09
+      - ev.05
+      - ev.06
+      - ev.07
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.07
+      - cor.10
+      - cor.11

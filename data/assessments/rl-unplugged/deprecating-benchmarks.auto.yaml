@@ -2,13 +2,15 @@
 benchmark: rl-unplugged
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
 model_run:
@@ -29,15 +31,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The benchmark includes tasks where current offline RL performance is explicitly described as lower, indicating clear headroom for improvement.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2006.13888v4
-        locator: 2006.13888v4 page 9, chunk 2
-        quote: on partially-observable environments such as the locomotion suite the offline RL methods’ performance is lower
+    value: unmet
     by: model
+    rationale: The excerpts do not provide current best reported scores or demonstrate that the top score is not at or near the maximum achievable ceiling. While it mentions performance is 'lower' on some tasks, it does not quantify headroom or separation beyond uncertainty.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The provided excerpts do not document any contamination defenses such as private held-out sets or contamination analyses.
@@ -45,15 +44,12 @@ verdicts:
     by: model
     quotes_verified: true
   c3:
-    value: met
-    rationale: The benchmark consists of RL tasks (Atari games and robotics) which do not have classes or labels that could be skewed in the manner described by the rule.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2006.13888v4
-        locator: 2006.13888v4 page 3, chunk 1
-        quote: we include a wide range of task domains, including Atari games and simulated robotics tasks
+    value: unmet
     by: model
+    rationale: The excerpts do not report the label or answer distribution, nor do they report a majority-class or trivial baseline score to demonstrate that the benchmark is free of statistical bias.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: unmet
     rationale: The provided excerpts do not mention any audit, validation pass, or error analysis regarding the annotation error rate of the benchmark data.
@@ -81,15 +77,16 @@ verdicts:
     by: model
     quotes_verified: true
   c7:
-    value: met
-    rationale: The benchmark is described as a 'living benchmark suite' intended to evolve, and there is no evidence that its labels or task meanings have shifted or become unrepresentative.
+    value: unmet
+    by: model
+    rationale: The excerpts do not show a maintenance process, revision history, or evidence that addresses semantic drift. The benchmark is described as a 'living benchmark suite' that will evolve, but no specific mechanism for addressing meaning drift or label updates is detailed in the provided text.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2006.13888v4
+        quote: Moving forward, we view RL Unplugged as a living benchmark suite that will evolve and grow with datasets contributed by the research community and ourselves.
         locator: 2006.13888v4 page 1, chunk 1
-        quote: we view RL Unplugged as a living benchmark suite that will evolve and grow
-    by: model
+        url: https://arxiv.org/abs/2006.13888v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: unmet
     rationale: The excerpts do not mention a version identifier (like a DOI or release tag) visible alongside the benchmark name, nor do they describe how changes are recorded per version.
@@ -103,16 +100,22 @@ verdicts:
     by: model
     quotes_verified: true
   r3:
-    value: met
-    rationale: The benchmark provides a project page on GitHub, which serves as an issue tracker/contact point, and the paper describes the project as a 'living benchmark suite' intended to evolve.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2006.13888v4
-        locator: 2006.13888v4 page 1, chunk 1
-        quote: Our project page is available on github.
+    value: unmet
     by: model
+    rationale: The excerpts list the authors and their affiliations (DeepMind, Google Brain) but do not publish a specific named maintainer or contact address for handling queries related to the deprecated benchmark, nor do they mention a monitored issue tracker.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 6 verdicts agreed, 4 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - c3
+      - c7
+      - r3

@@ -192,6 +192,7 @@ verdicts:
         quote: If the ensemble do not agree, a human labels the ground truth via a Google search.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
     value: n/a
     rationale: The benchmark explicitly avoids subjective examples, stating that models are incentivized to lie about verifiable facts.
@@ -203,21 +204,26 @@ verdicts:
     by: model
     quotes_verified: true
   ea.1:
-    value: unmet
-    rationale: While the paper mentions 'Lying' as a category in Figure 8, it does not provide a qualitative description of common failure modes or a count of specific failure instances.
-    evidence: []
-    by: model
-    quotes_verified: true
-  ea.2:
     value: met
-    rationale: The paper breaks down honesty/lying rates by 'Question Type' (archetypes) in Figure 8, which serves as a named confound/variable.
+    by: human
+    rationale: The paper provides both qualitative descriptions of failure modes (e.g., lying, evasion) and quantitative counts/rates (e.g., honesty scores, proportions of response types).
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
+        quote: No model shown is explicitly honest in more than 46% of cases.
         locator: 2503.03750v3 page 8, chunk 1
-        quote: Honesty by Question Type
-    by: model
+        url: https://arxiv.org/abs/2503.03750v3
+      - source: paper
+        quote: "Figure 8: No one archetype represents a disproportionate amount of honest or lying examples"
+        locator: 2503.03750v3 page 8, chunk 1
+        url: https://arxiv.org/abs/2503.03750v3
     quotes_verified: true
+  ea.2:
+    value: unmet
+    by: model
+    rationale: While the paper mentions that accuracy correlates with compute, it does not provide a table or figure breaking down failures or scores by a named confounder with counts or rates to investigate correlation with non-targeted phenomena.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.3:
     value: unmet
     rationale: The paper states in Figure 8 that 'No one archetype represents a disproportionate amount of honest or lying examples', but it does not discuss specific scoring biases revealed by this analysis.
@@ -250,6 +256,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: met
     rationale: The benchmark is compared to TruthfulQA, noting that TruthfulQA measures accuracy/factual knowledge while MASK disentangles honesty from accuracy.
@@ -268,9 +275,15 @@ verdicts:
         url: https://arxiv.org/abs/2503.03750v3
         locator: 2503.03750v3 page 14, chunk 1
         quote: leaving non-trivial room for misclassification noise that could bias model rankings
-    by: model
+    by: human
     quotes_verified: true
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - ea.1
+      - ea.2

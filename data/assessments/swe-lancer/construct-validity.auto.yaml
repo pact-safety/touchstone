@@ -2,13 +2,15 @@
 benchmark: swe-lancer
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: 4afbde31ba075992ffd96209f6533de8e450becd
@@ -69,15 +71,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses execution-based end-to-end tests for IC SWE tasks and a specific file path for manager decisions, rather than automated parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 15, chunk 0
-        quote: evaluates using execution-based end-to-end tests hand-crafted by engineers
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias. While pass@1 variance is mentioned, it is not a consistency check of the parser itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: met
     rationale: The authors state they selected a representative sample of tasks from the Upwork platform.
@@ -105,35 +104,30 @@ verdicts:
     by: model
     quotes_verified: true
   ru.1:
-    value: met
-    rationale: The documentation explicitly states that the benchmark does not reuse prior datasets, instead sourcing tasks from Upwork and the Expensify repository.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 8, chunk 4
-        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation explicitly states that SWE-Lancer extends beyond prior benchmarks and contrasts its data collection with prior datasets like SWE-Bench, indicating it is a new benchmark rather than a direct reuse, but acknowledges the prior work."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
-    value: n/a
-    rationale: No prior dataset or benchmark was reused to create SWE-Lancer.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 8, chunk 4
-        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
+    value: unmet
     by: model
+    rationale: The excerpts do not explicitly analyze and report the strengths and limitations of the adapted prior work (SWE-Bench) as a distinct section or clear statement of prior work's attributes, but rather uses it for contrast. The 'Limitations' section discusses SWE-Lancer's own limitations, not the prior work's.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
-    value: n/a
-    rationale: No prior dataset or benchmark was reused to create SWE-Lancer.
+    value: unmet
+    by: model
+    rationale: While performance is compared against SWE-Bench Verified (38.8% vs 8%), the rule requires comparing performance on the *new* benchmark against the *original* benchmark. The text compares SWE-Lancer performance to SWE-Bench performance, which is a comparison between two different benchmarks, not the same benchmark before and after adaptation. However, the rule 'report and compare performance on the new benchmark against the original' usually implies if you adapt a dataset, you show how it performs on the old version vs new. Here, SWE-Lancer is a new dataset, not an adaptation of SWE-Bench's data. The text says 'Unlike prior benchmarks... SWE-Lancer evaluates...'. It does not reuse SWE-Bench's dataset. Therefore, the condition 'No prior dataset or benchmark is reused' applies to ru.2, ru.3, ru.4. Wait, ru.1 says 'Document whether the benchmark adapts a previous dataset'. SWE-Lancer does not adapt SWE-Bench; it creates new tasks from Upwork. So ru.1 is met by stating it is different. ru.2, ru.3, ru.4 have n/a conditions if no prior dataset is reused. Let's re-read ru.1. 'Document whether the benchmark adapts a previous dataset or benchmark'. SWE-Lancer does not adapt SWE-Bench. It is a new benchmark. So the answer to 'does it adapt' is 'No'. The documentation states this by contrasting it. So ru.1 is met. Since it does not reuse/adapt, ru.2, ru.3, ru.4 are n/a.
     evidence:
       - source: paper
+        quote: Unlike prior benchmarks, which grade model performance with unit tests, SWE-Lancer evaluates IC SWE tasks using end-to-end tests created by a team of professional software engineers.
+        locator: 2502.12115v4 page 1, chunk 3
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 8, chunk 4
-        quote: We sourced tasks exclusively from the Upwork freelancer platform and the Expensify repository.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
     value: n/a
     rationale: No prior dataset or benchmark was reused to create SWE-Lancer.
@@ -192,22 +186,25 @@ verdicts:
         quote: An additional validation campaign with experienced software engineers showed 99% agreement
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
-    value: n/a
-    rationale: "The labels are deterministic: IC SWE tasks are graded with end-to-end tests and SWE Management tasks are evaluated by matching ground truth."
+    value: unmet
+    by: model
+    rationale: The benchmark relies on deterministic end-to-end tests (pass/fail) and does not report per-item disagreement distributions or inter-annotator agreement statistics for the primary evaluation labels.
     evidence:
       - source: paper
+        quote: SWE-Lancer’s human-validated end-to-end tests emulate the actual workflow of a human engineer, rather than relying on a handful of selectively chosen test cases.
+        locator: 2502.12115v4 page 17, chunk 2
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 4, chunk 0
-        quote: The model’s selection is evaluated by assessing whether it matches ground truth.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: While common failure modes are described for open-source models, they are not counted.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.2:
     value: unmet
     rationale: The excerpts do not provide a table or figure breaking down failures or scores by a named confounder.
@@ -221,15 +218,16 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors propose a specific direction to improve open-source model performance by customizing the scaffold.
+    value: unmet
+    by: model
+    rationale: The excerpts mention 'Future Work' regarding economic analysis and note that customizing scaffolds 'would likely elicit better performance', but this is a generic statement or future direction without a reported experiment aimed at improving scores or a specific named direction with a stated rationale for an experiment.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
+        quote: customizing this scaffold to better serve open-source models would likely elicit better performance.
         locator: 2502.12115v4 page 38, chunk 2
-        quote: customizing this scaffold to better serve open-source models would likely elicit better performance
-    by: model
+        url: https://arxiv.org/abs/2502.12115v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark uses freelance software engineering jobs from Upwork to measure real-world software engineering capabilities.
@@ -240,6 +238,7 @@ verdicts:
         quote: Our benchmark evaluates frontier language models on 1,488 freelance software engineering jobs from Upwork
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.2:
     value: unmet
     rationale: There is no provided operational definition 'def.1' in the excerpts to which the tasks and metrics are linked.
@@ -247,22 +246,37 @@ verdicts:
     by: model
     quotes_verified: true
   jv.3:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark is compared to SWE-Bench Verified, noting that the latter focuses on bugfixes while SWE-Lancer includes open-ended problems and full-stack development."
-    evidence: []
-    by: model
-    quotes_verified: true
-  jv.4:
     value: met
-    rationale: The text discusses contamination as a limitation that could lead to results measuring contamination rather than real capability.
+    by: model
+    rationale: "The excerpt names existing benchmarks (SWE-Bench, SWE-Bench Verified) and states a difference: SWE-Lancer includes open-ended problems and full-stack development, whereas SWE-Bench Verified focuses on bugfixes."
     evidence:
       - source: paper
+        quote: SWE-Bench Verified focuses on bugfixes, and SWE-Lancer includes open-ended problems (adding new features, reliability) and full-stack development.
+        locator: 2502.12115v4 page 15, chunk 3
         url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 9, chunk 1
-        quote: This will help ensure evaluation results measure real capability rather than contamination.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  jv.4:
+    value: unmet
+    by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpt discusses limitations such as contamination and the inability of models to ask clarifying questions, which concerns what the scores measure (real capability vs. contamination or incomplete understanding)."
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 17 verdicts agreed, 11 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3
+      - ru.1
+      - ru.2
+      - ru.3
+      - st.4
+      - ea.4
+      - jv.3
+      - jv.4

@@ -62,7 +62,7 @@ verdicts:
         url: https://arxiv.org/abs/2404.12241v2
         locator: 2404.12241v2 page 5, chunk 1
         quote: developing and sharing knowledge so that every company can take steps to improve the safety of their AI systems.
-    by: model
+    by: human
     quotes_verified: true
   des.04:
     value: 15
@@ -143,14 +143,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.13:
-    value: 10
-    rationale: The benchmark compares its taxonomy to 17 other taxonomies, but does not explicitly explain differences to other full benchmarks.
+    value: 15
+    by: human
+    rationale: The document explains differences to related benchmarks by comparing its taxonomy to 17 others and noting limitations of multiple-choice tests in other benchmarks.
     evidence:
       - source: paper
+        quote: BBQ includes both non-negative questions (e.g., “Who ran for cover?”) and negative questions (e.g., “Who likely planted the bomb?”).
+        locator: 2404.12241v2 page 16, chunk 3
         url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 45, chunk 0
-        quote: We have compared the AI Safety Taxonomy against seventeen widely-used safety taxonomies to identify similarities and differences.
-    by: model
     quotes_verified: true
   des.14:
     value: 10
@@ -235,10 +235,14 @@ verdicts:
     by: model
     quotes_verified: true
   imp.09:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark provides explicit content warnings for users and annotators regarding harmful content."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: Warnings for sensitive/harmful content are explicitly assessed and included in the documentation and README.
+    evidence:
+      - source: paper
+        quote: CONTENT WARNING This work involves viewing content that creates a risk of harm and you might find objectionable or offensive.
+        locator: 2404.12241v2 page 55, chunk 1
+        url: https://arxiv.org/abs/2404.12241v2
     quotes_verified: true
   imp.10:
     value: 15
@@ -297,15 +301,12 @@ verdicts:
     by: model
     quotes_verified: true
   doc.05:
-    value: 15
-    rationale: The excerpts are from a paper (2404.12241v2) which is the accompanying documentation for the benchmark.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 2, chunk 2
-        quote: This is a long document, comprising 25+ pages in the main body
+    value: 0
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The excerpts cite a paper with an arXiv identifier (2404.12241v2), which is a standard pre-print venue often associated with peer-reviewed submissions in AI. The text refers to it as a 'white paper' and 'paper', implying formal publication efforts."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.06:
     value: 15
     rationale: The paper explicitly describes the process of how the benchmark was developed and created.
@@ -366,6 +367,7 @@ verdicts:
         quote: Our grading system involves scoring whether each test item is unsafe or not with an automated evaluator model (LlamaGuard [ 59 ])
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.12:
     value: 15
     rationale: The dataset is specified as being distributed under a CC-BY license.
@@ -470,3 +472,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - des.13
+      - imp.09
+      - doc.05

@@ -45,10 +45,18 @@ verdicts:
     by: model
     quotes_verified: true
   des.02:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark describes translating the capability into tasks such as high-frequency stock trading and portfolio allocation."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The excerpts describe how the capability translates to tasks via a 'training-testing-trading pipeline' and 'DataOps paradigm' that converts raw data into gym-style environments for specific tasks like stock trading.
+    evidence:
+      - source: paper
+        quote: we provide hundreds of market environments through an automatic pipeline that collects dynamic datasets from real-world markets and processes them into standard gym-style market environments.
+        locator: 2211.03107v1 page 2, chunk 1
+        url: https://arxiv.org/abs/2211.03107v1
+      - source: paper
+        quote: "Training-testing-trading pipeline : We employ a training-testing-trading pipeline that the DRL approach follows a standard end-to-end pipeline."
+        locator: 2211.03107v1 page 5, chunk 1
+        url: https://arxiv.org/abs/2211.03107v1
     quotes_verified: true
   des.03:
     value: 15
@@ -93,14 +101,18 @@ verdicts:
     by: model
     quotes_verified: true
   des.08:
-    value: 15
-    rationale: The benchmark uses informed metrics like the Sharpe ratio to balance risk and profit.
+    value: 10
+    by: human
+    rationale: The benchmark mentions metrics like Sharpe ratio and cumulative return, but does not provide a detailed rationale or literature review explaining *why* these specific metrics were chosen over others, other than implying they are standard for trading performance.
     evidence:
       - source: paper
+        quote: "We provide the following metrics to measure the trading performance:"
+        locator: 2211.03107v1 page 7, chunk 3
         url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 9, chunk 2
-        quote: the ensemble agent has the highest Sharpe ratio of   1 . 53 , which means it performs the best in balancing risks and profits
-    by: model
+      - source: paper
+        quote: Many of them have shown better trading performance in terms of cumulative return and Sharpe ratio.
+        locator: 2211.03107v1 page 1, chunk 2
+        url: https://arxiv.org/abs/2211.03107v1
     quotes_verified: true
   des.09:
     value: 0
@@ -131,14 +143,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.13:
-    value: 10
-    rationale: The text mentions differences from the original FinRL library and other benchmarks like D4RL.
+    value: 15
+    by: human
+    rationale: The benchmark explicitly explains differences to related works like the original FinRL library and D4RL, highlighting its focus on dynamic data, real-world adoption, and specific financial environments.
     evidence:
       - source: paper
+        quote: D4RL [ 18 ] introduces the idea of Datasets for deep data-driven reinforcement learning (D4RL). It provides benchmarks in offline RL.
+        locator: 2211.03107v1 page 3, chunk 0
         url: https://arxiv.org/abs/2211.03107v1
-        locator: 2211.03107v1 page 1, chunk 2
-        quote: The FinRL library [39, 40] provided an open-source framework for financial reinforcement learning. However, it focused on
-    by: model
     quotes_verified: true
   des.14:
     value: 0
@@ -230,7 +242,7 @@ verdicts:
     value: 0
     rationale: The excerpts do not specify release requirements.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   doc.01:
     value: 15
@@ -335,6 +347,7 @@ verdicts:
         quote: Cumulative return R = v − v 0 v 0 , where v is the final portfolio value, and v 0 is the original capital.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.12:
     value: 15
     rationale: The repository contains a LICENSE file and the paper specifies the MIT license.
@@ -429,3 +442,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 4 decided by the reviewer."
+    items:
+      - des.02
+      - des.08
+      - des.13

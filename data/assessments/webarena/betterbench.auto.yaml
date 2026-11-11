@@ -71,10 +71,18 @@ verdicts:
     by: model
     quotes_verified: true
   des.05:
-    value: 0
-    rationale: There is no mention of domain experts being involved in the design or creation of the benchmark.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: Domain experts (authors proficient in JavaScript) and human annotators (CS graduate students) were involved in creating and evaluating the benchmark tasks.
+    evidence:
+      - source: paper
+        quote: The programs to evaluate the remaining examples were contributed by three of the authors who are proficient in JavaScript programming.
+        locator: 2307.13854v4 page 7, chunk 2
+        url: https://arxiv.org/abs/2307.13854v4
+      - source: paper
+        quote: We sample one task from each of the 170 templates and ask five computer science graduate students to perform these tasks.
+        locator: 2307.13854v4 page 7, chunk 2
+        url: https://arxiv.org/abs/2307.13854v4
     quotes_verified: true
   des.06:
     value: 15
@@ -86,6 +94,7 @@ verdicts:
         quote: we set up a user profile for a shop owner who has full read-and-write access to all system contents
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.07:
     value: 15
     rationale: The benchmark integrates domain literature and references, such as manuals for integrated development tools and citations of previous agent research.
@@ -233,14 +242,14 @@ verdicts:
     by: model
     quotes_verified: true
   imp.10:
-    value: 10
-    rationale: The README mentions a github workflow for unit tests, which is an equivalent to build status.
+    value: 15
+    by: human
+    rationale: The README mentions a GitHub workflow for tests and encourages updating environment variables to ensure the correctness of unit tests.
     evidence:
       - source: repo
-        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
+        quote: You are encouraged to update the environment variables in [github workflow](.github/workflows/tests.yml#L7) to ensure the correctness of unit tests
         locator: web-arena-x/webarena@dce04686a562:README.md, chunk 7
-        quote: update the environment variables in [github workflow](.github/workflows/tests.yml#L7) to ensure the correctness of unit tests
-    by: model
+        url: https://github.com/web-arena-x/webarena/tree/dce04686a56253aefba7b18a4fa0937cf1dc987b
     quotes_verified: true
   imp.11:
     value: 0
@@ -310,7 +319,7 @@ verdicts:
         url: https://arxiv.org/abs/2307.13854v4
         locator: 2307.13854v4 page 2, chunk 2
         quote: Each task is described as a high-level natural language intent, emulating the abstract language usage patterns typically employed by humans
-    by: model
+    by: human
     quotes_verified: true
   doc.08:
     value: 0
@@ -334,6 +343,7 @@ verdicts:
         quote: we deploy our websites in separate Docker images   11 , one per website
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.11:
     value: 15
     rationale: The paper documents evaluation metrics such as exact_match and must_include for information-seeking tasks.
@@ -344,6 +354,7 @@ verdicts:
         quote: First, we define   exact_match   where only   ˆ a   that is identical with   a ∗   receives a score of one.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.12:
     value: 15
     rationale: The LICENSE file specifies the Apache License, Version 2.0.
@@ -430,3 +441,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 3 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - des.05
+      - imp.10

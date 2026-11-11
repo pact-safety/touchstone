@@ -2,13 +2,15 @@
 benchmark: gpqa
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 56686c06f5e19865c153de0fdb11be3890014df7
@@ -35,31 +37,33 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   cv.01:
+    value: unmet
+    by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation provides a precise definition of the target phenomenon (graduate-level scientific knowledge) by specifying the observable outputs (correct answers to multiple-choice questions) and the population (experts vs. non-experts)."
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  cv.02:
     value: met
-    rationale: The target phenomenon is defined as questions that have a ground truth known to experts but cannot be reliably solved by highly skilled non-experts.
+    by: human
+    rationale: The documentation explicitly states the scope (biology, physics, chemistry) and names aspects excluded or not covered (e.g., it is not a representative sample of scientific practice, and it excludes LLM assistants for non-experts).
     evidence:
       - source: paper
+        quote: We make no claim that GPQA is a representative sample of any population of questions that are likely to come up in the course of scientific practice.
+        locator: 2311.12022v1 page 12, chunk 3
         url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 2, chunk 1
-        quote: datasets of questions which have a ground truth answer known to certain experts, but which even highly skilled, well resourced, and motivated non-experts still cannot reliably solve
-    by: model
-    quotes_verified: true
-  cv.02:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The scope is defined as graduate-level questions in physics, chemistry, and biology, and it explicitly excludes the use of LLM assistants for non-experts."
-    evidence: []
-    by: model
     quotes_verified: true
   cv.03:
-    value: n/a
-    rationale: The paper treats the phenomenon as a single construct of 'expertise gap' or 'difficulty' without naming distinct facets that require independent scoring.
+    value: unmet
+    by: model
+    rationale: The documentation does not report separate scores for distinct facets (e.g., factual accuracy vs. tone) in a table or figure; it reports aggregate expert and non-expert accuracy for domains and subsets.
     evidence:
       - source: paper
+        quote: "Table 2: Counts, expert accuracy, and non-expert accuracy for the extended set, the main set, and the diamond set."
+        locator: 2311.12022v1 page 6, chunk 0
         url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 6, chunk 1
-        quote: The delta ( Δ ) column shows the expertise gap, which is the difference between the expert validator accuracy and non-expert validator accuracy
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
     value: met
     rationale: The task space is defined by high-level domains and subdomains, and item counts are reported for these subdomains.
@@ -100,17 +104,23 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark consists of original questions written by experts, not a reused dataset.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The documentation does not contain a table or figure comparing the same models on an original dataset and on the adapted benchmark; it compares models on different subsets of GPQA or against other benchmarks without a direct side-by-side table of the same models on both.
+    evidence:
+      - source: paper
+        quote: "Table 5: Baseline model accuracies on the full, main, and diamond sets, containing 546, 448, and 198 questions respectively."
+        locator: 2311.12022v1 page 10, chunk 0
+        url: https://arxiv.org/abs/2311.12022v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark reuses no prior dataset.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The documentation does not list modifications made to reused data with reasons; it describes a creation process from scratch by experts rather than modifying a prior dataset.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While item counts are stated, there is no power calculation or confidence-interval half-width reported for the model gaps.
@@ -121,6 +131,7 @@ verdicts:
         quote: containing 546, 448, and 198 questions respectively
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.11:
     value: unmet
     rationale: The main results table (Table 5) reports accuracy percentages but does not provide confidence intervals or standard errors for each score.
@@ -194,6 +205,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: met
     rationale: The benchmark is compared to ExpertQA and QuALITY, noting that GPQA uses a more involved validation process and a real-world expertise gap.
@@ -228,6 +240,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.03:
     value: unmet
     rationale: No overlap was named in iv.02, and no measurement or mitigation of such overlap is described.
@@ -247,11 +260,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: "The benchmark uses multiple-choice questions where answers are extracted via regex, but the decision rule for n/a applies if scoring involves no parsing of free-form output; however, the provided excerpts show the use of a simple regex to extract answers from model responses, which is a form of parsing. But since the target is MCQs, it is effectively a fixed-choice selection. Actually, the rule says 'n/a when: Scoring involves no parsing of free-form output'. The excerpts show 'We extracted answers from the model response using a simple regex', which is parsing free-form output. Therefore, it is not n/a. It is unmet because no parser bias test is reported."
-    evidence: []
+    value: unmet
     by: model
+    rationale: The scoring involves parsing model outputs to extract answers (e.g., using regex). The excerpts do not report parser agreement or accuracy figures for different response formats.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report overlap/contamination checks or training cutoffs for every evaluated model (e.g., Llama-2, GPT-4).
@@ -259,17 +273,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs (a dataset) and local/API scoring without a mutable external environment.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The evaluation uses external APIs (OpenAI, Bing) which are mutable environments. The excerpts do not document a static snapshot or a changelog of environment changes with re-validation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: n/a
-    rationale: The evaluation consists of stateless model calls for each question.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe the harness resetting state between runs (e.g., fresh containers). The code listing shows a simple script running baselines, but does not explicitly document state clearing mechanisms.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: met
     rationale: The benchmark uses multiple-choice questions and reports the random-guess baseline of 25%.
@@ -286,6 +302,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.02:
     value: met
     rationale: The documentation states that experts in biology, physics, and chemistry were used, and that each question was validated by two experts.
@@ -317,23 +334,26 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark is presented as a general graduate-level Q&A dataset for scalable oversight experiments, not for a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application or match a named deployed product configuration; it is a general academic benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark is presented as a general graduate-level Q&A dataset for scalable oversight experiments, not for a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: "The benchmark does not claim to evaluate a specific deployed application, making this item n/a, but since n/a is not allowed for this specific item ID in the prompt's context (or rather, the rule says n/a when it doesn't claim specific deployment, which it doesn't, so it should be n/a? Wait. The rule says 'n/a when: The benchmark does not claim to evaluate a specific deployed application.' The benchmark does NOT claim to evaluate a specific deployed application. Therefore, the condition for n/a holds. However, the prompt instructions say 'n/a is allowed only for items that state an n/a condition, and only when the excerpts show that condition holds.' The item ev.06 has an n/a condition. The excerpts show the benchmark is a general dataset, not a specific deployed app. Thus, n/a is appropriate. Let me re-read ev.05. Ev.05 also has the same n/a condition. I will mark both as n/a if the condition holds. The condition is 'The benchmark does not claim to evaluate a specific deployed application.' The excerpts describe it as a 'graduate-level... benchmark' and 'evaluation dataset'. It does not claim to evaluate a specific deployed product. So n/a is correct for ev.05 and ev.06."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark is presented as a general graduate-level Q&A dataset for scalable oversight experiments, not for a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application, so the n/a condition applies. Wait, I already decided ev.05 and ev.06 are n/a. Let's look at ev.07. It also has the n/a condition. So ev.07 should also be n/a.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation does not list sampling parameters, hardware models, or the OS/container image.
@@ -359,15 +379,12 @@ verdicts:
     by: model
     quotes_verified: true
   rel.05:
-    value: met
-    rationale: The benchmark reports non-expert accuracy as a baseline for the graduate-level tasks.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 17, chunk 0
-        quote: Non-Expert Accuracy (%)
+    value: unmet
     by: model
+    rationale: The excerpts report performance of AI models (GPT-4, Llama-2) but do not report a human or expert baseline score for comparison, nor do they state why one is not relevant.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.06:
     value: unmet
     rationale: The excerpts do not report the score of a trivial baseline such as random selection or majority-class prediction.
@@ -375,29 +392,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The excerpts do not indicate that a model was used as a rater or judge for the ground truth; instead, human experts were used.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts describe expert validation and non-expert validation processes, but do not report any correlation between model raters and human judgments, as no model is used as a rater.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The excerpts do not indicate that a model was used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: No model is used as a rater or judge in the benchmark's scoring or validation pipeline described in the excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The excerpts do not indicate that a model was used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: No model is used as a rater or judge, so consistency across repeated rating runs is not applicable or reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The excerpts do not indicate that a model was used as a rater or judge.
-    evidence: []
+    value: unmet
     by: model
+    rationale: No model is used as a rater or judge, so systematic biases in a model rater are not measured.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: met
     rationale: The pipeline uses two expert validators and three non-expert validators, and reports objectivity based on expert assessment.
@@ -437,25 +458,23 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The benchmark uses multiple-choice questions with regex matching for labels, which does not involve parsing free-form output for the ground truth scoring.
+    value: unmet
+    by: model
+    rationale: While a regex parser is mentioned, the excerpts do not provide evidence that it is deterministic or tested for consistency on identical inputs.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 19, chunk 2
         quote: We extracted answers from the model response using a simple regex matching phrases like ‘answer is’, ‘answer:’ etc.
-    by: model
+        locator: 2311.12022v1 page 19, chunk 2
+        url: https://arxiv.org/abs/2311.12022v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The benchmark uses multiple-choice questions with regex matching for labels, which does not involve parsing free-form output for the ground truth scoring.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 19, chunk 2
-        quote: We extracted answers from the model response using a simple regex matching phrases like ‘answer is’, ‘answer:’ etc.
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null/trivial-agent run or a targeted exploit attempt on the scorer.
@@ -466,3 +485,26 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 33 verdicts agreed, 21 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.01
+      - cv.02
+      - cv.03
+      - cv.08
+      - cv.09
+      - iv.06
+      - iv.08
+      - iv.09
+      - ev.05
+      - ev.06
+      - ev.07
+      - rel.05
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.10
+      - cor.11

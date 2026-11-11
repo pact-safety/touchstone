@@ -2,13 +2,15 @@
 benchmark: gsm8k
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 3101c7d5072418e28b9008a6636bde82a006892c
@@ -72,16 +74,14 @@ verdicts:
         quote: If we instead finetune a 6B model to directly output the final answer without any intermediate steps, performance drops drastically from 20.6% to 5.2%
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.3:
-    value: n/a
-    rationale: The excerpts do not mention the use of automated parsing for free-form output; they only state that solutions are labeled based on whether they reach the correct final answer.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 7, chunk 1
-        quote: Training solutions are labeled as correct or incorrect based solely on whether they reach the correct final answer.
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias. The paper uses verifiers to judge correctness, not an automated parser with reported accuracy metrics.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts mention design principles for diversity and quality, but do not document a specific sampling strategy over a described task space.
@@ -105,15 +105,12 @@ verdicts:
     by: model
     quotes_verified: true
   ru.1:
-    value: met
-    rationale: The documentation states that the dataset was created by human problem writers and contractors, rather than adapting a previous dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14168v2
-        locator: 2110.14168v2 page 3, chunk 0
-        quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers.
+    value: unmet
     by: model
+    rationale: The excerpts describe the creation of GSM8K as a new dataset with specific design principles to avoid issues in prior datasets, but they do not explicitly state whether GSM8K adapts or reuses a previous dataset or benchmark. The text mentions ASDiv as addressing flaws in prior datasets and states GSM8K shares those design principles, but does not confirm adaptation of ASDiv or any other specific prior dataset.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
     value: n/a
     rationale: The benchmark does not reuse or adapt a prior dataset; it was created from scratch using human contractors.
@@ -176,11 +173,12 @@ verdicts:
         quote: We segmented these into 7.5K training problems and 1K test problems.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.2:
     value: unmet
     rationale: The excerpts do not provide a main results table where every score has a confidence interval or standard error; only a mention of mean and standard deviation for specific runs in Figure 5.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   st.3:
     value: unmet
@@ -192,6 +190,7 @@ verdicts:
         quote: GSM8K consists of 8.5K high quality grade school math problems created by human problem writers.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
     value: n/a
     rationale: Every label comes from a deterministic key (the correct final numeric answer), making the labels non-subjective.
@@ -258,3 +257,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 5 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3
+      - ru.1

@@ -2,13 +2,15 @@
 benchmark: webarena
 standard: abc
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: dce04686a56253aefba7b18a4fa0937cf1dc987b
@@ -90,7 +92,7 @@ verdicts:
         url: https://arxiv.org/abs/2307.13854v4
         locator: 2307.13854v4 page 17, chunk 1
         quote: The goal is to evaluate whether the answer is semantically equivalent to the reference answer.
-    by: model
+    by: human
     quotes_verified: true
   O.c.1:
     value: met
@@ -100,7 +102,7 @@ verdicts:
         url: https://arxiv.org/abs/2307.13854v4
         locator: 2307.13854v4 page 7, chunk 2
         quote: The reference answers to the information-seeking tasks were curated by the authors and an external annotator. To ensure consistency and accuracy, each question was annotated twice.
-    by: model
+    by: human
     quotes_verified: true
   O.c.2:
     value: unmet
@@ -127,24 +129,16 @@ verdicts:
     by: model
     quotes_verified: true
   O.e.1:
-    value: met
-    rationale: The benchmark uses programmatic validators (r_prog) that check intermediate states, including underlying databases and page content, to verify success.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 6, chunk 3
-        quote: These intermediate states are often the underlying databases of the websites, the status, and the content of a web page at each step of the execution.
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts do not report a coverage figure for the tested code or list components shown to be exercised.
+    evidence: []
     quotes_verified: true
   O.e.2:
-    value: met
-    rationale: The environment provides scripts to reset to a deterministic initial state, ensuring reproducibility.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 4, chunk 1
-        quote: provide scripts to reset the environment to a deterministic initial state
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts do not show that tests give the same result on repeat runs to prevent flakiness.
+    evidence: []
     quotes_verified: true
   O.f.1:
     value: met
@@ -190,6 +184,7 @@ verdicts:
         quote: Predictions that are judged as “correct” will receive a score of one, while all other predictions will receive a score of zero.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.1:
     value: unmet
     rationale: The provided excerpts do not list versions for the tools or packages used in the environment.
@@ -197,15 +192,12 @@ verdicts:
     by: model
     quotes_verified: true
   T.2:
-    value: n/a
-    rationale: The environment is described as a 'standalone, self-hostable web environment' using 'packaged Docker images' and 'self-hosted web applications', indicating no external API tools are used.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 2, chunk 0
-        quote: WebArena is a standalone, self-hostable web environment
+    value: unmet
     by: model
+    rationale: The excerpts do not document how the harness handles retries or rate limits for external API tools.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.3:
     value: n/a
     rationale: No external API tools are used in the self-hosted environment.
@@ -214,7 +206,7 @@ verdicts:
         url: https://arxiv.org/abs/2307.13854v4
         locator: 2307.13854v4 page 2, chunk 0
         quote: WebArena is a standalone, self-hostable web environment
-    by: model
+    by: human
     quotes_verified: true
   T.4:
     value: met
@@ -262,6 +254,7 @@ verdicts:
         quote: Overall, the human annotators complete 78.24% of the tasks
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.9:
     value: unmet
     rationale: No automated reference solver that solves all tasks is mentioned; only programmatic validators are provided.
@@ -326,6 +319,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.7:
     value: unmet
     rationale: While it mentions error analysis, it does not describe a specific quality-control step combined with a recorded correction channel like a changelog.
@@ -380,3 +374,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 34 verdicts agreed, 4 settled by adjudicator-v4, 5 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - O.e.1
+      - O.e.2
+      - T.2

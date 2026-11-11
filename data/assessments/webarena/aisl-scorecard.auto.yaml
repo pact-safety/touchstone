@@ -50,6 +50,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
     value: unmet
     rationale: The paper does not explicitly state the phenomenon is a single unitary construct, nor does it report separate scores for named facets in a table.
@@ -74,6 +75,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.07:
     value: unmet
     rationale: No named subset of boundary or adversarial items with a stated size and membership criterion is mentioned.
@@ -81,17 +83,27 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark creates its own environment and tasks; it does not reuse a prior dataset/benchmark for evaluation.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The documentation does not contain a table or figure comparing the same model on the original dataset and on the adapted benchmark. It compares WebArena to other benchmarks qualitatively.
+    evidence:
+      - source: paper
+        quote: "Table 4: The comparison between our benchmark and existing benchmarks on grounding natural language instructions to concrete executions."
+        locator: 2307.13854v4 page 9, chunk 0
+        url: https://arxiv.org/abs/2307.13854v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark reuses no prior dataset or benchmark.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The documentation does not list modifications made to reused data with their reasons. It mentions importing data from real-world counterparts but does not detail specific modifications to prior datasets.
+    evidence:
+      - source: paper
+        quote: Data resources were obtained from data from actual online sites, such as that included in the Webshop data dumpYao et al. (2022a).
+        locator: 2307.13854v4 page 15, chunk 0
+        url: https://arxiv.org/abs/2307.13854v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: The item count is stated (812), but no power calculation or confidence-interval half-width is reported.
@@ -122,6 +134,7 @@ verdicts:
         quote: The intents were contributed by the authors following the annotation guideline in §3.1
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.13:
     value: unmet
     rationale: The paper acknowledges potential demographic differences but does not report rater demographics or a mitigation check.
@@ -132,6 +145,7 @@ verdicts:
         quote: We acknowledge that there may be a difference in human performance when annotators with different demographics are involved.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.14:
     value: n/a
     rationale: Labels are deterministic (exact match, must include, or programmatic state checks), not subjective.
@@ -166,6 +180,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: met
     rationale: The paper compares WebArena to several prior benchmarks (e.g., Mind2Web) and identifies a gap in functional correctness.
@@ -182,6 +197,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.01:
     value: unmet
     rationale: The documentation does not identify specific secondary capabilities nor provide control conditions or ablation results for them.
@@ -213,15 +229,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: met
-    rationale: Scoring is performed by programmatically examining environment states or using validators, rather than parsing free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 2, chunk 0
-        quote: We provide validators to programmatically validate the functional correctness of each task.
+    value: unmet
     by: model
+    rationale: "The evaluation uses programmatic validators and fuzzy matching rather than parsing free-form output, but the excerpts do not explicitly state that scoring involves no parsing of free-form output in the manner required to trigger the n/a condition (it uses LLMs for fuzzy match which is a form of parsing/judging). However, looking at iv.06 n/a condition: 'Scoring involves no parsing of free-form output (e.g. outcomes are read from environment state or exit codes)'. The excerpts describe 'fuzzy_match' using GPT-4 to assess semantic equivalence, which is parsing/judging free-form text. Thus it is not n/a. But the decision rule requires comparing parser output with reference labels on at least two response formats. This is not reported."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report contamination checks or provide training-data cutoffs for the evaluated models (GPT-4, PALM-2).
@@ -238,6 +251,7 @@ verdicts:
         quote: We deliver the hosting services using Docker containers with gym -APIs (Brockman et al., 2016), ensuring both the usability and the reproducibility of WebArena .
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: met
     rationale: The documentation describes resetting the environment to its initial state by deleting and restarting Docker containers.
@@ -249,15 +263,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.10:
-    value: met
-    rationale: The benchmark evaluates functional correctness of web tasks and does not use a multiple-choice format.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 2, chunk 2
-        quote: We focus on evaluating the functional correctness of these tasks, i.e., does the result of the execution actually achieve the desired goal
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark tasks are described as 'high-level natural language intent' and 'long-horizon web-based tasks', not multiple choice questions."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation mentions 'annotators' were encouraged to create complex and creative intents, but it does not name specific domain experts or user groups consulted to define the scenarios and criteria.
@@ -287,23 +298,30 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark provides a general environment for evaluating web agents across various sites rather than claiming to evaluate a specific deployed product or application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark does not state that the model, tools, prompt, and environment match a specific named deployed product or configuration for real deployment; it uses open-source frameworks to emulate real sites.
+    evidence:
+      - source: paper
+        quote: we make the best attempt to reproduce the functionality of commonly used sites in a reproducible way. To achieve this, we utilized open-source frameworks
+        locator: 2307.13854v4 page 15, chunk 0
+        url: https://arxiv.org/abs/2307.13854v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark provides a general environment for evaluating web agents rather than claiming to evaluate a specific deployed product or application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not mention adversarial or misuse configurations of the system under test.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark provides a general environment for evaluating web agents rather than claiming to evaluate a specific deployed product or application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: While the paper notes simplifications in other environments, it does not explicitly list differences between its test setting and real deployment with a stated caveat on how to read the results.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation does not list library versions, hardware models, or a specific OS/container image.
@@ -352,7 +370,7 @@ verdicts:
         url: https://arxiv.org/abs/2307.13854v4
         locator: 2307.13854v4 page 17, chunk 1
         quote: we manually checked 40 examples and found that 39 of them are identical to our human judgment
-    by: model
+    by: human
     quotes_verified: true
   cor.02:
     value: met
@@ -362,7 +380,7 @@ verdicts:
         url: https://arxiv.org/abs/2307.13854v4
         locator: 2307.13854v4 page 17, chunk 1
         quote: The goal is to evaluate whether the answer is semantically equivalent to the reference answer.
-    by: model
+    by: human
     quotes_verified: true
   cor.03:
     value: unmet
@@ -414,7 +432,7 @@ verdicts:
         url: https://arxiv.org/abs/2307.13854v4
         locator: 2307.13854v4 page 6, chunk 2
         quote: The fuzzy_match function could also flexibly match the time “2h58min” with different forms such as “2 hour 58 minutes”, “2:58” and others.
-    by: model
+    by: human
     quotes_verified: true
   cor.09:
     value: unmet
@@ -433,14 +451,10 @@ verdicts:
     by: model
     quotes_verified: true
   cor.11:
-    value: n/a
-    rationale: Scoring involves direct string comparison or model-based semantic equivalence, not a parser of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 6, chunk 1
-        quote: we create must_include where any ˆ a containing a ∗ receives a score of one.
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs. They report GPT-4 accuracy on date/time formats, but this is for the fuzzy_match function, not a general parser accuracy against a manually verified set of all outputs.
+    evidence: []
     quotes_verified: true
   cor.12:
     value: unmet
@@ -452,3 +466,15 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 14 settled by adjudicator-v4, 4 decided by the reviewer."
+    items:
+      - cv.08
+      - cv.09
+      - iv.06
+      - iv.10
+      - ev.05
+      - ev.06
+      - ev.07
+      - cor.11

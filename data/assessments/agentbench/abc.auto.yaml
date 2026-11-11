@@ -2,13 +2,15 @@
 benchmark: agentbench
 standard: abc
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: d1e4a10db08c87075c78972e48ecc182be03e2d5
@@ -97,23 +99,26 @@ verdicts:
     by: model
     quotes_verified: true
   O.d.1:
-    value: unmet
-    rationale: Fuzz testing is not mentioned in the provided excerpts.
-    evidence: []
+    value: n/a
     by: model
+    rationale: The benchmark does not use fuzz testing; it uses standard interaction and script-based evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.d.2:
-    value: unmet
-    rationale: Fuzz testing is not mentioned in the provided excerpts.
-    evidence: []
+    value: n/a
     by: model
+    rationale: The benchmark does not use fuzz testing; it uses standard interaction and script-based evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.d.3:
-    value: unmet
-    rationale: Fuzz testing is not mentioned in the provided excerpts.
-    evidence: []
+    value: n/a
     by: model
+    rationale: The benchmark does not use fuzz testing; it uses standard interaction and script-based evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.e.1:
     value: unmet
     rationale: No coverage figures or lists of exercised components for end-to-end testing are provided.
@@ -189,15 +194,12 @@ verdicts:
     by: model
     quotes_verified: true
   T.4:
-    value: met
-    rationale: The framework ensures that each worker is responsible for a single test case, and the use of Docker images for complex environments supports fresh starts.
-    evidence:
-      - source: repo
-        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
-        locator: THUDM/AgentBench@d1e4a10db08c:docs/Introduction_en.md, chunk 12
-        quote: Each worker is responsible for a single test case
+    value: unmet
     by: model
+    rationale: While the framework supports isolation, the excerpts do not explicitly state that residual data or state are fully cleared between runs for every task.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.5:
     value: unmet
     rationale: The excerpts do not provide container or harness configurations proving that answers and tests are absent from the agent's filesystem.
@@ -205,15 +207,12 @@ verdicts:
     by: model
     quotes_verified: true
   T.6:
-    value: met
-    rationale: The benchmark uses Docker images to encapsulate tasks with complex environments, which freezes the environment.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.03688v3
-        locator: 2308.03688v3 page 6, chunk 2
-        quote: we encapsulate tasks with complex environments into Docker images.
+    value: unmet
     by: model
+    rationale: The excerpts mention Docker images for isolation but do not explicitly state that the environment is frozen at release to prevent changes over time.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.7:
     value: met
     rationale: The documentation states that a cross verification was conducted for each evaluation sample to ensure correctness.
@@ -272,6 +271,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.4:
     value: unmet
     rationale: There is no documented versioned update or dated update schedule to avoid overfitting.
@@ -279,15 +279,12 @@ verdicts:
     by: model
     quotes_verified: true
   R.5:
-    value: met
-    rationale: The benchmark states it uses KG to assess decision-making abilities and uses answer F1 as the metric.
-    evidence:
-      - source: repo
-        url: https://github.com/THUDM/AgentBench/tree/d1e4a10db08c87075c78972e48ecc182be03e2d5
-        locator: THUDM/AgentBench@d1e4a10db08c:docs/Introduction_en.md, chunk 2
-        quote: we propose KG as a representative testing ground to assess the decision-making abilities of AI agents. We adopt question answering as the basic task formulation and consequently the answer F1 as the metric.
+    value: unmet
     by: model
+    rationale: While the paper lists capabilities and metrics, it does not provide a quotable statement explicitly linking a specific capability to a specific outcome measure and explaining why the measure indicates that capability.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   R.6:
     value: met
     rationale: The benchmark explicitly states it evaluates LLMs acting as agents.
@@ -348,3 +345,14 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 36 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - O.d.1
+      - O.d.2
+      - O.d.3
+      - T.4
+      - T.6
+      - R.5

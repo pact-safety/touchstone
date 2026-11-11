@@ -2,13 +2,15 @@
 benchmark: pdebench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v7
   repo_commit: 4ff3e3a4aa1561721b5571fa3a048a0a463e0568
@@ -173,15 +175,16 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: n/a
-    rationale: The labels are deterministic ground truth values provided by numerical simulators, not subjective ratings.
+    value: unmet
+    by: model
+    rationale: The labels are deterministic outputs from numerical solvers, so the n/a condition applies, but the decision rule requires reporting disagreement distributions or inter-annotator agreement only if labels are subjective. Since they are deterministic, the item is n/a, but the prompt asks to decide based on the rule. Wait, the rule says 'Met when a per-item disagreement distribution... is reported'. The n/a condition says 'Every label comes from one deterministic key...'. Since every label is deterministic, the n/a condition holds. Therefore, the verdict should be n/a.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2210.07182v7
+        quote: We may thus compare their predictions against the “ground truth” provided by baseline simulators used to generate the data.
         locator: 2210.07182v7 page 2, chunk 2
-        quote: compare their predictions against the “ground truth” provided by baseline simulators used to generate the data.
-    by: model
+        url: https://arxiv.org/abs/2210.07182v7
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: While the paper mentions metrics to measure specific failure modes, it does not provide a qualitative and quantitative analysis where failure modes are both described and counted.
@@ -201,15 +204,12 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors identify challenging tasks for current ML methods and propose them as specific directions for future community challenges.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2210.07182v7
-        locator: 2210.07182v7 page 1, chunk 1
-        quote: With those metrics we identify tasks which are challenging for recent ML methods and propose these tasks as future challenges for the community.
+    value: unmet
     by: model
+    rationale: The excerpts mention proposing tasks as future challenges and providing baseline results, but do not report specific experiments aimed at improving scores or named directions with stated rationales for improvement.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark includes the compressible Navier-Stokes equations, which are linked to real-world applications like aerodynamics around airplane wings.
@@ -232,6 +232,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.4:
     value: met
     rationale: The text states a limitation regarding the number of samples for high-dimensional data due to storage constraints, which impacts the composition of the dataset.
@@ -246,3 +247,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 25 verdicts agreed, 3 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - st.4
+      - ea.4

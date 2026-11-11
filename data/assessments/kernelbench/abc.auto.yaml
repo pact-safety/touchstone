@@ -2,13 +2,15 @@
 benchmark: kernelbench
 standard: abc
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
@@ -44,6 +46,7 @@ verdicts:
         quote: We compare the   Model   output to the LM-generated   ModelNew   output.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.a.2:
     value: n/a
     rationale: The benchmark scores correctness by comparing tensor outputs, not by string matching.
@@ -94,6 +97,7 @@ verdicts:
         quote: KernelBench is   automatically verifiable .
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.b.2:
     value: n/a
     rationale: No LLM judge is used for scoring.
@@ -104,6 +108,7 @@ verdicts:
         quote: KernelBench is   automatically verifiable .
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.c.1:
     value: unmet
     rationale: While the benchmark uses correctness checks on randomized inputs, there is no documentation of a human or expert review step for the test cases themselves.
@@ -196,14 +201,19 @@ verdicts:
         url: https://arxiv.org/abs/2502.10517v1
         locator: 2502.10517v1 page 22, chunk 0
         quote: Name your new improved output architecture ModelNew . Output the new code in codeblocks . ... Just output the new model code , no other text
-    by: model
+    by: human
     quotes_verified: true
   O.g.2:
-    value: unmet
-    rationale: The benchmark does not state the answer-space size or the resulting chance success rate for the generated kernels.
-    evidence: []
+    value: n/a
     by: model
+    rationale: Answers are not scored by matching a final answer. The benchmark scores by execution correctness and speedup.
+    evidence:
+      - source: paper
+        quote: "We can evaluate whether LM generations are correct and fast as follows: 1. Correctness We compare the Model output to the LM-generated ModelNew output."
+        locator: 2502.10517v1 page 4, chunk 2
+        url: https://arxiv.org/abs/2502.10517v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   O.h.1:
     value: met
     rationale: The benchmark reports on adversarial kernels designed to reward hack (e.g., reusing cached computations) and ensures the eval script catches them.
@@ -212,18 +222,27 @@ verdicts:
         url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
         locator: ScalingIntelligence/KernelBench@423217d9fda9:EVAL.md, chunk 3
         quote: These tests run adversarial kernels ... that contain examples of reward hacking ... and ensures that the eval script catches them
-    by: model
+    by: human
     quotes_verified: true
   T.1:
-    value: unmet
-    rationale: While some core versions are specified (Python, PyTorch, CUDA), many dependencies in pyproject.toml and requirements.txt use range operators (e.g., '>=') rather than specific versions or a lockfile.
+    value: met
+    by: model
+    rationale: The excerpts specify Python 3.10 and PyTorch 2.5.0+cu124 in the paper, and the pyproject.toml and requirements.txt provide version constraints or pinned versions for dependencies.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2502.10517v1
-        locator: 2502.10517v1 page 17, chunk 0
         quote: Our environment uses Python 3.10 , PyTorch 2.5.0+cu124 , and CUDA 12.4
-    by: model
+        locator: 2502.10517v1 page 17, chunk 0
+        url: https://arxiv.org/abs/2502.10517v1
+      - source: repo
+        quote: requires-python = "==3.10.*"
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:pyproject.toml, chunk 0
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
+      - source: repo
+        quote: torch==2.9.*
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:requirements.txt, chunk 0
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.2:
     value: n/a
     rationale: The benchmark evaluates GPU kernel generation and execution on local or orchestrated hardware; no external API tools are used for the task execution itself.
@@ -269,15 +288,12 @@ verdicts:
     by: model
     quotes_verified: true
   T.8:
-    value: met
-    rationale: The benchmark uses a PyTorch reference module as a baseline for every task, which serves as a reference solution to verify solvability.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.10517v1
-        locator: 2502.10517v1 page 17, chunk 0
-        quote: the KernelBench task entails a PyTorch reference module Model as baseline
+    value: unmet
     by: model
+    rationale: The excerpts do not state that every task was solved by a person or a reference solution to verify solvability.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   T.9:
     value: unmet
     rationale: The benchmark provides a PyTorch reference implementation, but not an automated Oracle solver that generates the optimized CUDA kernels for all challenges.
@@ -396,3 +412,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 35 verdicts agreed, 6 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - O.g.2
+      - T.1
+      - T.8

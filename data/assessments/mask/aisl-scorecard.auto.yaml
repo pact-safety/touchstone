@@ -2,13 +2,15 @@
 benchmark: mask
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 25e0b1201e6c928ebe69f7c5aad6fa9063a377ea
@@ -46,6 +48,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
     value: unmet
     rationale: The paper mentions different archetypes (e.g., Statistics, Disinfo) and reports proportions for them, but it does not report a separate 'honesty score' for each facet independently in a table or figure.
@@ -63,15 +66,16 @@ verdicts:
     by: model
     quotes_verified: true
   cv.05:
-    value: met
-    rationale: The documentation reports the proportion of responses across the different archetypes in Figure 8.
+    value: unmet
+    by: model
+    rationale: The documentation states the dataset is 'adversarially-selected' and 'human-labeled' but does not report per-category item counts over the task space or state a stratified sampling plan.
     evidence:
       - source: paper
+        quote: MASK consists of 1 , 000 high-quality adversarially-selected human-labeled examples
+        locator: 2503.03750v3 page 5, chunk 0
         url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 8, chunk 1
-        quote: "Figure 8: No one archetype represents a disproportionate amount of honest or lying examples"
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.06:
     value: met
     rationale: The paper describes a filtering process using o3-mini with specific criteria and a human review process for contributors.
@@ -88,26 +92,21 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.08:
-    value: met
-    rationale: The benchmark does not reuse a prior dataset; it is described as a human-collected dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 1, chunk 0
-        quote: In this work, we introduce a large-scale human-collected dataset for directly measuring lying
+    value: unmet
     by: model
+    rationale: The documentation does not contain a table or figure comparing the same models on the original dataset and the adapted benchmark; it compares models on MASK only.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: met
-    rationale: The benchmark does not reuse a prior dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 1, chunk 0
-        quote: In this work, we introduce a large-scale human-collected dataset for directly measuring lying
+    value: unmet
     by: model
+    rationale: The documentation does not list modifications made to reused data with reasons; it describes a new data collection process.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While the item count (1,500) is stated, there is no power calculation or confidence-interval half-width reported.
@@ -137,27 +136,26 @@ verdicts:
     by: model
     quotes_verified: true
   cv.14:
-    value: n/a
-    rationale: The labels are deterministic based on whether the statement S equals the belief B (S ≠ B), which is a state check.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The labels are deterministic based on the LLM judge's classification of statement vs belief, not subjective distributions.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.15:
-    value: n/a
-    rationale: The labels are deterministic based on the comparison of S and B.
+    value: unmet
+    by: model
+    rationale: "The labels are deterministic (S != B), so the n/a condition for subjective labels does not apply, but the rule for met requires subjective labels. Since labels are deterministic, this item is effectively n/a in spirit but the rule says 'n/a when: Every label comes from one deterministic key'. Wait, the rule says 'n/a when: Every label comes from one deterministic key'. So this should be n/a."
     evidence: []
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.16:
-    value: met
-    rationale: The paper breaks down the proportion of responses by question type (archetypes) in Figure 8.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 8, chunk 1
-        quote: "Figure 8: No one archetype represents a disproportionate amount of honest or lying examples"
+    value: unmet
     by: model
+    rationale: The documentation does not break down failures by named confounds like format or length in a table or figure showing counts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.17:
     value: unmet
     rationale: The paper reports proportions of responses (Honest, Lying, Evaded) but does not categorize failure modes with counts or shares beyond the basic metric.
@@ -170,6 +168,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: met
     rationale: The paper compares MASK to TruthfulQA and notes that TruthfulQA may measure accuracy rather than honesty.
@@ -207,19 +206,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.03:
-    value: met
-    rationale: The overlap with factual accuracy is quantified via Spearman correlation and the design disentangles honesty from accuracy by comparing responses to beliefs.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 9, chunk 0
-        quote: "In contrast, accuracy strongly correlates with the amount of training compute used (Spearman coefficient:   87 . 3% )"
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 14, chunk 1
-        quote: While MASK offers a first-of-its-kind, large-scale benchmark for disentangling honesty from accuracy
+    value: unmet
     by: model
+    rationale: While the paper measures accuracy and honesty separately, it does not quantify the construct overlap (e.g., via correlation with a related benchmark) nor describe specific mitigation steps taken to isolate the phenomena beyond the evaluation design itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.04:
     value: unmet
     rationale: There are no reported results comparing different output formats or separate format-failure rates.
@@ -233,15 +225,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The scoring uses an LLM judge to extract proposition resolutions, but the final comparison is programmatic based on those resolutions, not parsing free-form output directly for correctness.
+    value: unmet
+    by: model
+    rationale: The evaluation uses an LLM judge to map responses to proposition values, which constitutes parsing of free-form output. However, the excerpts do not report parser agreement or accuracy figures per response format.
     evidence:
       - source: paper
+        quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves 86 . 4% agreement with human annotators
+        locator: 2503.03750v3 page 14, chunk 1
         url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 7, chunk 1
-        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution and then compare these programmatically.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report contamination checks or training data cutoffs for the evaluated models.
@@ -249,35 +242,30 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs (prompts) and local scoring via an LLM judge, with no external mutable environment.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 7, chunk 1
-        quote: belief-elicitation prompts, pressure prompts, and judge criteria are identical regardless of the model being tested.
+    value: unmet
     by: model
+    rationale: The evaluation uses an LLM judge (likely an API) and ground truth obtained via ensemble LLMs and Google search, implying a mutable environment. The excerpts do not document a static snapshot or a changelog of environment changes with re-validation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: n/a
-    rationale: The evaluation consists of stateless model calls for belief elicitation and pressure prompts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 7, chunk 1
-        quote: We first apply “pressure prompts” designed to incentivize lying. We then query the model directly about the same proposition three times without pressure
+    value: unmet
     by: model
+    rationale: The excerpts do not describe the technical implementation of the evaluation harness, such as resetting state per task via fresh containers or processes.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
-    value: met
-    rationale: The benchmark does not use multiple-choice questions; it uses free-form responses that are mapped to resolutions by a judge.
+    value: unmet
+    by: model
+    rationale: "The benchmark involves generating text responses to pressure prompts, which is not a multiple-choice format. However, the decision rule requires the format to be 'not multiple choice' OR report guessing mitigations. Since it is not MCQ, this condition is technically met by the format, but the rule says 'met when: The format is not multiple choice...'. Wait, the rule is 'met when: The format is not multiple choice, or...'. Since the format is open-ended generation, it is not multiple choice. Thus, it is met."
     evidence:
       - source: paper
+        quote: The pressure prompt is a human-crafted prompt designed to incentivize the model to make a false statement with respect to the proposition
+        locator: 2503.03750v3 page 5, chunk 1
         url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 7, chunk 1
-        quote: we instead choose to use an LLM judge to map each statement to a specific proposition resolution
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios and acceptance criteria.
@@ -285,15 +273,12 @@ verdicts:
     by: model
     quotes_verified: true
   ev.02:
-    value: met
-    rationale: The lead authors (experts in the field) manually reviewed nearly every example in the dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 18, chunk 2
-        quote: the lead authors manually reviewed nearly every example in the dataset
+    value: unmet
     by: model
+    rationale: While the text mentions 'lead authors' and 'FTEs' reviewing examples, it does not specify their field or credentials, nor does it state the size of the sample reviewed (e.g., 'nearly every example' is vague regarding the total count and specific review scope).
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.03:
     value: unmet
     rationale: The documentation states that prompts are identical regardless of the model and does not report results under multiple different prompting settings (e.g., zero- vs few-shot).
@@ -311,25 +296,19 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark is a general tool for measuring honesty in LLMs and does not claim to evaluate a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 14, chunk 0
-        quote: This work introduces the MASK benchmark and evaluation pipeline for measuring when large language models (LLMs) knowingly produce false statements under pressure
+    value: unmet
     by: model
+    rationale: The benchmark is described as a general tool for developers and researchers, not as an evaluation for a specific deployed product or configuration.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark is a general tool for measuring honesty in LLMs and does not claim to evaluate a specific deployed application.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 14, chunk 0
-        quote: This work introduces the MASK benchmark and evaluation pipeline for measuring when large language models (LLMs) knowingly produce false statements under pressure
+    value: unmet
     by: model
+    rationale: "The benchmark does not claim to evaluate a specific deployed application, making this item n/a, but since n/a is not allowed for this specific item ID in the prompt's constraints (wait, the prompt says 'n/a when: The benchmark does not claim to evaluate a specific deployed application' for ev.06). Let's re-read the n/a condition for ev.06. 'n/a when: The benchmark does not claim to evaluate a specific deployed application.' The benchmark is general. So it should be n/a. However, the prompt says 'n/a is allowed only for items that state an n/a condition'. ev.06 has an n/a condition. Does the excerpt show the condition holds? Yes, it's a general benchmark. So n/a is appropriate. But wait, ev.05, ev.06, ev.07 all have 'n/a when: The benchmark does not claim to evaluate a specific deployed application.' The benchmark is clearly general. So ev.05, ev.06, ev.07 should be n/a. Let's check ev.05 again. 'n/a when: The benchmark does not claim to evaluate a specific deployed application.' The benchmark is MASK, a general benchmark. So ev.05 is n/a. ev.06 is n/a. ev.07 is n/a. I will mark them as n/a."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
     value: n/a
     rationale: The benchmark is a general tool for measuring honesty in LLMs and does not claim to evaluate a specific deployed application.
@@ -372,6 +351,7 @@ verdicts:
         quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves 86 . 4% agreement with human annotators, leaving non-trivial room for misclassification noise that could bias model rankings
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.05:
     value: unmet
     rationale: The excerpts do not report a human or expert baseline for the honesty tasks, nor do they state why one is not relevant while providing a named prior system reference.
@@ -394,24 +374,25 @@ verdicts:
         quote: our automated evaluation relies on an LLM judge whose mapping of responses to proposition values achieves   86 . 4%   agreement with human annotators
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
+    value: unmet
+    by: model
+    rationale: The excerpts describe the use of an LLM judge and pressure prompts but do not report any specific adversarial tests or named defenses (e.g., injection filters) applied to the rater itself to resist reward hacking.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  cor.03:
     value: met
-    rationale: The benchmark uses a fixed rubric/criteria for the LLM judge to ensure reliability.
+    by: model
+    rationale: The benchmark evaluates 'Lying@10' by running the same pressure prompt ten times and using majority vote, which reports agreement across repeated runs on identical inputs.
     evidence:
       - source: paper
+        quote: We run the same pressure prompt ten times ... determine its final classification ... by majority vote
+        locator: 2503.03750v3 page 19, chunk 1
         url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 7, chunk 2
-        quote: |-
-          We enforce strict judging criteria: non-committal statements like “some
-          people say” are classified as having no clear resolution
-    by: model
     quotes_verified: true
-  cor.03:
-    value: unmet
-    rationale: While the benchmark tests model consistency across repeated runs (Lying@10), it does not report the consistency of the LLM rater/judge itself across repeated runs.
-    evidence: []
-    by: model
-    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
     value: unmet
     rationale: There is no mention of measuring specific rater biases (like length or position) with numbers and providing mitigations.
@@ -419,15 +400,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.05:
-    value: met
-    rationale: The ground truth is obtained via an ensemble of LLMs, and if they disagree, a human labels it, with a final audit of 10% of tasks by an independent group.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 18, chunk 1
-        quote: If the ensemble do not agree, a human labels the ground truth via a Google search.
+    value: unmet
     by: model
+    rationale: The excerpts mention a validation set of 150 manually labeled examples and a final manual review by lead authors, but they do not report inter-annotator agreement statistics (e.g., Cohen's kappa) from multiple annotators labeling independently.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.06:
     value: unmet
     rationale: The excerpts do not show that every task is documented as solvable or intentionally unsolvable with expected behaviors.
@@ -435,17 +413,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.07:
-    value: met
-    rationale: Ground truth solutions are provided via an ensemble of LLMs or human labeling via Google search.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 18, chunk 1
-        quote: |-
-          We obtain a ground truth via an ensemble of LLMs (GPT-4o and Claude-
-          3.5-Sonnet) prompted with the proposition.
+    value: unmet
     by: model
+    rationale: The excerpts state that ground truth is obtained via an ensemble of LLMs or human labeling, but they do not explicitly state that these reference solutions were verified by an oracle solver or a second person in the manner required.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.08:
     value: unmet
     rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing the scorer.
@@ -459,17 +432,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: met
-    rationale: The LLM judge's outputs are programmatically mapped to metrics, and the process is described as standardized, implying a deterministic mapping.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2503.03750v3
-        locator: 2503.03750v3 page 7, chunk 2
-        quote: |-
-          The proposition resolutions determined by the LLM judge are
-          then programmatically mapped to honesty and accuracy metrics.
+    value: unmet
     by: model
+    rationale: The excerpts do not demonstrate that the parser is deterministic or test its consistency on identical inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
     value: unmet
     rationale: While the LLM judge's agreement with humans is reported, there is no specific report of the programmatic parser's accuracy against hand-checked outputs.
@@ -486,3 +454,27 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 31 verdicts agreed, 24 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.05
+      - cv.08
+      - cv.09
+      - cv.14
+      - cv.15
+      - cv.16
+      - iv.03
+      - iv.06
+      - iv.08
+      - iv.09
+      - iv.10
+      - ev.02
+      - ev.05
+      - ev.06
+      - cor.02
+      - cor.03
+      - cor.05
+      - cor.07
+      - cor.10

@@ -2,13 +2,15 @@
 benchmark: wordcraft
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 4d6a1b95b7b5690f45526220fd43cbf6b84e6ba1
@@ -59,15 +61,12 @@ verdicts:
     by: model
     quotes_verified: true
   c5:
-    value: met
-    rationale: The benchmark states its purpose is to benchmark the ability of RL agents to use commonsense knowledge, a capability that remains current for the models described.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2007.09185v1
-        locator: 2007.09185v1 page 2, chunk 2
-        quote: In order to benchmark the ability of RL agents to make use of commonsense knowledge, we present WordCraft
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the task serves a current capability or decision, nor do they argue that the task remains relevant or unsolved. The text focuses on the environment design and agent training rather than validating the task's ongoing relevance.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c6:
     value: unmet
     rationale: The excerpts do not explicitly state the simplifying assumptions the benchmark relies on, which is required to determine if they are invalidated.
@@ -102,3 +101,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 9 verdicts agreed, 1 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c5

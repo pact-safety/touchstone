@@ -2,13 +2,15 @@
 benchmark: hellaswag
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
 model_run:
@@ -189,27 +191,30 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: n/a
-    rationale: The labels are deterministic as the task is a multiple-choice problem with one true ending (ground truth).
+    value: unmet
+    by: model
+    rationale: The benchmark uses a deterministic ground truth (one correct ending per context), so the n/a condition for deterministic keys applies, but the decision rule for 'met' requires reporting disagreement distributions or inter-annotator agreement, which are not shown in the excerpts.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/1905.07830v1
+        quote: During human validation, crowd workers are given a context and six ending choices, of which one is the true ending
         locator: 1905.07830v1 page 5, chunk 3
-        quote: crowd workers are given a context and six ending choices, of which one is the true ending
-    by: model
+        url: https://arxiv.org/abs/1905.07830v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: While the paper provides qualitative examples of failures (e.g., BERT's incoherent choice in a WikiHow example), it does not provide a quantitative count of these failure modes.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.2:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper breaks down BERT's performance by a named confound (omitting context) in Figure 4, showing a drop from 86.7% to 74.8%."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.3:
     value: met
     rationale: The error analysis regarding the omission of context leads the authors to discuss a potential scoring bias in the endings.
@@ -236,6 +241,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.2:
     value: unmet
     rationale: There is no statement linking the choice of tasks and metrics to a specific operational definition provided in a 'def.1' section.
@@ -266,3 +272,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 24 verdicts agreed, 4 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - st.4

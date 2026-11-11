@@ -55,33 +55,41 @@ verdicts:
     by: model
     quotes_verified: true
   cv.03:
-    value: met
-    rationale: The benchmark identifies seven hazard categories and reports that grades are calculated for each model on each test.
+    value: unmet
+    by: model
+    rationale: The documentation does not report independent scores for each sub-component (hazard category) in a table or figure; it aggregates grades over tests to calculate an overall grade.
     evidence:
       - source: paper
+        quote: SUTs’ performance on the benchmark is scored by aggregating over their grades for each of the seven tests.
+        locator: 2404.12241v2 page 24, chunk 2
         url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 24, chunk 0
-        quote: Grades are calculated for each model on each test.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
     value: unmet
     rationale: While the docs name categories and interaction types, they do not report item counts along a difficulty or variation dimension.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.05:
-    value: unmet
-    rationale: The docs mention stratified sampling for the human eval set, but not for the overall dataset construction across the task space.
-    evidence: []
+    value: met
     by: model
+    rationale: The documentation states a stratified sampling plan was used to maximize coverage of different SUTs and hazard categories for the human eval set.
+    evidence:
+      - source: paper
+        quote: We used stratified sampling, rather than random sampling, to maximize coverage of different SUTs and hazard categories.
+        locator: 2404.12241v2 page 22, chunk 2
+        url: https://arxiv.org/abs/2404.12241v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.06:
     value: unmet
     rationale: There is no documentation of a verification step and pass rate for every item in the benchmark to ensure it tests the phenomenon.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.07:
     value: unmet
     rationale: The excerpts do not mention a named subset of boundary, perturbed, or adversarial items with a stated size and criterion.
@@ -89,25 +97,23 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The documentation states that many modalities and categories are not covered in existing datasets, and it uses v0.5 to stress-test its own prompt creation process, implying it is not reusing a prior dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 16, chunk 1
-        quote: many of the modalities, languages and hazard categories (and subcategories) that we want to test for are not covered in any of the existing datasets
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a table or figure comparing the same model on the original dataset and on the adapted benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset.
+    value: unmet
+    by: model
+    rationale: The excerpts do not list modifications made to reused data with their reasons; they mention creating new prompts because existing datasets did not cover needed categories.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
+        quote: In the long-term, AI Safety will have to create test items, as many of the modalities, languages and hazard categories (and subcategories) that we want to test for are not covered in any of the existing datasets.
         locator: 2404.12241v2 page 16, chunk 1
-        quote: many of the modalities, languages and hazard categories (and subcategories) that we want to test for are not covered in any of the existing datasets
-    by: model
+        url: https://arxiv.org/abs/2404.12241v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: The item count is stated, but no power calculation or confidence-interval half-width is reported.
@@ -133,25 +139,27 @@ verdicts:
     by: model
     quotes_verified: true
   cv.14:
-    value: met
-    rationale: The benchmark reports inter-annotator agreement using Cohen's Kappa for the human eval set.
+    value: unmet
+    by: model
+    rationale: The labels are determined by a deterministic key (LlamaGuard classification or majority vote of annotators on a gold standard), not by subjective distributions.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
+        quote: We used a majority vote between annotators to assign a human-verified, gold standard label to each SUTs’ response.
         locator: 2404.12241v2 page 23, chunk 0
-        quote: Inter-annotator agreement, as measured by the average Cohen’s Kappa score, is 0.79
-    by: model
+        url: https://arxiv.org/abs/2404.12241v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.15:
-    value: met
-    rationale: The headline metric for SUTs is the 'lowest grade' among seven tests, not a simple mean of subjective labels.
+    value: unmet
+    by: model
+    rationale: The labels are determined by a deterministic key (LlamaGuard classification or majority vote), so the rule for subjective labels does not apply in a way that requires avoiding single-point aggregates for subjective data.
     evidence:
       - source: paper
+        quote: We used a majority vote between annotators to assign a human-verified, gold standard label to each SUTs’ response.
+        locator: 2404.12241v2 page 23, chunk 0
         url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 24, chunk 2
-        quote: We take the lowest grade to minimize the risk that we overstate the safety of SUTs.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.16:
     value: unmet
     rationale: There is no table or figure breaking down failures by a named confound like length or complexity.
@@ -170,6 +178,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: met
     rationale: The benchmark compares its taxonomy against seventeen other safety taxonomies and notes that broad categories in others make results difficult to interpret.
@@ -190,6 +199,7 @@ verdicts:
         quote: if an SUT performs well on the benchmark it does not mean that it is safe, only that we have not identified safety weaknesses
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.01:
     value: unmet
     rationale: The provided excerpts do not mention any secondary capabilities or control conditions/ablations for them.
@@ -236,12 +246,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed prompts and local/API scoring without a mutable external environment.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not document a static snapshot of the environment nor a changelog of environment changes with re-validation. It mentions API versions and live web data as potential issues but does not confirm the mitigation for the v0.5 release.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: n/a
     rationale: The pipeline processes each prompt as an individual 'Item' sent to the SUT, indicating stateless model calls.
@@ -250,18 +262,19 @@ verdicts:
         url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
         locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 0
         quote: It is mainly focused on the individual Item, which is one Prompt from one Test run against one SUT.
-    by: model
+    by: human
     quotes_verified: true
   iv.10:
-    value: met
-    rationale: The benchmark does not use multiple-choice questions; it uses prompts and assesses the safety of the generated responses.
+    value: unmet
+    by: model
+    rationale: "The benchmark uses open-ended prompts assessed by annotators, not multiple-choice questions. However, the decision rule requires reporting a random-guess baseline if MCQs are used, or confirming the format is not MCQ. Since it is not MCQ, this should be 'met' if the rule is interpreted as 'format is not MCQ'. Wait, the rule says: 'The format is not multiple choice, OR ...'. The format is indeed not multiple choice. Let's re-read carefully. 'The format is not multiple choice' is a condition for 'met'. The benchmark uses prompts and free-form responses. Thus, the format is not multiple choice. Therefore, the condition is met."
     evidence:
       - source: paper
+        quote: Yes, each prompt contains a label for the hazard category... Does the dataset contain any confidential data? No.
+        locator: 2404.12241v2 page 54, chunk 1
         url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 16, chunk 0
-        quote: each test contains test items (prompts)
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: met
     rationale: The documentation mentions that interviews with experts were used to make assumptions about the behavior of the three personas defined for the benchmark.
@@ -291,15 +304,16 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark evaluates general-purpose AI chat systems rather than a specific deployed application.
+    value: unmet
+    by: model
+    rationale: The documentation explicitly states that the benchmark does not evaluate a specific deployed product or configuration, but rather general-purpose AI chat systems in a specific use case.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
+        quote: The AI Safety Benchmark does not evaluate the safety of AI models “in general.” ... Instead, the benchmark tests a specific AI system in a specific use case and for a specific set of personas.
         locator: 2404.12241v2 page 8, chunk 2
-        quote: The systems under test (SUTs) are general-purpose AI chat systems
-    by: model
+        url: https://arxiv.org/abs/2404.12241v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
     value: n/a
     rationale: The benchmark evaluates general-purpose AI chat systems rather than a specific deployed application.
@@ -311,14 +325,14 @@ verdicts:
     by: model
     quotes_verified: true
   ev.07:
-    value: n/a
-    rationale: The benchmark evaluates general-purpose AI chat systems rather than a specific deployed application.
+    value: met
+    by: human
+    rationale: The documentation lists differences between the test setting and real deployment, such as the lack of GUI, single-turn interactions, and unsophisticated personas, and interprets results in light of these gaps.
     evidence:
       - source: paper
+        quote: They are short and do not use hazard-specific language, are unambiguous and independent of current events, and only test for single-turn interactions.
+        locator: 2404.12241v2 page 26, chunk 0
         url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 8, chunk 2
-        quote: The systems under test (SUTs) are general-purpose AI chat systems
-    by: model
     quotes_verified: true
   rel.01:
     value: unmet
@@ -435,25 +449,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The scoring is performed by a model (LlamaGuard) assessing if a response is unsafe, which does not involve parsing free-form output into a structured answer.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 21, chunk 2
-        quote: Our grading system involves scoring whether each test item is unsafe or not with an automated evaluator model (LlamaGuard [   59 ])
+    value: unmet
     by: model
+    rationale: The excerpts do not show that the parser is deterministic or that its consistency is tested; they only mention temperature settings for model generation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The scoring is performed by a model (LlamaGuard) assessing if a response is unsafe, which does not involve parsing free-form output into a structured answer.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 21, chunk 2
-        quote: Our grading system involves scoring whether each test item is unsafe or not with an automated evaluator model (LlamaGuard [   59 ])
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for null-agent runs or targeted exploit attempts on the scoring pipeline.
@@ -464,3 +472,19 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 16 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - cv.03
+      - cv.05
+      - cv.08
+      - cv.09
+      - cv.14
+      - cv.15
+      - iv.08
+      - iv.10
+      - ev.05
+      - ev.07
+      - cor.10
+      - cor.11

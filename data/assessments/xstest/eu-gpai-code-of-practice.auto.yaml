@@ -2,13 +2,15 @@
 benchmark: xstest
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
@@ -51,25 +53,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.03:
-    value: met
-    rationale: The prompt template is provided via the CSV file, sampling settings (temperature zero, max tokens 256) are stated, and the harness is available in the repo.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 13, chunk 1
-        quote: set the temperature to zero to make responses deterministic. We also set the maximum response length to 256 tokens
+    value: unmet
     by: model
+    rationale: While temperature and max tokens are specified, the excerpts do not provide the full prompt template (only examples) or the specific harness/scaffold version used for evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.04:
-    value: met
-    rationale: The benchmark uses contrasting unsafe prompts to control for the confound of lexical overfitting/safety-related words.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 6, chunk 1
-        quote: to better test model calibration, we also evaluate models on the 200 contrasting unsafe prompts
+    value: unmet
     by: model
+    rationale: The excerpts describe the construction of prompts to resemble unsafe ones, but do not describe a specific control against confounding variables (like answer-position balancing) or its result.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.05:
     value: unmet
     rationale: There is no mention of canary strings, private test splits, or a contamination analysis to prevent training data leakage.
@@ -83,25 +79,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.07:
-    value: met
-    rationale: The authors performed a manual inspection of model outputs to classify them into a taxonomy and reported the findings.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 4, chunk 3
-        quote: All annotations were completed by three authors of this paper, with two annotations per prompt.
+    value: unmet
     by: model
+    rationale: The excerpts mention that authors annotated responses and provide examples, but do not report a formal manual inspection of trajectories or error analysis findings.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.08:
-    value: met
-    rationale: The benchmark describes how labels were produced by authors and reports inter-annotator agreement using Fleiss' kappa.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 5, chunk 0
-        quote: Annotators agreed on 96.4% of cases for Llama2.0 (Fleiss’   κ = 0.93)
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts describe the labeling process involving three authors and report inter-annotator agreement figures (Fleiss' kappa) for each model."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: met
     rationale: The benchmark releases the full model outputs per item on GitHub.
@@ -112,6 +102,7 @@ verdicts:
         quote: All model responses can be found at github.com/paul-rottger/exaggerated-safety
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     rationale: There is no documented check for evaluation awareness, sandbagging, or under-elicitation.
@@ -130,12 +121,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.02:
     value: unmet
     rationale: The excerpts do not state any concrete ways the evaluation setting differs from real-world use; they focus on the test design and results.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.03:
     value: met
     rationale: The evaluation spread is described across different prompt types (scenarios) with specific counts provided for safe prompts.
@@ -222,3 +215,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 15 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.03
+      - iv.04
+      - iv.07
+      - iv.08

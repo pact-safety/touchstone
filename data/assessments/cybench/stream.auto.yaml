@@ -2,13 +2,15 @@
 benchmark: cybench
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: ca483c6443f17a20ba7d6bac3d274859a1721e51
@@ -107,23 +109,26 @@ verdicts:
     by: model
     quotes_verified: true
   s2.v-a:
-    value: n/a
-    rationale: The grading is performed by a script checking for correct flags/answers, not by a model grader.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The report does not describe a base model used for grading. The grading script `grade_benchmark.py` appears to use exact string matching or simple parsing of outputs, not a model grader.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.v-b:
-    value: n/a
-    rationale: The grading is performed by a script checking for correct flags/answers, not by a model grader.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The report does not describe an automated grading process involving a model. It mentions a script but does not detail the algorithmic procedure of the grader itself beyond running the script.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.v-c:
-    value: n/a
-    rationale: The grading is performed by a script checking for correct flags/answers, not by a model grader.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The report does not state whether the autograder was compared to human graders or other auto-graders.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.i:
     value: met
     rationale: The report lists specific model identifiers such as GPT-4o, OpenAI o1-preview, and Claude 3.5 Sonnet.
@@ -134,6 +139,7 @@ verdicts:
         quote: "GPT-4o: Oct 2023 (OpenAI, 2024a), OpenAI o1-preview: Oct 2023 (OpenAI, 2024c), Claude 3 Opus: Aug 2023 (Anthropic, 2024c), Claude 3.5 Sonnet: Apr 2024 (Anthropic, 2024c)"
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.ii:
     value: met
     rationale: The report describes a specific prompt adaptation used to mitigate safety refusals by framing the task as an ethical challenge.
@@ -173,23 +179,26 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-a:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for the Cybench benchmark.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe a human baseline sample or recruitment process. The benchmark relies on Capture the Flag challenges from competitions, but no human participant data is reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for the Cybench benchmark.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not provide human performance statistics or describe differences with AI test results. While a reference to human scores in a different context (2022 finals) is mentioned, it is not part of this benchmark's reported baseline.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-c:
-    value: n/a
-    rationale: The provided excerpts do not mention the use of a human baseline for the Cybench benchmark.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe how human performance was elicited, as no human baseline was used or described in the provided text.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
     value: unmet
     rationale: The report does not provide a reason why a human baseline would not be appropriate or feasible.
@@ -204,7 +213,7 @@ verdicts:
         url: https://arxiv.org/abs/2408.08926v4
         locator: 2408.08926v4 page 35, chunk 2
         quote: First solve time (FST) is the time it takes the first team to solve a given challenge.
-    by: model
+    by: human
     quotes_verified: true
   s6.i:
     value: unmet
@@ -244,3 +253,14 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 20 verdicts agreed, 7 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s2.v-a
+      - s2.v-b
+      - s2.v-c
+      - s5.i-a
+      - s5.i-b
+      - s5.i-c

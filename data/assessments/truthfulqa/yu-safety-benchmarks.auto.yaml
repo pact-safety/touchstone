@@ -2,13 +2,15 @@
 benchmark: truthfulqa
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: d71c110897f5d31c5d7f309e7bc316c152f6f031
@@ -79,15 +81,12 @@ verdicts:
     by: model
     quotes_verified: true
   r2.a:
-    value: met
-    rationale: The benchmark describes using internet searches for common misconceptions and conspiracies to find adversarial items.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 32, chunk 0
-        quote: widen the answer set by running internet searches for [common misconceptions / superstitions / conspiracies around X]
+    value: unmet
     by: model
+    rationale: The excerpts describe the construction of the benchmark (using Wikipedia and internet searches for misconceptions) but do not describe mechanisms for discovering *novel* risks such as fuzzing, red-teaming, or LM-generated evaluation items for future risks.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r2.b:
     value: unmet
     rationale: While the license mentions contributions, there is no documented process for how they are integrated or credited.
@@ -101,14 +100,14 @@ verdicts:
     by: model
     quotes_verified: true
   r2.d:
-    value: met
-    rationale: The benchmark explicitly states it does not cover interactive settings, which satisfies the n/a condition.
+    value: unmet
+    by: human
+    rationale: The benchmark explicitly states it does not cover interactive settings, which are required for multi-agent or interactive evaluation where emergent risks arise.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
+        quote: For instance, TruthfulQA does not cover long-form generation (e.g. news articles) or interactive settings (e.g. extended chat with an adversarial human).
         locator: 2109.07958v2 page 9, chunk 1
-        quote: TruthfulQA does not cover long-form generation (e.g. news articles) or interactive settings
-    by: model
+        url: https://arxiv.org/abs/2109.07958v2
     quotes_verified: true
   r3.a:
     value: unmet
@@ -117,15 +116,12 @@ verdicts:
     by: model
     quotes_verified: true
   r3.b:
-    value: met
-    rationale: The benchmark documents annotator disagreement patterns (6-7%) and the use of a validator.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 5, chunk 0
-        quote: They disagreed on 7% of questions.
+    value: unmet
     by: model
+    rationale: The excerpts mention a 'validator' and 'participant' and that they disagreed on 7% of questions, but do not document annotator selection, disagreement patterns in detail, or annotator demographics/skew.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r3.c:
     value: unmet
     rationale: The benchmark mentions a canary string for training data, but does not state how long the evaluation set stays valid.
@@ -254,17 +250,12 @@ verdicts:
     by: model
     quotes_verified: true
   r8.b:
-    value: met
-    rationale: The benchmark reports using greedy decoding (temperature zero) for inference, which satisfies the rule for inference.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 5, chunk 3
-        quote: |-
-          Answers are generated using greedy decoding
-          (i.e. temperature set to zero).
+    value: unmet
     by: model
+    rationale: The excerpts state that greedy decoding was used but do not mention fixing or reporting random seeds for data sampling, model inference, or evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r8.c:
     value: unmet
     rationale: The judge model (GPT-judge) is described, but it and the scoring rubrics do not have a version, date, or commit hash provided.
@@ -303,19 +294,12 @@ verdicts:
     by: model
     quotes_verified: true
   r9.b:
-    value: met
-    rationale: The benchmark states that the questions resemble real-world questions but were not collected from a deployed system, which may lead to over- or under-estimation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 9, chunk 1
-        quote: |-
-          while the questions in TruthfulQA resemble real-
-          world questions, they were not collected from a
-          deployed system — and hence may over- or under-
-          estimate truthfulness for a deployed system.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark acknowledges that questions were not collected from a deployed system and may over- or under-estimate truthfulness for deployed systems, stating limitations."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.c:
     value: n/a
     rationale: The benchmark targets single-turn question answering and explicitly states it does not cover interactive settings.
@@ -327,7 +311,7 @@ verdicts:
           TruthfulQA does not cover long-form generation
           (e.g. news articles) or interactive settings (e.g. ex-
           tended chat with an adversarial human).
-    by: model
+    by: human
     quotes_verified: true
   r9.d:
     value: n/a
@@ -363,13 +347,25 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r10.d:
     value: unmet
     rationale: The benchmark does not explicitly state that model-level scores are not system-level safety, nor does it name further evaluations needed for deployment.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 29 verdicts agreed, 6 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r2.a
+      - r2.d
+      - r3.b
+      - r8.b
+      - r9.b

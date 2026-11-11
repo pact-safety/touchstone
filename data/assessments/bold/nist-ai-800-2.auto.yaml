@@ -2,13 +2,15 @@
 benchmark: bold
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 3ad652c773f5d1e30d5f6f61657ed934d768ecad
@@ -107,14 +109,10 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.3a:
-    value: met
-    rationale: Scores for multiple models of different capabilities (GPT-2, BERT, CTRL variants) are reported.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 10, chunk 4
-        quote: We also show that GPT-2, CTRL-THT, and CTRL-OPN conform more to social biases than BERT and CTRL-WIKI.
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts do not report results by item difficulty tier or provide scores for at least three models of clearly different capability to judge difficulty headroom.
+    evidence: []
     quotes_verified: true
   1.2.3b:
     value: met
@@ -187,15 +185,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2b:
-    value: met
-    rationale: The paper describes the exact logic for creating prompts (first five words plus the term) and provides examples.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 3, chunk 2
-        quote: The prompt is taken to be the first five words plus the profession / name / religious belief / political ideology term.
+    value: unmet
     by: model
+    rationale: The excerpts describe how prompts are extracted from Wikipedia but do not provide the exact verbatim prompt templates or text used in the repository.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2c:
     value: n/a
     rationale: The benchmark involves single model responses to prompts without tools or agentic loops.
@@ -243,28 +238,17 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2h:
-    value: met
-    rationale: The benchmark uses a toxicity classifier based on BERT-Large and a regard classifier, and provides the rubric/guidelines for human judges via AMT.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 12, chunk 2
-        quote: Toxicity Classifier . We take a toxicity classifier that consists of the pre-trained “BERT-Large, Uncased (Whole Word Masking)” model
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 12, chunk 3
-        quote: Sentiment annotation guidelines . Choose the primary sentiment that is expressed by the text.
+    value: unmet
     by: model
+    rationale: The benchmark uses automated metrics (VADER, toxicity classifier) and human annotators, not an LLM judge to score responses.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2i:
-    value: met
-    rationale: The benchmark reports the Spearman's correlation coefficient between automatic metrics and human annotations.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 9, chunk 4
-        quote: "Spearman’s 𝜌 correlation coefficient: . 9126 and . 9186"
-    by: model
+    value: n/a
+    by: human
+    rationale: No LLM judge is used to score or parse responses; human annotators and automated metrics are used.
+    evidence: []
     quotes_verified: true
   2.1.2j:
     value: unmet
@@ -283,15 +267,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.2:
-    value: n/a
-    rationale: The scoring is based on classifiers (toxicity, sentiment) and psycholinguistic norms, which do not require extracting a specific answer format from the model.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 12, chunk 2
-        quote: Toxicity Classifier . We take a toxicity classifier that consists of the pre-trained “BERT-Large, Uncased (Whole Word Masking)” model
+    value: unmet
     by: model
+    rationale: The excerpts do not specify the required answer format or ship logic that extracts answers from responses.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.3:
     value: unmet
     rationale: There is no evidence of version identifiers or a changelog for the benchmark.
@@ -333,15 +314,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.1.4:
-    value: n/a
-    rationale: The prompts are extracted from Wikipedia and are not designed to trigger safety or security safeguards.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 2, chunk 5
-        quote: we take English Wikipedia as a source for gathering prompts
+    value: unmet
     by: model
+    rationale: The items contain content likely to trigger model safeguards (bias, toxicity, gender, religion), so the n/a condition does not hold, and no refusal scoring is described.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.5:
     value: n/a
     rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
@@ -359,19 +337,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2D:
-    value: met
-    rationale: The paper publishes results for several models (GPT-2, BERT, CTRL) and the protocol used (hyperparameters in Appendix).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 12, chunk 2
-        quote: We set max sentence length to   15 , temperature to   0 . 7
-      - source: paper
-        url: https://arxiv.org/abs/2101.11718v1
-        locator: 2101.11718v1 page 10, chunk 4
-        quote: We also show that GPT-2, CTRL-THT, and CTRL-OPN conform more to social biases than BERT and CTRL-WIKI.
+    value: unmet
     by: model
+    rationale: The excerpts do not publish reference results with exact model versions and protocol for comparison.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
     value: met
     rationale: The benchmark reports results separately for different domains (profession, gender, race, religion, political ideology).
@@ -380,7 +351,7 @@ verdicts:
         url: https://arxiv.org/abs/2101.11718v1
         locator: 2101.11718v1 page 1, chunk 0
         quote: "bias benchmarking across five domains: profession, gender, race, religion, and political ideology."
-    by: model
+    by: human
     quotes_verified: true
   3.1.2:
     value: unmet
@@ -429,11 +400,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.2a:
-    value: n/a
-    rationale: The benchmark does not claim to represent real-world tasks; it is described as a dataset for evaluating bias in language generation.
-    evidence: []
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark explicitly states limitations regarding its real-world representativeness, noting that it covers only a limited set of demographic domains and specific groups."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.3:
     value: met
     rationale: The benchmark uses Wikipedia text as a baseline and describes the source of this baseline.
@@ -468,3 +440,16 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 42 verdicts agreed, 6 settled by adjudicator-v4, 3 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.3a
+      - 2.1.2b
+      - 2.1.2h
+      - 2.1.2i
+      - 2.2.2
+      - 2.4.1.4
+      - 2.4.2D
+      - 3.3.2a

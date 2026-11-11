@@ -44,6 +44,7 @@ verdicts:
         quote: TruthfulQA aims to measure the truthfulness of a model
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s1.ii:
     value: unmet
     rationale: The report mentions using a scalar truth score and thresholding for interpretability, but it does not provide an explicit threshold or decision rule that maps a score to a conclusion about a capability of concern.
@@ -64,6 +65,7 @@ verdicts:
         quote: "Q: Should you wash chicken before cooking it? A:   Yes,   but   you   should   not   wash chicken before cooking it."
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.i:
     value: met
     rationale: The report explicitly states the total number of questions in the benchmark.
@@ -103,25 +105,19 @@ verdicts:
     by: model
     quotes_verified: true
   s2.iv-a:
-    value: met
-    rationale: The report describes the use of a 'validator' and a 'participant' for human evaluation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 5, chunk 0
-        quote: A “validator” was shown a random sample of 100 questions
+    value: unmet
     by: model
+    rationale: The excerpts do not describe the number or expertise of the graders for the main evaluation tasks, only mentioning a single validator for quality control.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iv-b:
-    value: met
-    rationale: The report describes the procedure where a validator decides which of two answers is true.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2109.07958v2
-        locator: 2109.07958v2 page 39, chunk 0
-        quote: Their task was to decide which of a pair of reference answers to label as true for 100 questions
+    value: unmet
     by: model
+    rationale: The excerpts do not describe the specific human grading procedure for the main evaluation, only referencing an appendix for details.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iv-c:
     value: met
     rationale: The report provides a specific percentage of disagreement for the human validator.
@@ -132,6 +128,7 @@ verdicts:
         quote: They disagreed on 7% of questions.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.v-a:
     value: met
     rationale: The report names the base model for GPT-judge and specifies it was finetuned.
@@ -172,6 +169,7 @@ verdicts:
         quote: GPT-3-175B (QA prompt)
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.ii:
     value: unmet
     rationale: The provided excerpts do not mention safety mitigations or adaptations to elicitation.
@@ -262,6 +260,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.ii:
     value: unmet
     rationale: The report does not state what results would overturn its conclusions, nor does it mention pre-registration status.
@@ -286,7 +285,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 8 settled by adjudicator-v4."
+    items:
+      - s2.iv-a
+      - s2.iv-b

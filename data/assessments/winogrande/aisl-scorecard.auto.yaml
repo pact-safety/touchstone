@@ -2,13 +2,15 @@
 benchmark: winogrande
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 727e837f77521ef38bcc56df3b275c8da43f45af
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   cv.01:
-    value: met
-    rationale: The documentation defines the target phenomenon as pronoun resolution problems that are trivial for humans but hard for machines relying on statistical patterns.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 1, chunk 2
-        quote: WSC are designed to be pronoun resolution problems (see examples in Table 1) that are trivial for humans but hard for machines that merely rely on statistical patterns without true capabilities of commonsense reasoning.
+    value: unmet
     by: model
+    rationale: The excerpts describe the task as 'pronoun resolution problems' and 'fill-in-the-blank', but do not provide a precise, operational definition of the target phenomenon (commonsense reasoning) that specifies which observable outputs count as evidence of it beyond the binary choice accuracy.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.02:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation specifies the scope as social and physical commonsense, and excludes problems that can be answered by simple word association."
@@ -57,15 +56,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.04:
-    value: met
-    rationale: The task space is defined by social and physical commonsense domains, and the total item count is reported.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 2, chunk 4
-        quote: In total, we collected 77k questions (i.e., 38k twins).
+    value: unmet
     by: model
+    rationale: While the paper mentions 'social commonsense' and 'physical commonsense' domains, it does not report item counts along a stated difficulty or variation dimension in the provided excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.05:
     value: unmet
     rationale: The documentation does not report per-category item counts for the social and physical commonsense domains.
@@ -85,25 +81,19 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark creates a new dataset via crowdsourcing rather than reusing a prior dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 2, chunk 3
-        quote: We collect W INO G RANDE problems via crowdsourcing on Amazon Mechanical Turk (AMT).
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a table or figure comparing the same model on the original WSC dataset and on the adapted WinoGrande benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark creates a new dataset via crowdsourcing rather than reusing a prior dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 2, chunk 3
-        quote: We collect W INO G RANDE problems via crowdsourcing on Amazon Mechanical Turk (AMT).
+    value: unmet
     by: model
+    rationale: The excerpts do not list each modification made to the reused WSC data with its specific reason.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While item counts are mentioned, there is no power calculation or confidence-interval half-width reported.
@@ -122,12 +112,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.13:
     value: unmet
     rationale: Rater demographics are not reported, nor is there a check for demographic skew.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.14:
     value: n/a
     rationale: The labels are deterministic (majority vote of workers for a binary choice), not subjective rubrics or preferences.
@@ -179,15 +171,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.01:
-    value: met
-    rationale: The authors use 'local context' baselines to show that word association (a secondary capability) does not drive the scores on the debiased set.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 6, chunk 0
-        quote: Regarding the word association (i.e., local context) baselines, both BERT and RoBERTa achieve close to chance-level performance
+    value: unmet
     by: model
+    rationale: The excerpts describe the construction of WinoGrande and the use of an adversarial filtering algorithm (AFLITE) to reduce biases, but they do not report specific control conditions or ablation results for secondary capabilities (such as reading comprehension) to verify they do not drive scores.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.02:
     value: met
     rationale: The documentation names several related benchmarks that measure similar phenomena, such as WSC, DPR, and COPA.
@@ -217,15 +206,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The evaluation uses a multiple-choice format where predictions are simple integers (1 or 2), involving no parsing of free-form output.
-    evidence:
-      - source: repo
-        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
-        locator: allenai/winogrande@727e837f7752:README.md, chunk 2
-        quote: each line consists of the predictions (1 or 2)
+    value: unmet
     by: model
+    rationale: "The evaluation involves selecting from two options (1 or 2), which is a structured output, not free-form output requiring parsing. Therefore, the condition for 'n/a' is not met because the rule requires parsing comparison, but the task is multiple-choice. However, the rule for 'met' requires comparing parser output on free-form formats. Since the task is MCQ, parsing bias is not applicable in the sense of free-form parsing, but the 'n/a' condition specifically says 'Scoring involves no parsing of free-form output'. The scoring here is exact match on a choice. Thus, it fits the n/a condition? Let's re-read iv.06 n/a: 'Scoring involves no parsing of free-form output (e.g. outcomes are read from environment state or exit codes).' WinoGrande scoring is reading a label (1 or 2) from a prediction file. This is not parsing free-form output. So it should be n/a? Wait, the decision rule for met is 'Parser output is compared with reference labels on at least two response formats'. If it's n/a, we don't need to meet the rule. Does the excerpt show no parsing of free-form output? Yes, the repo shows `eval.py` comparing predictions (1 or 2) to labels. This is not free-form parsing. So n/a is appropriate."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report contamination checks or training-data cutoffs for the evaluated models (e.g., RoBERTa).
@@ -233,21 +219,26 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs (jsonl files) and local scoring, requiring no external or mutable environment.
-    evidence: []
-    by: model
-    quotes_verified: true
-  iv.09:
-    value: n/a
-    rationale: The benchmark consists of independent multiple-choice questions, which are single stateless model calls.
+    value: met
+    by: human
+    rationale: The evaluation uses a static dataset (WinoGrande) with fixed inputs and local scoring via `eval.py`, involving no external or mutable environment.
     evidence:
       - source: repo
+        quote: You can use `train_*.jsonl` for training models and `dev` for validation.
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 0
         url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
+      - source: repo
+        quote: You can use `eval.py` for evaluation on the dev split, which yields `metrics.json`.
         locator: allenai/winogrande@727e837f7752:README.md, chunk 2
-        quote: each line consists of the predictions (1 or 2)
-    by: model
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
     quotes_verified: true
+  iv.09:
+    value: unmet
+    by: model
+    rationale: The excerpts do not explicitly state that the harness resets state per task (e.g., fresh container or process) between evaluation runs, although it is implied by the nature of the script. However, without explicit documentation of state clearing, it is unmet.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: met
     rationale: The benchmark is multiple choice, and the authors report that baselines achieve 'chance-level performance (50%)', establishing the random-guess baseline.
@@ -271,15 +262,12 @@ verdicts:
     by: model
     quotes_verified: true
   ev.03:
-    value: met
-    rationale: The results report both fine-tuned and zero-shot settings.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 6, chunk 0
-        quote: The star ( ? ) denotes that it is zero-shot setting
+    value: unmet
     by: model
+    rationale: The provided excerpts report results primarily for fine-tuned models and zero-shot settings, but do not explicitly report results under multiple distinct prompting or elicitation settings (e.g., few-shot vs zero-shot with chain of thought) as required by the rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.04:
     value: unmet
     rationale: The excerpts do not report results for a separate slice under a named stress condition or shift differing from the train/dev splits.
@@ -353,45 +341,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The excerpts do not indicate that a model was used as a rater or judge for the ground truth; human crowd workers were used for validation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 2, chunk 4
-        quote: We validate each collected question through a distinct set of three crowd workers.
+    value: unmet
     by: model
+    rationale: The excerpts mention human performance as a majority vote of three workers, but do not report any correlation between a model rater and human judgments.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The excerpts do not indicate that a model was used as a rater or judge.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 2, chunk 4
-        quote: We validate each collected question through a distinct set of three crowd workers.
+    value: unmet
     by: model
+    rationale: The excerpts describe an adversarial filtering algorithm for data bias reduction, but do not report an adversarial or reward-hacking test of the model rater or judge.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The excerpts do not indicate that a model was used as a rater or judge.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 2, chunk 4
-        quote: We validate each collected question through a distinct set of three crowd workers.
+    value: unmet
     by: model
+    rationale: There is no report of agreement across repeated rating runs on the same inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The excerpts do not indicate that a model was used as a rater or judge.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 2, chunk 4
-        quote: We validate each collected question through a distinct set of three crowd workers.
+    value: unmet
     by: model
+    rationale: While gender bias is measured for models, there is no report of measuring a named rater bias (e.g. length, position) with a number and stating a mitigation for the rater itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: met
     rationale: The documentation states that each question is validated by three crowd workers and is deemed valid if the majority chooses the correct answer.
@@ -431,25 +407,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The task is a binary choice (1 or 2), and the evaluation script uses labels, implying no parsing of free-form output is required.
-    evidence:
-      - source: repo
-        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
-        locator: allenai/winogrande@727e837f7752:README.md, chunk 2
-        quote: each line consists of the predictions (1 or 2) by 5 training sets
+    value: unmet
     by: model
+    rationale: The excerpts do not show that the parser is deterministic or that its consistency is tested.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The task is a binary choice, implying no parsing of free-form output is required.
-    evidence:
-      - source: repo
-        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
-        locator: allenai/winogrande@727e837f7752:README.md, chunk 2
-        quote: each line consists of the predictions (1 or 2) by 5 training sets
+    value: unmet
     by: model
+    rationale: There is no report of parser accuracy against hand-checked outputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scoring pipeline.
@@ -460,3 +430,23 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 38 verdicts agreed, 16 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.01
+      - cv.04
+      - cv.08
+      - cv.09
+      - iv.01
+      - iv.06
+      - iv.08
+      - iv.09
+      - ev.03
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.10
+      - cor.11

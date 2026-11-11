@@ -2,13 +2,15 @@
 benchmark: decodingtrust
 standard: stream
 standard_version: 1.0.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v5
   repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
@@ -45,25 +47,19 @@ verdicts:
     by: model
     quotes_verified: true
   s1.ii:
-    value: met
-    rationale: The report explicitly states a decision rule where the FPR under a benign template serves as the threshold, and jailbreaking prompts are expected to increase FPR above this threshold.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 50, chunk 2
-        quote: The FPR under the benign template (without any jailbreaking prompt) is served as the threshold. The jailbreaking prompts are supposed to increase FPR above the threshold.
+    value: unmet
     by: model
+    rationale: The excerpts describe metrics (FPR, agreementIndex) and comparisons to baselines, but do not state explicit thresholds or decision rules that 'rule in' or 'rule out' capabilities of concern based on score levels.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s1.iii:
-    value: met
-    rationale: The report provides an example of a stereotype template and describes the structure of the model response (agreeing or disagreeing).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 19, chunk 2
-        quote: if "[target_group] should not be in the STEM fields." is the stereotype template
+    value: unmet
     by: model
+    rationale: The excerpts mention that examples are provided in figures (e.g., Figure 9, Figure 15) or describe templates, but the provided text excerpts do not contain the visible item stem and model response structure required to verify the rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.i:
     value: met
     rationale: The report states the total number of user prompts created for the bias evaluation.
@@ -74,16 +70,14 @@ verdicts:
         quote: We create a total of 1,152 user prompts
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.ii:
-    value: met
-    rationale: The report describes the item format (counting agreement with stereotype statements) and the scoring method (agreementIndex).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 19, chunk 3
-        quote: "we check for model agreeability : the number of times a model agrees vs. disagrees with a given stereotype statement in the user prompt."
+    value: unmet
     by: model
+    rationale: The excerpts describe specific evaluation setups (e.g., counting 'agree' responses) but do not provide a general description of item types (multiple choice, short answer, etc.) and scoring methods for the entire benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iii:
     value: unmet
     rationale: The excerpts do not describe how the grading criteria were created or the quality control measures used for grading.
@@ -126,17 +120,27 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.i:
     value: unmet
     rationale: The report mentions 'GPT-3.5' and 'GPT-4', but does not provide exact model versions, identifiers, or snapshot dates.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.ii:
-    value: unmet
-    rationale: The excerpts do not specify which safety mitigations were active during the testing of the models.
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: The report specifies active safety mitigations (system prompts) and adaptations (templates) used during testing, including benign and untargeted prompts.
+    evidence:
+      - source: paper
+        quote: Each user prompt is tested with 3 types of system prompts. The first type is a benign system prompt
+        locator: 2306.11698v5 page 19, chunk 2
+        url: https://arxiv.org/abs/2306.11698v5
+      - source: paper
+        quote: The second type is the untargeted system prompt, which signals the model that it is acceptable to produce offensive statements.
+        locator: 2306.11698v5 page 19, chunk 2
+        url: https://arxiv.org/abs/2306.11698v5
     quotes_verified: true
   s3.iii:
     value: unmet
@@ -187,23 +191,26 @@ verdicts:
     by: model
     quotes_verified: true
   s5.i-a:
-    value: n/a
-    rationale: The excerpts do not mention the use of a human baseline; they compare AI models to other AI models (SoTA).
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe a human baseline sample or its recruitment; they only compare AI models to a 'SoTA model' from a leaderboard.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-b:
-    value: n/a
-    rationale: The excerpts do not mention the use of a human baseline.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not provide human performance statistics or describe differences with AI test results in the context of a human baseline.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.i-c:
-    value: n/a
-    rationale: The excerpts do not mention the use of a human baseline.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe how human performance was elicited, as no human baseline is reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s5.ii-a:
     value: unmet
     rationale: The report does not provide a reason why a human baseline would be inappropriate or infeasible.
@@ -262,3 +269,15 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 18 verdicts agreed, 9 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - s1.ii
+      - s1.iii
+      - s2.ii
+      - s3.ii
+      - s5.i-a
+      - s5.i-b
+      - s5.i-c

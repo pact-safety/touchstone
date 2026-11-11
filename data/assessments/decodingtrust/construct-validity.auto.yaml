@@ -2,13 +2,15 @@
 benchmark: decodingtrust
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v5
   repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
@@ -53,17 +55,12 @@ verdicts:
     by: model
     quotes_verified: true
   def.3:
-    value: met
-    rationale: The benchmark identifies sub-components of counterfactual examples (revise hypothesis and revise premise) and explicitly states they are experimented with separately.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 33, chunk 3
-        quote: |-
-          SNLI-CAD introduces two ways to generate counterfactual examples:   revise hypothesis 
-          (SNLI-RH) and   revise premise   (SNLI-RP), and we experiment with both subsets separately.
+    value: unmet
     by: model
+    rationale: The excerpts mention sub-components like 'in-distribution' and 'OOD' knowledge, but do not state that they are scored separately, nor do they explicitly state the phenomenon is unitary.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.1:
     value: unmet
     rationale: The excerpts do not identify secondary abilities required by the tasks, nor do they report control conditions or ablation results for such abilities.
@@ -77,15 +74,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The provided excerpts do not show the use of automated parsing of free-form output; the demonstration templates show constrained outputs like '[yes|no]', and the repo mentions 'parsed results' without describing a free-form parser validation process.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 90, chunk 1
-        quote: Assistant   [yes|no|maybe]
+    value: unmet
     by: model
+    rationale: The excerpts describe output formats and privacy leakage criteria, but do not report parser accuracy against hand-checked outputs, repeat-run consistency, or bias comparisons across output formats.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: met
     rationale: The benchmark documents a sampling strategy for the nontoxic subset of the RealToxicityPrompts dataset, using uniform sampling from the pool.
@@ -129,15 +123,12 @@ verdicts:
     by: model
     quotes_verified: true
   ru.3:
-    value: met
-    rationale: The benchmark compares the performance of GPT models against the state-of-the-art (SoTA) model from the original AdvGLUE leaderboard.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 23, chunk 2
-        quote: To better compare the evaluation results to the SoTA model on the AdvGLUE benchmark, we additionally include the results of the best model from the AdvGLUE leaderboard
+    value: unmet
     by: model
+    rationale: The excerpts compare GPT models against each other or against SoTA models on the same benchmark (AdvGLUE), but do not report and compare performance on the new benchmark against the original prior dataset/benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
     value: unmet
     rationale: The documentation mentions using a preprocessed version of the Enron dataset and adding jailbreaking prompts to others, but it does not explain how these modifications improve construct validity.
@@ -181,21 +172,30 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: n/a
-    rationale: The labels described in the excerpts are deterministic keys, such as 'wrong' or 'not wrong' for ETHICS and 'entailment, contradiction, or neutral' for BBNLI.
+    value: unmet
+    by: human
+    rationale: The excerpts describe metrics based on deterministic keys (accuracy, bias scores derived from fixed pro/anti pairs) or single-point aggregations (expected maximum toxicity). There is no report of per-item disagreement distributions or inter-annotator agreement statistics.
     evidence:
       - source: paper
+        quote: Expected Maximum Toxicity evaluates the worst-case generation by calculating the maximum toxicity scores over 25 generations
+        locator: 2306.11698v5 page 12, chunk 3
         url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 48, chunk 1
-        quote: An ideal assistant is supposed to answer with the label ( i.e. ,   wrong   or   not wrong ) for each sample.
-    by: model
     quotes_verified: true
   ea.1:
-    value: unmet
-    rationale: While the text provides qualitative examples of failure modes (e.g., textual perturbations), it does not provide a quantitative count of these specific failure modes.
-    evidence: []
+    value: met
     by: model
+    rationale: The excerpts provide both qualitative descriptions of failure modes (e.g., adversarial text perturbations) and quantitative counts/rates (e.g., attack success rates, accuracy drops).
+    evidence:
+      - source: paper
+        quote: attack success rate of ANLI and AdvSQuAD dropped from 61.13% to 36.78% and from 10.52% to 0% on GPT-4.
+        locator: 2306.11698v5 page 24, chunk 1
+        url: https://arxiv.org/abs/2306.11698v5
+      - source: paper
+        quote: These examples qualitatively demonstrate that both models are still vulnerable to simple textual perturbations
+        locator: 2306.11698v5 page 24, chunk 1
+        url: https://arxiv.org/abs/2306.11698v5
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.2:
     value: met
     rationale: The benchmark breaks down fairness performance (failures/scores) by named confounders (sensitive attributes) such as sex, race, and age in Table 30.
@@ -217,25 +217,23 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors propose a specific direction to improve model scores by adding an 'I don't know' option to investigate and handle uncertain knowledge.
+    value: unmet
+    by: model
+    rationale: The excerpts mention future work or open-sourcing the platform but do not report specific experiments aimed at improving scores or propose specific named directions with stated rationales for improvement within the benchmark context.
     evidence:
       - source: paper
+        quote: Furthermore, we will open-source our evaluation platform, which will facilitate more comprehensive assessments of the trustworthiness of other LLMs.
+        locator: 2306.11698v5 page 12, chunk 0
         url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 30, chunk 0
-        quote: we conduct experiments with an added “I don’t know” option to investigate the model’s preferences under uncertain events or knowledge
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
-    value: met
-    rationale: The benchmark uses RealtimeQA, which is explicitly linked to real-world events from sources like CNN and USAToday.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 29, chunk 2
-        quote: we leverage RealtimeQA [   86   ], which consists of time-sensitive multiple-choice questions ranging from 2020 to 2023 that are relevant to real-world events from sources such as CNN, USAToday, and THE WEEK.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpt explicitly links the benchmark tasks (evaluating hallucinations and unknown knowledge) to real-world applications, specifically noting that trustworthy LLMs must handle queries beyond their training data to avoid made-up responses in real-world deployment."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.2:
     value: unmet
     rationale: There is no provided operational definition 'def.1' in the excerpts, nor a statement linking task choice and each metric to such a definition.
@@ -266,3 +264,15 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 21 verdicts agreed, 6 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.3
+      - mo.3
+      - ru.3
+      - st.4
+      - ea.1
+      - ea.4
+      - jv.1

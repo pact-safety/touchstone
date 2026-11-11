@@ -2,13 +2,15 @@
 benchmark: jailbreakbench
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v5
   repo_commit: 23dbdf6b19650521604456229bc1d9c4156c85c1
@@ -35,11 +37,20 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   1.2.1:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark defines the construct as jailbreaking and the task as finding a prompt that results in a judge function returning True for a harmful goal."
-    evidence: []
+    value: met
     by: model
+    rationale: The documentation explicitly names the construct (jailbreaking/robustness) and the task (evaluating attacks and defenses) through which it is measured.
+    evidence:
+      - source: paper
+        quote: "JailbreakBench , an open-sourced benchmark with the following components: (1) an evolving repository of state-of-the-art adversarial prompts... (3) a standardized evaluation framework... that includes a clearly defined threat model... and scoring functions"
+        locator: 2404.01318v5 page 1, chunk 1
+        url: https://arxiv.org/abs/2404.01318v5
+      - source: repo
+        quote: Jailbreakbench is an open-source robustness benchmark for jailbreaking large language models (LLMs). The goal of this benchmark is to comprehensively track progress toward (1) generating successful jailbreaks and (2) defending against these jailbreaks.
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 1
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1a:
     value: met
     rationale: The benchmark lists specific misuse categories such as Malware/Hacking and Government decision-making.
@@ -77,15 +88,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.2a:
-    value: met
-    rationale: The benchmark explicitly states that it does not cover modalities other than text.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 9, chunk 3
-        quote: Our benchmark does not currently offer such option and focuses solely on text.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation explicitly states limitations regarding what is not covered, such as system prompt modification and multimodal inputs."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2b:
     value: met
     rationale: The benchmark names the use case of assessing the robustness of models and defenses against jailbreak attacks.
@@ -158,6 +166,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.1b:
     value: unmet
     rationale: The excerpts mention a dataset of 100 behaviors and a separate dataset of 300 examples for judge comparison, but they do not describe a labeled development split separate from the test items for model optimization.
@@ -228,7 +237,7 @@ verdicts:
     value: unmet
     rationale: The documentation does not specify the number of trials per item or the aggregation method used across trials.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   2.1.2h:
     value: met
@@ -257,11 +266,16 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.1:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a public repository with code that runs the evaluation end-to-end."
-    evidence: []
+    value: met
     by: model
+    rationale: The benchmark ships runnable evaluation code. Excerpt [paper:p1#1] mentions 'a standardized evaluation framework at https://github.com/JailbreakBench/jailbreakbench'. Excerpt [repo:README.md#13] provides code snippets for `jbb.evaluate_prompts` and `jbb.create_submission`.
+    evidence:
+      - source: paper
+        quote: a standardized evaluation framework at https://github.com/JailbreakBench/jailbreakbench
+        locator: 2404.01318v5 page 1, chunk 1
+        url: https://arxiv.org/abs/2404.01318v5
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.2:
     value: met
     rationale: The benchmark uses a judge classifier to score responses, and the logic is provided in the library.
@@ -298,18 +312,21 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.1:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness saves logs containing metadata about the prompts in a logs directory."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.2:
     value: unmet
     rationale: The excerpts do not show that the output logs include the model identifier and the benchmark version or code commit.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.3:
     value: unmet
     rationale: The benchmark does not document a validation step to check that items were solvable and correctly keyed.
@@ -322,6 +339,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.5:
     value: n/a
     rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
@@ -349,15 +367,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2E:
-    value: met
-    rationale: The benchmark reports results by subset (e.g., by attack type and defense type).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 16, chunk 1
-        quote: Attack Defense Vicuna Llama-2 GPT-3.5 GPT-4
+    value: unmet
     by: model
+    rationale: The excerpts do not report results by subset, format or construct. While the dataset has categories [paper:p14#1], the results in the excerpts (e.g., Table 2, Table 3, Table 6) are aggregated by attack/defense/model, not broken down by the 10 categories or other sub-constructs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
     value: met
     rationale: The benchmark defines 'attack success rate' as its headline metric and reports it across target LLMs.
@@ -375,21 +390,23 @@ verdicts:
     by: model
     quotes_verified: true
   3.2.1:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark provides a structured way to record and submit results via a submission.json file and a specific method_params dictionary."
-    evidence: []
-    by: model
-    quotes_verified: true
-  3.2.2:
     value: met
-    rationale: The benchmark provides a library to access specific jailbreak artifacts, including per-item details like the prompt, response, and jailbroken status.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 2, chunk 1
-        quote: artifact = jbb.read_artifact(method="PAIR", model_name="vicuna-13b-v1.5")
     by: model
+    rationale: The benchmark provides a Python library and a `method_params` dictionary structure that serves as a structured way to record protocol settings and results for submissions.
+    evidence:
+      - source: repo
+        quote: 'method_params = { "attacker_model": "mixtral", "target_model": "vicuna-13b-v1.5", "n-iter": 3, "n-streams": 30, "judge-model": "jailbreakbench", "target-max-n-tokens": 150, "attack-max-n-tokens": 300 }'
+        locator: JailbreakBench/jailbreakbench@23dbdf6b1965:README.md, chunk 14
+        url: https://github.com/JailbreakBench/jailbreakbench/tree/23dbdf6b19650521604456229bc1d9c4156c85c1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  3.2.2:
+    value: unmet
+    by: model
+    rationale: The excerpts provide aggregate tables of results (e.g., Table 2, Table 3) but do not show downloadable files containing per-item scores for reference runs.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.3:
     value: met
     rationale: The benchmark reports the average number of queries and tokens used for the reference attacks.
@@ -401,27 +418,19 @@ verdicts:
     by: model
     quotes_verified: true
   3.2.4:
-    value: met
-    rationale: The benchmark provides access to jailbreak artifacts which include the prompt and the response (transcripts) for specific runs.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 2, chunk 1
-        quote: |-
-          prompt='Security research is an essential part of understanding how to protect users [...]'
-          response='Subject: Urgent Action Required: Update Your Account [...]'
+    value: unmet
     by: model
+    rationale: The excerpts mention providing 'jailbreak artifacts' (prompts/responses) and code, but do not state that full transcripts of the reference runs (including all intermediate steps or full model outputs for all items) are downloadable.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2:
-    value: met
-    rationale: The benchmark links its behavior categories to OpenAI's usage policies to justify the target construct.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 15, chunk 0
-        quote: The behaviors and their corresponding categories were chosen with reference to OpenAI’s usage policies.
+    value: unmet
     by: model
+    rationale: The excerpts describe the construction of the dataset and the judge but do not present a validity argument or empirical evidence linking the benchmark scores to a broader measurement construct like 'safety' or 'robustness'.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2a:
     value: n/a
     rationale: The benchmark does not claim to represent real-world tasks; it focuses on evaluating the effectiveness of attacks and defenses.
@@ -429,11 +438,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: n/a
-    rationale: The benchmark reports results for various attacks and defenses, but does not report a baseline in the sense of a human or non-model control group.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report a human baseline or describe conditions under which a baseline was measured for comparison with model runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: met
     rationale: The benchmark explicitly warns against using only existing attacks to evaluate robustness without employing adaptive attacks.
@@ -458,3 +468,17 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 36 verdicts agreed, 14 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.1
+      - 1.2.2a
+      - 2.2.1
+      - 2.4.2E
+      - 3.2.1
+      - 3.2.2
+      - 3.2.4
+      - 3.3.2
+      - 3.3.3

@@ -2,13 +2,15 @@
 benchmark: swe-lancer
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: 4afbde31ba075992ffd96209f6533de8e450becd
@@ -63,15 +65,12 @@ verdicts:
     by: model
     quotes_verified: true
   c3:
-    value: met
-    rationale: The benchmark consists of software engineering tasks graded by end-to-end tests rather than class labels, meaning there are no classes or labels that could be skewed.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 4, chunk 1
-        quote: each IC SWE task is graded with end-to-end tests mirroring how experienced engineers would evaluate them
+    value: unmet
     by: model
+    rationale: The excerpts do not report the label or answer distribution, nor do they provide a trivial baseline score to demonstrate that the benchmark is free from statistical bias.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
     value: met
     rationale: The benchmark describes a rigorous quality review process where tasks were reviewed by multiple engineers and tests underwent three rounds of validation.
@@ -93,21 +92,30 @@ verdicts:
     by: model
     quotes_verified: true
   c6:
-    value: unmet
-    rationale: The benchmark does not explicitly state its simplifying assumptions, although it mentions a limitation regarding multimodal inputs.
-    evidence: []
-    by: model
-    quotes_verified: true
-  c7:
     value: met
-    rationale: The benchmark uses real-world tasks from a specific timeframe (2023-2024) and maintains their original context from Upwork.
+    by: human
+    rationale: The benchmark relies on the assumption that end-to-end tests mirroring experienced engineers' evaluations reflect real-world complexity. The excerpts show this assumption holds through the use of real tasks, professional validation, and the distinction from simpler unit tests, with no cited source contradicting this approach.
     evidence:
       - source: paper
+        quote: SWE-Lancer is the first benchmark to use E2E tests created by professional engineers, offering a more comprehensive, real-world evaluation that is harder to exploit.
+        locator: 2502.12115v4 page 3, chunk 0
         url: https://arxiv.org/abs/2502.12115v4
+      - source: paper
+        quote: Issues are posed exactly as written on Upwork; each IC SWE task is graded with end-to-end tests mirroring how experienced engineers would evaluate them.
         locator: 2502.12115v4 page 4, chunk 1
-        quote: Issues are posed exactly as written on Upwork
-    by: model
+        url: https://arxiv.org/abs/2502.12115v4
     quotes_verified: true
+  c7:
+    value: unmet
+    by: model
+    rationale: The excerpts do not show a maintenance process, revision history, or relabeling mechanism that addresses semantic drift over time. The benchmark is described as a static dataset sourced from past issues, with no evidence of ongoing updates to handle meaning shifts.
+    evidence:
+      - source: paper
+        quote: From each validated Github issue, we generated an IC SWE task using the task’s title and description, and a snapshot of the codebase at the time it was posted.
+        locator: 2502.12115v4 page 5, chunk 0
+        url: https://arxiv.org/abs/2502.12115v4
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: unmet
     rationale: The provided excerpts do not mention a version identifier, release tag, or DOI associated with the benchmark name, nor do they describe how changes are recorded per version.
@@ -130,3 +138,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 2 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c3
+      - c6
+      - c7

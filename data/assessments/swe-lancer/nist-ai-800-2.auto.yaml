@@ -108,7 +108,7 @@ verdicts:
     value: n/a
     rationale: The benchmark does not claim that its scores predict a specific downstream outcome, but rather maps performance to monetary value.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   1.2.3a:
     value: met
@@ -118,7 +118,7 @@ verdicts:
         url: https://arxiv.org/abs/2502.12115v4
         locator: 2502.12115v4 page 8, chunk 2
         quote: The best performing model, Claude 3.5 Sonnet, earns $208,050 on the SWE-Lancer Diamond set and resolves 26.2% of IC SWE issues
-    by: model
+    by: human
     quotes_verified: true
   1.2.3b:
     value: met
@@ -301,19 +301,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.1:
-    value: met
-    rationale: The benchmark provides an open-source evaluation harness and Docker image.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 1, chunk 0
-        quote: we open-source a unified Docker image and a public evaluation split
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 8, chunk 0
-        quote: using the OpenAI API and our open-source eval harness.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark ships runnable evaluation code. Excerpt [paper:p1#0] states: 'we open-source a unified Docker image and a public evaluation split'. Excerpt [paper:p8#0] mentions 'our open-source eval harness'."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.2:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies a required JSON format for SWE Manager tasks and provides the path where it must be written."
@@ -348,12 +341,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.2:
     value: unmet
     rationale: The excerpts do not show that the output logs include the model identifier and benchmark version/commit.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.3:
     value: met
     rationale: The benchmark describes a validation step where tests were triple-verified by engineers and an automated system ensured they passed in the fixed state and failed in the broken state.
@@ -399,10 +394,14 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2D:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark publishes scores for multiple models (GPT-4o, o1, Claude 3.5 Sonnet) with specific versions."
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: The benchmark publishes reference results. Excerpt [paper:p9#0] provides Table 2 with pass rates for GPT-4o, o1, and Sonnet 3.5. Excerpt [paper:p5#2] mentions evaluating specific model versions.
+    evidence:
+      - source: paper
+        quote: Table 2. Diamond Task Pass Rates by Task Type IC SWE SWE Manager Task Type GPT-4o o1 Sonnet 3.5 n GPT-4o o1 Sonnet 3.5 n Application Logic (Client-Side) 8.0% 15.9% 23.9% 176 36.3% 42.3% 45.8% 201
+        locator: 2502.12115v4 page 9, chunk 0
+        url: https://arxiv.org/abs/2502.12115v4
     quotes_verified: true
   2.4.2E:
     value: met
@@ -418,6 +417,7 @@ verdicts:
         quote: Table 3. Diamond Task Pass Rates by Nature of Work
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
     value: met
     rationale: The benchmark defines headline metrics including pass@1 accuracies, total payout (earnings), and earn rates, and specifies aggregation across tasks.
@@ -493,15 +493,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.4:
-    value: met
-    rationale: The documentation states that high performance does not yet imply the reliability needed for trustworthy deployment.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.12115v4
-        locator: 2502.12115v4 page 8, chunk 2
-        quote: the majority of its solutions are incorrect, and higher reliability is needed for trustworthy deployment.
+    value: unmet
     by: model
+    rationale: The excerpts discuss limitations and comparisons but do not explicitly state what the scores should *not* be taken to show (e.g., that a high score does not imply safety).
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.5:
     value: met
     rationale: The benchmark includes a limitations section noting that certain engineering tasks (infrastructure) are underrepresented.
@@ -516,3 +513,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - 2.2.1
+      - 2.4.2D
+      - 3.3.4

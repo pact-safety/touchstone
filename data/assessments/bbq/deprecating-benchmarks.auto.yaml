@@ -2,13 +2,15 @@
 benchmark: bbq
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: bea11bd97d79217245b5871acd247b9d6eb24598
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The benchmark reports that models achieve low accuracy (no more than 67.5%) in ambiguous contexts, indicating significant headroom below the maximum achievable score.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 9, chunk 3
-        quote: Models achieve low accuracy in these ambiguous contexts (no more than 67.5%)
+    value: unmet
     by: model
+    rationale: The excerpts do not provide current best reported scores on the benchmark's standard evaluation, nor do they show headroom from the evaluation ceiling. Without specific top scores and uncertainty intervals, the condition for 'met' cannot be verified.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The excerpts indicate that the test examples are provided in the repository for users to test, but there is no mention of a contamination defense such as a private held-out set or regular refreshing.
@@ -60,16 +59,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c4:
-    value: met
-    rationale: The benchmark describes a human validation process where templates failing a 4/5 agreement threshold were edited until they passed, and annotators achieved over 85% accuracy on filler items.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 15, chunk 1
-        quote: all annotators achieved above 85% accuracy on these items
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts describe a validation process where templates failing human validation (fewer than 4/5 annotators agreeing) are edited until they pass, indicating a quality review of labels."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c5:
     value: met
     rationale: The benchmark states its purpose is to measure social biases in QA models, a capability that remains current for the models it is used on.
@@ -81,25 +78,27 @@ verdicts:
     by: model
     quotes_verified: true
   c6:
-    value: met
-    rationale: The benchmark explicitly states its simplifying assumption that the categories are limited to a current US English-speaking cultural context.
+    value: unmet
+    by: model
+    rationale: The excerpts state that the benchmark is limited to a current US English-speaking cultural context and does not include all possible social biases, which contradicts the assumption of reflecting real-world complexity and task diversity broadly.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
+        quote: These categories are limited to a current US English-speaking cultural context and do not include all possible social biases.
         locator: 2110.08193v2 page 9, chunk 3
-        quote: These categories are limited to a current US English-speaking cultural context
-    by: model
+        url: https://arxiv.org/abs/2110.08193v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c7:
-    value: met
-    rationale: The benchmark's content is designed for a specific cultural context and there is no evidence provided that the labels or task meanings have shifted since creation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.08193v2
-        locator: 2110.08193v2 page 9, chunk 3
-        quote: These categories are limited to a current US English-speaking cultural context
+    value: unmet
     by: model
+    rationale: The excerpts do not show a maintenance process or revision history that addresses meaning drift; the benchmark is presented as a static dataset created for a specific context without evidence of ongoing updates to handle semantic shifts.
+    evidence:
+      - source: repo
+        quote: The paper has been published in the Findings of ACL 2022 [here](https://aclanthology.org/2022.findings-acl.165/).
+        locator: nyu-mll/BBQ@bea11bd97d79:README.md, chunk 1
+        url: https://github.com/nyu-mll/BBQ/tree/bea11bd97d79217245b5871acd247b9d6eb24598
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: unmet
     rationale: The provided excerpts do not show an explicit version identifier (like a release tag or DOI) displayed alongside the benchmark name in its main references.
@@ -122,3 +121,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 5 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - c4
+      - c6
+      - c7

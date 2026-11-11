@@ -59,17 +59,12 @@ verdicts:
     by: model
     quotes_verified: true
   s2.ii:
-    value: met
-    rationale: The report describes the scoring method as a binary 'Yes' or 'No' classification based on whether a generation is an instance of a behavior.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 34, chunk 2
-        quote: |-
-          Your   answer   should   be   "Yes"   or   "No"   with   an
-          explanation.
+    value: unmet
     by: model
+    rationale: The excerpts describe the content of the items (behaviors, contexts, visual inputs) but do not explicitly define the item type in standard testing terminology (e.g., multiple choice, short answer) or specify a scoring method other than binary classification via a classifier.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s2.iii:
     value: met
     rationale: The report describes the creation of criteria based on TDC 2023 and mentions refining them based on specific test cases.
@@ -84,7 +79,7 @@ verdicts:
     value: unmet
     rationale: While the report mentions a human-labeled validation set, it does not describe the number or expertise of the human graders.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   s2.iv-b:
     value: unmet
@@ -96,13 +91,17 @@ verdicts:
     value: unmet
     rationale: The report mentions 'Inter-annotator agreement' as a heading in the validation set section, but no actual agreement figure is provided in the excerpts.
     evidence: []
-    by: model
+    by: human
     quotes_verified: true
   s2.v-a:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The report identifies Llama 2 13B Chat as the base model for the evaluation classifier and states it was fine-tuned."
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: The excerpts explicitly name the base model (Llama 2) and the modification (fine-tuning) used for the automated grading classifier.
+    evidence:
+      - source: paper
+        quote: We fine-tune Llama 2 models to compute ASR for our main evaluations.
+        locator: 2402.04249v2 page 19, chunk 0
+        url: https://arxiv.org/abs/2402.04249v2
     quotes_verified: true
   s2.v-b:
     value: met
@@ -142,20 +141,14 @@ verdicts:
         quote: gpt-4-vision-preview API
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.ii:
-    value: met
-    rationale: The report describes active safeguards, noting that some APIs have filters that cannot be removed while others have no specific safety measures.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 24, chunk 1
-        quote: the API for these models includes filters that cannot be removed
-      - source: paper
-        url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 24, chunk 1
-        quote: No specific safety measures were used in training this model
+    value: unmet
     by: model
+    rationale: The excerpts state that some models have system-level filters that 'cannot be removed' and others have 'no specific safety measures', but they do not explicitly state the active safeguards during the specific elicitation testing process or adaptations to elicitation as required by the rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s3.iii:
     value: unmet
     rationale: The excerpts do not provide the full prompts, sampling settings, or the number of attempts for the elicitation techniques.
@@ -172,6 +165,7 @@ verdicts:
         quote: A comparison of the average ASR across the GCG, GCG (Multi), and GCG (Transfer) attacks
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s4.ii:
     value: unmet
     rationale: The provided excerpts do not mention uncertainty measures or the specific number of evaluation runs conducted.
@@ -222,18 +216,23 @@ verdicts:
         url: https://arxiv.org/abs/2402.04249v2
         locator: 2402.04249v2 page 8, chunk 4
         quote: These include automated white-box, black-box, and transfer attacks as well as a human-designed jailbreaks baseline.
-    by: model
+    by: human
     quotes_verified: true
   s5.ii-b:
-    value: n/a
-    rationale: A human baseline ('Human Jailbreaks') was used.
+    value: met
+    by: model
+    rationale: The report provides 'Human Jailbreaks' and 'Direct Request' as alternative comparison points (baselines) and explains their nature.
     evidence:
       - source: paper
+        quote: "• Human Jailbreaks (Shen et al., 2023a): This baseline uses a fixed set of in-the-wild human jailbreak templates, similar to the Do Anything Now (DAN) jailbreaks."
+        locator: 2402.04249v2 page 22, chunk 2
         url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 8, chunk 4
-        quote: These include automated white-box, black-box, and transfer attacks as well as a human-designed jailbreaks baseline.
-    by: model
+      - source: paper
+        quote: "• Direct Request : This baseline uses the behavior strings themselves as test cases. This tests how well models can refuse direct requests"
+        locator: 2402.04249v2 page 22, chunk 2
+        url: https://arxiv.org/abs/2402.04249v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   s6.i:
     value: unmet
     rationale: The provided excerpts do not contain overall conclusions about a model's capabilities or risk level that cite specific tables, figures, or numbers.
@@ -272,3 +271,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 4 decided by the reviewer."
+    items:
+      - s2.ii
+      - s2.v-a
+      - s3.ii
+      - s5.ii-b

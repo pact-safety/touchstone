@@ -2,13 +2,15 @@
 benchmark: medmnist-v2
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 805b74237fb5bd2db376fd94e50646b6a8905d9d
@@ -74,7 +76,7 @@ verdicts:
         url: https://arxiv.org/abs/2110.14795v2
         locator: 2110.14795v2 page 2, chunk 2
         quote: As a large-scale benchmark in biomedical image analysis, MedMNIST has been particularly useful for machine learning and computer vision research 13–15 ,   e.g. , AutoML, trustworthy machine learning, domain adaptive learning.
-    by: model
+    by: human
     quotes_verified: true
   c6:
     value: met
@@ -84,18 +86,15 @@ verdicts:
         url: https://arxiv.org/abs/2110.14795v2
         locator: 2110.14795v2 page 3, chunk 1
         quote: All images are pre-processed into a MNIST-like format,   i.e. ,   28   ×   28   (2D) or   28   ×   28   ×   28   (3D)
-    by: model
+    by: human
     quotes_verified: true
   c7:
-    value: met
-    rationale: The benchmark uses labels from source datasets and there is no evidence provided that these labels or the task meanings have shifted over time.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 3, chunk 1
-        quote: The MedMNIST uses the classification labels from the source datasets directly in most cases
+    value: unmet
     by: model
+    rationale: The excerpts do not show a maintenance process or revision that addresses meaning drift, nor do they state when content was collected in a way that links to a drift mitigation strategy. The README updates refer to new APIs and corrupted versions, not label maintenance.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: met
     rationale: The benchmark uses an explicit version identifier 'v2' in its main references and maintains detailed release notes recording changes per version.
@@ -140,3 +139,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 1 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c7

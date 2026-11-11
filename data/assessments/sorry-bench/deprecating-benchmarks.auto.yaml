@@ -2,13 +2,15 @@
 benchmark: sorry-bench
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 7da10addffb6790cfeb75281eaffb5a176861653
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The benchmark reports a wide range of scores (6.00% to 90.22%), indicating that the top scores are not at the ceiling and that the benchmark effectively distinguishes between different models.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 18, chunk 0
-        quote: ranging from 6.00% to 90.22%, demonstrating how SORRY-Bench can well distinguish the safety refusal performance of various LLMs
+    value: unmet
     by: model
+    rationale: The excerpts provide a score range (6.00% to 90.22%) but do not report the current best reported score or demonstrate that it is not at or near the maximum achievable ceiling, nor do they provide uncertainty metrics for score differences.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The authors explicitly state that the dataset may suffer from contamination and that a private split is a 'future step', meaning no current contamination defense is documented.
@@ -85,25 +84,27 @@ verdicts:
     by: model
     quotes_verified: true
   c6:
-    value: met
-    rationale: The benchmark states it relies on the assumption of capturing 'average-case bad users' via 20 linguistic mutations, and no cited source contradicts this for its intended use.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 15, chunk 2
-        quote: our focus in this work mainly lies in capturing the snapshot of average-case bad users
+    value: unmet
     by: model
-    quotes_verified: true
-  c7:
-    value: met
-    rationale: The benchmark's content is maintained as the authors explicitly state that the taxonomy and dataset 'may need regular revising' to keep up with the rapidly evolving safety landscape.
+    rationale: The benchmark explicitly admits to simplifying assumptions that do not reflect real-world complexity, specifically noting that it does not capture scenarios involving multiple risky categories simultaneously, which contradicts the requirement that assumptions hold for real-world complexity.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
+        quote: For example, our refusal benchmark does not capture unsafe scenarios that simultaneously involve multiple risky categories.
         locator: 2406.14598v2 page 15, chunk 1
-        quote: our taxonomy and dataset may need regular revising with community effort
-    by: model
+        url: https://arxiv.org/abs/2406.14598v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  c7:
+    value: unmet
+    by: model
+    rationale: The excerpts indicate that the meaning of safety categories has shifted due to external policy changes (e.g., OpenAI Model Spec), and the benchmark acknowledges that its taxonomy may need regular revising, implying it is not frozen but also that drift has occurred without a cited maintenance process ensuring current representativeness.
+    evidence:
+      - source: paper
+        quote: This shift aligns with OpenAI Model Spec (OpenAI, 2024) published in May 2024, which states that discussing adult topics is permissible.
+        locator: 2406.14598v2 page 8, chunk 3
+        url: https://arxiv.org/abs/2406.14598v2
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r1:
     value: unmet
     rationale: The provided excerpts do not mention a version identifier (like a DOI or release tag) associated with the benchmark name, nor do they describe a system for recording changes per version.
@@ -126,3 +127,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 7 verdicts agreed, 3 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - c6
+      - c7

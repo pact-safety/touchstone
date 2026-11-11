@@ -71,15 +71,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses quasi-exact match for answers that are strings, numbers, or lists, rather than automated parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 5, chunk 2
-        quote: evaluation is done via quasi exact match between a model’s answer and the ground truth
+    value: unmet
     by: model
+    rationale: The excerpts describe automated evaluation via quasi-exact match but do not report parser accuracy against hand-checked outputs, repeat-run consistency, or bias comparisons across formats.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: The excerpts mention that questions were 'carefully crafted' and follow a 'design methodology', but no specific sampling strategy over a described task space is documented.
@@ -87,15 +84,12 @@ verdicts:
     by: model
     quotes_verified: true
   ds.2:
-    value: met
-    rationale: The text states that human annotators validated the questions, and the 'Human score' refers to the results of this validation process.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 8, chunk 2
-        quote: Human score refers to the score obtained by our annotators when validating the questions.
+    value: unmet
     by: model
+    rationale: The excerpts state that 'two rounds of annotations are required' to ensure questions are unambiguous, but they do not document a quality or relevance check for every single item in the dataset.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: There is no mention of a counted subset of permuted or perturbed items, nor are such results reported separately.
@@ -113,35 +107,26 @@ verdicts:
     by: model
     quotes_verified: true
   ru.2:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset; it uses a custom question design framework with seed questions devised by the authors.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 19, chunk 0
-        quote: We provided the annotators with a seed set of   GAIA   questions we devised ourselves
+    value: unmet
     by: model
+    rationale: While the paper acknowledges limitations of the benchmark itself, it does not analyze or report the specific strengths and limitations of the 'existing evaluation datasets' that were repurposed.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.3:
-    value: n/a
-    rationale: No prior dataset or benchmark was reused.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 19, chunk 0
-        quote: We provided the annotators with a seed set of   GAIA   questions we devised ourselves
+    value: unmet
     by: model
+    rationale: The paper does not report or compare performance on the new benchmark against the original repurposed datasets.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
-    value: n/a
-    rationale: No prior dataset or benchmark was reused.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 19, chunk 0
-        quote: We provided the annotators with a seed set of   GAIA   questions we devised ourselves
+    value: unmet
     by: model
+    rationale: The paper does not explain modifications to the reused datasets or how they improve construct validity.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The excerpts mention that contamination is mitigated by the design of the tasks, but no specific contamination test is described or reported.
@@ -158,6 +143,7 @@ verdicts:
         quote: We release a developer set of 166 annotated questions and release the remaining 300 questions without annotations
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.3:
     value: unmet
     rationale: The paper discusses the risk of contamination and claims answers are absent from pre-training data, but it does not report a search or overlap check against a named corpus or model.
@@ -202,7 +188,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.12983v1
         locator: 2311.12983v1 page 5, chunk 2
         quote: There is only one correct answer. Hence, evaluation is done via quasi exact match
-    by: model
+    by: human
     quotes_verified: true
   ea.1:
     value: unmet
@@ -230,7 +216,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.12983v1
         locator: 2311.12983v1 page 9, chunk 1
         quote: augmenting LLMs via tool APIs or access to the web improves answer accuracy, and unlock many new use cases, confirming the huge potential of this research direction.
-    by: model
+    by: human
     quotes_verified: true
   jv.1:
     value: met
@@ -272,3 +258,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 6 settled by adjudicator-v4, 2 decided by the reviewer."
+    items:
+      - mo.3
+      - ds.2
+      - ru.2
+      - ru.3
+      - ru.4

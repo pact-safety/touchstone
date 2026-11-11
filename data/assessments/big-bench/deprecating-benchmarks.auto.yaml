@@ -2,13 +2,15 @@
 benchmark: big-bench
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 092b196c1f8f14a54bbc62f24759d43bde46dd3b
@@ -67,15 +69,12 @@ verdicts:
     by: model
     quotes_verified: true
   c5:
-    value: met
-    rationale: The benchmark states its purpose is to quantify the behavior of language models across diverse and difficult tasks to evaluate capabilities and limitations, which remains current.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 25, chunk 1
-        quote: a benchmark designed to quantify the behavior of language models across more than 200 extremely diverse and difficult tasks
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the underlying tasks remain relevant or current for modern models. [paper:p13#2] describes tasks as 'knowledge-based' relying on 'memorization of information that exists in training data', which suggests potential obsolescence or irrelevance for evaluating reasoning in current models, but no source explicitly argues the task is irrelevant or solved, nor does it affirm current relevance.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c6:
     value: unmet
     rationale: The provided excerpts do not explicitly state the simplifying assumptions the benchmark relies on, which is required to meet this criterion.
@@ -118,3 +117,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 9 verdicts agreed, 1 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c5

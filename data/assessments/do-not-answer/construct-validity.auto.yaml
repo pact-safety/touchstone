@@ -2,13 +2,15 @@
 benchmark: do-not-answer
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 460703484df354958a5e1cd7378a38fcb94a2f3e
@@ -50,6 +52,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: met
     rationale: The phenomenon is broken down into a hierarchical risk taxonomy and action categories, which are measured and distributed separately in the results.
@@ -73,15 +76,16 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses model-based evaluators (GPT-4 and Longformer) to classify responses into indices, rather than using automated parsing of free-form output to extract answers.
+    value: unmet
+    by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or bias comparisons across formats.
     evidence:
       - source: paper
+        quote: Although the evaluation scores from GPT-4 and Longformer are not the same as human annotations, the corresponding ranks are almost identical
+        locator: 2308.13387v2 page 11, chunk 2
         url: https://arxiv.org/abs/2308.13387v2
-        locator: 2308.13387v2 page 9, chunk 4
-        quote: "we force the model to return the corresponding class index in the following format: <answer>index</answer>"
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.1:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors describe a task space consisting of a risk taxonomy and a sampling strategy of collecting prompts for each fine-grained risk category."
@@ -89,15 +93,12 @@ verdicts:
     by: model
     quotes_verified: true
   ds.2:
-    value: met
-    rationale: The authors documented a quality check where they excluded or rephrased borderline cases that were not inherently risky to ensure consistency.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.13387v2
-        locator: 2308.13387v2 page 6, chunk 1
-        quote: To ensure the consistency of our data, we address these borderline cases by either incorporating a specific risky scenario, or excluding them if straightforward rephrasing is not feasible.
+    value: unmet
     by: model
+    rationale: While the paper mentions addressing borderline cases and gathering 939 questions, it does not document a quality or relevance check that every single item passed.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: The provided excerpts do not mention a subset of permuted or perturbed items or separate results for such items.
@@ -105,15 +106,12 @@ verdicts:
     by: model
     quotes_verified: true
   ru.1:
-    value: met
-    rationale: The documentation describes the collection of a new dataset using GPT-4, indicating it is not adapting a previous dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.13387v2
-        locator: 2308.13387v2 page 5, chunk 2
-        quote: we use   GPT-4   to generate 10–20 questions or question templates for each harm type
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a statement confirming or denying whether the Do-Not-Answer benchmark adapts a previous dataset or benchmark. While prior works are cited, there is no explicit declaration of reuse or adaptation for the Do-Not-Answer dataset itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
     value: n/a
     rationale: The benchmark uses a newly generated dataset rather than adapting a prior one.
@@ -185,15 +183,16 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: met
-    rationale: The ground truth is based on human annotations and model ratings (subjective), and the paper reports that annotators discussed disagreements to reach consensus.
+    value: unmet
+    by: model
+    rationale: The excerpts describe using consensus for human labels and automatic evaluators, but do not report per-item disagreement distributions or inter-annotator agreement statistics.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2308.13387v2
-        locator: 2308.13387v2 page 7, chunk 3
         quote: They discussed instances of disagreement, and mutually agreed on the final label through consensus.
-    by: model
+        locator: 2308.13387v2 page 7, chunk 3
+        url: https://arxiv.org/abs/2308.13387v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: The excerpts describe categories of responses (safe vs harmful) and action categories, but they do not provide a quantitative count of specific failure modes.
@@ -262,3 +261,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 23 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3
+      - ds.2
+      - ru.1
+      - st.4

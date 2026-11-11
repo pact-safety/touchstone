@@ -2,13 +2,15 @@
 benchmark: mlcommons-ai-safety-v0-5
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 79accfe1424a7994399154ae34fd960fe93a4259
@@ -63,19 +65,20 @@ verdicts:
     by: model
     quotes_verified: true
   def.3:
-    value: met
-    rationale: The phenomenon is divided into hazard categories and subcategories, which are scored separately as indicated by the scoring pipeline.
+    value: unmet
+    by: model
+    rationale: The excerpts mention subcategories and sub-subcategories in the taxonomy, but do not state that they are scored separately; instead, they describe a hierarchy where hazard scores are used to score benchmarks, implying aggregation rather than separate measurement of all sub-components.
     evidence:
       - source: paper
+        quote: although we elaborated numerous subcategories and sub subcategories in the taxonomy, we have not covered every hazard.
+        locator: 2404.12241v2 page 26, chunk 0
         url: https://arxiv.org/abs/2404.12241v2
-        locator: 2404.12241v2 page 54, chunk 1
-        quote: each prompt contains a label for the hazard category, as well as subcategory
       - source: repo
-        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
-        locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 2
         quote: hazard scored - the Test scores are used to score the Hazards
-    by: model
+        locator: mlcommons/modelbench@79accfe1424a:docs/run-journal.md, chunk 2
+        url: https://github.com/mlcommons/modelbench/tree/79accfe1424a7994399154ae34fd960fe93a4259
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.1:
     value: unmet
     rationale: The excerpts do not mention any secondary abilities required by the tasks or any corresponding control conditions or ablation results.
@@ -99,17 +102,23 @@ verdicts:
     by: model
     quotes_verified: true
   ds.1:
-    value: unmet
-    rationale: The documentation describes how the dataset was generated using fragments and templates, but it does not document a sampling strategy over a described task space to ensure representativeness.
-    evidence: []
+    value: met
     by: model
+    rationale: The excerpts document the use of stratified sampling to ensure the human evaluation subset is representative of the overall task space (SUTs and hazard categories).
+    evidence:
+      - source: paper
+        quote: We used stratified sampling, rather than random sampling, to maximize coverage of different SUTs and hazard categories.
+        locator: 2404.12241v2 page 22, chunk 2
+        url: https://arxiv.org/abs/2404.12241v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.2:
     value: unmet
     rationale: While the text mentions validating the accuracy of the LlamaGuard evaluator, there is no evidence that every single task item in the dataset passed a documented quality or relevance check.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: The text mentions using variations to test robustness, but it does not provide a counted subset of permuted/perturbed items with results reported separately from the main score.
@@ -252,12 +261,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.2:
     value: unmet
     rationale: There is no quotable statement linking the choice of tasks and each metric to a specific operational definition labeled 'def.1'.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: met
     rationale: The benchmark compares its taxonomy against seventeen others and notes that some existing taxonomies have additional categories like Sexual content or Profanity.
@@ -278,7 +289,15 @@ verdicts:
         quote: The benchmark can only identify   lack   of safety rather than safety
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 22 verdicts agreed, 6 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.3
+      - ds.1

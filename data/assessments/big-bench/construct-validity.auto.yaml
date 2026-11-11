@@ -2,13 +2,15 @@
 benchmark: big-bench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 092b196c1f8f14a54bbc62f24759d43bde46dd3b
@@ -51,15 +53,12 @@ verdicts:
     by: model
     quotes_verified: true
   def.3:
-    value: met
-    rationale: The benchmark identifies sub-components of social bias (racial, gender, religious, political) and the provided excerpts show that these are categorized as sub-types.
-    evidence:
-      - source: repo
-        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
-        locator: google/BIG-bench@092b196c1f8f:keywords.md, chunk 6
-        quote: "`racial bias` | sub-type of social bias, exploring the impact of race"
+    value: unmet
     by: model
+    rationale: The excerpts mention that tasks are grouped by keywords (e.g., 'social bias' has sub-types like 'racial bias'), but they do not state that the phenomenon is unitary, nor do they explicitly state that these sub-components are scored separately in the aggregate benchmark definition.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.1:
     value: unmet
     rationale: The excerpts do not name specific secondary abilities required by the tasks nor report control conditions or ablation results for them.
@@ -77,16 +76,10 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The provided documentation describes tasks as either text-to-text (comparing against a target string) or multiple-choice (comparing predicted probabilities), neither of which involves automated parsing of free-form output.
-    evidence:
-      - source: repo
-        url: https://github.com/google/BIG-bench/tree/092b196c1f8f14a54bbc62f24759d43bde46dd3b
-        locator: google/BIG-bench@092b196c1f8f:docs/doc.md, chunk 12
-        quote: |-
-          Text-to-text, where the model's generated output is compared against a target output string.
-          - Multiple-choice, where the model is used to score several possible outputs.
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency, or a comparison across at least two output formats for bias validation. While bias is discussed, the specific validation metrics for automated parsing are missing.
+    evidence: []
     quotes_verified: true
   ds.1:
     value: unmet
@@ -171,15 +164,12 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: n/a
-    rationale: The metrics described (exact string match, multiple choice grade, and expected calibration error) rely on deterministic keys or probability distributions rather than subjective labels.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 8, chunk 1
-        quote: "exact_string_match: Accuracy on exact. •   multiple_choice_grade: A weighted multiple choice accuracy between 0-100"
+    value: unmet
     by: model
+    rationale: The excerpts describe metrics like exact_string_match and multiple_choice_grade but do not report per-item disagreement distributions or inter-annotator agreement statistics.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: The excerpts do not provide a qualitative and quantitative analysis where failure modes are both described and counted.
@@ -199,15 +189,12 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors report an experiment on whether including multiple-choice options in the query improves performance, finding that it actually hurts performance.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.04615v3
-        locator: 2206.04615v3 page 16, chunk 1
-        quote: we find that including the choices hurts performance, even in a few-shot context.
+    value: unmet
     by: model
+    rationale: The excerpts discuss the motivation for the benchmark and general findings but do not report specific experiments aimed at improving scores or propose specific named directions with stated rationales for improvement.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: unmet
     rationale: The excerpts mention the motivation to predict 'dangerous or undesirable outcomes', but they do not name a specific real-world application and link it to the tasks.
@@ -240,3 +227,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 24 verdicts agreed, 3 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.3
+      - mo.3
+      - st.4
+      - ea.4

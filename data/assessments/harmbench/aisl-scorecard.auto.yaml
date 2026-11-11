@@ -2,13 +2,15 @@
 benchmark: harmbench
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 8e1604d1171fe8a48d8febecd22f600e462bdcdd
@@ -86,6 +88,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.07:
     value: unmet
     rationale: The excerpts do not mention a named subset of boundary, perturbed, or adversarial items with a stated size and membership criterion.
@@ -93,17 +96,23 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: n/a
-    rationale: The benchmark creates its own set of behaviors (though some are modeled after others), and the excerpts do not show the reuse of a prior dataset for evaluation that requires a comparison table of the same model on original vs adapted data.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The paper compares HarmBench to prior works conceptually and lists prior methods, but does not provide a table or figure comparing the same models on the original dataset (e.g., AdvBench) and on HarmBench.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset in a way that requires listing modifications; it designs its own behaviors.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The paper states it builds on prior work (AdvBench, TDC) but does not list each modification made to the reused data with its specific reason in the provided excerpts.
+    evidence:
+      - source: paper
+        quote: Standard behaviors are modeled after existing datasets of harmful behaviors, including AdvBench and the TDC 2023 Red Teaming Track dataset (Zou et al., 2023; Mazeika et al., 2023).
+        locator: 2402.04249v2 page 5, chunk 2
+        url: https://arxiv.org/abs/2402.04249v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: The item count is mentioned, but there is no power calculation or confidence-interval half-width reported to justify statistical power.
@@ -128,6 +137,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.14:
     value: unmet
     rationale: The labels are subjective (model ratings/human labels), but no per-item disagreement distribution or inter-annotator agreement statistic is reported beside the aggregate scores.
@@ -144,6 +154,7 @@ verdicts:
         quote: The primary measure of a red teaming method’s success is its attack success rate (ASR) on a given target model, which is the percentage of test cases that elicit the behavior from the target model.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.16:
     value: unmet
     rationale: The excerpts do not show a breakdown of failures or scores by a named confound in a table or figure.
@@ -157,10 +168,14 @@ verdicts:
     by: model
     quotes_verified: true
   cv.18:
-    value: unmet
-    rationale: The docs do not contain a single statement that names the tasks, each metric, and the construct from cv.01 they measure with a stated reason.
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: The paper states that HarmBench is designed to satisfy properties of breadth, comparability, and robust metrics, linking the tasks/metrics to the construct of red teaming robustness.
+    evidence:
+      - source: paper
+        quote: We identify three desirable properties for red teaming evaluations—breadth, comparability, and robust metrics—and we systematically design HarmBench to satisfy them.
+        locator: 2402.04249v2 page 1, chunk 3
+        url: https://arxiv.org/abs/2402.04249v2
     quotes_verified: true
   cv.19:
     value: met
@@ -178,6 +193,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.01:
     value: unmet
     rationale: The documentation does not identify specific secondary capabilities or provide control conditions/ablation results for them.
@@ -221,15 +237,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs and local scoring (classifiers), involving no external or mutable environment.
-    evidence:
-      - source: repo
-        url: https://github.com/centerforaisafety/HarmBench/tree/8e1604d1171fe8a48d8febecd22f600e462bdcdd
-        locator: centerforaisafety/HarmBench@8e1604d1171f:docs/codebase_structure.md, chunk 0
-        quote: "The evaluation pipeline consists of four scripts: `generate_test_cases.py`, `merge_test_cases.py`, `generate_completions.py`, `evaluate_completions.py`."
+    value: unmet
     by: model
+    rationale: The evaluation uses live APIs (e.g., OpenAI) which are mutable environments, but no changelog of environment changes with re-validation is published.
+    evidence:
+      - source: paper
+        quote: "We evaluate four different OpenAI models: GPT-3.5 Turbo 0613, GPT-3.5 Turbo 1106, GPT-4 0613, and GPT-4 Turbo 1106."
+        locator: 2402.04249v2 page 24, chunk 0
+        url: https://arxiv.org/abs/2402.04249v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: n/a
     rationale: The evaluation consists of single stateless model calls to generate completions.
@@ -238,7 +255,7 @@ verdicts:
         url: https://arxiv.org/abs/2402.04249v2
         locator: 2402.04249v2 page 7, chunk 2
         quote: Test cases are passed into the target LLM f , which generates T tokens with greedy decoding to produce output strings
-    by: model
+    by: human
     quotes_verified: true
   iv.10:
     value: unmet
@@ -279,23 +296,26 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark is a general framework for automated red teaming and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark is a standardized framework for automated red teaming and does not claim to evaluate a specific deployed product or configuration in a real deployment setting; it evaluates models against behaviors.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark is a general framework for automated red teaming and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The n/a condition applies because the benchmark does not claim to evaluate a specific deployed application; it is a general evaluation framework for automated red teaming.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark is a general framework for automated red teaming and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The n/a condition applies because the benchmark does not claim to evaluate a specific deployed application.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation mentions hyperparameters in config files, but does not list specific library versions, hardware models, or the OS/container image.
@@ -321,15 +341,12 @@ verdicts:
     by: model
     quotes_verified: true
   rel.05:
-    value: met
-    rationale: The benchmark includes a human-designed jailbreaks baseline for red teaming tasks.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 8, chunk 4
-        quote: These include automated white-box, black-box, and transfer attacks as well as a human-designed jailbreaks baseline.
+    value: unmet
     by: model
+    rationale: The excerpts list various LLM baselines (GCG, GCG Multi, etc.) but do not report a human baseline for the red teaming tasks, nor do they state why one is not relevant.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.06:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports a 'Direct Request' baseline, which serves as a trivial/naive baseline for red teaming."
@@ -347,15 +364,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.02:
-    value: met
-    rationale: The benchmark describes a fixed rubric (criteria) used in classifier prompts to ensure consistent and robust rating.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 18, chunk 2
-        quote: we include them in our classifier prompts to improve agreement with human labels.
+    value: unmet
     by: model
+    rationale: The excerpts describe the use of a validation classifier to prevent overfitting, but do not report an adversarial or reward-hacking test of the rater itself, nor do they describe specific defenses like injection filters applied to the rater.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
     value: unmet
     rationale: There is no report of agreement across repeated rating runs on the same inputs for the model rater.
@@ -399,25 +413,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The scoring is performed by a classifier model (Llama 2 or GPT-4) based on a prompt, not by a parser of free-form output into a structured format.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 7, chunk 3
-        quote: we fine-tune Llama 2 13B chat to serve as our classifier for whether a test case was successful.
+    value: unmet
     by: model
+    rationale: The excerpts describe the classifier and pipeline but do not show that the parser is deterministic or test its consistency on identical inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The scoring is performed by a classifier model, not a parser of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.04249v2
-        locator: 2402.04249v2 page 7, chunk 3
-        quote: we fine-tune Llama 2 13B chat to serve as our classifier for whether a test case was successful.
+    value: unmet
     by: model
+    rationale: The excerpts report classifier accuracy against human labels, but do not report parser accuracy against a set of manually verified outputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: While the paper mentions a 'prequalification test' for robustness, it does not report results for a null/trivial-agent run or a targeted exploit attempt on the scorer.
@@ -428,3 +436,19 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 39 verdicts agreed, 14 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.08
+      - cv.09
+      - cv.18
+      - iv.08
+      - ev.05
+      - ev.06
+      - ev.07
+      - rel.05
+      - cor.02
+      - cor.10
+      - cor.11

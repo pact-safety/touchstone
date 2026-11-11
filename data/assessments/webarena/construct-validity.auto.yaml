@@ -2,13 +2,15 @@
 benchmark: webarena
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: dce04686a56253aefba7b18a4fa0937cf1dc987b
@@ -50,6 +52,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: unmet
     rationale: The paper mentions different categories of tasks (e.g., Site Navigation, Content & Config, information-seeking), but it does not state that these sub-components are scored separately; it primarily reports an end-to-end task success rate.
@@ -177,15 +180,16 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: n/a
-    rationale: The benchmark evaluates functional correctness using deterministic keys (reference answers or programs), and the fuzzy match is used to check semantic equivalence to a reference answer.
+    value: unmet
+    by: model
+    rationale: The benchmark uses deterministic checks (exact answer, test suite) or fuzzy matching with a single score, without reporting per-item disagreement distributions or inter-annotator agreement statistics.
     evidence:
       - source: paper
+        quote: Predictions that are judged as “correct” will receive a score of one, while all other predictions will receive a score of zero.
+        locator: 2307.13854v4 page 17, chunk 1
         url: https://arxiv.org/abs/2307.13854v4
-        locator: 2307.13854v4 page 2, chunk 2
-        quote: We focus on evaluating the   functional correctness   of these tasks,   i.e.,   does the result of the execution actually achieve the desired goal
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: met
     rationale: The authors describe a common failure mode (early stopping) and provide a quantitative count (54.9% of feasible tasks).
@@ -234,6 +238,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: met
     rationale: The benchmark is compared to Mind2Web, noting that Mind2Web lacks functional correctness evaluation.
@@ -258,3 +263,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 25 verdicts agreed, 3 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - st.4

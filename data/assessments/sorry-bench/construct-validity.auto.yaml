@@ -2,13 +2,15 @@
 benchmark: sorry-bench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 7da10addffb6790cfeb75281eaffb5a176861653
@@ -50,6 +52,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: met
     rationale: The phenomenon is broken down into a 44-class taxonomy of safety categories, and the text discusses measuring fulfillment rates for these specific categories separately.
@@ -73,14 +76,10 @@ verdicts:
     by: model
     quotes_verified: true
   mo.3:
-    value: n/a
-    rationale: The benchmark uses an LLM-as-a-judge to classify responses as 'refusal' or 'fulfillment', which is a classification task rather than automated parsing of free-form output into structured data.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 8, chunk 1
-        quote: we evaluate these responses as either in “refusal” or “fulfillment” of the corresponding user request
-    by: model
+    value: unmet
+    by: human
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs, repeat-run consistency for the parser, or a comparison across at least two output formats for bias. They report LLM-as-a-judge agreement with humans qualitatively and test decoding strategies, but not the specific automated parsing validation metrics required.
+    evidence: []
     quotes_verified: true
   ds.1:
     value: unmet
@@ -95,15 +94,12 @@ verdicts:
     by: model
     quotes_verified: true
   ds.3:
-    value: met
-    rationale: The benchmark includes 20 linguistic mutations (perturbed items) and reports their impact on safety evaluation results separately in Table 2.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 8, chunk 1
-        quote: we also present an additional study on how the 20 linguistic mutations (§2.4) may impact our safety evaluation results (Table 2)
+    value: unmet
     by: model
+    rationale: While a subset of permuted items (20 linguistic mutations) exists, the excerpts do not report their results separately from the main score. The text states results are presented in 'Table 2' and 'Fig 4' but does not explicitly state that the mutation results are reported separately from the main benchmark score in a way that satisfies the rule.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.1:
     value: met
     rationale: The documentation explicitly states that data points from previous datasets were used as a data bank for the benchmark construction.
@@ -138,12 +134,14 @@ verdicts:
         quote: we also provide a cross-comparison of the benchmark scores in Table 4. Specifically, we compare SORRY-Bench with 4 recent LLM safety benchmarks
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
     value: unmet
     rationale: While the authors mention making 'necessary modifications' to data points, they do not list each specific modification or explain how those specific changes improve construct validity.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The provided excerpts do not describe any contamination tests performed or report any results from such tests.
@@ -192,6 +190,7 @@ verdicts:
         quote: We have validated the inter-annotator agreements among our 6 annotators
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   st.4:
     value: met
     rationale: The labels are subjective (human/model ratings) and the paper reports inter-annotator agreement statistics (Cohen Kappa).
@@ -221,15 +220,16 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors conduct experiments with different system prompts and prompt templates to see how they affect safety refusal scores.
+    value: unmet
+    by: model
+    rationale: The excerpts mention future steps like quantifying 'actual harmfulness' and revising the taxonomy, but these are generic future-work lines rather than specific named directions with stated rationales for improving scores on the current benchmark.
     evidence:
       - source: paper
+        quote: While some prior work (Qi et al., 2023; Souly et al., 2024) have taken the first step to conduct safety evaluation under a more granular scoring rubric, we leave this as an important future step.
+        locator: 2406.14598v2 page 15, chunk 0
         url: https://arxiv.org/abs/2406.14598v2
-        locator: 2406.14598v2 page 36, chunk 2
-        quote: our results indicate that the inclusion of a system prompt, no matter “safe” or “helpful”, consistently enhances model safety refusal
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: met
     rationale: The benchmark is linked to the critical need for safe deployment of LLMs in real-world applications.
@@ -246,19 +246,30 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.3:
     value: unmet
     rationale: While the paper mentions other benchmarks like MT-Bench and Chatbot Arena, it does so to justify sampling temperature, not to compare the benchmark's phenomenon evaluation or state differences in approach.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.4:
     value: unmet
     rationale: The excerpts discuss trade-offs regarding evaluator efficiency (speed vs accuracy) and sampling temperature, but not limitations concerning what the benchmark scores do or do not measure regarding construct validity.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 18 verdicts agreed, 9 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - mo.3
+      - ds.3
+      - ea.4

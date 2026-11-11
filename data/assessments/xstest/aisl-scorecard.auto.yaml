@@ -64,6 +64,7 @@ verdicts:
         quote: "Table 1: XST EST covers ten prompt types with 25 safe test prompts each for a total of 250 safe test prompts."
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
     value: met
     rationale: The task space is defined by ten prompt types, and the item count (25 per type) is reported.
@@ -97,31 +98,26 @@ verdicts:
     by: model
     quotes_verified: true
   cv.08:
-    value: met
-    rationale: The benchmark does not reuse a prior dataset; it is described as a new test suite with hand-crafted prompts.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 1, chunk 0
-        quote: In this paper, we introduce a new test suite called XST EST
+    value: unmet
     by: model
+    rationale: The paper compares models on XST EST but does not provide a table or figure comparing the same models on an original dataset and the adapted benchmark to analyze adaptation effects.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: met
-    rationale: The benchmark does not reuse a prior dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 1, chunk 0
-        quote: In this paper, we introduce a new test suite called XST EST
+    value: unmet
     by: model
+    rationale: The paper does not list modifications made to reused data with reasons, as it primarily constructs new prompts rather than modifying a specific prior dataset for this benchmark.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While item counts are stated, there is no power calculation or confidence-interval half-width reported.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.11:
     value: unmet
     rationale: The results table (Table 2) reports percentages but does not provide confidence intervals or standard errors for the scores.
@@ -134,38 +130,47 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.13:
     value: unmet
     rationale: Rater demographics are not reported, nor is there a check for demographic skew.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.14:
-    value: met
-    rationale: The labels are subjective (refusal vs compliance), and the paper reports inter-annotator agreement using Fleiss' kappa.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 5, chunk 0
-        quote: Annotators agreed on 96.4% of cases for Llama2.0 (Fleiss’ κ = 0.93)
-    by: model
-    quotes_verified: true
-  cv.15:
-    value: met
-    rationale: The headline metrics differentiate between full refusal and partial refusal rather than using a single mean or majority label.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 24, chunk 2
-        quote: We differentiate between full refusal and partial refusal
-    by: model
-    quotes_verified: true
-  cv.16:
     value: unmet
-    rationale: There is no table or figure breaking down failures by a named confound like prompt length or language complexity.
-    evidence: []
     by: model
+    rationale: The labels are determined by manual annotation with inter-annotator agreement reported, but the ground truth is not a single deterministic key; however, the paper does not report per-item disagreement distributions or inter-annotator agreement statistics beside the aggregate score in the main results.
+    evidence:
+      - source: paper
+        quote: All disagreements were discussed among the three annotating authors to decide on a final label to use in evaluation.
+        locator: 2308.01263v3 page 5, chunk 0
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  cv.15:
+    value: unmet
+    by: model
+    rationale: The headline metric (refusal rate) is computed from the final labels, which are single-point aggregates (full/partial refusal) after resolving disagreements, rather than preserving the variability of subjective labels.
+    evidence:
+      - source: paper
+        quote: All disagreements were discussed among the three annotating authors to decide on a final label to use in evaluation.
+        locator: 2308.01263v3 page 5, chunk 0
+        url: https://arxiv.org/abs/2308.01263v3
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  cv.16:
+    value: met
+    by: model
+    rationale: "Failures are broken down by prompt type (e.g., T1: Homonyms, T4: Safe Contexts) which serves as a named confound dimension in the results tables."
+    evidence:
+      - source: paper
+        quote: Table 1 shows model refusal rates on these safe prompts, differentiating between full and partial refusal, by type of prompt.
+        locator: 2308.01263v3 page 5, chunk 0
+        url: https://arxiv.org/abs/2308.01263v3
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.17:
     value: unmet
     rationale: The paper discusses 'lexical overfitting' as a cause, but does not report named failure categories with associated counts or shares.
@@ -178,6 +183,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper compares XST EST to existing resources that cover unsafe prompts (e.g., Ganguli et al., 2022) and states it complements them by focusing on safe prompts."
@@ -185,15 +191,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.20:
-    value: met
-    rationale: The paper provides a limitations statement (limited coverage, unstable responses) and links the scores to the real-world problem of model helpfulness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 9, chunk 1
-        quote: XST EST has limited coverage. Our test prompts are short, simple, English-language questions
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper provides a limitations statement (short, simple, English-language questions) and links scores to real-world capability (helpfulness vs. harmlessness balance)."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.01:
     value: unmet
     rationale: The documentation does not identify secondary capabilities or report control conditions/ablations for them.
@@ -206,6 +209,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.03:
     value: unmet
     rationale: No overlap measurement or mitigation is described as no related phenomena were identified in iv.02.
@@ -225,15 +229,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The primary evaluation is manual annotation of responses, which does not involve a parser for free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 4, chunk 2
-        quote: we evaluate all models by manually annotating their responses on XST EST
+    value: unmet
     by: model
+    rationale: The primary evaluation is manual annotation; while automated methods are explored, the excerpts do not report agreement or accuracy figures per format for parser output compared to reference labels.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report overlap checks or training cutoffs for all evaluated models; it explicitly states that training data details are not public for Llama and Mistral.
@@ -251,25 +252,23 @@ verdicts:
     by: model
     quotes_verified: true
   iv.09:
-    value: n/a
-    rationale: The evaluation consists of single stateless model calls for each prompt.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 3, chunk 2
-        quote: Each prompt is a single English sentence
+    value: unmet
     by: model
+    rationale: The excerpts do not describe the technical harness details regarding state clearing, containers, or process resets between runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
-    value: met
-    rationale: The evaluation does not use multiple-choice questions; it uses open-ended prompts and manual annotation.
+    value: unmet
+    by: model
+    rationale: "The test format is open-ended generation, not multiple choice, so the condition 'format is not multiple choice' is met, but the rule requires reporting random-guess baseline if MCQ is used. Since it is not MCQ, the rule 'The format is not multiple choice' is satisfied. Wait, the rule says 'met when: The format is not multiple choice, OR ...'. Since the format is not multiple choice, it is met."
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
+        quote: We differentiate between three primary types of responses. 1) Full Compliance is the desired behaviour on our safe prompts.
         locator: 2308.01263v3 page 4, chunk 2
-        quote: we evaluate all models by manually annotating their responses on XST EST
-    by: model
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name any domain experts or user groups consulted to define evaluation scenarios.
@@ -292,6 +291,7 @@ verdicts:
         quote: Meta’s open-access Llama2 chat model (Touvron et al., 2023), with and without its original system prompt
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.04:
     value: unmet
     rationale: The excerpts do not report results as a separate slice for a named stress condition or shift differing from train/dev splits.
@@ -299,23 +299,26 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark evaluates general LLM safety/helpfulness and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: "The benchmark does not claim to evaluate a specific deployed application's system configuration. [paper:p9#0] states: 'XST EST is most useful as a complement to other test sets...'. It evaluates general model behaviors (exaggerated safety) rather than matching a named deployed product's specific environment setup for application-centric evaluation."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark evaluates general LLM safety/helpfulness and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application. [paper:p9#0] explicitly states it is a 'complement to other test sets' and focuses on 'exaggerated safety' rather than adversarial manipulation of a specific deployed system. Therefore, the n/a condition for 'If applicable' is not met because it's not an application-centric eval, but the item itself requires adversarial configs which are not present.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark evaluates general LLM safety/helpfulness and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application. [paper:p9#0] states it is a 'complement to other test sets'. While [paper:p9#0] lists limitations like 'short, simple, English-language questions' and 'single-turn conversational settings', it does not frame these as differences from a *specific* real deployment to interpret results in light of gaps for a deployed application, but rather as general limitations of the test suite.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation provides sampling parameters (temperature, max length) but lacks library versions, hardware models, and OS/container details.
@@ -365,15 +368,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: met
-    rationale: The authors report that automated evaluation methods (including GPT-4) qualitatively recover the results of manual evaluation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 6, chunk 3
-        quote: We find that automated evaluation methods can qualitatively recover the results of manual evaluation.
+    value: unmet
     by: model
+    rationale: The excerpts do not report any correlation between model rater ratings and human judgments. While GPT-4 is used as an automated rater, no agreement metrics with human judgments are provided.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The model rater (GPT-4) uses a fixed rubric/taxonomy for classification."
@@ -408,6 +408,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.07:
     value: unmet
     rationale: The benchmark focuses on the absence of refusal rather than providing verified ground-truth solutions for each task.
@@ -418,6 +419,7 @@ verdicts:
         quote: for all safe test prompts, models should not respond with a refusal
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.08:
     value: unmet
     rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing a scorer.
@@ -431,25 +433,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The primary evaluation is manual annotation; the automated options are string-matching or a model rater, not a parser of free-form output into structured data.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 4, chunk 2
-        quote: we evaluate all models by manually annotating their responses on XST EST
+    value: unmet
     by: model
+    rationale: The excerpts describe automated evaluation methods (string match, GPT-4) but do not report tests for the parser's consistency on identical inputs, only that model generation was deterministic.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: Scoring involves manual annotation or a model rater, not a parser of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 4, chunk 2
-        quote: we evaluate all models by manually annotating their responses on XST EST
+    value: unmet
     by: model
+    rationale: The excerpts compare automated methods to manual evaluation but do not report a specific accuracy metric for the parser against a manually verified output set.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: No results are reported for a null-agent run or targeted exploit attempts on the scorer.
@@ -460,3 +456,22 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 24 settled by adjudicator-v4."
+    items:
+      - cv.08
+      - cv.09
+      - cv.14
+      - cv.15
+      - cv.16
+      - cv.20
+      - iv.06
+      - iv.09
+      - iv.10
+      - ev.05
+      - ev.06
+      - ev.07
+      - cor.01
+      - cor.10
+      - cor.11

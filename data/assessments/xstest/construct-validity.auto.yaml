@@ -2,13 +2,15 @@
 benchmark: xstest
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: d7bb5bd738c1fcbc36edd83d5e7d1b71a3e2d84d
@@ -49,11 +51,16 @@ verdicts:
     by: model
     quotes_verified: true
   def.2:
-    value: unmet
-    rationale: While the scope is implied through the ten prompt types, the text does not explicitly name any excluded aspects of the phenomenon.
-    evidence: []
+    value: met
     by: model
+    rationale: The scope is defined as 'exaggerated safety' (false refusals of safe prompts), and the paper explicitly excludes 'lacking safety' (failing to refuse unsafe prompts) from this specific evaluation.
+    evidence:
+      - source: paper
+        quote: We are not suggesting an equivalence between the problem of lacking safety and that of exaggerated safety. With XST EST , we simply want to provide a way of evaluating the latter.
+        locator: 2308.01263v3 page 8, chunk 4
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.3:
     value: met
     rationale: The phenomenon is broken down into ten prompt types (T1-T10) which are measured and reported separately (e.g., refusal rates vary across prompt types).
@@ -187,23 +194,34 @@ verdicts:
     by: model
     quotes_verified: true
   ea.1:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The authors describe failure modes (e.g., exaggerated safety, lexical overfitting) and provide counts of refusals for specific prompt types."
-    evidence: []
+    value: met
     by: model
+    rationale: The paper describes failure modes (e.g., exaggerated safety, lexical overfitting) and provides quantitative counts/rates in tables and text.
+    evidence:
+      - source: paper
+        quote: Table 1 shows model refusal rates on these safe prompts, differentiating between full and partial refusal, by type of prompt.
+        locator: 2308.01263v3 page 5, chunk 0
+        url: https://arxiv.org/abs/2308.01263v3
+      - source: paper
+        quote: The model fully refuses 38% of prompts in XST EST , and partially refuses another 21.6%.
+        locator: 2308.01263v3 page 5, chunk 0
+        url: https://arxiv.org/abs/2308.01263v3
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.2:
     value: unmet
     rationale: The excerpts do not provide a table or figure breaking down failures by a named confounder.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.3:
     value: unmet
     rationale: Since ea.2 is unmet, ea.3 must be unmet per the decision rule.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.4:
     value: met
     rationale: "The authors propose a specific direction for future research: investigating internal mechanisms of white-box models to understand false refusal."
@@ -231,15 +249,12 @@ verdicts:
     by: model
     quotes_verified: true
   jv.3:
-    value: met
-    rationale: The benchmark compares its use of contrast sets to HateCheck.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2308.01263v3
-        locator: 2308.01263v3 page 3, chunk 1
-        quote: This is motivated by the effectiveness of contrast sets for evaluating model decision boundaries (Gardner et al., 2020) and their application in HateCheck (Röttger et al., 2021).
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The excerpts name an existing benchmark (HateCheck) and state a difference in purpose: XST EST's unsafe prompts primarily serve to validate findings rather than being a comprehensive evaluation themselves."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.4:
     value: met
     rationale: The text discusses the trade-off between adequate and exaggerated safety in model calibration.
@@ -254,3 +269,11 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 23 verdicts agreed, 5 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.2
+      - ea.1
+      - jv.3

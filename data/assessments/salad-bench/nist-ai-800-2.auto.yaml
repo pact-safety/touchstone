@@ -2,13 +2,15 @@
 benchmark: salad-bench
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
@@ -76,6 +78,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2a:
     value: unmet
     rationale: The documentation does not name specific areas or tasks that are excluded or not covered relative to the safety construct.
@@ -88,6 +91,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2c:
     value: n/a
     rationale: The benchmark does not claim that its scores predict specific downstream outcomes.
@@ -111,15 +115,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.4a:
-    value: met
-    rationale: The benchmark lists data sources including self-instructed (Finetuned GPT-3.5) and various open-sourced datasets.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 16, chunk 0
-        quote: "Table 9: Data source of base set in SALAD-Bench."
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation states where items came from (self-instructed, open-sourced datasets like HH, Advbench, etc.) and describes the generation/templating process."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4b:
     value: met
     rationale: The benchmark states the total item count (21k) and counts for specific subsets (attack-enhanced, defense-enhanced, MCQ).
@@ -148,6 +149,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.1a:
     value: unmet
     rationale: The documentation does not define a reference protocol for comparison or specify which settings may vary without breaking comparability.
@@ -161,15 +163,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2a:
-    value: met
-    rationale: The benchmark specifies that greedy sampling is used for open-sourced models.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 6, chunk 2
-        quote: When generating from open-sourced models, we strictly follow its chat template and use greedy sampling.
+    value: unmet
     by: model
+    rationale: While greedy sampling is mentioned for open-sourced models, the benchmark does not specify inference settings (like temperature) for black-box models or state that they are left to the evaluator.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2b:
     value: met
     rationale: The prompt template for the MCQ-Judge is provided verbatim in the paper.
@@ -282,6 +281,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.4:
     value: n/a
     rationale: The models in this benchmark do not execute code or tool calls.
@@ -321,15 +321,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.1.4:
-    value: met
-    rationale: The benchmark provides a list of keywords used to identify and handle rejections.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 15, chunk 0
-        quote: Here is the comprehensive list of keywords used to identify a rejection.
+    value: unmet
     by: model
+    rationale: The items contain safety-related content likely to trigger safeguards, but the excerpts do not specify how refusals are scored or reported separately.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.5:
     value: n/a
     rationale: Items are answered in a single response with no tools or environment, so no solution path exists beyond answering.
@@ -346,22 +343,21 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2D:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark publishes safety scores for various models (e.g., Claude2, GPT-3.5) in Table 5."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
-    value: met
-    rationale: The benchmark reports safety rates separately for the base set and the attack-enhanced subset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 7, chunk 3
-        quote: There is a significant drop in safety rates when comparing the base set to the attack-enhanced set.
+    value: unmet
     by: model
+    rationale: The benchmark has multiple item formats (QA and MCQ) and claims multiple constructs, but does not report results separately for each format or construct in the excerpts.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
     value: unmet
     rationale: The benchmark mentions 'safety score' and 'ASR', but does not precisely define the headline metric or the specific aggregation functions used across items.
@@ -398,6 +394,7 @@ verdicts:
           Money Cost   N/A   ~$20   N/A   ~$77
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.4:
     value: unmet
     rationale: While examples of responses are shown in figures, there is no mention of downloadable full or representative transcripts of reference runs.
@@ -423,15 +420,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.4:
-    value: met
-    rationale: The benchmark explicitly states that a high overall safety rate does not mean all risks are identified.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 2, chunk 2
-        quote: a high overall safety rate does not obscure the identification of tasks and categories that may present risks.
+    value: unmet
     by: model
+    rationale: The excerpts do not state what the scores should *not* be taken to show; they only present the scores and comparisons without explicit disclaimers about over-generalization.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.5:
     value: unmet
     rationale: The documentation discusses limitations of existing benchmarks, but does not provide a dedicated section for the limitations or known issues of SALAD-Bench itself.
@@ -442,3 +436,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 39 verdicts agreed, 12 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.4a
+      - 2.1.2a
+      - 2.4.1.4
+      - 2.4.2E
+      - 3.3.4

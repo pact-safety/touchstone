@@ -35,11 +35,16 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   des.01:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark defines the truthfulness objective as a claim counting as true if it describes the literal truth about the real world."
-    evidence: []
+    value: 15
     by: model
+    rationale: The benchmark explicitly defines the concept of truthfulness it measures, distinguishing it from honesty and specifying a strict standard based on literal truth about the real world.
+    evidence:
+      - source: paper
+        quote: TruthfulQA aims to measure the truthfulness of a model (Evans et al., 2021). We use a strict standard, where a claim counts as true if it describes the literal truth about the real world.
+        locator: 2109.07958v2 page 4, chunk 0
+        url: https://arxiv.org/abs/2109.07958v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.02:
     value: 15
     rationale: The benchmark translates the concept of truthfulness into a task of measuring whether models produce false statements in response to questions designed to elicit imitative falsehoods.
@@ -61,10 +66,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.04:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The text provides guidance on how to interpret scores, noting that poor performance indicates a lack of robustness and that the benchmark may not generalize to specialized domains."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The document provides specific guidance on how to interpret scores, noting that strong performance does not imply truthfulness in specialized domains and that poor performance indicates a lack of robustness.
+    evidence:
+      - source: paper
+        quote: Strong performance on TruthfulQA does not imply that a model will be truthful in a specialized domain. But poor performance does indicate a lack of robustness.
+        locator: 2109.07958v2 page 9, chunk 1
+        url: https://arxiv.org/abs/2109.07958v2
     quotes_verified: true
   des.05:
     value: 0
@@ -72,6 +81,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.06:
     value: 0
     rationale: No specific use cases or user personas are described.
@@ -79,16 +89,25 @@ verdicts:
     by: model
     quotes_verified: true
   des.07:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The benchmark integrates domain literature by citing numerous papers on factuality, veracity, and truthfulness."
-    evidence: []
+    value: 15
     by: model
+    rationale: The document integrates domain literature by citing previous work on truthfulness, factuality, and related benchmarks to contextualize the new benchmark.
+    evidence:
+      - source: paper
+        quote: Concepts related to truthfulness in natural language generation include factuality, veracity, and avoiding hallucinations (Shuster et al., 2021; Zhou et al., 2021). Evans et al. (2021) refine the concept of truthfulness and draw distinctions between truthfulness and honesty.
+        locator: 2109.07958v2 page 8, chunk 3
+        url: https://arxiv.org/abs/2109.07958v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.08:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (10): The benchmark uses multiple metrics (GPT-judge, BLEURT, etc.) and discusses the validation accuracy of the automated GPT-judge metric."
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The document explains the choice of metrics, including human evaluation, GPT-judge, and standard NLP metrics, and validates the automated metrics against human judgments.
+    evidence:
+      - source: paper
+        quote: The finetuned GPT-judge model is able to predict human evaluations of truthfulness with 90-96% validation accuracy. ... We have shown that GPT-judge is reasonably robust and provides a cheap alternative to human evaluation.
+        locator: 2109.07958v2 page 8, chunk 1
+        url: https://arxiv.org/abs/2109.07958v2
     quotes_verified: true
   des.09:
     value: 0
@@ -113,20 +132,25 @@ verdicts:
     by: model
     quotes_verified: true
   des.12:
-    value: 0
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The GPT-judge automated evaluation is validated against human evaluations with high accuracy."
-    evidence: []
+    value: 15
     by: model
-    quotes_verified: true
-  des.13:
-    value: 10
-    rationale: The benchmark mentions that most other benchmarks are multiple choice while some require short answers, and lists other factual benchmarks.
+    rationale: The document describes a validated automatic evaluation method (GPT-judge) that predicts human evaluations with high accuracy.
     evidence:
       - source: paper
+        quote: The finetuned GPT-judge model is able to predict human evaluations of truthfulness with 90-96% validation accuracy.
+        locator: 2109.07958v2 page 8, chunk 1
         url: https://arxiv.org/abs/2109.07958v2
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  des.13:
+    value: 15
+    by: human
+    rationale: The document explains differences to related benchmarks by contrasting TruthfulQA with multiple-choice benchmarks and automated fact-checking, highlighting its focus on generation and imitative falsehoods.
+    evidence:
+      - source: paper
+        quote: While most benchmarks are multiple choice, some require models to generate short (single-phrase) answers ... A related line of research is automated fact-checking ... where the focus is on evaluation of statements rather than generation.
         locator: 2109.07958v2 page 8, chunk 3
-        quote: While most benchmarks are multiple choice, some require models to generate short (single-phrase) answers
-    by: model
+        url: https://arxiv.org/abs/2109.07958v2
     quotes_verified: true
   des.14:
     value: 0
@@ -144,6 +168,7 @@ verdicts:
         quote: answers and scores can be generated by running `truthfulqa/evaluate.py`
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.02:
     value: 15
     rationale: The benchmark questions and reference answers are provided in a CSV file in the repository.
@@ -404,3 +429,13 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 3 decided by the reviewer."
+    items:
+      - des.01
+      - des.04
+      - des.07
+      - des.08
+      - des.12
+      - des.13

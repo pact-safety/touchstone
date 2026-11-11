@@ -62,7 +62,7 @@ verdicts:
         url: https://arxiv.org/abs/2404.07972v2
         locator: 2404.07972v2 page 2, chunk 2
         quote: Each task example is based on real-world computer use cases experienced by real users
-    by: model
+    by: human
     quotes_verified: true
   des.04:
     value: 0
@@ -80,15 +80,20 @@ verdicts:
         quote: annotators being computer science major college students who possess basic software usage skills
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   des.06:
-    value: 15
-    rationale: The benchmark explicitly states that tasks are based on real-world computer use cases.
+    value: 10
+    by: human
+    rationale: The benchmark uses 'real-world computer use cases' and categorizes tasks by domain (Office, Daily, Professional), which serves as a proxy for user personas/use cases, but does not explicitly describe specific user personas.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2404.07972v2
-        locator: 2404.07972v2 page 2, chunk 2
         quote: Each task example is based on real-world computer use cases experienced by real users
-    by: model
+        locator: 2404.07972v2 page 2, chunk 2
+        url: https://arxiv.org/abs/2404.07972v2
+      - source: repo
+        quote: Category-level statistics (Office, Daily, Professional)
+        locator: xlang-ai/OSWorld@044bc33901cb:README.md, chunk 11
+        url: https://github.com/xlang-ai/OSWorld/tree/044bc33901cb893808e3f91ebc9a17ed8e54b44c
     quotes_verified: true
   des.07:
     value: 0
@@ -228,7 +233,7 @@ verdicts:
           ```bash
           # Basic usage with default parameters
           python show_result.py
-    by: model
+    by: human
     quotes_verified: true
   imp.08:
     value: 0
@@ -318,7 +323,7 @@ verdicts:
         url: https://arxiv.org/abs/2404.07972v2
         locator: 2404.07972v2 page 6, chunk 2
         quote: The environment preparation, annotation process, data statistics, and human performance are described in this section.
-    by: model
+    by: human
     quotes_verified: true
   doc.07:
     value: 15
@@ -469,3 +474,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 4 decided by the reviewer."
+    items:
+      - des.06

@@ -2,13 +2,15 @@
 benchmark: hellaswag
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
 model_run:
@@ -34,22 +36,25 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.02:
     value: unmet
     rationale: While the documentation describes the dataset's composition, it does not explicitly state what is in scope and name an aspect of the phenomenon that is excluded.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
-    value: n/a
-    rationale: The paper describes the task as a single construct of commonsense NLI/reasoning without naming distinct facets that require independent scoring.
+    value: unmet
+    by: model
+    rationale: The paper reports a single aggregate accuracy score for the benchmark and does not provide independent scores for distinct facets like factual accuracy vs. tone.
     evidence:
       - source: paper
+        quote: "Table 1: Performance of models, evaluated with accuracy (%)."
+        locator: 1905.07830v1 page 6, chunk 0
         url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 9, chunk 1
-        quote: In this paper, we presented HellaSwag , a new dataset for physically situated commonsense reasoning.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
     value: met
     rationale: The docs define the task space using categories (in-domain vs zero-shot) and report item counts for these dimensions.
@@ -66,6 +71,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.06:
     value: met
     rationale: Every item passed a human validation step to filter out realistic machine-generated endings, and the criteria (highest agreement/probability) are described.
@@ -120,6 +126,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.13:
     value: unmet
     rationale: Rater demographics are not reported, nor is there a description of mitigation for demographic skew.
@@ -127,25 +134,27 @@ verdicts:
     by: model
     quotes_verified: true
   cv.14:
-    value: n/a
-    rationale: "The labels are deterministic: the ground truth is the actual next caption of the video."
+    value: unmet
+    by: model
+    rationale: The ground truth is a deterministic key (the true ending), so subjective label variability metrics are not required, but the paper does not report inter-annotator agreement statistics anyway.
     evidence:
       - source: paper
+        quote: For example, option A of the WikiHow passage suggests that a driver should stop at a red light for no more than two seconds . plausible next event is option C
+        locator: 1905.07830v1 page 1, chunk 3
         url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 2, chunk 3
-        quote: Only one choice is right – the actual next caption of the video.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.15:
-    value: n/a
-    rationale: "The labels are deterministic: the ground truth is the actual next caption of the video."
+    value: unmet
+    by: model
+    rationale: The ground truth is a deterministic key (the true ending), so reducing to a single-point aggregate (accuracy) is appropriate and not a violation of this rule.
     evidence:
       - source: paper
+        quote: "Table 1: Performance of models, evaluated with accuracy (%)."
+        locator: 1905.07830v1 page 6, chunk 0
         url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 2, chunk 3
-        quote: Only one choice is right – the actual next caption of the video.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.16:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper breaks down performance by the confound of context presence (Ending Only) in Figure 4."
@@ -164,6 +173,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: met
     rationale: The benchmark is compared to SWAG, and it is stated that HellaSwag addresses the gap of 'artifacts' and 'spurious patterns' found in SWAG.
@@ -211,17 +221,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The models are trained to return a logit for an ending in a four-way cross-entropy loss, which does not involve parsing free-form output.
+    value: unmet
+    by: model
+    rationale: "The evaluation uses a multiple-choice format where the model returns a logit for an ending, not free-form output requiring parsing. The n/a condition for 'no parsing of free-form output' applies, but the item asks to test for parsing bias. Since the scoring is based on selecting from fixed choices (logits/softmax), there is no free-form parsing bias to test in the manner described. However, the rule for 'met' requires comparing parser output on two formats. Since there is no parser for free-form output, the condition for 'n/a' is met: 'Scoring involves no parsing of free-form output'."
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/1905.07830v1
+        quote: "The models share the same format: given a context and an ending, return a logit for that ending."
         locator: 1905.07830v1 page 6, chunk 1
-        quote: |-
-          given a context and an ending, return a   logit 
-          for that ending.
-    by: model
+        url: https://arxiv.org/abs/1905.07830v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report overlap/contamination checks or provide training-data cutoffs for all evaluated models.
@@ -229,23 +238,19 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs and local scoring without an external or mutable environment.
+    value: unmet
+    by: model
+    rationale: The excerpts do not document environment changes or re-validation, nor do they explicitly state the use of a static snapshot in a way that satisfies the rule.
     evidence: []
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: n/a
-    rationale: The task consists of predicting a logit for a given context and ending, which is a single stateless model call.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 6, chunk 1
-        quote: |-
-          given a context and an ending, return a   logit 
-          for that ending.
+    value: unmet
     by: model
+    rationale: The excerpts do not describe the evaluation harness resetting state per task (e.g., fresh container or process) in code or docs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark uses a multiple-choice format and reports the random-guess baseline of 25%."
@@ -271,36 +276,33 @@ verdicts:
     by: model
     quotes_verified: true
   ev.04:
-    value: met
-    rationale: Results are reported as separate slices for 'Zero-Shot' and 'In-Domain' conditions, with specific item counts provided for these subsets.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 6, chunk 0
-        quote: |-
-          Overall   In-Domain   Zero-Shot   ActivityNet   WikiHow
-          Model   Val   Test   Val   Test   Val   Test   Val   Test   Val   Test
-          Split Size Ñ   10K   10K   5K   5K   5K   5K   3.2K   3.5K   6.8K   6.5K
+    value: unmet
     by: model
+    rationale: The excerpts report splits for 'in-domain' and 'zero-shot' categories, but do not report results for a named stress condition or shift (e.g., adversarial, time) that differs from the released train/dev/test splits as a separate slice with item count.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.05:
-    value: n/a
-    rationale: The benchmark is presented as a general testbed for NLI models and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark is described as a general testbed for commonsense NLI and does not claim to evaluate a specific deployed product or configuration.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
-    value: n/a
-    rationale: The benchmark is presented as a general testbed for NLI models and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application, so this item is not applicable in the context of application-centric evaluations, but strictly speaking, the rule requires adversarial configurations to be included for the item to be met. However, the n/a condition is 'The benchmark does not claim to evaluate a specific deployed application.'
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.07:
-    value: n/a
-    rationale: The benchmark is presented as a general testbed for NLI models and does not claim to evaluate a specific deployed application.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark does not claim to evaluate a specific deployed application, triggering the n/a condition.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rel.01:
     value: unmet
     rationale: The documentation mentions some hyperparameters (batch size, warmup) but fails to list library versions, hardware models, or OS/container images.
@@ -336,35 +338,48 @@ verdicts:
     by: model
     quotes_verified: true
   rel.06:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation reports a 'Chance' baseline score of 25.0%."
-    evidence: []
+    value: met
     by: model
+    rationale: The excerpts report the performance of trivial baselines, specifically random chance and simple models like fastText.
+    evidence:
+      - source: paper
+        quote: The baseline (25% accuracy) is random chance.
+        locator: 1905.07830v1 page 3, chunk 0
+        url: https://arxiv.org/abs/1905.07830v1
+      - source: paper
+        quote: Chance 25.0 fastText 30.9 31.6 33.8 32.9 28.0 30.2 27.7 28.4 32.4 33.3
+        locator: 1905.07830v1 page 6, chunk 0
+        url: https://arxiv.org/abs/1905.07830v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.01:
-    value: n/a
-    rationale: The benchmark uses human annotators for validation and ground truth, not a model rater to assign final labels.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts describe human annotation and filtering but do not report any correlation between a model rater and human judgments.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The benchmark uses human annotators for validation and ground truth, not a model rater to assign final labels.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts describe Adversarial Filtering but do not report an adversarial test of the rater or describe a named defense against reward hacking.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The benchmark uses human annotators for validation and ground truth, not a model rater to assign final labels.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on the same inputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The benchmark uses human annotators for validation and ground truth, not a model rater to assign final labels.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not measure any named rater bias with a number or state a mitigation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: met
     rationale: The documentation states that human evaluation is performed by combining five independent workers via majority vote.
@@ -404,25 +419,19 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: The task is a four-way multiple choice problem where the model returns a logit for the ending, involving no parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 6, chunk 1
-        quote: given a context and an ending, return a   logit for that ending
+    value: unmet
     by: model
+    rationale: The excerpts do not show the parser is deterministic or test its consistency.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: The task is a four-way multiple choice problem where the model returns a logit for the ending, involving no parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1905.07830v1
-        locator: 1905.07830v1 page 6, chunk 1
-        quote: given a context and an ending, return a   logit for that ending
+    value: unmet
     by: model
+    rationale: The excerpts do not report parser accuracy against hand-checked outputs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: There are no reported results for a null/trivial-agent run or targeted exploit attempts on the scorer.
@@ -433,3 +442,25 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 33 verdicts agreed, 22 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.03
+      - cv.14
+      - cv.15
+      - iv.06
+      - iv.08
+      - iv.09
+      - ev.04
+      - ev.05
+      - ev.06
+      - ev.07
+      - rel.06
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.10
+      - cor.11

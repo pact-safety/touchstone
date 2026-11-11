@@ -61,15 +61,12 @@ verdicts:
     by: model
     quotes_verified: true
   c4:
-    value: met
-    rationale: The benchmark employs a validation process where each question is validated by two experts to ensure objective answers.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12022v1
-        locator: 2311.12022v1 page 11, chunk 1
-        quote: We verify that the answers to our questions are objective by having each one validated by two experts
+    value: unmet
     by: model
+    rationale: The excerpts describe the validation process (expert validation) but do not provide any cited audit, error analysis, or reported error rate for the benchmark data. The decision rule requires a cited audit or validation pass reporting a low error rate, which is missing.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c5:
     value: met
     rationale: The benchmark serves the purpose of providing data for scalable oversight experiments, which is stated as a current need as models advance.
@@ -78,7 +75,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.12022v1
         locator: 2311.12022v1 page 11, chunk 0
         quote: scalable oversight experiments are most effective if they use data with ground truth labels (e.g., answers to questions) that models cannot yet reliably produce
-    by: model
+    by: human
     quotes_verified: true
   c6:
     value: unmet
@@ -118,3 +115,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - c4

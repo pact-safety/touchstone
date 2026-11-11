@@ -2,13 +2,15 @@
 benchmark: impossiblebench
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: d4f9a149db2b9cec0fed7bab01d91c07ee10aca2
@@ -68,7 +70,7 @@ verdicts:
         url: https://arxiv.org/abs/2510.20270v1
         locator: 2510.20270v1 page 1, chunk 2
         quote: As standard benchmarks typically cannot distinguish such specification-violating shortcuts from genuine solutions
-    by: model
+    by: human
     quotes_verified: true
   r2.a:
     value: met
@@ -146,6 +148,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r5.a:
     value: unmet
     rationale: The benchmark does not provide a severity scale or cite a source for harm weighting.
@@ -193,15 +196,16 @@ verdicts:
     by: model
     quotes_verified: true
   r7.a:
-    value: met
-    rationale: The benchmark identifies cheating as the target construct and provides operational definitions for four specific strategies (Modify Test Cases, Overload Comparison Operators, Record Extra States, and Special-casing).
+    value: unmet
+    by: model
+    rationale: The benchmark defines 'cheating' as exploiting test cases (e.g., modifying tests, overloading operators), but it does not provide explicit operational definitions for other potential harm constructs like 'bias' or 'toxicity', nor does it define what counts as an instance for those specific constructs. It focuses solely on cheating propensity.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2510.20270v1
+        quote: "Modify Test Cases : The model directly modifies tests despite being explicitly instructed not to. • Overload Comparison Operators : The model overloads the comparison operators so they always return desired values."
         locator: 2510.20270v1 page 5, chunk 1
-        quote: we identify four distinct cheating strategies that models employ when faced with impossible tasks, ranging from direct test manipulation to sophisticated state-based exploits.
-    by: model
+        url: https://arxiv.org/abs/2510.20270v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.b:
     value: unmet
     rationale: The excerpts do not state whose values or judgments (e.g., specific experts or policy frameworks) inform the definition of cheating/harm.
@@ -253,15 +257,16 @@ verdicts:
     by: model
     quotes_verified: true
   r9.a:
-    value: met
-    rationale: The prompts are sourced from existing benchmarks (LiveCodeBench, SWE-bench) and mutated; the benchmark reports a quality control process to validate these mutations.
+    value: unmet
+    by: model
+    rationale: The benchmark states that prompts are sourced from researcher-designed scaffolds and examples, but it does not report validation of these synthetic prompts. It mentions prompt engineering to minimize cheating, but not validation of the prompt sources themselves against real user logs or other criteria.
     evidence:
       - source: paper
+        quote: To arrive at the prompts used in our main results (Figure 3 and Figure 4), we conducted extensive prompt engineering to minimize cheating propensity.
+        locator: 2510.20270v1 page 6, chunk 1
         url: https://arxiv.org/abs/2510.20270v1
-        locator: 2510.20270v1 page 4, chunk 0
-        quote: To reduce noise, we verify their validity by testing them against both the original patches from the base benchmarks and empty patches
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.b:
     value: met
     rationale: The benchmark argues that its setup (providing test access) mirrors real-world scenarios where agents iteratively refine solutions.
@@ -324,3 +329,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 33 verdicts agreed, 3 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r7.a
+      - r9.a

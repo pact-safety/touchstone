@@ -2,13 +2,15 @@
 benchmark: strongreject
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
@@ -61,15 +63,16 @@ verdicts:
     by: model
     quotes_verified: true
   iv.04:
-    value: met
-    rationale: The authors describe a control experiment using an unaligned model (Dolphin) to isolate the effect of jailbreaks on capabilities versus willingness.
+    value: unmet
+    by: model
+    rationale: The excerpts describe experiments isolating capabilities by using unaligned models or benign prompts, but do not describe controls for confounding variables like answer-position balancing or prompt-format perturbation within the main evaluation.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2402.10260v2
+        quote: To isolate the effect of jailbreaks on capabilities, we must either feed jailbroken forbidden prompts to an unaligned model (i.e., a model that willingly responds to forbidden prompts) or feed jailbroken benign prompts to an aligned model.
         locator: 2402.10260v2 page 9, chunk 1
-        quote: To isolate the effect of jailbreaks on capabilities, we must either feed jailbroken forbidden prompts to an unaligned model
-    by: model
+        url: https://arxiv.org/abs/2402.10260v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.05:
     value: unmet
     rationale: There is no mention of canary strings, private test splits, or a contamination analysis to prevent test data from being in the training set.
@@ -84,7 +87,7 @@ verdicts:
         url: https://arxiv.org/abs/2402.10260v2
         locator: 2402.10260v2 page 15, chunk 3
         quote: The model is still non-deterministic at τ = 0 , so we supply three sampled outputs.
-    by: model
+    by: human
     quotes_verified: true
   iv.07:
     value: met
@@ -94,18 +97,19 @@ verdicts:
         url: https://arxiv.org/abs/2402.10260v2
         locator: 2402.10260v2 page 2, chunk 1
         quote: when we look at the full model responses from GPT-4, they do not contain any actionable information on explosives.
-    by: model
+    by: human
     quotes_verified: true
   iv.08:
-    value: met
-    rationale: The authors describe using human labelers from LabelBox and validate the automated evaluator's labels against these human judgments.
+    value: unmet
+    by: model
+    rationale: While human evaluators were recruited, the excerpts do not describe blinding procedures or report inter-annotator agreement figures to control for labeling bias.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2402.10260v2
+        quote: We recruited five labelers from LabelBox to label responses from our four victim models to a 60-prompt subset of our StrongREJECT dataset.
         locator: 2402.10260v2 page 5, chunk 3
-        quote: We recruited five labelers from LabelBox to label responses from our four victim models
-    by: model
+        url: https://arxiv.org/abs/2402.10260v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
     value: unmet
     rationale: The excerpts do not show that the benchmark releases full model outputs per item for evaluators to read.
@@ -140,6 +144,7 @@ verdicts:
         quote: the attacks that we use are not necessarily useful for other tasks like indirect prompt injection of LLM-based applications
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.03:
     value: unmet
     rationale: While the paper mentions a dataset of forbidden prompts, it does not describe the spread of the evaluation along a specific axis with counts or proportions.
@@ -214,3 +219,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 17 verdicts agreed, 3 settled by adjudicator-v4, 2 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.04
+      - iv.08

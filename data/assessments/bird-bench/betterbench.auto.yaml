@@ -81,10 +81,14 @@ verdicts:
     by: model
     quotes_verified: true
   des.07:
-    value: 0
-    rationale: There is no evidence of integrating domain literature into the benchmark design.
-    evidence: []
-    by: model
+    value: 15
+    by: human
+    rationale: The benchmark integrates domain literature by comparing with prior works (GeoQuery, ATIS, WikiSQL, Spider) and citing relevant SQL efficiency studies.
+    evidence:
+      - source: paper
+        quote: Study about SQL Efficiency Efficient execution of SQL queries on big databases has been a significant topic in both academia and industries.
+        locator: 2305.03111v3 page 28, chunk 1
+        url: https://arxiv.org/abs/2305.03111v3
     quotes_verified: true
   des.08:
     value: 15
@@ -150,6 +154,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.01:
     value: 15
     rationale: The paper explicitly states that the source code is available via a provided URL.
@@ -160,17 +165,17 @@ verdicts:
         quote: |-
           The leaderboard and source code
           are available:   https://bird-bench.github.io/
-    by: model
+    by: human
     quotes_verified: true
   imp.02:
-    value: 15
-    rationale: The paper states that the databases are easily accessible and provides details on the training, development, and testing sets.
+    value: 10
+    by: human
+    rationale: The training and development databases are accessible, but the testing dataset is explicitly hidden for fair evaluation, meaning the full evaluation data is not accessible.
     evidence:
       - source: paper
+        quote: Training and development sets are public while testing data set is hidden for the fair evaluation of all text-to-SQL challengers.
+        locator: 2305.03111v3 page 17, chunk 2
         url: https://arxiv.org/abs/2305.03111v3
-        locator: 2305.03111v3 page 3, chunk 2
-        quote: All of these databases contain real and large value distributions and are easily accessible
-    by: model
     quotes_verified: true
   imp.03:
     value: 15
@@ -194,7 +199,7 @@ verdicts:
         quote: |-
           We implement our codes mainly based on the
           hugging-face transformers library
-    by: model
+    by: human
     quotes_verified: true
   imp.05:
     value: 0
@@ -338,7 +343,7 @@ verdicts:
         url: https://arxiv.org/abs/2305.03111v3
         locator: 2305.03111v3 page 2, chunk 6
         quote: we propose a new evaluation metric Valid Efficiency Score (VES) to evaluate the efficiency of generated SQLs.
-    by: model
+    by: human
     quotes_verified: true
   doc.12:
     value: 15
@@ -380,7 +385,7 @@ verdicts:
         url: https://arxiv.org/abs/2305.03111v3
         locator: 2305.03111v3 page 19, chunk 1
         quote: Yes, we provide the token list for each question and SQLs from NLTK for users.
-    by: model
+    by: human
     quotes_verified: true
   doc.17:
     value: 15
@@ -400,7 +405,7 @@ verdicts:
         url: https://arxiv.org/abs/2305.03111v3
         locator: 2305.03111v3 page 3, chunk 2
         quote: In our work, we obtain and process databases from three different sources to enrich real-world attributes.
-    by: model
+    by: human
     quotes_verified: true
   doc.19:
     value: 15
@@ -442,3 +447,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 1 settled by adjudicator-v4, 7 decided by the reviewer."
+    items:
+      - des.07
+      - imp.02

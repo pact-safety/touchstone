@@ -2,13 +2,15 @@
 benchmark: safebench
 standard: eu-gpai-code-of-practice
 standard_version: 2025-07
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: dec22690c23fc152d65ddf87ae1fc7f3785c29b8
@@ -44,6 +46,7 @@ verdicts:
         quote: we systematically evaluate the AD algorithms on 2 , 352 generated safety-critical testing scenarios
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.02:
     value: unmet
     rationale: The benchmark does not report significance tests, confidence intervals, or statistical power figures for score differences.
@@ -57,15 +60,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.04:
-    value: met
-    rationale: The benchmark uses benign scenarios as a control to compare against safety-critical scenarios to identify performance drops.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.09682v4
-        locator: 2206.09682v4 page 10, chunk 3
-        quote: AD algorithms tested on SafeBench have a large performance drop compared to evaluations on benign scenarios
+    value: unmet
     by: model
+    rationale: The excerpts describe scenario generation and selection based on collision rates but do not describe specific controls for confounding variables like answer-position balancing, blind baselines, or prompt-format perturbations.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.05:
     value: unmet
     rationale: There is no mention of contamination safeguards such as canary strings, private splits, or contamination analysis.
@@ -118,6 +118,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.02:
     value: met
     rationale: The documentation explicitly states that the simulation used in SafeBench cannot exactly reflect real-world conditions.
@@ -151,28 +152,19 @@ verdicts:
     by: model
     quotes_verified: true
   rp.03:
-    value: met
-    rationale: The authors state that the code and data needed to reproduce results are available on their website.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2206.09682v4
-        locator: 2206.09682v4 page 16, chunk 0
-        quote: "Did you include the code, data, and instructions needed to reproduce the main experimental results (either in the supplemental material or as a URL)? [Yes] See on the website:   https://safebench . github . io ."
+    value: unmet
     by: model
+    rationale: The excerpts describe a challenge platform where participants submit files or scripts, but do not confirm that the test items (scenarios/data) are obtainable by outside researchers via public download or documented access-controlled request for independent evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.04:
-    value: met
-    rationale: The repository contains a harness (carla_runner.py), scoring/evaluation logic, and is released in a public repository.
-    evidence:
-      - source: repo
-        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
-        locator: trust-ai/SafeBench@dec22690c23f:docs/source/main_files.md, chunk 0
-        quote: |-
-          Carla Runner (safebench/carla_runner.py)
-
-          This is the entry point that manages all modules by hosting a loop to run all scenarios.
+    value: unmet
     by: model
+    rationale: The documentation describes a challenge setup using EvalAI where participants upload Docker images and the host provides the environment image. It does not state that the harness/scoring code is released in a repository runnable against a new model without the authors' help; rather, it implies a hosted evaluation infrastructure.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.05:
     value: met
     rationale: The paper and documentation describe how scenarios are constructed, how models are queried, and how outputs are scored via metrics.
@@ -190,29 +182,34 @@ verdicts:
     by: model
     quotes_verified: true
   rp.07:
-    value: met
-    rationale: The repository includes configuration files for various agents and model checkpoints, providing the setup used to query models.
-    evidence:
-      - source: repo
-        url: https://github.com/trust-ai/SafeBench/tree/dec22690c23fc152d65ddf87ae1fc7f3785c29b8
-        locator: trust-ai/SafeBench@dec22690c23f:FILE LISTING, chunk 0
-        quote: |-
-          safebench/agent/config/sac.yaml
-          safebench/agent/config/td3.yaml
-          safebench/agent/config/yolo.yaml
+    value: unmet
     by: model
+    rationale: The excerpts describe the scenario generation algorithms and metrics but do not show that the specific prompts, scaffolding, or few-shot examples used to query models are released, merely described.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   rp.08:
-    value: met
-    rationale: The benchmark is built upon the Carla simulator, which is a public tool/simulator.
+    value: unmet
+    by: model
+    rationale: The benchmark runs models through a local Docker container with the Carla simulator, not through public APIs or open weights, and is not built on or exported to a named public evaluation framework or standard format.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2206.09682v4
+        quote: This platform runs in the Docker [ 54 ] container and is built upon the Carla simulator [ 28 ].
         locator: 2206.09682v4 page 4, chunk 0
-        quote: This platform runs in the Docker [ 54   ] container and is built upon the Carla simulator [ 28   ].
-    by: model
+        url: https://arxiv.org/abs/2206.09682v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 15 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - iv.04
+      - rp.03
+      - rp.04
+      - rp.07
+      - rp.08

@@ -65,15 +65,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.1c:
-    value: met
-    rationale: The benchmark states it uses multiple-choice questions and provides numerous examples (e.g., Figure 3, 4, 66).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2009.03300v3
-        locator: 2009.03300v3 page 3, chunk 2
-        quote: We create a massive multitask test consisting of multiple-choice questions from various branches of knowledge.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The item format is stated as multiple choice, and examples are shown in the text."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1d:
     value: met
     rationale: The benchmark uses accuracy based on predicting the correct class among four choices.
@@ -100,6 +97,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2c:
     value: n/a
     rationale: The benchmark does not claim that its scores predict specific downstream outcomes.
@@ -112,12 +110,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.3b:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark reports both unspecialized human (MTurk) and expert-level baseline accuracies."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4a:
     value: met
     rationale: The documentation states items were manually collected by students from freely available online sources like the GRE and USMLE.
@@ -166,6 +166,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.1b:
     value: met
     rationale: The benchmark provides a few-shot development set, a validation set, and a test set that are distinct.
@@ -355,15 +356,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2D:
-    value: met
-    rationale: The paper publishes results for GPT-3 variants (Small, Medium, Large, X-Large) and UnifiedQA.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2009.03300v3
-        locator: 2009.03300v3 page 5, chunk 1
-        quote: We evaluate GPT-3 (Brown et al., 2020) and UnifiedQA (Khashabi et al., 2020).
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark publishes reference results (e.g., GPT-3 accuracy) with the model name and protocol, allowing comparison."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
     value: met
     rationale: The benchmark reports results separately for different subjects and tasks.
@@ -439,11 +437,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: n/a
-    rationale: The provided excerpts do not report a human or external baseline to compare against the model runs.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe a baseline measured under specific conditions (tools, time, incentives) to compare against the model runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: met
     rationale: The documentation explicitly states that a model's prediction should not be trusted unless the model is calibrated.
@@ -468,3 +467,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: adjudicator-v4
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 7 settled by adjudicator-v4."
+    items:
+      - 1.2.1c
+      - 2.4.2D
+      - 3.3.3

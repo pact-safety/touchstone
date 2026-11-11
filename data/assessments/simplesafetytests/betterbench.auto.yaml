@@ -42,7 +42,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.08370v2
         locator: 2311.08370v2 page 3, chunk 1
         quote: Information and Advice Seeking   Questions asked of the model that, if answered in an unsafe way, would give the user access to harmful information
-    by: model
+    by: human
     quotes_verified: true
   des.02:
     value: 15
@@ -52,7 +52,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.08370v2
         locator: 2311.08370v2 page 3, chunk 1
         quote: In all cases, the statements are formulated as an imperative, where the model is unambiguously instructed to do something
-    by: model
+    by: human
     quotes_verified: true
   des.03:
     value: 15
@@ -62,7 +62,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.08370v2
         locator: 2311.08370v2 page 6, chunk 1
         quote: we believe there is considerable value in a simple set of tests that can be used as a first point of testing.
-    by: model
+    by: human
     quotes_verified: true
   des.04:
     value: 15
@@ -72,7 +72,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.08370v2
         locator: 2311.08370v2 page 6, chunk 1
         quote: if a model returns 0% unsafe responses to SST then it only indicates that no safety risks have been found, rather than guaranteeing the absence of any safety risks.
-    by: model
+    by: human
     quotes_verified: true
   des.05:
     value: 15
@@ -136,7 +136,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.08370v2
         locator: 2311.08370v2 page 7, chunk 0
         quote: Our results demonstrate that the evaluation process could be partly automated.
-    by: model
+    by: human
     quotes_verified: true
   des.13:
     value: 0
@@ -172,7 +172,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.08370v2
         locator: 2311.08370v2 page 2, chunk 3
         quote: S IMPLE S AFETY T ESTS   is available on GitHub and HuggingFace
-    by: model
+    by: human
     quotes_verified: true
   imp.03:
     value: 15
@@ -182,18 +182,15 @@ verdicts:
         url: https://arxiv.org/abs/2311.08370v2
         locator: 2311.08370v2 page 13, chunk 0
         quote: We prompted the closed-source models at the end of January 2024, via their respective commercial APIs.
-    by: model
+    by: human
     quotes_verified: true
   imp.04:
-    value: 15
-    rationale: The authors prompted open models via the Replicate API, which supports local/open model hosting.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.08370v2
-        locator: 2311.08370v2 page 13, chunk 0
-        quote: We prompted the open models via the Replicate API
+    value: 0
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (15): The excerpts mention testing 15 LLMs, including open models like Llama2, Mistral, and Falcon, and note that open models were prompted via Replicate API, implying support for local/open model evaluation."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   imp.05:
     value: 0
     rationale: There is no mention of globally unique identifiers or encryption for evaluation instances.
@@ -226,7 +223,7 @@ verdicts:
         url: https://github.com/bertiev/SimpleSafetyTests/tree/d7aee9a9422a5a5488f478fd79c2479c891c0f3b
         locator: bertiev/SimpleSafetyTests@d7aee9a9422a:README.md, chunk 0
         quote: SimpleSafetyTests contains prompts that relate to child abuse, suicide, self-harm and eating disorders
-    by: model
+    by: human
     quotes_verified: true
   imp.10:
     value: 0
@@ -264,6 +261,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   doc.05:
     value: 0
     rationale: The paper is described as a 'Preprint. Under review.', meaning it has not yet been accepted at a peer-reviewed venue.
@@ -416,3 +414,8 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 2 settled by adjudicator-v4, 8 decided by the reviewer."
+    items:
+      - imp.04

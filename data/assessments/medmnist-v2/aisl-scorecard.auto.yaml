@@ -2,13 +2,15 @@
 benchmark: medmnist-v2
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 805b74237fb5bd2db376fd94e50646b6a8905d9d
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   cv.01:
-    value: met
-    rationale: The benchmark is defined as a large-scale benchmark for 2D and 3D biomedical image classification, with observable outputs being the classification of images.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 1, chunk 3
-        quote: MedMNIST v2 is a large-scale benchmark for 2D and 3D biomedical image classification
+    value: unmet
     by: model
+    rationale: The excerpts describe the dataset composition and tasks (classification) but do not provide a precise, operational definition of the target phenomenon (e.g., 'biomedical image classification capability') stating which specific observable outputs count as evidence of it beyond standard accuracy metrics.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.02:
     value: unmet
     rationale: While the documentation describes what is included (2D and 3D datasets), it does not explicitly name an aspect of the phenomenon that is excluded.
@@ -51,11 +50,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.03:
-    value: n/a
-    rationale: The paper treats the phenomenon as a unitary construct of image classification across various datasets, reporting aggregate AUC and ACC.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The paper reports aggregate scores (AUC, ACC) and average performance over datasets, but does not provide independent reported scores for distinct facets of the phenomenon in a table or figure.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.04:
     value: met
     rationale: The task space is defined by modalities, classification tasks, and scales, and item counts are reported for 2D and 3D datasets.
@@ -91,15 +91,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.09:
-    value: met
-    rationale: The documentation lists modifications such as center-cropping and resizing for several reused datasets and provides the reason (standardization).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 5, chunk 0
-        quote: We center-crop the images with a window size of length of the short edge and resize them into 1 × 28 × 28
+    value: unmet
     by: model
+    rationale: The benchmark reuses prior datasets (e.g., ChestMNIST, PathMNIST), but the excerpts do not list each modification made to the reused data with its specific reason.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While item counts are stated, there is no power calculation or confidence-interval half-width reported.
@@ -163,15 +160,12 @@ verdicts:
     by: model
     quotes_verified: true
   cv.19:
-    value: met
-    rationale: The benchmark is compared to the Medical Segmentation Decathlon (MSD), noting that MedMNIST focuses on the machine learning part rather than the end-to-end system.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 1, chunk 3
-        quote: a large but simple dataset focusing on the machine learning part like VDD, rather than the end-to-end system like MSD
+    value: unmet
     by: model
+    rationale: While prior benchmarks are mentioned, the excerpts do not explicitly compare MedMNIST v2 to a named prior benchmark of the *same* construct with a concrete difference or gap addressed in the required manner.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.20:
     value: unmet
     rationale: The documentation lacks a specific limitations statement for the design and a claim linking scores to real-world capability/harm.
@@ -209,15 +203,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: The benchmark uses classification labels and standard metrics (AUC, ACC) on pre-processed image data, involving no parsing of free-form output.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 7, chunk 2
-        quote: Area under ROC curve (AUC) 44 and Accuracy (ACC) are used as the evaluation metrics.
+    value: unmet
     by: model
+    rationale: "The evaluation uses fixed image classification labels (AUC/ACC) rather than parsing free-form output, but the excerpts do not explicitly state that scoring involves no parsing of free-form output to trigger the n/a condition, nor do they report parser bias tests. Given the binary nature of the task, it likely falls under n/a, but without explicit confirmation of 'no parsing', unmet is safer. However, looking at iv.06 n/a condition: 'Scoring involves no parsing of free-form output'. The task is image classification. The output is a label. There is no free-form output to parse. Thus n/a is appropriate if we interpret 'output format requirements' as text generation. But the item asks to test for parsing bias. Since there is no free-form output, the condition for n/a holds. Let's re-read carefully. 'n/a when: Scoring involves no parsing of free-form output'. Image classification outputs are discrete labels, not free-form text. Therefore, no parsing of free-form output occurs. The n/a condition holds."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report overlap/contamination checks or training-data cutoffs for the evaluated models (e.g., ResNet, AutoKeras).
@@ -225,14 +216,14 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs (pre-processed images) and local scoring, not an external or mutable environment.
+    value: met
+    by: human
+    rationale: The evaluation uses a static dataset (MedMNIST v2) with fixed splits, implying no external or mutable environment changes.
     evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 6, chunk 2
-        quote: Each subset is saved in NumPy 39 npz format
-    by: model
+      - source: repo
+        quote: Each sub-dataset is pre-processed into the same format... we provide standard train-validation-test splits for all datasets
+        locator: MedMNIST/MedMNIST@805b74237fb5:README.md, chunk 4
+        url: https://github.com/MedMNIST/MedMNIST/tree/805b74237fb5bd2db376fd94e50646b6a8905d9d
     quotes_verified: true
   iv.09:
     value: n/a
@@ -245,15 +236,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.10:
-    value: met
-    rationale: The tasks are classification (binary, multi-class, multi-label, ordinal regression) rather than multiple-choice questions.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 1, chunk 3
-        quote: MedMNIST v2 is a large-scale benchmark for 2D and 3D biomedical image classification
+    value: unmet
     by: model
+    rationale: The task involves multi-class and binary classification, which are forms of multiple-choice. The excerpts do not report a random-guess baseline or a named guessing mitigation (e.g., chance-corrected scoring).
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation does not name specific domain experts or user groups consulted to define evaluation scenarios or acceptance criteria.
@@ -353,29 +341,33 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The benchmark uses ground-truth labels from source datasets or programmatic generation, not a model as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report any correlation between model raters and human judgments, as the benchmark uses standard classification metrics (AUC/ACC) rather than model-based rating.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The benchmark uses ground-truth labels from source datasets or programmatic generation, not a model as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe any adversarial or reward-hacking tests for a model rater, as no such rater is used in the described benchmarking process.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.03:
-    value: n/a
-    rationale: The benchmark uses ground-truth labels from source datasets or programmatic generation, not a model as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on the same inputs for a model rater, as the evaluation relies on standard metrics like AUC and ACC.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.04:
-    value: n/a
-    rationale: The benchmark uses ground-truth labels from source datasets or programmatic generation, not a model as a rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not measure or mitigate systematic biases in a model rater, as the benchmark uses fixed ground-truth labels and standard metrics.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.05:
     value: unmet
     rationale: The excerpts do not report inter-annotator agreement or the accuracy of a programmatic checker on a labelled sample.
@@ -389,15 +381,12 @@ verdicts:
     by: model
     quotes_verified: true
   cor.07:
-    value: met
-    rationale: The benchmark provides ground-truth labels derived from source datasets or automatic generation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2110.14795v2
-        locator: 2110.14795v2 page 6, chunk 3
-        quote: "“{train,val,test}_labels” : an array containing ground-truth labels"
+    value: unmet
     by: model
+    rationale: The excerpts do not state that reference solutions were checked by an oracle solver or reviewed by a second person; they only mention using official splits and labels from source datasets.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.08:
     value: unmet
     rationale: There is no list of accepted equivalences or examples of non-identical correct answers passing the scorer.
@@ -440,3 +429,20 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 43 verdicts agreed, 11 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.01
+      - cv.03
+      - cv.09
+      - cv.19
+      - iv.06
+      - iv.08
+      - iv.10
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.07

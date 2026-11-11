@@ -94,6 +94,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2c:
     value: n/a
     rationale: The benchmark does not claim that its scores predict a specific downstream outcome.
@@ -121,15 +122,12 @@ verdicts:
     by: model
     quotes_verified: true
   1.2.4a:
-    value: met
-    rationale: The documentation states that questions were designed by authors and created by human annotators.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 7, chunk 0
-        quote: The authors designed initial questions, and gave them as examples to annotators along with instructions
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation states items were created by humans (authors and annotators) and reports the distribution of capabilities and file types."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4b:
     value: met
     rationale: The total item count (466) and the counts for each level (146, 245, 75) are provided.
@@ -172,6 +170,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.1b:
     value: met
     rationale: The benchmark provides a separate developer set of 166 questions distinct from the remaining 300 questions.
@@ -265,15 +264,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.1:
-    value: met
-    rationale: The benchmark provides a link to its code on Hugging Face.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2311.12983v1
-        locator: 2311.12983v1 page 1, chunk 1
-        quote: "Code:   https://huggingface.co/gaia-benchmark"
+    value: unmet
     by: model
+    rationale: While a code link is provided, the excerpts do not confirm that runnable evaluation code is shipped or that it runs the evaluation end-to-end with logging.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.2:
     value: met
     rationale: The required output format is specified in the system prompt, and a scoring function is provided.
@@ -346,7 +342,7 @@ verdicts:
         url: https://arxiv.org/abs/2311.12983v1
         locator: 2311.12983v1 page 2, chunk 2
         quote: The possibility to check the reasoning trace, the accuracy required in the answers, their absence in plain text from the internet prevent a possible data contamination.
-    by: model
+    by: human
     quotes_verified: true
   2.4.2C:
     value: met
@@ -424,6 +420,7 @@ verdicts:
         quote: Avg. time to answer in mins ( ↓ )
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.2.4:
     value: unmet
     rationale: While a sample question/answer is shown, there is no mention of downloadable full or representative transcripts of reference runs.
@@ -484,3 +481,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Cross-check against qwen/qwen3.6-35b-a3b applied: 5 settled by adjudicator-v4, 1 decided by the reviewer."
+    items:
+      - 1.2.4a
+      - 2.2.1

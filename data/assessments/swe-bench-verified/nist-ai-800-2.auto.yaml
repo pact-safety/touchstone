@@ -2,13 +2,15 @@
 benchmark: swe-bench-verified
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
@@ -76,6 +78,7 @@ verdicts:
         quote: We evaluate multiple state-of-the-art LMs on SWE-bench and find that they fail to solve all except the simplest issues.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.1c:
     value: met
     rationale: The format is stated as generating a patch/diff, and an example is provided in Figure 6.
@@ -116,6 +119,7 @@ verdicts:
         quote: SWE-bench task instances are all in Python; we hope to apply SWE-bench’s task instance collection procedure to expand its coverage to more programming languages and domains.
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.2b:
     value: unmet
     rationale: The documentation does not name a specific threat model or state if it measures the construct directly or via proxy.
@@ -217,18 +221,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.1.2c:
-    value: met
-    rationale: The benchmark uses a Docker-based evaluation harness to run the repository's test suite.
-    evidence:
-      - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 0
-        quote: |-
-          1. Sets up a Docker environment for a repository
-          2. Applies the model's generated patch
-          3. Runs the repository's test suite
+    value: unmet
     by: model
+    rationale: The benchmark involves running code in a Docker environment, which implies an agentic or at least multi-step execution environment where tools (like pytest) are used. The excerpts do not explicitly name the 'agent scaffold' or list the specific tools available to the model beyond the general concept of generating a patch and running tests. It does not state 'there are none' because there clearly is an environment.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2d:
     value: met
     rationale: The benchmark provides a Docker-based execution environment for reproducibility.
@@ -239,6 +237,7 @@ verdicts:
         quote: SWE-bench uses a Docker-based evaluation harness to ensure consistent, reproducible results
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2e:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The evaluation harness includes a timeout parameter for evaluating each instance."
@@ -291,6 +290,7 @@ verdicts:
         quote: We compare the BM25 retrieval results with those of the “oracle” retrieval setting
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.1:
     value: met
     rationale: The benchmark provides a runnable evaluation harness via a CLI and Python module.
@@ -301,18 +301,14 @@ verdicts:
         quote: python -m swebench.harness.run_evaluation --predictions_path predictions.jsonl
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.2:
-    value: n/a
-    rationale: Scoring is done by applying a patch and running tests in the environment, so no answer extraction from text is needed.
-    evidence:
-      - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 0
-        quote: |-
-          2. Applies the model's generated patch
-          3. Runs the repository's test suite
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark specifies the required answer format (a patch/diff) and the logic for parsing/evaluating it is part of the harness (running tests). The FAQ mentions 'Generate predictions in the required format'."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.3:
     value: unmet
     rationale: While versions are mentioned for task instances, there is no record of benchmark-wide releases with a changelog.
@@ -320,28 +316,19 @@ verdicts:
     by: model
     quotes_verified: true
   2.2.4:
-    value: met
-    rationale: The harness runs model-generated patches inside Docker containers.
-    evidence:
-      - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/guides/docker_setup.md, chunk 0
-        quote: SWE-bench uses a Docker-based evaluation harness to ensure consistent, reproducible results
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark runs model-generated code (patches) in a Docker container, which acts as a sandbox."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.2.5:
-    value: met
-    rationale: The inference scripts support multiple providers including OpenAI, Anthropic, and local Llama models.
-    evidence:
-      - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/reference/inference.md, chunk 0
-        quote: |-
-          The inference module provides tools to generate model completions for SWE-bench tasks using:
-          - API-based models (OpenAI, Anthropic)
-          - Local models (SWE-Llama)
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness supports different models (OpenAI, Anthropic, Local Llama) via configuration settings like `--model_name_or_path`."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.1:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The harness saves a folder per instance containing logs and reports."
@@ -355,15 +342,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.1.3:
-    value: met
-    rationale: The benchmark describes a validation engine to verify that solutions and tests can be applied and the codebase installed.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2310.06770v3
-        locator: 2310.06770v3 page 19, chunk 1
-        quote: The purpose of the validation engine is to verify candidate task instances. Specifically, this step checks first, that the solution δ and tests T can be applied to codebase C
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The 'Verified' subset is described as 'verified by engineers as solvable', and the collection process includes a validation step where reference solutions are executed."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.1.4:
     value: n/a
     rationale: The tasks involve software engineering (bug fixing) and are not likely to trigger safety/harm safeguards.
@@ -375,15 +359,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.1.5:
-    value: met
-    rationale: The benchmark uses a containerized environment to isolate evaluations and prevent contamination.
-    evidence:
-      - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/guides/docker_setup.md, chunk 0
-        quote: This containerized approach eliminates environment discrepancies and provides isolated environments for each evaluation task.
+    value: unmet
     by: model
+    rationale: The excerpts do not document steps against solution contamination (e.g., internet access policy, hardened grader) or grader gaming. It mentions disjoint repositories for training data to eliminate contamination risk, but not for the test set evaluation process itself.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2C:
     value: unmet
     rationale: There is no documentation stating that task instructions were reviewed for clarity by multiple people or human testers.
@@ -391,38 +372,32 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2D:
-    value: met
-    rationale: The paper publishes results for several models (Claude 2, GPT-4, etc.) with their resolution rates.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2310.06770v3
-        locator: 2310.06770v3 page 26, chunk 1
-        quote: |-
-          Claude 2 4.80 62.82
-          ChatGPT-3.5 0.52 21.80
-          GPT-4 ∗ 1.74 34.00
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The paper publishes reference results for several models (GPT-4, Claude 2, etc.) with the protocol used, allowing evaluators to check their setup."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.4.2E:
-    value: n/a
-    rationale: The benchmark focuses on a single construct (software engineering/patch generation) and a single format.
-    evidence:
-      - source: repo
-        url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 0
-        quote: SWE-bench is a benchmark for evaluating large language models on real-world software engineering tasks.
+    value: unmet
     by: model
+    rationale: The excerpts do not report results by subset, format, or construct. It reports overall results and some temporal analysis, but not a breakdown by item format or sub-construct.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
-    value: met
-    rationale: The benchmark defines the headline score as the ratio of resolved instances to total instances.
+    value: unmet
+    by: model
+    rationale: The excerpts mention 'Key metrics include:' in the FAQ but do not list them or define the headline metric or aggregation method (e.g., pass@k, mean) precisely.
     evidence:
       - source: repo
+        quote: |-
+          What metrics are reported?
+          Key metrics include:
+        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/faq.md, chunk 0
         url: https://github.com/SWE-bench/SWE-bench/tree/02e7a74ffd0b707aab73d203fe87bdc7c76afc8e
-        locator: SWE-bench/SWE-bench@02e7a74ffd0b:docs/reference/cli.md, chunk 5
-        quote: The score is the report's `resolved_instances` / `total_instances`.
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.3:
     value: unmet
     rationale: The provided excerpts do not mention standard errors, confidence intervals, or uncertainty methods for the results.
@@ -467,6 +442,7 @@ verdicts:
         quote: We elect to source problems from well-trafficked repositories because widespread use usually suggests that the repository has extensive documentation
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2a:
     value: met
     rationale: The benchmark claims real-world representativeness and notes that automated generations can be less comprehensive or readable than human solutions.
@@ -477,12 +453,14 @@ verdicts:
         quote: automated code generations from LMs can frequently be less comprehensive, efficient, or readable compared to human-written solutions
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.3:
-    value: n/a
-    rationale: The provided excerpts do not report a baseline comparison with specific measurement conditions.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not describe the conditions under which any baseline was measured.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: met
     rationale: The documentation states that execution-based testing alone is insufficient to guarantee reliable performance.
@@ -493,6 +471,7 @@ verdicts:
         quote: relying solely on this method is insufficient to guarantee reliable performance of model generations
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.5:
     value: met
     rationale: The benchmark documents limitations, such as the fact that all task instances are currently in Python.
@@ -507,3 +486,18 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 33 verdicts agreed, 18 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 2.1.2c
+      - 2.2.2
+      - 2.2.4
+      - 2.2.5
+      - 2.4.1.3
+      - 2.4.1.5
+      - 2.4.2D
+      - 2.4.2E
+      - 3.1.2
+      - 3.3.3

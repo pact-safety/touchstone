@@ -2,13 +2,15 @@
 benchmark: decodingtrust
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v5
   repo_commit: 161ae8321ced62f45fcd9ceb412e05b47c603cd4
@@ -108,6 +110,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.3b:
     value: met
     rationale: A random baseline is reported for the machine ethics evaluation.
@@ -192,6 +195,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2c:
     value: n/a
     rationale: The benchmark consists of single-response queries to LLMs without tools or agentic loops.
@@ -258,6 +262,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.1.2j:
     value: met
     rationale: The benchmark reports results under different decoding strategies (Greedy vs Top-p) and different prompt templates.
@@ -310,6 +315,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   2.3.1:
     value: met
     rationale: The harness saves raw queries, responses, and scores for each task in JSON files.
@@ -435,15 +441,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.2:
-    value: met
-    rationale: The benchmark provides a validity argument for its items, such as using the Perspective API for toxicity and specific datasets for bias and robustness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2306.11698v5
-        locator: 2306.11698v5 page 12, chunk 2
-        quote: We use Perspective API, an online automated model for toxic language and hate speech detection.
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation presents a validity argument by describing how items resemble target tasks, such as using real-world prompts for toxicity and specific datasets for bias."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2a:
     value: met
     rationale: The benchmark claims real-world relevance (e.g., for machine ethics) and notes that existing benchmarks lack the complex social interactions crucial in the real world.
@@ -452,14 +455,15 @@ verdicts:
         url: https://arxiv.org/abs/2306.11698v5
         locator: 2306.11698v5 page 60, chunk 0
         quote: while lacking complex social interactions, which are crucial in studying agent behaviors in the real world.
-    by: model
+    by: human
     quotes_verified: true
   3.3.3:
-    value: n/a
-    rationale: The provided excerpts do not report a baseline for comparison against the model runs; they primarily compare different models (GPT-3.5 vs GPT-4).
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts describe the models evaluated (GPT-3.5, GPT-4) but do not provide a description of baseline conditions (e.g., human subjects, tools, incentives) for comparison.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: unmet
     rationale: The documentation does not explicitly name a conclusion that the scores do not support or provide a disclaimer against over-generalization.
@@ -480,3 +484,10 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 44 verdicts agreed, 6 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 3.3.2
+      - 3.3.3

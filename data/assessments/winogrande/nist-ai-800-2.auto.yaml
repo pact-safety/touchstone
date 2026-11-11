@@ -2,13 +2,15 @@
 benchmark: winogrande
 standard: nist-ai-800-2
 standard_version: ipd-2026-01
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: 727e837f77521ef38bcc56df3b275c8da43f45af
@@ -143,12 +145,18 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4c:
-    value: unmet
-    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark uses a held-out test set where labels are not included in the public release."
-    evidence: []
+    value: met
     by: model
+    rationale: The documentation states that labels are not included in the public test set, reducing contamination risk.
+    evidence:
+      - source: repo
+        quote: Please note that labels are not included in `test.jsonl`.
+        locator: allenai/winogrande@727e837f7752:README.md, chunk 0
+        url: https://github.com/allenai/winogrande/tree/727e837f77521ef38bcc56df3b275c8da43f45af
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   1.2.4d:
     value: unmet
     rationale: There is no mention of a canary string in the provided excerpts.
@@ -191,7 +199,7 @@ verdicts:
         url: https://arxiv.org/abs/1907.10641v2
         locator: 1907.10641v2 page 5, chunk 3
         quote: The input format becomes   [CLS] context [SEP]   option [SEP]
-    by: model
+    by: human
     quotes_verified: true
   2.1.2c:
     value: n/a
@@ -370,15 +378,12 @@ verdicts:
     by: model
     quotes_verified: true
   2.4.2E:
-    value: n/a
-    rationale: The benchmark has one item format (binary choice) and claims a single construct (commonsense reasoning).
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 7, chunk 0
-        quote: We converted WinoGrande to the True/False binary problems.
+    value: unmet
     by: model
+    rationale: The excerpts do not report results by subset, format or construct. They report aggregate scores.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.1.2:
     value: unmet
     rationale: The provided excerpts do not define a headline metric or the precise method for aggregating item scores.
@@ -416,15 +421,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.2:
-    value: met
-    rationale: The benchmark provides a validity argument by explaining that WSC problems are designed to be trivial for humans but hard for machines relying on statistical patterns.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 1, chunk 2
-        quote: WSC are designed to be pronoun resolution problems (see examples in Table 1) that are trivial for humans but hard for machines that merely rely on statistical patterns without true capabilities of commonsense reasoning.
+    value: unmet
     by: model
+    rationale: The excerpts assert that the dataset is designed for commonsense reasoning and harder than previous datasets, but do not present a validity argument or empirical evidence linking scores to the construct.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.2a:
     value: n/a
     rationale: The benchmark does not claim to represent real-world tasks; it is described as a benchmark for evaluating commonsense reasoning via pronoun resolution problems.
@@ -436,15 +438,12 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.3:
-    value: met
-    rationale: The benchmark describes the conditions of the word association baseline, specifying that the model is trained with only local contexts surrounding the blank.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 5, chunk 4
-        quote: "In this baseline, the model is trained with only local contexts ( w t − 2: EOS ) surrounding the blank to be filled ( w t )"
+    value: unmet
     by: model
+    rationale: The excerpts mention human evaluation as a majority vote of three crowd workers but do not describe the conditions (tools, time, incentives) under which this baseline was measured compared to model runs.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   3.3.4:
     value: met
     rationale: The documentation warns that positive results might indicate the prevalence of spurious dataset biases rather than true machine intelligence.
@@ -456,16 +455,23 @@ verdicts:
     by: model
     quotes_verified: true
   3.3.5:
-    value: met
-    rationale: The documentation identifies a limitation regarding the potential for dataset-specific biases, especially after scaling up.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/1907.10641v2
-        locator: 1907.10641v2 page 3, chunk 0
-        quote: still possible that the constructed dataset has dataset-specific biases – especially after it has been scaled up.
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a limitations section or known-issues list that documents specific limitations such as sensitivity to prompt format or label noise.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 44 verdicts agreed, 6 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - 1.2.4c
+      - 2.4.2E
+      - 3.3.2
+      - 3.3.3
+      - 3.3.5

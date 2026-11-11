@@ -2,13 +2,15 @@
 benchmark: mmlu
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v3
   repo_commit: 4450500f923c49f1fb1dd3d99108a0bd9717b660
@@ -35,15 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The paper states that the best models still require substantial improvements to reach expert-level accuracy, indicating clear headroom.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2009.03300v3
-        locator: 2009.03300v3 page 1, chunk 0
-        quote: on every one of the 57 tasks, the best models still need substantial improvements before they can reach expert-level accuracy
+    value: unmet
     by: model
+    rationale: The excerpts do not provide current best reported scores or a documented saturation analysis showing headroom from the ceiling. The paper only reports scores for GPT-3 at the time of publication, not current best scores.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: met
     rationale: The benchmark provides a contamination analysis suggesting exact questions were not memorized and mentions a defense of providing question sources to reduce future leakage.
@@ -52,7 +51,7 @@ verdicts:
         url: https://arxiv.org/abs/2009.03300v3
         locator: 2009.03300v3 page 14, chunk 0
         quote: This suggests that our   exact   questions were not memorized.
-    by: model
+    by: human
     quotes_verified: true
   c3:
     value: unmet
@@ -118,3 +117,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 8 verdicts agreed, 1 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1

@@ -2,13 +2,15 @@
 benchmark: kernelbench
 standard: aisl-scorecard
 standard_version: 2026.07.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v1
   repo_commit: 423217d9fda91e0c2d67e4a43bf62f96f6d104f1
@@ -35,24 +37,23 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   cv.01:
-    value: met
-    rationale: The documentation defines the target phenomenon as the ability to generate performant GPU kernels and specifies that evidence consists of functional correctness and speedup over a baseline.
-    evidence:
-      - source: repo
-        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
-        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 2
-        quote: |-
-          To evaluate model-generated kernels, we need to check if they:
-          - **are correct ✅**: check against reference torch operators `n_correctness` times on randomized inputs.
-          - **are performant ⏱️**: compare against reference torch operators `n_trial` times to measure speedup between runtimes.
-    by: model
-    quotes_verified: true
-  cv.02:
     value: unmet
-    rationale: While the documentation defines what is in scope (Levels 1-4), it does not name any aspect of the phenomenon that is explicitly excluded.
-    evidence: []
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The documentation provides a precise operational definition of the target phenomenon (generating performant GPU kernels) by defining the observable outputs (correctness and speedup metrics) and the specific conditions under which they are measured."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  cv.02:
+    value: met
+    by: model
+    rationale: The documentation explicitly states the scope by defining four levels of categories and listing specific examples of what is included (e.g., convolutions, matrix multiplies) and what is excluded or not covered (e.g., it does not provide ground truth kernels, focuses on CUDA/PyTorch primarily though other backends are mentioned).
+    evidence:
+      - source: paper
+        quote: We do not provide ground truth kernels for the tasks since we imagine users benchmarking on a variety of hardware platforms
+        locator: 2502.10517v1 page 4, chunk 2
+        url: https://arxiv.org/abs/2502.10517v1
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.03:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark identifies different levels of AI workloads (Level 1, 2, 3) and reports scores for each independently in Table 1."
@@ -78,27 +79,26 @@ verdicts:
     by: model
     quotes_verified: true
   cv.07:
-    value: met
-    rationale: The benchmark includes a set of adversarial kernels to test for reward hacking, and the criteria for membership (e.g., reusing cached computations) are stated.
-    evidence:
-      - source: repo
-        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
-        locator: ScalingIntelligence/KernelBench@423217d9fda9:EVAL.md, chunk 3
-        quote: We've included some unit tests for the eval script in `src/unit_tests/test_eval_adversarial.py`. These tests run adversarial kernels (see `src/unit_tests/test_kernels/`) that contain examples of reward hacking
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): A named subset of boundary/adversarial items exists (unit tests with adversarial examples), its size is implied by the list of examples, and the criterion for membership (reward hacking, cheating correctness checks) is stated."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.08:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset; it constructs its own tasks based on PyTorch models.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not contain a table or figure comparing the same model on an original dataset and on the adapted benchmark. It compares models on KernelBench levels, but not against a prior benchmark version of the same construct in a comparative table.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.09:
-    value: n/a
-    rationale: The benchmark does not reuse a prior dataset.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The benchmark reuses PyTorch reference implementations, but the excerpts do not list each modification made to reused data with its reason. It describes the task structure but not specific modifications to prior datasets.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.10:
     value: unmet
     rationale: While item counts are implied by the levels, there is no power calculation or confidence-interval half-width reported.
@@ -157,6 +157,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.17:
     value: met
     rationale: "The documentation reports named failure categories: execution failures and correctness errors."
@@ -173,12 +174,14 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.19:
     value: unmet
     rationale: The paper mentions other code generation workloads generally but does not compare against a specific named prior benchmark of the same construct to state a concrete gap addressed.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cv.20:
     value: met
     rationale: The paper links success on tasks to real-world impact and provides a limitation regarding the use of temperature=0 in iterative refinement experiments.
@@ -220,15 +223,12 @@ verdicts:
     by: model
     quotes_verified: true
   iv.06:
-    value: n/a
-    rationale: Scoring is based on comparing tensor outputs of the generated code against a reference, not parsing free-form text.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.10517v1
-        locator: 2502.10517v1 page 4, chunk 2
-        quote: We compare the Model output to the LM-generated ModelNew output.
+    value: unmet
     by: model
+    rationale: The scoring involves parsing free-form code output (generating ModelNew classes), so the n/a condition does not hold. The excerpts do not report parser accuracy figures per format.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.07:
     value: unmet
     rationale: The paper does not report contamination checks or provide training cutoffs for the evaluated models.
@@ -236,35 +236,30 @@ verdicts:
     by: model
     quotes_verified: true
   iv.08:
-    value: n/a
-    rationale: The evaluation uses fixed inputs and local scoring (comparing tensor outputs), not a mutable external environment.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.10517v1
-        locator: 2502.10517v1 page 4, chunk 2
-        quote: we randomly generate input tensors of the prescribed shape and precision and collect the PyTorch Model output.
+    value: unmet
     by: model
+    rationale: The evaluation uses mutable external environments (cloud GPUs via Modal, varying hardware types), but the excerpts do not document a static snapshot or a changelog with re-validation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.09:
-    value: met
-    rationale: The orchestrator spawns independent processes for each task, ensuring state is reset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.10517v1
-        locator: 2502.10517v1 page 36, chunk 1
-        quote: The orchestrator spawns multiple independent processes that each handle an independent task in KernelBench.
+    value: unmet
     by: model
+    rationale: The evaluation involves running generated kernels which require stateful execution (compilation, memory allocation), so the n/a condition for single stateless calls does not hold. The excerpts do not explicitly show state reset mechanisms per task in the provided text.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   iv.10:
-    value: met
-    rationale: The benchmark requires generating code (a new class), not selecting from multiple choice options.
+    value: unmet
+    by: model
+    rationale: "The benchmark does not use multiple-choice questions; it requires generating code. However, the decision rule requires the format to be 'not multiple choice' OR report guessing mitigations. Since it is not MCQ, this should be met? Wait, the rule says 'met when: The format is not multiple choice...'. The format is code generation, which is not multiple choice. Therefore, the condition 'The format is not multiple choice' is true. I must check if I can quote 'The format is not multiple choice'. The excerpts do not contain this phrase. The excerpts describe the task as generating code. I cannot quote 'The format is not multiple choice' because it is not in the text. I must use a quote from the excerpt. The excerpt says 'the LM needs to output a new class'. This implies it is not MCQ. But the rule requires a quote. If I quote 'the LM needs to output a new class', does that prove it is not MCQ? Yes. Is it 12+ chars? Yes. So it is met."
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2502.10517v1
+        quote: the LM needs to output a new class named   ModelNew   derived from
         locator: 2502.10517v1 page 4, chunk 0
-        quote: the LM needs to output a new class named ModelNew derived from torch.nn.Module()
-    by: model
+        url: https://arxiv.org/abs/2502.10517v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.01:
     value: unmet
     rationale: The documentation mentions individuals who provided feedback, but it does not name specific domain experts or user groups consulted to define evaluation scenarios and acceptance criteria.
@@ -294,15 +289,16 @@ verdicts:
     by: model
     quotes_verified: true
   ev.05:
-    value: n/a
-    rationale: The benchmark is described as an open-source evaluation framework for general kernel generation rather than a tool for a specific deployed application.
-    evidence:
-      - source: repo
-        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
-        locator: ScalingIntelligence/KernelBench@423217d9fda9:README.md, chunk 11
-        quote: KernelBench is designed as an **open-source** evaluation framework and toolkit.
+    value: unmet
     by: model
+    rationale: The benchmark is described as an 'evaluation-only benchmark' for 'a variety of hardware platforms' and does not state that the model, tools, or environment match a named deployed product or configuration.
+    evidence:
+      - source: paper
+        quote: KernelBench is an evaluation-only benchmark. We do not provide ground truth kernels for the tasks since we imagine users benchmarking on a variety of hardware platforms
+        locator: 2502.10517v1 page 4, chunk 2
+        url: https://arxiv.org/abs/2502.10517v1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ev.06:
     value: n/a
     rationale: The benchmark does not claim to evaluate a specific deployed application.
@@ -380,39 +376,44 @@ verdicts:
     by: model
     quotes_verified: true
   cor.01:
-    value: n/a
-    rationale: The benchmark uses programmatic verification (comparing outputs to a PyTorch reference) rather than a model rater.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts do not report any correlation between model raters and human judgments. The benchmark relies on programmatic verification (correctness checks) rather than model-based rating, but the specific requirement for rater-human correlation evidence is not met.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.02:
-    value: n/a
-    rationale: The benchmark uses programmatic verification rather than a model rater.
-    evidence: []
-    by: model
-    quotes_verified: true
-  cor.03:
-    value: n/a
-    rationale: The benchmark uses programmatic verification rather than a model rater.
-    evidence: []
-    by: model
-    quotes_verified: true
-  cor.04:
-    value: n/a
-    rationale: The benchmark uses programmatic verification rather than a model rater.
-    evidence: []
-    by: model
-    quotes_verified: true
-  cor.05:
     value: met
-    rationale: Correctness is verified programmatically by comparing the generated output against a PyTorch reference output on randomized inputs.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2502.10517v1
-        locator: 2502.10517v1 page 4, chunk 2
-        quote: We compare the Model output to the LM-generated ModelNew output.
     by: model
+    rationale: The documentation explicitly reports unit tests for adversarial examples and reward hacking, listing specific mitigation strategies like catching incorrect correctness checks or excessive speedups.
+    evidence:
+      - source: repo
+        quote: We've included some unit tests for the eval script in `src/unit_tests/test_eval_adversarial.py`. These tests run adversarial kernels ... that contain examples of reward hacking ... and ensures that the eval script catches them
+        locator: ScalingIntelligence/KernelBench@423217d9fda9:EVAL.md, chunk 3
+        url: https://github.com/ScalingIntelligence/KernelBench/tree/423217d9fda91e0c2d67e4a43bf62f96f6d104f1
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  cor.03:
+    value: unmet
+    by: model
+    rationale: The excerpts do not report agreement across repeated rating runs on the same inputs. While repeated sampling is discussed, it is for generating kernels, not for verifying the consistency of a rater's judgment on identical inputs.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  cor.04:
+    value: unmet
+    by: model
+    rationale: There is no mention of measuring named rater biases (e.g., length, position) or stating mitigations for systematic scoring biases.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  cor.05:
+    value: unmet
+    by: model
+    rationale: The benchmark uses programmatic verification (comparing outputs to reference implementations) rather than multiple human annotators. No inter-annotator agreement or programmatic checker accuracy on a labelled sample is reported.
+    evidence: []
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.06:
     value: unmet
     rationale: The excerpts do not document whether every task is solvable or intentionally unsolvable, nor the expected behavior for unsolvable ones.
@@ -420,15 +421,16 @@ verdicts:
     by: model
     quotes_verified: true
   cor.07:
-    value: met
-    rationale: Reference solutions are provided in the form of PyTorch implementations used as the ground truth for correctness checks.
+    value: unmet
+    by: model
+    rationale: The documentation explicitly states that ground truth kernels are not provided. Instead, it uses a reference PyTorch implementation for comparison, but does not provide verified ground-truth solutions in the sense of a static answer key.
     evidence:
       - source: paper
+        quote: We do not provide ground truth kernels for the tasks since we imagine users benchmarking on a variety of hardware platforms
+        locator: 2502.10517v1 page 4, chunk 2
         url: https://arxiv.org/abs/2502.10517v1
-        locator: 2502.10517v1 page 3, chunk 3
-        quote: the input to the task is a reference implementation written in PyTorch
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.08:
     value: unmet
     rationale: The documentation does not list accepted equivalences or show a non-identical correct answer passing.
@@ -442,24 +444,50 @@ verdicts:
     by: model
     quotes_verified: true
   cor.10:
-    value: n/a
-    rationale: Scoring is based on comparing tensor outputs of executed code, not parsing free-form text output.
-    evidence: []
+    value: unmet
     by: model
+    rationale: While the parser is likely deterministic, the excerpts do not explicitly show code proving determinism or report a test of consistency for the automated output parser.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.11:
-    value: n/a
-    rationale: Scoring is based on comparing tensor outputs of executed code, not parsing free-form text output.
-    evidence: []
+    value: unmet
     by: model
+    rationale: Parser accuracy against hand-checked outputs is not reported.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   cor.12:
     value: unmet
     rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark includes unit tests with adversarial kernels designed to catch reward hacking (e.g., caching or modifying inputs)."
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 33 verdicts agreed, 22 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - cv.01
+      - cv.02
+      - cv.07
+      - cv.08
+      - cv.09
+      - iv.06
+      - iv.08
+      - iv.09
+      - iv.10
+      - ev.05
+      - cor.01
+      - cor.02
+      - cor.03
+      - cor.04
+      - cor.05
+      - cor.07
+      - cor.10
+      - cor.11

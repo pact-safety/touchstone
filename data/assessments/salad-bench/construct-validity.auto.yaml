@@ -2,13 +2,15 @@
 benchmark: salad-bench
 standard: construct-validity
 standard_version: 2025.1.1
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v4
   repo_commit: 575d5369c5355c0ed76e27860a889aa2f3c3e0e5
@@ -44,6 +46,7 @@ verdicts:
         quote: we count an attack success if at least one prompt triggers harmful response
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   def.2:
     value: unmet
     rationale: While the benchmark mentions a structured hierarchy of domains and tasks, it does not name any specific excluded aspects of the phenomenon.
@@ -51,15 +54,12 @@ verdicts:
     by: model
     quotes_verified: true
   def.3:
-    value: met
-    rationale: The phenomenon is broken down into a hierarchy of domains, tasks, and categories to ensure specific safety dimensions are evaluated.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 2, chunk 2
-        quote: SALAD-Bench introduces a structured hierarchy with three levels, comprising 6 domains, 16 tasks, and 66 categories, respectively.
+    value: unmet
     by: model
+    rationale: The excerpts mention a hierarchy with domains, tasks, and categories, but do not explicitly state that sub-components are scored separately or that the phenomenon is unitary.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.1:
     value: unmet
     rationale: The paper identifies 'instruction following ability' as a secondary ability that restricts accuracy, but it does not report a control condition or ablation result for this ability.
@@ -67,15 +67,12 @@ verdicts:
     by: model
     quotes_verified: true
   mo.2:
-    value: met
-    rationale: The paper explicitly discusses how models that fail to generate the accurate response format result in failures to be detected by the evaluator, impacting scores.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 24, chunk 0
-        quote: Some LLMs could make the right choices but fail to generate an accurate response format, such that the responses fail to be detected by the MCQ-Judge evaluator.
+    value: unmet
     by: model
+    rationale: The excerpts do not measure the effect of output-format requirements on scores; they only mention that format failures cause detection issues.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   mo.3:
     value: unmet
     rationale: While the paper mentions regex parsing and some accuracy checks, it does not report repeat-run consistency or a comparison across two output formats to validate the parser for bias.
@@ -89,15 +86,16 @@ verdicts:
     by: model
     quotes_verified: true
   ds.2:
-    value: unmet
-    rationale: While human verification was performed on a sampled subset of 458 questions, the decision rule requires that every item passed a documented quality or relevance check.
+    value: met
+    by: model
+    rationale: The text explicitly documents a quality check where a subset of the dataset was verified by human annotators.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
+        quote: To ensure the quality of the final dataset we obtained, we sample a subset of our dataset and asks 4 annotators to verify the dataset.
         locator: 2402.05044v4 page 16, chunk 0
-        quote: we sample a subset of our dataset and asks 4 annotators to verify the dataset
-    by: model
+        url: https://arxiv.org/abs/2402.05044v4
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ds.3:
     value: unmet
     rationale: The excerpts mention using attack methods like GCG and perturbation-based defense methods, but they do not show a counted subset of permuted/perturbed items with results reported separately from the main score.
@@ -110,24 +108,35 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.2:
-    value: n/a
-    rationale: The provided excerpts do not show that any prior dataset or benchmark was reused to create SALAD-Bench.
-    evidence: []
-    by: model
+    value: met
+    by: human
+    rationale: The text reports limitations of prior work (narrow perspective, high safety rates making them backward) and implies strengths by noting they 'inspired subsequent AI safety research'.
+    evidence:
+      - source: paper
+        quote: Although these work do provided a benchmark for early LLM safety exploration and inspired subsequent AI safety research
+        locator: 2402.05044v4 page 13, chunk 1
+        url: https://arxiv.org/abs/2402.05044v4
+      - source: paper
+        quote: most of safety datasets only fall on a narrow perspective of safety threats
+        locator: 2402.05044v4 page 13, chunk 1
+        url: https://arxiv.org/abs/2402.05044v4
     quotes_verified: true
   ru.3:
-    value: n/a
-    rationale: The provided excerpts do not show that any prior dataset or benchmark was reused to create SALAD-Bench.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts compare the new benchmark's evaluator (MD-Judge) against other evaluators on external benchmarks (Harmbench, Lifetox), but do not compare performance on the new benchmark against the original prior datasets.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ru.4:
-    value: n/a
-    rationale: The provided excerpts do not show that any prior dataset or benchmark was reused to create SALAD-Bench.
-    evidence: []
+    value: unmet
     by: model
+    rationale: While modifications are described (e.g., generating safe/unsafe responses, MCQ format), the text does not explicitly explain how each modification improves construct validity.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.1:
     value: unmet
     rationale: The provided excerpts do not describe any tests implemented to detect data contamination or report results of such tests.
@@ -144,6 +153,7 @@ verdicts:
         quote: our proprietary test set
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ct.3:
     value: unmet
     rationale: There is no report of a search or overlap check of the benchmark's source material against a named training corpus or model.
@@ -181,15 +191,16 @@ verdicts:
     by: model
     quotes_verified: true
   st.4:
-    value: met
-    rationale: The benchmark uses human ratings for verification and reports a consistency rate (inter-annotator agreement statistic).
+    value: unmet
+    by: model
+    rationale: The benchmark uses deterministic keys (predefined correct answers for MCQs) and model-based judges (MD-Judge, MC-Judge) rather than subjective human labels for the primary evaluation, so the condition for subjective labels is not met; however, even if considered, no inter-annotator agreement or disagreement distribution is reported for the main benchmark scores.
     evidence:
       - source: paper
+        quote: In contrast to the Question-Answering subset where ground-truth answers are provided, the multiple-choice subset includes predefined correct answers.
+        locator: 2402.05044v4 page 6, chunk 0
         url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 16, chunk 1
-        quote: The annotation results indicate that our data taxonomy labels match human taxonomy labels with a consistency rate of   94.3% .
-    by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   ea.1:
     value: unmet
     rationale: While the paper describes failure modes (e.g., 'weak instruction following ability' or 'too strict safety strategies'), it does not provide counts of these specific failure modes.
@@ -209,21 +220,19 @@ verdicts:
     by: model
     quotes_verified: true
   ea.4:
-    value: met
-    rationale: The authors propose a specific direction to explore safety alignment algorithms that reduce negative effects on helpfulness.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.05044v4
-        locator: 2402.05044v4 page 23, chunk 1
-        quote: These results encourage us to explore more effective safety alignment algorithms with fewer negative effects
+    value: unmet
     by: model
+    rationale: The excerpts mention future work to update taxonomy and explore algorithms, but do not report specific experiments aimed at improving scores on this benchmark or specific named directions with stated rationales for improvement.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.1:
     value: unmet
     rationale: The excerpts mention safety evaluation and 'jailbreaking', but they do not name a specific real-world application and link it to the tasks.
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   jv.2:
     value: unmet
     rationale: There is no statement linking the choice of tasks and metrics to a specific operational definition provided in a 'def.1' section.
@@ -254,3 +263,16 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 16 verdicts agreed, 11 settled by adjudicator-v4, 1 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - def.3
+      - mo.2
+      - ds.2
+      - ru.2
+      - ru.3
+      - ru.4
+      - st.4
+      - ea.4

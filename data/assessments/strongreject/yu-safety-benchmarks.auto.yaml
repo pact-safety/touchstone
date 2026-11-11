@@ -2,13 +2,15 @@
 benchmark: strongreject
 standard: yu-safety-benchmarks
 standard_version: "2026.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: f7cad6c17e624e21d8df2278e918ae1dddb4cb56
@@ -75,15 +77,12 @@ verdicts:
     by: model
     quotes_verified: true
   r2.a:
-    value: met
-    rationale: The benchmark describes using LLM-generated prompts to create its dataset.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.10260v2
-        locator: 2402.10260v2 page 4, chunk 0
-        quote: Our dataset of forbidden prompts consists of prompts we wrote manually, LLM-generated prompts using GPT-4 and pplx-70b-online
+    value: unmet
     by: model
+    rationale: The excerpts describe the benchmark as a static dataset of forbidden prompts and an automated evaluator. They do not describe mechanisms for discovering *novel* risks (like fuzzing or red-teaming for new categories) beyond the creation of the initial dataset.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r2.b:
     value: unmet
     rationale: While a website is mentioned, there is no documented process for how outside contributions are integrated and credited.
@@ -121,15 +120,20 @@ verdicts:
     by: model
     quotes_verified: true
   r4.a:
-    value: met
-    rationale: The benchmark reports results using 'non-refusal rates'.
+    value: unmet
+    by: model
+    rationale: The benchmark reports 'non-refusal rates' and 'scores', but does not explicitly label results as 'observed rate' or 'failure frequency' in the provided excerpts, nor does it reserve 'probability' for calibrated estimates. It mentions estimating effectiveness within a confidence interval, but the primary reporting metric is a score/rate without the specific labeling required.
     evidence:
       - source: paper
+        quote: any difference in StrongREJECT scores across jailbreaks must be due to the effect of these jailbreaks on Dolphin’s capabilities.
+        locator: 2402.10260v2 page 9, chunk 1
         url: https://arxiv.org/abs/2402.10260v2
-        locator: 2402.10260v2 page 9, chunk 3
-        quote: The x-axis represents non-refusal rates
-    by: model
+      - source: paper
+        quote: This size allows researchers to estimate the effectiveness of a jailbreak to within 0.05 points on a 0-1 scale with 90% confidence
+        locator: 2402.10260v2 page 10, chunk 1
+        url: https://arxiv.org/abs/2402.10260v2
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r4.b:
     value: unmet
     rationale: There is no evidence that benchmark rates are compared with or adjusted by real-world prevalence estimates.
@@ -180,6 +184,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r6.c:
     value: unmet
     rationale: "The benchmark does not report score variance across all three required dimensions: random seeds, prompt rephrasings, and evaluator versions."
@@ -208,6 +213,7 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r7.c:
     value: unmet
     rationale: The provided excerpts do not name any specific value choices in the harm definitions as being contested.
@@ -253,15 +259,12 @@ verdicts:
     by: model
     quotes_verified: true
   r9.a:
-    value: met
-    rationale: The benchmark states prompts are from the authors, existing benchmarks, and OpenAI's system card, and it reports validation by verifying they are distinct and refused by latest models.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2402.10260v2
-        locator: 2402.10260v2 page 4, chunk 1
-        quote: We verified that all of the forbidden prompts we selected for our dataset were distinct, refused by the latest models from the major providers above
+    value: unmet
     by: model
+    rationale: "No quote supporting this could be verified in the sources, so it is scored as not satisfied. Model's proposal (met): The benchmark states that prompts are sourced from existing benchmarks (synthetic/researcher-designed) and human-curated sources, and reports validation by verifying they are distinct, refused by models, and have factually verifiable answers."
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.b:
     value: met
     rationale: The benchmark argues that the prompts reflect harmful material a lay person could find on the web and states the limitation that the dataset size is not a stand-alone definitive measure.
@@ -273,11 +276,12 @@ verdicts:
     by: model
     quotes_verified: true
   r9.c:
-    value: n/a
-    rationale: The benchmark focuses on single-turn jailbreak effectiveness (forbidden prompts), and the excerpts do not indicate that the targeted risks emerge only over extended interaction.
-    evidence: []
+    value: unmet
     by: model
+    rationale: The excerpts describe the benchmark as evaluating responses to single forbidden prompts and do not mention including multi-turn evaluation.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r9.d:
     value: n/a
     rationale: The benchmark uses publicly available datasets and author-generated prompts, not in-the-wild data constrained by privacy or curation opacity.
@@ -316,7 +320,17 @@ verdicts:
     evidence: []
     by: model
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
 revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 30 verdicts agreed, 7 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - r2.a
+      - r4.a
+      - r9.a
+      - r9.c

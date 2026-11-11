@@ -2,13 +2,15 @@
 benchmark: humaneval
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v2
   repo_commit: b9453e8f1865df0a0057a1383767caa400acfbcf
@@ -59,15 +61,12 @@ verdicts:
     by: model
     quotes_verified: true
   c5:
-    value: met
-    rationale: The benchmark serves to measure the capabilities of code synthesis and generation methodologies, a purpose that remains current for the models evaluated.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2107.03374v2
-        locator: 2107.03374v2 page 25, chunk 2
-        quote: measure the capabilities of advancing code synthesis and generation methodologies
+    value: unmet
     by: model
+    rationale: The excerpts do not state that the task of code generation is still considered relevant and has not effectively been solved. In fact, the paper discusses the 'challenging open research problem' of fully aligning models and notes that 'fully aligning models on tasks that are hard for human labelers... is a challenging open research problem', implying the task is not solved. However, the rule requires the benchmark to *state* the capability and that the purpose remains current, or that no source argues it is irrelevant. The excerpts discuss the difficulty and open nature of the problem but do not explicitly confirm the benchmark's stated purpose remains current in the manner required to 'met' the rule without ambiguity, or more critically, the rule says 'Unmet if the task is no longer relevant... or is effectively solved'. The excerpts suggest it is *not* solved, but do not explicitly affirm the benchmark's specific relevance statement as required by the 'met' definition which asks for the benchmark to state its capability/decision. More importantly, the excerpts do not contain a quote from the benchmark stating its purpose remains current. The excerpts are from a paper *about* Codex using HumanEval, not the benchmark documentation itself stating its ongoing relevance. Without a quote from the benchmark stating its purpose remains current, and given the 'Unmet' condition for lack of such statement or evidence of irrelevance, 'unmet' is the safer application of the literal rule requiring the benchmark to state the capability and that purpose remains current.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c6:
     value: unmet
     rationale: The excerpts do not explicitly state the simplifying assumptions relied upon by the HumanEval benchmark.
@@ -102,3 +101,9 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 9 verdicts agreed, 1 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c5

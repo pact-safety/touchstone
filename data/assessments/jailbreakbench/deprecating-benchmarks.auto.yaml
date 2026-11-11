@@ -2,13 +2,15 @@
 benchmark: jailbreakbench
 standard: deprecating-benchmarks
 standard_version: "2025.1"
-status: draft
+status: published
 mode: itemized
 provenance:
   kind: automated
   assessors:
     - touchstone-assessor (google/gemma-4-31b-it)
   assessed_on: 2026-10-29
+  reviewers:
+    - Li Bearden
 benchmark_ref:
   paper_version: v5
   repo_commit: 23dbdf6b19650521604456229bc1d9c4156c85c1
@@ -35,19 +37,12 @@ model_run:
   excerpt_chars: 40000
 verdicts:
   c1:
-    value: met
-    rationale: The benchmark reports attack success rates (ASRs) for various models and attacks that are well below the maximum (100%), showing clear headroom for improvement.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 16, chunk 0
-        quote: Attack success rates by source. We report the attack success rates of each data source used to curate JBB-Behaviors .
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 16, chunk 0
-        quote: GPT-4 PAIR 31% 28% 44% GCG 2% 0% 11% JB-Chat 0% 0% 0% Prompt with RS 73% 89% 81%
+    value: unmet
     by: model
+    rationale: The excerpts do not provide current best reported scores on the benchmark's standard evaluation that leave clear headroom, nor do they show score differences between top models that separate them beyond reported uncertainty. Table 5 shows scores for specific models/attacks but does not establish a 'current best' ceiling or headroom analysis for the benchmark as a whole.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c2:
     value: unmet
     rationale: The benchmark provides a public dataset of behaviors and evaluations on HuggingFace, but the excerpts do not document a contamination defense such as a private held-out set or regular refreshing.
@@ -85,35 +80,38 @@ verdicts:
     by: model
     quotes_verified: true
   c6:
-    value: met
-    rationale: The benchmark explicitly states its simplifying assumptions, such as focusing solely on text and not allowing system prompt modification.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 9, chunk 3
-        quote: Our benchmark does not currently offer such option and focuses solely on text.
+    value: unmet
     by: model
+    rationale: The benchmark explicitly states simplifying assumptions (e.g., text-only input, no system prompt modification) that are contradicted by the current context of use where models accept other modalities and system prompts are often targeted.
+    evidence: []
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
   c7:
-    value: met
-    rationale: The benchmark's content is maintained and there is no evidence provided that the labels or task meanings have shifted since creation.
-    evidence:
-      - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
-        locator: 2404.01318v5 page 4, chunk 0
-        quote: we strive to make our benchmark community-driven, prioritizing clear guidelines for adding new attacks, models, and defenses.
+    value: unmet
     by: model
-    quotes_verified: true
-  r1:
-    value: met
-    rationale: The benchmark provides an explicit version identifier (v1.0) and a maintenance plan for versioning updates.
+    rationale: The benchmark states it is 'Actively Maintained' but explicitly notes 'We are not planning to release major updates' and 'No transformations were applied', indicating a lack of maintenance process to address semantic drift or outdated content.
     evidence:
       - source: paper
-        url: https://arxiv.org/abs/2404.01318v5
+        quote: "Maintenance status: Actively Maintained ... Updates: We are not planning to release major updates."
         locator: 2404.01318v5 page 22, chunk 1
-        quote: "Current version: v1.0"
-    by: model
+        url: https://arxiv.org/abs/2404.01318v5
+      - source: paper
+        quote: "Transformations applied: No transformations were applied to the data."
+        locator: 2404.01318v5 page 24, chunk 1
+        url: https://arxiv.org/abs/2404.01318v5
     quotes_verified: true
+    adjudicated_by: adjudicator-v4
+  r1:
+    value: unmet
+    by: model
+    rationale: The excerpts mention a version number (v1.0) and a last updated date, but do not show an explicit version identifier (like a DOI or release tag) displayed alongside the benchmark name in main references to point towards updated versions. The versioning plan is described as minor updates for errors, not a formal version control system with visible identifiers in the benchmark name.
+    evidence:
+      - source: paper
+        quote: "Current version: v1.0"
+        locator: 2404.01318v5 page 22, chunk 1
+        url: https://arxiv.org/abs/2404.01318v5
+    quotes_verified: true
+    adjudicated_by: adjudicator-v4
   r2:
     value: unmet
     rationale: There is no stated plan for what happens to artifacts at the end of life or a specific archive policy for deprecation.
@@ -134,3 +132,12 @@ revisions:
   - date: 2026-10-29
     by: touchstone-assessor
     summary: Automated assessment with google/gemma-4-31b-it.
+  - date: 2026-11-11
+    by: Li Bearden
+    summary: "Reviewed against a qwen/qwen3.6-35b-a3b cross-check: 6 verdicts agreed, 4 settled by adjudicator-v4, 0 decided by the reviewer. Approved by the reviewer at the level of the standard; rows settled by adjudicator-v4 were not checked one by one."
+    items:
+      - status
+      - c1
+      - c6
+      - c7
+      - r1
