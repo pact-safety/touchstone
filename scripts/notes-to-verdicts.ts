@@ -12,6 +12,7 @@ import { resolve } from 'node:path';
 import { parseArgs } from 'node:util';
 import { readDocs } from './apply-review.ts';
 import type { Rows } from './crosscheck.ts';
+import { load } from '../src/load.ts';
 
 type Evidence = { source: string; url: string; locator: string };
 export type NoteVerdict = { value: string | number; rationale?: string; evidence: Evidence[]; by: 'human' };
@@ -46,11 +47,12 @@ export const githubRepos = (note: string): string[] =>
   (note.match(/https?:\/\/\S+/g) ?? []).map((u) => u.replace(/[.,;)]+$/, '').match(GITHUB)).filter(Boolean).map((m) => `${m![1]}/${m![2]}`);
 
 /** Pure: one note to a verdict, or the reason it can't be one. */
-export function noteToVerdict(note: string | undefined, pin: Pin): { verdict: NoteVerdict } | { reason: string } {
+export function noteToVerdict(note: string | undefined, pin: Pin, canBeNA = true): { verdict: NoteVerdict } | { reason: string } {
   if (!note?.trim()) return { reason: 'no note' };
   const m = note.match(VALUE);
   if (!m) return { reason: 'no clear value' };
   const value: string | number = m[1] ? ({ unmet: 'unmet', met: 'met' } as Record<string, string>)[m[1].toLowerCase()] ?? 'n/a' : Number(m[2]);
+  if (value === 'n/a' && !canBeNA) return { reason: 'n/a on an item with no n/a condition' };
   const urls = (note.match(/https?:\/\/\S+/g) ?? []).map((u) => u.replace(/[.,;)]+$/, ''));
   const locator = note.replace(/https?:\/\/\S+/g, ' ').match(LOCATOR)?.[0].replace(/[.,;)]+$/, '') ?? 'reviewer note';
   const evidence = urls.flatMap((u) => { const e = toEvidence(u, pin); return e ? [{ ...e, locator }] : []; });
@@ -72,13 +74,15 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
   const known = new Set(rows.rows.map((r) => r.key));
   const todo = readDocs(readFileSync(values.decisions, 'utf8')).flatMap((d) =>
     Object.entries(d.data.choices ?? {}).filter(([item, c]) => c === 'other' && known.has(`${d.id}~${item}`)).map(([item]) => ({ pair: d.id, item, note: d.data.notes?.[item] as string | undefined })));
+  const naItems = new Set(load(new URL('..', import.meta.url).pathname).standards.flatMap(({ value: st }) => st.groups.flatMap((g) => g.items.filter((i) => i.guidance?.not_applicable).map((i) => `${st.id}~${i.id}`))));
+  const standardOf = new Map(rows.pairs.map((p) => [p.id, p.standard]));
   const cache = new Map<string, string | undefined>();
   for (const t of todo) for (const r of githubRepos(t.note ?? '')) if (!cache.has(r)) cache.set(r, ghHead(r));
   const out: Record<string, Record<string, NoteVerdict>> = {};
   const unconverted: string[] = [];
   const counts: Record<string, number> = {};
   for (const t of todo) {
-    const r = noteToVerdict(t.note, (repo) => cache.get(repo));
+    const r = noteToVerdict(t.note, (repo) => cache.get(repo), naItems.has(`${standardOf.get(t.pair)}~${t.item}`));
     if ('verdict' in r) (out[t.pair] ??= {})[t.item] = r.verdict;
     else { counts[r.reason] = (counts[r.reason] ?? 0) + 1; unconverted.push(`${t.pair}~${t.item}: ${r.reason}`); }
   }

@@ -21,6 +21,10 @@ describe('noteToVerdict values', () => {
     expect(r.verdict).toMatchObject({ value, rationale, by: 'human' });
     expect(r.verdict).not.toHaveProperty('quotes_verified');
   });
+  it('rejects n/a on an item with no n/a condition', () => {
+    expect(noteToVerdict('N/A — not normative.', pin, false)).toEqual({ reason: 'n/a on an item with no n/a condition' });
+    expect(noteToVerdict('Unmet — x.', pin, false)).toHaveProperty('verdict');
+  });
   it('rejects empty and valueless notes', () => {
     expect(conv('')).toEqual({ reason: 'no note' });
     expect(conv(undefined)).toEqual({ reason: 'no note' });
