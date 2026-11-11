@@ -38,6 +38,8 @@ If neither reading has a verified quote, no judge is called. The whole rule is r
 
 `scripts/apply-review.ts` records who made each choice, per row. A choice matching `adjudication.json` stays `by: model` with `adjudicated_by: adjudicator-v<prompt version>`, and the site shows that name. Any other choice is a person's, `by: human`. Publishing still needs a person: when a standard is approved, each of its pairs with every row decided becomes `published` with that person as reviewer, and its revision entry counts the rows the adjudicator settled and the rows the reviewer decided, and says the settled rows were not checked one by one.
 
+A choice of `other` is fixed by hand unless `--note-verdicts <file>` supplies a verdict for the row. `scripts/notes-to-verdicts.ts --decisions <file> --rows <rows.json> --out <file>` builds that file from the reviewer's notes: a note starting with `Met`, `Unmet`, `N/A`, a number or `Score <n>` becomes a `by: human` verdict whose rationale is the note, with its arXiv and GitHub links as evidence (arXiv html turned into the abs page, GitHub pinned to the repo's current HEAD commit; other mutable links dropped). A positive verdict left with no fixed-version evidence, and any note without a clear value, is listed and left for hand work.
+
 Reading B's files are optional. Where one is absent, B's verdict comes from `rows.json`, and each quote's `source` is looked up from the same benchmark's other assessments by URL. A row with a URL that doesn't resolve to one source stays undecided.
 
 ## Outputs
