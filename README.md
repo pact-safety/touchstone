@@ -6,7 +6,7 @@ People cite benchmark results to back claims about AI models, and benchmarks dif
 
 **Status.** The published ratings so far are imports from the standards' own authors. The 307 automated assessments are unreviewed drafts produced by google/gemma-4-31b-it; they are shown labelled as drafts and never count toward a score.
 
-**Grades.** The grade is designed as a consensus across standards (see the score doc). As of 2026-11-11 every published rating comes from a single standard: no benchmark has two published ratings. Each grade therefore rests on one standard, with low confidence, and 13 of 48 benchmarks have no grade yet. The worked example in the score doc is illustrative.
+**Grades.** The grade is designed as a consensus across standards (see the score doc). As of 2026-11-11 every published rating comes from a single standard: no benchmark has two published ratings. Each grade therefore rests on one standard, with low confidence, and 14 of 49 benchmarks have no grade yet. The worked example in the score doc is illustrative.
 
 ## Principles
 
@@ -46,7 +46,7 @@ See [docs/methodology.md](docs/methodology.md) for the scoring rules, [docs/touc
 
 ## Current data
 
-48 benchmarks, 9 encoded standards and 2 paywalled (ISO texts sold under per-user licences). There are 35 published assessments, all imported from the standards' authors: BetterBench (23 benchmarks, item level), the Agentic Benchmark Checklist (10, section scores) and the AI Standards Lab Scorecard (2 worked examples). Recomputing them from their own verdicts flags where published figures disagree: 10 BetterBench entries, and ImpossibleBench, which the Scorecard paper rates Category B under an earlier version of its table but which scores Category C under the final one.
+49 benchmarks, 9 encoded standards and 2 paywalled (ISO texts sold under per-user licences). There are 35 published assessments, all imported from the standards' authors: BetterBench (23 benchmarks, item level), the Agentic Benchmark Checklist (10, section scores) and the AI Standards Lab Scorecard (2 worked examples). Recomputing them from their own verdicts flags where published figures disagree: 10 BetterBench entries, and ImpossibleBench, which the Scorecard paper rates Category B under an earlier version of its table but which scores Category C under the final one.
 
 There are also 307 automated drafts, not yet reviewed (see Status above).
 

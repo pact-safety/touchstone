@@ -2,7 +2,7 @@
 
 Each benchmark gets two separate things, shown side by side and never blended into one number:
 
-1. **Rigor consensus**: how rigorous the benchmark is, according to the published standards it has been rated under. As of 2026-11-11 every published rating comes from a single standard: no benchmark has two published ratings. Each grade therefore rests on one standard, with low confidence, and 13 of 48 benchmarks have no grade yet. The worked example below is illustrative.
+1. **Rigor consensus**: how rigorous the benchmark is, according to the published standards it has been rated under. As of 2026-11-11 every published rating comes from a single standard: no benchmark has two published ratings. Each grade therefore rests on one standard, with low confidence, and 14 of 49 benchmarks have no grade yet. The worked example below is illustrative.
 2. **Run cost**: what a full run of the benchmark takes.
 
 A third view, the **value frontier**, compares the two across benchmarks. Everything here is deterministic arithmetic over the repository's data; the code is in `src/touchstone.ts` and the reference prices are in `config/pricing.yaml`.
