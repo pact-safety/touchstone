@@ -94,6 +94,7 @@ let wantSearch = false;
 
 const MODALITY: Record<string, string> = { 'lm-agent': 'Language-model agent', 'language-model': 'Language model', 'rl-agent': 'Reinforcement-learning agent', classifier: 'Classifier', 'scientific-ml': 'Scientific ML' };
 const modalityName = (m: string) => MODALITY[m] ?? m.replace(/-/g, ' ');
+const compositeChip = (b: { composite?: boolean }) => (b.composite ? html`<span class="chip" title="Combined from other benchmarks' scores">composite index</span>` : '');
 /** Only standards with at least one rating get a column, so the table has no empty ones. */
 const ratedStds = () => encoded.filter((s) => data.summaries.some((a) => a.standard === s.id));
 /** The columns the wide table shows: the reader's pick, or by default the two standards with the most ratings. */
@@ -270,7 +271,7 @@ function tableView(rows: B[]): Raw {
     <tbody>${rows.map((b) => html`<tr data-bench="${b.id}" data-prefetch="benchmarks/${b.id}.json">
       <td class="rt-sel">${cmpBox(b)}</td>
       <th scope="row" class="rt-name"><a class="rt-link" href="#/benchmark/${b.id}">${b.name}</a>
-        <div class="rt-sub"><span class="chip">${b.domain}</span><span class="rt-concept" title="${b.concept}">${modalityName(b.modality)} · ${b.concept}</span></div></th>
+        <div class="rt-sub"><span class="chip">${b.domain}</span>${compositeChip(b)}<span class="rt-concept" title="${b.concept}">${modalityName(b.modality)} · ${b.concept}</span></div></th>
       <td class="rt-grade">${touchstoneView(b)}</td><td class="rt-run">${runView(b)}</td>
       ${stds.map((s) => cell(b, s))}</tr>`)}</tbody></table>`;
 }
@@ -306,7 +307,7 @@ function cardView(b: B): Raw {
   const rated = ratedStds().map((s) => [s, primary(b.id, s.id, state.source)] as const).filter((x): x is [IStd, Summary] => !!x[1]);
   const missing = ratedStds().length - rated.length;
   return html`<li class="bcard" data-bench="${b.id}" data-prefetch="benchmarks/${b.id}.json">
-    <div class="flex items-start justify-between gap-3"><a class="t-sub rt-link" href="#/benchmark/${b.id}">${b.name}</a><span class="chip">${b.domain}</span></div>
+    <div class="flex items-start justify-between gap-3"><a class="t-sub rt-link" href="#/benchmark/${b.id}">${b.name}</a><span class="flex flex-wrap justify-end gap-1"><span class="chip">${b.domain}</span>${compositeChip(b)}</span></div>
     <div class="t-caption mt-1">${modalityName(b.modality)} · ${b.concept}</div>
     <div class="mt-3 grid gap-1 text-sm"><div><span class="text-muted">Touchstone grade</span> ${touchstoneView(b)}</div>
       <div><span class="text-muted">Run cost</span> ${runView(b)}</div></div>
@@ -354,7 +355,7 @@ function renderCompare(ids: string[]) {
         ${row('Touchstone grade', (b) => touchstoneView(b))}
         ${row('Score (0 to 100)', (b) => String(b.touchstone.rigor.score ?? '—'))}
         ${row('Run cost', (b) => { const r = b.touchstone.run; return r ? html`${apiLabel(r)}<span class="rt-count">${r.tokens.toLocaleString('en-US')} tokens${r.apiTier === 'none' ? '' : `, about ${usd(r.costUsd[0])} to ${usd(r.costUsd[1])}`}</span><span class="rt-count">${r.localTier} local setup</span>${b.touchstone.onFrontier ? html`<span class="pill rt-best" title="${BEST_VALUE}">best value</span>` : ''}` : 'Not yet collected'; })}
-        ${row('Type', (b) => html`<span class="chip">${b.domain}</span> ${modalityName(b.modality)}`)}
+        ${row('Type', (b) => html`<span class="chip">${b.domain}</span> ${compositeChip(b)} ${modalityName(b.modality)}`)}
         ${stds.map((s) => row(html`<span title="${stdTip(s)}">${s.short}</span>`, (b) => {
           const p = primary(b.id, s.id, 'all');
           return p ? html`<span class="flex flex-wrap items-center gap-1.5">${ratingLabel(p.label)}${chips(p)}</span>${bar(p.pct)}` : inScope(s, b) ? 'Not rated yet' : html`<span class="text-muted">Does not apply</span>`;
@@ -696,6 +697,7 @@ function renderBenchmark(b: B, file: BenchmarkFile, full: Map<string, Standard>,
     <h1 class="t-page mt-3" tabindex="-1">${b.name}</h1>
     <p class="mt-3 text-lg text-muted">${b.concept}</p>
     <p class="t-caption mt-2"><span class="capitalize">${b.domain}</span> · ${detailModality(b.modality)}${b.year ? ` · ${b.year}` : ''}</p>
+    ${b.composite ? html`<p class="mt-2">${compositeChip(b)} This is an index, not a test: its score is combined from other benchmarks' scores. Questions about test items may not apply to it.</p>` : ''}
     <ul class="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm" role="list">
       ${b.links.paper ? html`<li><a class="link tap" href="${safeUrl(b.links.paper)}">Paper</a>${watched?.paper_version ? ` (latest ${watched.paper_version})` : ''}</li>` : ''}
       ${b.links.repo ? html`<li><a class="link tap" href="${safeUrl(b.links.repo)}">Code</a>${watched?.repo_commit ? ` (at ${watched.repo_commit.slice(0, 7)}${watched.archived ? ', archived' : ''})` : ''}</li>` : ''}

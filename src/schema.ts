@@ -168,6 +168,8 @@ export const Benchmark = z.strictObject({
   domain: z.enum(['safety', 'capability']),
   modality: z.enum(['language-model', 'lm-agent', 'rl-agent', 'classifier', 'scientific-ml']),
   concept: z.string(),
+  /** True for an index whose score is combined from other benchmarks' scores (it has no test items of its own). */
+  composite: z.boolean().optional(),
   year: z.number().int().optional(),
   links: z
     .strictObject({
